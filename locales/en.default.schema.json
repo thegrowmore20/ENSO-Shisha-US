@@ -1,0 +1,400 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "settings": {
+    "typography": {
+      "name": "Typography",
+      "headings": {
+        "content": "Headings & Structure"
+      },
+      "type_heading_font": {
+        "label": "Heading font",
+        "info": "Montserrat carries the wordmark, product headings and buttons."
+      },
+      "type_accent_font": {
+        "label": "Section heading & stat font",
+        "info": "Inter carries section headings and numerals, tracked tight."
+      },
+      "body": {
+        "content": "Body"
+      },
+      "type_body_font": {
+        "label": "Body font"
+      }
+    },
+    "colors": {
+      "name": "Colors",
+      "background": { "label": "Background" },
+      "background_raised": { "label": "Background raised (cards)" },
+      "text": { "label": "Text" },
+      "text_muted": { "label": "Muted text" },
+      "border": { "label": "Border / hairline" },
+      "accent": { "label": "Accent (amber)" },
+      "accent_soft": { "label": "Accent soft" },
+      "button_background": { "label": "Button background" },
+      "button_label": { "label": "Button label" }
+    },
+    "layout": {
+      "name": "Layout",
+      "page_width": { "label": "Page width" }
+    },
+    "social": {
+      "name": "Social media",
+      "instagram": {
+        "label": "Instagram",
+        "info": "https://instagram.com/enso.future"
+      },
+      "tiktok": { "label": "TikTok" }
+    },
+    "social_sharing": {
+      "name": "Social sharing image",
+      "share_image": {
+        "label": "Default share image",
+        "info": "Used when a page has no image of its own. Recommended 1200 x 630px."
+      }
+    }
+  },
+  "sections": {
+    "header": {
+      "name": "Header",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "sticky": { "label": "Sticky header" },
+        "menu": { "label": "Menu" }
+      }
+    },
+    "footer": {
+      "name": "Footer",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "menu": { "label": "Footer menu" }
+      },
+      "blocks": {
+        "menu": {
+          "name": "Menu",
+          "settings": {
+            "heading": { "label": "Heading" },
+            "menu": { "label": "Menu" }
+          }
+        },
+        "policies": {
+          "name": "Policies",
+          "settings": {
+            "heading": { "label": "Heading" }
+          },
+          "paragraph": "Automatically displays your store's policy links."
+        },
+        "text": {
+          "name": "Text column",
+          "settings": {
+            "heading": { "label": "Heading" },
+            "text": { "label": "Text" }
+          }
+        }
+      }
+    },
+    "hero": {
+      "name": "Hero",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "text": { "label": "Body text" },
+        "image": { "label": "Image" },
+        "cta_primary_label": { "label": "Primary button label" },
+        "cta_primary_link": { "label": "Primary button link" },
+        "cta_secondary_label": { "label": "Secondary button label" },
+        "cta_secondary_link": { "label": "Secondary button link" }
+      },
+      "presets": { "name": "Hero" }
+    },
+    "philosophy": {
+      "name": "Philosophy",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "intro": { "label": "Intro text" }
+      },
+      "blocks": {
+        "item": {
+          "name": "Value",
+          "settings": {
+            "index": { "label": "Index (e.g. 01)" },
+            "title": { "label": "Title" },
+            "text": { "label": "Text" }
+          }
+        }
+      },
+      "presets": { "name": "Philosophy" }
+    },
+    "reasons": {
+      "name": "Reasons grid",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" }
+      },
+      "blocks": {
+        "reason": {
+          "name": "Reason",
+          "settings": {
+            "title": { "label": "Title" },
+            "text": { "label": "Text" }
+          }
+        }
+      },
+      "presets": { "name": "Reasons grid" }
+    },
+    "product_highlight": {
+      "name": "Product highlight",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "product": { "label": "Product" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "text": { "label": "Body text" },
+        "image": { "label": "Image (overrides product image)" },
+        "cta": { "label": "Button label" }
+      },
+      "blocks": {
+        "spec": {
+          "name": "Spec row",
+          "settings": {
+            "label": { "label": "Label" },
+            "value": { "label": "Value" }
+          }
+        }
+      },
+      "presets": { "name": "Product highlight" }
+    },
+    "faq": {
+      "name": "FAQ",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" }
+      },
+      "blocks": {
+        "question": {
+          "name": "Question",
+          "settings": {
+            "question": { "label": "Question" },
+            "answer": { "label": "Answer" }
+          }
+        }
+      },
+      "presets": { "name": "FAQ" }
+    },
+    "newsletter": {
+      "name": "Newsletter",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "heading": { "label": "Heading" },
+        "text": { "label": "Text" }
+      },
+      "presets": { "name": "Newsletter" }
+    },
+    "video_hero_slider": {
+      "name": "Video hero slider",
+      "settings": {
+        "autoplay_interval": {
+          "label": "Autoplay interval",
+          "info": "Time between slides, in milliseconds. Set to 0 to disable autoplay."
+        }
+      },
+      "blocks": {
+        "slide": {
+          "name": "Slide",
+          "settings": {
+            "thumbnail": {
+              "label": "Thumbnail",
+              "info": "Shown until the video has fully loaded, so the slide never plays empty."
+            },
+            "video": { "label": "Upload video" },
+            "video_url": { "label": "YouTube or Vimeo video URL" },
+            "eyebrow": { "label": "Eyebrow label" },
+            "heading": { "label": "Heading" },
+            "text": { "label": "Body text" },
+            "cta_label": { "label": "Button label" },
+            "cta_link": { "label": "Button link" }
+          }
+        }
+      },
+      "presets": { "name": "Video hero slider" }
+    },
+    "signature_models": {
+      "name": "Signature models",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "features": { "label": "Feature line" }
+      },
+      "blocks": {
+        "model": {
+          "name": "Model",
+          "settings": {
+            "product": { "label": "Product", "info": "When set, the fields below act as overrides." },
+            "image": { "label": "Image", "info": "Overrides the product's featured image" },
+            "name": { "label": "Name", "info": "Overrides the product title" },
+            "badge_label": { "label": "Badge label", "info": "e.g. Pre-Order, Best Seller" },
+            "rating": { "label": "Rating", "info": "Set to 0 to hide the star rating" },
+            "review_count": { "label": "Review count label" },
+            "excerpt": { "label": "Excerpt", "info": "Used only if the product has no subtitle metafield or description, or if no product is selected." },
+            "cta_label": { "label": "Button label" }
+          },
+          "headers": {
+            "fallback": "Fallback (when no product is selected)"
+          }
+        }
+      },
+      "presets": { "name": "Signature models" }
+    },
+    "shop_accessories": {
+      "name": "Shop accessories",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "collection": { "label": "Collection" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "products_limit": { "label": "Products to show" },
+        "cta_label": { "label": "Button label" },
+        "cta_link": { "label": "Button link" }
+      },
+      "presets": { "name": "Shop accessories" }
+    },
+    "story_timeline": {
+      "name": "Story timeline",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "intro": { "label": "Intro text" }
+      },
+      "blocks": {
+        "milestone": {
+          "name": "Milestone",
+          "settings": {
+            "year": { "label": "Year" },
+            "title": { "label": "Title" },
+            "text": { "label": "Text" },
+            "image": { "label": "Image" }
+          }
+        }
+      },
+      "presets": { "name": "Story timeline" }
+    },
+    "awards": {
+      "name": "Awards",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" }
+      },
+      "blocks": {
+        "award": {
+          "name": "Award",
+          "settings": {
+            "image": { "label": "Image" },
+            "title": { "label": "Title" },
+            "subtitle": { "label": "Subtitle" },
+            "text": { "label": "Text" }
+          }
+        }
+      },
+      "presets": { "name": "Awards" }
+    },
+    "instagram_reels": {
+      "name": "Instagram reels",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "cta_label": { "label": "Button label" },
+        "cta_link": { "label": "Button link", "info": "Defaults to the Instagram link set under Theme settings > Social media" }
+      },
+      "blocks": {
+        "reel": {
+          "name": "Reel",
+          "settings": {
+            "thumbnail": { "label": "Thumbnail" },
+            "video": { "label": "Video", "info": "Plays muted, looped, once scrolled into view" },
+            "link": { "label": "Instagram post link" }
+          }
+        }
+      },
+      "presets": { "name": "Instagram reels" }
+    },
+    "blog_posts": {
+      "name": "Blog posts",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "blog": { "label": "Blog" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "posts_limit": { "label": "Posts to show" },
+        "cta_label": { "label": "Button label" },
+        "cta_link": { "label": "Button link" }
+      },
+      "presets": { "name": "Blog posts" }
+    },
+    "contact": {
+      "name": "Contact Form",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "collection": { "label": "Collection" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" },
+        "cta_label": { "label": "Button label" },
+        "cta_link": { "label": "Button link" }
+      },
+      "presets": { "name": "Contact Form" }
+    },
+    "feature_videos": {
+      "name": "Image Content Multirow",
+      "settings": {
+        "color_scheme": { "label": "Color scheme" },
+        "eyebrow": { "label": "Eyebrow label" },
+        "heading": { "label": "Heading" }
+      },
+      "blocks": {
+        "feature": {
+          "name": "Feature",
+          "settings": {
+            "thumbnail": {
+              "label": "Thumbnail",
+              "info": "Shown until the video has fully loaded, so the row never plays empty."
+            },
+            "video": { "label": "Upload video" },
+            "video_url": { "label": "YouTube or Vimeo video URL" },
+            "eyebrow": { "label": "Eyebrow label" },
+            "heading": { "label": "Heading" },
+            "text": { "label": "Body text" },
+            "cta_label": { "label": "Button label" },
+            "cta_link": { "label": "Button link" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Image Content Multirow"
+      }
+    },
+    "main-product": { "name": "Product information" },
+    "main-collection": { "name": "Collection" },
+    "main-cart": { "name": "Cart" },
+    "main-page": { "name": "Page" },
+    "main-search": { "name": "Search results" },
+    "main-404": { "name": "404" },
+    "main-article": { "name": "Blog post" },
+    "main-blog": { "name": "Blog posts" },
+    "main-list-collections": { "name": "Collections list" }
+  }
+}

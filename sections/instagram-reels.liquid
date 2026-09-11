@@ -1,0 +1,292 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<instagram-reels class="instagram-reels {{ scheme_class }} section-padding">
+  <div class="container">
+    <div class="instagram-reels__header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h-section">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.cta_label != blank -%}
+        <a
+          href="{{ section.settings.cta_link | default: settings.social_instagram_link | default: '#' }}"
+          class="btn btn--outline instagram-reels__cta"
+          target="_blank"
+          rel="noopener"
+        >
+          {%- render 'icon-instagram' -%}
+          {{ section.settings.cta_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="instagram-reels__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign has_video = false
+          if block.settings.video and block.settings.video.sources.size > 0
+            assign has_video = true
+          endif
+        -%}
+        <a href="{{ block.settings.link | default: '#' }}" class="reel" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+          <div class="reel__media">
+            {%- if block.settings.thumbnail -%}
+              <img
+                src="{{ block.settings.thumbnail | image_url: width: 500 }}"
+                alt="{{ block.settings.thumbnail.alt | escape }}"
+                width="{{ block.settings.thumbnail.width }}"
+                height="{{ block.settings.thumbnail.height }}"
+                loading="lazy"
+                class="reel__poster"
+              >
+            {%- else -%}
+              <div class="media-placeholder reel__placeholder">
+                {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
+              </div>
+            {%- endif -%}
+
+            {%- if has_video -%}
+              <template data-video-template>
+                <video class="reel__video" muted loop playsinline preload="none">
+                  {%- for source in block.settings.video.sources -%}
+                    {%- if source.format == 'mp4' -%}
+                      <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                    {%- endif -%}
+                  {%- endfor -%}
+                </video>
+              </template>
+            {%- endif -%}
+
+            <span class="reel__play">{%- render 'icon-play' -%}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</instagram-reels>
+
+{% stylesheet %}
+  .instagram-reels__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-bottom: var(--space-7);
+    flex-wrap: wrap;
+  }
+
+  .instagram-reels__cta {
+    flex-shrink: 0;
+  }
+
+  .instagram-reels__cta .icon-instagram {
+    width: 16px;
+    height: 16px;
+  }
+
+  .instagram-reels__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-4);
+  }
+
+  .reel__media {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-background-raised);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s var(--ease-out);
+  }
+
+  .reel:hover .reel__media {
+    box-shadow: var(--shadow-md);
+  }
+
+  .reel__poster,
+  .reel__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .reel:hover .reel__poster {
+    transform: scale(1.06);
+  }
+
+  .reel__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: auto;
+  }
+
+  .reel__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0) 35%);
+    pointer-events: none;
+  }
+
+  .reel__video {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .reel__media.is-ready .reel__video {
+    opacity: 1;
+  }
+
+  .reel__play {
+    position: absolute;
+    bottom: var(--space-3);
+    right: var(--space-3);
+    width: 26px;
+    height: 26px;
+    color: #F5F1E6;
+    transition: opacity 0.2s ease;
+  }
+
+  .reel__media.is-ready .reel__play {
+    opacity: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .instagram-reels__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 589px) {
+    .instagram-reels__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class InstagramReels extends HTMLElement {
+    connectedCallback() {
+      const medias = [...this.querySelectorAll('.reel__media')];
+      if (!medias.length) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            this.#loadVideo(entry.target);
+            observer.unobserve(entry.target);
+          }
+        },
+        { rootMargin: '200px' }
+      );
+
+      for (const media of medias) {
+        observer.observe(media);
+      }
+    }
+
+    #loadVideo(media) {
+      const template = media.querySelector('[data-video-template]');
+      if (!template) return;
+
+      const video = template.content.firstElementChild.cloneNode(true);
+      video.addEventListener('canplay', () => media.classList.add('is-ready'), { once: true });
+      media.append(video);
+      video.play().catch(() => {});
+    }
+  }
+
+  customElements.define('instagram-reels', InstagramReels);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.instagram_reels.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.instagram_reels.settings.color_scheme.label",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.instagram_reels.settings.eyebrow.label",
+      "default": "Community"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.instagram_reels.settings.heading.label",
+      "default": "As Seen on Instagram"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:sections.instagram_reels.settings.cta_label.label",
+      "default": "Follow @enso.future"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "t:sections.instagram_reels.settings.cta_link.label",
+      "info": "t:sections.instagram_reels.settings.cta_link.info"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "t:sections.instagram_reels.blocks.reel.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "t:sections.instagram_reels.blocks.reel.settings.thumbnail.label"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:sections.instagram_reels.blocks.reel.settings.video.label",
+          "info": "t:sections.instagram_reels.blocks.reel.settings.video.info"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.instagram_reels.blocks.reel.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.instagram_reels.presets.name",
+      "blocks": [
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" }
+      ]
+    }
+  ]
+}
+{% endschema %}

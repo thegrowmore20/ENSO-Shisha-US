@@ -1,0 +1,529 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max_width = '760px'
+    when 'page_width'
+      assign content_max_width = 'var(--page-width)'
+    when 'full'
+      assign content_max_width = '100%'
+    else
+      assign content_max_width = '1000px'
+  endcase
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign first_question = true -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'question' -%}
+            {%- unless first_question -%},{%- endunless -%}
+            {%- assign first_question = false -%}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | strip_html | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ block.settings.answer | strip_html | json }}
+              }
+            }
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+<section class="faq-section {{ scheme_class }} section-{{ section.id }}-padding">
+  <div class="container faq-section__inner">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="faq-section__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="faq-section__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="faq-section__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq-section__body">
+        {%- for block in section.blocks -%}
+
+          {%- if block.type == 'category' -%}
+            {%- if block.settings.label != blank -%}
+              <p class="faq-section__category" {{ block.shopify_attributes }}>
+                {{ block.settings.label }}
+              </p>
+            {%- endif -%}
+
+          {%- elsif block.type == 'question' -%}
+            <details class="faq-item" {{ block.shopify_attributes }}>
+              <summary class="faq-item__trigger">
+                <span class="faq-item__question">{{ block.settings.question }}</span>
+                <span class="faq-item__icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 6L8 11L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-item__panel">
+                <div class="faq-item__answer">{{ block.settings.answer }}</div>
+              </div>
+            </details>
+
+          {%- endif -%}
+
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% style %}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<style>
+  /* Layout */
+  .faq-section__inner {
+    max-width: {{ content_max_width }};
+    margin-inline: auto;
+  }
+
+  /* Header */
+  .faq-section__header {
+    text-align: {{ section.settings.header_alignment }};
+    margin-bottom: 40px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .faq-section__header {
+      margin-bottom: 32px;
+    }
+  }
+
+  .faq-section__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    opacity: 0.6;
+  }
+
+  .faq-section__heading {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  /* Category label */
+  .faq-section__category {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 40px 0 0;
+    padding-bottom: 12px;
+  }
+
+  .faq-section__category:first-child {
+    margin-top: 0;
+  }
+
+  /* FAQ list */
+  .faq-section__body {
+    opacity: 1;
+  }
+
+  /* Individual item */
+  .faq-item {
+    border-bottom: 1px solid #8080803d;
+    opacity: 1;
+  }
+
+  .faq-section__category + .faq-item {
+    border-top: 1px solid #8080803d;
+  }
+
+  .faq-item__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-item__trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__question {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .faq-item__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #000;
+    color: #fff;
+    transition: transform 0.25s ease;
+  }
+
+  .faq-item__icon svg {
+    width: 45%;
+    height: 45%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .faq-item__icon {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .faq-item.is-open .faq-item__icon {
+    transform: rotate(180deg);
+  }
+
+  /* Some browsers now ship a built-in fade/resize transition on details
+     content (via ::details-content). We animate height ourselves via JS,
+     so disable the native one to stop it fighting our animation. */
+  .faq-item {
+    interpolate-size: numeric-only;
+  }
+
+  .faq-item::details-content {
+    transition: none;
+    opacity: 1;
+    block-size: auto;
+    overflow: visible;
+  }
+
+  .faq-item__panel {
+    overflow: hidden;
+  }
+
+  .faq-item__answer {
+    padding-bottom: 20px;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  .faq-item__answer p {
+    margin: 0 0 12px;
+  }
+
+  .faq-item__answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-item__answer a {
+    color: currentColor;
+    text-underline-offset: 3px;
+  }
+</style>
+
+<script>
+  (function () {
+    function FaqAccordionItem(details, group) {
+      this.el = details;
+      this.group = group;
+      this.summary = details.querySelector('summary');
+      this.content = details.querySelector('.faq-item__panel');
+      this.animation = null;
+      this.isClosing = false;
+      this.isExpanding = false;
+      this.summary.addEventListener('click', this.onClick.bind(this));
+    }
+
+    FaqAccordionItem.prototype.onClick = function (event) {
+      event.preventDefault();
+
+      if (this.isClosing || !this.el.open) {
+        this.open();
+      } else if (this.isExpanding || this.el.open) {
+        this.close();
+      }
+    };
+
+    FaqAccordionItem.prototype.open = function () {
+      this.group.forEach(function (item) {
+        if (item !== this && (item.el.open || item.isExpanding)) {
+          item.close();
+        }
+      }, this);
+
+      this.el.style.overflow = 'hidden';
+      this.el.style.height = this.el.offsetHeight + 'px';
+      this.el.open = true;
+      this.el.classList.add('is-open');
+      window.requestAnimationFrame(this.expand.bind(this));
+    };
+
+    FaqAccordionItem.prototype.cancelAnimation = function () {
+      if (!this.animation) return;
+      this.animation.onfinish = null;
+      this.animation.oncancel = null;
+      this.animation.cancel();
+      this.animation = null;
+    };
+
+    FaqAccordionItem.prototype.expand = function () {
+      this.cancelAnimation();
+      this.isClosing = false;
+      this.isExpanding = true;
+      var startHeight = this.el.offsetHeight;
+      var endHeight = this.summary.offsetHeight + this.content.offsetHeight;
+
+      this.animation = this.el.animate(
+        { height: [startHeight + 'px', endHeight + 'px'] },
+        { duration: 300, easing: 'ease-out' }
+      );
+      this.animation.onfinish = function () { this.onAnimationFinish(true); }.bind(this);
+    };
+
+    FaqAccordionItem.prototype.close = function () {
+      this.cancelAnimation();
+      this.isExpanding = false;
+      this.isClosing = true;
+      this.el.style.overflow = 'hidden';
+      this.el.classList.remove('is-open');
+      var startHeight = this.el.offsetHeight;
+      var endHeight = this.summary.offsetHeight;
+
+      this.animation = this.el.animate(
+        { height: [startHeight + 'px', endHeight + 'px'] },
+        { duration: 300, easing: 'ease-out' }
+      );
+      this.animation.onfinish = function () { this.onAnimationFinish(false); }.bind(this);
+    };
+
+    FaqAccordionItem.prototype.onAnimationFinish = function (open) {
+      this.el.open = open;
+      this.animation = null;
+      this.isClosing = false;
+      this.isExpanding = false;
+      this.el.style.height = '';
+      this.el.style.overflow = '';
+    };
+
+    function initFaqAccordion(container) {
+      var group = [];
+      container.querySelectorAll('.faq-item').forEach(function (details) {
+        group.push(new FaqAccordionItem(details, group));
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var section = document.getElementById('shopify-section-{{ section.id }}');
+      if (section) initFaqAccordion(section);
+    });
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.target.id === 'shopify-section-{{ section.id }}') {
+        initFaqAccordion(event.target);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQs",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Questions"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        { "value": "narrow", "label": "Narrow (760px)" },
+        { "value": "normal", "label": "Normal (1000px)" },
+        { "value": "page_width", "label": "Page width" },
+        { "value": "full", "label": "Full width (100%)" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Padding — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Padding — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Category name",
+          "default": "General"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Write your question here"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Write your answer here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": { "label": "Product" }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Does ENSO use charcoal?",
+            "answer": "<p>No. ENSO is fully electronic — controlled heat from 180 to 330°C, no charcoal, no ash, no open flame.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Am I locked into proprietary pods?",
+            "answer": "<p>No. ENSO is an open system — bring your own molasses, always.</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": { "label": "Shipping" }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>ENSO ships globally from our warehouses · approximately 2 weeks delivery.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

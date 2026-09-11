@@ -1,0 +1,34 @@
+.breadcrumbs {
+  margin-bottom: var(--space-5, 1.5rem);
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumbs__item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumbs__item a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs__item--current {
+  color: currentColor;
+  font-weight: 500;
+}
+
+
+@media (max-width: 749px) {
+  .breadcrumbs {
+    margin-bottom: var(--space-4, 1rem);
+  }
+}

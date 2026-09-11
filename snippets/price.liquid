@@ -1,0 +1,35 @@
+{%- comment -%}
+  Renders the price for a single variant.
+  Usage: {% render 'price', product: product, variant: variant, show_unit_price: true, show_savings_badge: true %}
+  `variant` defaults to product.selected_or_first_available_variant if omitted.
+  `show_savings_badge` is opt-in (e.g. product detail page) so it doesn't leak onto product cards.
+{%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  assign compare_at = target.compare_at_price
+  assign current_price = target.price
+  assign savings = compare_at | minus: current_price
+-%}
+<div class="price{% if compare_at > current_price %} price--on-sale{% endif %}{% unless target.available %} price--sold-out{% endunless %}">
+
+    {%- if compare_at > current_price -%}
+      <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+      <span class="price__current price__current--sale">{{ current_price | money }}</span>
+      <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+      <s class="price__compare-at">{{ compare_at | money }}</s>
+      {%- if show_savings_badge and savings > 0 -%}
+        <span class="price__savings">Save {{ savings | money }}</span>
+      {%- endif -%}
+    {%- else -%}
+      <span class="price__current">{{ current_price | money }}</span>
+    {%- endif -%}
+    {%- if target.available == false -%}
+        <span class="price__sold-out">{{ 'products.product.sold_out' | t }}</span>  
+    {%- endif -%}
+
+  {%- if show_unit_price and target.unit_price and target.unit_price > 0 -%}
+    <span class="price__unit caption">
+      {{ target.unit_price | money }}/{%- if target.unit_price_measurement.reference_value != 1 -%}{{ target.unit_price_measurement.reference_value }}{%- endif -%}{{ target.unit_price_measurement.reference_unit }}
+    </span>
+  {%- endif -%}
+</div>

@@ -1,0 +1,238 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+<div class="cart-drawer">
+	<div class="cart-drawer-box {{ scheme_class }}">
+		{% comment %} Header section {% endcomment %}
+		<header class="cart-drawer-header">
+			<h2>{{ 'cart.general.title' | t }}</h2>
+
+			<div class="cart-drawer-header-right">
+				<span class="cart-drawer-header-right-items">{{ 'cart.general.item_count' | t: count: cart.item_count }}</span>
+				
+				<button class="cart-drawer-header-right-close" type="button">
+					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M5 19L19 5" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="var(--icon-stroke-linecap)" stroke-linejoin="var(--icon-stroke-linejoin)" vector-effect="non-scaling-stroke"></path>
+						<path d="M5 5L19 19" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="var(--icon-stroke-linecap)" stroke-linejoin="var(--icon-stroke-linejoin)" vector-effect="non-scaling-stroke"></path>
+					</svg>
+				</button>
+			</div>
+		</header>
+		
+		{% if cart.item_count > 0 %}
+			{% render 'cart-shipping-bar' %}
+		{% endif %}
+		
+		{% form 'cart', cart, class: 'cart-drawer-form' %}
+			{% if cart.item_count == 0 %}
+				<div class="cart-drawer-empty-state text-center">
+					<p class="cart-drawer-empty">{{ 'cart.general.empty' | t }}</p>
+					<a class="btn btn--primary" href="{{ settings.cart_empty_button_link | default: routes.all_products_collection_url }}">
+						{{ 'cart.general.continue_shopping' | t }}
+					</a>
+				</div>
+			{% else %}
+				<div class="cart-drawer-items">
+					{% for item in cart.items %}
+						<div class="cart-drawer-item" data-line-item-key="{{ item.key }}">
+							<div class="cart-drawer-item-image">
+								<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}" loading="lazy" width="" height="" alt="{{ item.title }}">
+							</div>
+							<div class="cart-drawer-item-main">
+								<div class="cart-drawer-item-main-flex">
+									<div class="cart-drawer-item-main-flex-left">
+										<div class="cart-drawer-item-header">
+											<h3><a href="{{ item.url }}">{{ item.product.title }}</a></h3>
+											<button class="cart-drawer-item-remove" type="button" data-line-item-key="{{ item.key }}">
+												{% render 'icon-remove' %} 
+											</button>
+										</div>
+										
+										{% unless item.variant.title == 'Default Title' %}
+											<span>{{ item.variant.title }}</span>
+										{% endunless %}
+										<div class="cart-drawer-item-qty-price">
+											
+											<div class="cart-drawer-item-main-flex-right">
+
+												{% assign savings = item.original_line_price | minus: item.final_line_price %}
+
+												{% if savings > 0 %}
+													<span class="cart-item-saving-badge">
+														Save {{ savings | money }}
+													</span>
+												{% endif %}
+
+												<div class="cart-line-price">
+
+													<span class="cart-final-price">
+														{{ item.final_line_price | money }}
+													</span>
+
+													{% if item.original_line_price > item.final_line_price %}
+														<span class="cart-compare-price">
+															{{ item.original_line_price | money }}
+														</span>
+													{% endif %}
+
+												</div>
+
+											</div>
+											
+											<div class="cart-drawer-quantity-selector">
+												<button class="cart-drawer-quantity-selector-minus" type="button" aria-label="{{ 'products.product.decrease_quantity' | t }}">{% render 'icon-minus' %}</button>
+												<input type="text" readonly value="{{ item.quantity }}">
+												<button class="cart-drawer-quantity-selector-plus" type="button" aria-label="{{ 'products.product.increase_quantity' | t }}">{% render 'icon-plus' %}</button>
+											</div>
+										</div>
+										
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				
+				<footer class="cart-drawer-footer">
+
+					<div class="cart-order-note">
+
+						<button
+							type="button"
+							class="order-note-toggle"
+							aria-expanded="false"
+							aria-controls="cart-note-wrapper"
+						>
+							<span class="order-note-icon">✎</span>
+							<span>{{ 'cart.general.add_order_note' | t }}</span>
+							<span class="order-note-arrow">+</span>
+						</button>
+
+
+						<div id="cart-note-wrapper" class="order-note-content" hidden>
+							<textarea name="note" id="CartNote" placeholder="{{ 'cart.general.order_note_placeholder' | t }}" rows="4">{{ cart.note }}</textarea>
+						</div>
+
+					</div>
+					
+					<div class="total-with-discount-wrapper">
+						{% liquid
+							
+							assign compare_at_total = 0
+							assign total_compare_at_savings = 0
+							assign c_savings_percent = 0
+							assign regular_price_total = 0
+							assign discount_total = cart.total_discount
+							
+							for item in cart.items
+							assign item_total_compare_price = 0
+							assign quantity = item.quantity
+							assign regular_price = item.variant.price
+							assign compare_price = item.variant.compare_at_price
+							assign item_total_regular_price = regular_price | times: quantity
+							
+							if compare_price and compare_price > regular_price
+							assign item_total_compare_price = compare_price | times: quantity
+							else
+							assign item_total_compare_price = regular_price | times: quantity
+							endif
+							
+							assign compare_at_total = compare_at_total | plus: item_total_compare_price
+							assign regular_price_total = regular_price_total | plus: item_total_regular_price
+							
+							if compare_price and compare_price > regular_price
+							assign single_item_save = compare_price | minus: regular_price
+							assign line_item_save = single_item_save | times: quantity
+							assign total_compare_at_savings = total_compare_at_savings | plus: line_item_save
+							endif
+							
+							assign item_level_discount_percentage = 0
+							if item.line_level_discount_allocations.size > 0
+							for discount in item.line_level_discount_allocations
+							assign item_level_discount_percentage = item_level_discount_percentage | plus: discount.discount_application.value | round
+							endfor
+							endif
+							endfor
+							
+							if compare_at_total > 0 and total_compare_at_savings > 0
+							assign c_savings_percent = total_compare_at_savings | times: 100.0 | divided_by: compare_at_total | round
+							endif
+							
+							assign cart_level_discount_percentage = 0
+							for discount in cart.cart_level_discount_applications
+							assign cart_level_discount_percentage = cart_level_discount_percentage | plus: discount.value | round
+							endfor
+							
+							assign grand_saving = c_savings_percent | plus: item_level_discount_percentage | plus: cart_level_discount_percentage
+							
+							assign total_line_price = compare_at_total | minus: regular_price_total
+							assign total_saved_amount = total_line_price | plus: discount_total
+							
+						%}  
+						
+						<style>
+							#grand-saving {
+								font-size: 14px;
+								display: flex;
+								align-items: center;
+								gap: 4px;
+							}
+							.summary-total-discount-price {
+								color: #34A853;
+							}
+							#grand-saving svg {
+								width: 14px;
+							}
+							
+						</style>
+						
+						<div class="cart-original-total-row cart__summary-item cart__total summary-total-price-wrapper">
+							<span class="cart__original-total-label">
+								{{ 'cart.general.total_price' | t }}
+							</span>
+							<span class="summary-total-price" id="summary-total-price">
+							{{ compare_at_total | money }}
+						</span>
+					</div>
+					<div class="cart-total-discounts-row cart__summary-item cart__total summary-total-compare-wrapper font-600 color-green">
+						<span class="cart-dicount-row-label">
+							{{ 'cart.general.discount' | t }} <span id="grand-saving" class="grand-saving"> {% render 'icon-discount' %} {{ grand_saving | append: '%' }}  </span>
+						</span>
+						<span class="summary-total-discount-price">
+						-{{ total_saved_amount | money }}
+					</span>
+				</div>
+
+			</div>
+
+			{% if cart.total_discounts > 0 %}
+				<div class="cart-drawer-footer-row" style="display: none;">
+					<h3>{{ 'cart.general.discount' | t }}</h3>
+					<span>{{ cart.total_discounts | money }}</span>
+				</div>
+			{% endif %}
+			<div class="cart-drawer-footer-row">
+				<h3>{{ 'cart.general.total' | t }}</h3>
+				<span>{{ cart.total_price | money }}</span>
+			</div>
+			<button type="submit" name="checkout" class="cart-drawer-button">{{ 'cart.general.checkout' | t }}</button>
+		</footer>
+	{% endif %}
+{% endform %}
+</div>
+</div>
+
+{% schema %}
+{
+	"name": "Cart drawer",
+	"settings": [
+		{
+			"type": "color_scheme",
+			"id": "color_scheme",
+			"label": "Color scheme",
+			"default": "scheme-paper"
+		}
+	]
+}
+{% endschema %}

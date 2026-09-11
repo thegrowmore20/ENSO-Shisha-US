@@ -1,0 +1,351 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+
+  assign media_class = 'feature-row__media'
+  unless section.settings.show_media_shadow
+    assign media_class = media_class | append: ' feature-row__media--no-shadow'
+  endunless
+
+  assign section_class = 'feature-videos ' | append: scheme_class | append: ' section-padding'
+  if section.settings.width == 'full'
+    assign section_class = section_class | append: ' feature-videos--full'
+  endif
+-%}
+
+<section class="{{ section_class }}">
+  <div class="{% if section.settings.width == 'page' %}container{% endif %}">
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+      <div class="feature-videos__header text-center">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h-section">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="feature-videos__list">
+      {%- for block in section.blocks -%}
+        <article class="feature-row" {{ block.shopify_attributes }}>
+          {%- render 'video-media',
+            video: block.settings.video,
+            video_url: block.settings.video_url,
+            thumbnail: block.settings.thumbnail,
+            alt: block.settings.heading,
+            width: 1200,
+            class: media_class
+          -%}
+
+          {%- liquid
+            assign horizontal_position = block.settings.text_position | default: 'left'
+            assign content_align_items = 'flex-start'
+            case horizontal_position
+              when 'center'
+                assign content_align_items = 'center'
+              when 'right'
+                assign content_align_items = 'flex-end'
+            endcase
+
+            assign content_align_self = 'center'
+            case block.settings.text_vertical_position
+              when 'top'
+                assign content_align_self = 'start'
+              when 'bottom'
+                assign content_align_self = 'end'
+            endcase
+          -%}
+          <div class="feature-row__content" style="text-align: {{ horizontal_position }}; align-items: {{ content_align_items }}; align-self: {{ content_align_self }};">
+            {% if block.settings.content_small_image %}
+              <div class="content-image-small">
+                <img
+                  src="{{ block.settings.content_small_image | image_url: width: 200 }}"
+                  alt="{{ block.settings.content_small_image.alt }}"
+                  width="{{ block.settings.content_small_image.width }}"
+                  height="{{ block.settings.content_small_image.height }}"
+                  loading="lazy"
+                >
+              </div>
+            {% endif %}
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="eyebrow">{{ block.settings.eyebrow }}</p>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h3 class="h-product feature-row__heading">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="body-text text-muted feature-row__text">{{ block.settings.text }}</div>
+            {%- endif -%}
+            {%- if block.settings.cta_label != blank -%}
+              <a href="{{ block.settings.cta_link | default: '#' }}" class="btn btn--outline feature-row__cta">
+                {{ block.settings.cta_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .feature-videos__header {
+    max-width: 640px;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  .feature-videos__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'media content';
+    align-items: center;
+  }
+
+  .feature-row:nth-child(even) {
+    grid-template-areas: 'content media';
+  }
+
+  .feature-row__media {
+    grid-area: media;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-row__media--no-shadow {
+    box-shadow: none;
+  }
+
+  /* Full width: media sits flush against the viewport edge, so flatten
+     whichever side of it actually touches that edge. */
+  .feature-videos--full .feature-row:nth-child(odd) .feature-row__media {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .feature-videos--full .feature-row:nth-child(even) .feature-row__media {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .feature-row__content {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    padding-inline: var(--space-8);
+  }
+
+  .feature-row__content .content-image-small {
+    width: 96px;
+    height: 96px;
+    overflow: hidden;
+    margin-bottom: var(--space-3);
+  }
+  .feature-row__content .content-image-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .feature-row__heading {
+    margin-bottom: var(--space-4);
+  }
+
+  .feature-row__text {
+    max-width: 46ch;
+  }
+
+  .feature-row__cta {
+    margin-top: var(--space-6);
+  }
+
+  @media screen and (max-width: 749px) {
+    .feature-row,
+    .feature-row:nth-child(even) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'media'
+        'content';
+      gap: var(--space-5);
+    }
+
+    .feature-row .feature-row__content {
+      padding-inline: var(--space-4);
+    }
+
+    .feature-videos--full .feature-row__media {
+      border-radius: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.feature_videos.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.feature_videos.settings.color_scheme.label",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.feature_videos.settings.eyebrow.label",
+      "default": "Why ENSŌ"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.feature_videos.settings.heading.label",
+      "default": "Built Around the Ritual"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Container width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_media_shadow",
+      "label": "Show media box shadow",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "t:sections.feature_videos.blocks.feature.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "t:sections.feature_videos.blocks.feature.settings.thumbnail.label",
+          "info": "t:sections.feature_videos.blocks.feature.settings.thumbnail.info"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:sections.feature_videos.blocks.feature.settings.video.label"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "t:sections.feature_videos.blocks.feature.settings.video_url.label",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "image_picker",
+          "id": "content_small_image",
+          "label": "Content small image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "t:sections.feature_videos.blocks.feature.settings.eyebrow.label"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.feature_videos.blocks.feature.settings.heading.label",
+          "default": "Coal-Free Comfort"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.feature_videos.blocks.feature.settings.text.label"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "t:sections.feature_videos.blocks.feature.settings.cta_label.label"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "t:sections.feature_videos.blocks.feature.settings.cta_link.label"
+        },
+        {
+          "type": "header",
+          "content": "Text position"
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Horizontal position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "text_vertical_position",
+          "label": "Vertical position",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" }
+          ],
+          "default": "center"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.feature_videos.presets.name",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "01",
+            "heading": "Coal-Free Comfort",
+            "text": "<p>No charcoal means no toxic carbon monoxide and none of the harmful chemicals that come with an open flame. Just clean, controlled heat — and a session that tastes like what you actually put in it.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "02",
+            "heading": "Cordless Convenience",
+            "text": "<p>A swap-out battery keeps the session going, and the whole system is built to travel. No outlet, no setup, no infrastructure — the ritual goes where you go.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "03",
+            "heading": "Magnetic Simplicity",
+            "text": "<p>Magnetically attachable mouthpieces snap into place and lift right off — so sharing, switching and cleaning take seconds instead of minutes.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "eyebrow": "04",
+            "heading": "Formidable Clouds",
+            "text": "<p>ENSŌ's custom heating algorithm holds temperature precisely where it needs to be, drawing out dense, consistent clouds from the first draw to the last.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

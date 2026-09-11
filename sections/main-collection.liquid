@@ -1,0 +1,610 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign products_per_page = section.settings.products_per_page
+  assign pagination_type = section.settings.pagination_type
+  assign nav_menu = linklists[section.settings.nav_menu]
+  assign has_quick_links = false
+  if section.settings.quick_link_1_text != blank and section.settings.quick_link_1_url != blank
+    assign has_quick_links = true
+  endif
+  if section.settings.quick_link_2_text != blank and section.settings.quick_link_2_url != blank
+    assign has_quick_links = true
+  endif
+  assign mobile_columns_class = 'collection--mobile-cols-' | append: section.settings.mobile_columns
+-%}
+
+<div
+  class="collection {{ scheme_class }} section-padding {{ mobile_columns_class }}"
+  data-section-id="{{ section.id }}"
+  data-pagination-type="{{ pagination_type }}"
+>
+  <div class="container">
+    {%- render 'breadcrumbs' -%}
+
+    {% if section.settings.enable_collection_content %}
+      <div class="collection__header text-center">
+        <h1 class="h-section">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="body-text text-muted collection__description">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
+    {% endif %}
+
+    {%- paginate collection.products by products_per_page -%}
+      <div class="collection__layout{% unless section.settings.enable_filtering %} collection__layout--no-sidebar{% endunless %}">
+
+        {%- if section.settings.enable_filtering -%}
+          <div class="collection__sidebar-overlay" data-sidebar-close></div>
+
+          <aside
+            class="collection__sidebar"
+            id="CollectionSidebar-{{ section.id }}"
+            aria-hidden="true"
+          >
+            <div class="collection__sidebar-header">
+              <p class="h-4">{{ 'collections.general.filter_and_sort' | t }}</p>
+              <button
+                type="button"
+                class="collection__sidebar-close"
+                data-sidebar-close
+                aria-label="{{ 'accessibility.close' | t }}"
+              >{% render 'icon-close' %}</button>
+            </div>
+
+            {%- comment -%}
+              Drawer-only sort control. On mobile the sidebar becomes the
+              filter/sort drawer, so sort lives here instead of the toolbar.
+              The toolbar's own sort instance is hidden below 990px via CSS
+              in snippets/sort-by.liquid; both stay in sync via facets.js.
+            {%- endcomment -%}
+            {%- if section.settings.enable_sorting -%}
+              {%- render 'sort-by', results: collection, section: section, variant: 'drawer', id_suffix: 'Drawer' -%}
+            {%- endif -%}
+
+            {%- render 'facets',
+              results: collection,
+              nav_menu: nav_menu,
+              has_quick_links: has_quick_links,
+              section: section
+            -%}
+
+            <button type="button" class="btn btn--primary collection__sidebar-apply" data-sidebar-close>
+              {{ 'collections.general.view_results' | t }} ({{ collection.products_count }})
+            </button>
+          </aside>
+        {%- endif -%}
+
+        <div class="collection__main">
+          <div class="collection__toolbar" id="CollectionToolbar-{{ section.id }}">
+            {%- comment -%}
+              Mobile: [ toggle .......... count ]  (sort lives in the drawer)
+              Desktop: [ count .......... sort ]  (toggle is display:none)
+              Achieved with justify-content: space-between + each side's own
+              display:none at the relevant breakpoint — no JS reordering needed.
+            {%- endcomment -%}
+            {%- if section.settings.enable_filtering -%}
+              <button
+                type="button"
+                class="btn btn--secondary collection__filter-toggle"
+                aria-expanded="false"
+                aria-controls="CollectionSidebar-{{ section.id }}"
+              >
+                {{ 'collections.general.filter_and_sort' | t }}
+              </button>
+            {%- endif -%}
+
+            <p class="collection__count body-text text-muted">
+              {{ 'collections.general.items_with_count' | t: count: collection.products_count }}
+            </p>
+
+            {%- if section.settings.enable_sorting -%}
+              {%- render 'sort-by', results: collection, section: section, variant: 'toolbar', id_suffix: 'Toolbar' -%}
+            {%- endif -%}
+          </div>
+
+          <div id="ProductGridContainer-{{ section.id }}" aria-live="polite">
+            {%- if collection.products.size > 0 -%}
+              <div class="grid grid--3 collection__grid" id="ProductGrid-{{ section.id }}">
+                {%- for product in collection.products -%}
+                  {%- render 'card-product', product: product -%}
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <p class="body-text text-muted text-center collection__empty">{{ 'collections.general.no_matches' | t }}</p>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%}
+            This wrapper ALWAYS renders, even when there's nothing to paginate.
+            It must never be conditionally omitted: the AJAX swap targets this
+            element by id, and if the fetched HTML doesn't contain it (because
+            a filter reduced results to one page), the JS falls back to
+            clearing it out. If the div itself were missing here too, a stale
+            "load more" button / pagination nav from before the filter was
+            applied would stay live — which is exactly the bug where filtered
+            pagination silently loads unfiltered results.
+          {%- endcomment -%}
+          <div class="collection__pagination-wrapper" id="PaginationWrapper-{{ section.id }}">
+            {%- if paginate.pages > 1 -%}
+              {%- if pagination_type == 'load_more' -%}
+                {%- if paginate.next -%}
+                  <button
+                    type="button"
+                    class="btn btn--primary collection__load-more"
+                    data-load-more-url="{{ paginate.next.url }}"
+                  >
+                    {{ 'collections.general.load_more' | t }}
+                  </button>
+                {%- endif -%}
+              {%- else -%}
+                {%- render 'pagination', paginate: paginate -%}
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endpaginate -%}
+  </div>
+</div>
+
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+{% stylesheet %}
+  .collection__layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--space-6, 2rem);
+    align-items: start;
+  }
+
+  .collection__layout--no-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .collection__sidebar-overlay {
+    display: none;
+  }
+
+  .collection__sidebar-header,
+  .collection__sidebar-apply {
+    display: none;
+  }
+
+  .collection__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4, 1rem);
+    margin-bottom: var(--space-5, 1.5rem);
+  }
+
+  .collection__filter-toggle {
+    display: none;
+  }
+
+  .collection__count {
+    margin: 0;
+  }
+
+  .collection__pagination-wrapper {
+    margin-top: var(--space-7, 2.5rem);
+    display: flex;
+    justify-content: center;
+  }
+
+  .collection__pagination-wrapper:empty {
+    margin-top: 0;
+  }
+
+  .collection__load-more[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .collection--loading .collection__main {
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  /* Mobile: sidebar becomes an off-canvas drawer */
+  @media (max-width: 989px) {
+    .collection__filter-toggle {
+      display: inline-flex;
+      padding-left: 0;
+    }
+
+    .collection__sidebar-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+      z-index: 40;
+    }
+
+    .collection__sidebar-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .collection__sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(340px, 88vw);
+      background: var(--color-background, #fff);
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 41;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: var(--space-4, 1rem);
+    }
+
+    .collection__sidebar.is-open {
+      transform: translateX(0);
+    }
+
+    .collection__sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4, 1rem);
+    }
+
+    .collection__sidebar-close {
+      background: none;
+      border: 0;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      padding-right: 0;
+    }
+
+    .collection__sidebar-apply {
+      display: block;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .collection__layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .collection__sidebar {
+      position: static;
+    }
+  }
+
+  /* Facets */
+  .facets__group {
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+    padding: var(--space-3, 0.75rem) 0;
+  }
+
+  .facets__group--link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .facets__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 500;
+  }
+
+  .facets__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .facets__chevron {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .facets__chevron--down {
+    transform: rotate(45deg);
+  }
+
+  .facets__group[open] > .facets__summary .facets__chevron--down {
+    transform: rotate(225deg);
+  }
+
+  .facets__chevron--right {
+    transform: rotate(-45deg);
+  }
+
+  .facets__body {
+    padding-top: var(--space-3, 0.75rem);
+  }
+
+  .facets__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .facets__checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    cursor: pointer;
+  }
+
+  /* Custom checkbox color/size — replaces the native blue tick.
+     Swap #1a1813 for your theme's primary-button color variable if one exists. */
+  .facets__checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: #1a1813;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .facets__item--disabled {
+    opacity: 0.4;
+  }
+
+  .facets__item--disabled .facets__checkbox-label {
+    cursor: not-allowed;
+  }
+
+  .facets__count {
+    margin-left: auto;
+    font-size: 0.85em;
+  }
+
+  /* Active filter pills */
+  .active-filters {
+    margin-bottom: var(--space-4, 1rem);
+    padding-bottom: var(--space-4, 1rem);
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+  }
+
+  .active-filters__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2, 0.5rem);
+    margin-bottom: var(--space-3, 0.75rem);
+  }
+
+  .active-filters__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 999px;
+    font-size: 0.85em;
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+  }
+
+  .active-filters__remove,
+  .active-filters__remove-icon {
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  .active-filters__remove {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  .active-filters__remove svg.icon-close,
+  .active-filters__pill svg,
+  .collection__sidebar-close svg {
+    min-width: 14px;
+    min-height: 14px;
+  }
+
+  .active-filters__clear-all {
+    display: inline-block;
+    font-size: 0.9em;
+    text-decoration: underline;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Mobile columns override — scoped under the section's own modifier class
+     so it never bleeds into other grids on the page. Uses !important
+     deliberately: this is specifically overriding a global theme rule that
+     forces 1 column below 589px, and specificity alone isn't guaranteed to
+     win against it depending on load order. If your global rule doesn't use
+     !important itself, you can safely drop it here too. */
+  @media (max-width: 589px) {
+    .collection--mobile-cols-2 .collection__grid.grid--3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: var(--space-4)
+    }
+
+    .collection--mobile-cols-1 .collection__grid.grid--3 {
+      grid-template-columns: repeat(1, 1fr) !important;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.main-collection.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_collection_content",
+      "label": "Show Collection Title & Description",
+      "default": false,
+      "info": "If using banner image above this should be disabled to avoid repetition."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filter sidebar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 1,
+      "default": 24,
+      "label": "Products per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quickadd",
+      "label": "Enable quick add"
+    },
+    {
+      "type": "select",
+      "id": "pagination_type",
+      "label": "Pagination style",
+      "options": [
+        { "value": "pagination", "label": "Pagination" },
+        { "value": "load_more", "label": "Load more button" }
+      ],
+      "default": "pagination"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Products per row on mobile",
+      "info": "Below 589px. Overrides the theme's default 1-column mobile grid for this section only.",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "header",
+      "content": "Navigation filter group"
+    },
+    {
+      "type": "link_list",
+      "id": "nav_menu",
+      "label": "Navigation menu",
+      "info": "Rendered as a filter-style checkbox group. Selecting a link navigates instead of filtering; the current page's link shows as checked."
+    },
+    {
+      "type": "header",
+      "content": "Quick links"
+    },
+    {
+      "type": "text",
+      "id": "quick_link_1_text",
+      "label": "Quick link 1 text"
+    },
+    {
+      "type": "url",
+      "id": "quick_link_1_url",
+      "label": "Quick link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "quick_link_2_text",
+      "label": "Quick link 2 text"
+    },
+    {
+      "type": "url",
+      "id": "quick_link_2_url",
+      "label": "Quick link 2 URL"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,105 @@
+{%- doc -%}
+  @param {object} article - The article to render
+{%- enddoc -%}
+
+<a href="{{ article.url }}" class="article-card">
+  <div class="article-card__media">
+    {%- if article.image -%}
+      <img
+        src="{{ article.image | image_url: width: 700 }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+        loading="lazy"
+        class="article-card__image"
+      >
+    {%- else -%}
+      <div class="article-card__placeholder">
+        {%- render 'icon-enso', class: 'article-card__placeholder-mark' -%}
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="article-card__info">
+    <h3 class="h-feature article-card__title">{{ article.title }}</h3>
+    
+    <p class="body-text text-muted article-card__excerpt">{{ article.excerpt_or_content | strip_html }}</p>
+    <div class="article-card__author-with-date">
+      <div class="article-card_author">{{ article.author }}</div>
+      <p class="caption article-card__date">{{ article.published_at | date: '%B %d, %Y' }}</p>
+    </div>
+  </div>
+</a>
+
+{% stylesheet %}
+  .article-card__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-background-raised);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.35s var(--ease-out);
+  }
+
+  .article-card:hover .article-card__media {
+    box-shadow: var(--shadow-md);
+  }
+
+  .article-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .article-card:hover .article-card__image {
+    transform: scale(1.06);
+  }
+
+  .article-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .article-card__placeholder-mark {
+    width: 30%;
+    color: var(--color-accent);
+    opacity: 0.5;
+  }
+
+  .article-card__info {
+    padding-top: var(--space-4);
+  }
+
+  .article-card__title {
+    transition: color 0.2s ease;
+    text-transform: capitalize;
+  }
+
+  .article-card:hover .article-card__title {
+    color: var(--color-accent);
+  }
+
+  .article-card__excerpt {
+    margin-top: var(--space-3);
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+  .article-card__author-with-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-4)
+  }
+  .article-card_author {
+    font-weight: 400;
+    color: var(--color-text)
+  }
+{% endstylesheet %}

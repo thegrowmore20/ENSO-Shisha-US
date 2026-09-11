@@ -1,0 +1,448 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<section
+  class="split {{ scheme_class }} split--width-{{ section.settings.width }} {% if section.settings.width == 'page' %}container{% endif %} split--height-{{ section.settings.height }} split--align-{{ section.settings.content_alignment }}"
+  style="
+    --split-margin-top: {{ section.settings.margin_top }}px;
+    --split-margin-bottom: {{ section.settings.margin_bottom }}px;
+    --split-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
+    --split-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --split-overlay-color: {{ section.settings.overlay_color }};
+    --split-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --split-gap: {{ section.settings.image_gap }}px;
+  "
+>
+  <div class="split__inner">
+    <div class="split__row">
+      {%- for block in section.blocks limit: 2 -%}
+        {%- liquid
+          assign has_image = false
+          if block.settings.image != blank or block.settings.image_mobile != blank
+            assign has_image = true
+          endif
+
+          assign heading_style = ''
+          if block.settings.heading_color != blank
+            assign heading_style = 'color: ' | append: block.settings.heading_color | append: ';'
+          endif
+        -%}
+        <div class="split__item" {{ block.shopify_attributes }}>
+          <div class="split__media">
+            {%- if block.settings.image_mobile != blank -%}
+              <img
+                class="split__image split__image--mobile"
+                src="{{ block.settings.image_mobile | image_url: width: 800 }}"
+                alt="{{ block.settings.image_mobile.alt | default: block.settings.heading | escape }}"
+                width="{{ block.settings.image_mobile.width }}"
+                height="{{ block.settings.image_mobile.height }}"
+                loading="eager"
+                fetchpriority="high"
+              >
+            {%- endif -%}
+
+            {%- if block.settings.image != blank -%}
+              <img
+                class="split__image split__image--desktop"
+                src="{{ block.settings.image | image_url: width: 1200 }}"
+                alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+                loading="eager"
+                fetchpriority="high"
+              >
+            {%- elsif block.settings.image_mobile == blank -%}
+              <div class="split__placeholder">
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'split__placeholder-svg' }}
+              </div>
+            {%- endif -%}
+
+            {%- if has_image and section.settings.overlay_opacity > 0 -%}
+              <div class="split__overlay"></div>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.heading != blank or block.settings.subheading != blank or block.settings.button != blank -%}
+            <div class="split__content container">
+              {%- if block.settings.heading != blank -%}
+                <h2 class="split__heading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
+                  {{ block.settings.heading }}
+                </h2>
+              {%- endif -%}
+              {%- if block.settings.subheading != blank -%}
+                <div class="split__subheading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
+                  {{ block.settings.subheading }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.button != blank -%}
+                <a class="btn btn--primary" href="{{ block.settings.button_url }}">
+                  {{ block.settings.button }}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        {%- if request.design_mode -%}
+          <p class="body-text text-muted">{{ 'sections.split_showcase.onboarding' | t }}</p>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .split {
+    position: relative;
+    margin-top: var(--split-margin-top);
+    margin-bottom: var(--split-margin-bottom);
+  }
+
+  .split__inner {
+    position: relative;
+    width: 100%;
+  }
+
+  .split--width-page .split__inner {
+    max-width: var(--page-width);
+    margin-inline: auto;
+  }
+
+  .split__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--split-gap);
+  }
+
+  @media screen and (min-width: 768px) {
+    .split__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .split__item {
+    position: relative;
+  }
+
+  .split__media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .split--width-page .split__media {
+    border-radius: 12px;
+  }
+
+  .split__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .split__image--mobile {
+    display: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    .split__image--mobile {
+      display: block;
+    }
+    .split__image--mobile ~ .split__image--desktop {
+      display: none;
+    }
+  }
+
+  /* Fixed height variants: image and placeholder fill the box */
+  .split--height-small .split__media,
+  .split--height-small .split__placeholder {
+    min-height: 220px;
+  }
+  .split--height-medium .split__media,
+  .split--height-medium .split__placeholder {
+    min-height: 320px;
+  }
+  .split--height-large .split__media,
+  .split--height-large .split__placeholder {
+    min-height: 440px;
+  }
+  .split--height-auto .split__placeholder {
+    min-height: 280px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .split--height-small .split__media,
+    .split--height-small .split__placeholder {
+      min-height: 300px;
+    }
+    .split--height-medium .split__media,
+    .split--height-medium .split__placeholder {
+      min-height: 420px;
+    }
+    .split--height-large .split__media,
+    .split--height-large .split__placeholder {
+      min-height: 600px;
+    }
+    .split--height-auto .split__placeholder {
+      min-height: 360px;
+    }
+  }
+
+  .split--height-small .split__image,
+  .split--height-medium .split__image,
+  .split--height-large .split__image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
+  .split__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .split__placeholder-svg {
+    width: 40%;
+    height: auto;
+    opacity: 0.4;
+  }
+
+  .split__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--split-overlay-color);
+    opacity: var(--split-overlay-opacity);
+    pointer-events: none;
+  }
+
+  .split__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--page-margin-mobile);
+  }
+
+  .split--align-center .split__content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .split--align-left .split__content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .split__heading {
+    margin: 0;
+    max-width: 20ch;
+    font-size: var(--split-heading-size-mobile);
+    line-height: 1.1;
+  }
+
+  @media screen and (min-width: 768px) {
+    .split__heading {
+      font-size: var(--split-heading-size-desktop);
+    }
+    .split__content {
+      padding: var(--page-margin);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Split showcase",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Section width",
+      "options": [
+        { "value": "full", "label": "Full width" },
+        { "value": "page", "label": "Page width" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "image_gap",
+      "label": "Gap between images",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top margin",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom margin",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Image height",
+      "options": [
+        { "value": "auto", "label": "Auto (based on image)" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Heading size"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "min": 24,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 20,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile image (below 768px)",
+          "info": "Optional. If empty, the desktop image is used on mobile too."
+        },
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading color"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "subheading",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split showcase",
+      "blocks": [
+        { "type": "column", "settings": { "heading": "Add a heading" } },
+        { "type": "column", "settings": { "heading": "Add a heading" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

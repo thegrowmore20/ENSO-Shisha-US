@@ -1,0 +1,113 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<section class="reasons {{ scheme_class }} section-padding">
+  <div class="container">
+    <div class="reasons__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h-section">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid--3 reasons__grid">
+      {%- for block in section.blocks -%}
+        <div class="card" {{ block.shopify_attributes }}>
+          <h3 class="card__title">{{ block.settings.title }}</h3>
+          <p class="card__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .reasons__header {
+    max-width: 640px;
+    margin-bottom: var(--space-7);
+  }
+
+  .reasons__grid {
+    row-gap: var(--space-5);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.reasons.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.reasons.settings.color_scheme.label",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.reasons.settings.eyebrow.label",
+      "default": "Reasons to Believe"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.reasons.settings.heading.label",
+      "default": "Everything Had Evolved. Except This"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reason",
+      "name": "t:sections.reasons.blocks.reason.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.reasons.blocks.reason.settings.title.label",
+          "default": "Open system"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.reasons.blocks.reason.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.reasons.presets.name",
+      "blocks": [
+        {
+          "type": "reason",
+          "settings": { "title": "Open system", "text": "No proprietary pods. The user brings their own molasses." }
+        },
+        {
+          "type": "reason",
+          "settings": { "title": "All-in-one", "text": "Heat, battery, chamber, filtration and mouthpiece in one object." }
+        },
+        {
+          "type": "reason",
+          "settings": { "title": "Engineering heritage", "text": "Built by the team behind AirVape — ten years of heating technology." }
+        },
+        {
+          "type": "reason",
+          "settings": { "title": "Industry validation", "text": "Shisha of the Year 2025 · Red Dot Design Award 2026." }
+        },
+        {
+          "type": "reason",
+          "settings": { "title": "Portability", "text": "Cordless, removable battery, no infrastructure required." }
+        },
+        {
+          "type": "reason",
+          "settings": { "title": "Cleaner session", "text": "No charcoal, no open flame, no ash, no heat management." }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

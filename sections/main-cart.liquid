@@ -1,0 +1,123 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<div class="cart-page {{ scheme_class }} section-padding">
+  <div class="container">
+    <h1 class="h-section cart-page__title">{{ 'cart.general.title' | t }}</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-page__empty text-center">
+        <p class="body-text text-muted">{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">{{ 'cart.general.continue_shopping' | t }}</a>
+      </div>
+    {%- else -%}
+      {%- form 'cart', cart, id: 'CartForm' -%}
+        <div class="cart-page__items">
+          {%- for item in cart.items -%}
+            <div class="cart-item">
+              <a href="{{ item.url }}" class="cart-item__media">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | default: item.title | escape }}" width="100" height="100" loading="lazy">
+                {%- endif -%}
+              </a>
+              <div class="cart-item__info">
+                <a href="{{ item.url }}" class="h-feature">{{ item.product.title }}</a>
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p class="caption">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="caption">{{ item.final_price | money }}</p>
+              </div>
+              <input
+                type="number"
+                name="updates[{{ forloop.index0 }}]"
+                value="{{ item.quantity }}"
+                min="0"
+                aria-label="{{ 'cart.general.title' | t }}"
+                class="search-input cart-item__qty"
+              >
+              <p class="cart-item__total">{{ item.final_line_price | money }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-page__footer">
+          <div class="cart-page__subtotal">
+            <span class="h-feature">{{ 'cart.general.subtotal' | t }}</span>
+            <span class="h-feature">{{ cart.total_price | money }}</span>
+          </div>
+          <button type="submit" name="checkout" class="btn btn--primary btn--full">{{ 'cart.general.checkout' | t }}</button>
+        </div>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .cart-page__title {
+    margin-bottom: var(--space-7);
+  }
+
+  .cart-page__empty {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    align-items: center;
+    padding-block: var(--space-7);
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 90px 100px;
+    gap: var(--space-4);
+    align-items: center;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cart-item__media img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  .cart-item__total {
+    text-align: right;
+    font-size: 14px;
+  }
+
+  .cart-page__footer {
+    margin-top: var(--space-7);
+    max-width: 360px;
+    margin-left: auto;
+  }
+
+  .cart-page__subtotal {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-5);
+  }
+
+  @media screen and (max-width: 589px) {
+    .cart-item {
+      grid-template-columns: 64px 1fr;
+      grid-template-areas: "media info" "media qty" "media total";
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.main-cart.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-paper"
+    }
+  ]
+}
+{% endschema %}

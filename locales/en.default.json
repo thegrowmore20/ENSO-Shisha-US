@@ -1,0 +1,233 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "404": {
+      "title": "Page Not Found",
+      "subtext": "The page you're looking for doesn't exist. It may have moved, or the link may be wrong.",
+      "link": "Return to the homepage"
+    },
+    "search": {
+      "placeholder": "Search the ritual...",
+      "no_results_html": "No results found for \"{{ terms }}\". Check the spelling or use a different word.",
+      "results_for_html": "Results for \"{{ terms }}\"",
+      "title": "Search"
+    },
+    "password_page": {
+      "opening_soon": "Opening Soon"
+    },
+    "breadcrumbs": {
+      "home": "Home"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page"
+    }
+  },
+  "templates": {
+    "search": {
+      "title": "Search"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "cart": "Cart",
+    "cart_count": "{{ count }} items in cart",
+    "menu": "Menu",
+    "next_slide": "Next",
+    "previous_slide": "Previous",
+    "go_to_slide": "Go to slide {{ count }}",
+    "loading": "Loading...",
+    "unit_price_separator": "per",
+    "breadcrumbs": "Breadcrumbs"
+  },
+  "header": {
+    "menu": "Menu",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Cart",
+    "age_gate": "ENSO · 21+ only",
+    "toggle_menu": "Toggle menu",
+    "view_all": "View all"
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold Out",
+      "add_to_cart": "Add to Cart",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "decrease_quantity": "Decrease quantity",
+      "increase_quantity": "Increase quantity",
+      "choose_options": "Choose Options",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "purchase_option": "Purchase option",
+      "one_time_purchase": "One-time purchase",
+      "from_price_html": "From {{ price }}",
+      "media_gallery": "Product media gallery",
+      "view_media": "View media {{ index }}"
+    }
+  },
+  "collections": {
+    "general": {
+      "filter_and_sort": "Filter",
+      "clear_all": "Clear",
+      "view_results": "View Results",
+      "load_more": "Load More",
+      "no_matches": "No products found in this collection.",
+      "items_with_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "remove": "Remove"
+    },
+    "sorting": {
+      "title": "Sort"
+    },
+    "filters": {
+      "from": "From",
+      "to": "To"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue Shopping",
+      "subtotal": "Subtotal",
+      "total_price": "Total Price",
+      "total": "Total",
+      "discount": "Discount",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "note": "Order note",
+      "add_order_note": "Add Order Note",
+      "order_note_placeholder": "Add a note for your order...",
+      "item_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      }
+    }
+  },
+  "sections": {
+    "hero": {
+      "eyebrow": "The all-in-one · 2026",
+      "heading": "No charcoal. No ash. No open flame.",
+      "text": "For people who value the hookah ritual but reject the burden of charcoal — ENSO is the fully electronic hookah system that delivers a precise, portable and cleaner session.",
+      "cta_primary": "Order ENSO 2026",
+      "cta_secondary": "Learn More"
+    },
+    "philosophy": {
+      "eyebrow": "Philosophy",
+      "heading": "A Modern Twist on a Classic Ritual",
+      "intro": "Japanese minimalism without the coldness. The detail is the argument, so we never have to make one.",
+      "item_1_title": "Restraint",
+      "item_1_text": "Japanese minimalism without the coldness. Warm stone, wood, linen and real daylight — never neon, never blue light, never clinical white.",
+      "item_2_title": "Ritual",
+      "item_2_text": "A session is time set aside, not a device being operated. Everything we make should feel calm in the hand and quiet on the page.",
+      "item_3_title": "Craft",
+      "item_3_text": "The detail is the argument, so we never have to make one. No superlatives, no hype, no exclamation marks."
+    },
+    "reasons": {
+      "eyebrow": "Reasons to Believe",
+      "heading": "Everything Had Evolved. Except This",
+      "item_1_title": "Open system",
+      "item_1_text": "No proprietary pods. The user brings their own molasses.",
+      "item_2_title": "All-in-one",
+      "item_2_text": "Heat, battery, chamber, filtration and mouthpiece in one object.",
+      "item_3_title": "Engineering heritage",
+      "item_3_text": "Built by the team behind AirVape — ten years of heating technology.",
+      "item_4_title": "Industry validation",
+      "item_4_text": "Shisha of the Year 2025 · Red Dot Design Award 2026.",
+      "item_5_title": "Portability",
+      "item_5_text": "Cordless, removable battery, no infrastructure required.",
+      "item_6_title": "Cleaner session",
+      "item_6_text": "No charcoal, no open flame, no ash, no heat management."
+    },
+    "product_highlight": {
+      "eyebrow": "01 · All-in-one",
+      "heading": "An All-in-One Electric Hookah",
+      "text": "The complete device — heater, tank and base in one object. Porcelain chamber, glass water tank, zinc alloy body, vegan leather strap, removable battery, magnetic mouthpiece, temperature control.",
+      "spec_1_label": "Heat range",
+      "spec_1_value": "180–330°C · stepless",
+      "spec_2_label": "Battery",
+      "spec_2_value": "Removable · fast-charging",
+      "spec_3_label": "Chamber",
+      "spec_3_value": "Porcelain · glass water tank",
+      "cta": "Order Now"
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "heading": "Before You Order",
+      "question_1": "Does ENSO use charcoal?",
+      "answer_1": "No. ENSO is fully electronic — controlled heat from 180 to 330°C, no charcoal, no ash, no open flame.",
+      "question_2": "Am I locked into proprietary pods?",
+      "answer_2": "No. ENSO is an open system — bring your own molasses, always.",
+      "question_3": "How long does shipping take?",
+      "answer_3": "ENSO ships globally from our warehouses · approximately 2 weeks delivery."
+    },
+    "newsletter": {
+      "heading": "Your Ritual. Without Charcoal.",
+      "text": "Refined for 2026. Join the list for release updates.",
+      "placeholder": "Email address",
+      "submit": "Join",
+      "success": "You're on the list.",
+      "error": "Please enter a valid email address."
+    },
+    "shop_accessories": {
+      "onboarding": "Select a collection to display accessories here."
+    },
+    "blog_posts": {
+      "onboarding": "Select a blog to display posts here."
+    },
+    "product_recommendations": {
+      "onboarding": "Select a fallback collection to display product recommendations here."
+    },
+    "split_showcase": {
+      "onboarding": "Add a block to display split content here."
+    },
+    "product_shorts": {
+      "onboarding": "Add a video block to display shorts here."
+    },
+    "reviews": {
+      "summary": "{{ rating }} out of 5 stars, based on {{ count }} reviews"
+    },
+    "signature_models": {
+      "review_count": {
+        "one": "{{ count }} review",
+        "other": "{{ count }} reviews"
+      }
+    },
+    "contact": {
+      "form": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "email": "Email",
+        "phone": "Phone",
+        "message": "Message",
+        "send": "Submit",
+        "post_success": "From submitted successfully."
+      }
+    },
+    "footer": {
+      "tagline": "Your ritual. Without charcoal.",
+      "sign_off": "The ENSO team",
+      "support": "support@ensoshisha.eu",
+      "age_gate": "ENSO · 21+ only",
+      "copyright": "© {{ year }} ENSO. All rights reserved."
+    }
+  }
+}

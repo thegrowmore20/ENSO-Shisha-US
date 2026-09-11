@@ -1,0 +1,434 @@
+{%- comment -%}
+  Category Grid — standalone section (e.g. "Shop Accessories").
+  Block-driven card grid: unlimited/reorderable cards, each with its own
+  image, focal point, label, sublabel, link, and text color.
+  Color scheme + literal desktop/mobile padding & gap, same approach as
+  the General USPs / Awards sections. No AI-generated boilerplate.
+{%- endcomment -%}
+
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign heading_tag = section.settings.heading_html_tag
+-%}
+
+{% style %}
+  #cat-grid-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  #cat-grid-{{ section.id }} .cat-grid__list {
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: {{ section.settings.gap_desktop }}px;
+  }
+
+  #cat-grid-{{ section.id }} .cat-grid__overlay {
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, {{ section.settings.overlay_opacity }}) 100%);
+  }
+
+  @media screen and (max-width: 749px) {
+    #cat-grid-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    #cat-grid-{{ section.id }} .cat-grid__list {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section id="cat-grid-{{ section.id }}" class="cat-grid {{ scheme_class }}{% if section.settings.layout_width == 'full' %} cat-grid--full{% endif %}">
+  <div class="cat-grid__container">
+
+    {%- if section.settings.heading != blank -%}
+      <{{ heading_tag }} class="cat-grid__heading">{{ section.settings.heading | escape }}</{{ heading_tag }}>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cat-grid__list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign card_content = block.settings.label
+          -%}
+          {%- capture card_markup -%}
+            <div class="cat-grid__card" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 600 }}"
+                  srcset="
+                    {{ block.settings.image | image_url: width: 300 }} 300w,
+                    {{ block.settings.image | image_url: width: 600 }} 600w,
+                    {{ block.settings.image | image_url: width: 900 }} 900w
+                  "
+                  sizes="(max-width: 749px) 50vw, 25vw"
+                  alt="{{ block.settings.image.alt | default: block.settings.label | escape }}"
+                  class="cat-grid__image"
+                  style="object-position: {{ block.settings.image_position }};"
+                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                >
+              {%- else -%}
+                <div class="cat-grid__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'cat-grid__placeholder-svg' }}
+                </div>
+              {%- endif -%}
+
+              <div class="cat-grid__overlay"></div>
+
+              <div class="cat-grid__text" style="color: {{ block.settings.text_color }};">
+                {%- if block.settings.label != blank -%}
+                  <span class="cat-grid__label">{{ block.settings.label | escape }}</span>
+                {%- endif -%}
+                {%- if block.settings.sublabel != blank -%}
+                  <span class="cat-grid__sublabel">{{ block.settings.sublabel | escape }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endcapture -%}
+
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="cat-grid__link">{{ card_markup }}</a>
+          {%- else -%}
+            <div class="cat-grid__link">{{ card_markup }}</div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+  .cat-grid__container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .cat-grid--full .cat-grid__container {
+    max-width: none;
+  }
+
+  .cat-grid__heading {
+    margin: 0 0 clamp(1.5rem, 4vw, 2.5rem);
+    text-align: center;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: 0.02em;
+  }
+
+  .cat-grid__list {
+    display: grid;
+  }
+
+  .cat-grid__link {
+    display: contents;
+    text-decoration: none;
+  }
+
+  .cat-grid__card {
+    position: relative;
+    border-radius: var(--radius-lg, 10px);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .cat-grid__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  .cat-grid__card:hover .cat-grid__image {
+    transform: scale(1.05);
+  }
+
+  .cat-grid__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .cat-grid__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+  }
+
+  .cat-grid__placeholder-svg {
+    width: 45%;
+    height: 45%;
+    opacity: 0.35;
+  }
+
+  .cat-grid__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .cat-grid__text {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.15rem;
+    padding: clamp(0.9rem, 2.5vw, 1.4rem);
+  }
+
+  .cat-grid__label {
+    font-size: clamp(0.8rem, 1.6vw, 1.1rem);
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .cat-grid__sublabel {
+    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Category Grid",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop Accessories"
+    },
+    {
+      "type": "select",
+      "id": "heading_html_tag",
+      "label": "Heading HTML tag",
+      "options": [
+        { "value": "h1", "label": "h1" },
+        { "value": "h2", "label": "h2" },
+        { "value": "h3", "label": "h3" },
+        { "value": "h4", "label": "h4" },
+        { "value": "h5", "label": "h5" },
+        { "value": "h6", "label": "h6" },
+        { "value": "p", "label": "p" },
+        { "value": "span", "label": "span" },
+        { "value": "div", "label": "div" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "label": "Section width",
+      "options": [
+        { "value": "container", "label": "Container" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "container"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns (mobile)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "Grid gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Gap (desktop)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Gap (mobile)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay strength",
+      "min": 0,
+      "max": 1,
+      "step": 0.5,
+      "default": 0.5
+    },
+    {
+      "type": "header",
+      "content": "Desktop padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category card",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image focal point",
+          "options": [
+            { "value": "top left", "label": "Top left" },
+            { "value": "top center", "label": "Top center" },
+            { "value": "top right", "label": "Top right" },
+            { "value": "center left", "label": "Center left" },
+            { "value": "center center", "label": "Center" },
+            { "value": "center right", "label": "Center right" },
+            { "value": "bottom left", "label": "Bottom left" },
+            { "value": "bottom center", "label": "Bottom center" },
+            { "value": "bottom right", "label": "Bottom right" }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Category"
+        },
+        {
+          "type": "text",
+          "id": "sublabel",
+          "label": "Sublabel",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Grid",
+      "blocks": [
+        { "type": "category", "settings": { "label": "ENSŌ", "sublabel": "Accessories" } },
+        { "type": "category", "settings": { "label": "Legacy", "sublabel": "Accessories" } },
+        { "type": "category", "settings": { "label": "X", "sublabel": "Accessories" } },
+        { "type": "category", "settings": { "label": "XS GO", "sublabel": "Accessories" } },
+        { "type": "category", "settings": { "label": "OM", "sublabel": "Accessories" } },
+        { "type": "category", "settings": { "label": "Chargers", "sublabel": "" } },
+        { "type": "category", "settings": { "label": "Wearables", "sublabel": "" } },
+        { "type": "category", "settings": { "label": "Grinders", "sublabel": "" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,183 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "type_heading_font": "montserrat_n4",
+    "type_accent_font": "inter_n8",
+    "type_body_font": "montserrat_n3",
+    "page_width": 1440,
+    "social_instagram_link": "https://instagram.com/enso.future",
+    "social_tiktok_link": "",
+    "free_shipping_bar_threshold": 500,
+    "free_shipping_bar_message_below": "Spend [amount] more for free shipping!",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "mega_menu_tf78ca": {
+            "type": "mega_menu",
+            "settings": {
+              "mega_target_item": "Shop",
+              "show_products": true,
+              "max_products": 4,
+              "image_heading": "",
+              "image_url": ""
+            }
+          }
+        },
+        "block_order": [
+          "mega_menu_tf78ca"
+        ],
+        "settings": {
+          "color_scheme": "",
+          "sticky": true,
+          "menu": "header-menu-products"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "menu",
+            "settings": {
+              "heading": "Policies",
+              "menu": "footer"
+            }
+          },
+          "menu_VLqCEn": {
+            "type": "menu",
+            "settings": {
+              "heading": "Quick Links",
+              "menu": "footer-menu"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "menu_VLqCEn"
+        ],
+        "settings": {
+          "color_scheme": "",
+          "footer_bg_image": "shopify://shop_images/Enso-2.webp"
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "fix-footer-mobile": {
+        "type": "fix-footer-mobile",
+        "settings": {}
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "11532412952436166569": {
+        "type": "shopify://apps/loox-reviews/blocks/loox-inject/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+        "disabled": false,
+        "settings": {}
+      },
+      "12342438634123318931": {
+        "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "selector_collection": "",
+          "selector_cart_item": ""
+        }
+      }
+    },
+    "color_schemes": {
+      "scheme-paper": {
+        "settings": {
+          "background": "#faf6ec",
+          "background_raised": "#f2ede3",
+          "text": "#0a0a0a",
+          "text_muted": "#5a554b",
+          "border": "#e3ddcc",
+          "accent": "#c8943a",
+          "accent_soft": "#d4a758",
+          "primary_button_background": "#1a1813",
+          "primary_button_label": "#f0e8d8",
+          "primary_button_border": "#1a1813",
+          "primary_button_hover_background": "#c8943a",
+          "primary_button_hover_label": "#ffffff",
+          "primary_button_hover_border": "#c8943a",
+          "secondary_button_background": "#f2ede3",
+          "secondary_button_label": "#0a0a0a",
+          "secondary_button_border": "#e3ddcc",
+          "secondary_button_hover_background": "#1a1813",
+          "secondary_button_hover_label": "#f0e8d8",
+          "secondary_button_hover_border": "#1a1813"
+        }
+      },
+      "scheme-graphite": {
+        "settings": {
+          "background": "#1a1813",
+          "background_raised": "#262420",
+          "text": "#f0e8d8",
+          "text_muted": "#8a8070",
+          "border": "#3a3731",
+          "accent": "#c8943a",
+          "accent_soft": "#d4a758",
+          "primary_button_background": "#1a1813",
+          "primary_button_label": "#f0e8d8",
+          "primary_button_border": "#1a1813",
+          "primary_button_hover_background": "#c8943a",
+          "primary_button_hover_label": "#ffffff",
+          "primary_button_hover_border": "#c8943a",
+          "secondary_button_background": "#f2ede3",
+          "secondary_button_label": "#0a0a0a",
+          "secondary_button_border": "#e3ddcc",
+          "secondary_button_hover_background": "#1a1813",
+          "secondary_button_hover_label": "#f0e8d8",
+          "secondary_button_hover_border": "#1a1813"
+        }
+      }
+    }
+  },
+  "presets": {
+    "Default": {
+      "type_heading_font": "montserrat_n4",
+      "type_accent_font": "inter_n8",
+      "type_body_font": "montserrat_n3",
+      "color_schemes": {
+        "scheme-paper": {
+          "settings": {
+            "background": "#FAF6EC",
+            "background_raised": "#F2EDE3",
+            "text": "#0A0A0A",
+            "text_muted": "#5A554B",
+            "border": "#E3DDCC",
+            "accent": "#C8943A",
+            "accent_soft": "#D4A758",
+            "button_background": "#1A1813",
+            "button_label": "#F0E8D8"
+          }
+        },
+        "scheme-graphite": {
+          "settings": {
+            "background": "#1A1813",
+            "background_raised": "#262420",
+            "text": "#F0E8D8",
+            "text_muted": "#8A8070",
+            "border": "#3A3731",
+            "accent": "#C8943A",
+            "accent_soft": "#D4A758",
+            "button_background": "#C8943A",
+            "button_label": "#1A1813"
+          }
+        }
+      },
+      "page_width": 1600,
+      "social_instagram_link": "https://instagram.com/enso.future",
+      "social_tiktok_link": ""
+    }
+  }
+}

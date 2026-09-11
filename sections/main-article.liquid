@@ -1,0 +1,57 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<article class="article {{ scheme_class }} section-padding">
+  <div class="container article__inner">
+    <p class="caption text-center">{{ article.published_at | date: '%B %d, %Y' }}</p>
+    <h1 class="h-section text-center article__title">{{ article.title }}</h1>
+
+    {%- if article.image -%}
+      <img
+        src="{{ article.image | image_url: width: 1200 }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+        loading="eager"
+        class="article__image"
+      >
+    {%- endif -%}
+
+    <div class="body-text article__content">{{ article.content }}</div>
+  </div>
+</article>
+
+{% stylesheet %}
+  .article__inner {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .article__title {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .article__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-6);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-paper"
+    }
+  ]
+}
+{% endschema %}

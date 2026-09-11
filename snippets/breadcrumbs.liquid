@@ -1,0 +1,68 @@
+{%- comment -%}
+  Reusable breadcrumb trail. Include on any template:
+    {% render 'breadcrumbs' %}
+{%- endcomment -%}
+
+{{ 'breadcrumbs.css' | asset_url | stylesheet_tag }}
+
+<nav class="breadcrumbs" aria-label="{{ 'accessibility.breadcrumbs' | t }}">
+  <ol class="breadcrumbs__list body-text text-muted">
+    <li class="breadcrumbs__item">
+      <a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a>
+    </li>
+
+    {%- case template.name -%}
+      {%- when 'collection' -%}
+        {%- if collection -%}
+          {%- if current_tags -%}
+            <li class="breadcrumbs__item" aria-hidden="true">/</li>
+            <li class="breadcrumbs__item"><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+            <li class="breadcrumbs__item" aria-hidden="true">/</li>
+            <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ current_tags | join: ', ' }}</li>
+          {%- else -%}
+            <li class="breadcrumbs__item" aria-hidden="true">/</li>
+            <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ collection.title }}</li>
+          {%- endif -%}
+        {%- endif -%}
+
+      {%- when 'product' -%}
+        {%- if product -%}
+          {%- if collection and collection.url -%}
+            <li class="breadcrumbs__item" aria-hidden="true">/</li>
+            <li class="breadcrumbs__item"><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+          {%- elsif product.collections.first -%}
+            <li class="breadcrumbs__item" aria-hidden="true">/</li>
+            <li class="breadcrumbs__item"><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></li>
+          {%- endif -%}
+          <li class="breadcrumbs__item" aria-hidden="true">/</li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ product.title }}</li>
+        {%- endif -%}
+
+      {%- when 'page' -%}
+        {%- if page -%}
+          <li class="breadcrumbs__item" aria-hidden="true">/</li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ page.title }}</li>
+        {%- endif -%}
+
+      {%- when 'blog' -%}
+        {%- if blog -%}
+          <li class="breadcrumbs__item" aria-hidden="true">/</li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ blog.title }}</li>
+        {%- endif -%}
+
+      {%- when 'article' -%}
+        {%- if article -%}
+          {%- if blog -%}
+            <li class="breadcrumbs__item" aria-hidden="true">/</li>
+            <li class="breadcrumbs__item"><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+          {%- endif -%}
+          <li class="breadcrumbs__item" aria-hidden="true">/</li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ article.title }}</li>
+        {%- endif -%}
+
+      {%- when 'search' -%}
+        <li class="breadcrumbs__item" aria-hidden="true">/</li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ 'templates.search.title' | t }}</li>
+    {%- endcase -%}
+  </ol>
+</nav>

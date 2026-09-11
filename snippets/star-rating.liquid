@@ -1,0 +1,33 @@
+{%- doc -%}
+  @param {number} rating - Rating value from 0-5, supports decimals (e.g. 4.5)
+  @param {string} [review_count] - Label shown next to the stars, e.g. "128 reviews"
+{%- enddoc -%}
+
+{%- liquid
+  assign rating = rating | default: 0
+-%}
+
+<div class="star-rating">
+  <div class="star-rating__stars" aria-hidden="true">
+    {%- for i in (1..5) -%}
+      {%- liquid
+        assign diff = rating | minus: i | plus: 1
+        assign fill_percent = 0
+        if diff >= 1
+          assign fill_percent = 100
+        elsif diff > 0
+          assign fill_percent = diff | times: 100 | round
+        endif
+      -%}
+      <span class="star-rating__star">
+        {%- render 'icon-star' -%}
+        <span class="star-rating__star-fill" style="width: {{ fill_percent }}%;">
+          {%- render 'icon-star' -%}
+        </span>
+      </span>
+    {%- endfor -%}
+  </div>
+  {%- if review_count != blank -%}
+    <span class="star-rating__count caption">{{ review_count }}</span>
+  {%- endif -%}
+</div>

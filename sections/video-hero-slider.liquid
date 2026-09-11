@@ -1,0 +1,544 @@
+{%- liquid
+  assign autoplay_interval = section.settings.autoplay_interval
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<video-hero-slider class="video-hero-slider {{ scheme_class }}" data-autoplay="{{ autoplay_interval }}">
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign has_upload = false
+      if block.settings.video and block.settings.video.sources.size > 0
+        assign has_upload = true
+      endif
+      assign has_external = false
+      if block.settings.video_url and block.settings.video_url.id != blank
+        assign has_external = true
+      endif
+    -%}
+    <div
+      class="video-hero-slider__slide{% if forloop.first %} is-active{% endif %}"
+      data-slide
+      data-index="{{ forloop.index0 }}"
+      {{ block.shopify_attributes }}
+    >
+      <div class="video-hero-slider__media">
+        {%- if block.settings.thumbnail -%}
+          <img
+            class="video-hero-slider__poster"
+            src="{{ block.settings.thumbnail | image_url: width: 1920 }}"
+            alt="{{ block.settings.thumbnail.alt | default: block.settings.heading | escape }}"
+            width="{{ block.settings.thumbnail.width }}"
+            height="{{ block.settings.thumbnail.height }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            {% if forloop.first %}fetchpriority="high"{% endif %}
+          >
+        {%- else -%}
+          <div class="media-placeholder video-hero-slider__poster-fallback">
+            {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
+          </div>
+        {%- endif -%}
+
+        <div class="video-hero-slider__video-slot" data-video-slot></div>
+
+        {%- if has_upload -%}
+          <template data-video-template data-video-kind="upload">
+            <video class="video-hero-slider__video" muted loop playsinline preload="none">
+              {%- for source in block.settings.video.sources -%}
+                {%- if source.format == 'mp4' -%}
+                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                {%- endif -%}
+              {%- endfor -%}
+            </video>
+          </template>
+        {%- elsif has_external -%}
+          <template data-video-template data-video-kind="{{ block.settings.video_url.type }}" data-video-id="{{ block.settings.video_url.id }}"></template>
+        {%- endif -%}
+      </div>
+
+      <div class="video-hero-slider__scrim"></div>
+
+      <div class="container video-hero-slider__content">
+        {%- if block.settings.eyebrow != blank -%}
+          <p class="eyebrow video-hero-slider__eyebrow">{{ block.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if block.settings.heading != blank -%}
+          <h2 class="h-display video-hero-slider__heading">{{ block.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if block.settings.text != blank -%}
+          <div class="body-text video-hero-slider__text">{{ block.settings.text }}</div>
+        {%- endif -%}
+        {%- if block.settings.cta_label != blank -%}
+          <a href="{{ block.settings.cta_link | default: '#' }}" class="btn btn--primary video-hero-slider__cta">
+            {{ block.settings.cta_label }}
+          </a>
+        {%- endif -%}
+        {%- if block.settings.custom_liquid != blank -%}
+          <div class="custom-liquid">
+            {{ block.settings.custom_liquid }}
+          </div>
+        {% endif %}  
+      </div>
+    </div>
+  {%- endfor -%}
+
+  {%- if section.blocks.size > 1 -%}
+    <button type="button" class="video-hero-slider__arrow video-hero-slider__arrow--prev" data-prev aria-label="{{ 'accessibility.previous_slide' | t }}">
+      {%- render 'icon-chevron' -%}
+    </button>
+    <button type="button" class="video-hero-slider__arrow video-hero-slider__arrow--next" data-next aria-label="{{ 'accessibility.next_slide' | t }}">
+      {%- render 'icon-chevron' -%}
+    </button>
+
+    <div class="video-hero-slider__dots">
+      {%- for block in section.blocks -%}
+        <button
+          type="button"
+          class="video-hero-slider__dot{% if forloop.first %} is-active{% endif %}"
+          data-dot
+          data-index="{{ forloop.index0 }}"
+          aria-label="{{ 'accessibility.go_to_slide' | t: count: forloop.index }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</video-hero-slider>
+
+{% stylesheet %}
+  /*
+    The section carries a color scheme so buttons and accents resolve their
+    tokens. Overlay text and scrim stay fixed light values regardless of that
+    scheme, because they sit on arbitrary merchant-supplied video footage where
+    contrast has to be guaranteed.
+  */
+  .video-hero-slider {
+    position: relative;
+    display: block;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .video-hero-slider__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease;
+  }
+
+  .video-hero-slider__slide.is-active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .video-hero-slider__media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .video-hero-slider__poster,
+  .video-hero-slider__poster-fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 7s var(--ease-out);
+  }
+
+  .video-hero-slider__slide.is-active .video-hero-slider__poster,
+  .video-hero-slider__slide.is-active .video-hero-slider__poster-fallback {
+    transform: scale(1.08);
+  }
+
+  .video-hero-slider__video-slot {
+    position: absolute;
+    inset: 0;
+  }
+
+  .video-hero-slider__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video-hero-slider__poster,
+    .video-hero-slider__poster-fallback {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  .video-hero-slider__slide.is-ready .video-hero-slider__video {
+    opacity: 1;
+  }
+
+  .video-hero-slider__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0.1) 55%, rgba(10, 10, 10, 0.4) 100%);
+  }
+
+  .video-hero-slider__content {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Top padding clears the header, which overlays the hero rather than sitting above it. */
+    padding-top: 120px;
+    padding-bottom: var(--space-8);
+    color: #F5F1E6;
+  }
+
+  .video-hero-slider__content > * {
+    max-width: 600px;
+  }
+
+  .video-hero-slider__eyebrow {
+    color: var(--color-accent);
+  }
+
+  .video-hero-slider__heading {
+    max-width: 20ch;
+    font-weight: 500;
+  }
+
+  .video-hero-slider__text {
+    margin-top: var(--space-3);
+    max-width: 46ch;
+    color: rgba(245, 241, 230, 0.82);
+  }
+
+  .video-hero-slider__cta {
+    margin-top: var(--space-4);
+    width: fit-content;
+    box-shadow: var(--shadow-md);
+  }
+
+  .video-hero-slider__content .custom-liquid {
+    margin-top: var(--space-3);
+  }
+
+  .video-hero-slider__dots {
+    position: absolute;
+    z-index: 3;
+    bottom: var(--space-6);
+    right: var(--page-margin);
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .video-hero-slider__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background-color: rgba(255, 255, 255, 0.4);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .video-hero-slider__dot.is-active {
+    background-color: #FFFFFF;
+    transform: scale(1.4);
+  }
+
+  .video-hero-slider__arrow {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    background-color: rgba(10, 10, 10, 0.3);
+    color: #F5F1E6;
+  }
+
+  .video-hero-slider__arrow .icon-chevron {
+    width: 18px;
+    height: 18px;
+  }
+
+  .video-hero-slider__arrow--prev {
+    left: var(--page-margin);
+  }
+
+  .video-hero-slider__arrow--prev .icon-chevron {
+    transform: rotate(90deg);
+  }
+
+  .video-hero-slider__arrow--next {
+    right: var(--page-margin);
+  }
+
+  .video-hero-slider__arrow--next .icon-chevron {
+    transform: rotate(-90deg);
+  }
+
+  @media screen and (max-width: 749px) {
+    .video-hero-slider__arrow {
+      display: none;
+    }
+
+    .video-hero-slider__dots {
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class VideoHeroSlider extends HTMLElement {
+    constructor() {
+      super();
+      this.slides = [...this.querySelectorAll('[data-slide]')];
+      this.dots = [...this.querySelectorAll('[data-dot]')];
+      this.prevButton = this.querySelector('[data-prev]');
+      this.nextButton = this.querySelector('[data-next]');
+      this.activeIndex = 0;
+      this.timer = null;
+      this.interval = Number(this.dataset.autoplay || 0);
+      this.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    connectedCallback() {
+      if (!this.slides.length) return;
+
+      this.#loadSlide(this.activeIndex);
+
+      for (const dot of this.dots) {
+        dot.addEventListener('click', () => this.#goTo(Number(dot.dataset.index)));
+      }
+
+      this.prevButton?.addEventListener('click', () => this.#step(-1));
+      this.nextButton?.addEventListener('click', () => this.#step(1));
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          this.#stopAutoplay();
+        } else {
+          this.#startAutoplay();
+        }
+      });
+
+      this.#startAutoplay();
+    }
+
+    #startAutoplay() {
+      this.#stopAutoplay();
+      if (this.reduceMotion || !this.interval || this.slides.length < 2) return;
+      this.timer = window.setInterval(() => this.#step(1), this.interval);
+    }
+
+    #stopAutoplay() {
+      if (this.timer) {
+        window.clearInterval(this.timer);
+        this.timer = null;
+      }
+    }
+
+    #step(direction) {
+      const next = (this.activeIndex + direction + this.slides.length) % this.slides.length;
+      this.#goTo(next);
+    }
+
+    #goTo(index) {
+      if (index === this.activeIndex || !this.slides[index]) return;
+
+      this.slides[this.activeIndex].classList.remove('is-active');
+      this.dots[this.activeIndex]?.classList.remove('is-active');
+
+      this.activeIndex = index;
+
+      this.slides[this.activeIndex].classList.add('is-active');
+      this.dots[this.activeIndex]?.classList.add('is-active');
+
+      this.#loadSlide(this.activeIndex);
+      this.#startAutoplay();
+    }
+
+    #loadSlide(index) {
+      if (this.reduceMotion) return;
+
+      const slide = this.slides[index];
+      if (!slide || slide.dataset.loaded) return;
+      slide.dataset.loaded = 'true';
+
+      const template = slide.querySelector('[data-video-template]');
+      const slot = slide.querySelector('[data-video-slot]');
+      if (!template || !slot) return;
+
+      const kind = template.dataset.videoKind;
+
+      if (kind === 'upload') {
+        const video = template.content.firstElementChild.cloneNode(true);
+        video.addEventListener('canplay', () => slide.classList.add('is-ready'), { once: true });
+        slot.append(video);
+        video.play().catch(() => {});
+        return;
+      }
+
+      const videoId = template.dataset.videoId;
+      if (!videoId) return;
+
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media');
+      iframe.setAttribute('title', 'Background video');
+      iframe.className = 'video-hero-slider__video';
+
+      if (kind === 'vimeo') {
+        iframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1&controls=0`;
+      } else {
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&playsinline=1&modestbranding=1&rel=0`;
+      }
+
+      iframe.addEventListener(
+        'load',
+        () => {
+          window.setTimeout(() => slide.classList.add('is-ready'), 300);
+        },
+        { once: true }
+      );
+
+      slot.append(iframe);
+    }
+  }
+
+  customElements.define('video-hero-slider', VideoHeroSlider);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Video hero slider",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "info": "Sets the button and accent colors. Overlay text stays light for contrast against video.",
+      "default": "scheme-graphite"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "label": "Autoplay interval",
+      "info": "Time between slides, in milliseconds. Set to 0 to disable autoplay.",
+      "min": 0,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms",
+      "default": 6000
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail",
+          "info": "Shown until the video has fully loaded, so the slide never plays empty."
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Upload video"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "YouTube or Vimeo video URL",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow label",
+          "default": "Coal-Free Comfort"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "A Modern Twist on a Classic Ritual"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Body text",
+          "default": "<p>No charcoal, no carbon monoxide, no harsh aftertaste — ENSŌ delivers the ritual without the burden.</p>"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Button label",
+          "default": "Go Shop"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link"
+        },
+        {
+          "id": "custom_liquid",
+          "type": "liquid",
+          "label": "Custom liquid"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video hero slider",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Coal-Free Comfort",
+            "heading": "A Modern Twist on a Classic Ritual",
+            "text": "<p>No charcoal, no carbon monoxide, no harsh aftertaste — ENSŌ delivers the ritual without the burden.</p>",
+            "cta_label": "Go Shop"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Cordless Convenience",
+            "heading": "Your Session, Untethered",
+            "text": "<p>A swap-out battery and fully portable build mean the ritual travels with you — no outlet, no setup.</p>",
+            "cta_label": "Shop ENSŌ"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Magnetic Simplicity",
+            "heading": "Snap. Seal. Session.",
+            "text": "<p>Magnetically attachable mouthpieces make cleaning, sharing and switching effortless.</p>",
+            "cta_label": "Explore the System"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

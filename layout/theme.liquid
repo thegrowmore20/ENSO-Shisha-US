@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#FAF6EC">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+  {%- render 'meta-tags' -%}
+
+  {%- liquid
+    assign heading_font = settings.type_heading_font
+    assign heading_font_extralight = heading_font | font_modify: 'weight', '200'
+    assign heading_font_light = heading_font | font_modify: 'weight', '300'
+    assign heading_font_medium = heading_font | font_modify: 'weight', '500'
+    assign heading_font_semibold = heading_font | font_modify: 'weight', '600'
+    assign body_font = settings.type_body_font
+    assign accent_font = settings.type_accent_font
+  -%}
+  {%- style -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {{ heading_font_extralight | font_face: font_display: 'swap' }}
+    {{ heading_font_light | font_face: font_display: 'swap' }}
+    {{ heading_font_medium | font_face: font_display: 'swap' }}
+    {{ heading_font_semibold | font_face: font_display: 'swap' }}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {{ accent_font | font_face: font_display: 'swap' }}
+  {%- endstyle -%}
+
+  {%- render 'css-variables' -%}
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+  {{ content_for_header }}
+
+  <link rel="stylesheet" href="{{ 'cart-drawer.css' | asset_url }}">
+</head>
+
+<body class="template-{{ request.page_type | handleize }}">
+  <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+    {{ 'accessibility.skip_to_content' | t }}
+  </a>
+
+  {% section 'header' %}
+
+  <main id="MainContent">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {% section 'cart-drawer' %}
+  <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+
+  {% section 'fix-footer-mobile' %}
+</body>
+</html>

@@ -1,0 +1,106 @@
+.product-main__content > .product-block:not(:first-child) {
+	margin: 12px 0;
+	display: block;
+}
+.eyebrow {
+	display: inline-block;
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: clamp(0.625rem, 0.6rem + 0.1vw, 0.75rem);
+	letter-spacing: 0.26em;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+shopify-accelerated-checkout {
+	--shopify-accelerated-checkout-button-border-radius: 50px !important;
+}
+
+.product-delivery-dates {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.product-delivery-dates .icon-md svg {
+	width: 20px;
+}
+
+/* -------- icons with text block -------- */
+
+.icon-text-block--vertical.homepage-usps-info .icon-wrapper img{
+	filter: brightness(0) saturate(100%) invert(43%) sepia(0%) saturate(1647%) hue-rotate(175deg) brightness(87%) contrast(94%);
+}
+
+.icon-text-block--vertical.homepage-usps-info .icon-text strong {
+	display: inline-block;
+	margin-bottom: 3px;
+}
+.icon-text-block {
+	width: 100%;
+}
+
+/* INLINE (all items in one row, icon top, text below) */
+.product-main__content .icon-text-block--inline.product-block {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.icon-text-block--inline .icon-text-item {
+	flex: 1 1 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 1rem;
+}
+
+/* VERTICAL (each item row, icon left, text right) */
+.product-main__content .icon-text-block--vertical.product-block {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.icon-text-block--vertical .icon-text-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.icon-wrapper img {
+	display: block;
+	height: auto;
+	aspect-ratio: 1 / 1;
+}
+
+.icon-wrapper{
+	background-color: #f9f9f9;
+	padding: 10px;
+	border-radius: 50%;
+}
+
+.icon-text {
+	line-height: 1.4;
+}
+
+.icon-text-block--vertical.homepage-usps-info .icon-text-item {
+	width: calc(50% - 12px);
+}
+
+.product-main__content .icon-text-block--vertical.homepage-usps-info {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 520px) {
+	.icon-text-block--inline {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}    
+	
+	.icon-text-block--vertical.homepage-usps-info .icon-text-item {
+		align-items: flex-start;
+	}
+}
+/* icons with text block end */

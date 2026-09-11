@@ -1,0 +1,62 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<div class="blog {{ scheme_class }} section-padding">
+  <div class="container">
+    <h1 class="h-section text-center blog__title">{{ blog.title }}</h1>
+
+    {%- paginate blog.articles by 12 -%}
+      <div class="grid grid--3 blog__grid">
+        {%- for article in blog.articles -%}
+          <a href="{{ article.url }}" class="card blog-card">
+            {%- if article.image -%}
+              <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | default: article.title | escape }}" width="600" height="400" loading="lazy" class="blog-card__image">
+            {%- endif -%}
+            <p class="caption">{{ article.published_at | date: '%B %d, %Y' }}</p>
+            <h3 class="card__title">{{ article.title }}</h3>
+            <p class="card__text">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+          </a>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="collection__pagination" aria-label="pagination">
+          {{ paginate | default_pagination }}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .blog__title {
+    margin-bottom: var(--space-7);
+  }
+
+  .blog__grid {
+    row-gap: var(--space-6);
+  }
+
+  .blog-card__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-paper"
+    }
+  ]
+}
+{% endschema %}

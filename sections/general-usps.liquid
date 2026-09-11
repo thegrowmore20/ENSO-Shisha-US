@@ -1,0 +1,425 @@
+{%- comment -%}
+  General USPs — standalone section.
+  Color scheme driven (section-level + per-card), explicit desktop/mobile
+  padding controls, vertical/centered layout only. No external CSS asset,
+  no dependency on unknown theme snippets.
+{%- endcomment -%}
+
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+{% style %}
+  #usps-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #usps-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section id="usps-{{ section.id }}" class="usps {{ scheme_class }}">
+  <div class="usps__container">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.badge_1_image != blank or section.settings.badge_2_image != blank -%}
+      <div class="usps__intro">
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_html_tag }} class="usps__heading">{{ section.settings.heading | escape }}</{{ section.settings.heading_html_tag }}>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="usps__subheading">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+
+        <div class="usps__badges">
+          <div class="usps__badge">
+            {%- if section.settings.badge_1_image != blank -%}
+              {{
+                section.settings.badge_1_image
+                | image_url: width: 200
+                | image_tag:
+                  widths: '100, 150, 200, 300',
+                  sizes: '96px',
+                  alt: section.settings.badge_1_image.alt | default: section.settings.heading,
+                  loading: 'lazy',
+                  class: 'usps__badge-image'
+              }}
+            {%- else -%}
+              <svg class="icon-enso award__placeholder-mark usps__badge-placeholder" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M32 6C17.6 6 6 17.9 6 32.6c0 13.4 10 24.5 23 26.2 1.6.2 2.4-1.9.9-2.6-10.6-4.8-18-15.5-18-27.9C11.9 13 20.9 4 32.3 4c1.9 0 3.7.2 5.5.7 1.7.4 2.7-1.7 1.2-2.6C36.4 1 34.3 6 32 6Z" fill="currentColor"></path>
+                <path d="M33 4c14 1 25 12.9 25 27.4C58 45.6 47.7 57 34.6 58.7c-1.7.2-2.4-2-.8-2.7 11.2-4.6 19.2-15.6 19.2-28.6 0-12.2-8.4-22.5-19.7-25.4-1.8-.5-1.9-1.9-.3-2Z" fill="currentColor"></path>
+              </svg>
+            {%- endif -%}
+          </div>
+          <div class="usps__badge">
+            {%- if section.settings.badge_2_image != blank -%}
+              {{
+                section.settings.badge_2_image
+                | image_url: width: 200
+                | image_tag:
+                  widths: '100, 150, 200, 300',
+                  sizes: '96px',
+                  alt: section.settings.badge_2_image.alt | default: section.settings.heading,
+                  loading: 'lazy',
+                  class: 'usps__badge-image'
+              }}
+            {%- else -%}
+              <svg class="icon-enso award__placeholder-mark usps__badge-placeholder" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M32 6C17.6 6 6 17.9 6 32.6c0 13.4 10 24.5 23 26.2 1.6.2 2.4-1.9.9-2.6-10.6-4.8-18-15.5-18-27.9C11.9 13 20.9 4 32.3 4c1.9 0 3.7.2 5.5.7 1.7.4 2.7-1.7 1.2-2.6C36.4 1 34.3 6 32 6Z" fill="currentColor"></path>
+                <path d="M33 4c14 1 25 12.9 25 27.4C58 45.6 47.7 57 34.6 58.7c-1.7.2-2.4-2-.8-2.7 11.2-4.6 19.2-15.6 19.2-28.6 0-12.2-8.4-22.5-19.7-25.4-1.8-.5-1.9-1.9-.3-2Z" fill="currentColor"></path>
+              </svg>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="usps__grid">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign card_scheme = 'color-' | append: block.settings.color_scheme
+          -%}
+          <div class="usps__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="usps__icon">
+                {{
+                  block.settings.image
+                  | image_url: width: 96
+                  | image_tag:
+                    widths: '48, 96, 144',
+                    sizes: '56px',
+                    alt: block.settings.image.alt | default: block.settings.heading,
+                    loading: 'lazy',
+                    class: 'usps__icon-image'
+                }}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.heading != blank -%}
+              <h3 class="usps__card-heading">{{ block.settings.heading | escape }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.subheading != blank -%}
+              <p class="usps__card-subheading">{{ block.settings.subheading | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+  .usps__container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+  }
+
+  .usps__intro {
+    width: 100%;
+    border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+    border-radius: var(--radius-xl, 20px);
+    padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.5rem, 4vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .usps__heading {
+    margin: 0;
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .usps__subheading {
+    margin: 0 0 0.5rem;
+    font-size: 0.9375rem;
+    opacity: 0.85;
+  }
+
+  .usps__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: 0.5rem;
+  }
+
+  .usps__badge {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .usps__badge-image,
+  .usps__badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .usps__badge-placeholder {
+    width: 60%;
+    height: 60%;
+  }
+
+  .usps__grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
+  @media screen and (max-width: 989px) {
+    .usps__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .usps__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .usps__card {
+    border-radius: var(--radius-lg, 16px);
+    padding: clamp(1.5rem, 3vw, 2rem) clamp(1rem, 3vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    transition: transform 0.25s ease;
+    background: {{ section.settings.cards_background }}
+  }
+
+  .usps__card:hover {
+    transform: translateY(-3px);
+  }
+
+  .usps__icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .usps__icon-image,
+  .usps__icon img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .usps__card-heading {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .usps__card-subheading {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "General USPs",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Buy With Confidence"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Risk Free Shopping & Satisfaction Guaranteed"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_1_image",
+      "label": "Trust badge 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_2_image",
+      "label": "Trust badge 2"
+    },
+    {
+      "type": "select",
+      "id": "heading_html_tag",
+      "label": "Heading HTML tag",
+      "options": [
+        { "value": "h1", "label": "h1" },
+        { "value": "h2", "label": "h2" },
+        { "value": "h3", "label": "h3" },
+        { "value": "h4", "label": "h4" },
+        { "value": "h5", "label": "h5" },
+        { "value": "h6", "label": "h6" },
+        { "value": "p", "label": "p" },
+        { "value": "span", "label": "span" },
+        { "value": "div", "label": "div" }
+      ],
+      "default": "h2",
+      "info": "Controls the semantic tag without changing the visual size."
+    },
+    {
+      "id": "cards_background",
+      "type": "color",
+      "label": "Cards background"
+    },
+    {
+      "type": "header",
+      "content": "Desktop padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Mobile padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Color scheme",
+          "default": "scheme-2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Service Name"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Describe your service here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "General USPs",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "heading": "FAST HEAT-UP",
+            "subheading": "Ready to go in seconds"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "PURE FLAVOUR",
+            "subheading": "Crisp vapor with precision"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "EASY TO USE",
+            "subheading": "Effortless enjoyment"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "LASTS LONGER",
+            "subheading": "Enjoy more sessions"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

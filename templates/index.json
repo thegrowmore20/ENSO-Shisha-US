@@ -1,0 +1,805 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "video-hero-slider": {
+      "type": "video-hero-slider",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/WhatsApp Video 2026-05-08 at 08.50.32.webm",
+            "video_url": "",
+            "eyebrow": "Coal-Free Comfort",
+            "heading": "A Modern Twist on a Classic Ritual",
+            "text": "<p>No charcoal, no carbon monoxide, no harsh aftertaste — ENSŌ delivers the ritual without the burden.</p>",
+            "cta_label": "Go Shop",
+            "cta_link": "shopify://products/enso-diamond-pre-order",
+            "custom_liquid": "{% if shop.metafields.loox[\"global_stats\"] %}\n            {% assign looxstats = shop.metafields.loox[\"global_stats\"] | split: ',' %} \n            <div class=\"loox-rating loox-rating-hp\" data-rating=\"{{ looxstats[0] }}\" data-raters=\"{{ looxstats[1] }}\" data-pattern=\"[rating] ([count])\"></div> \n            {% endif %}"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "video_url": "",
+            "eyebrow": "Cordless Convenience",
+            "heading": "Your Session, Untethered",
+            "text": "<p>A swap-out battery and fully portable build mean the ritual travels with you — no outlet, no setup.</p>",
+            "cta_label": "Shop ENSŌ",
+            "cta_link": "",
+            "custom_liquid": ""
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "video_url": "",
+            "eyebrow": "Magnetic Simplicity",
+            "heading": "Snap. Seal. Session.",
+            "text": "<p>Magnetically attachable mouthpieces make cleaning, sharing and switching effortless.</p>",
+            "cta_label": "Explore the System",
+            "cta_link": "",
+            "custom_liquid": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide-1",
+        "slide-2",
+        "slide-3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-graphite",
+        "autoplay_interval": 6000
+      }
+    },
+    "shop_accessories_i6L44k": {
+      "type": "shop-accessories",
+      "name": "Shop Signature Models",
+      "settings": {
+        "color_scheme": "",
+        "collection": "accesories",
+        "eyebrow": "",
+        "heading": "Shop Signature Models",
+        "layout": "carousel",
+        "columns": "4",
+        "columns_mobile": "1",
+        "card_gap": 24,
+        "products_limit": 8,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "cta_label": "View All",
+        "cta_link": "shopify://collections/all",
+        "enable_quickadd": true
+      }
+    },
+    "general_usps_RmKHGg": {
+      "type": "general-usps",
+      "blocks": {
+        "column_m4BNwx": {
+          "type": "column",
+          "settings": {
+            "color_scheme": "",
+            "image": "shopify://shop_images/FAST_HEAT-UP.webp",
+            "heading": "FAST HEAT-UP",
+            "subheading": "Ready to go in seconds"
+          }
+        },
+        "column_YbHDhU": {
+          "type": "column",
+          "settings": {
+            "color_scheme": "",
+            "image": "shopify://shop_images/PURE_FLAVOUR.webp",
+            "heading": "PURE FLAVOUR",
+            "subheading": "Crisp vapor with precision"
+          }
+        },
+        "column_tHiamr": {
+          "type": "column",
+          "settings": {
+            "color_scheme": "",
+            "image": "shopify://shop_images/EASY_TO_USE.webp",
+            "heading": "EASY TO USE",
+            "subheading": "Effortless enjoyment"
+          }
+        },
+        "column_LtFrrA": {
+          "type": "column",
+          "settings": {
+            "color_scheme": "scheme-paper",
+            "image": "shopify://shop_images/LONG_BATTERY_LIFE.webp",
+            "heading": "LASTS LONGER",
+            "subheading": "Enjoy more sessions"
+          }
+        }
+      },
+      "block_order": [
+        "column_m4BNwx",
+        "column_YbHDhU",
+        "column_tHiamr",
+        "column_LtFrrA"
+      ],
+      "name": "General USPs",
+      "settings": {
+        "color_scheme": "scheme-graphite",
+        "heading": "Buy With Confidence",
+        "subheading": "Risk Free Shopping & Satisfaction Guaranteed",
+        "badge_1_image": "shopify://shop_images/Hippie_Lifetime.png",
+        "badge_2_image": "shopify://shop_images/Hippie_Lifetime.png",
+        "heading_html_tag": "h2",
+        "cards_background": "#202020",
+        "padding_top_desktop": 64,
+        "padding_bottom_desktop": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "categories_grid_yY3jai": {
+      "type": "categories-grid",
+      "blocks": {
+        "category_C8MD8g": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/1-enso_hero_resize.jpg",
+            "image_position": "center center",
+            "label": "ENSŌ",
+            "sublabel": "Accessories",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "category_zQKhUw": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/Diamond_blackback_cf418612-0d07-486f-a2f5-09066c86a3e0.png",
+            "image_position": "center center",
+            "label": "Legacy",
+            "sublabel": "Accessories",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "category_7A7fGg": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/hookah_tobacco_2.png",
+            "image_position": "center center",
+            "label": "X",
+            "sublabel": "Accessories",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "category_Ti3Fk6": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/Enso-the_future_of_Shisha.png",
+            "image_position": "center center",
+            "label": "XS GO",
+            "sublabel": "Accessories",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "category_6FmdVR": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/Avoid_Blowing_Smoke_in_Faces.png",
+            "image_position": "center center",
+            "label": "OM",
+            "sublabel": "Accessories",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "category_Qcq4gj": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/Thermocap_static.png",
+            "image_position": "center right",
+            "label": "Chargers",
+            "sublabel": "",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "category_t6jA3T": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ENSO_pr_2_18fb9a3e-65ba-42b4-a3e5-19ca0a6da413.png",
+            "image_position": "center center",
+            "label": "Wearables",
+            "sublabel": "",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        },
+        "category_dRDCjd": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/cd6ac5f9-bc59-4278-aa6e-5c799f35aff2.png",
+            "image_position": "center center",
+            "label": "Grinders",
+            "sublabel": "",
+            "link": "",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "category_C8MD8g",
+        "category_zQKhUw",
+        "category_7A7fGg",
+        "category_Ti3Fk6",
+        "category_6FmdVR",
+        "category_Qcq4gj",
+        "category_t6jA3T",
+        "category_dRDCjd"
+      ],
+      "disabled": true,
+      "name": "Category Grid",
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "heading": "Shop Accessories",
+        "heading_html_tag": "h2",
+        "layout_width": "container",
+        "columns_desktop": "4",
+        "columns_mobile": "2",
+        "gap_desktop": 16,
+        "gap_mobile": 12,
+        "overlay_opacity": 0.5,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "1788861639b5ca3afe": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_agg_section_hzR6md": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-agg-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
+            "only_photos": false,
+            "hide_thumbnails": false,
+            "product_handle": "",
+            "aggregated": true,
+            "data-limit": 5,
+            "maxwidth": 1200,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_agg_section_hzR6md"
+      ],
+      "settings": {}
+    },
+    "hero_banner_rrbnzD": {
+      "type": "hero-banner",
+      "name": "Hero Banner",
+      "settings": {
+        "color_scheme": "",
+        "image": "shopify://shop_images/enso_award_16x9Edit_bf165e4f-81bb-48ae-851e-e210074ef171.png",
+        "image_mobile": "shopify://shop_images/enso_award_4x5mobileedit.png",
+        "heading": "A Modern Twist on a Classic Ritual",
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 32,
+        "heading_color": "#000000",
+        "subheading": "",
+        "button": "Shop",
+        "button_url": "shopify://products/enso",
+        "width": "full",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "height": "large",
+        "content_alignment": "left",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "signature-models": {
+      "type": "signature-models",
+      "blocks": {
+        "model-enso": {
+          "type": "model",
+          "settings": {
+            "product": "enso",
+            "badge_label": "",
+            "cta_label": "Shop ENSŌ",
+            "name": "ENSŌ",
+            "excerpt": "The original — porcelain chamber, zinc alloy body, vegan leather strap in a warm stone finish. Coal-free, cordless, ready when you are."
+          }
+        },
+        "model-diamond": {
+          "type": "model",
+          "settings": {
+            "product": "enso-diamond-pre-order",
+            "badge_label": "Pre-Order",
+            "cta_label": "Pre-Order DIAMOND",
+            "name": "DIAMOND",
+            "excerpt": "A faceted, light-catching finish on the same all-in-one system — now taking pre-orders."
+          }
+        }
+      },
+      "block_order": [
+        "model-enso",
+        "model-diamond"
+      ],
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "eyebrow": "The Collection",
+        "heading": "Shop Signature Models",
+        "features": "Coal-Free · Cordless · Magnetic"
+      }
+    },
+    "feature-videos": {
+      "type": "feature-videos",
+      "blocks": {
+        "feature-coal-free": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/Thermocap.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Coal-Free Comfort",
+            "text": "<p>No charcoal means no toxic carbon monoxide and none of the harmful chemicals that come with an open flame. Just clean, controlled heat — and a session that tastes like what you actually put in it.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "center",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature-cordless": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/battery_114b6808-804c-468b-a49f-af2bd90d1dc9.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Cordless Convenience",
+            "text": "<p>A swap-out battery keeps the session going, and the whole system is built to travel. No outlet, no setup, no infrastructure — the ritual goes where you go.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "center",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature-magnetic": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/Mag_anim_home.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Magnetic Simplicity",
+            "text": "<p>Magnetically attachable mouthpieces snap into place and lift right off — so sharing, switching and cleaning take seconds instead of minutes.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "center",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature-clouds": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/Xray_mobile.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Formidable Clouds",
+            "text": "<p>ENSŌ's custom heating algorithm holds temperature precisely where it needs to be, drawing out dense, consistent clouds from the first draw to the last.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "center",
+            "text_vertical_position": "center"
+          }
+        }
+      },
+      "block_order": [
+        "feature-coal-free",
+        "feature-cordless",
+        "feature-magnetic",
+        "feature-clouds"
+      ],
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "eyebrow": "Why ENSŌ",
+        "heading": "Built Around the Ritual",
+        "width": "full",
+        "show_media_shadow": false
+      }
+    },
+    "shop-accessories": {
+      "type": "shop-accessories",
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "collection": "accesories",
+        "eyebrow": "Accessories",
+        "heading": "Shop Accessories",
+        "layout": "carousel",
+        "columns": "4",
+        "columns_mobile": "2",
+        "card_gap": 24,
+        "products_limit": 8,
+        "padding_top": 32,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "cta_label": "View All Accessories",
+        "cta_link": "",
+        "enable_quickadd": true
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "I switched from a traditional hookah and never looked back. No coals to manage, no ash, and the flavour is cleaner than anything I've had.",
+            "name": "Marcus T.",
+            "product": ""
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Setup takes under a minute and the magnetic mouthpiece makes sharing with friends effortless. It just works.",
+            "name": "Leyla K.",
+            "product": ""
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "The battery lasts a full evening and I can take it to the balcony or a friend's place without hauling anything else.",
+            "name": "Daniel R.",
+            "product": ""
+          }
+        },
+        "review-4": {
+          "type": "review",
+          "settings": {
+            "rating": 4.5,
+            "quote": "Clouds are genuinely dense — I was sceptical an electric system could match coals, but it does.",
+            "name": "Priya S.",
+            "product": ""
+          }
+        },
+        "review_WWVdHX": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "I switched from a traditional hookah and never looked back. No coals to manage, no ash, and the flavour is cleaner than anything I've had.",
+            "name": "Marcus T.",
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3",
+        "review-4",
+        "review_WWVdHX"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "eyebrow": "Social Proof",
+        "heading": "Why Do People Love ENSŌ?",
+        "overall_rating": 4.8,
+        "overall_count": "1,240",
+        "layout": "carousel",
+        "columns": "4",
+        "columns_mobile": "1",
+        "card_gap": 24,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "story-timeline": {
+      "type": "story-timeline",
+      "blocks": {
+        "milestone-1": {
+          "type": "milestone",
+          "settings": {
+            "year": "A decade earlier",
+            "title": "AirVape heats the way",
+            "text": "Ten years spent perfecting fast, precise heating technology — the foundation everything ENSŌ would build on."
+          }
+        },
+        "milestone-2": {
+          "type": "milestone",
+          "settings": {
+            "year": "2020",
+            "title": "AirVape × ENSŌ",
+            "text": "AirVape partners with the ENSŌ team to reimagine the hookah ritual — coal-free, cordless, built to travel."
+          }
+        },
+        "milestone-3": {
+          "type": "milestone",
+          "settings": {
+            "year": "In development",
+            "title": "Coal-free by design",
+            "text": "Porcelain chamber, glass water tank, swap-out battery and magnetic mouthpieces — engineered so nothing about the ritual feels compromised."
+          }
+        },
+        "milestone-4": {
+          "type": "milestone",
+          "settings": {
+            "year": "Today",
+            "title": "ENSŌ, ready to ship",
+            "text": "ENSŌ ships worldwide, with DIAMOND — a faceted, light-catching finish on the same system — now taking pre-orders."
+          }
+        }
+      },
+      "block_order": [
+        "milestone-1",
+        "milestone-2",
+        "milestone-3",
+        "milestone-4"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "eyebrow": "Our Story",
+        "heading": "A Decade in the Making",
+        "intro": "The Story: how a decade of AirVape heating expertise became ENSŌ, the coal-free hookah system."
+      }
+    },
+    "awards": {
+      "type": "awards",
+      "blocks": {
+        "award-1": {
+          "type": "award",
+          "settings": {
+            "title": "Red Dot Winner",
+            "subtitle": "Design Award · 2026",
+            "text": ""
+          }
+        },
+        "award-2": {
+          "type": "award",
+          "settings": {
+            "title": "Best Hookah",
+            "subtitle": "Shisha of the Year · 2025",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "award-1",
+        "award-2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-graphite",
+        "eyebrow": "Recognition",
+        "heading": "Industry Validation",
+        "section_gap": 48,
+        "cards_layout": "card",
+        "logo_list": false
+      }
+    },
+    "178903959458a6537c": {
+      "type": "apps",
+      "blocks": {
+        "gsc_instagram_feed_instafeed_JcJWJJ": {
+          "type": "shopify://apps/gsc-instagram-feed/blocks/instafeed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
+          "settings": {
+            "widget_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "gsc_instagram_feed_instafeed_JcJWJJ"
+      ],
+      "settings": {}
+    },
+    "instagram-reels": {
+      "type": "instagram-reels",
+      "blocks": {
+        "reel-1": {
+          "type": "reel",
+          "settings": {
+            "link": ""
+          }
+        },
+        "reel-2": {
+          "type": "reel",
+          "settings": {
+            "link": ""
+          }
+        },
+        "reel-3": {
+          "type": "reel",
+          "settings": {
+            "link": ""
+          }
+        },
+        "reel-4": {
+          "type": "reel",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "reel-1",
+        "reel-2",
+        "reel-3",
+        "reel-4"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "eyebrow": "Community",
+        "heading": "As Seen on Instagram",
+        "cta_label": "Follow @enso.future",
+        "cta_link": ""
+      }
+    },
+    "hero_banner_raL7Vz": {
+      "type": "hero-banner",
+      "name": "Hero Banner",
+      "settings": {
+        "color_scheme": "",
+        "image": "shopify://shop_images/Enso-2.webp",
+        "heading": "Elevate Your Experience",
+        "heading_size_desktop": 36,
+        "heading_size_mobile": 24,
+        "heading_color": "#ffffff",
+        "subheading": "<p>Discover the perfect blend of advanced technology and unbeatable flavor with every hit.</p>",
+        "button": "Shop Now",
+        "button_url": "shopify://products/enso",
+        "width": "full",
+        "margin_top": 48,
+        "margin_bottom": 24,
+        "height": "medium",
+        "content_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 35
+      }
+    },
+    "split_showcase_9Jtmqe": {
+      "type": "split-showcase",
+      "blocks": {
+        "column_TFr3f4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/web_support-6290.webp",
+            "heading": "Why Choose ENSŌ",
+            "heading_color": "#ffffff",
+            "subheading": "ENSŌ combines smooth vapor & modular design to give you a better non-nicotine herbal shisha experience. Enjoy a cleaner way to relax without compromising on style.",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "column_RfzBiN": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/hookah_tobacco_2.png",
+            "heading": "Cordless Convenience",
+            "heading_color": "#ffffff",
+            "subheading": "Enjoy the best shisha moments with friends anywhere. The ENSŌ features a swap-out battery for easy, on-the-go use.",
+            "button": "",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_TFr3f4",
+        "column_RfzBiN"
+      ],
+      "name": "Split showcase",
+      "settings": {
+        "color_scheme": "",
+        "width": "full",
+        "image_gap": 24,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "height": "medium",
+        "content_alignment": "center",
+        "heading_size_desktop": 32,
+        "heading_size_mobile": 24,
+        "overlay_color": "#000000",
+        "overlay_opacity": 35
+      }
+    },
+    "blog-posts": {
+      "type": "blog-posts",
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "blog": "news",
+        "eyebrow": "Journal",
+        "heading": "From the Journal",
+        "posts_limit": 3,
+        "cta_label": "Read More",
+        "cta_link": ""
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q-1": {
+          "type": "question",
+          "settings": {
+            "question": "Does ENSO use charcoal?",
+            "answer": "<p>No. ENSO is fully electronic — controlled heat from 180 to 330°C, no charcoal, no ash, no open flame.</p>"
+          }
+        },
+        "q-2": {
+          "type": "question",
+          "settings": {
+            "question": "Am I locked into proprietary pods?",
+            "answer": "<p>No. ENSO is an open system — bring your own molasses, always.</p>"
+          }
+        },
+        "q-3": {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>ENSO ships globally from our warehouses · approximately 2 weeks delivery.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q-1",
+        "q-2",
+        "q-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "eyebrow": "Questions",
+        "heading": "Before You Order"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "heading": "Your Ritual. Without Charcoal.",
+        "text": "Refined for 2026. Join the list for release updates."
+      }
+    }
+  },
+  "order": [
+    "video-hero-slider",
+    "shop_accessories_i6L44k",
+    "general_usps_RmKHGg",
+    "categories_grid_yY3jai",
+    "1788861639b5ca3afe",
+    "hero_banner_rrbnzD",
+    "signature-models",
+    "feature-videos",
+    "shop-accessories",
+    "reviews",
+    "story-timeline",
+    "awards",
+    "178903959458a6537c",
+    "instagram-reels",
+    "hero_banner_raL7Vz",
+    "split_showcase_9Jtmqe",
+    "blog-posts",
+    "faq",
+    "newsletter"
+  ]
+}

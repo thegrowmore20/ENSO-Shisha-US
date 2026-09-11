@@ -1,0 +1,175 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign featured_product = section.settings.product
+-%}
+
+<section class="product-highlight {{ scheme_class }} section-padding">
+  <div class="container product-highlight__inner">
+    <div class="product-highlight__media">
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1000 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          loading="lazy"
+          class="product-highlight__image"
+        >
+      {%- elsif featured_product and featured_product.featured_image -%}
+        <img
+          src="{{ featured_product.featured_image | image_url: width: 1000 }}"
+          alt="{{ featured_product.featured_image.alt | default: featured_product.title | escape }}"
+          width="{{ featured_product.featured_image.width }}"
+          height="{{ featured_product.featured_image.height }}"
+          loading="lazy"
+          class="product-highlight__image"
+        >
+      {%- else -%}
+        <div class="media-placeholder">
+          {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product-highlight__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h-section">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="body-text text-muted product-highlight__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="spec-list">
+          {%- for block in section.blocks -%}
+            <div class="spec-row" {{ block.shopify_attributes }}>
+              <span class="spec-row__label">{{ block.settings.label }}</span>
+              <span class="spec-row__value">{{ block.settings.value }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="product-highlight__actions">
+        {%- if featured_product -%}
+          <a href="{{ featured_product.url }}" class="btn btn--primary">
+            {{ section.settings.cta }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .product-highlight__inner {
+    display: grid;
+    grid-template-columns: 0.9fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  @media screen and (max-width: 989px) {
+    .product-highlight__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  .product-highlight__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xl);
+  }
+
+  .product-highlight__text {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-6);
+    max-width: 52ch;
+  }
+
+  .product-highlight__actions {
+    margin-top: var(--space-6);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.product_highlight.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.product_highlight.settings.color_scheme.label",
+      "default": "scheme-graphite"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:sections.product_highlight.settings.product.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.product_highlight.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.product_highlight.settings.eyebrow.label",
+      "default": "01 · All-in-one"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.product_highlight.settings.heading.label",
+      "default": "An All-in-One Electric Hookah"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:sections.product_highlight.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "t:sections.product_highlight.settings.cta.label",
+      "default": "Order Now"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "t:sections.product_highlight.blocks.spec.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.product_highlight.blocks.spec.settings.label.label",
+          "default": "Heat range"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "t:sections.product_highlight.blocks.spec.settings.value.label",
+          "default": "180–330°C · stepless"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product_highlight.presets.name",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "Heat range", "value": "180–330°C · stepless" } },
+        { "type": "spec", "settings": { "label": "Battery", "value": "Removable · fast-charging" } },
+        { "type": "spec", "settings": { "label": "Chamber", "value": "Porcelain · glass water tank" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

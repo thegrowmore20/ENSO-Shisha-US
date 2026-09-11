@@ -1,0 +1,61 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_CzDtgQ": {
+      "type": "hero-banner",
+      "name": "Hero Banner",
+      "settings": {
+        "color_scheme": "",
+        "image": "shopify://shop_images/Enso-2.webp",
+        "heading": "{{ collection.title }}",
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 32,
+        "heading_color": "#ffffff",
+        "subheading": "{{ collection.metafields.custom.short_description | metafield_tag }}",
+        "button": "",
+        "button_url": "",
+        "width": "full",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "height": "small",
+        "content_alignment": "left",
+        "overlay_color": "#000000",
+        "overlay_opacity": 35
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "color_scheme": "scheme-paper",
+        "enable_collection_content": false,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "products_per_page": 16,
+        "enable_quickadd": true,
+        "pagination_type": "load_more",
+        "mobile_columns": "2",
+        "nav_menu": "shop-enso",
+        "quick_link_1_text": "Accessories",
+        "quick_link_1_url": "shopify://collections/accesories",
+        "quick_link_2_text": "Shop Enso",
+        "quick_link_2_url": "shopify://products/enso",
+        "padding_top_desktop": 20,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    }
+  },
+  "order": [
+    "hero_banner_CzDtgQ",
+    "main"
+  ]
+}

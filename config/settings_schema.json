@@ -1,0 +1,330 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "ENSO",
+    "theme_version": "0.1.0",
+    "theme_author": "ENSO",
+    "theme_documentation_url": "https://ensoshisha.com/",
+    "theme_support_url": "https://ensoshisha.com/pages/support"
+  },
+  {
+    "name": "t:settings.typography.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.typography.headings.content"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "default": "montserrat_n4",
+        "label": "t:settings.typography.type_heading_font.label",
+        "info": "t:settings.typography.type_heading_font.info"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_accent_font",
+        "default": "inter_n8",
+        "label": "t:settings.typography.type_accent_font.label",
+        "info": "t:settings.typography.type_accent_font.info"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.typography.body.content"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "default": "montserrat_n3",
+        "label": "t:settings.typography.type_body_font.label"
+      }
+    ]
+  },
+  {
+  "name": "t:settings.colors.name",
+  "settings": [
+    {
+      "type": "color_scheme_group",
+      "id": "color_schemes",
+      "definition": [
+        {
+          "type": "color",
+          "id": "background",
+          "label": "t:settings.colors.background.label",
+          "default": "#FAF6EC"
+        },
+        {
+          "type": "color",
+          "id": "background_raised",
+          "label": "t:settings.colors.background_raised.label",
+          "default": "#F2EDE3"
+        },
+        {
+          "type": "color",
+          "id": "text",
+          "label": "t:settings.colors.text.label",
+          "default": "#0A0A0A"
+        },
+        {
+          "type": "color",
+          "id": "text_muted",
+          "label": "t:settings.colors.text_muted.label",
+          "default": "#5A554B"
+        },
+        {
+          "type": "color",
+          "id": "border",
+          "label": "t:settings.colors.border.label",
+          "default": "#E3DDCC"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "t:settings.colors.accent.label",
+          "default": "#C8943A"
+        },
+        {
+          "type": "color",
+          "id": "accent_soft",
+          "label": "t:settings.colors.accent_soft.label",
+          "default": "#D4A758"
+        },
+
+        {
+          "type": "header",
+          "content": "Primary Button"
+        },
+        {
+          "type": "color",
+          "id": "primary_button_background",
+          "label": "Primary Button Background",
+          "default": "#1A1813"
+        },
+        {
+          "type": "color",
+          "id": "primary_button_label",
+          "label": "Primary Button Text Color",
+          "default": "#F0E8D8"
+        },
+        {
+          "type": "color",
+          "id": "primary_button_border",
+          "label": "Primary Button Border",
+          "default": "#1A1813"
+        },
+        {
+          "type": "color",
+          "id": "primary_button_hover_background",
+          "label": "Primary Button Hover Background",
+          "default": "#C8943A"
+        },
+        {
+          "type": "color",
+          "id": "primary_button_hover_label",
+          "label": "Primary Button Hover Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "primary_button_hover_border",
+          "label": "Primary Button Hover Border",
+          "default": "#C8943A"
+        },
+
+        {
+          "type": "header",
+          "content": "Secondary Button"
+        },
+        {
+          "type": "color",
+          "id": "secondary_button_background",
+          "label": "Secondary Button Background",
+          "default": "#F2EDE3"
+        },
+        {
+          "type": "color",
+          "id": "secondary_button_label",
+          "label": "Secondary Button Text Color",
+          "default": "#0A0A0A"
+        },
+        {
+          "type": "color",
+          "id": "secondary_button_border",
+          "label": "Secondary Button Border",
+          "default": "#E3DDCC"
+        },
+        {
+          "type": "color",
+          "id": "secondary_button_hover_background",
+          "label": "Secondary Button Hover Background",
+          "default": "#1A1813"
+        },
+        {
+          "type": "color",
+          "id": "secondary_button_hover_label",
+          "label": "Secondary Button Hover Text Color",
+          "default": "#F0E8D8"
+        },
+        {
+          "type": "color",
+          "id": "secondary_button_hover_border",
+          "label": "Secondary Button Hover Border",
+          "default": "#1A1813"
+        }
+      ],
+
+      "role": {
+        "background": "background",
+        "text": "text",
+
+        "primary_button": "primary_button_background",
+        "on_primary_button": "primary_button_label",
+        "primary_button_border": "primary_button_border",
+
+        "secondary_button": "secondary_button_background",
+        "on_secondary_button": "secondary_button_label",
+        "secondary_button_border": "secondary_button_border",
+
+        "links": "accent",
+        "icons": "text"
+      }
+    }
+  ]
+},
+  {
+    "name": "t:settings.layout.name",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 960,
+        "max": 1800,
+        "step": 20,
+        "default": 1600,
+        "unit": "px",
+        "label": "t:settings.layout.page_width.label"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social.name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "t:settings.social.instagram.label",
+        "info": "t:settings.social.instagram.info"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "t:settings.social.tiktok.label"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social_sharing.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "t:settings.social_sharing.share_image.label",
+        "info": "t:settings.social_sharing.share_image.info"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Free shipping bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "free_shipping_bar_enable",
+        "label": "Show free shipping progress bar in cart",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_bar_threshold",
+        "label": "Free shipping threshold",
+        "info": "Amount in your store's currency, e.g. 75 for $75.00",
+        "default": 75
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_bar_message_below",
+        "label": "Message before threshold is reached",
+        "info": "Use [amount] to insert the remaining amount",
+        "default": "Spend [amount] more for free shipping!"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_bar_message_achieved",
+        "label": "Message once threshold is reached",
+        "default": "You've unlocked free shipping!"
+      },
+      {
+        "type": "color",
+        "id": "free_shipping_bar_fill_color",
+        "label": "Progress bar fill color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "free_shipping_bar_track_color",
+        "label": "Progress bar track color",
+        "default": "#E5E5E5"
+      },
+      {
+        "type": "header",
+        "content": "Empty cart"
+      },
+      {
+        "type": "url",
+        "id": "cart_empty_button_link",
+        "label": "Empty cart button link",
+        "info": "Where the \"Continue shopping\" button links to when the cart is empty. Defaults to all products if left blank."
+      }
+    ]
+  },
+  {
+    "name": "Badges",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sold out badge"
+      },
+      {
+        "type": "color",
+        "id": "badge_sold_out_bg",
+        "label": "Background color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "badge_sold_out_text",
+        "label": "Text color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Sale / savings badge"
+      },
+      {
+        "type": "color",
+        "id": "badge_sale_bg",
+        "label": "Background color",
+        "default": "#EA4335"
+      },
+      {
+        "type": "color",
+        "id": "badge_sale_text",
+        "label": "Text color",
+        "default": "#FFFFFF"
+      }
+    ]
+  }
+]

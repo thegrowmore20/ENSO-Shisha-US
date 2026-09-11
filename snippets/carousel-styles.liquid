@@ -1,0 +1,70 @@
+{%- comment -%}
+  Shared scoped CSS for any section using the carousel-slider structure.
+  Usage:
+  {% render 'carousel-styles',
+    section_id: section.id,
+    columns_desktop: section.settings.columns,
+    columns_mobile: section.settings.columns_mobile,
+    gap: section.settings.card_gap,
+    padding_top: section.settings.padding_top,
+    padding_bottom: section.settings.padding_bottom,
+    padding_top_mobile: section.settings.padding_top_mobile,
+    padding_bottom_mobile: section.settings.padding_bottom_mobile
+  %}
+  Pair with id="Carousel-{{ section.id }}" on the <carousel-slider> element.
+{%- endcomment -%}
+
+{%- liquid
+  assign col_desktop = columns_desktop | default: 4 | plus: 0
+  assign col_mobile = columns_mobile | default: 1 | plus: 0
+  assign track_gap = gap | default: 24 | plus: 0
+  assign pt = padding_top | default: 48 | plus: 0
+  assign pb = padding_bottom | default: 48 | plus: 0
+  assign pt_m = padding_top_mobile | default: 32 | plus: 0
+  assign pb_m = padding_bottom_mobile | default: 32 | plus: 0
+-%}
+
+{% style %}
+  #Carousel-{{ section_id }} {
+    padding-top: {{ pt_m }}px;
+    padding-bottom: {{ pb_m }}px;
+    display: block;
+  }
+  #Carousel-{{ section_id }} .container {
+    /* padding-inline: calc(var(--page-margin) - 60px); */
+  }
+  #Carousel-{{ section_id }} .carousel__wrapper {
+    position: relative;
+    /* padding-inline: 60px; */
+  }
+  #Carousel-{{ section_id }} .carousel__wrapper .carousel__arrow {
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    background: var(--color-text);
+    color: var(--color-background)
+  }
+  #Carousel-{{ section_id }} .carousel__wrapper .carousel__arrow--prev {
+    left: 0;
+  }
+  #Carousel-{{ section_id }} .carousel__wrapper .carousel__arrow--next {
+    right: 0;
+  }
+
+  #Carousel-{{ section_id }} .carousel__track {
+    gap: {{ track_gap }}px;
+  }
+  #Carousel-{{ section_id }} .carousel__track > * {
+    flex: 0 0 calc((100% - ({{ track_gap }}px * {{ col_mobile | minus: 1 }})) / {{ col_mobile }});
+  }
+
+  @media screen and (min-width: 750px) {
+    #Carousel-{{ section_id }} {
+      padding-top: {{ pt }}px;
+      padding-bottom: {{ pb }}px;
+    }
+    #Carousel-{{ section_id }} .carousel__track > * {
+      flex: 0 0 calc((100% - ({{ track_gap }}px * {{ col_desktop | minus: 1 }})) / {{ col_desktop }});
+    }
+  }
+{% endstyle %}

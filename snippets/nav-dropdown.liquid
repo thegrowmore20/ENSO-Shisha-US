@@ -1,0 +1,90 @@
+{%- comment -%}
+  Two-level dropdown (children + grandchildren) for a top-level nav link
+  that does NOT have a matching mega_menu block. Grandchildren are listed
+  indented beneath their parent child in the same column — a single panel,
+  not a cascading flyout — to keep this lightweight.
+  Accepts: link (the top-level link object)
+{%- endcomment -%}
+
+<div class="site-header__dropdown" data-dropdown>
+  <ul class="site-header__dropdown-list">
+    {%- for child in link.links -%}
+      <li class="site-header__dropdown-item">
+        <a
+          href="{{ child.url }}"
+          class="caption site-header__dropdown-link"
+          {% if child.active %}aria-current="page"{% endif %}
+        >
+          {{ child.title }}
+        </a>
+        {%- if child.links.size > 0 -%}
+          <ul class="site-header__dropdown-sublist">
+            {%- for grandchild in child.links -%}
+              <li>
+                <a
+                  href="{{ grandchild.url }}"
+                  class="caption site-header__dropdown-sublink"
+                  {% if grandchild.active %}aria-current="page"{% endif %}
+                >
+                  {{ grandchild.title }}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% stylesheet %}
+  .site-header__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    margin-top: var(--space-3, 0.75rem);
+    padding: var(--space-4, 1rem);
+    background: var(--color-background, #fff);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    z-index: 41;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  }
+
+  .site-header__nav-item:hover .site-header__dropdown,
+  .site-header__nav-item:focus-within .site-header__dropdown,
+  .site-header__nav-item.is-open .site-header__dropdown {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .site-header__dropdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 0.75rem);
+  }
+
+  body:has(#MainContent>.shopify-section:first-child .video-hero-slider) .site-header__dropdown .site-header__dropdown-list .site-header__dropdown-item a.site-header__dropdown-link {
+    display: block;
+    color: var(--color-text);
+  }
+
+  .site-header__dropdown-sublist {
+    margin-top: var(--space-2, 0.5rem);
+    padding-left: var(--space-4, 1rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  body:has(#MainContent>.shopify-section:first-child .video-hero-slider) .site-header__dropdown .site-header__dropdown-list .site-header__dropdown-sublink {
+    display: block;
+    color: var(--color-text-muted, #6b6b6b);
+  }
+{% endstylesheet %}

@@ -1,0 +1,176 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-paper"
+      }
+    },
+    "hero_banner_V6dPzL": {
+      "type": "hero-banner",
+      "name": "Hero Banner",
+      "settings": {
+        "color_scheme": "",
+        "image": "shopify://shop_images/web_support-6290.webp",
+        "heading": "{{ page.title }}",
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 32,
+        "heading_color": "#ffffff",
+        "width": "full",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "height": "small",
+        "content_alignment": "left",
+        "overlay_color": "#000000",
+        "overlay_opacity": 50
+      }
+    },
+    "contact_MFQGnq": {
+      "type": "contact",
+      "blocks": {
+        "subheading_9khccU": {
+          "type": "subheading",
+          "settings": {
+            "text": "Got any questions?"
+          }
+        },
+        "heading_XpNGTk": {
+          "type": "heading",
+          "settings": {
+            "text": "Get in touch"
+          }
+        },
+        "description_cTBmTF": {
+          "type": "description",
+          "settings": {
+            "text": "<p>Your feedback is important to us. Whatever your needs, please don't hesitate to reach out.</p>"
+          }
+        },
+        "cards_XT9RQc": {
+          "type": "cards",
+          "settings": {
+            "card_1_bg": "#000000",
+            "card_1_color": "#ffffff",
+            "card_1_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\"><path fill=\"#fff\" d=\"M23.961 8.429c-.831.982-1.614 1.918-1.961 3.775v6.683l-4 2.479v-9.161c-.206-1.104-.566-1.885-1-2.539v11.475l-4-2.885v-13.069l1.577 1.138c-.339-.701-.577-1.518-.577-2.524l.019-.345-2.019-1.456-5.545 4-6.455-4v18l6.455 4 5.545-4 5.545 4 6.455-4v-11.618l-.039.047zm-17.961 12.936l-4-2.479v-13.294l4 2.479v13.294zm5-3.11l-4 2.885v-13.067l4-2.886v13.068zm9-18.255c-2.1 0-4 1.702-4 3.801 0 3.121 3.188 3.451 4 8.199.812-4.748 4-5.078 4-8.199 0-2.099-1.9-3.801-4-3.801zm0 5.5c-.828 0-1.5-.671-1.5-1.5s.672-1.5 1.5-1.5 1.5.671 1.5 1.5-.672 1.5-1.5 1.5z\"></path></svg>",
+            "card_1_heading": "Location",
+            "card_1_body": "<p>16133 Ventura Blvd Fl 7, Encino, CA 91436, USA</p>",
+            "card_2_bg": "#000000",
+            "card_2_color": "#ffffff",
+            "card_2_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\"><path fill=\"#fff\" d=\"M19 9.062s-5.188-.333-7 1.938c2-4.896 7-5.938 7-5.938v-2l5 4-5 4.019v-2.019zm-18.974 14.938h23.947l-11.973-11.607-11.974 11.607zm1.673-14l10.291-7.488 3.053 2.218c.712-.459 1.391-.805 1.953-1.054l-5.006-3.637-11.99 8.725v12.476l7.352-7.127-5.653-4.113zm15.753 4.892l6.548 6.348v-11.612l-6.548 5.264z\"></path></svg>",
+            "card_2_heading": "Email",
+            "card_2_body": "<p><a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
+          }
+        },
+        "social_fc7fiH": {
+          "type": "social",
+          "settings": {
+            "label": "Our social media",
+            "social_facebook_url": "https://www.facebook.com/share/16AJipvPXs/?mibextid=wwXIfr",
+            "social_instagram_url": "https://instagram.com/enso.future",
+            "social_youtube_url": "https://www.youtube.com/@enso.future",
+            "social_tiktok_url": "",
+            "social_x_url": "",
+            "social_pinterest_url": "",
+            "social_linkedin_url": ""
+          }
+        },
+        "richtext_K7HjTn": {
+          "type": "richtext",
+          "settings": {
+            "text": "<p>Our Hours of Operation are Monday-Friday, 9am-5pm PST.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_9khccU",
+        "heading_XpNGTk",
+        "description_cTBmTF",
+        "cards_XT9RQc",
+        "social_fc7fiH",
+        "richtext_K7HjTn"
+      ],
+      "name": "t:sections.contact.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "show_left_content": true,
+        "form_heading": "Contact Us",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "awards_WzJrri": {
+      "type": "awards",
+      "blocks": {
+        "award_TXdKgh": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/Icons_all-05-webp.webp",
+            "title": "<a href=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\" target=\"_blank\" title=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\">ENSŌ User Guide</a>",
+            "subtitle": "",
+            "text": ""
+          }
+        },
+        "award_FJjReB": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/Icons_all-01-webp.webp",
+            "title": "<a href=\"/pages/user-guide\" target=\"_blank\" title=\"User Guide Videos\">ENSŌ Video Guide</a>",
+            "subtitle": "",
+            "text": ""
+          }
+        },
+        "award_TiC4tE": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/ICON_E150-04-webp.webp",
+            "title": "<a href=\"/pages/warranty\" target=\"_blank\" title=\"Warranty\">ENSŌ Warranty Registration</a>",
+            "subtitle": "",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "award_TXdKgh",
+        "award_FJjReB",
+        "award_TiC4tE"
+      ],
+      "name": "t:sections.awards.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "eyebrow": "",
+        "heading": "Find More About Us"
+      }
+    },
+    "custom_liquid_W8RPpV": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "content": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3301.5932184375492!2d-118.48755332595366!3d34.15674781220776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c29789ecb089d7%3A0x2a751daf9daf3265!2s16133%20Ventura%20Blvd%20Fl%207%2C%20Encino%2C%20CA%2091436%2C%20USA!5e0!3m2!1sen!2s!4v1788341396524!5m2!1sen!2s\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
+        "page_width": "page",
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    }
+  },
+  "order": [
+    "main",
+    "hero_banner_V6dPzL",
+    "contact_MFQGnq",
+    "awards_WzJrri",
+    "custom_liquid_W8RPpV"
+  ]
+}

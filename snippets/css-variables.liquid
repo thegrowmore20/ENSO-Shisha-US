@@ -1,0 +1,80 @@
+{%- style -%}
+  :root {
+    --font-heading: {{ settings.type_heading_font.family }}, sans-serif;
+    --font-body: {{ settings.type_body_font.family }}, sans-serif;
+    --font-accent: {{ settings.type_accent_font.family }}, sans-serif;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-pill: 999px;
+
+    --page-width: {{ settings.page_width }}px;
+    --page-margin: 80px;
+    --page-margin-mobile: 20px;
+
+    --border-width: 1px;
+
+    --badge-sold-out-bg: {{ settings.badge_sold_out_bg }};
+    --badge-sold-out-text: {{ settings.badge_sold_out_text }};
+    --badge-sale-bg: {{ settings.badge_sale_bg }};
+    --badge-sale-text: {{ settings.badge_sale_text }};
+
+    --shadow-sm: 0 1px 3px rgba(10, 10, 10, 0.07);
+    --shadow-md: 0 12px 32px rgba(10, 10, 10, 0.10);
+    --shadow-lg: 0 24px 60px rgba(10, 10, 10, 0.16);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media screen and (max-width: 749px) {
+    :root {
+      --page-margin: var(--page-margin-mobile);
+    }
+  }
+
+  {%- for scheme in settings.color_schemes -%}
+
+  .color-{{ scheme.id }} {
+
+    --color-background: {{ scheme.settings.background }};
+    --color-background-raised: {{ scheme.settings.background_raised }};
+    --color-text: {{ scheme.settings.text }};
+    --color-text-muted: {{ scheme.settings.text_muted }};
+    --color-border: {{ scheme.settings.border }};
+    --color-accent: {{ scheme.settings.accent }};
+    --color-accent-soft: {{ scheme.settings.accent_soft }};
+
+    /* Primary Button */
+    --color-primary-button-background: {{ scheme.settings.primary_button_background }};
+    --color-primary-button-label: {{ scheme.settings.primary_button_label }};
+    --color-primary-button-border: {{ scheme.settings.primary_button_border }};
+    --color-primary-button-hover-background: {{ scheme.settings.primary_button_hover_background }};
+    --color-primary-button-hover-label: {{ scheme.settings.primary_button_hover_label }};
+    --color-primary-button-hover-border: {{ scheme.settings.primary_button_hover_border }};
+
+    /* Secondary Button */
+    --color-secondary-button-background: {{ scheme.settings.secondary_button_background }};
+    --color-secondary-button-label: {{ scheme.settings.secondary_button_label }};
+    --color-secondary-button-border: {{ scheme.settings.secondary_button_border }};
+    --color-secondary-button-hover-background: {{ scheme.settings.secondary_button_hover_background }};
+    --color-secondary-button-hover-label: {{ scheme.settings.secondary_button_hover_label }};
+    --color-secondary-button-hover-border: {{ scheme.settings.secondary_button_hover_border }};
+
+    background-color: var(--color-background);
+    color: var(--color-text);
+
+  }
+
+{%- endfor -%}
+{%- endstyle -%}

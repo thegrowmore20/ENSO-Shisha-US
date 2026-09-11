@@ -1,0 +1,305 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<section class="signature-models {{ scheme_class }} section-padding">
+  <div class="container">
+    <div class="signature-models__header text-center">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h-section">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.features != blank -%}
+        <p class="caption signature-models__features">{{ section.settings.features }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid--2 signature-models__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign model = block.settings.product
+
+          assign model_name = model.title | default: block.settings.name
+          assign model_image = model.featured_image
+          assign model_url = model.url | default: '#'
+
+          assign model_excerpt = model.metafields.descriptors.subtitle.value
+          if model_excerpt == blank
+            assign model_excerpt = model.description | strip_html | truncatewords: 32
+          endif
+          if model_excerpt == blank
+            assign model_excerpt = block.settings.excerpt
+          endif
+
+          assign model_rating = model.metafields.reviews.rating.value.rating
+          assign model_rating_count = model.metafields.reviews.rating_count.value
+
+          assign badge_label = block.settings.badge_label
+          if badge_label == blank
+            if model.available == false and model != blank
+              assign badge_label = 'products.product.sold_out' | t
+            elsif model.tags contains 'pre-order'
+              assign badge_label = 'Pre-Order'
+            elsif model.tags contains 'bestseller'
+              assign badge_label = 'Best Seller'
+            endif
+          endif
+
+          assign cta_label = block.settings.cta_label
+          if cta_label == blank
+            assign cta_label = 'products.product.choose_options' | t
+          endif
+        -%}
+
+        <div class="signature-model" {{ block.shopify_attributes }}>
+          <a href="{{ model_url }}" class="signature-model__media" aria-hidden="true" tabindex="-1">
+            {%- if badge_label != blank -%}
+              <span class="badge signature-model__badge">{{ badge_label }}</span>
+            {%- endif -%}
+            {%- if model_image -%}
+              <img
+                src="{{ model_image | image_url: width: 1100 }}"
+                alt="{{ model_image.alt | default: model_name | escape }}"
+                width="{{ model_image.width }}"
+                height="{{ model_image.height }}"
+                loading="lazy"
+                class="signature-model__image"
+              >
+            {%- else -%}
+              <div class="media-placeholder signature-model__placeholder">
+                {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
+              </div>
+            {%- endif -%}
+          </a>
+
+          <div class="signature-model__info">
+            {%- if model_name != blank -%}
+              <h3 class="h-product">
+                <a href="{{ model_url }}">{{ model_name }}</a>
+              </h3>
+            {%- endif -%}
+
+            {%- if model_rating > 0 -%}
+              {%- liquid
+                assign rating_label = model_rating_count
+                if model_rating_count == 1
+                  assign rating_label = 'sections.signature_models.review_count.one' | t: count: model_rating_count
+                else
+                  assign rating_label = 'sections.signature_models.review_count.other' | t: count: model_rating_count
+                endif
+              -%}
+              {%- render 'star-rating', rating: model_rating, review_count: rating_label -%}
+            {%- endif -%}
+
+            {%- if model != blank -%}
+              <p class="signature-model__price">
+                {%- if model.price_varies -%}
+                  {{ 'products.product.from_price_html' | t: price: model.price_min | money }}
+                {%- else -%}
+                  {{ model.price | money }}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            {%- if model_excerpt != blank -%}
+              <p class="body-text text-muted signature-model__excerpt">{{ model_excerpt }}</p>
+            {%- endif -%}
+
+            <a href="{{ model_url }}" class="btn btn--primary signature-model__cta">
+              {{ cta_label }}
+              {%- render 'icon-chevron', class: 'signature-model__cta-icon' -%}
+            </a>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .signature-models__header {
+    max-width: 640px;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  .signature-models__features {
+    margin-top: var(--space-4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .signature-models__grid {
+    align-items: start;
+    gap: var(--space-7);
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .signature-model__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-background-raised);
+    box-shadow: var(--shadow-md);
+  }
+
+  .signature-model__badge {
+    top: var(--space-4);
+    left: var(--space-4);
+  }
+
+  .signature-model__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out);
+  }
+
+  .signature-model__media:hover .signature-model__image {
+    transform: scale(1.05);
+  }
+
+  .signature-model__placeholder {
+    aspect-ratio: auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .signature-model__info {
+    margin-top: var(--space-5);
+  }
+
+  .signature-model__info .h-product {
+    font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.625rem);
+  }
+
+  .signature-model__info .h-product a {
+    transition: color 0.2s ease;
+  }
+
+  .signature-model__info .h-product a:hover {
+    color: var(--color-accent);
+  }
+
+  .signature-model__info .star-rating {
+    margin-top: var(--space-3);
+  }
+
+  .signature-model__price {
+    margin-top: var(--space-3);
+    font-family: var(--font-accent);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+
+  .signature-model__excerpt {
+    margin-top: var(--space-3);
+    max-width: 42ch;
+  }
+
+  .signature-model__cta {
+    margin-top: var(--space-5);
+  }
+
+  .signature-model__cta-icon {
+    width: 12px;
+    height: 12px;
+    transform: rotate(-90deg);
+  }
+
+  @media screen and (max-width: 589px) {
+    .signature-models__grid {
+      gap: var(--space-8);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.signature_models.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.signature_models.settings.color_scheme.label",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.signature_models.settings.eyebrow.label",
+      "default": "The Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.signature_models.settings.heading.label",
+      "default": "Shop Signature Models"
+    },
+    {
+      "type": "text",
+      "id": "features",
+      "label": "t:sections.signature_models.settings.features.label",
+      "default": "Coal-Free · Cordless · Magnetic"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "model",
+      "name": "t:sections.signature_models.blocks.model.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.signature_models.blocks.model.settings.product.label",
+          "info": "t:sections.signature_models.blocks.model.settings.product.info"
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "t:sections.signature_models.blocks.model.settings.badge_label.label",
+          "info": "t:sections.signature_models.blocks.model.settings.badge_label.info"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "t:sections.signature_models.blocks.model.settings.cta_label.label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.signature_models.blocks.model.headers.fallback"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "t:sections.signature_models.blocks.model.settings.name.label",
+          "info": "t:sections.signature_models.blocks.model.settings.name.info"
+        },
+        {
+          "type": "textarea",
+          "id": "excerpt",
+          "label": "t:sections.signature_models.blocks.model.settings.excerpt.label",
+          "info": "t:sections.signature_models.blocks.model.settings.excerpt.info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.signature_models.presets.name",
+      "blocks": [
+        { "type": "model", "settings": { "name": "ENSŌ", "cta_label": "Shop ENSŌ" } },
+        { "type": "model", "settings": { "name": "DIAMOND", "cta_label": "Pre-Order DIAMOND" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

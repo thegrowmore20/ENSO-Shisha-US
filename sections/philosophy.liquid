@@ -1,0 +1,134 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<section class="philosophy {{ scheme_class }} section-padding">
+  <div class="container">
+    <div class="philosophy__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h-section philosophy__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="body-text text-muted philosophy__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid--3">
+      {%- for block in section.blocks -%}
+        <div class="card" {{ block.shopify_attributes }}>
+          {%- if block.settings.index != blank -%}
+            <span class="card__index">{{ block.settings.index }}</span>
+          {%- endif -%}
+          <h3 class="card__title">{{ block.settings.title }}</h3>
+          <p class="card__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .philosophy__header {
+    max-width: 640px;
+    margin-bottom: var(--space-7);
+  }
+
+  .philosophy__heading {
+    margin-bottom: var(--space-4);
+  }
+
+  .philosophy__intro {
+    max-width: 56ch;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.philosophy.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.philosophy.settings.color_scheme.label",
+      "default": "scheme-paper"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.philosophy.settings.eyebrow.label",
+      "default": "Philosophy"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.philosophy.settings.heading.label",
+      "default": "A Modern Twist on a Classic Ritual"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "t:sections.philosophy.settings.intro.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.philosophy.blocks.item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "index",
+          "label": "t:sections.philosophy.blocks.item.settings.index.label",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.philosophy.blocks.item.settings.title.label",
+          "default": "Restraint"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.philosophy.blocks.item.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.philosophy.presets.name",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "index": "01",
+            "title": "Restraint",
+            "text": "Japanese minimalism without the coldness. Warm stone, wood, linen and real daylight — never neon, never blue light, never clinical white."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "index": "02",
+            "title": "Ritual",
+            "text": "A session is time set aside, not a device being operated. Everything we make should feel calm in the hand and quiet on the page."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "index": "03",
+            "title": "Craft",
+            "text": "The detail is the argument, so we never have to make one. No superlatives, no hype, no exclamation marks."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

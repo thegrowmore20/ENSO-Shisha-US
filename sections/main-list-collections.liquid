@@ -1,0 +1,51 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<div class="collections-list {{ scheme_class }} section-padding">
+  <div class="container">
+    <h1 class="h-section text-center collections-list__title">{{ 'general.search.title' | t }}</h1>
+    <div class="grid grid--3 collections-list__grid">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="card">
+          {%- if collection.featured_image -%}
+            <img src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.featured_image.alt | default: collection.title | escape }}" width="600" height="400" loading="lazy" class="collections-list__image">
+          {%- endif -%}
+          <h3 class="card__title">{{ collection.title }}</h3>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .collections-list__title {
+    margin-bottom: var(--space-7);
+  }
+
+  .collections-list__grid {
+    row-gap: var(--space-6);
+  }
+
+  .collections-list__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.main-list-collections.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-paper"
+    }
+  ]
+}
+{% endschema %}

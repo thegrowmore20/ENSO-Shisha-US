@@ -1,0 +1,29 @@
+{%- assign meta_description = page_description | default: shop.description | default: shop.name -%}
+{%- assign meta_image = page_image | default: settings.share_image -%}
+
+<title>
+  {{ page_title | default: shop.name }}
+  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+  {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+</title>
+
+{% if meta_description != blank %}
+  <meta name="description" content="{{ meta_description | strip_html | truncate: 320 }}">
+{% endif %}
+
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title | default: shop.name }}">
+<meta property="og:type" content="{% if template contains 'product' %}product{% else %}website{% endif %}">
+{% if meta_description != blank %}
+  <meta property="og:description" content="{{ meta_description | strip_html | truncate: 320 }}">
+{% endif %}
+{% if meta_image %}
+  <meta property="og:image" content="https:{{ meta_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ meta_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:card" content="summary_large_image">
+{% endif %}
+
+<link rel="canonical" href="{{ canonical_url }}">

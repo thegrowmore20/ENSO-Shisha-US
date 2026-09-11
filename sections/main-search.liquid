@@ -1,0 +1,72 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<div class="search-page {{ scheme_class }} section-padding">
+  <div class="container">
+    <div class="search-page__header text-center">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
+        <input type="hidden" name="type" value="product">
+        <label class="visually-hidden" for="SearchInput">{{ 'general.search.title' | t }}</label>
+        <input
+          type="search"
+          id="SearchInput"
+          name="q"
+          class="search-input"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+        >
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="body-text text-muted text-center search-page__count">{{ 'general.search.results_for_html' | t: terms: search.terms }}</p>
+        <div class="grid grid--3 search-page__grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- render 'card-product', product: item -%}
+            {%- else -%}
+              <a href="{{ item.url }}" class="card">
+                <h3 class="card__title">{{ item.title }}</h3>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="body-text text-muted text-center">{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .search-page__form {
+    max-width: 480px;
+    margin-inline: auto;
+    margin-bottom: var(--space-7);
+  }
+
+  .search-page__count {
+    margin-bottom: var(--space-6);
+  }
+
+  .search-page__grid {
+    row-gap: var(--space-6);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.main-search.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-paper"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,99 @@
+{%- doc -%}
+  Renders a poster image that is replaced by a muted, looping background video
+  once it scrolls into view. The poster stays visible until the video can play,
+  so the frame is never empty.
+
+  @param {object} [video] - Shopify-hosted video (from a `video` setting)
+  @param {object} [video_url] - External video (from a `video_url` setting)
+  @param {object} [thumbnail] - Poster image shown until the video is ready
+  @param {string} [alt] - Fallback alt text when the thumbnail has none
+  @param {number} [width] - Requested poster width from the CDN, defaults to 1200
+  @param {string} [loading] - Poster loading attribute, defaults to 'lazy'
+  @param {string} [class] - Additional CSS classes for the wrapper
+{%- enddoc -%}
+
+{%- liquid
+  assign poster_width = width | default: 1200
+  assign poster_loading = loading | default: 'lazy'
+
+  assign has_upload = false
+  if video and video.sources.size > 0
+    assign has_upload = true
+  endif
+
+  assign has_external = false
+  if video_url and video_url.id != blank
+    assign has_external = true
+  endif
+-%}
+
+<lazy-video class="video-media {{ class }}">
+  {%- if thumbnail -%}
+    <img
+      src="{{ thumbnail | image_url: width: poster_width }}"
+      alt="{{ thumbnail.alt | default: alt | escape }}"
+      width="{{ thumbnail.width }}"
+      height="{{ thumbnail.height }}"
+      loading="{{ poster_loading }}"
+      class="video-media__poster"
+    >
+  {%- else -%}
+    <div class="media-placeholder video-media__placeholder">
+      {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
+    </div>
+  {%- endif -%}
+
+  {%- if has_upload -%}
+    <template data-video-template data-video-kind="upload">
+      <video class="video-media__video" muted loop playsinline preload="none">
+        {%- for source in video.sources -%}
+          {%- if source.format == 'mp4' -%}
+            <source src="{{ source.url }}" type="{{ source.mime_type }}">
+          {%- endif -%}
+        {%- endfor -%}
+      </video>
+    </template>
+  {%- elsif has_external -%}
+    <template
+      data-video-template
+      data-video-kind="{{ video_url.type }}"
+      data-video-id="{{ video_url.id }}"
+    ></template>
+  {%- endif -%}
+</lazy-video>
+
+{% stylesheet %}
+  .video-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: var(--color-background-raised);
+  }
+
+  .video-media__poster,
+  .video-media__placeholder,
+  .video-media__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-media__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: auto;
+  }
+
+  .video-media__video {
+    border: 0;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .video-media.is-ready .video-media__video {
+    opacity: 1;
+  }
+{% endstylesheet %}

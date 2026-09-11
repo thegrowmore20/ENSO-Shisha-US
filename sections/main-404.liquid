@@ -1,0 +1,42 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+-%}
+
+<div class="not-found {{ scheme_class }} section-padding">
+  <div class="container text-center not-found__inner">
+    {%- render 'icon-enso', class: 'not-found__mark' -%}
+    <h1 class="h-section">{{ 'general.404.title' | t }}</h1>
+    <p class="body-text text-muted">{{ 'general.404.subtext' | t }}</p>
+    <a href="{{ routes.root_url }}" class="btn btn--primary">{{ 'general.404.link' | t }}</a>
+  </div>
+</div>
+
+{% stylesheet %}
+  .not-found__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    padding-block: var(--space-8);
+  }
+
+  .not-found__mark {
+    width: 48px;
+    color: var(--color-accent);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.main-404.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.header.settings.color_scheme.label",
+      "default": "scheme-paper"
+    }
+  ]
+}
+{% endschema %}
