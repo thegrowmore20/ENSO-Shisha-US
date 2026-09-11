@@ -26,11 +26,22 @@
         "heading_size_desktop": 56,
         "heading_size_mobile": 32,
         "heading_color": "#ffffff",
+        "subheading": "",
+        "button": "",
+        "button_url": "",
         "width": "full",
         "margin_top": 0,
         "margin_bottom": 0,
-        "height": "small",
+        "height_desktop": "custom",
+        "height_desktop_custom": 300,
+        "height_tablet": "custom",
+        "height_tablet_custom": 300,
+        "height_mobile": "custom",
+        "height_mobile_custom": 300,
         "content_alignment": "left",
+        "content_width_desktop": 600,
+        "content_width_tablet": 500,
+        "content_width_mobile": 0,
         "overlay_color": "#000000",
         "overlay_opacity": 50
       }
@@ -101,56 +112,13 @@
       ],
       "name": "t:sections.contact.presets.name",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "show_left_content": true,
         "form_heading": "Contact Us",
-        "padding_top": 60,
-        "padding_bottom": 60,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      }
-    },
-    "awards_WzJrri": {
-      "type": "awards",
-      "blocks": {
-        "award_TXdKgh": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons_all-05-webp.webp",
-            "title": "<a href=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\" target=\"_blank\" title=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\">ENSŌ User Guide</a>",
-            "subtitle": "",
-            "text": ""
-          }
-        },
-        "award_FJjReB": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons_all-01-webp.webp",
-            "title": "<a href=\"/pages/user-guide\" target=\"_blank\" title=\"User Guide Videos\">ENSŌ Video Guide</a>",
-            "subtitle": "",
-            "text": ""
-          }
-        },
-        "award_TiC4tE": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/ICON_E150-04-webp.webp",
-            "title": "<a href=\"/pages/warranty\" target=\"_blank\" title=\"Warranty\">ENSŌ Warranty Registration</a>",
-            "subtitle": "",
-            "text": ""
-          }
-        }
-      },
-      "block_order": [
-        "award_TXdKgh",
-        "award_FJjReB",
-        "award_TiC4tE"
-      ],
-      "name": "t:sections.awards.presets.name",
-      "settings": {
-        "color_scheme": "",
-        "eyebrow": "",
-        "heading": "Find More About Us"
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "custom_liquid_W8RPpV": {
@@ -170,7 +138,6 @@
     "main",
     "hero_banner_V6dPzL",
     "contact_MFQGnq",
-    "awards_WzJrri",
     "custom_liquid_W8RPpV"
   ]
 }

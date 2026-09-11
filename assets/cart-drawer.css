@@ -19,6 +19,7 @@
 }
 
 .cart-drawer-box {
+  position: relative;
   width: 480px;
   background: #f5f5f5;
   border-radius: 12px 0 0 12px;
@@ -89,12 +90,49 @@
   padding: 20px;
 }
 
+/*
+  Shown while a quantity change or item removal is in flight (see
+  cart-drawer.js). Covers the whole drawer panel — header through footer —
+  rather than just the items list, with the spinner centered in the drawer.
+  Injected/removed by JS rather than living in the server-rendered markup:
+  updateCartDrawer() replaces .cart-drawer's entire innerHTML (which
+  includes .cart-drawer-box, and this overlay along with it) with the fresh
+  section HTML the moment the request resolves, so the overlay disappears
+  as a side effect of that swap — no explicit "hide" step needed on success.
+*/
+.cart-drawer-loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 245, 245, 0.8);
+}
+
+.cart-drawer-loading-overlay__spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(33, 37, 41, 0.15);
+  border-top-color: #212529;
+  border-radius: 50%;
+  animation: cart-drawer-spin 0.6s linear infinite;
+}
+
+@keyframes cart-drawer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .cart-drawer-item {
   display: flex;
   border: 1px solid #e7e7e7;
   border-radius: 12px;
   background: white;
   overflow: hidden;
+  padding: var(--space-3);
+  gap: var(--space-3);
 }
 
 .cart-drawer-item + .cart-drawer-item {
@@ -102,18 +140,18 @@
 }
 
 .cart-drawer-item-image {
-  width: 120px;
+  width: 90px;
 }
 
 .cart-drawer-item-image img {
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
+  border-radius: var(--radius-md);
 }
 
 .cart-drawer-item-main {
   flex: 1;
-  padding: 5px 10px;
 }
 
 .cart-drawer-item-main-flex {
@@ -123,7 +161,8 @@
 }
 
 .cart-drawer-item-header {
-  margin-bottom: 8px;
+  margin-bottom: var(--space-3);
+  gap: var(--space-2);
 }
 
 .cart-drawer-item-header,
@@ -197,8 +236,8 @@
 }
 
 .cart-drawer-quantity-selector button {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,15 +251,13 @@
 }
 
 .cart-drawer-quantity-selector button svg {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 .cart-drawer-quantity-selector input {
-  width: 28px;
-  font-size: 13px;
-  text-align: center;
-  line-height: 24px;
+  width: 28px;  
+  text-align: center;  
   border: 0;
   font-weight: 600;
 }
@@ -228,7 +265,6 @@
 .cart-drawer-footer {
   padding: 20px;
   margin-top: auto;
-  border-top: 1px solid #e7e7e7;
 }
 
 .cart-drawer-footer-row {
@@ -239,13 +275,14 @@
 }
 
 .cart-drawer-footer-row:last-of-type {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-2);
 }
 
+.cart-drawer-footer-row span,
 .cart-drawer-footer-row h3 {
-  font-weight: 400;
-  color: #525252;
-  font-size: 14px;
+  color: #000;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .cart-drawer-footer-row span {
@@ -258,11 +295,9 @@
   display: block;
   width: 100%;
   font-weight: 500;
-  background-color: #212529;
-  color: #fff;
   line-height: 46px;
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: 50px;
 }
 
 .cart-drawer-empty-state {
@@ -291,7 +326,7 @@
   justify-content:flex-start;
   background:none;
   border:none;
-  padding:16px 0;
+  padding:var(--space-2) 0;
   cursor:pointer;
   font-size:14px;
   font-weight:600;
@@ -319,13 +354,17 @@
   font-size:14px;
 }
 
+.cart-original-total-row{
+  margin-top: var(--space-2);
+}
+
 .cart-original-total-row,
 .cart-total-discounts-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
   font-weight: 600;
 }
 

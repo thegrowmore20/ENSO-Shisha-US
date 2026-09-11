@@ -10,10 +10,29 @@
   if section.settings.heading_color != blank
     assign heading_style = 'color: ' | append: section.settings.heading_color | append: ';'
   endif
+
+  assign content_width_desktop_css = 'none'
+  if section.settings.content_width_desktop > 0
+    assign content_width_desktop_css = section.settings.content_width_desktop | append: 'px'
+  endif
+
+  assign content_width_tablet_css = 'none'
+  if section.settings.content_width_tablet > 0
+    assign content_width_tablet_css = section.settings.content_width_tablet | append: 'px'
+  endif
+
+  assign content_width_mobile_css = 'none'
+  if section.settings.content_width_mobile > 0
+    assign content_width_mobile_css = section.settings.content_width_mobile | append: 'px'
+  endif
+
+  assign height_desktop_custom_css = section.settings.height_desktop_custom | append: 'px'
+  assign height_tablet_custom_css = section.settings.height_tablet_custom | append: 'px'
+  assign height_mobile_custom_css = section.settings.height_mobile_custom | append: 'px'
 -%}
 
 <section
-  class="banner {{ scheme_class }} banner--width-{{ section.settings.width }} {% if section.settings.width == 'page' %}container{% endif %} banner--height-{{ section.settings.height }} banner--align-{{ section.settings.content_alignment }}"
+  class="banner {{ scheme_class }} banner--width-{{ section.settings.width }} {% if section.settings.width == 'page' %}container{% endif %} banner--height-mobile-{{ section.settings.height_mobile }} banner--height-tablet-{{ section.settings.height_tablet }} banner--height-desktop-{{ section.settings.height_desktop }} banner--align-{{ section.settings.content_alignment }}"
   style="
     --banner-margin-top: {{ section.settings.margin_top }}px;
     --banner-margin-bottom: {{ section.settings.margin_bottom }}px;
@@ -21,6 +40,12 @@
     --banner-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
     --banner-overlay-color: {{ section.settings.overlay_color }};
     --banner-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --banner-content-width-desktop: {{ content_width_desktop_css }};
+    --banner-content-width-tablet: {{ content_width_tablet_css }};
+    --banner-content-width-mobile: {{ content_width_mobile_css }};
+    --banner-height-desktop-custom: {{ height_desktop_custom_css }};
+    --banner-height-tablet-custom: {{ height_tablet_custom_css }};
+    --banner-height-mobile-custom: {{ height_mobile_custom_css }};
   "
 >
   <div class="banner__inner">
@@ -60,21 +85,23 @@
 
     {%- if section.settings.heading != blank -%}
       <div class="banner__content container">
-        {% if section.settings.heading != blank %}
-          <h1 class="banner__heading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
-            {{ section.settings.heading }}
-          </h1>
-        {% endif %}
-        {% if section.settings.subheading != blank %}
-          <div class="banner__subheading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
-            {{ section.settings.subheading }}
-          </div>
-        {% endif %}
-        {% if section.settings.button != blank %}
-          <a class="btn btn--primary" href="{{ section.settings.button_url }}">
-            {{ section.settings.button }}
-          </a>
-        {% endif %}
+        <div class="banner__content-inner">
+          {% if section.settings.heading != blank %}
+            <h2 class="banner__heading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
+              {{ section.settings.heading }}
+            </h2>
+          {% endif %}
+          {% if section.settings.subheading != blank %}
+            <div class="banner__subheading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
+              {{ section.settings.subheading }}
+            </div>
+          {% endif %}
+          {% if section.settings.button != blank %}
+            <a class="btn btn--primary" href="{{ section.settings.button_url }}">
+              {{ section.settings.button }}
+            </a>
+          {% endif %}
+        </div>
       </div>
     {%- endif -%}
   </div>
@@ -128,47 +155,98 @@
     }
   }
 
-  /* Fixed height variants: image and placeholder fill the box */
-  .banner--height-small .banner__media,
-  .banner--height-small .banner__placeholder {
-    min-height: 260px;
-  }
-  .banner--height-medium .banner__media,
-  .banner--height-medium .banner__placeholder {
-    min-height: 380px;
-  }
-  .banner--height-large .banner__media,
-  .banner--height-large .banner__placeholder {
-    min-height: 520px;
-  }
-  .banner--height-auto .banner__placeholder {
-    min-height: 320px;
+  /* Fixed height variants: image and placeholder fill the box.
+     Each viewport tier (mobile / tablet / desktop) carries its own class
+     on the section at all times — only the media query below decides
+     which tier's rules are actually in effect at a given width. */
+  @media screen and (max-width: 749px) {
+    .banner--height-mobile-small .banner__media,
+    .banner--height-mobile-small .banner__placeholder {
+      min-height: 410px;
+    }
+    .banner--height-mobile-medium .banner__media,
+    .banner--height-mobile-medium .banner__placeholder {
+      min-height: 550px;
+    }
+    .banner--height-mobile-large .banner__media,
+    .banner--height-mobile-large .banner__placeholder {
+      min-height: 640px;
+    }
+    .banner--height-mobile-auto .banner__placeholder {
+      min-height: 320px;
+    }
+    .banner--height-mobile-custom .banner__media,
+    .banner--height-mobile-custom .banner__placeholder {
+      min-height: var(--banner-height-mobile-custom);
+    }
+    .banner--height-mobile-small .banner__image,
+    .banner--height-mobile-medium .banner__image,
+    .banner--height-mobile-large .banner__image,
+    .banner--height-mobile-custom .banner__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
   }
 
-  @media screen and (min-width: 768px) {
-    .banner--height-small .banner__media,
-    .banner--height-small .banner__placeholder {
-      min-height: 360px;
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .banner--height-tablet-small .banner__media,
+    .banner--height-tablet-small .banner__placeholder {
+      min-height: 410px;
     }
-    .banner--height-medium .banner__media,
-    .banner--height-medium .banner__placeholder {
-      min-height: 520px;
+    .banner--height-tablet-medium .banner__media,
+    .banner--height-tablet-medium .banner__placeholder {
+      min-height: 550px;
     }
-    .banner--height-large .banner__media,
-    .banner--height-large .banner__placeholder {
-      min-height: 720px;
+    .banner--height-tablet-large .banner__media,
+    .banner--height-tablet-large .banner__placeholder {
+      min-height: 640px;
     }
-    .banner--height-auto .banner__placeholder {
+    .banner--height-tablet-auto .banner__placeholder {
+      min-height: 380px;
+    }
+    .banner--height-tablet-custom .banner__media,
+    .banner--height-tablet-custom .banner__placeholder {
+      min-height: var(--banner-height-tablet-custom);
+    }
+    .banner--height-tablet-small .banner__image,
+    .banner--height-tablet-medium .banner__image,
+    .banner--height-tablet-large .banner__image,
+    .banner--height-tablet-custom .banner__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .banner--height-desktop-small .banner__media,
+    .banner--height-desktop-small .banner__placeholder {
+      min-height: 410px;
+    }
+    .banner--height-desktop-medium .banner__media,
+    .banner--height-desktop-medium .banner__placeholder {
+      min-height: 550px;
+    }
+    .banner--height-desktop-large .banner__media,
+    .banner--height-desktop-large .banner__placeholder {
+      min-height: 640px;
+    }
+    .banner--height-desktop-auto .banner__placeholder {
       min-height: 420px;
     }
-  }
-
-  .banner--height-small .banner__image,
-  .banner--height-medium .banner__image,
-  .banner--height-large .banner__image {
-    position: absolute;
-    inset: 0;
-    height: 100%;
+    .banner--height-desktop-custom .banner__media,
+    .banner--height-desktop-custom .banner__placeholder {
+      min-height: var(--banner-height-desktop-custom);
+    }
+    .banner--height-desktop-small .banner__image,
+    .banner--height-desktop-medium .banner__image,
+    .banner--height-desktop-large .banner__image,
+    .banner--height-desktop-custom .banner__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
   }
 
   .banner__placeholder {
@@ -212,12 +290,26 @@
     text-align: left;
   }
 
+  .banner--align-right .banner__content {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .banner__content-inner {
+    max-width: var(--banner-content-width-mobile);
+  }
+
   .banner__heading {
     margin: 0;
-    max-width: 20ch;
     font-size: var(--banner-heading-size-mobile);
     line-height: 1.1;
     margin-bottom: 1rem;
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .banner__content-inner {
+      max-width: var(--banner-content-width-tablet);
+    }
   }
 
   @media screen and (min-width: 768px) {
@@ -225,7 +317,13 @@
       font-size: var(--banner-heading-size-desktop);
     }
     .banner__content {
-        padding: var(--page-margin);    
+        padding: var(--page-margin);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .banner__content-inner {
+      max-width: var(--banner-content-width-desktop);
     }
   }
 {% endstylesheet %}
@@ -342,15 +440,75 @@
     },
     {
       "type": "select",
-      "id": "height",
-      "label": "Banner height",
+      "id": "height_desktop",
+      "label": "Banner height (desktop)",
       "options": [
         { "value": "auto", "label": "Auto (based on image)" },
         { "value": "small", "label": "Small" },
         { "value": "medium", "label": "Medium" },
-        { "value": "large", "label": "Large" }
+        { "value": "large", "label": "Large" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop_custom",
+      "label": "Custom height (desktop)",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 500,
+      "visible_if": "{{ section.settings.height_desktop == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "height_tablet",
+      "label": "Banner height (tablet)",
+      "options": [
+        { "value": "auto", "label": "Auto (based on image)" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "custom", "label": "Custom" }
       ],
       "default": "medium"
+    },
+    {
+      "type": "range",
+      "id": "height_tablet_custom",
+      "label": "Custom height (tablet)",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 500,
+      "visible_if": "{{ section.settings.height_tablet == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Banner height (mobile)",
+      "options": [
+        { "value": "auto", "label": "Auto (based on image)" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile_custom",
+      "label": "Custom height (mobile)",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 500,
+      "visible_if": "{{ section.settings.height_mobile == 'custom' }}"
     },
     {
       "type": "select",
@@ -358,9 +516,43 @@
       "label": "Content alignment",
       "options": [
         { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" }
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
       ],
       "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_width_desktop",
+      "label": "Content width (desktop)",
+      "min": 0,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 600,
+      "info": "0 = no limit"
+    },
+    {
+      "type": "range",
+      "id": "content_width_tablet",
+      "label": "Content width (tablet)",
+      "min": 0,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 500,
+      "info": "0 = no limit"
+    },
+    {
+      "type": "range",
+      "id": "content_width_mobile",
+      "label": "Content width (mobile)",
+      "min": 0,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = no limit"
     },
     {
       "type": "header",

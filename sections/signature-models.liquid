@@ -2,7 +2,23 @@
   assign scheme_class = 'color-' | append: section.settings.color_scheme
 -%}
 
-<section class="signature-models {{ scheme_class }} section-padding">
+{% style %}
+ .section-padding-{{ section.id }} {
+      display: block;
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      max-width: 100%;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-padding-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+{% endstyle %}
+
+<section class="signature-models {{ scheme_class }} section-padding-{{ section.id }}">
   <div class="container">
     <div class="signature-models__header text-center">
       {%- if section.settings.eyebrow != blank -%}
@@ -27,7 +43,7 @@
 
           assign model_excerpt = model.metafields.descriptors.subtitle.value
           if model_excerpt == blank
-            assign model_excerpt = model.description | strip_html | truncatewords: 32
+            assign model_excerpt = model.description | strip_html | truncatewords: 15
           endif
           if model_excerpt == blank
             assign model_excerpt = block.settings.excerpt
@@ -81,7 +97,8 @@
               </h3>
             {%- endif -%}
 
-            {%- if model_rating > 0 -%}
+            {% assign model_rating_number = model_rating | plus: 0 %}
+            {%- if model_rating_number > 0 -%}
               {%- liquid
                 assign rating_label = model_rating_count
                 if model_rating_count == 1
@@ -122,7 +139,7 @@
   .signature-models__header {
     max-width: 640px;
     margin-inline: auto;
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
   }
 
   .signature-models__features {
@@ -193,7 +210,7 @@
   .signature-model__price {
     margin-top: var(--space-3);
     font-family: var(--font-accent);
-    font-weight: 800;
+    font-weight: 600;
     font-size: 18px;
     letter-spacing: -0.02em;
   }
@@ -248,6 +265,50 @@
       "id": "features",
       "label": "t:sections.signature_models.settings.features.label",
       "default": "Coal-Free · Cordless · Magnetic"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
     }
   ],
   "blocks": [

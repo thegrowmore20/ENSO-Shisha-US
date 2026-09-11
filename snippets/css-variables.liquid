@@ -25,6 +25,12 @@
 
     --border-width: 1px;
 
+    /* Kept in sync by announcement-bar.liquid's own JS whenever it mounts,
+       resizes, or is removed — lets the transparent/fixed header (see
+       header.liquid) offset itself below the bar without needing to know
+       about it directly. Stays 0px when no announcement bar is on the page. */
+    --announcement-bar-height: 0px;
+
     --badge-sold-out-bg: {{ settings.badge_sold_out_bg }};
     --badge-sold-out-text: {{ settings.badge_sold_out_text }};
     --badge-sale-bg: {{ settings.badge_sale_bg }};

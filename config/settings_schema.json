@@ -207,6 +207,17 @@
     ]
   },
   {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
     "name": "t:settings.social.name",
     "settings": [
       {
@@ -217,8 +228,23 @@
       },
       {
         "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube"
+      },
+      {
+        "type": "text",
         "id": "social_tiktok_link",
         "label": "t:settings.social.tiktok.label"
+      },
+      {
+        "type": "text",
+        "id": "social_x_link",
+        "label": "X (Twitter)"
       }
     ]
   },
@@ -324,6 +350,36 @@
         "id": "badge_sale_text",
         "label": "Text color",
         "default": "#FFFFFF"
+      }
+    ]
+  },
+  {
+    "name": "Product Cards",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Swatches"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_product_card_swatches",
+        "label": "Enable variant swatches on product cards",
+        "info": "Shows selectable image swatches in the bottom-left corner of the card image. Only appears on products that have a matching option below — other products are unaffected.",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "swatch_color_option_name",
+        "label": "Color option name",
+        "default": "Color",
+        "info": "The exact option name (case-insensitive) products use for color, e.g. \"Color\" or \"Colour\". Leave blank to disable matching on color."
+      },
+      {
+        "type": "text",
+        "id": "swatch_size_option_name",
+        "label": "Size option name",
+        "default": "Size",
+        "info": "Used only when a product has no matching color option. Leave blank to disable matching on size."
       }
     ]
   }

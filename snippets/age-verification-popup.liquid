@@ -1,0 +1,230 @@
+{% liquid
+  assign terms_url = blank
+  for policy in shop.policies
+    assign policy_handle = policy.title | handleize
+    if policy_handle contains 'terms'
+      assign terms_url = policy.url
+    endif
+  endfor
+%}
+<style>
+  .agegate-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding: 16px;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0 0 0 / 80%);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    animation: agegate-fade 0.25s ease both;
+  }
+  .agegate-overlay.is-active {
+    display: flex;
+  }
+  body.agegate-is-active {
+    overflow: hidden;
+  }
+
+  @keyframes agegate-fade {
+    from {
+      opacity: 0
+    }
+    to {
+      opacity: 1
+    }
+  }
+  @keyframes agegate-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98)
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1)
+    }
+  }
+
+  .agegate-card {
+    width: 100%;
+    max-width: 380px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 60px rgb(0 0 0 / 40%);
+    animation: agegate-rise 0.3s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+    padding: 32px;
+    font-family: var(--font-body);
+  }
+
+  .agegate-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .agegate-mark {
+    max-width: 150px;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+  }
+  .agegate-mark-fallback {
+    width: 34px;
+    height: 34px;
+    color: var(--color-text);
+  }
+
+  .agegate-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 22px;
+    margin: 0 0 8px;
+  }
+
+  .agegate-sub {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0 0 20px;
+  }
+
+  .agegate-choices {
+    margin-bottom: 14px;
+    gap: var(--space-2);
+  }
+  .agegate-choices .btn {
+    width: 100%;
+    padding: 0 25px;
+  }
+
+  .agegate-legal {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  .agegate-legal a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 480px) {
+    .agegate-card {
+      padding: 2rem 1.5rem;
+    }
+    .agegate-title {
+      font-size: 20px;
+    }
+  }
+</style>
+
+<div class="agegate-overlay color-scheme-paper" id="agegate-overlay">
+  <div
+    class="agegate-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="agegate-title">
+
+    <div class="agegate-logo">
+      {% if shop.brand.logo %}
+        <img
+          class="agegate-mark"
+          src="{{ shop.brand.logo | image_url: width: 300 }}"
+          alt="{{ shop.name }}"
+          width="150"
+          height="36"
+          loading="lazy"
+          decoding="async">
+      {% else %}
+        <svg
+          class="agegate-mark-fallback"
+          viewBox="0 0 48 48"
+          fill="none"
+          aria-hidden="true">
+          <path
+            d="M38 14C34.8 9.6 29.6 7 24 7 14.6 7 7 14.6 7 24s7.6 17 17 17c8.2 0 15-5.8 16.6-13.5"
+            stroke="currentColor"
+            stroke-width="3.2"
+            stroke-linecap="round" />
+        </svg>
+      {% endif %}
+    </div>
+
+    <h4 class="agegate-title text-center" id="agegate-title">Are you 21 or older?</h4>
+    <p class="agegate-sub text-center">ENSŌ products are intended for adults only. Please confirm your age to continue.</p>
+
+    <div class="agegate-choices grid grid--2">
+      <button
+        class="btn btn--primary agegate-yes"
+        id="age-popup-yes"
+        type="button">Yes, I'm 21+</button>
+      <button
+        class="btn btn--outline agegate-no"
+        id="age-popup-no"
+        type="button">No, I'm not</button>
+    </div>
+
+    <p class="agegate-legal text-center">
+      By entering you agree to our
+      {% if terms_url != blank %}
+        <a href="{{ terms_url }}">Terms &amp; Conditions</a>
+      {% else %}
+        Terms &amp; Conditions
+      {% endif %}.
+    </p>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var overlay = document.getElementById('agegate-overlay');
+    var yesButton = document.getElementById('age-popup-yes');
+    var noButton = document.getElementById('age-popup-no');
+
+    if (!overlay || !yesButton || !noButton) return;
+
+    var isVerified = false;
+    try {
+      isVerified = !!localStorage.getItem('over-21');
+    } catch (e) {
+      // localStorage unavailable (privacy mode, blocked storage, etc.) —
+      // fail open rather than letting the exception skip attaching the
+      // button listeners below.
+    }
+
+    if (!isVerified) {
+      setTimeout(showAgePopup, 3000);
+    }
+
+    yesButton.addEventListener('click', removeAgePopup);
+    noButton.addEventListener('click', function () {
+      window.location.href = 'https://google.com';
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && overlay.classList.contains('is-active')) {
+        removeAgePopup();
+      }
+    });
+
+    function showAgePopup() {
+      document.body.classList.add('agegate-is-active');
+      overlay.classList.add('is-active');
+      yesButton.focus();
+    }
+
+    function removeAgePopup() {
+      try {
+        localStorage.setItem('over-21', 'true');
+      } catch (e) {
+        // Ignore — worst case the gate reappears next visit.
+      }
+      document.body.classList.remove('agegate-is-active');
+      overlay.classList.remove('is-active');
+    }
+  });
+</script>

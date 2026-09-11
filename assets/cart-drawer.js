@@ -14,6 +14,40 @@ function updateCartItemCounts(count) {
   });
 }
 
+/**
+ * Shown the moment a quantity/remove request starts, covering the whole
+ * drawer panel (header through footer) with the spinner centered in it.
+ * Not removed explicitly — updateCartDrawer() swaps .cart-drawer's entire
+ * innerHTML (which includes .cart-drawer-box, and this overlay along with
+ * it) with freshly-rendered markup once the request resolves, which wipes
+ * the overlay out as a side effect. Guarded against stacking duplicates if
+ * a second click slips in before the first request settles.
+ */
+function showCartDrawerLoading() {
+  const box = document.querySelector(".cart-drawer-box");
+  if (!box || box.querySelector(".cart-drawer-loading-overlay")) return;
+
+  const overlay = document.createElement("div");
+  overlay.className = "cart-drawer-loading-overlay";
+  overlay.innerHTML = '<span class="cart-drawer-loading-overlay__spinner"></span>';
+  box.appendChild(overlay);
+}
+
+// Only needed on the failure path — a successful update always ends in
+// updateCartDrawer(), which replaces .cart-drawer-box entirely and takes
+// the overlay with it. Without this, a failed request would leave the
+// drawer stuck behind the spinner forever.
+function hideCartDrawerLoading() {
+  document.querySelector(".cart-drawer-loading-overlay")?.remove();
+}
+
+// Shared by the click handler and the post-refresh state restoration below,
+// so the +/− glyph never drifts out of sync with the toggle's actual state.
+function setOrderNoteArrow(toggle, isOpen) {
+  const arrow = toggle?.querySelector(".order-note-arrow");
+  if (arrow) arrow.textContent = isOpen ? "−" : "+";
+}
+
 async function updateCartDrawer() {
   // Capture order-note UI state before the drawer's innerHTML is replaced,
   // so a quantity/remove change elsewhere doesn't snap an open note closed
@@ -41,6 +75,7 @@ async function updateCartDrawer() {
     if (noteToggleAfter) {
       noteToggleAfter.setAttribute("aria-expanded", "true");
       noteToggleAfter.classList.add("is-open");
+      setOrderNoteArrow(noteToggleAfter, true);
     }
   }
 
@@ -70,24 +105,34 @@ function addCartDrawerListeners() {
       const isUp = button.classList.contains("cart-drawer-quantity-selector-plus");
       const newQuantity = isUp ? currentQuantity + 1 : currentQuantity - 1;
 
-      const res = await fetch("/cart/update.js", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          updates: {
-            [key]: newQuantity < 1 ? 0 : newQuantity,
+      const quantityButtons = rootItem.querySelectorAll(".cart-drawer-quantity-selector button");
+      quantityButtons.forEach((btn) => (btn.disabled = true));
+      showCartDrawerLoading();
+
+      try {
+        const res = await fetch("/cart/update.js", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
-        }),
-      });
+          body: JSON.stringify({
+            updates: {
+              [key]: newQuantity < 1 ? 0 : newQuantity,
+            },
+          }),
+        });
 
-      const cart = await res.json();
+        const cart = await res.json();
 
-      updateCartItemCounts(cart.item_count);
+        updateCartItemCounts(cart.item_count);
 
-      await updateCartDrawer();
+        await updateCartDrawer();
+      } catch (error) {
+        console.error(error);
+        quantityButtons.forEach((btn) => (btn.disabled = false));
+        hideCartDrawerLoading();
+      }
     });
   });
 
@@ -99,25 +144,32 @@ function addCartDrawerListeners() {
       const key = rootItem.getAttribute("data-line-item-key");
 
       button.disabled = true;
+      showCartDrawerLoading();
 
-      const res = await fetch("/cart/update.js", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          updates: {
-            [key]: 0,
+      try {
+        const res = await fetch("/cart/update.js", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
-        }),
-      });
+          body: JSON.stringify({
+            updates: {
+              [key]: 0,
+            },
+          }),
+        });
 
-      const cart = await res.json();
+        const cart = await res.json();
 
-      updateCartItemCounts(cart.item_count);
+        updateCartItemCounts(cart.item_count);
 
-      await updateCartDrawer();
+        await updateCartDrawer();
+      } catch (error) {
+        console.error(error);
+        button.disabled = false;
+        hideCartDrawerLoading();
+      }
     });
   });
 
@@ -157,6 +209,7 @@ function addCartDrawerListeners() {
       noteWrapper.hidden = !willOpen;
       noteToggle.setAttribute("aria-expanded", String(willOpen));
       noteToggle.classList.toggle("is-open", willOpen);
+      setOrderNoteArrow(noteToggle, willOpen);
 
       if (willOpen) {
         const field = document.getElementById("CartNote");

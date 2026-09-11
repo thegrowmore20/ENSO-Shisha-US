@@ -3,7 +3,23 @@
   assign featured_blog = section.settings.blog
 -%}
 
-<section class="blog-posts {{ scheme_class }} section-padding">
+{% style %}
+ .section-padding-{{ section.id }} {
+      display: block;
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      max-width: 100%;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-padding-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+{% endstyle %}
+
+<section class="blog-posts {{ scheme_class }} section-padding-{{ section.id }}">
   <div class="container">
     <div class="blog-posts__header">
       <div>
@@ -40,7 +56,7 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: var(--space-5);
-    margin-bottom: var(--space-7);
+    margin-bottom: var(--space-6);
     flex-wrap: wrap;
   }
 
@@ -100,6 +116,50 @@
       "type": "url",
       "id": "cta_link",
       "label": "t:sections.blog_posts.settings.cta_link.label"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
     }
   ],
   "presets": [

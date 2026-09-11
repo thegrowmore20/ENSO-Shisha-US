@@ -155,11 +155,18 @@ if (!customElements.get('product-info')) {
 }
 
 if (!customElements.get('product-media-gallery')) {
+  // Below this, a swipe/drag is treated as an intentional slide change
+  // rather than a tap or an indecisive wiggle.
+  const SWIPE_THRESHOLD_PX = 40;
+
   class ProductMediaGallery extends HTMLElement {
     connectedCallback() {
       this.thumbs = Array.from(this.querySelectorAll('[data-thumb]'));
       this.items = Array.from(this.querySelectorAll('.product-gallery__item'));
+      this.track = this.querySelector('[data-gallery-track]');
+      this.viewport = this.querySelector('[data-gallery-main]');
       this.isCarousel = !!this.querySelector('[data-carousel-track]');
+      this.activeIndex = Math.max(0, this.items.findIndex((item) => item.classList.contains('is-active')));
 
       this.thumbs.forEach((thumb) => {
         thumb.addEventListener('click', () => this.setActiveMedia(thumb.dataset.targetMediaId));
@@ -169,6 +176,12 @@ if (!customElements.get('product-media-gallery')) {
       if (this.querySelector('[data-media-type="model"]') && window.Shopify?.loadFeatures) {
         window.Shopify.loadFeatures([{ name: 'model-viewer-ui', version: '1.0', onLoad: () => {} }]);
       }
+
+      if (!this.isCarousel && this.track && this.items.length > 1) {
+        this.#bindSwipe();
+      }
+
+      this.#bindThumbsOverflow();
     }
 
     setActiveMedia(mediaId) {
@@ -178,18 +191,156 @@ if (!customElements.get('product-media-gallery')) {
         return;
       }
 
-      this.items.forEach((item) => {
-        const isMatch = item.dataset.mediaId === String(mediaId);
-        item.hidden = !isMatch;
+      const index = this.items.findIndex((item) => item.dataset.mediaId === String(mediaId));
+      if (index === -1) return;
+      this.#goToIndex(index);
+    }
+
+    #goToIndex(index, options) {
+      const animate = !options || options.animate !== false;
+      index = Math.max(0, Math.min(index, this.items.length - 1));
+      this.activeIndex = index;
+
+      if (this.track) {
+        this.track.classList.toggle('is-dragging', !animate);
+        this.track.style.transform = 'translateX(' + -100 * index + '%)';
+      }
+
+      this.items.forEach((item, itemIndex) => {
+        const isMatch = itemIndex === index;
         item.classList.toggle('is-active', isMatch);
-        if (!isMatch) item.querySelector('video')?.pause();
+        if (isMatch) {
+          item.removeAttribute('inert');
+        } else {
+          item.setAttribute('inert', '');
+          item.querySelector('video')?.pause();
+        }
       });
 
+      const activeMediaId = this.items[index]?.dataset.mediaId;
       this.thumbs.forEach((thumb) => {
-        const isMatch = thumb.dataset.targetMediaId === String(mediaId);
+        const isMatch = thumb.dataset.targetMediaId === activeMediaId;
         thumb.classList.toggle('is-active', isMatch);
         thumb.setAttribute('aria-selected', String(isMatch));
       });
+
+      const activeThumb = this.thumbs.find((thumb) => thumb.dataset.targetMediaId === activeMediaId);
+      activeThumb?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+
+    // Pointer events unify mouse drag (desktop) and touch swipe (mobile) in
+    // one handler. touch-action: pan-y on the viewport (see main-product.css)
+    // leaves vertical page scrolling to the browser; this only ever acts on
+    // horizontal movement.
+    #bindSwipe() {
+      let startX = 0;
+      let currentX = 0;
+      let dragging = false;
+      let pointerId = null;
+
+      const width = () => this.viewport.getBoundingClientRect().width || 1;
+
+      const onPointerDown = (event) => {
+        if (event.button !== undefined && event.button !== 0) return;
+        dragging = true;
+        pointerId = event.pointerId;
+        startX = event.clientX;
+        currentX = startX;
+        this.track.classList.add('is-dragging');
+        // Wrapped: the Pointer Capture API can throw NotFoundError in
+        // browser-specific edge cases (e.g. capture already auto-released
+        // before this call). Letting that escape here would only cost the
+        // few pixels of extra drag precision capture provides — nothing
+        // else in this handler depends on it succeeding.
+        try {
+          this.viewport.setPointerCapture?.(pointerId);
+        } catch (error) {
+          // Ignored — see comment above.
+        }
+      };
+
+      const onPointerMove = (event) => {
+        if (!dragging || event.pointerId !== pointerId) return;
+        currentX = event.clientX;
+        const deltaPercent = ((currentX - startX) / width()) * 100;
+        this.track.style.transform =
+          'translateX(' + (-100 * this.activeIndex + deltaPercent) + '%)';
+      };
+
+      const onPointerUp = (event) => {
+        if (!dragging || event.pointerId !== pointerId) return;
+        dragging = false;
+        // Same NotFoundError risk as setPointerCapture above — critically,
+        // this must not throw and skip the #goToIndex() call below, or the
+        // slide is left stuck mid-drag with the transition still disabled.
+        try {
+          this.viewport.releasePointerCapture?.(pointerId);
+        } catch (error) {
+          // Ignored — see setPointerCapture above.
+        }
+
+        const delta = currentX - startX;
+        let nextIndex = this.activeIndex;
+        if (Math.abs(delta) >= SWIPE_THRESHOLD_PX) {
+          nextIndex += delta < 0 ? 1 : -1;
+        }
+        this.#goToIndex(nextIndex);
+      };
+
+      this.viewport.addEventListener('pointerdown', onPointerDown);
+      this.viewport.addEventListener('pointermove', onPointerMove);
+      this.viewport.addEventListener('pointerup', onPointerUp);
+      this.viewport.addEventListener('pointercancel', onPointerUp);
+    }
+
+    // Shows/hides the up/down scroll arrows flanking a vertical thumbnail
+    // column (thumbnails_left layout) based on whether it actually
+    // overflows its max-height, and keeps them in sync as the visitor
+    // scrolls the column or the viewport is resized.
+    // The thumbnail column is vertical on desktop and switches to a
+    // horizontal row on mobile (see main-product.css). Rather than track
+    // that breakpoint separately here, ask the element itself which axis
+    // it's actually scrolling in right now — correct automatically across
+    // resizes, including live resizing in the theme editor/devtools.
+    #bindThumbsOverflow() {
+      const thumbsList = this.querySelector('[data-gallery-thumbs]');
+      const prevButton = this.querySelector('[data-thumbs-prev]');
+      const nextButton = this.querySelector('[data-thumbs-next]');
+      if (!thumbsList || !prevButton || !nextButton) return;
+
+      const isHorizontal = () => getComputedStyle(thumbsList).flexDirection === 'row';
+
+      const updateArrows = () => {
+        if (isHorizontal()) {
+          const canScroll = thumbsList.scrollWidth > thumbsList.clientWidth + 1;
+          prevButton.hidden = !canScroll || thumbsList.scrollLeft <= 0;
+          nextButton.hidden =
+            !canScroll || thumbsList.scrollLeft + thumbsList.clientWidth >= thumbsList.scrollWidth - 1;
+        } else {
+          const canScroll = thumbsList.scrollHeight > thumbsList.clientHeight + 1;
+          prevButton.hidden = !canScroll || thumbsList.scrollTop <= 0;
+          nextButton.hidden =
+            !canScroll || thumbsList.scrollTop + thumbsList.clientHeight >= thumbsList.scrollHeight - 1;
+        }
+      };
+
+      const scrollByStep = (direction) => {
+        const horizontal = isHorizontal();
+        const thumbSize = horizontal
+          ? this.thumbs[0]?.getBoundingClientRect().width
+          : this.thumbs[0]?.getBoundingClientRect().height;
+        const step = (thumbSize || 64) + 12;
+        thumbsList.scrollBy(
+          horizontal ? { left: direction * step * 2, behavior: 'smooth' } : { top: direction * step * 2, behavior: 'smooth' }
+        );
+      };
+
+      prevButton.addEventListener('click', () => scrollByStep(-1));
+      nextButton.addEventListener('click', () => scrollByStep(1));
+      thumbsList.addEventListener('scroll', updateArrows);
+      window.addEventListener('resize', updateArrows);
+
+      updateArrows();
     }
   }
 

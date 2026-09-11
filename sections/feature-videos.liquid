@@ -6,13 +6,29 @@
     assign media_class = media_class | append: ' feature-row__media--no-shadow'
   endunless
 
-  assign section_class = 'feature-videos ' | append: scheme_class | append: ' section-padding'
+  assign section_class = 'feature-videos ' | append: scheme_class
   if section.settings.width == 'full'
     assign section_class = section_class | append: ' feature-videos--full'
   endif
 -%}
 
-<section class="{{ section_class }}">
+{% style %}
+ .section-padding-{{ section.id }} {
+      display: block;
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      max-width: 100%;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-padding-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+{% endstyle %}
+
+<section class="{{ section_class }} section-padding-{{ section.id }}">
   <div class="{% if section.settings.width == 'page' %}container{% endif %}">
     {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
       <div class="feature-videos__header text-center">
@@ -20,7 +36,7 @@
           <p class="eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="h-section">{{ section.settings.heading }}</h2>
+          <h2 class="h2">{{ section.settings.heading }}</h2>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -92,7 +108,7 @@
   .feature-videos__header {
     max-width: 640px;
     margin-inline: auto;
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
   }
 
   .feature-videos__list {
@@ -224,6 +240,50 @@
       "id": "show_media_shadow",
       "label": "Show media box shadow",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
     }
   ],
   "blocks": [

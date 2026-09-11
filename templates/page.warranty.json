@@ -29,7 +29,12 @@
         "width": "full",
         "margin_top": 0,
         "margin_bottom": 0,
-        "height": "small",
+        "height_desktop": "custom",
+        "height_desktop_custom": 300,
+        "height_tablet": "custom",
+        "height_tablet_custom": 300,
+        "height_mobile": "custom",
+        "height_mobile_custom": 300,
         "content_alignment": "left",
         "overlay_color": "#000000",
         "overlay_opacity": 50

@@ -292,6 +292,13 @@
     gap: var(--space-4);
   }
 
+  .site-header__actions .wishtlist-wrapper-header .xb-wishlist-header__btn, 
+  .site-header__actions .wishtlist-wrapper-header .xb-wishlist-header__btn:hover,
+  .site-header__actions .xb-wishlist__header {
+    width: 20px;
+    height: 20px;
+  }
+
   .site-header__actions .wishtlist-wrapper-header svg {
     fill: currentColor;
   }
@@ -441,16 +448,33 @@
     flow and overlay it, so the hero occupies the whole viewport with the header
     inside that 100vh rather than stacked above it. It starts transparent over
     the footage and picks up the scheme background once scrolled past the hero.
+
+    The announcement bar (rendered above the header by header-group.json) is
+    pinned alongside it here too, offsetting the header below it via
+    --announcement-bar-height (kept in sync by announcement-bar.liquid's own
+    JS) — otherwise the header would still snap to the very top of the
+    viewport and render on top of/behind the bar instead of under it. The
+    offset is 0px whenever the bar has no content or isn't on the page, so
+    this degrades cleanly with no separate "no announcement bar" case to
+    maintain.
   */
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header {
+  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .announcement-bar {
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    z-index: 41;
+  }
+
+  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header {
+    position: fixed;
+    top: var(--announcement-bar-height, 0px);
     left: 0;
     right: 0;
     z-index: 40;
     background-color: transparent;
     color: #F5F1E6;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, top 0.2s ease;
   }
 
   body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header__bar {

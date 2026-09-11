@@ -33,7 +33,7 @@
         {%- endif -%}
 
         {%- if section.settings.subheading != blank -%}
-          <p class="usps__subheading">{{ section.settings.subheading | escape }}</p>
+          <p class="usps__subheading body-text">{{ section.settings.subheading | escape }}</p>
         {%- endif -%}
 
         <div class="usps__badges">
@@ -106,7 +106,7 @@
             {%- endif -%}
 
             {%- if block.settings.subheading != blank -%}
-              <p class="usps__card-subheading">{{ block.settings.subheading | escape }}</p>
+              <p class="usps__card-subheading body-text">{{ block.settings.subheading | escape }}</p>
             {%- endif -%}
           </div>
         {%- endfor -%}
@@ -132,7 +132,7 @@
     width: 100%;
     border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
     border-radius: var(--radius-xl, 20px);
-    padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.5rem, 4vw, 2.5rem);
+    padding: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -148,8 +148,6 @@
 
   .usps__subheading {
     margin: 0 0 0.5rem;
-    font-size: 0.9375rem;
-    opacity: 0.85;
   }
 
   .usps__badges {
@@ -194,6 +192,12 @@
     }
   }
 
+  @media screen and (max-width: 768px) {
+    .usps__intro {
+      padding: 16px; 
+    }
+  }
+
   @media screen and (max-width: 480px) {
     .usps__grid {
       grid-template-columns: 1fr;
@@ -233,16 +237,14 @@
   .usps__card-heading {
     margin: 0;
     font-size: 0.9375rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.03em;
     text-transform: uppercase;
   }
 
   .usps__card-subheading {
     margin: 0;
-    font-size: 0.85rem;
     line-height: 1.5;
-    opacity: 0.8;
   }
 </style>
 

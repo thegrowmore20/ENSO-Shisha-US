@@ -66,6 +66,8 @@
     {%- endif -%}
 
     {%- comment -%} 2. Quick links — fake accordion rows, chevron right, plain navigation {%- endcomment -%}
+
+
     {%- if has_quick_links -%}
       {%- if section.settings.quick_link_1_text != blank and section.settings.quick_link_1_url != blank -%}
         <a href="{{ section.settings.quick_link_1_url }}" class="facets__group facets__group--link">
@@ -121,7 +123,7 @@
             <span class="facets__chevron facets__chevron--down" aria-hidden="true"></span>
           </summary>
           <div class="facets__body">
-            {%- render 'price-range', filter: filter, collection: results -%}
+            {%- render 'price-range', filter: filter -%}
           </div>
         </details>
       {%- elsif filter.values.size > 0 -%}

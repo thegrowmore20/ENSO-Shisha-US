@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_figgti": {
+          "type": "mega_menu",
+          "settings": {
+            "mega_target_item": "Shop Devices",
+            "show_products": true,
+            "max_products": 4,
+            "image_heading": "",
+            "image_url": ""
+          }
+        },
+        "mega_menu_4TX6jk": {
+          "type": "mega_menu",
+          "settings": {
+            "mega_target_item": "Shop Accessories",
+            "show_products": true,
+            "max_products": 4,
+            "image_heading": "",
+            "image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_figgti",
+        "mega_menu_4TX6jk"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
+        "sticky": true,
+        "menu": "header-menu-products"
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

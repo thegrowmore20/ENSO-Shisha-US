@@ -8,6 +8,10 @@
 
   {%- render 'meta-tags' -%}
 
+  {% if settings.favicon != blank %}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {% endif %}
+
   {%- liquid
     assign heading_font = settings.type_heading_font
     assign heading_font_extralight = heading_font | font_modify: 'weight', '200'
@@ -31,6 +35,7 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
   <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'wishlist-reveal.js' | asset_url }}" defer="defer"></script>
 
   {{ content_for_header }}
 
@@ -42,7 +47,7 @@
     {{ 'accessibility.skip_to_content' | t }}
   </a>
 
-  {% section 'header' %}
+  {% sections 'header-group' %}
 
   <main id="MainContent">
     {{ content_for_layout }}
@@ -52,6 +57,11 @@
 
   {% section 'cart-drawer' %}
   <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+  {% if settings.enable_product_card_swatches %}
+    <script src="{{ 'product-card-swatches.js' | asset_url }}" defer></script>
+  {% endif %}
+
+  {% render 'age-verification-popup' %}
 
   {% section 'fix-footer-mobile' %}
 </body>

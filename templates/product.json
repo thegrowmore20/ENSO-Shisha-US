@@ -40,7 +40,7 @@
             "starColor": "",
             "showAllReviews": false,
             "looxOpenFloatingWidget": false,
-            "emptyRatingWidget": false
+            "emptyRatingWidget": true
           }
         },
         "price_KNKNd3": {
@@ -86,13 +86,59 @@
       "settings": {
         "color_scheme": "scheme-paper",
         "width": "page",
-        "media_width": 50,
-        "gallery_layout": "thumbnails_bottom",
+        "media_width": 55,
+        "gallery_layout": "thumbnails_left",
         "enable_sticky_info": true,
         "padding_top": 48,
         "padding_bottom": 48,
         "padding_top_mobile": 32,
         "padding_bottom_mobile": 32
+      }
+    },
+    "custom_section_K6xprp": {
+      "type": "custom-section",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_FLebBd": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 5,
+            "hide_thumbnails": false,
+            "maxwidth": 1200,
+            "is_sample": true
+          }
+        },
+        "header": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": "Why People Love Enso?",
+            "heading_size_desktop": 36,
+            "heading_size_mobile": 24,
+            "subheading": "",
+            "subheading_link": "",
+            "subheading_icon_start": "",
+            "subheading_icon_end": "",
+            "alignment": "vertical",
+            "header_spacing_bottom": 32
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_FLebBd"
+      ],
+      "name": "Custom Section",
+      "settings": {
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
+        "width": "page",
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16
       }
     },
     "product_recommendations_ADkJeU": {
@@ -108,18 +154,20 @@
         "columns_mobile": "1",
         "card_gap": 24,
         "products_limit": 4,
+        "enable_quickadd": true,
+        "quickadd_design": "secondary",
         "padding_top": 48,
         "padding_bottom": 48,
         "padding_top_mobile": 32,
         "padding_bottom_mobile": 32,
         "cta_label": "",
-        "cta_link": "",
-        "enable_quickadd": false
+        "cta_link": ""
       }
     }
   },
   "order": [
     "main",
+    "custom_section_K6xprp",
     "product_recommendations_ADkJeU"
   ]
 }

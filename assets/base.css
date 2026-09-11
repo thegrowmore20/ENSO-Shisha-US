@@ -13,9 +13,9 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 1.7;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
   background-color: var(--color-background);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
@@ -58,6 +58,45 @@ h3,
 h4,
 p {
   margin: 0;
+}
+
+h1, .h1 {
+  font-size: 48px;
+}
+h2, .h2 {
+  font-size: 36px;
+}
+h3, .h3 {
+  font-size: 30px;
+}
+h4, .h4 {
+  font-size: 24px;
+}
+h5, .h5 {
+  font-size: 20px;
+}
+h6, .h6 {
+  font-size: 18px;
+}
+@media screen and (max-width: 768px) {
+  h1, .h1 {
+    font-size: 32px;
+  }
+  h2, .h2 {
+    font-size: 28px;
+  }
+  h3, .h3 {
+    font-size: 24px;
+  }
+  h4, .h4 {
+    font-size: 20px;
+  }
+  h5, .h5 {
+    font-size: 18px;
+  }
+  h6, .h6 {
+    font-size: 16px;
+  }
 }
 
 :focus-visible {
@@ -165,7 +204,7 @@ p {
 
 .h-section {
   font-family: var(--font-accent);
-  font-weight: 800;
+  font-weight: 600;
   font-size: clamp(1.875rem, 1.3rem + 2.4vw, 3rem);
   line-height: 1.15;
   letter-spacing: -0.03em;
@@ -195,7 +234,7 @@ p {
 .caption {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: clamp(0.6875rem, 0.66rem + 0.1vw, 0.8125rem);
+  font-size: 16px;
   color: var(--color-text-muted);
 }
 
@@ -203,7 +242,7 @@ p {
   display: inline-block;
   font-family: var(--font-heading);
   font-weight: 500;
-  font-size: clamp(0.625rem, 0.6rem + 0.1vw, 0.75rem);
+  font-size: 16px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--color-accent);
@@ -212,7 +251,7 @@ p {
 
 .stat {
   font-family: var(--font-accent);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.03em;
   font-size: clamp(2rem, 1.6rem + 2vw, 3rem);
   line-height: 1;
@@ -235,8 +274,7 @@ p {
   border-radius: var(--radius-pill);
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.05em;
+  font-size: 16px;
   text-transform: uppercase;
   text-align: center;
   border: 1px solid transparent;
@@ -248,6 +286,7 @@ p {
 .cart-drawer .btn {
   height: auto;
   padding: 12px 40px;
+  line-height: normal;
 }
 
 .btn:hover {
@@ -525,7 +564,7 @@ p {
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-5);
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-6);
   flex-wrap: wrap;
 }
 
@@ -735,4 +774,46 @@ p {
 /* ---------- policies ---------- */
 .shopify-policy__container {
   padding-block: var(--space-7, 48px);
+}
+
+/* ---------- Wishlist button ---------- */
+.custom-wishlist-button {
+  opacity: 0;
+  z-index: 99;
+  animation:
+    custom-wishlist-detect 1ms,
+    custom-wishlist-reveal 200ms ease var(--wishlist-reveal-delay, 6000ms) forwards;
+}
+
+.custom-wishlist-button.is-wishlist-ready {
+  opacity: 1;
+}
+
+@keyframes custom-wishlist-detect {
+  from { opacity: 0; }
+  to { opacity: 0; }
+}
+
+@keyframes custom-wishlist-reveal {
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-wishlist-button { animation-duration: 1ms; }
+}
+
+.custom-wishlist-button .xb-wishlist__add > button,
+.custom-wishlist-button .xb-wishlist__remove > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-wishlist-button svg {
+  transition: transform 0.15s ease;
+}
+
+.custom-wishlist-button .xb-wishlist__add > button:hover svg,
+.custom-wishlist-button .xb-wishlist__remove > button:hover svg {
+  transform: scale(1.12);
 }

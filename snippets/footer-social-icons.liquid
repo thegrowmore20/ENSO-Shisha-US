@@ -1,0 +1,40 @@
+{%- doc -%}
+  Renders whichever social network links are filled in under
+  Theme Settings → Social. Reusable anywhere a row of social icons is
+  needed — not footer-specific despite the filename.
+{%- enddoc -%}
+
+{%- if settings.social_instagram_link != blank
+  or settings.social_facebook_link != blank
+  or settings.social_youtube_link != blank
+  or settings.social_tiktok_link != blank
+  or settings.social_x_link != blank
+-%}
+  <div class="footer-social-icons">
+    {%- if settings.social_facebook_link != blank -%}
+      <a href="{{ settings.social_facebook_link }}" class="footer-social-icons__link" target="_blank" rel="noopener" aria-label="Facebook">
+        {%- render 'icon-facebook' -%}
+      </a>
+    {%- endif -%}
+    {%- if settings.social_instagram_link != blank -%}
+      <a href="{{ settings.social_instagram_link }}" class="footer-social-icons__link" target="_blank" rel="noopener" aria-label="Instagram">
+        {%- render 'icon-instagram' -%}
+      </a>
+    {%- endif -%}
+    {%- if settings.social_youtube_link != blank -%}
+      <a href="{{ settings.social_youtube_link }}" class="footer-social-icons__link" target="_blank" rel="noopener" aria-label="YouTube">
+        {%- render 'icon-youtube' -%}
+      </a>
+    {%- endif -%}
+    {%- if settings.social_tiktok_link != blank -%}
+      <a href="{{ settings.social_tiktok_link }}" class="footer-social-icons__link" target="_blank" rel="noopener" aria-label="TikTok">
+        {%- render 'icon-tiktok' -%}
+      </a>
+    {%- endif -%}
+    {%- if settings.social_x_link != blank -%}
+      <a href="{{ settings.social_x_link }}" class="footer-social-icons__link" target="_blank" rel="noopener" aria-label="X">
+        {%- render 'icon-x' -%}
+      </a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

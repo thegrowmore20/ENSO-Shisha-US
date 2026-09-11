@@ -1,6 +1,11 @@
 {%- liquid
   assign scheme_class = 'color-' | append: section.settings.color_scheme
   assign current_year = 'now' | date: '%Y'
+
+  assign policy_links = linklists.policies.links
+  if policy_links == blank
+    assign policy_links = shop.policies
+  endif
 -%}
 
 <footer class="site-footer {{ scheme_class }}">
@@ -12,19 +17,11 @@
           <span>ENSŌ</span>
         </a>
         <p class="body-text text-muted site-footer__tagline">{{ 'sections.footer.tagline' | t }}</p>
-
-        <div class="site-footer__social">
-          {%- if settings.social_instagram_link != blank -%}
-            <a href="{{ settings.social_instagram_link }}" class="site-footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">
-              {%- render 'icon-instagram' -%}
-            </a>
-          {%- endif -%}
-        </div>
       </div>
 
       <div class="site-footer__columns">
         {%- for block in section.blocks -%}
-          <div class="site-footer__column" {{ block.shopify_attributes }}>
+          <div class="site-footer__column{% if block.type == 'contact' %} site-footer__column--contact{% endif %}" {{ block.shopify_attributes }}>
             {%- case block.type -%}
               {%- when 'menu' -%}
                 {%- if block.settings.heading != blank -%}
@@ -35,6 +32,17 @@
                     <li><a href="{{ link.url }}" class="caption site-footer__link">{{ link.title }}</a></li>
                   {%- endfor -%}
                 </ul>
+
+                {%- if block.settings.menu_1 != blank -%}
+                  {%- if block.settings.heading_1 != blank -%}
+                    <p class="eyebrow site-footer__column-title site-footer__column-title--second">{{ block.settings.heading_1 }}</p>
+                  {%- endif -%}
+                  <ul class="site-footer__links">
+                    {%- for link in block.settings.menu_1.links -%}
+                      <li><a href="{{ link.url }}" class="caption site-footer__link">{{ link.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
 
               {%- when 'policies' -%}
                 {%- if block.settings.heading != blank -%}
@@ -55,45 +63,68 @@
                 {%- if block.settings.text != blank -%}
                   <div class="body-text text-muted site-footer__text">{{ block.settings.text }}</div>
                 {%- endif -%}
+
+              {%- when 'contact' -%}
+                {%- if block.settings.heading != blank -%}
+                  <p class="eyebrow site-footer__column-title">{{ block.settings.heading }}</p>
+                {%- endif -%}
+                {%- render 'contact-info',
+                  contact_link: block.settings.contact_link_text,
+                  contact_url: block.settings.contact_url,
+                  open_new_contact: block.settings.open_new_contact,
+                  whatsapp_number: block.settings.whatsapp_number,
+                  whatsapp_url: block.settings.whatsapp_url,
+                  open_new_whatsapp: block.settings.open_new_whatsapp,
+                  phone_number: block.settings.phone_number,
+                  call_url: block.settings.call_url,
+                  open_new_call: block.settings.open_new_call,
+                  email_address: block.settings.email_address,
+                  email_url: block.settings.email_url,
+                  open_new_email: block.settings.open_new_email,
+                  location: block.settings.location,
+                  address_url: block.settings.address_url,
+                  open_new_address: block.settings.open_new_address
+                -%}
             {%- endcase -%}
           </div>
         {%- endfor -%}
       </div>
-
-      <div class="site-footer__newsletter">
-        <p class="eyebrow">{{ 'sections.newsletter.heading' | t }}</p>
-        {%- form 'customer', id: 'FooterNewsletterForm' -%}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <div class="site-footer__newsletter-field">
-            <label class="visually-hidden" for="FooterNewsletterEmail">{{ 'sections.newsletter.placeholder' | t }}</label>
-            <input
-              type="email"
-              id="FooterNewsletterEmail"
-              name="contact[email]"
-              class="search-input"
-              placeholder="{{ 'sections.newsletter.placeholder' | t }}"
-              required
-            >
-            <button type="submit" class="btn btn--primary">{{ 'sections.newsletter.submit' | t }}</button>
-          </div>
-          {%- if form.posted_successfully? -%}
-            <p class="caption">{{ 'sections.newsletter.success' | t }}</p>
-          {%- elsif form.errors -%}
-            <p class="caption">{{ 'sections.newsletter.error' | t }}</p>
-          {%- endif -%}
-        {%- endform -%}
-      </div>
     </div>
+
+    {%- if section.settings.show_payment or section.settings.show_social -%}
+      <div class="site-footer__payment-social">
+        {%- if section.settings.show_payment -%}
+          <ul class="site-footer__payment" role="list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>{{ type | payment_type_svg_tag: class: 'site-footer__payment-icon' }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {%- if section.settings.show_social -%}
+          {%- render 'footer-social-icons' -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     <hr class="hairline site-footer__divider">
 
     <div class="site-footer__bottom">
-      <p class="caption">{{ 'sections.footer.copyright' | t: year: current_year }}</p>
-      <p class="caption">
-        {{ 'sections.footer.sign_off' | t }} ·
-        <a href="mailto:{{ 'sections.footer.support' | t }}" class="footer-micro">{{ 'sections.footer.support' | t }}</a>
+      {%- if policy_links != blank -%}
+        <nav class="site-footer__policies" aria-label="Policies">
+          <ul role="list">
+            {%- for link in policy_links -%}
+              <li><a href="{{ link.url }}" class="caption footer-micro">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+      <p class="caption site-footer__copyright">
+        &copy; {{ current_year }} <a href="{{ routes.root_url }}" class="site-footer__shop-link">{{ shop.name }}</a>
+        <a href="https://growmore.com" target="_blank" rel="noopener" class="footer-micro site-footer__credit">
+          Developed by <span class="site-footer__credit-word">GrowMore</span>
+          <span class="site-footer__credit-icon">{%- render 'icon-external-link' -%}</span>
+        </a>
       </p>
-      <p class="caption">{{ 'sections.footer.age_gate' | t }}</p>
     </div>
   </div>
 </footer>
@@ -106,19 +137,24 @@
     background-size: cover;
     position: relative;
   }
-  footer.site-footer:before {
+  footer.site-footer::before {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1;
-  } 
+    background: rgba(0,0,0,0.78);
+    z-index: 0;
+  }
   {% endif %}
+  footer.site-footer .container {
+    position: relative;
+    z-index: 1;
+  }
   .site-footer__top {
     display: grid;
-    grid-template-columns: 1fr 2fr 1.5fr;
+    grid-template-columns: 1fr 2fr;
     gap: var(--space-8);
     margin-bottom: var(--space-6);
   }
@@ -147,32 +183,28 @@
     max-width: 32ch;
   }
 
-  .site-footer__social {
-    display: flex;
-    gap: var(--space-4);
-    margin-top: var(--space-5);
-  }
-
-  .site-footer__social-link {
-    display: flex;
-    width: 20px;
-    height: 20px;
-    color: var(--color-text);
-    transition: color 0.2s ease;
-  }
-
-  .site-footer__social-link:hover {
-    color: var(--color-accent);
-  }
-
   .site-footer__columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: var(--space-6);
   }
 
+  @media screen and (max-width: 749px) {
+    .site-footer__columns {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .site-footer__column--contact {
+      grid-column: 1 / -1;
+    }
+  }
+
   .site-footer__column-title {
     margin-bottom: var(--space-4);
+  }
+
+  .site-footer__column-title--second {
+    margin-top: var(--space-6);
   }
 
   .site-footer__links {
@@ -190,31 +222,211 @@
     color: var(--color-accent);
   }
 
-  .site-footer__newsletter-field {
+  /* contact-info.liquid's own markup (snippets/contact-info.liquid) */
+  .contact-info-wrapper {
     display: flex;
-    gap: var(--space-2);
-    margin-top: var(--space-3);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
-  .site-footer__newsletter-field .search-input {
-    flex: 1;
+  .contact-info-wrapper .contact-link {
+    align-items: flex-start;
+    gap: var(--space-3);
+    color: var(--color-text);
+    transition: color 0.2s ease;
   }
 
-  @media screen and (max-width: 589px) {
-    .site-footer__newsletter-field {
-      flex-direction: column;
+  .contact-info-wrapper .contact-link:hover {
+    color: var(--color-accent);
+  }
+
+  /* icon-whatsapp/phone/email-address/location have no width/height of
+     their own, so an unstyled render blows up to the browser's 300x150
+     default replaced-element size. */
+  .contact-info-wrapper svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Those same icons hardcode fill:#fff (or, for external-link, a literal
+     stroke="#ffffff" attribute) instead of using currentColor, so the text
+     color change above doesn't carry over to the icon on hover — override
+     both explicitly. CSS beats an SVG presentation attribute, so this wins
+     over external-link's inline stroke without !important. */
+  .contact-info-wrapper .contact-link:hover svg .st0 {
+    fill: var(--color-accent);
+  }
+
+  .contact-info-wrapper .contact-link:hover svg path {
+    stroke: var(--color-accent);
+  }
+
+  footer.site-footer .section-padding {
+    padding-bottom: var(--space-3);
+  }
+
+  @media screen and (max-width: 749px) {
+    footer.site-footer .section-padding {
+      padding-bottom: var(--space-4);
     }
   }
 
+  .site-footer__payment-social {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+
+  .site-footer__payment {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .site-footer__payment-icon {
+    display: block;
+    width: auto;
+    height: 20px;
+  }
+
+  .footer-social-icons {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .footer-social-icons__link {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    color: var(--color-text);
+    transition: color 0.2s ease;
+  }
+
+  .footer-social-icons__link:hover {
+    color: var(--color-accent);
+  }
+
   .site-footer__divider {
-    margin-block: var(--space-6);
+    margin-block: var(--space-4);
+    border-top-color: rgba(255, 255, 255, 0.06);
   }
 
   .site-footer__bottom {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--space-3);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--space-2) var(--space-4);
+    font-size: 12px;
+  }
+
+  .site-footer__bottom * {
+    font-size: inherit;
+  }
+
+  @media screen and (min-width: 750px) {
+    .site-footer__bottom {
+      font-size: 14px;
+    }
+  }
+
+  /* Mobile: policies first, copyright+credit second. Desktop: reversed. */
+  .site-footer__policies {
+    order: 1;
+  }
+
+  .site-footer__copyright {
+    order: 2;
+  }
+
+  @media screen and (min-width: 750px) {
+    .site-footer__policies {
+      order: 2;
+    }
+
+    .site-footer__copyright {
+      order: 1;
+    }
+  }
+
+  .site-footer__policies ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-1) var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Resting state is dimmed; links brighten to the accent color on hover. */
+  .site-footer__copyright,
+  .site-footer__policies a,
+  .site-footer__credit {
+    color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  }
+
+  .site-footer__policies a,
+  .site-footer__shop-link {
+    transition: color 0.2s ease;
+  }
+
+  .site-footer__policies a:hover,
+  .site-footer__shop-link:hover {
+    color: var(--color-accent);
+  }
+
+  .site-footer__credit {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-left: var(--space-1);
+  }
+
+  /* Hovering the link recolors only the "GrowMore" word and the icon —
+     "Developed by" stays at the dimmed resting color. */
+  .site-footer__credit-word {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+  }
+
+  .site-footer__credit:hover .site-footer__credit-word {
+    color: var(--color-accent);
+  }
+
+  .site-footer__credit-icon {
+    display: inline-flex;
+    width: 12px;
+    height: 12px;
+    transition: transform 0.2s ease;
+  }
+
+  .site-footer__credit-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* icon-external-link hardcodes stroke="#ffffff" instead of currentColor —
+     override it directly; CSS beats an SVG presentation attribute. */
+  .site-footer__credit:hover .site-footer__credit-icon {
+    transform: scale(1.2);
+  }
+
+  .site-footer__credit:hover .site-footer__credit-icon svg path {
+    stroke: var(--color-accent);
   }
 {% endstyle %}
 
@@ -233,6 +445,22 @@
       "type": "image_picker",
       "id": "footer_bg_image",
       "label": "Background Image"
+    },
+    {
+      "type": "header",
+      "content": "Payment & social"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social media icons",
+      "default": true
     }
   ],
   "blocks": [
@@ -251,6 +479,20 @@
           "id": "menu",
           "label": "t:sections.footer.blocks.menu.settings.menu.label",
           "default": "footer"
+        },
+        {
+          "type": "header",
+          "content": "Second menu"
+        },
+        {
+          "type": "text",
+          "id": "heading_1",
+          "label": "Heading"
+        },
+        {
+          "type": "link_list",
+          "id": "menu_1",
+          "label": "Menu"
         }
       ]
     },
@@ -285,6 +527,115 @@
           "type": "richtext",
           "id": "text",
           "label": "t:sections.footer.blocks.text.settings.text.label"
+        }
+      ]
+    },
+    {
+      "type" : "contact",
+      "name": "Contact",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.footer.blocks.text.settings.heading.label",
+          "default": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "contact_link_text",
+          "label": "Contact Link",
+          "default": "Get In Touch"
+        },
+        {
+          "type": "url",
+          "id": "contact_url",
+          "label": "Contact Url"
+        },
+        {
+          "type" : "checkbox",
+          "id" : "open_new_contact",
+          "label": "Open in New Tab",
+          "default": false
+        },
+        {
+          "type" : "header",
+          "content": "Whatsapp Us"
+        },
+        {
+          "type": "text",
+          "label": "Whatsapp Number",
+          "id": "whatsapp_number"
+        },
+        {
+          "type": "url",
+          "label": "URL",
+          "id": "whatsapp_url"
+        },
+        {
+          "type" : "checkbox",
+          "id" : "open_new_whatsapp",
+          "label": "Open in New Tab",
+          "default": false
+        },
+        {
+          "type" : "header",
+          "content": "Call Us"
+        },
+        {
+          "type": "text",
+          "label": "Phone Number",
+          "id": "phone_number"
+        },
+        {
+          "type": "url",
+          "label": "URL",
+          "id": "call_url"
+        },
+        {
+          "type" : "checkbox",
+          "id" : "open_new_call",
+          "label": "Open in New Tab",
+          "default": false
+        },
+        {
+          "type" : "header",
+          "content": "Email Address"
+        },
+        {
+          "type": "text",
+          "label": "Email",
+          "id": "email_address"
+        },
+        {
+          "type": "url",
+          "label": "Link",
+          "id": "email_url"
+        },
+        {
+          "type" : "checkbox",
+          "id" : "open_new_email",
+          "label": "Open in New Tab",
+          "default": false
+        },
+        {
+          "type" : "header",
+          "content": "Location"
+        },
+        {
+          "type": "text",
+          "label": "Address",
+          "id": "location"
+        },
+        {
+          "type": "url",
+          "label": "Link",
+          "id": "address_url"
+        },
+        {
+          "type" : "checkbox",
+          "id" : "open_new_address",
+          "label": "Open in New Tab",
+          "default": false
         }
       ]
     }

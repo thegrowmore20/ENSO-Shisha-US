@@ -1,0 +1,22 @@
+{%- doc -%}
+  Normalizes a merchant-entered URL for use directly as an href.
+  Shopify's `url` setting type stores whatever text is typed — a bare
+  domain entered without a scheme (e.g. "example.com" instead of
+  "https://example.com") would otherwise resolve as a relative path
+  instead of navigating off-site. Relative paths, anchors, and
+  mailto:/tel:/sms: links are left untouched.
+
+  @param {string} url - The raw URL value to normalize
+{%- enddoc -%}
+{%- liquid
+  assign output_url = url
+  assign url_start = url | slice: 0, 1
+  assign has_scheme = false
+  if url contains '://' or url contains 'mailto:' or url contains 'tel:' or url contains 'sms:'
+    assign has_scheme = true
+  endif
+  if url != blank and has_scheme == false and url_start != '/' and url_start != '#'
+    assign output_url = 'https://' | append: url
+  endif
+-%}
+{{- output_url -}}

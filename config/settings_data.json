@@ -9,12 +9,17 @@
  */
 {
   "current": {
-    "type_heading_font": "montserrat_n4",
-    "type_accent_font": "inter_n8",
-    "type_body_font": "montserrat_n3",
+    "type_heading_font": "montserrat_n5",
+    "type_accent_font": "inter_n6",
+    "type_body_font": "montserrat_n4",
     "page_width": 1440,
+    "favicon": "shopify://shop_images/favicon2.png",
     "social_instagram_link": "https://instagram.com/enso.future",
+    "social_facebook_link": "https://www.facebook.com/share/16AJipvPXs/?mibextid=wwXIfr",
+    "social_youtube_link": "https://www.youtube.com/@enso.future",
     "social_tiktok_link": "",
+    "social_x_link": "",
+    "free_shipping_bar_enable": false,
     "free_shipping_bar_threshold": 500,
     "free_shipping_bar_message_below": "Spend [amount] more for free shipping!",
     "sections": {
@@ -44,6 +49,27 @@
       "footer": {
         "type": "footer",
         "blocks": {
+          "contact_TDYpF8": {
+            "type": "contact",
+            "settings": {
+              "heading": "Contact",
+              "contact_link_text": "Get In Touch",
+              "contact_url": "/pages/contact",
+              "open_new_contact": false,
+              "whatsapp_number": "",
+              "whatsapp_url": "",
+              "open_new_whatsapp": false,
+              "phone_number": "",
+              "call_url": "",
+              "open_new_call": false,
+              "email_address": "support@ensoshisha.eu",
+              "email_url": "mailto:support@ensoshisha.eu",
+              "open_new_email": false,
+              "location": "16133 Ventura Blvd Fl 7, Encino, CA 91436, USA",
+              "address_url": "https://www.google.com/maps/search/?api=1&query=16133+Ventura+Blvd+Fl+7%2C+Encino%2C+CA+91436%2C+USA",
+              "open_new_address": true
+            }
+          },
           "footer-0": {
             "type": "menu",
             "settings": {
@@ -61,16 +87,19 @@
         },
         "block_order": [
           "footer-0",
-          "menu_VLqCEn"
+          "menu_VLqCEn",
+          "contact_TDYpF8"
         ],
         "settings": {
-          "color_scheme": "",
+          "color_scheme": "scheme-c77ef17d-36fa-436c-9a1c-70fb4fb41f71",
           "footer_bg_image": "shopify://shop_images/Enso-2.webp"
         }
       },
       "cart-drawer": {
         "type": "cart-drawer",
-        "settings": {}
+        "settings": {
+          "color_scheme": ""
+        }
       },
       "fix-footer-mobile": {
         "type": "fix-footer-mobile",
@@ -139,6 +168,52 @@
           "secondary_button_hover_label": "#f0e8d8",
           "secondary_button_hover_border": "#1a1813"
         }
+      },
+      "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db": {
+        "settings": {
+          "background": "#ffffff",
+          "background_raised": "#ffffff",
+          "text": "#000000",
+          "text_muted": "#333333",
+          "border": "#333333",
+          "accent": "#c8943a",
+          "accent_soft": "#d4a758",
+          "primary_button_background": "#000000",
+          "primary_button_label": "#ffffff",
+          "primary_button_border": "#000000",
+          "primary_button_hover_background": "#333333",
+          "primary_button_hover_label": "#ffffff",
+          "primary_button_hover_border": "#333333",
+          "secondary_button_background": "#fbbc05",
+          "secondary_button_label": "#000000",
+          "secondary_button_border": "#fbbc05",
+          "secondary_button_hover_background": "#eba80b",
+          "secondary_button_hover_label": "#000000",
+          "secondary_button_hover_border": "#eba80b"
+        }
+      },
+      "scheme-c77ef17d-36fa-436c-9a1c-70fb4fb41f71": {
+        "settings": {
+          "background": "#333333",
+          "background_raised": "#333333",
+          "text": "#ffffff",
+          "text_muted": "#ffffff",
+          "border": "#ffffff",
+          "accent": "#fbbc05",
+          "accent_soft": "#eba80b",
+          "primary_button_background": "#1a1813",
+          "primary_button_label": "#f0e8d8",
+          "primary_button_border": "#1a1813",
+          "primary_button_hover_background": "#c8943a",
+          "primary_button_hover_label": "#ffffff",
+          "primary_button_hover_border": "#c8943a",
+          "secondary_button_background": "#fbbc05",
+          "secondary_button_label": "#ffffff",
+          "secondary_button_border": "#fbbc05",
+          "secondary_button_hover_background": "#eba80b",
+          "secondary_button_hover_label": "#ffffff",
+          "secondary_button_hover_border": "#eba80b"
+        }
       }
     }
   },
@@ -177,7 +252,10 @@
       },
       "page_width": 1600,
       "social_instagram_link": "https://instagram.com/enso.future",
-      "social_tiktok_link": ""
+      "social_facebook_link": "https://www.facebook.com/share/16AJipvPXs/?mibextid=wwXIfr",
+      "social_youtube_link": "https://www.youtube.com/@enso.future",
+      "social_tiktok_link": "",
+      "social_x_link": ""
     }
   }
 }

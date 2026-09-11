@@ -46,62 +46,78 @@
 
   {%- else -%}
     <div class="product-gallery__main" data-gallery-main>
-      {%- for media in media_list -%}
-        <div
-          class="product-gallery__item{% if forloop.first %} is-active{% endif %}"
-          data-media-id="{{ media.id }}"
-          data-media-type="{{ media.media_type }}"
-          {% unless forloop.first %}hidden{% endunless %}
-        >
+      {% render 'wishlist-button', card_product: product %}
 
-          {% render 'wishlist-button', card_product: product %}
-
-          {%- case media.media_type -%}
-            {%- when 'image' -%}
-              <img
-                src="{{ media | image_url: width: 1200 }}"
-                alt="{{ media.alt | default: product.title | escape }}"
-                width="{{ media.width }}"
-                height="{{ media.height }}"
-                loading="{% if loop_index == 1 %}eager{% else %}lazy{% endif %}"
-                class="product-gallery__image"
-              >
-            {%- when 'video' -%}
-              {{ media | video_tag: controls: true, preload: 'metadata', class: 'product-gallery__video' }}
-            {%- when 'external_video' -%}
-              {{ media | external_video_tag: class: 'product-gallery__video' }}
-            {%- when 'model' -%}
-              {{ media | model_viewer_tag: class: 'product-gallery__model', reveal: 'interaction' }}
-          {%- endcase -%}
-        </div>
-      {%- endfor -%}
+      <div class="product-gallery__track" data-gallery-track>
+        {%- for media in media_list -%}
+          <div
+            class="product-gallery__item{% if forloop.first %} is-active{% endif %}"
+            data-media-id="{{ media.id }}"
+            data-media-type="{{ media.media_type }}"
+            {% unless forloop.first %}inert{% endunless %}
+          >
+            {%- case media.media_type -%}
+              {%- when 'image' -%}
+                <img
+                  src="{{ media | image_url: width: 1200 }}"
+                  alt="{{ media.alt | default: product.title | escape }}"
+                  width="{{ media.width }}"
+                  height="{{ media.height }}"
+                  loading="{% if loop_index == 1 %}eager{% else %}lazy{% endif %}"
+                  class="product-gallery__image"
+                  draggable="false"
+                >
+              {%- when 'video' -%}
+                {{ media | video_tag: controls: true, preload: 'metadata', class: 'product-gallery__video' }}
+              {%- when 'external_video' -%}
+                {{ media | external_video_tag: class: 'product-gallery__video' }}
+              {%- when 'model' -%}
+                {{ media | model_viewer_tag: class: 'product-gallery__model', reveal: 'interaction' }}
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      </div>
     </div>
 
-    <div class="product-gallery__thumbs" data-gallery-thumbs role="tablist" aria-label="{{ 'products.product.media_gallery' | t }}">
-      {%- for media in media_list -%}
-        <button
-          type="button"
-          class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
-          data-thumb
-          data-target-media-id="{{ media.id }}"
-          role="tab"
-          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-          aria-label="{{ 'products.product.view_media' | t: index: forloop.index }}"
-        >
-          {%- if media.preview_image -%}
-            <img src="{{ media.preview_image | image_url: width: 160 }}" alt="" width="80" height="80" loading="lazy">
-          {%- endif -%}
-          {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
-            <span class="product-gallery__thumb-icon" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </span>
-          {%- elsif media.media_type == 'model' -%}
-            <span class="product-gallery__thumb-icon" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
-            </span>
-          {%- endif -%}
+    <div class="product-gallery__thumbs-wrap" data-gallery-thumbs-wrap>
+      {%- if layout == 'thumbnails_left' -%}
+        <button type="button" class="product-gallery__thumbs-arrow product-gallery__thumbs-arrow--prev" data-thumbs-prev aria-label="{{ 'accessibility.previous_slide' | t }}" hidden>
+          {%- render 'icon-chevron' -%}
         </button>
-      {%- endfor -%}
+      {%- endif -%}
+
+      <div class="product-gallery__thumbs" data-gallery-thumbs role="tablist" aria-label="{{ 'products.product.media_gallery' | t }}">
+        {%- for media in media_list -%}
+          <button
+            type="button"
+            class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+            data-thumb
+            data-target-media-id="{{ media.id }}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-label="{{ 'products.product.view_media' | t: index: forloop.index }}"
+          >
+            {%- if media.preview_image -%}
+              <img src="{{ media.preview_image | image_url: width: 160 }}" alt="" width="80" height="80" loading="lazy">
+            {%- endif -%}
+            {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+              <span class="product-gallery__thumb-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+            {%- elsif media.media_type == 'model' -%}
+              <span class="product-gallery__thumb-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
+              </span>
+            {%- endif -%}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      {%- if layout == 'thumbnails_left' -%}
+        <button type="button" class="product-gallery__thumbs-arrow product-gallery__thumbs-arrow--next" data-thumbs-next aria-label="{{ 'accessibility.next_slide' | t }}" hidden>
+          {%- render 'icon-chevron' -%}
+        </button>
+      {%- endif -%}
     </div>
   {%- endif -%}
 </product-media-gallery>

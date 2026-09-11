@@ -20,6 +20,49 @@
   if card_compare_price > card_price
     assign saved_compare_amount = card_compare_price | minus: card_price
   endif
+
+  comment
+    Card swatches: pick whichever of the two configured option names
+    (Theme Settings → Product Cards) actually exists on this product,
+    color preferred over size — products with neither option render no
+    swatches at all.
+  endcomment
+  assign show_swatches = false
+  assign swatch_option = blank
+  assign swatch_option_index = -1
+  assign swatch_color_name_down = settings.swatch_color_option_name | strip | downcase
+  assign swatch_size_name_down = settings.swatch_size_option_name | strip | downcase
+
+  if settings.enable_product_card_swatches
+    if swatch_color_name_down != blank
+      for option in card_product.options_with_values
+        assign option_name_down = option.name | downcase
+        if option_name_down == swatch_color_name_down
+          assign swatch_option = option
+          assign swatch_option_index = forloop.index0
+          break
+        endif
+      endfor
+    endif
+
+    if swatch_option == blank and swatch_size_name_down != blank
+      for option in card_product.options_with_values
+        assign option_name_down = option.name | downcase
+        if option_name_down == swatch_size_name_down
+          assign swatch_option = option
+          assign swatch_option_index = forloop.index0
+          break
+        endif
+      endfor
+    endif
+
+    if swatch_option != blank and swatch_option.values.size > 1
+      assign show_swatches = true
+    endif
+  endif
+
+  assign swatch_group_name = card_product.id | append: '-swatch-' | append: section.id
+  assign swatch_max_shown = 3
 -%}
 
 <a href="{{ card_product.url }}" class="product-card {% if card_product.media[1] != blank %}has-secondary-image{% endif %}">
@@ -59,6 +102,52 @@
         {%- render 'icon-enso', class: 'product-card__placeholder-mark' -%}
       </div>
     {%- endif -%}
+
+    {%- if show_swatches -%}
+      <product-card-swatches class="product-card-swatches">
+        {%- assign swatches_shown = 0 -%}
+        {%- for swatch_value in swatch_option.values -%}
+          {%- assign swatch_variant = blank -%}
+          {%- for variant in card_product.variants -%}
+            {%- if variant.options[swatch_option_index] == swatch_value -%}
+              {%- if swatch_variant == blank -%}
+                {%- assign swatch_variant = variant -%}
+              {%- endif -%}
+              {%- if variant.available -%}
+                {%- assign swatch_variant = variant -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if swatch_variant != blank and swatches_shown < swatch_max_shown -%}
+            {%- assign swatches_shown = swatches_shown | plus: 1 -%}
+            {%- assign swatch_image = swatch_variant.featured_image | default: card_image -%}
+            {%- assign swatch_id = 'CardSwatch-' | append: card_product.id | append: '-' | append: swatch_variant.id | append: '-' | append: section.id -%}
+            <div class="card-swatch-item{% unless swatch_variant.available %} is-unavailable{% endunless %}">
+              <input
+                type="radio"
+                id="{{ swatch_id }}"
+                name="{{ swatch_group_name }}"
+                value="{{ swatch_value | escape }}"
+                class="card-swatch-input"
+                data-variant-id="{{ swatch_variant.id }}"
+                data-url="{{ card_product.url }}?variant={{ swatch_variant.id }}"
+                data-image="{{ swatch_image | image_url: width: 700 }}"
+                data-available="{{ swatch_variant.available }}"
+                {% if swatch_variant.id == card_product.selected_or_first_available_variant.id %}checked{% endif %}
+              >
+              <label for="{{ swatch_id }}" title="{{ swatch_value | escape }}">
+                <img src="{{ swatch_image | image_url: width: 64 }}" alt="" loading="lazy" width="32" height="32">
+              </label>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if swatch_option.values.size > swatch_max_shown -%}
+          <span class="card-swatch-more">+{{ swatch_option.values.size | minus: swatch_max_shown }}</span>
+        {%- endif -%}
+      </product-card-swatches>
+    {%- endif -%}
   </div>
   <div class="product-card__info">
     <h3 class="h-feature product-card__title">{{ card_product.title }}</h3>
@@ -79,18 +168,19 @@
     {% if section.settings.enable_quickadd %}
       <div class="product-card-quickadd">
         {% form 'product', card_product, class: 'quick-add-form' %}
-          <input 
-            type="hidden" 
-            name="id" 
+          <input
+            type="hidden"
+            name="id"
             value="{{ product.selected_or_first_available_variant.id }}"
+            data-variant-id-input
           >
 
-          <button 
-            type="submit" 
-            class="quick-add-button btn btn--primary btn--full"
+          <button
+            type="submit"
+            class="quick-add-button btn btn--{{ section.settings.quickadd_design }} btn--full"
             {% unless product.available %}disabled{% endunless %}
           >
-            <span>
+            <span data-quick-add-label data-label-available="Add To Cart" data-label-sold-out="Sold Out">
             {% if product.available %}
               Add To Cart
             {% else %}
@@ -106,6 +196,18 @@
 </a>
 
 {% stylesheet %}
+  .product-card {
+    padding: 10px;
+    border: 1px solid #f5ebeb;
+    border-radius: var(--radius-lg);
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-card {
+      padding: 5px;
+    }
+  }
+
   .product-card__secondary-image {
     display: none;
   }
@@ -171,6 +273,68 @@
   .product-card__badge-save {
     background: #ea4335;
     color: #fff;
+  }
+
+  /* ---------- Card swatches ---------- */
+  .product-card-swatches {
+    position: absolute;
+    left: var(--space-3);
+    bottom: var(--space-3);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-swatch-item {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .card-swatch-item label {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7), inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.15s ease;
+  }
+
+  .card-swatch-item label img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-swatch-input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .card-swatch-input:checked + label {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-accent);
+  }
+
+  .card-swatch-input:focus-visible + label {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .card-swatch-item.is-unavailable label {
+    opacity: 0.45;
+  }
+
+  .card-swatch-more {
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   .product-card__info {

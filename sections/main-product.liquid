@@ -296,6 +296,19 @@
     }
   }
 
+  /*
+    Grid items default to min-width: auto, meaning a wide-enough descendant
+    (here, the horizontally-scrolling mobile thumbnail row) can force this
+    track — and with it the whole page — wider than the viewport instead of
+    scrolling within it. min-width: 0 lets the grid item actually shrink to
+    the track's available space, same fix .product-main__media already
+    relies on further down the tree at every level that holds the thumbnail
+    row.
+  */
+  .product-main__media {
+    min-width: 0;
+  }
+
   @media screen and (min-width: 990px) {
     .product-main--sticky .product-main__media {
       position: sticky;
@@ -332,12 +345,9 @@
   .product-gallery__model {
     width: 100%;
     height: auto;
-    border-radius: var(--radius-xl);
     aspect-ratio: 1 / 1;
     object-fit: cover;
   }
-
-  .product-gallery__main .product-gallery__item[hidden] { display: none; }
 
   .product-gallery--thumbnails_bottom .product-gallery__thumbs {
     display: flex;
@@ -355,12 +365,44 @@
 
   .product-gallery__main {
     position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    /* Let the page scroll vertically as usual; the gallery's own JS
+       (pointer events) handles horizontal swipe/drag itself. */
+    touch-action: pan-y;
   }
   .product-gallery__main .custom-wishlist-button {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 1;
+    z-index: 2;
+  }
+
+  /*
+    Slides sit side by side in a flex row; changing slides (via swipe, drag,
+    or a thumbnail click) just moves this row with translateX — .is-dragging
+    drops the transition so a finger/pointer drag tracks 1:1 with no lag,
+    turned back on for the settle/snap once the drag ends.
+  */
+  .product-gallery__track {
+    display: flex;
+    transition: transform 0.35s var(--ease-out);
+  }
+  .product-gallery__track.is-dragging {
+    transition: none;
+  }
+
+  .product-gallery__item {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    max-height: 600px;
   }
 
   .product-gallery--thumbnails_left .product-gallery__thumbs {
@@ -368,18 +410,100 @@
     flex-direction: column;
     gap: var(--space-3);
     overflow-y: auto;
-    max-height: 600px;
+    min-height: 0;
+    scrollbar-width: none;
+  }
+  .product-gallery--thumbnails_left .product-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Only shown by JS once the thumbnail column actually overflows its
+     max-height (see product-form.js) — scrolls the column by roughly one
+     thumbnail at a time instead of relying on the hidden scrollbar. A bare
+     chevron, no chip/border/shadow behind it — just an icon sitting in the
+     open space past the last thumbnail. */
+  .product-gallery__thumbs-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--color-text);
+    opacity: 0.8;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+  }
+  .product-gallery__thumbs-arrow:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .product-gallery__thumbs-arrow .icon-chevron {
+    width: 14px;
+    height: 14px;
+  }
+  /* Desktop: column of thumbnails, arrows point up/down. */
+  .product-gallery__thumbs-arrow--prev .icon-chevron {
+    transform: rotate(180deg);
+  }
+  .product-gallery__thumbs-arrow[hidden] {
+    display: none;
   }
 
   @media screen and (max-width: 749px) {
     .product-gallery--thumbnails_left {
-      flex-direction: column-reverse;
+      /* DOM order is [main, thumbs-wrap]; plain column keeps that order
+         (image on top, thumbnail row below) — column-reverse was flipping
+         it, putting the thumbnail row above the image on mobile. */
+      flex-direction: column;
+    }
+    /* Row of thumbnails flanked by arrows, mirroring the desktop column —
+       same overflow-arrow pattern, rotated. min-width: 0 on every level is
+       load-bearing here: without it the row's intrinsic content width (not
+       its scrollable width) forces this flex item, its ancestors, and
+       ultimately the page itself wider than the viewport instead of
+       scrolling in place. */
+    .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
+      flex-direction: row;
+      gap: 0;
+      max-height: none;
+      min-width: 0;
+      width: 100%;
+      position: relative;
     }
     .product-gallery--thumbnails_left .product-gallery__thumbs {
       flex-direction: row;
-      max-height: none;
+      gap: var(--space-1);
       overflow-x: auto;
       overflow-y: visible;
+      flex: 1;
+      min-width: 0;
+    }
+    /* Arrows float over the thumbnail row instead of reserving their own
+       flex column — keeps the row (and its thumbnails) spanning the full
+       width instead of leaving a blank gap where an arrow used to sit. */
+    .product-gallery--thumbnails_left .product-gallery__thumbs-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+    .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--prev {
+      left: 0;
+    }
+    .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--next {
+      right: 0;
+    }
+    .product-gallery__thumbs-arrow--prev .icon-chevron {
+      transform: rotate(90deg);
+    }
+    .product-gallery__thumbs-arrow--next .icon-chevron {
+      transform: rotate(-90deg);
     }
   }
 
@@ -443,7 +567,6 @@
     align-items: baseline;
     gap: var(--space-2);
     flex-wrap: wrap;
-    margin-top: var(--space-3);
   }
   .price__current { color: var(--color-accent); font-size: 20px; }
   /* .price--on-sale .price__current--sale { color: #c0392b; } */
@@ -526,7 +649,7 @@
   }
 
   /* ---------- Buy buttons ---------- */
-  .product-form__buy-buttons { margin-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+  .product-form__buy-buttons { margin-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-3); }
   .product-form__selling-plan { display: flex; flex-direction: column; gap: var(--space-2); }
 
   /* Quantity + Add to cart on one row; dynamic checkout stays its own full-width row below */
@@ -581,6 +704,7 @@
     cursor: pointer;
     font-family: var(--font-heading);
     list-style: none;
+    font-weight: 600;
   }
   .accordion__heading::-webkit-details-marker { display: none; }
   .accordion__icon { transition: transform 0.2s ease; flex-shrink: 0; }

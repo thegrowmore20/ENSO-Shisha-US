@@ -1,0 +1,297 @@
+{%- liquid
+  assign interval_ms = section.settings.change_interval | times: 1000
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <announcement-bar-{{ section.id }}
+    class="announcement-bar"
+    style="--announcement-bg: {{ section.settings.background_color }}; --announcement-text: {{ section.settings.text_color }};"
+    data-auto-rotate="{{ section.settings.auto_rotate }}"
+    data-interval="{{ interval_ms }}"
+  >
+    <div class="container announcement-bar__inner">
+      {%- if section.blocks.size > 1 -%}
+        <button type="button" class="announcement-bar__arrow announcement-bar__arrow--prev" data-announcement-prev aria-label="{{ 'accessibility.previous_slide' | t }}">
+          {%- render 'icon-chevron' -%}
+        </button>
+      {%- endif -%}
+
+      <div class="announcement-bar__track">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.text != blank -%}
+            {%- if block.settings.link != blank -%}
+              <a
+                href="{{ block.settings.link }}"
+                class="announcement-bar__item{% if forloop.first %} is-active{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.text }}
+              </a>
+            {%- else -%}
+              <p
+                class="announcement-bar__item{% if forloop.first %} is-active{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.text }}
+              </p>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <button type="button" class="announcement-bar__arrow announcement-bar__arrow--next" data-announcement-next aria-label="{{ 'accessibility.next_slide' | t }}">
+          {%- render 'icon-chevron' -%}
+        </button>
+      {%- endif -%}
+    </div>
+  </announcement-bar-{{ section.id }}>
+
+  <script>
+    (function () {
+      var TAG = 'announcement-bar-{{ section.id }}';
+
+      class AnnouncementBar extends HTMLElement {
+        connectedCallback() {
+          this.items = Array.prototype.slice.call(
+            this.querySelectorAll('.announcement-bar__item')
+          );
+          this.index = 0;
+
+          var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reducedMotion) this.classList.add('announcement-bar--no-motion');
+
+          // Publishes this bar's rendered height as a CSS variable so
+          // header.liquid's fixed/transparent-over-hero header can offset
+          // itself below it without the two sections knowing about each
+          // other directly. Keeps the header from overlapping the bar (or
+          // leaving a gap) whether the bar is present, removed, or wraps
+          // to a different number of lines at a given viewport width.
+          this.updateHeight = this.updateHeight.bind(this);
+          this.updateHeight();
+          window.addEventListener('resize', this.updateHeight);
+
+          if (this.items.length < 2) return;
+
+          this.interval = parseInt(this.dataset.interval, 10);
+          if (!this.interval || this.interval < 1000) this.interval = 5000;
+
+          var prevButton = this.querySelector('[data-announcement-prev]');
+          var nextButton = this.querySelector('[data-announcement-next]');
+          var self = this;
+
+          if (prevButton) {
+            prevButton.addEventListener('click', function () {
+              self.goTo(self.index - 1);
+            });
+          }
+          if (nextButton) {
+            nextButton.addEventListener('click', function () {
+              self.goTo(self.index + 1);
+            });
+          }
+
+          if (this.dataset.autoRotate === 'true') this.startTimer();
+        }
+
+        updateHeight() {
+          document.documentElement.style.setProperty(
+            '--announcement-bar-height',
+            this.offsetHeight + 'px'
+          );
+        }
+
+        goTo(index) {
+          var count = this.items.length;
+          var nextIndex = ((index % count) + count) % count;
+          if (nextIndex === this.index) return;
+
+          this.items[this.index].classList.remove('is-active');
+          this.index = nextIndex;
+          this.items[this.index].classList.add('is-active');
+
+          // Manual navigation resets the auto-rotate clock so the bar
+          // doesn't jump again right after the visitor just picked a slide.
+          if (this.timer) this.startTimer();
+        }
+
+        startTimer() {
+          if (this.timer) window.clearInterval(this.timer);
+          var self = this;
+          this.timer = window.setInterval(function () {
+            self.goTo(self.index + 1);
+          }, this.interval);
+        }
+
+        disconnectedCallback() {
+          if (this.timer) window.clearInterval(this.timer);
+          window.removeEventListener('resize', this.updateHeight);
+          document.documentElement.style.setProperty('--announcement-bar-height', '0px');
+        }
+      }
+
+      if (!customElements.get(TAG)) {
+        customElements.define(TAG, AnnouncementBar);
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .announcement-bar {
+    display: block;
+    background-color: var(--announcement-bg);
+    color: var(--announcement-text);
+  }
+
+  .announcement-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding-block: 10px;
+  }
+
+  .announcement-bar__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    color: inherit;
+    opacity: 0.85;
+    transition: opacity 0.15s ease;
+  }
+
+  .announcement-bar__arrow:hover {
+    opacity: 1;
+  }
+
+  .announcement-bar__arrow .icon-chevron {
+    width: 14px;
+    height: 14px;
+  }
+
+  .announcement-bar__arrow--prev .icon-chevron {
+    transform: rotate(90deg);
+  }
+
+  .announcement-bar__arrow--next .icon-chevron {
+    transform: rotate(-90deg);
+  }
+
+  .announcement-bar__track {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    min-width: 0;
+  }
+
+  /*
+    All items are stacked in the same grid cell rather than absolutely
+    positioned — position:absolute would pull every item out of flow,
+    leaving the track with no intrinsic size to lay out against (it
+    collapsed to zero width once this became a flex row for the arrow
+    buttons). Grid still sizes the shared cell to the largest stacked
+    item, so the track keeps a real width/height and the whole arrow +
+    text + arrow cluster stays a compact, centered group.
+  */
+  .announcement-bar__item {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    opacity: 0;
+    pointer-events: none;
+    color: inherit;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: opacity 0.4s ease;
+  }
+
+  .announcement-bar__item.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  a.announcement-bar__item:hover {
+    text-decoration: underline;
+  }
+
+  .announcement-bar--no-motion .announcement-bar__item {
+    transition: none;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Change messages automatically",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_interval",
+      "label": "Change message every",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#C62828"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "announcement", "settings": { "text": "Free shipping on orders over $100" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
