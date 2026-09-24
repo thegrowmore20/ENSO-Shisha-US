@@ -1,0 +1,872 @@
+{% doc %}
+  @prompt
+    A short FAQ section, with the subheading :FAQ, Title : Questions, answered. Subtitile:If something is missing, write us — we read everything. And for the contant these here are the question which should be collapsable and the asnwers inside the collapsed content :What is ENSŌ Diamond?
+    Diamond is an electronic heating element that replaces charcoal on a traditional shisha. It sits on top of the cup, holds your set temperature, and runs ~90 minutes on a single battery.
+    
+    Does it work with my shisha?
+    Yes. Diamond is designed to drop in on standard hookah cups and bowls. No adapter, no special hardware. If your setup is unusual, write us before you reserve and we'll confirm fit.
+    
+    How does it replace charcoal?
+    You pack the cup as you usually would, without foil or coals. Diamond goes on top, heats the tobacco from above with a precise ceramic element, and you start drawing. No CO, no smoke from coals — just steady heat tuned to your tobacco.
+    
+    When does it ship?
+    August 2026, estimated. You'll get monthly factory updates from us, and a final ship date confirmation about two weeks before dispatch.
+    
+    What does my deposit cover?
+    The deposit reserves your slot in the first production run at founder pricing. The remaining balance is charged on shipping. You can cancel any time within 30 days for a full refund.
+    
+    How does the 30-day money-back work?
+    If you're not happy with your unit within 30 days of receiving it, write us and we'll arrange a return. You get a full refund of the deposit and balance once the unit is back with us.
+    
+    What is pass-through charging?
+    You can run a session while Diamond is plugged in. Useful for back-to-back sessions or long evenings. The battery still charges in the background.
+    
+    Will firmware updates change the device?
+    Updates add features, new heating profiles, refinements to existing ones and patch issues if any are found. You install them yourself over USB-C — no service center needed.
+    
+    International shipping?
+    Yes. We ship globally from our DE warehouse. Local taxes and duties are calculated at checkout. EU customers see VAT included; other regions see duties estimated separately.
+    
+    Warranty?
+    Two years against manufacturing defects. Doesn't cover accidental damage, misuse, or wear-and-tear on consumable parts. We'll be specific about which parts those are in the manual.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-faq-section-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.section_padding }}px 0;
+    display: block;
+  }
+
+  .ai-faq-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.content_max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-faq-header-{{ ai_gen_id }} {
+    text-align: {{ block.settings.text_alignment }};
+    margin-bottom: {{ block.settings.header_spacing }}px;
+  }
+
+  .ai-faq-subheading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subheading_size }}px;
+    color: {{ block.settings.subheading_color }};
+    margin: 0 0 {{ block.settings.subheading_margin }}px;
+    text-transform: {{ block.settings.subheading_transform }};
+    letter-spacing: 0.05em;
+  }
+
+  .ai-faq-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 {{ block.settings.title_margin }}px;
+    font-family: {{ block.settings.title_font.family }}, {{ block.settings.title_font.fallback_families }};
+    font-weight: {{ block.settings.title_font.weight }};
+  }
+
+  .ai-faq-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0;
+    max-width: 600px;
+    margin-left: {% if block.settings.text_alignment == 'center' %}auto{% else %}0{% endif %};
+    margin-right: {% if block.settings.text_alignment == 'center' %}auto{% else %}0{% endif %};
+  }
+
+  .ai-faq-list-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.item_spacing }}px;
+  }
+
+  .ai-faq-item-{{ ai_gen_id }} {
+    border: {{ block.settings.item_border_width }}px solid {{ block.settings.item_border_color }};
+    border-radius: {{ block.settings.item_border_radius }}px;
+    background-color: {{ block.settings.item_background }};
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .ai-faq-item-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.item_border_hover_color }};
+  }
+
+  .ai-faq-question-{{ ai_gen_id }} {
+    width: 100%;
+    padding: {{ block.settings.question_padding }}px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-size: {{ block.settings.question_size }}px;
+    color: {{ block.settings.question_color }};
+    font-family: {{ block.settings.question_font.family }}, {{ block.settings.question_font.fallback_families }};
+    font-weight: {{ block.settings.question_font.weight }};
+    transition: color 0.2s ease;
+  }
+
+  .ai-faq-question-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.question_hover_color }};
+  }
+
+  .ai-faq-question-text-{{ ai_gen_id }} {
+    flex: 1;
+  }
+
+  .ai-faq-icon-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-faq-icon-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    stroke: {{ block.settings.icon_color }};
+  }
+
+  .ai-faq-item-{{ ai_gen_id }}.active .ai-faq-icon-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+  }
+
+  .ai-faq-answer-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .ai-faq-item-{{ ai_gen_id }}.active .ai-faq-answer-{{ ai_gen_id }} {
+    max-height: 1000px;
+  }
+
+  .ai-faq-answer-content-{{ ai_gen_id }} {
+    padding: 0 {{ block.settings.question_padding }}px {{ block.settings.question_padding }}px;
+    font-size: {{ block.settings.answer_size }}px;
+    color: {{ block.settings.answer_color }};
+    line-height: 1.6;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-faq-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.8);
+    }
+
+    .ai-faq-subtitle-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtitle_size }}px * 0.9);
+    }
+
+    .ai-faq-question-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.question_size }}px * 0.9);
+      padding: {{ block.settings.question_padding | times: 0.75 }}px;
+    }
+
+    .ai-faq-answer-content-{{ ai_gen_id }} {
+      padding: 0 {{ block.settings.question_padding | times: 0.75 }}px {{ block.settings.question_padding | times: 0.75 }}px;
+      font-size: calc({{ block.settings.answer_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<faq-section-{{ ai_gen_id }} class="ai-faq-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-faq-container-{{ ai_gen_id }}">
+    <div class="ai-faq-header-{{ ai_gen_id }}">
+      {% if block.settings.subheading != blank %}
+        <div class="ai-faq-subheading-{{ ai_gen_id }}">{{ block.settings.subheading }}</div>
+      {% endif %}
+      {% if block.settings.title != blank %}
+        <h2 class="ai-faq-title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+      {% endif %}
+      {% if block.settings.subtitle != blank %}
+        <div class="ai-faq-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</div>
+      {% endif %}
+    </div>
+
+    <div class="ai-faq-list-{{ ai_gen_id }}">
+      {% if block.settings.faq_1_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_1_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_1_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_2_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_2_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_2_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_3_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_3_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_3_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_4_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_4_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_4_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_5_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_5_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_5_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_6_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_6_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_6_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_7_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_7_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_7_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_8_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_8_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_8_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_9_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_9_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_9_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.faq_10_question != blank %}
+        <div class="ai-faq-item-{{ ai_gen_id }}" data-faq-item>
+          <button class="ai-faq-question-{{ ai_gen_id }}" aria-expanded="false">
+            <span class="ai-faq-question-text-{{ ai_gen_id }}">{{ block.settings.faq_10_question }}</span>
+            <span class="ai-faq-icon-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="ai-faq-answer-{{ ai_gen_id }}">
+            <div class="ai-faq-answer-content-{{ ai_gen_id }}">{{ block.settings.faq_10_answer }}</div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</faq-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FaqSection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.items = this.querySelectorAll('[data-faq-item]');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.items.forEach((item) => {
+          const button = item.querySelector('.ai-faq-question-{{ ai_gen_id }}');
+          
+          button.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            if (isActive) {
+              item.classList.remove('active');
+              button.setAttribute('aria-expanded', 'false');
+            } else {
+              item.classList.add('active');
+              button.setAttribute('aria-expanded', 'true');
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('faq-section-{{ ai_gen_id }}', FaqSection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ section",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Questions, answered."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "If something is missing, write us — we read everything."
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "FAQ 1"
+    },
+    {
+      "type": "text",
+      "id": "faq_1_question",
+      "label": "Question",
+      "default": "What is ENSŌ Diamond?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_1_answer",
+      "label": "Answer",
+      "default": "Diamond is an electronic heating element that replaces charcoal on a traditional shisha. It sits on top of the cup, holds your set temperature, and runs ~90 minutes on a single battery."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 2"
+    },
+    {
+      "type": "text",
+      "id": "faq_2_question",
+      "label": "Question",
+      "default": "Does it work with my shisha?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_2_answer",
+      "label": "Answer",
+      "default": "Yes. Diamond is designed to drop in on standard hookah cups and bowls. No adapter, no special hardware. If your setup is unusual, write us before you reserve and we'll confirm fit."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 3"
+    },
+    {
+      "type": "text",
+      "id": "faq_3_question",
+      "label": "Question",
+      "default": "How does it replace charcoal?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_3_answer",
+      "label": "Answer",
+      "default": "You pack the cup as you usually would, without foil or coals. Diamond goes on top, heats the tobacco from above with a precise ceramic element, and you start drawing. No CO, no smoke from coals — just steady heat tuned to your tobacco."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 4"
+    },
+    {
+      "type": "text",
+      "id": "faq_4_question",
+      "label": "Question",
+      "default": "When does it ship?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_4_answer",
+      "label": "Answer",
+      "default": "August 2026, estimated. You'll get monthly factory updates from us, and a final ship date confirmation about two weeks before dispatch."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 5"
+    },
+    {
+      "type": "text",
+      "id": "faq_5_question",
+      "label": "Question",
+      "default": "What does my deposit cover?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_5_answer",
+      "label": "Answer",
+      "default": "The deposit reserves your slot in the first production run at founder pricing. The remaining balance is charged on shipping. You can cancel any time within 30 days for a full refund."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 6"
+    },
+    {
+      "type": "text",
+      "id": "faq_6_question",
+      "label": "Question",
+      "default": "How does the 30-day money-back work?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_6_answer",
+      "label": "Answer",
+      "default": "If you're not happy with your unit within 30 days of receiving it, write us and we'll arrange a return. You get a full refund of the deposit and balance once the unit is back with us."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 7"
+    },
+    {
+      "type": "text",
+      "id": "faq_7_question",
+      "label": "Question",
+      "default": "What is pass-through charging?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_7_answer",
+      "label": "Answer",
+      "default": "You can run a session while Diamond is plugged in. Useful for back-to-back sessions or long evenings. The battery still charges in the background."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 8"
+    },
+    {
+      "type": "text",
+      "id": "faq_8_question",
+      "label": "Question",
+      "default": "Will firmware updates change the device?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_8_answer",
+      "label": "Answer",
+      "default": "Updates add features, new heating profiles, refinements to existing ones and patch issues if any are found. You install them yourself over USB-C — no service center needed."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 9"
+    },
+    {
+      "type": "text",
+      "id": "faq_9_question",
+      "label": "Question",
+      "default": "International shipping?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_9_answer",
+      "label": "Answer",
+      "default": "Yes. We ship globally from our DE warehouse. Local taxes and duties are calculated at checkout. EU customers see VAT included; other regions see duties estimated separately."
+    },
+    {
+      "type": "header",
+      "content": "FAQ 10"
+    },
+    {
+      "type": "text",
+      "id": "faq_10_question",
+      "label": "Question",
+      "default": "Warranty?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_10_answer",
+      "label": "Answer",
+      "default": "Two years against manufacturing defects. Doesn't cover accidental damage, misuse, or wear-and-tear on consumable parts. We'll be specific about which parts those are in the manual."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 600,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Header spacing",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "label": "Item spacing",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Subheading size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "subheading_transform",
+      "label": "Subheading transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "subheading_margin",
+      "label": "Subheading margin",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Title font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "title_margin",
+      "label": "Title margin",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "font_picker",
+      "id": "question_font",
+      "label": "Question font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "range",
+      "id": "question_size",
+      "label": "Question size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "answer_size",
+      "label": "Answer size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "question_hover_color",
+      "label": "Question hover",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "item_background",
+      "label": "Item background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "item_border_color",
+      "label": "Item border",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "item_border_hover_color",
+      "label": "Item border hover",
+      "default": "#cccccc"
+    },
+    {
+      "type": "header",
+      "content": "Item style"
+    },
+    {
+      "type": "range",
+      "id": "item_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "item_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "question_padding",
+      "label": "Question padding",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ section"
+    }
+  ]
+}
+{% endschema %}

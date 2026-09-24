@@ -20,6 +20,8 @@
             "mega_target_item": "Shop Devices",
             "show_products": true,
             "max_products": 4,
+            "view_all_text": "",
+            "view_all_link": "",
             "image_heading": "",
             "image_url": ""
           }
@@ -29,7 +31,9 @@
           "settings": {
             "mega_target_item": "Shop Accessories",
             "show_products": true,
-            "max_products": 4,
+            "max_products": 5,
+            "view_all_text": "View All",
+            "view_all_link": "shopify://collections/accesories",
             "image_heading": "",
             "image_url": ""
           }
@@ -41,7 +45,7 @@
       ],
       "settings": {
         "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
-        "sticky": true,
+        "sticky": "scroll_up",
         "menu": "header-menu-products"
       }
     }

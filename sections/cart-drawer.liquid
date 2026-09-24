@@ -195,6 +195,7 @@
 							{{ compare_at_total | money }}
 						</span>
 					</div>
+					{% if total_saved_amount > 0 %}
 					<div class="cart-total-discounts-row cart__summary-item cart__total summary-total-compare-wrapper font-600 color-green">
 						<span class="cart-dicount-row-label">
 							{{ 'cart.general.discount' | t }} <span id="grand-saving" class="grand-saving"> {% render 'icon-discount' %} {{ grand_saving | append: '%' }}  </span>
@@ -203,6 +204,7 @@
 						-{{ total_saved_amount | money }}
 					</span>
 				</div>
+					{% endif %}
 
 			</div>
 

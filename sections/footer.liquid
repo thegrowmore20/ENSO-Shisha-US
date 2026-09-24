@@ -13,10 +13,14 @@
     <div class="site-footer__top">
       <div class="site-footer__brand">
         <a href="{{ routes.root_url }}" class="wordmark site-footer__logo">
-          {%- render 'icon-enso', class: 'site-footer__mark' -%}
-          <span>ENSŌ</span>
+          <img src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Logo_text_web-01.webp?v=1790148101" />
         </a>
         <p class="body-text text-muted site-footer__tagline">{{ 'sections.footer.tagline' | t }}</p>
+        {%- if section.settings.show_social -%}
+          <div class="site-footer__brand-social">
+            {%- render 'footer-social-icons' -%}
+          </div>
+        {%- endif -%}
       </div>
 
       <div class="site-footer__columns">
@@ -91,18 +95,13 @@
       </div>
     </div>
 
-    {%- if section.settings.show_payment or section.settings.show_social -%}
+    {%- if section.settings.show_payment -%}
       <div class="site-footer__payment-social">
-        {%- if section.settings.show_payment -%}
-          <ul class="site-footer__payment" role="list">
-            {%- for type in shop.enabled_payment_types -%}
-              <li>{{ type | payment_type_svg_tag: class: 'site-footer__payment-icon' }}</li>
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
-        {%- if section.settings.show_social -%}
-          {%- render 'footer-social-icons' -%}
-        {%- endif -%}
+        <ul class="site-footer__payment" role="list">
+          {%- for type in shop.enabled_payment_types -%}
+            <li>{{ type | payment_type_svg_tag: class: 'site-footer__payment-icon' }}</li>
+          {%- endfor -%}
+        </ul>
       </div>
     {%- endif -%}
 
@@ -144,7 +143,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.78);
+    background: rgba(0,0,0,0.34);
     z-index: 0;
   }
   {% endif %}
@@ -183,6 +182,10 @@
     max-width: 32ch;
   }
 
+  .site-footer__brand-social {
+    margin-top: var(--space-5);
+  }
+
   .site-footer__columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -205,6 +208,10 @@
 
   .site-footer__column-title--second {
     margin-top: var(--space-6);
+  }
+
+  .site-footer__column .eyebrow.site-footer__column-title {
+    font-size: 18px;
   }
 
   .site-footer__links {
@@ -250,6 +257,7 @@
   .contact-info-wrapper svg {
     width: 16px;
     height: 16px;
+    margin-top: 5px;
   }
 
   /* Those same icons hardcode fill:#fff (or, for external-link, a literal
@@ -275,6 +283,8 @@
     }
   }
 
+  /* Payment icons are the only thing in this row now that social icons
+     live under the tagline instead — always centered. */
   .site-footer__payment-social {
     display: flex;
     flex-wrap: wrap;
@@ -310,6 +320,12 @@
     height: 20px;
     color: var(--color-text);
     transition: color 0.2s ease;
+  }
+
+  .footer-social-icons__link img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .footer-social-icons__link:hover {
@@ -460,6 +476,7 @@
       "type": "checkbox",
       "id": "show_social",
       "label": "Show social media icons",
+      "info": "Shown below the tagline, under the ENSŌ logo.",
       "default": true
     }
   ],

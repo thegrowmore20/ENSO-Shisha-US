@@ -21,6 +21,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 5px;
+  background-color: #c8943a;
+  z-index: 100;
+  pointer-events: none;
+  will-change: width;
+}
+
 img,
 svg {
   display: block;
@@ -65,6 +78,7 @@ h1, .h1 {
 }
 h2, .h2 {
   font-size: 36px;
+  line-height: 1.2;
 }
 h3, .h3 {
   font-size: 30px;
@@ -212,7 +226,7 @@ h6, .h6 {
 
 .h-catalog {
   font-family: var(--font-heading);
-  font-weight: 200;
+  font-weight: 400;
   font-size: clamp(1.5rem, 1.4rem + 0.4vw, 1.625rem);
   letter-spacing: 0.08em;
 }
@@ -228,7 +242,7 @@ h6, .h6 {
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.75;
+  line-height: 1.5;
 }
 
 .caption {
@@ -243,7 +257,7 @@ h6, .h6 {
   font-family: var(--font-heading);
   font-weight: 500;
   font-size: 16px;
-  letter-spacing: 0.26em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-accent);
   margin-bottom: var(--space-3);
@@ -273,9 +287,9 @@ h6, .h6 {
   padding: 0 40px;
   border-radius: var(--radius-pill);
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   text-align: center;
   border: 1px solid transparent;
   transition: opacity 0.15s ease, transform 0.15s ease;
@@ -298,10 +312,15 @@ h6, .h6 {
 }
 
 .btn--primary {
-  background-color: var(--color-primary-button-background);
+  
+  background-color: var(--color-accent);
   color: var(--color-primary-button-label);
+  color: #fff;
+  opacity: 1;
 }
-
+.btn--primary:hover {
+    background-color: var(--color-primary-button-background);
+}
 .btn--secondary {
   background-color: var(--color-secondary-button-background);
   color: var(--color-secondary-button-label);
@@ -320,13 +339,39 @@ h6, .h6 {
 .quick-add-button {
   position: relative;
 }
-.quick-add-button[data-loading] span:first-child {
+.quick-add-button svg {
+  width: 20px;
+  height: 20px;
+}
+.quick-add-button svg path {
+    stroke: #fff;
+    fill: #fff;
+}
+.quick-add-button[data-loading] span:first-child,
+.quick-add-button[data-loading] svg {
   visibility: hidden;
+}
+
+/* All "Add to cart" buttons (product cards' quick-add + the PDP buy button)
+   use this fixed yellow regardless of color scheme, independent of
+   .btn--primary/.btn--secondary's scheme-driven colors used elsewhere. */
+.quick-add-button,
+.product-form__submit {
+  background-color: #c8943a;
+  color: #fff;
+  border-color: #c8943a;
 }
 
 @media screen and (max-width: 749px) {
   .btn {
     height: 40px;
+    gap: 5px;
+    font-size: 15px;
+  }
+
+  .quick-add-button svg {
+    min-width: 15px;
+    height: 15px;
   }
 
   .cart-drawer .btn {
@@ -348,7 +393,7 @@ h6, .h6 {
 .card {
   background-color: var(--color-background-raised);
   border-radius: var(--radius-lg);
-  padding: 26px;
+  padding: 20px;
 }
 
 .card__title {
@@ -816,4 +861,257 @@ h6, .h6 {
 .custom-wishlist-button .xb-wishlist__add > button:hover svg,
 .custom-wishlist-button .xb-wishlist__remove > button:hover svg {
   transform: scale(1.12);
+}
+
+.site-header__logo {
+    max-width: 160px;
+}
+
+.template-index header:not(.is-scrolled) .site-header__logo {
+    filter: invert(1);
+}
+header.is-scrolled {
+    border-bottom: 0 !important;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+header.site-header[data-mega-open]  .site-header__logo{
+   filter: none !important;
+}
+header {
+    border: none !important;
+}
+
+.site-header__mega {
+    border: none !important;
+}
+.loox-rating .loox-icon {
+  color: var(--color-accent) !important;
+}
+img.video-hero-slider__poster {
+    object-fit: contain;
+    background: #202020;
+}
+button.carousel__arrow.carousel__arrow--prev[disabled] {
+    display: none;
+}
+.star {
+    color: #c8943a !important;
+}
+a.btn.btn--outline {
+    border: none;
+    padding: 0;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+}
+.product-main p a {
+    text-decoration: underline;
+}
+.product-form__cart-row .product-form__submit svg path {
+    fill: #fff;
+    stroke: #fff;
+}
+div#comparison-table-container-6 img {
+    max-width: 204px;
+    max-height: 204px;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
+div#comparison-table-container-6 tr:first-child th:first-child img {
+    object-fit: cover;
+}
+
+div#comparison-table-container-6 img.product-card__image.product-card__primary-image {
+    object-fit: cover;
+}
+body.template-product .site-header a.site-header__logo.wordmark {
+    filter: none;
+}
+
+body.template-product .site-header {
+    box-shadow: #959da533 0 8px 24px;
+}
+.video-hero-slider__arrow--prev {
+    left: calc(var(--page-margin) - 40px) !important;
+}
+
+button.video-hero-slider__arrow.video-hero-slider__arrow--next {
+    right: calc(var(--page-margin) - 40px) !important;
+}
+@media only screen and (max-width: 1540px) {
+  .video-hero-slider__arrow--prev {
+    left: 15px !important;
+  }
+
+  button.video-hero-slider__arrow.video-hero-slider__arrow--next {
+      right: 15px !important;
+  }
+}
+.site-header[data-sticky=scroll_up] {
+    box-shadow: #959da533 0 8px 24px;
+}
+div[data-icon="icon_1"] img, div[data-icon="icon_2"] img {
+    opacity: 0.5;
+}
+.template-index .site-header[data-sticky=scroll_up] {
+    /* box-shadow: none; */
+}
+
+.template-index .site-header[data-sticky=scroll_up] {
+    box-shadow: none;
+}
+
+.template-index .site-header[data-sticky=scroll_up].is-scrolled {
+    box-shadow: #959da533 0 8px 24px;
+}
+
+.template-index .site-header[data-sticky=scroll_up]:not(.is-scrolled) .site-header__logo {
+    filter: none;
+}
+.template-index .site-header[data-sticky=scroll_up] .site-header__bar .site-header__logo {
+    filter: invert(1);
+}
+
+.template-index .site-header[data-sticky=scroll_up].is-scrolled .site-header__bar .site-header__logo {
+    filter: none;
+}
+a.site-header__mega-view-all {
+    order: 1;
+    border: none;
+    text-decoration: underline;
+}
+a.btn.btn--outline {
+    /* text-decoration: underline; */
+    text-underline-offset: .25rem;
+    font-weight: 700;
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: auto;
+}
+
+a.btn.btn--outline::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #000;
+    border-left: 0;
+    border-bottom: 0;
+    transform: rotate(45deg);
+}
+
+a.btn.btn--outline:hover {
+    text-decoration: underline;
+}
+.video-hero-slider__slide.is-active.is-ready .reserve-spot-button {
+    margin-left: 0;
+}
+
+.video-hero-slider__slide.is-active.is-ready .reserve-spot-form {
+    padding: 0;
+    margin: 0;
+    justify-content: flex-start !important;
+}
+
+.video-hero-slider__slide.is-active.is-ready .reserve-spot-form button {
+    max-width: max-content !important;
+    padding: 14px 20px !important;
+    margin: 10px 0px 0px !important;
+}
+a.wordmark.site-footer__logo img {
+    filter: invert(1);
+    max-width: 200px;
+}
+.price__current {
+    color: #000 !important;
+    font-weight: 1000;
+}
+div#comparison-table-container-6 img.product-card__image.product-card__primary-image + img {
+    object-fit: cover;
+}
+carousel-slider.blog__tags-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.blog__tags {
+    width: 100%;
+}
+
+.carousel__controls.blog__tags-controls {
+    width: 100%;
+    position: absolute;
+    height: 40px;
+    /* background: red; */
+    left: 0;
+    right: 0;
+}
+
+button.carousel__arrow.carousel__arrow--prev[disabled] {}
+
+.carousel__controls.blog__tags-controls button.carousel__arrow.carousel__arrow--prev[disabled] {
+    left: 0;
+}
+
+.carousel__controls.blog__tags-controls button[aria-label="Next"] {
+    left: auto;
+    position: absolute;
+    right: 0;
+}
+img.product-card__image.product-card__secondary-image[alt="ENSŌ Diamond Pre-Order"] {
+    object-fit: contain;
+}
+.custom-wishlist-button svg {
+    stroke: #c8943a;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.list-items li {
+    margin-top: .5em;
+    margin-bottom: .5em;
+    color: #000;
+    opacity: 1;
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: ;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.list-items ul {
+    list-style-type: disc;
+    /* margin-top: 1.25em; */
+    /* margin-bottom: 1.25em; */
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.list-items {
+    padding-top: 0;
+}
+.video-hero-slider__slide.is-active.is-ready .reserve-spot-form button {
+    letter-spacing: normal;
+    padding: 14px 35px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* mobile css */
+
+@media only screen and (max-width:767px) {
+  #shopify-section-template--27698706678073__video_hero_slider_p6YT3f .video-hero-slider__content {
+    max-width: 360px !important;
+  }
+
+  .split--height-mobile-small .split__media, .split--height-mobile-small .split__placeholder {
+      height: auto;
+      min-height: 410px !important;
+  }
 }

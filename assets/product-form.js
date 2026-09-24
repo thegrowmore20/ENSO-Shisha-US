@@ -125,6 +125,10 @@ if (!customElements.get('product-info')) {
         url.searchParams.set('variant', variant.id);
         window.history.replaceState({}, '', url);
       }
+
+      // 6. Let other elements on the page (e.g. the sticky add-to-cart bar)
+      // react to the new variant without needing their own variant-matching logic.
+      document.dispatchEvent(new CustomEvent('variant:change', { detail: { variant } }));
     }
 
     #bindQuantity() {
@@ -345,4 +349,81 @@ if (!customElements.get('product-media-gallery')) {
   }
 
   customElements.define('product-media-gallery', ProductMediaGallery);
+}
+
+if (!customElements.get('sticky-add-to-cart')) {
+  class StickyAddToCart extends HTMLElement {
+    connectedCallback() {
+      this.target = document.getElementById(this.dataset.watchTarget);
+      this.variantIdInput = this.querySelector('[data-sticky-variant-id]');
+      this.priceEl = this.querySelector('[data-sticky-price]');
+      this.priceTemplates = this.querySelector('[data-sticky-price-templates]');
+      this.addButton = this.querySelector('[data-add-to-cart]');
+      this.addButtonText = this.querySelector('[data-add-to-cart-text]');
+      this.dismissed = false;
+
+      this.querySelector('[data-sticky-atc-close]')?.addEventListener('click', () => {
+        this.dismissed = true;
+        this.hidden = true;
+      });
+
+      this.#bindQuantity();
+
+      document.addEventListener('variant:change', (event) => this.#applyVariant(event.detail.variant));
+
+      if (!this.target) return;
+
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (entry.isIntersecting) {
+            this.dismissed = false;
+            this.hidden = true;
+          } else if (!this.dismissed) {
+            this.hidden = false;
+          }
+        },
+        { threshold: 0 }
+      );
+      this.observer.observe(this.target);
+    }
+
+    disconnectedCallback() {
+      this.observer?.disconnect();
+    }
+
+    #applyVariant(variant) {
+      if (this.variantIdInput) this.variantIdInput.value = variant.id;
+      if (this.priceEl && this.priceTemplates) {
+        const template = this.priceTemplates.content.querySelector(
+          '[data-variant-price-id="' + variant.id + '"]'
+        );
+        if (template) this.priceEl.innerHTML = template.innerHTML;
+      }
+      if (this.addButton) this.addButton.disabled = !variant.available;
+      if (this.addButtonText) {
+        this.addButtonText.textContent = variant.available
+          ? this.addButtonText.dataset.labelAvailable
+          : this.addButtonText.dataset.labelSoldOut;
+      }
+    }
+
+    #bindQuantity() {
+      const input = this.querySelector('[data-quantity-input]');
+      if (!input) return;
+
+      this.querySelector('[data-quantity-minus]')?.addEventListener('click', () => {
+        input.value = Math.max(1, parseInt(input.value || '1', 10) - 1);
+      });
+      this.querySelector('[data-quantity-plus]')?.addEventListener('click', () => {
+        input.value = parseInt(input.value || '1', 10) + 1;
+      });
+      input.addEventListener('change', () => {
+        const value = parseInt(input.value, 10);
+        if (isNaN(value) || value < 1) input.value = 1;
+      });
+    }
+  }
+
+  customElements.define('sticky-add-to-cart', StickyAddToCart);
 }

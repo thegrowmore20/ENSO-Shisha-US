@@ -1,0 +1,458 @@
+{% doc %}
+  @prompt
+    I need a section where the subheading is: Founder Edition, The title is: Get your founder spot. Text under title is: Reserve ENSŌ Diamond from the first production run with a €100 deposit.. Under this text there should be 4 separate text boxes next to each other separated by a thin line on both sides of the middle ones. The texts in the boxes should have a subheading on top , a title underneath and a text under that. Here is the content for the boxes1: subheading : Full price, title:€270, text : €170 balance on shipping. Box 2 : Subheading : Regular price Title: €330, text : After first batchBox 3: Subheading:Estimated shipping, Title :August 2026, Text: Confirmed two weeks before dispatch. Box 4: Subheading: Guarantee, title: 30 days, text: Money-back after receiving the unit
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-founder-edition-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 100%;
+    padding: 32px 0;
+    background-color: {{ block.settings.background_color }};
+    display: block;
+  }
+
+  .ai-founder-edition__container-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: var(--page-width, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--page-margin, 24px);
+  }
+
+  .ai-founder-edition__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .ai-founder-edition__subheading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subheading_size }}px;
+    color: {{ block.settings.subheading_color }};
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  .ai-founder-edition__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 10px;
+    font-weight: 700;
+  }
+
+  .ai-founder-edition__description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.75;
+  }
+
+  .ai-founder-edition__boxes-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .ai-founder-edition__box-{{ ai_gen_id }} {
+    padding: 18px 16px;
+    text-align: center;
+    position: relative;
+    border: 1px solid {{ block.settings.divider_color }};
+    border-radius: 10px;
+  }
+
+  .ai-founder-edition__box-subheading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.box_subheading_size }}px;
+    color: {{ block.settings.box_subheading_color }};
+    margin: 0 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .ai-founder-edition__box-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.box_title_size }}px;
+    color: {{ block.settings.box_title_color }};
+    margin: 0 0 6px;
+    font-weight: 700;
+  }
+
+  .ai-founder-edition__box-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.box_text_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    line-height: 1.4;
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-founder-edition__container-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-founder-edition__boxes-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-founder-edition-{{ ai_gen_id }} {
+      padding: 24px 0;
+    }
+
+    .ai-founder-edition__header-{{ ai_gen_id }} {
+      margin-bottom: 20px;
+    }
+
+    .ai-founder-edition__boxes-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-founder-edition-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-founder-edition__container-{{ ai_gen_id }}">
+  <div class="ai-founder-edition__header-{{ ai_gen_id }}">
+    {%- if block.settings.subheading != blank -%}
+      <div class="ai-founder-edition__subheading-{{ ai_gen_id }}">
+        {{ block.settings.subheading }}
+      </div>
+    {%- endif -%}
+    
+    {%- if block.settings.title != blank -%}
+      <h2 class="ai-founder-edition__title-{{ ai_gen_id }}">
+        {{ block.settings.title }}
+      </h2>
+    {%- endif -%}
+    
+    {%- if block.settings.description != blank -%}
+      <div class="ai-founder-edition__description-{{ ai_gen_id }}">
+        {{ block.settings.description }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="ai-founder-edition__boxes-{{ ai_gen_id }}">
+    <div class="ai-founder-edition__box-{{ ai_gen_id }}">
+      {%- if block.settings.box_1_subheading != blank -%}
+        <div class="ai-founder-edition__box-subheading-{{ ai_gen_id }}">
+          {{ block.settings.box_1_subheading }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_1_title != blank -%}
+        <div class="ai-founder-edition__box-title-{{ ai_gen_id }}">
+          {{ block.settings.box_1_title }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_1_text != blank -%}
+        <div class="ai-founder-edition__box-text-{{ ai_gen_id }}">
+          {{ block.settings.box_1_text }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="ai-founder-edition__box-{{ ai_gen_id }}">
+      {%- if block.settings.box_2_subheading != blank -%}
+        <div class="ai-founder-edition__box-subheading-{{ ai_gen_id }}">
+          {{ block.settings.box_2_subheading }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_2_title != blank -%}
+        <div class="ai-founder-edition__box-title-{{ ai_gen_id }}">
+          {{ block.settings.box_2_title }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_2_text != blank -%}
+        <div class="ai-founder-edition__box-text-{{ ai_gen_id }}">
+          {{ block.settings.box_2_text }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="ai-founder-edition__box-{{ ai_gen_id }}">
+      {%- if block.settings.box_3_subheading != blank -%}
+        <div class="ai-founder-edition__box-subheading-{{ ai_gen_id }}">
+          {{ block.settings.box_3_subheading }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_3_title != blank -%}
+        <div class="ai-founder-edition__box-title-{{ ai_gen_id }}">
+          {{ block.settings.box_3_title }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_3_text != blank -%}
+        <div class="ai-founder-edition__box-text-{{ ai_gen_id }}">
+          {{ block.settings.box_3_text }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="ai-founder-edition__box-{{ ai_gen_id }}">
+      {%- if block.settings.box_4_subheading != blank -%}
+        <div class="ai-founder-edition__box-subheading-{{ ai_gen_id }}">
+          {{ block.settings.box_4_subheading }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_4_title != blank -%}
+        <div class="ai-founder-edition__box-title-{{ ai_gen_id }}">
+          {{ block.settings.box_4_title }}
+        </div>
+      {%- endif -%}
+      {%- if block.settings.box_4_text != blank -%}
+        <div class="ai-founder-edition__box-text-{{ ai_gen_id }}">
+          {{ block.settings.box_4_text }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Founder edition",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header content"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Founder Edition"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Get your founder spot"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Reserve ENSŌ Diamond from the first production run with a €100 deposit."
+    },
+    {
+      "type": "header",
+      "content": "Box 1"
+    },
+    {
+      "type": "text",
+      "id": "box_1_subheading",
+      "label": "Subheading",
+      "default": "Full price"
+    },
+    {
+      "type": "text",
+      "id": "box_1_title",
+      "label": "Title",
+      "default": "€270"
+    },
+    {
+      "type": "textarea",
+      "id": "box_1_text",
+      "label": "Text",
+      "default": "€170 balance on shipping"
+    },
+    {
+      "type": "header",
+      "content": "Box 2"
+    },
+    {
+      "type": "text",
+      "id": "box_2_subheading",
+      "label": "Subheading",
+      "default": "Regular price"
+    },
+    {
+      "type": "text",
+      "id": "box_2_title",
+      "label": "Title",
+      "default": "€330"
+    },
+    {
+      "type": "textarea",
+      "id": "box_2_text",
+      "label": "Text",
+      "default": "After first batch"
+    },
+    {
+      "type": "header",
+      "content": "Box 3"
+    },
+    {
+      "type": "text",
+      "id": "box_3_subheading",
+      "label": "Subheading",
+      "default": "Estimated shipping"
+    },
+    {
+      "type": "text",
+      "id": "box_3_title",
+      "label": "Title",
+      "default": "August 2026"
+    },
+    {
+      "type": "textarea",
+      "id": "box_3_text",
+      "label": "Text",
+      "default": "Confirmed two weeks before dispatch"
+    },
+    {
+      "type": "header",
+      "content": "Box 4"
+    },
+    {
+      "type": "text",
+      "id": "box_4_subheading",
+      "label": "Subheading",
+      "default": "Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "box_4_title",
+      "label": "Title",
+      "default": "30 days"
+    },
+    {
+      "type": "textarea",
+      "id": "box_4_text",
+      "label": "Text",
+      "default": "Money-back after receiving the unit"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "box_subheading_color",
+      "label": "Box subheading color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "box_title_color",
+      "label": "Box title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Subheading size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "box_subheading_size",
+      "label": "Box subheading size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "box_title_size",
+      "label": "Box title size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "box_text_size",
+      "label": "Box text size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founder edition"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}

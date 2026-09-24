@@ -2,13 +2,15 @@
   Renders the quantity stepper used in the product form.
   Accepts:
   - section_id: {String} current section's id, used to build a unique input id
+  - id_suffix: {String} optional, appended to the input id when a section renders
+    more than one quantity selector on the page (e.g. the sticky add-to-cart bar)
 {% endcomment %}
 <div class="quantity" data-quantity-wrapper>
-  <label class="visually-hidden" for="Quantity-{{ section_id }}">{{ 'products.product.quantity' | t }}</label>
+  <label class="visually-hidden" for="Quantity-{{ section_id }}{{ id_suffix }}">{{ 'products.product.quantity' | t }}</label>
   <button type="button" class="quantity__button" data-quantity-minus aria-label="{{ 'products.product.decrease_quantity' | t }}">−</button>
   <input
     type="number"
-    id="Quantity-{{ section_id }}"
+    id="Quantity-{{ section_id }}{{ id_suffix }}"
     name="quantity"
     value="1"
     min="1"

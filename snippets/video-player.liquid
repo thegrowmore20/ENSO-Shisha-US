@@ -1,0 +1,43 @@
+{% liquid
+  assign is_background = false
+  if background == true
+    assign is_background = true
+  endif
+
+  assign show_loop = false
+  if loop
+    assign show_loop = true
+  endif
+
+  assign show_autoplay = is_background
+  if autoplay == false
+    assign show_autoplay = false
+  endif
+
+  assign video_class = 'w-full h-full'
+  if is_background
+    assign video_class = 'fit-cover'
+  endif
+
+  assign show_controls = true
+  if is_background
+    assign show_controls = false
+  endif
+%}
+
+{% if video != blank %}
+  {{
+    video
+    | video_tag:
+      image_size: '1920x',
+      autoplay: show_autoplay,
+      loop: show_loop,
+      muted: is_background,
+      controls: show_controls,
+      class: video_class
+  }}
+{% elsif video_url != blank %}
+  {{ video_url | external_video_tag: class: video_class }}
+{% else %}
+  {% render 'placeholder', type: 'lifestyle-1', class: 'placeholder--dark' %}
+{% endif %}

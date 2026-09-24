@@ -10,6 +10,12 @@
   if section.settings.quick_link_2_text != blank and section.settings.quick_link_2_url != blank
     assign has_quick_links = true
   endif
+  if section.settings.quick_link_3_text != blank and section.settings.quick_link_3_url != blank
+    assign has_quick_links = true
+  endif
+  if section.settings.quick_link_4_text != blank and section.settings.quick_link_4_url != blank
+    assign has_quick_links = true
+  endif
   assign mobile_columns_class = 'collection--mobile-cols-' | append: section.settings.mobile_columns
 -%}
 
@@ -523,9 +529,20 @@
      win against it depending on load order. If your global rule doesn't use
      !important itself, you can safely drop it here too. */
   @media (max-width: 589px) {
+    .collection.section-padding {
+      padding-block: var(--space-6);
+    }
     .collection--mobile-cols-2 .collection__grid.grid--3 {
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: var(--space-4)
+      --gap: var(--space-4);
+      gap: var(--gap);
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .collection--mobile-cols-2 .collection__grid.grid--3 .product-card {
+      width: calc(50% - var(--gap) / 2);
+      max-width: 100%;
     }
 
     .collection--mobile-cols-1 .collection__grid.grid--3 {
@@ -642,6 +659,26 @@
       "type": "url",
       "id": "quick_link_2_url",
       "label": "Quick link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "quick_link_3_text",
+      "label": "Quick link 3 text"
+    },
+    {
+      "type": "url",
+      "id": "quick_link_3_url",
+      "label": "Quick link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "quick_link_4_text",
+      "label": "Quick link 4 text"
+    },
+    {
+      "type": "url",
+      "id": "quick_link_4_url",
+      "label": "Quick link 4 URL"
     },
     {
       "type": "link_list",

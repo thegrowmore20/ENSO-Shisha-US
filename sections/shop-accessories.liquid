@@ -7,6 +7,11 @@
   if section.settings.layout == 'carousel'
     assign is_carousel = true
   endif
+  assign is_load_more = false
+  if section.settings.layout == 'grid_load_more'
+    assign is_load_more = true
+  endif
+  assign load_more_step = section.settings.load_more_step | plus: 0
   assign section_collection = section.settings.collection
 -%}
 
@@ -45,6 +50,31 @@
   }
 {% endstyle %} {% endcomment %}
 
+{% style %}
+  .carousel__actions-desktop {
+    display: block;
+  }
+  .carousel__actions-mobile {
+    display: none;
+  }
+  @media (max-width: 749px) {
+    .carousel__actions-desktop {
+      display: none;
+    }
+    .carousel__actions-mobile {
+      display: block;
+      text-align: center;
+      margin-top: var(--space-3);
+    }
+  }
+
+  .carousel__load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-6);
+  }
+{% endstyle %}
+
 <carousel-slider
   id="Carousel-{{ section.id }}"
   class="shop-accessories {{ scheme_class }} section-padding"
@@ -57,23 +87,25 @@
           <p class="eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="h-section">{{ section.settings.heading }}</h2>
+          <h2 class="h2">{{ section.settings.heading }}</h2>
         {%- endif -%}
       </div>
 
-      <div class="carousel__actions">
+      <div class="carousel__actions carousel__actions-desktop">
         {%- if section.settings.cta_label != blank -%}
           <a href="{{ section.settings.cta_link | default: section_collection.url | default: '#' }}" class="btn btn--outline">
             {{ section.settings.cta_label }}
           </a>
         {%- endif -%}
-
-        
       </div>
     </div>
 
     {%- if section_collection != blank -%}
-      <div class="carousel__wrapper">
+      {%- if is_load_more -%}
+        <load-more-grid class="carousel__wrapper" data-step="{{ load_more_step }}">
+      {%- else -%}
+        <div class="carousel__wrapper">
+      {%- endif -%}
         <div
           class="carousel__track {% unless is_carousel %}carousel__track--grid{% endunless %}"
           {% if is_carousel %}data-carousel-track tabindex="0"{% endif %}
@@ -81,7 +113,13 @@
           aria-label="{{ section.settings.heading | escape }}"
         >
           {%- for product in section_collection.products limit: section.settings.products_limit -%}
-            {%- render 'card-product', product: product, section: section -%}
+            {%- if is_load_more -%}
+              <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
+                {%- render 'card-product', product: product, section: section -%}
+              </div>
+            {%- else -%}
+              {%- render 'card-product', product: product, section: section -%}
+            {%- endif -%}
           {%- endfor -%}
         </div>
         {%- if is_carousel -%}
@@ -93,6 +131,30 @@
               {%- render 'icon-chevron' -%}
             </button>
           </div>
+        {%- endif -%}
+        {%- if is_load_more and section_collection.products.size > load_more_step -%}
+          <div class="carousel__load-more">
+            <button
+              type="button"
+              class="btn btn--outline"
+              data-load-more-button
+              data-label-load-more="{{ 'sections.shop_accessories.load_more' | t }}"
+              data-label-show-less="{{ 'sections.shop_accessories.show_less' | t }}"
+            >
+              {{ 'sections.shop_accessories.load_more' | t }}
+            </button>
+          </div>
+        {%- endif -%}
+      {%- if is_load_more -%}
+        </load-more-grid>
+      {%- else -%}
+        </div>
+      {%- endif -%}
+      <div class="carousel__actions carousel__actions-mobile">
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_link | default: section_collection.url | default: '#' }}" class="btn btn--outline">
+            {{ section.settings.cta_label }}
+          </a>
         {%- endif -%}
       </div>
     {%- elsif request.design_mode -%}
@@ -209,9 +271,20 @@
       "label": "Layout",
       "options": [
         { "value": "carousel", "label": "Carousel (scrollable row)" },
-        { "value": "grid", "label": "Simple grid (wraps into rows)" }
+        { "value": "grid", "label": "Simple grid (wraps into rows)" },
+        { "value": "grid_load_more", "label": "Grid with Load more button" }
       ],
       "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "load_more_step",
+      "label": "Products per \"Load more\" click",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ section.settings.layout == 'grid_load_more' }}"
     },
     {
       "type": "select",

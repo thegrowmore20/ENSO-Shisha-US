@@ -25,7 +25,7 @@
         <p class="eyebrow">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
-        <h2 class="h-section">{{ section.settings.heading }}</h2>
+        <h2 class="h2">{{ section.settings.heading }}</h2>
       {%- endif -%}
       {%- if section.settings.features != blank -%}
         <p class="caption signature-models__features">{{ section.settings.features }}</p>
@@ -48,9 +48,6 @@
           if model_excerpt == blank
             assign model_excerpt = block.settings.excerpt
           endif
-
-          assign model_rating = model.metafields.reviews.rating.value.rating
-          assign model_rating_count = model.metafields.reviews.rating_count.value
 
           assign badge_label = block.settings.badge_label
           if badge_label == blank
@@ -92,22 +89,23 @@
 
           <div class="signature-model__info">
             {%- if model_name != blank -%}
-              <h3 class="h-product">
+              <h3 class="h4">
                 <a href="{{ model_url }}">{{ model_name }}</a>
               </h3>
             {%- endif -%}
 
-            {% assign model_rating_number = model_rating | plus: 0 %}
-            {%- if model_rating_number > 0 -%}
-              {%- liquid
-                assign rating_label = model_rating_count
-                if model_rating_count == 1
-                  assign rating_label = 'sections.signature_models.review_count.one' | t: count: model_rating_count
-                else
-                  assign rating_label = 'sections.signature_models.review_count.other' | t: count: model_rating_count
-                endif
-              -%}
-              {%- render 'star-rating', rating: model_rating, review_count: rating_label -%}
+            {%- if model != blank -%}
+              <div class="card-product-rating"
+                aria-label="Rated {{ model.metafields.loox.avg_rating }} out of 5 based on {{ model.metafields.loox.num_reviews }} reviews">
+                <div class="loox-rating"
+                  data-pattern="[rating] ([count])"
+                  data-show-empty-stars="true"
+                  data-id="{{ model.id }}"
+                  data-rating="{{ model.metafields.loox.avg_rating }}"
+                  data-raters="{{ model.metafields.loox.num_reviews }}"
+                  data-floating-product-reviews-enabled="true">
+                </div>
+              </div>
             {%- endif -%}
 
             {%- if model != blank -%}
@@ -203,7 +201,7 @@
     color: var(--color-accent);
   }
 
-  .signature-model__info .star-rating {
+  .signature-model__info .card-product-rating {
     margin-top: var(--space-3);
   }
 

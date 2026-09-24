@@ -57,28 +57,31 @@
                 </a>
               {%- endif -%}
 
-              {%- if is_carousel -%}
-                <div class="carousel__controls">
-                  <button type="button" class="carousel__arrow carousel__arrow--prev" data-carousel-prev aria-label="{{ 'accessibility.previous_slide' | t }}">
-                    {%- render 'icon-chevron' -%}
-                  </button>
-                  <button type="button" class="carousel__arrow carousel__arrow--next" data-carousel-next aria-label="{{ 'accessibility.next_slide' | t }}">
-                    {%- render 'icon-chevron' -%}
-                  </button>
-                </div>
-              {%- endif -%}
+              
             </div>
           </div>
 
-          <div
-            class="carousel__track {% unless is_carousel %}carousel__track--grid{% endunless %}"
-            {% if is_carousel %}data-carousel-track tabindex="0"{% endif %}
-            role="group"
-            aria-label="{{ section.settings.heading | escape }}"
-          >
-            {%- for card_product in products_source limit: section.settings.products_limit -%}
-              {%- render 'card-product', product: card_product, section: section, quick_add: section.settings.enable_quickadd -%}
-            {%- endfor -%}
+          <div class="carousel__wrapper">
+            <div
+              class="carousel__track {% unless is_carousel %}carousel__track--grid{% endunless %}"
+              {% if is_carousel %}data-carousel-track tabindex="0"{% endif %}
+              role="group"
+              aria-label="{{ section.settings.heading | escape }}"
+            >
+              {%- for card_product in products_source limit: section.settings.products_limit -%}
+                {%- render 'card-product', product: card_product, section: section, quick_add: section.settings.enable_quickadd -%}
+              {%- endfor -%}
+            </div>
+            {%- if is_carousel -%}
+              <div class="carousel__controls">
+                <button type="button" class="carousel__arrow carousel__arrow--prev" data-carousel-prev aria-label="{{ 'accessibility.previous_slide' | t }}">
+                  {%- render 'icon-chevron' -%}
+                </button>
+                <button type="button" class="carousel__arrow carousel__arrow--next" data-carousel-next aria-label="{{ 'accessibility.next_slide' | t }}">
+                  {%- render 'icon-chevron' -%}
+                </button>
+              </div>
+            {%- endif -%}
           </div>
         </div>
       </carousel-slider>
@@ -88,9 +91,20 @@
       </div>
     {%- endif -%}
   </product-recommendations>
-
-  <script src="{{ 'product-recommendations.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
+
+{% stylesheet %}
+  .product-recommendations .carousel__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  @media (max-width: 749px) {
+    .product-recommendations .carousel__header {
+      gap: 0;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

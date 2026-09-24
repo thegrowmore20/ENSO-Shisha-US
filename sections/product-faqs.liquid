@@ -1,0 +1,536 @@
+{%- liquid
+  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign faqs = product.metafields.custom.faqs.value
+-%}
+
+{%- if faqs != blank -%}
+<section class="faq-section {{ scheme_class }} section-padding">
+
+  <div class="container faq-section__inner">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="faq-section__header">
+
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="faq-section__eyebrow">
+            {{ section.settings.eyebrow }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="faq-section__heading">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+
+      </div>
+    {%- endif -%}
+
+
+    <div class="faq-section__body">
+
+      {%- for faq in faqs -%}
+
+        {%- if faq.question == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+
+        <details class="faq-item">
+
+          <summary class="faq-item__trigger">
+
+            <span class="faq-item__question">
+              {{ faq.question }}
+            </span>
+
+            <span class="faq-item__icon">
+              {%- render 'icon-chevron' -%}
+            </span>
+
+          </summary>
+
+
+          <div class="faq-item__panel">
+
+            <div class="faq-item__answer">
+              {{ faq.answer | metafield_tag }}
+            </div>
+
+          </div>
+
+        </details>
+
+      {%- endfor -%}
+
+    </div>
+
+  </div>
+
+</section>
+{%- endif -%}
+
+
+{% stylesheet %}
+
+/* Layout */
+
+.faq-section__inner {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+
+/* Header */
+
+.faq-section__header {
+  text-align:center;
+  margin-bottom:32px;
+}
+
+
+.faq-section__eyebrow {
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin:0 0 12px;
+  opacity:.6;
+}
+
+
+.faq-section__heading {
+  font-weight:600;
+  margin:0;
+}
+
+
+
+/* FAQ List */
+
+.faq-section__body {
+  opacity:1;
+}
+
+
+.faq-item {
+  border-bottom:1px solid #8080803d;
+}
+
+
+/* Question */
+
+.faq-item__trigger {
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:16px;
+
+  padding:10px 0;
+
+  cursor:pointer;
+  list-style:none;
+  user-select:none;
+
+}
+
+
+.faq-item__trigger::-webkit-details-marker {
+ display:none;
+}
+
+
+.faq-item__question {
+
+ font-size:1rem;
+ font-weight:600;
+ line-height:1.4;
+ flex:1;
+
+}
+
+
+
+/* Icon */
+
+.faq-item__icon {
+
+ flex-shrink:0;
+
+ display:flex;
+ align-items:center;
+ justify-content:center;
+
+ width:30px;
+ height:30px;
+
+ border-radius:50%;
+
+ background:#000;
+ color:#fff;
+
+ transition:transform .25s ease;
+
+}
+
+
+.faq-item__icon svg {
+
+ width:45%;
+ height:45%;
+
+}
+
+
+details[open] .faq-item__icon {
+ transform:rotate(180deg);
+}
+
+
+
+/* Answer */
+
+.faq-item__panel {
+ overflow:hidden;
+}
+
+
+.faq-item__answer {
+
+ padding-bottom:20px;
+
+ font-size:.9375rem;
+ line-height:1.7;
+
+}
+
+
+.faq-item__answer p {
+
+ margin:0 0 12px;
+
+}
+
+
+.faq-item__answer p:last-child {
+
+ margin-bottom:0;
+
+}
+
+.faq-item {
+  interpolate-size: numeric-only;
+}
+
+.faq-item::details-content {
+  transition:none;
+  opacity:1;
+  block-size:auto;
+  overflow:visible;
+}
+
+@media screen and (max-width:749px){
+
+.faq-section__inner{
+ max-width:100%;
+}
+
+
+.faq-section__header{
+ margin-bottom:32px;
+}
+
+
+.faq-item__icon{
+
+ width:25px;
+ height:25px;
+
+}
+
+}
+
+
+{% endstylesheet %}
+
+<script>
+(function () {
+
+  function FaqAccordionItem(details, group) {
+
+    this.el = details;
+    this.group = group;
+    this.summary = details.querySelector('summary');
+    this.content = details.querySelector('.faq-item__panel');
+
+    this.animation = null;
+    this.isClosing = false;
+    this.isExpanding = false;
+
+    this.summary.addEventListener(
+      'click',
+      this.onClick.bind(this)
+    );
+
+  }
+
+
+  FaqAccordionItem.prototype.onClick = function(event) {
+
+    event.preventDefault();
+
+    if (this.isClosing || !this.el.open) {
+
+      this.open();
+
+    } else if (this.isExpanding || this.el.open) {
+
+      this.close();
+
+    }
+
+  };
+
+
+
+  FaqAccordionItem.prototype.open = function() {
+
+
+    this.group.forEach(function(item){
+
+      if (
+        item !== this &&
+        (item.el.open || item.isExpanding)
+      ){
+
+        item.close();
+
+      }
+
+    }, this);
+
+
+
+    this.el.style.overflow = 'hidden';
+
+    this.el.style.height =
+      this.el.offsetHeight + 'px';
+
+
+    this.el.open = true;
+
+    this.el.classList.add('is-open');
+
+
+    window.requestAnimationFrame(
+      this.expand.bind(this)
+    );
+
+
+  };
+
+
+
+
+  FaqAccordionItem.prototype.cancelAnimation = function(){
+
+    if(!this.animation) return;
+
+    this.animation.onfinish = null;
+    this.animation.oncancel = null;
+
+    this.animation.cancel();
+
+    this.animation = null;
+
+  };
+
+
+
+
+  FaqAccordionItem.prototype.expand = function(){
+
+    this.cancelAnimation();
+
+    this.isClosing = false;
+    this.isExpanding = true;
+
+
+    var startHeight = this.el.offsetHeight;
+
+    var endHeight =
+      this.summary.offsetHeight +
+      this.content.offsetHeight;
+
+
+
+    this.animation = this.el.animate(
+
+      {
+        height:[
+          startHeight + 'px',
+          endHeight + 'px'
+        ]
+      },
+
+      {
+        duration:300,
+        easing:'ease-out'
+      }
+
+    );
+
+
+
+    this.animation.onfinish = function(){
+
+      this.onAnimationFinish(true);
+
+    }.bind(this);
+
+
+};
+
+
+
+
+
+FaqAccordionItem.prototype.close = function(){
+
+  this.cancelAnimation();
+
+  this.isExpanding = false;
+  this.isClosing = true;
+
+
+  this.el.style.overflow='hidden';
+
+
+  this.el.classList.remove('is-open');
+
+
+  var startHeight = this.el.offsetHeight;
+
+  var endHeight = this.summary.offsetHeight;
+
+
+
+  this.animation = this.el.animate(
+
+    {
+      height:[
+        startHeight + 'px',
+        endHeight + 'px'
+      ]
+    },
+
+    {
+      duration:300,
+      easing:'ease-out'
+    }
+
+  );
+
+
+
+  this.animation.onfinish=function(){
+
+    this.onAnimationFinish(false);
+
+  }.bind(this);
+
+
+};
+
+
+
+
+
+FaqAccordionItem.prototype.onAnimationFinish=function(open){
+
+  this.el.open=open;
+
+  this.animation=null;
+
+  this.isClosing=false;
+
+  this.isExpanding=false;
+
+
+  this.el.style.height='';
+
+  this.el.style.overflow='';
+
+};
+
+
+
+
+
+
+function initFaqAccordion(container){
+
+  var group=[];
+
+
+  container
+    .querySelectorAll('.faq-item')
+    .forEach(function(details){
+
+      group.push(
+        new FaqAccordionItem(details, group)
+      );
+
+    });
+
+}
+
+
+
+
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function(){
+
+    var section =
+      document.getElementById(
+        'shopify-section-{{ section.id }}'
+      );
+
+
+    if(section){
+
+      initFaqAccordion(section);
+
+    }
+
+  }
+);
+
+
+
+
+document.addEventListener(
+  'shopify:section:load',
+  function(event){
+
+    if(
+      event.target.id ===
+      'shopify-section-{{ section.id }}'
+    ){
+
+      initFaqAccordion(event.target);
+
+    }
+
+  }
+);
+
+
+
+})();
+</script>
+
+{% schema %} { "name": "Product FAQs", "tag": "section", "enabled_on": { "templates": ["product"] }, "settings": [ { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.faq.settings.color_scheme.label", "default": "scheme-paper" }, { "type": "text", "id": "eyebrow", "label": "t:sections.faq.settings.eyebrow.label", "default": "Questions" }, { "type": "text", "id": "heading", "label": "t:sections.faq.settings.heading.label", "default": "Before You Order" } ], "presets": [ { "name": "Product FAQs" } ] } {% endschema %}

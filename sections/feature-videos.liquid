@@ -87,7 +87,7 @@
               <p class="eyebrow">{{ block.settings.eyebrow }}</p>
             {%- endif -%}
             {%- if block.settings.heading != blank -%}
-              <h3 class="h-product feature-row__heading">{{ block.settings.heading }}</h3>
+              <h3 class="h2 feature-row__heading">{{ block.settings.heading }}</h3>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
               <div class="body-text text-muted feature-row__text">{{ block.settings.text }}</div>
@@ -194,6 +194,8 @@
 
     .feature-row .feature-row__content {
       padding-inline: var(--space-4);
+      align-items: flex-start !important;
+      text-align: left !important;
     }
 
     .feature-videos--full .feature-row__media {

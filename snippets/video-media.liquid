@@ -38,9 +38,12 @@
       class="video-media__poster"
     >
   {%- else -%}
-    <div class="media-placeholder video-media__placeholder">
-      {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
-    </div>
+    <img
+      src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Screenshot_2026-09-21_111535-removebg-preview.png?v=1789971478"
+      alt="{{ alt | escape }}"
+      loading="{{ poster_loading }}"
+      class="video-media__poster"
+    >
   {%- endif -%}
 
   {%- if has_upload -%}

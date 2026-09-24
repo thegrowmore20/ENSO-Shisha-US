@@ -42,13 +42,30 @@
         ],
         "settings": {
           "color_scheme": "",
-          "sticky": true,
           "menu": "header-menu-products"
         }
       },
       "footer": {
         "type": "footer",
         "blocks": {
+          "footer-0": {
+            "type": "menu",
+            "settings": {
+              "heading": "Shop",
+              "menu": "collection-tabs-mobile",
+              "heading_1": "",
+              "menu_1": ""
+            }
+          },
+          "menu_VLqCEn": {
+            "type": "menu",
+            "settings": {
+              "heading": "Quick Links",
+              "menu": "footer-menu",
+              "heading_1": "",
+              "menu_1": ""
+            }
+          },
           "contact_TDYpF8": {
             "type": "contact",
             "settings": {
@@ -64,24 +81,10 @@
               "open_new_call": false,
               "email_address": "support@ensoshisha.eu",
               "email_url": "mailto:support@ensoshisha.eu",
-              "open_new_email": false,
+              "open_new_email": true,
               "location": "16133 Ventura Blvd Fl 7, Encino, CA 91436, USA",
               "address_url": "https://www.google.com/maps/search/?api=1&query=16133+Ventura+Blvd+Fl+7%2C+Encino%2C+CA+91436%2C+USA",
               "open_new_address": true
-            }
-          },
-          "footer-0": {
-            "type": "menu",
-            "settings": {
-              "heading": "Policies",
-              "menu": "footer"
-            }
-          },
-          "menu_VLqCEn": {
-            "type": "menu",
-            "settings": {
-              "heading": "Quick Links",
-              "menu": "footer-menu"
             }
           }
         },
@@ -92,7 +95,9 @@
         ],
         "settings": {
           "color_scheme": "scheme-c77ef17d-36fa-436c-9a1c-70fb4fb41f71",
-          "footer_bg_image": "shopify://shop_images/Enso-2.webp"
+          "footer_bg_image": "shopify://shop_images/Enso-2.webp",
+          "show_payment": true,
+          "show_social": true
         }
       },
       "cart-drawer": {
@@ -120,6 +125,11 @@
           "selector_collection": "",
           "selector_cart_item": ""
         }
+      },
+      "13305437469741356523": {
+        "type": "shopify://apps/gsc-instagram-feed/blocks/embed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {

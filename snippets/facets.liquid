@@ -85,6 +85,23 @@
           </span>
         </a>
       {%- endif -%}
+
+      {%- if section.settings.quick_link_3_text != blank and section.settings.quick_link_3_url != blank -%}
+        <a href="{{ section.settings.quick_link_3_url }}" class="facets__group facets__group--link">
+          <span class="facets__summary">
+            <span>{{ section.settings.quick_link_3_text }}</span>
+            <span class="facets__chevron facets__chevron--right" aria-hidden="true"></span>
+          </span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.quick_link_4_text != blank and section.settings.quick_link_4_url != blank -%}
+        <a href="{{ section.settings.quick_link_4_url }}" class="facets__group facets__group--link">
+          <span class="facets__summary">
+            <span>{{ section.settings.quick_link_4_text }}</span>
+            <span class="facets__chevron facets__chevron--right" aria-hidden="true"></span>
+          </span>
+        </a>
+      {%- endif -%}
     {%- endif -%}
 
     {%- comment -%} 3. Navigation-as-filter — real accordion, checkboxes that redirect {%- endcomment -%}
@@ -127,7 +144,13 @@
           </div>
         </details>
       {%- elsif filter.values.size > 0 -%}
-        <details class="facets__group" data-filter-param="{{ filter.param_name }}" {% if filter.active_values.size > 0 %}open{% endif %}>
+        {%- liquid
+          assign is_availability_filter = false
+          if filter.param_name contains 'availability' or filter.label == 'Availability'
+            assign is_availability_filter = true
+          endif
+        -%}
+        <details class="facets__group" data-filter-param="{{ filter.param_name }}" {% if filter.active_values.size > 0 or is_availability_filter %}open{% endif %}>
           <summary class="facets__summary">
             <span>{{ filter.label }}</span>
             <span class="facets__chevron facets__chevron--down" aria-hidden="true"></span>

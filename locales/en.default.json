@@ -7,7 +7,14 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
+
 {
+  "blog": {
+    "general": {
+      "all_posts": "All posts",
+      "read_more": "Read more"
+    }
+  },
   "general": {
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
@@ -49,6 +56,7 @@
     "menu": "Menu",
     "next_slide": "Next",
     "previous_slide": "Previous",
+    "play_video": "Play video",
     "go_to_slide": "Go to slide {{ count }}",
     "loading": "Loading...",
     "unit_price_separator": "per",
@@ -66,6 +74,7 @@
   "products": {
     "product": {
       "sold_out": "Sold Out",
+      "join_waitlist": "Join Waitlist",
       "add_to_cart": "Add to Cart",
       "unavailable": "Unavailable",
       "quantity": "Quantity",
@@ -78,8 +87,16 @@
       "one_time_purchase": "One-time purchase",
       "from_price_html": "From {{ price }}",
       "media_gallery": "Product media gallery",
-      "view_media": "View media {{ index }}"
+      "view_media": "View media {{ index }}",
+      "share": "Share",
+      "link_copied": "Link copied"
     }
+  },
+  "newsletter": {
+    "email": "Email",
+    "button_label": "Subscribe",
+    "success": "Thanks for subscribing!",
+    "error": "Please enter a valid email address."
   },
   "collections": {
     "general": {
@@ -188,7 +205,9 @@
       "error": "Please enter a valid email address."
     },
     "shop_accessories": {
-      "onboarding": "Select a collection to display accessories here."
+      "onboarding": "Select a collection to display accessories here.",
+      "load_more": "Load more",
+      "show_less": "Show less"
     },
     "blog_posts": {
       "onboarding": "Select a blog to display posts here."
@@ -223,7 +242,7 @@
       }
     },
     "footer": {
-      "tagline": "Your ritual. Without charcoal.",
+      "tagline": "Your solo & party shisha ritual, without charcoal hassle.",
       "sign_off": "The ENSO team",
       "support": "support@ensoshisha.eu",
       "age_gate": "ENSO · 21+ only",

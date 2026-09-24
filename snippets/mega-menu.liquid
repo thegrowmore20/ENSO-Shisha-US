@@ -14,6 +14,16 @@
 {%- liquid
   assign max_products = block.settings.max_products | default: 4
   assign product_links = link.links | where: 'type', 'product_link'
+
+  assign products_to_show = product_links.size | at_most: max_products
+  assign show_view_all = false
+  if block.settings.view_all_text != blank
+    assign show_view_all = true
+  endif
+  assign mega_products_columns = products_to_show
+  if show_view_all
+    assign mega_products_columns = products_to_show | plus: 1
+  endif
 -%}
 
 <div class="site-header__mega" data-dropdown {{ block.shopify_attributes }}>
@@ -58,13 +68,20 @@
     {%- endif -%}
 
     {%- if block.settings.show_products and product_links.size > 0 -%}
-      <div class="site-header__mega-products">
-        {%- for product_link in product_links limit: max_products -%}
-          {%- assign product = product_link.object -%}
-          {%- if product -%}
-            {%- render 'card-product', product: product, section: section -%}
+      <div class="site-header__mega-products-wrap">
+        <div class="site-header__mega-products" style="--mega-product-count: {{ mega_products_columns }};">
+          {%- if show_view_all -%}
+            <a href="{{ block.settings.view_all_link | default: link.url }}" class="site-header__mega-view-all">
+              {{ block.settings.view_all_text }}
+            </a>
           {%- endif -%}
-        {%- endfor -%}
+          {%- for product_link in product_links limit: max_products -%}
+            {%- assign product = product_link.object -%}
+            {%- if product -%}
+              {%- render 'card-product', product: product, section: section -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       </div>
     {%- endif -%}
 
@@ -145,13 +162,34 @@
     color: var(--color-text-muted, #6b6b6b);
   }
 
-  .site-header__mega-products {
+  .site-header__mega-products-wrap {
     flex: 3;
     min-width: 0;
+  }
+
+  .site-header__mega-products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+    grid-template-columns: repeat(var(--mega-product-count, 4), minmax(160px, 200px));
     gap: var(--space-4, 1rem);
     justify-content: center;
+  }
+
+  .site-header__mega-view-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100%;
+    padding: var(--space-3, 0.75rem);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: var(--radius-sm, 4px);
+    color: var(--color-text);
+    font-weight: 500;
+    transition: border-color 0.15s ease;
+  }
+
+  .site-header__mega-view-all:hover {
+    border-color: var(--color-text);
   }
 
   .site-header__mega-products .product-card .product-card__media .badge,

@@ -12,16 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor_xFhjWq": {
-          "type": "vendor",
-          "disabled": true,
-          "settings": {}
-        },
-        "type_DwUKdy": {
-          "type": "type",
-          "disabled": true,
-          "settings": {}
-        },
         "title_BMUCcV": {
           "type": "title",
           "settings": {
@@ -49,6 +39,24 @@
             "show_unit_price": false
           }
         },
+        "text_3gth8b": {
+          "type": "text",
+          "settings": {
+            "content": "{{ product.metafields.custom.headline | metafield_tag }}",
+            "alignment": "left",
+            "text_size": "medium",
+            "show_icon": false
+          }
+        },
+        "text_x7rGgf": {
+          "type": "text",
+          "settings": {
+            "content": "{{ product.metafields.custom.hook_text | metafield_tag }}",
+            "alignment": "left",
+            "text_size": "medium",
+            "show_icon": false
+          }
+        },
         "variant_picker_bbi9yP": {
           "type": "variant_picker",
           "settings": {}
@@ -67,32 +75,86 @@
           "type": "accordion",
           "settings": {
             "heading": "Description",
-            "content": "{{ product.description }}",
+            "content": "{{ product.metafields.custom.description | metafield_tag }}",
+            "default_open": false
+          }
+        },
+        "accordion_p4QqYU": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Specifications",
+            "content": "{{ product.metafields.custom.specifications | metafield_tag }}",
+            "default_open": false
+          }
+        },
+        "accordion_NcpqMr": {
+          "type": "accordion",
+          "settings": {
+            "heading": "What's in the box",
+            "content": "{{ product.metafields.custom.what_s_in_the_box | metafield_tag }}",
+            "default_open": false
+          }
+        },
+        "accordion_gxeq9J": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Parts & Accessories",
+            "content": "{{ product.metafields.custom.parts_accessories | metafield_tag }}",
+            "default_open": false
+          }
+        },
+        "accordion_4VLPaF": {
+          "type": "accordion",
+          "settings": {
+            "heading": "How to use",
+            "content": "{{ product.metafields.custom.how_to_use | metafield_tag }}",
+            "default_open": false
+          }
+        },
+        "accordion_Pk44qQ": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Warranty & Support",
+            "content": "{{ product.metafields.custom.lifetime_waranty | metafield_tag }}",
+            "default_open": false
+          }
+        },
+        "accordion_bidD6a": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Why Choose ENSŌ?",
+            "content": "{{ product.metafields.custom.why_choose_enso | metafield_tag }}",
             "default_open": false
           }
         }
       },
       "block_order": [
-        "vendor_xFhjWq",
-        "type_DwUKdy",
         "title_BMUCcV",
         "loox_reviews_loox_rating_nBtcin",
         "price_KNKNd3",
+        "text_3gth8b",
+        "text_x7rGgf",
         "variant_picker_bbi9yP",
         "quantity_qDQky3",
         "buy_buttons_9DLDVw",
-        "accordion_wUV8pN"
+        "accordion_wUV8pN",
+        "accordion_p4QqYU",
+        "accordion_NcpqMr",
+        "accordion_gxeq9J",
+        "accordion_4VLPaF",
+        "accordion_Pk44qQ",
+        "accordion_bidD6a"
       ],
       "settings": {
-        "color_scheme": "scheme-paper",
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "media_width": 55,
         "gallery_layout": "thumbnails_left",
         "enable_sticky_info": true,
-        "padding_top": 48,
-        "padding_bottom": 48,
+        "padding_top": 64,
+        "padding_bottom": 32,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 16
       }
     },
     "custom_section_K6xprp": {
@@ -145,10 +207,10 @@
       "type": "product-recommendations",
       "name": "Product recommendations",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "collection": "",
         "eyebrow": "",
-        "heading": "You may also like",
+        "heading": "Signature Models",
         "layout": "carousel",
         "columns": "4",
         "columns_mobile": "1",
@@ -156,18 +218,28 @@
         "products_limit": 4,
         "enable_quickadd": true,
         "quickadd_design": "secondary",
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "padding_top_mobile": 32,
+        "padding_top": 32,
+        "padding_bottom": 64,
+        "padding_top_mobile": 16,
         "padding_bottom_mobile": 32,
         "cta_label": "",
         "cta_link": ""
+      }
+    },
+    "product_faqs_fJ8ifN": {
+      "type": "product-faqs",
+      "name": "Product FAQs",
+      "settings": {
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
+        "eyebrow": "",
+        "heading": "FAQs"
       }
     }
   },
   "order": [
     "main",
     "custom_section_K6xprp",
-    "product_recommendations_ADkJeU"
+    "product_recommendations_ADkJeU",
+    "product_faqs_fJ8ifN"
   ]
 }

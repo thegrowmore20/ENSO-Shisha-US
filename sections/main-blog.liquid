@@ -6,19 +6,81 @@
   <div class="container">
     <h1 class="h-section text-center blog__title">{{ blog.title }}</h1>
 
-    {%- paginate blog.articles by 12 -%}
-      <div class="grid grid--3 blog__grid">
-        {%- for article in blog.articles -%}
-          <a href="{{ article.url }}" class="card blog-card">
-            {%- if article.image -%}
-              <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | default: article.title | escape }}" width="600" height="400" loading="lazy" class="blog-card__image">
-            {%- endif -%}
-            <p class="caption">{{ article.published_at | date: '%B %d, %Y' }}</p>
-            <h3 class="card__title">{{ article.title }}</h3>
-            <p class="card__text">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+    {%- if blog.all_tags.size > 0 -%}
+      <carousel-slider class="blog__tags-wrap">
+        <div class="blog__tags" data-carousel-track tabindex="0">
+          <a href="{{ blog.url }}" class="blog__tag{% if current_tags.size == 0 %} is-active{% endif %}">
+            {{ 'blog.general.all_posts' | t }}
           </a>
-        {%- endfor -%}
-      </div>
+          {%- for tag in blog.all_tags -%}
+            <a
+              href="{{ blog.url }}/tagged/{{ tag | handle }}"
+              class="blog__tag{% if current_tags contains tag %} is-active{% endif %}"
+            >
+              {{ tag }}
+            </a>
+          {%- endfor -%}
+        </div>
+        <div class="carousel__controls blog__tags-controls">
+          <button type="button" class="carousel__arrow carousel__arrow--prev" data-carousel-prev aria-label="{{ 'accessibility.previous_slide' | t }}">
+            {%- render 'icon-chevron' -%}
+          </button>
+          <button type="button" class="carousel__arrow carousel__arrow--next" data-carousel-next aria-label="{{ 'accessibility.next_slide' | t }}">
+            {%- render 'icon-chevron' -%}
+          </button>
+        </div>
+      </carousel-slider>
+    {%- endif -%}
+
+    {%- paginate blog.articles by 13 -%}
+      {%- assign featured_article = blog.articles.first -%}
+
+      {%- if featured_article -%}
+        <a href="{{ featured_article.url }}" class="blog__featured">
+          <div class="blog__featured-media">
+            {%- if featured_article.image -%}
+              <img
+                src="{{ featured_article.image | image_url: width: 900 }}"
+                alt="{{ featured_article.image.alt | default: featured_article.title | escape }}"
+                width="900"
+                height="506"
+                loading="eager"
+                class="blog__featured-image"
+              >
+            {%- endif -%}
+          </div>
+          <div class="blog__featured-content">
+            {%- if featured_article.tags.first -%}
+              <span class="blog__badge">{{ featured_article.tags.first }}</span>
+            {%- endif -%}
+            <h2 class="blog__featured-title">{{ featured_article.title }}</h2>
+            <p class="caption blog__featured-date">{{ featured_article.published_at | date: '%B %-d, %Y' }}</p>
+            <p class="card__text blog__featured-excerpt">{{ featured_article.excerpt_or_content | strip_html | truncatewords: 28 }}</p>
+            <span class="btn btn--primary blog__featured-cta">{{ 'blog.general.read_more' | t }}</span>
+          </div>
+        </a>
+      {%- endif -%}
+
+      {%- assign remaining_count = blog.articles.size | minus: 1 -%}
+      {%- if remaining_count > 0 -%}
+        <div class="grid grid--3 blog__grid">
+          {%- for article in blog.articles offset: 1 -%}
+            <a href="{{ article.url }}" class="card blog-card">
+              <div class="blog-card__media">
+                {%- if article.image -%}
+                  <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | default: article.title | escape }}" width="600" height="338" loading="lazy" class="blog-card__image">
+                {%- endif -%}
+                {%- if article.tags.first -%}
+                  <span class="blog__badge blog__badge--overlay">{{ article.tags.first }}</span>
+                {%- endif -%}
+              </div>
+              <p class="caption">{{ article.published_at | date: '%B %d, %Y' }}</p>
+              <h3 class="card__title">{{ article.title }}</h3>
+              <p class="card__text">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
 
       {%- if paginate.pages > 1 -%}
         <nav class="collection__pagination" aria-label="pagination">
@@ -31,16 +93,187 @@
 
 {% stylesheet %}
   .blog__title {
+    margin-bottom: var(--space-6);
+  }
+
+  .blog__tags-wrap {
+    position: relative;
     margin-bottom: var(--space-7);
+    padding-inline: 52px;
+  }
+
+  .blog__tags-wrap::before,
+  .blog__tags-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: var(--space-2);
+    width: 40px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blog__tags-wrap::before {
+    left: 52px;
+    background: linear-gradient(to left, transparent, var(--color-background));
+  }
+
+  .blog__tags-wrap::after {
+    right: 52px;
+    background: linear-gradient(to right, transparent, var(--color-background));
+  }
+
+  .blog__tags-controls {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .blog__tags-controls .carousel__arrow {
+    pointer-events: auto;
+    width: 36px;
+    height: 36px;
+    background-color: var(--color-background);
+  }
+
+  .carousel--static .blog__tags-controls {
+    display: none;
+  }
+
+  .blog__tags {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: var(--space-3);
+    padding-bottom: var(--space-2);
+    scrollbar-width: none;
+  }
+
+  .blog__tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .blog__tag {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 var(--space-5);
+    border-radius: var(--radius-pill);
+    background-color: color-mix(in srgb, var(--color-text) 6%, transparent);
+    color: var(--color-text);
+    font-size: 14px;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .blog__tag:hover {
+    background-color: color-mix(in srgb, var(--color-text) 12%, transparent);
+  }
+
+  .blog__tag.is-active {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .blog__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background-color: #000;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .blog__badge--overlay {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: 1;
+  }
+
+  .blog__featured {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: center;
+    background-color: var(--color-background-raised);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-7);
+  }
+
+  .blog__featured-media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .blog__featured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .blog__featured-content {
+    padding: var(--space-6) var(--space-7) var(--space-6) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .blog__featured-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 28px;
+  }
+
+  .blog__featured-date {
+    margin: 0;
+  }
+
+  .blog__featured-excerpt {
+    margin: 0;
+  }
+
+  .blog__featured-cta {
+    margin-top: var(--space-2);
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog__featured {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .blog__featured-content {
+      padding: var(--space-5);
+    }
   }
 
   .blog__grid {
     row-gap: var(--space-6);
+    column-gap: var(--space-5);
+  }
+
+  .blog-card__media {
+    position: relative;
   }
 
   .blog-card__image {
     width: 100%;
     height: auto;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
     border-radius: var(--radius-md);
     margin-bottom: var(--space-4);
   }

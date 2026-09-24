@@ -97,7 +97,7 @@
             </div>
           {% endif %}
           {% if section.settings.button != blank %}
-            <a class="btn btn--primary" href="{{ section.settings.button_url }}">
+            <a class="btn btn--primary banner__button" href="{{ section.settings.button_url }}">
               {{ section.settings.button }}
             </a>
           {% endif %}
@@ -304,6 +304,10 @@
     font-size: var(--banner-heading-size-mobile);
     line-height: 1.1;
     margin-bottom: 1rem;
+  }
+
+  .banner__button {
+    margin-top: var(--space-4);
   }
 
   @media screen and (min-width: 750px) and (max-width: 989px) {

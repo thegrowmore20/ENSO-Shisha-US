@@ -26,7 +26,7 @@
         "heading_size_desktop": 56,
         "heading_size_mobile": 32,
         "heading_color": "#ffffff",
-        "subheading": "",
+        "subheading": "<p>Our customer support team will be happy to assist you!</p>",
         "button": "",
         "button_url": "",
         "width": "full",
@@ -74,12 +74,12 @@
             "card_1_color": "#ffffff",
             "card_1_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\"><path fill=\"#fff\" d=\"M23.961 8.429c-.831.982-1.614 1.918-1.961 3.775v6.683l-4 2.479v-9.161c-.206-1.104-.566-1.885-1-2.539v11.475l-4-2.885v-13.069l1.577 1.138c-.339-.701-.577-1.518-.577-2.524l.019-.345-2.019-1.456-5.545 4-6.455-4v18l6.455 4 5.545-4 5.545 4 6.455-4v-11.618l-.039.047zm-17.961 12.936l-4-2.479v-13.294l4 2.479v13.294zm5-3.11l-4 2.885v-13.067l4-2.886v13.068zm9-18.255c-2.1 0-4 1.702-4 3.801 0 3.121 3.188 3.451 4 8.199.812-4.748 4-5.078 4-8.199 0-2.099-1.9-3.801-4-3.801zm0 5.5c-.828 0-1.5-.671-1.5-1.5s.672-1.5 1.5-1.5 1.5.671 1.5 1.5-.672 1.5-1.5 1.5z\"></path></svg>",
             "card_1_heading": "Location",
-            "card_1_body": "<p>16133 Ventura Blvd Fl 7, Encino, CA 91436, USA</p>",
+            "card_1_body": "<p><a href=\"https://www.google.com/maps/search/?api=1&query=16133+Ventura+Blvd+Fl+7%2C+Encino%2C+CA+91436%2C+USA\" target=\"_blank\" title=\"https://www.google.com/maps/search/?api=1&query=16133+Ventura+Blvd+Fl+7%2C+Encino%2C+CA+91436%2C+USA\">16133 Ventura Blvd Fl 7, Encino, CA 91436, USA</a></p>",
             "card_2_bg": "#000000",
             "card_2_color": "#ffffff",
             "card_2_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\"><path fill=\"#fff\" d=\"M19 9.062s-5.188-.333-7 1.938c2-4.896 7-5.938 7-5.938v-2l5 4-5 4.019v-2.019zm-18.974 14.938h23.947l-11.973-11.607-11.974 11.607zm1.673-14l10.291-7.488 3.053 2.218c.712-.459 1.391-.805 1.953-1.054l-5.006-3.637-11.99 8.725v12.476l7.352-7.127-5.653-4.113zm15.753 4.892l6.548 6.348v-11.612l-6.548 5.264z\"></path></svg>",
             "card_2_heading": "Email",
-            "card_2_body": "<p><a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
+            "card_2_body": "<p><a href=\"mailto:support@ensoshisha.eu\" target=\"_blank\" title=\"support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
           }
         },
         "social_fc7fiH": {

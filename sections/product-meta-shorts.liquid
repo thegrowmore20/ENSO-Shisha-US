@@ -193,6 +193,9 @@
 
     .avs-ctrl-{{ short_id }} {
       gap: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-top: {{ section.settings.controls_spacing }}px;
     }
 
@@ -204,6 +207,9 @@
       height: {{ section.settings.arrow_size }}px;
       border-radius: 50%;
       transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .avs-arrow-{{ short_id }}:hover {
@@ -223,6 +229,8 @@
 
     .avs-dots-{{ short_id }} {
       gap: 8px;
+      display: flex;
+      align-items: center;
     }
 
     .avs-dot-{{ short_id }} {
@@ -388,7 +396,7 @@
           </div>
         </div>
 
-        <div class="avs-ctrl-{{ short_id }} flex items-center justify-center" data-controls>
+        <div class="avs-ctrl-{{ short_id }}" data-controls>
           {% if section.settings.show_arrows %}
             <button class="avs-arrow-{{ short_id }} flex items-center justify-center cursor-pointer shrink-0" data-prev aria-label="Previous slide">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

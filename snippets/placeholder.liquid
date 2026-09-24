@@ -1,0 +1,7 @@
+{% assign class = class | default: 'placeholder' %}
+{% assign placeholder = type | placeholder_svg_tag: class %}
+{% if cover != false %}
+  {{ placeholder | replace_first: '<svg ', '<svg preserveAspectRatio="xMidYMid slice" ' }}
+{% else %}
+  {{ placeholder }}
+{% endif %}

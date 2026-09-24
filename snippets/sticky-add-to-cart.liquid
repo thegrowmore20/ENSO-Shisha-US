@@ -1,0 +1,202 @@
+{%- comment -%}
+  Floating add-to-cart bar. Hidden by default; shown by <sticky-add-to-cart>
+  (assets/product-form.js) once the section passed in `watch_target_id`
+  scrolls out of view.
+  Usage: {% render 'sticky-add-to-cart', product: product, section: section, watch_target_id: 'ProductMain-' | append: section.id %}
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign sticky_form_id = 'StickyProductForm-' | append: section.id
+-%}
+
+<sticky-add-to-cart class="sticky-atc" data-watch-target="{{ watch_target_id }}" hidden>
+  <div class="sticky-atc__inner container">
+    <div class="sticky-atc__product">
+      {%- if product.featured_media -%}
+        <img
+          class="sticky-atc__image"
+          src="{{ product.featured_media | image_url: width: 100 }}"
+          alt=""
+          width="44"
+          height="44"
+          loading="lazy"
+        >
+      {%- endif -%}
+      <span class="sticky-atc__name">{{ product.title }}</span>
+    </div>
+
+    {%- form 'product', product, id: sticky_form_id, class: 'sticky-atc__form' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-sticky-variant-id>
+
+      <div class="sticky-atc__qty">
+        {%- render 'quantity-selector', section_id: section.id, id_suffix: '-sticky' -%}
+      </div>
+
+      <button
+        type="submit"
+        name="add"
+        class="btn product-form__submit sticky-atc__submit"
+        data-add-to-cart
+        {% unless current_variant.available %}disabled{% endunless %}
+      >
+        {% render 'icon-add-to-cart' %}
+        <span
+          data-add-to-cart-text
+          data-label-available="{{ 'products.product.add_to_cart' | t }}"
+          data-label-sold-out="{{ 'products.product.join_waitlist' | t }}"
+        >
+          {%- if current_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.join_waitlist' | t }}
+          {%- endif -%}
+        </span>
+        <span class="sticky-atc__price-sep" aria-hidden="true">&mdash;</span>
+        <span class="sticky-atc__price" data-sticky-price>{{ current_variant.price | money }}</span>
+      </button>
+
+      <template data-sticky-price-templates>
+        {%- for variant in product.variants -%}
+          <span data-variant-price-id="{{ variant.id }}">{{ variant.price | money }}</span>
+        {%- endfor -%}
+      </template>
+    {%- endform -%}
+
+    <button type="button" class="sticky-atc__close" data-sticky-atc-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon-close' %}
+    </button>
+  </div>
+</sticky-add-to-cart>
+
+{% style %}
+  .sticky-atc {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    background: var(--color-background, #fff);
+    color: var(--color-text, #1a1a1a);
+    border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  /* Re-declared at higher specificity than the shared .container rule so the
+     bar reliably centers/constrains itself regardless of load order with
+     other stylesheets on the page. */
+  .sticky-atc__inner.container {
+    max-width: var(--page-width, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--page-margin, 24px);
+  }
+
+  .sticky-atc:not([hidden]) {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Kept mounted (not display:none) so the transition above can run;
+     [hidden] only toggles the transform/opacity via the selector above. */
+  .sticky-atc[hidden] {
+    display: block;
+  }
+
+  .sticky-atc__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: 10px;
+  }
+
+  .sticky-atc__product {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .sticky-atc__image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .sticky-atc__name {
+    font-size: 16px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sticky-atc__form {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .sticky-atc__qty {
+    display: none;
+  }
+
+  /* .quantity carries a margin-top meant for its normal spot below the
+     variant picker in the main product form — reset it here so the
+     stepper centers against the Add to cart button instead of sitting
+     inside a taller, top-padded box. */
+  .sticky-atc__qty .quantity {
+    margin-top: 0;
+  }
+
+  .sticky-atc__submit {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+    border-radius: 999px;
+    padding-inline: var(--space-5);
+  }
+
+  .sticky-atc__price-sep {
+    opacity: 0.75;
+  }
+
+  .sticky-atc__price {
+    font-weight: 600;
+  }
+
+  .sticky-atc__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-background-secondary, rgba(0, 0, 0, 0.05));
+    flex-shrink: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sticky-atc__qty {
+      display: block;
+    }
+
+    .sticky-atc__name {
+      font-size: 17px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .sticky-atc__inner {
+      gap: var(--space-2);
+    }
+  }
+{% endstyle %}

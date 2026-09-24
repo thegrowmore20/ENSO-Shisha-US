@@ -21,6 +21,7 @@
 .cart-drawer-box {
   position: relative;
   width: 480px;
+  max-width: calc(100vw - 20px);
   background: #f5f5f5;
   border-radius: 12px 0 0 12px;
   flex: 1;
@@ -373,4 +374,24 @@
   align-items: center;
   gap: var(--space-1);
   color: #34A853;
+}
+
+
+/* cart drawer responsive */
+@media (max-width: 749px) {
+  .cart-drawer-header, .cart-drawer-items, .cart-drawer-footer {
+    padding: 15px;
+  }
+  .cart-drawer-item {
+    padding: var(--space-2);
+    gap: 10px;
+  }
+  .cart-drawer-item-image {
+    width: 80px;
+    height: 100%;
+  }
+  .cart-drawer-item-image img {
+    width: 80px;
+    height: 80px;
+  }
 }

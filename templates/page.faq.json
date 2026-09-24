@@ -26,6 +26,9 @@
         "heading_size_desktop": 56,
         "heading_size_mobile": 32,
         "heading_color": "#ffffff",
+        "subheading": "<p>Answers to the questions we hear most.</p>",
+        "button": "",
+        "button_url": "",
         "width": "full",
         "margin_top": 0,
         "margin_bottom": 0,
@@ -36,6 +39,9 @@
         "height_mobile": "custom",
         "height_mobile_custom": 300,
         "content_alignment": "left",
+        "content_width_desktop": 600,
+        "content_width_tablet": 500,
+        "content_width_mobile": 0,
         "overlay_color": "#000000",
         "overlay_opacity": 50
       }
@@ -530,7 +536,7 @@
       ],
       "name": "FAQs",
       "settings": {
-        "color_scheme": "scheme-paper",
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "Everything you need to know about ENSŌ",
         "heading": "Frequently Asked Questions",
         "header_alignment": "left",

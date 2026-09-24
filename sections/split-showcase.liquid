@@ -1,9 +1,28 @@
 {%- liquid
   assign scheme_class = 'color-' | append: section.settings.color_scheme
+
+  assign height_desktop_custom_css = section.settings.height_desktop_custom | append: 'px'
+  assign height_tablet_custom_css = section.settings.height_tablet_custom | append: 'px'
+  assign height_mobile_custom_css = section.settings.height_mobile_custom | append: 'px'
+
+  assign content_width_desktop_css = 'none'
+  if section.settings.content_width_desktop > 0
+    assign content_width_desktop_css = section.settings.content_width_desktop | append: 'px'
+  endif
+
+  assign content_width_tablet_css = 'none'
+  if section.settings.content_width_tablet > 0
+    assign content_width_tablet_css = section.settings.content_width_tablet | append: 'px'
+  endif
+
+  assign content_width_mobile_css = 'none'
+  if section.settings.content_width_mobile > 0
+    assign content_width_mobile_css = section.settings.content_width_mobile | append: 'px'
+  endif
 -%}
 
 <section
-  class="split {{ scheme_class }} split--width-{{ section.settings.width }} {% if section.settings.width == 'page' %}container{% endif %} split--height-{{ section.settings.height }} split--align-{{ section.settings.content_alignment }}"
+  class="split {{ scheme_class }} split--width-{{ section.settings.width }} {% if section.settings.width == 'page' %}container{% endif %} split--height-mobile-{{ section.settings.height_mobile }} split--height-tablet-{{ section.settings.height_tablet }} split--height-desktop-{{ section.settings.height_desktop }} split--align-{{ section.settings.content_alignment }}"
   style="
     --split-margin-top: {{ section.settings.margin_top }}px;
     --split-margin-bottom: {{ section.settings.margin_bottom }}px;
@@ -12,11 +31,17 @@
     --split-overlay-color: {{ section.settings.overlay_color }};
     --split-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
     --split-gap: {{ section.settings.image_gap }}px;
+    --split-height-desktop-custom: {{ height_desktop_custom_css }};
+    --split-height-tablet-custom: {{ height_tablet_custom_css }};
+    --split-height-mobile-custom: {{ height_mobile_custom_css }};
+    --split-content-width-desktop: {{ content_width_desktop_css }};
+    --split-content-width-tablet: {{ content_width_tablet_css }};
+    --split-content-width-mobile: {{ content_width_mobile_css }};
   "
 >
   <div class="split__inner">
-    <div class="split__row">
-      {%- for block in section.blocks limit: 2 -%}
+    <div class="split__row split__row--count-{{ section.blocks.size }} container">
+      {%- for block in section.blocks limit: 3 -%}
         {%- liquid
           assign has_image = false
           if block.settings.image != blank or block.settings.image_mobile != blank
@@ -65,21 +90,23 @@
 
           {%- if block.settings.heading != blank or block.settings.subheading != blank or block.settings.button != blank -%}
             <div class="split__content container">
-              {%- if block.settings.heading != blank -%}
-                <h2 class="split__heading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
-                  {{ block.settings.heading }}
-                </h2>
-              {%- endif -%}
-              {%- if block.settings.subheading != blank -%}
-                <div class="split__subheading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
-                  {{ block.settings.subheading }}
-                </div>
-              {%- endif -%}
-              {%- if block.settings.button != blank -%}
-                <a class="btn btn--primary" href="{{ block.settings.button_url }}">
-                  {{ block.settings.button }}
-                </a>
-              {%- endif -%}
+              <div class="split__content-inner">
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="split__heading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
+                    {{ block.settings.heading }}
+                  </h2>
+                {%- endif -%}
+                {%- if block.settings.subheading != blank -%}
+                  <div class="split__subheading"{% if heading_style != blank %} style="{{ heading_style }}"{% endif %}>
+                    <p>{{ block.settings.subheading }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.button != blank -%}
+                  <a class="btn btn--primary" href="{{ block.settings.button_url }}">
+                    {{ block.settings.button }}
+                  </a>
+                {%- endif -%}
+              </div>
             </div>
           {%- endif -%}
         </div>
@@ -96,7 +123,7 @@
   .split {
     position: relative;
     margin-top: var(--split-margin-top);
-    margin-bottom: var(--split-margin-bottom);
+    margin-bottom: calc(var(--split-margin-bottom) + var(--space-4));
   }
 
   .split__inner {
@@ -119,6 +146,47 @@
     .split__row {
       grid-template-columns: 1fr 1fr;
     }
+
+    .split__row--count-3 {
+      grid-template-columns: 2.2fr 1.4fr 1fr;
+      align-items: stretch;
+    }
+
+    .split__row--count-3 .split__item,
+    .split__row--count-3 .split__media {
+      height: 100%;
+    }
+
+    .split__row--count-3 .split__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
+
+    /* Secondary + accessory columns read smaller and quieter than the main column */
+    .split__row--count-3 .split__item:nth-child(2) .split__heading {
+      font-size: calc(var(--split-heading-size-desktop) * 0.72);
+    }
+
+    .split__row--count-3 .split__item:nth-child(3) .split__heading {
+      font-size: calc(var(--split-heading-size-desktop) * 0.58);
+    }
+
+    .split__row--count-3 .split__item:nth-child(2) .split__subheading,
+    .split__row--count-3 .split__item:nth-child(3) .split__subheading {
+      font-size: 0.85em;
+    }
+
+    .split__row--count-3 .split__item:nth-child(3) .split__content {
+      padding: var(--space-4);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .split__row--count-3 .split__item:nth-child(2) .split__heading,
+    .split__row--count-3 .split__item:nth-child(3) .split__heading {
+      font-size: calc(var(--split-heading-size-mobile) * 0.8);
+    }
   }
 
   .split__item {
@@ -132,7 +200,11 @@
   }
 
   .split--width-page .split__media {
-    border-radius: 12px;
+    border-radius: 8px;
+  }
+
+  .split__row--count-3 .split__media {
+    border-radius: 10px;
   }
 
   .split__image {
@@ -155,47 +227,98 @@
     }
   }
 
-  /* Fixed height variants: image and placeholder fill the box */
-  .split--height-small .split__media,
-  .split--height-small .split__placeholder {
-    min-height: 220px;
-  }
-  .split--height-medium .split__media,
-  .split--height-medium .split__placeholder {
-    min-height: 320px;
-  }
-  .split--height-large .split__media,
-  .split--height-large .split__placeholder {
-    min-height: 440px;
-  }
-  .split--height-auto .split__placeholder {
-    min-height: 280px;
-  }
-
-  @media screen and (min-width: 768px) {
-    .split--height-small .split__media,
-    .split--height-small .split__placeholder {
+  /* Fixed height variants: image and placeholder fill the box.
+     Each viewport tier (mobile / tablet / desktop) carries its own class
+     on the section at all times — only the media query below decides
+     which tier's rules are actually in effect at a given width. */
+  @media screen and (max-width: 749px) {
+    .split--height-mobile-small .split__media,
+    .split--height-mobile-small .split__placeholder {
+      min-height: 220px;
+    }
+    .split--height-mobile-medium .split__media,
+    .split--height-mobile-medium .split__placeholder {
       min-height: 300px;
     }
-    .split--height-medium .split__media,
-    .split--height-medium .split__placeholder {
-      min-height: 420px;
+    .split--height-mobile-large .split__media,
+    .split--height-mobile-large .split__placeholder {
+      min-height: 380px;
     }
-    .split--height-large .split__media,
-    .split--height-large .split__placeholder {
-      min-height: 600px;
+    .split--height-mobile-auto .split__placeholder {
+      min-height: 200px;
     }
-    .split--height-auto .split__placeholder {
-      min-height: 360px;
+    .split--height-mobile-custom .split__media,
+    .split--height-mobile-custom .split__placeholder {
+      min-height: var(--split-height-mobile-custom);
+    }
+    .split--height-mobile-small .split__image,
+    .split--height-mobile-medium .split__image,
+    .split--height-mobile-large .split__image,
+    .split--height-mobile-custom .split__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
     }
   }
 
-  .split--height-small .split__image,
-  .split--height-medium .split__image,
-  .split--height-large .split__image {
-    position: absolute;
-    inset: 0;
-    height: 100%;
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .split--height-tablet-small .split__media,
+    .split--height-tablet-small .split__placeholder {
+      min-height: 260px;
+    }
+    .split--height-tablet-medium .split__media,
+    .split--height-tablet-medium .split__placeholder {
+      min-height: 340px;
+    }
+    .split--height-tablet-large .split__media,
+    .split--height-tablet-large .split__placeholder {
+      min-height: 420px;
+    }
+    .split--height-tablet-auto .split__placeholder {
+      min-height: 260px;
+    }
+    .split--height-tablet-custom .split__media,
+    .split--height-tablet-custom .split__placeholder {
+      min-height: var(--split-height-tablet-custom);
+    }
+    .split--height-tablet-small .split__image,
+    .split--height-tablet-medium .split__image,
+    .split--height-tablet-large .split__image,
+    .split--height-tablet-custom .split__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .split--height-desktop-small .split__media,
+    .split--height-desktop-small .split__placeholder {
+      min-height: 300px;
+    }
+    .split--height-desktop-medium .split__media,
+    .split--height-desktop-medium .split__placeholder {
+      min-height: 380px;
+    }
+    .split--height-desktop-large .split__media,
+    .split--height-desktop-large .split__placeholder {
+      min-height: 460px;
+    }
+    .split--height-desktop-auto .split__placeholder {
+      min-height: 320px;
+    }
+    .split--height-desktop-custom .split__media,
+    .split--height-desktop-custom .split__placeholder {
+      min-height: var(--split-height-desktop-custom);
+    }
+    .split--height-desktop-small .split__image,
+    .split--height-desktop-medium .split__image,
+    .split--height-desktop-large .split__image,
+    .split--height-desktop-custom .split__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
   }
 
   .split__placeholder {
@@ -220,6 +343,14 @@
     pointer-events: none;
   }
 
+  .split__row--count-3 .split__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 55%);
+    pointer-events: none;
+  }
+
   .split__content {
     position: absolute;
     inset: 0;
@@ -227,6 +358,11 @@
     flex-direction: column;
     justify-content: center;
     padding: var(--page-margin-mobile);
+  }
+
+  .split__row--count-3 .split__content {
+    justify-content: flex-end;
+    padding: var(--space-5) var(--space-4);
   }
 
   .split--align-center .split__content {
@@ -239,11 +375,21 @@
     text-align: left;
   }
 
+  .split__content-inner {
+    max-width: var(--split-content-width-mobile);
+  }
+
   .split__heading {
     margin: 0;
-    max-width: 20ch;
     font-size: var(--split-heading-size-mobile);
     line-height: 1.1;
+    margin-bottom: var(--space-4);
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .split__content-inner {
+      max-width: var(--split-content-width-tablet);
+    }
   }
 
   @media screen and (min-width: 768px) {
@@ -253,6 +399,36 @@
     .split__content {
       padding: var(--page-margin);
     }
+  }
+
+  @media screen and (min-width: 990px) {
+    .split__content-inner {
+      max-width: var(--split-content-width-desktop);
+    }
+  }
+  .split__content-inner {
+      text-align: left;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 40px 20px 20px;
+  }
+
+  .split__heading {
+      margin: 0;
+  }
+
+  .split__subheading {
+      max-width: 400px;
+  }
+
+  .split__inner {
+      padding: 50px 0px;
+      background: #fff;
+  }
+
+  .split__row.split__row--count-3.container {
+      max-width: 1640px;
   }
 {% endstylesheet %}
 
@@ -289,7 +465,7 @@
       "max": 64,
       "step": 4,
       "unit": "px",
-      "default": 24
+      "default": 12
     },
     {
       "type": "range",
@@ -313,15 +489,75 @@
     },
     {
       "type": "select",
-      "id": "height",
-      "label": "Image height",
+      "id": "height_desktop",
+      "label": "Image height (desktop)",
       "options": [
         { "value": "auto", "label": "Auto (based on image)" },
         { "value": "small", "label": "Small" },
         { "value": "medium", "label": "Medium" },
-        { "value": "large", "label": "Large" }
+        { "value": "large", "label": "Large" },
+        { "value": "custom", "label": "Custom" }
       ],
       "default": "medium"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop_custom",
+      "label": "Custom height (desktop)",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 500,
+      "visible_if": "{{ section.settings.height_desktop == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "height_tablet",
+      "label": "Image height (tablet)",
+      "options": [
+        { "value": "auto", "label": "Auto (based on image)" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "range",
+      "id": "height_tablet_custom",
+      "label": "Custom height (tablet)",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 500,
+      "visible_if": "{{ section.settings.height_tablet == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Image height (mobile)",
+      "options": [
+        { "value": "auto", "label": "Auto (based on image)" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile_custom",
+      "label": "Custom height (mobile)",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 500,
+      "visible_if": "{{ section.settings.height_mobile == 'custom' }}"
     },
     {
       "type": "select",
@@ -331,7 +567,40 @@
         { "value": "left", "label": "Left" },
         { "value": "center", "label": "Center" }
       ],
-      "default": "center"
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "content_width_desktop",
+      "label": "Content width (desktop)",
+      "min": 0,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 600,
+      "info": "0 = no limit"
+    },
+    {
+      "type": "range",
+      "id": "content_width_tablet",
+      "label": "Content width (tablet)",
+      "min": 0,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 500,
+      "info": "0 = no limit"
+    },
+    {
+      "type": "range",
+      "id": "content_width_mobile",
+      "label": "Content width (mobile)",
+      "min": 0,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = no limit"
     },
     {
       "type": "header",
@@ -345,7 +614,7 @@
       "max": 96,
       "step": 2,
       "unit": "px",
-      "default": 40
+      "default": 30
     },
     {
       "type": "range",
@@ -355,7 +624,7 @@
       "max": 64,
       "step": 2,
       "unit": "px",
-      "default": 28
+      "default": 22
     },
     {
       "type": "header",
@@ -382,7 +651,7 @@
     {
       "type": "column",
       "name": "Column",
-      "limit": 2,
+      "limit": 3,
       "settings": [
         {
           "type": "header",

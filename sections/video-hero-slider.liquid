@@ -33,9 +33,13 @@
             {% if forloop.first %}fetchpriority="high"{% endif %}
           >
         {%- else -%}
-          <div class="media-placeholder video-hero-slider__poster-fallback">
-            {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
-          </div>
+          <img
+            class="video-hero-slider__poster"
+            src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Screenshot_2026-09-21_111535-removebg-preview.png?v=1789971478"
+            alt="{{ block.settings.heading | escape }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            {% if forloop.first %}fetchpriority="high"{% endif %}
+          >
         {%- endif -%}
 
         <div class="video-hero-slider__video-slot" data-video-slot></div>
@@ -62,7 +66,7 @@
           <p class="eyebrow video-hero-slider__eyebrow">{{ block.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if block.settings.heading != blank -%}
-          <h2 class="h-display video-hero-slider__heading">{{ block.settings.heading }}</h2>
+          <h2 class="h1 video-hero-slider__heading">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if block.settings.text != blank -%}
           <div class="body-text video-hero-slider__text">{{ block.settings.text }}</div>
@@ -183,12 +187,6 @@
     opacity: 1;
   }
 
-  .video-hero-slider__scrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(0deg, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0.1) 55%, rgba(10, 10, 10, 0.4) 100%);
-  }
-
   .video-hero-slider__content {
     position: relative;
     z-index: 2;
@@ -223,7 +221,7 @@
   }
 
   .video-hero-slider__cta {
-    margin-top: var(--space-4);
+    margin-top: var(--space-3);
     width: fit-content;
     box-shadow: var(--shadow-md);
   }

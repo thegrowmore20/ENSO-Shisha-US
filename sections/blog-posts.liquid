@@ -11,12 +11,32 @@
       max-width: 100%;
     }
 
+  
+    .blog-posts__cta-desktop {
+      display: none;
+    }
+    .blogs__cta-mobile {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-3)
+    }
+    
+
     @media screen and (min-width: 750px) {
       .section-padding-{{ section.id }} {
         padding-top: {{ section.settings.padding_top }}px;
         padding-bottom: {{ section.settings.padding_bottom }}px;
       }
+      .blog-posts__cta-desktop {
+        display: flex;
+      }
+      .blogs__cta-mobile {
+        display: none;
+      }
     }
+
+
+
 {% endstyle %}
 
 <section class="blog-posts {{ scheme_class }} section-padding-{{ section.id }}">
@@ -27,12 +47,12 @@
           <p class="eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="h-section">{{ section.settings.heading }}</h2>
+          <h2 class="h2">{{ section.settings.heading }}</h2>
         {%- endif -%}
       </div>
 
       {%- if section.settings.cta_label != blank -%}
-        <a href="{{ section.settings.cta_link | default: featured_blog.url | default: '#' }}" class="btn btn--outline blog-posts__cta">
+        <a href="{{ section.settings.cta_link | default: featured_blog.url | default: '#' }}" class="btn btn--outline blog-posts__cta blog-posts__cta-desktop">
           {{ section.settings.cta_label }}
         </a>
       {%- endif -%}
@@ -44,6 +64,13 @@
           {%- render 'card-article', article: article -%}
         {%- endfor -%}
       </div>
+      {%- if section.settings.cta_label != blank -%}
+        <div class="blogs__cta-mobile">
+          <a href="{{ section.settings.cta_link | default: featured_blog.url | default: '#' }}" class="btn btn--outline blog-posts__cta blog-posts__cta-mobile">
+            {{ section.settings.cta_label }}
+          </a>
+        </div>
+      {%- endif -%}
     {%- elsif request.design_mode -%}
       <p class="body-text text-muted">{{ 'sections.blog_posts.onboarding' | t }}</p>
     {%- endif -%}

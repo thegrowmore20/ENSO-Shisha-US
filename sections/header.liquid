@@ -11,8 +11,7 @@
       </button>
 
       <a href="{{ routes.root_url }}" class="site-header__logo wordmark" aria-label="{{ shop.name }}">
-        {%- render 'icon-enso', class: 'site-header__mark' -%}
-        <span>ENSŌ</span>
+        <img src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Logo_text_web-01.webp?v=1790148101" />
       </a>
 
       <nav class="site-header__nav" aria-label="{{ 'header.menu' | t }}">
@@ -155,7 +154,10 @@
           </li>
         {%- endfor -%}
       </ul>
-      <p class="caption site-header__panel-age">{{ 'header.age_gate' | t }}</p>
+
+      <div class="site-header__panel-social">
+        {%- render 'footer-social-icons' -%}
+      </div>
     </div>
   </div>
 </header>
@@ -175,9 +177,36 @@
     }
   }
 
-  .site-header[data-sticky="true"] .site-header__bar {
-    position: sticky;
-    top: 0;
+  .site-header {
+    /* transition: transform 0.3s ease; */
+  }
+
+  .site-header--hidden {
+    transform: translateY(-100%);
+  }
+
+  .site-header[data-sticky="always"],
+  .site-header[data-sticky="scroll_up"] {
+    position: fixed;
+    top: var(--announcement-bar-height, 0px);
+    left: 0;
+    right: 0;
+    z-index: 40;
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+
+  body:has(.site-header[data-sticky="always"]),
+  body:has(.site-header[data-sticky="scroll_up"]) {
+    padding-top: var(--site-header-height, 0px);
+  }
+
+  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) {
+    padding-top: 0;
+  }
+
+  .site-header--no-transition {
+    transition: none !important;
   }
 
   .site-header__inner {
@@ -381,6 +410,16 @@
     gap: var(--space-2);
   }
 
+  .site-header__panel-social {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .site-header__panel-social .footer-social-icons {
+    gap: var(--space-5);
+  }
+
   .site-header__panel-item > a.h-catalog {
     display: block;
   }
@@ -395,6 +434,12 @@
     justify-content: space-between;
     cursor: pointer;
     list-style: none;
+  }
+
+  .site-header__panel-summary .h-catalog {
+    letter-spacing: 0;
+    font-weight: 500;
+    font-size: 20px
   }
 
   .site-header__panel-summary::-webkit-details-marker {
@@ -474,7 +519,8 @@
     z-index: 40;
     background-color: transparent;
     color: #F5F1E6;
-    transition: background-color 0.3s ease, color 0.3s ease, top 0.2s ease;
+    /* transition: background-color 0.3s ease, color 0.3s ease, top 0.2s ease; */
+    transition: top 0.2s ease, transform 0.2s ease;
   }
 
   body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header__bar {
@@ -505,10 +551,24 @@
       "default": "scheme-paper"
     },
     {
-      "type": "checkbox",
+      "type": "select",
       "id": "sticky",
       "label": "Sticky header",
-      "default": true
+      "options": [
+        { 
+          "value": "always",
+          "label": "Always" 
+        },
+        { 
+          "value": "scroll_up",
+          "label": "On scroll up"
+        },
+        { 
+          "value": "none",
+          "label": "None" 
+        }
+      ],
+      "default": "always"
     },
     {
       "type": "link_list",
@@ -543,6 +603,18 @@
           "step": 1,
           "default": 4,
           "label": "Max products to show"
+        },
+        {
+          "type": "text",
+          "id": "view_all_text",
+          "label": "View all button text",
+          "info": "Optional. Shown below the products when filled in."
+        },
+        {
+          "type": "url",
+          "id": "view_all_link",
+          "label": "View all button link",
+          "info": "Defaults to the menu item's own link if left blank."
         },
         {
           "type": "header",

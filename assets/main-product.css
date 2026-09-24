@@ -15,6 +15,14 @@
 shopify-accelerated-checkout {
 	--shopify-accelerated-checkout-button-border-radius: 50px !important;
 }
+.shopify-payment-button__button--unbranded {
+	background-color: var(--color-primary-button-background);
+  	color: var(--color-primary-button-label);
+}
+.shopify-payment-button__button--unbranded:hover:not([disabled]) {
+	background-color: var(--color-primary-button-hover-background);
+  	color: var(--color-primary-button-label);
+}
 
 .product-delivery-dates {
 	display: flex;
@@ -94,13 +102,79 @@ shopify-accelerated-checkout {
 }
 
 @media (max-width: 520px) {
-	.icon-text-block--inline {
+	.product-main__content .icon-text-block--inline.product-block {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-	}    
-	
+		gap: 15px;
+	}
+	.product-main__content .icon-text-block--inline.inline-mobile-columns-2 {
+		grid-template-columns: 1fr 1fr;
+	}
+	.product-main__content .icon-text-block--inline.inline-mobile-columns-3 {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+	.product-main__content .icon-text-block--inline.inline-mobile-columns-4 {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}     
+	.product-main__content .icon-wrapper {
+		padding: 5px;
+	}
 	.icon-text-block--vertical.homepage-usps-info .icon-text-item {
 		align-items: flex-start;
 	}
 }
 /* icons with text block end */
+.product-block.product-rich-text.product-rich-text--text-left.founder-price-block {
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.founder-price-block span.product-rich-text__icon {
+    background: none;
+    padding: 0;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.founder-price-block span.product-rich-text__icon svg {
+    color: #000;
+    height: 30px;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.regular-price-block {
+    display: flex;
+    padding: 10px 10px;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.regular-price-block span.product-rich-text__icon {
+    background: none;
+    padding: 0;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.regular-price-block span.product-rich-text__icon svg {
+    color: #000;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.regular-price-block ul {
+    list-style-type: disc;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.625em;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.regular-price-block li {
+    margin-top: .5em;
+    margin-bottom: .5em;
+    color: #000;
+    opacity: 1;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.product-block.product-rich-text.product-rich-text--text-left.regular-price-block .product-rich-text__heading {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.reserve-spot-button {
+	padding: 16px 40px !important;
+}
