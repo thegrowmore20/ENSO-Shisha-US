@@ -532,6 +532,7 @@
         "eyebrow": "",
         "heading": "",
         "section_gap": 40,
+        "icon_bg": "",
         "cards_layout": "primary",
         "logo_list": false,
         "padding_top": 64,
@@ -724,6 +725,7 @@
         "eyebrow": "",
         "heading": "",
         "section_gap": 40,
+        "icon_bg": "",
         "cards_layout": "primary",
         "logo_list": true,
         "padding_top": 48,
@@ -770,6 +772,7 @@
       ],
       "custom_css": [
         ".ai-slider-slide-slider8aijb4:hover {transform: scale(1.1); transition: 0.3s all;}",
+        ".ai-slider-slide-slider8aijb4:not(:hover) {transform: scale(1); transition: 0.3s all;}",
         ".ai-slider-slide-slider8aijb4 {padding: 40px 20px;}"
       ],
       "name": "Image slider",

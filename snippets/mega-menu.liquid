@@ -78,7 +78,9 @@
           {%- for product_link in product_links limit: max_products -%}
             {%- assign product = product_link.object -%}
             {%- if product -%}
-              {%- render 'card-product', product: product, section: section -%}
+              {% unless product.title contains 'Shipping Protection' %}
+                {%- render 'card-product', product: product, section: section -%}
+              {% endunless %}
             {%- endif -%}
           {%- endfor -%}
         </div>

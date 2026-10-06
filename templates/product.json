@@ -97,6 +97,7 @@
         },
         "accordion_gxeq9J": {
           "type": "accordion",
+          "disabled": true,
           "settings": {
             "heading": "Parts & Accessories",
             "content": "{{ product.metafields.custom.parts_accessories | metafield_tag }}",

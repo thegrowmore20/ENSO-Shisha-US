@@ -371,10 +371,23 @@
       setupEventListeners() {
         this.items.forEach((item) => {
           const button = item.querySelector('.ai-faq-question-{{ ai_gen_id }}');
-          
+
           button.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
-            
+
+            // Close all other FAQ items
+            this.items.forEach((otherItem) => {
+              if (otherItem !== item) {
+                otherItem.classList.remove('active');
+
+                const otherButton = otherItem.querySelector('.ai-faq-question-{{ ai_gen_id }}');
+                if (otherButton) {
+                  otherButton.setAttribute('aria-expanded', 'false');
+                }
+              }
+            });
+
+            // Toggle clicked item
             if (isActive) {
               item.classList.remove('active');
               button.setAttribute('aria-expanded', 'false');

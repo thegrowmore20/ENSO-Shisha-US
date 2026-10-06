@@ -354,7 +354,7 @@
             "default_tab": "automatic",
             "only_photos": false,
             "hide_thumbnails": false,
-            "product_handle": "",
+            "product_handle": "enso",
             "aggregated": true,
             "data-limit": 5,
             "maxwidth": 1200,
@@ -759,6 +759,7 @@
         "eyebrow": "Recognition",
         "heading": "Industry Validation",
         "section_gap": 48,
+        "icon_bg": "",
         "cards_layout": "card",
         "logo_list": false,
         "padding_top": 64,
@@ -866,10 +867,10 @@
         "column_TFr3f4": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/web_support-6290.webp",
+            "image": "shopify://shop_images/image.webp",
             "heading": "ENSŌ Diamond Pre-Order",
             "heading_color": "#ffffff",
-            "subheading": "Diamond revolutionizes your ritual. Powered by advanced ENSŌ technology, it completely replaces charcoal on your traditional setup. ",
+            "subheading": "Diamond revolutionizes your ritual. Powered by advanced ENSŌ technology, it completely replaces charcoal on your traditional setup.&nbsp;",
             "button": "Pre Order",
             "button_url": "shopify://products/enso-diamond-pre-order"
           }

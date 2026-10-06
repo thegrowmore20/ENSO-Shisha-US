@@ -103,7 +103,7 @@
             "icon_1": "shopify://shop_images/2_Product_Page_Return_09267b1a-5983-448c-852b-7bf66c58199c.svg",
             "text_1": "<p>30 Days<br/>Return</p>",
             "icon_2": "shopify://shop_images/1.Product_Page_2_year_warranty.svg",
-            "text_2": "<p>Founder Price<br/>Locked at $349</p>",
+            "text_2": "<p>2 years<br/>Warranty Ltd.</p>",
             "icon_3": "shopify://shop_images/icon_Delivery-1.svg",
             "text_3": "<p>Free Delivery<br/>100+ USD</p>",
             "text_4": "",
@@ -186,13 +186,13 @@
         "loox_reviews_loox_dynamic_section_BAxFxw": {
           "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
           "settings": {
-            "reviews_to_display": "store_reviews_only",
-            "default_tab": "automatic",
+            "reviews_to_display": "",
+            "default_tab": "product_reviews",
             "only_photos": true,
             "aggregated": false,
             "limit": 5,
             "hide_thumbnails": false,
-            "maxwidth": 1080,
+            "maxwidth": 1200,
             "is_sample": true
           }
         },
@@ -216,9 +216,12 @@
       "block_order": [
         "loox_reviews_loox_dynamic_section_BAxFxw"
       ],
+      "custom_css": [
+        ".color-scheme-paper {background: none;}"
+      ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 48,
         "padding_bottom": 48,
@@ -512,6 +515,7 @@
       "block_order": [
         "custom_liquid_youtube_cta"
       ],
+      "disabled": true,
       "name": "Custom Section",
       "settings": {
         "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
@@ -572,6 +576,7 @@
     },
     "custom_liquid_E94gXE": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "Custom Liquid",
       "settings": {
         "content": "",

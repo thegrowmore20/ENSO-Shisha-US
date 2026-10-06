@@ -106,7 +106,11 @@
     height: 84px;
     margin-bottom: var(--space-5);
     border-radius: var(--radius-pill);
-    background: linear-gradient(150deg, var(--color-accent) 0%, var(--color-accent-soft) 100%);
+    {% if section.settings.icon_bg != blank %}
+      background: {{ section.settings.icon_bg }};
+    {% else %}
+      background: linear-gradient(150deg, var(--color-accent) 0%, var(--color-accent-soft) 100%);
+    {% endif %}  
     box-shadow: var(--shadow-sm);
   }
   .award .award__title {
@@ -176,6 +180,11 @@
       "min": 16,
       "max": 48,
       "step": 4
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Card icon background"
     },
     {
       "id": "cards_layout",

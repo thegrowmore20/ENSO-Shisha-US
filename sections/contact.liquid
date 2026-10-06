@@ -39,25 +39,32 @@
                   {%- for i in (1..2) -%}
                     {%- liquid
                       if i == 1
-                        assign card_bg    = block.settings.card_1_bg
-                        assign card_color = block.settings.card_1_color
                         assign card_image = block.settings.card_1_image
                         assign card_svg   = block.settings.card_1_svg
                         assign card_head  = block.settings.card_1_heading
                         assign card_body  = block.settings.card_1_body
                       else
-                        assign card_bg    = block.settings.card_2_bg
-                        assign card_color = block.settings.card_2_color
                         assign card_image = block.settings.card_2_image
                         assign card_svg   = block.settings.card_2_svg
                         assign card_head  = block.settings.card_2_heading
                         assign card_body  = block.settings.card_2_body
                       endif
                     -%}
-                    <div
-                      class="contact-card"
-                      style="background-color: {{ card_bg }}; color: {{ card_color }};"
-                    >
+                    {% capture card_bg %}card_{{ i }}_bg{% endcapture %}
+                    {% capture card_color %}card_{{ i }}_color{% endcapture %}
+                    {% style %}
+                      .contact-card-{{ i }} {
+                        background-color: {{ block.settings[card_bg] }}; 
+                        color: {{ block.settings[card_color] }};
+                        transition: background-color .4s ease;
+                      }
+
+                      .contact-card-{{ i }}:hover{
+                        background-color: var(--color-accent);
+                      }
+                      
+                    {% endstyle %}
+                    <div class="contact-card contact-card-{{ i }}">
                       <div class="contact-card-header">
                         {% if card_image != blank or card_svg != blank %}
                             <div class="contact-card__icon">
@@ -321,6 +328,11 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+  }
+
+  .contact-card a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .contact-card__icon {

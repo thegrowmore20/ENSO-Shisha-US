@@ -69,7 +69,9 @@
               aria-label="{{ section.settings.heading | escape }}"
             >
               {%- for card_product in products_source limit: section.settings.products_limit -%}
-                {%- render 'card-product', product: card_product, section: section, quick_add: section.settings.enable_quickadd -%}
+                {% unless card_product.title contains 'Shipping Protection' %}
+                  {%- render 'card-product', product: card_product, section: section, quick_add: section.settings.enable_quickadd -%}
+                {% endunless %}
               {%- endfor -%}
             </div>
             {%- if is_carousel -%}

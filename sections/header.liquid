@@ -117,7 +117,16 @@
             {%- if link.links.size > 0 -%}
               <details class="site-header__panel-details">
                 <summary class="site-header__panel-summary">
-                  <span class="h-catalog">{{ link.title }}</span>
+                  {%- if link.type == 'collection_link' and link.object -%}
+                    {%- assign link_count = link.object.all_products_count | default: link.object.products_count -%}
+                    {%- assign has_view_all = false -%}
+                    {% if link.object.all_products_count > link.links.size %}
+                      {%- assign has_view_all = true -%}
+                    {% endif %}  
+                  {%- endif -%}
+                  <span class="h-catalog">
+                    {{ link.title }} {% if link_count != blank %}({{ link_count }}){% endif %}
+                  </span>
                   <span class="site-header__panel-chevron" aria-hidden="true"></span>
                 </summary>
                 {% comment %} <a href="{{ link.url }}" class="caption site-header__panel-view-all">
@@ -142,10 +151,19 @@
                           </ul>
                         </details>
                       {%- else -%}
-                        <a href="{{ child.url }}" class="caption">{{ child.title }}</a>
+                        <a href="{{ child.url }}" class="caption">
+                          {{ child.title }}
+                        </a>
                       {%- endif -%}
                     </li>
                   {%- endfor -%}
+                  {% if has_view_all %}
+                    <li>
+                      <a href="{{ link.url }}" class="caption">
+                        <strong>View All</strong>
+                      </a>
+                    </li>  
+                  {% endif %}
                 </ul>
               </details>
             {%- else -%}
@@ -191,7 +209,7 @@
     top: var(--announcement-bar-height, 0px);
     left: 0;
     right: 0;
-    z-index: 40;
+    z-index: 41;
     background-color: var(--color-background);
     color: var(--color-text);
   }
@@ -307,6 +325,8 @@
   .site-header__menu-btn svg {
     width: 20px;
     height: 20px;
+    min-width: 20px;
+    min-height: 20px;
   }
 
   @media screen and (min-width: 990px) {
@@ -414,6 +434,7 @@
     margin-top: var(--space-6);
     padding-top: var(--space-5);
     border-top: 1px solid var(--color-border);
+    margin-top: auto;
   }
 
   .site-header__panel-social .footer-social-icons {
@@ -434,6 +455,8 @@
     justify-content: space-between;
     cursor: pointer;
     list-style: none;
+    padding-block: 8px;
+
   }
 
   .site-header__panel-summary .h-catalog {
@@ -482,6 +505,14 @@
 
   .site-header__panel-details--nested {
     margin-top: 0;
+  }
+
+  .site-header__panel-sublist a.caption {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
   }
 
   .site-header__panel-age {

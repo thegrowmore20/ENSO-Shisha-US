@@ -37,7 +37,7 @@
     {% endif %}
 
     <div class="mobile-collection-tabs">
-      {% for link in section.settings.tabs_menu.links limit: 2 %}
+      {% for link in section.settings.tabs_menu.links %}
         {%- if link.type == 'collection_link' and link.object -%}
           {%- assign link_count = link.object.all_products_count | default: link.object.products_count -%}
         {%- endif -%}
@@ -129,7 +129,9 @@
             {%- if collection.products.size > 0 -%}
               <div class="grid grid--3 collection__grid" id="ProductGrid-{{ section.id }}">
                 {%- for product in collection.products -%}
-                  {%- render 'card-product', product: product, section: section -%}
+                  {% unless product.title contains 'Shipping Protection' %}
+                    {%- render 'card-product', product: product, section: section -%}
+                  {% endunless %}
                 {%- endfor -%}
               </div>
             {%- else -%}
@@ -237,11 +239,15 @@
   /* Mobile: sidebar becomes an off-canvas drawer */
   @media (max-width: 989px) {
     .mobile-collection-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      justify-content: center;
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
       justify-items: center;
       margin-bottom: 12px;
+      flex-wrap: nowrap;
+      overflow: auto;
+      padding: 0 2px 5px;
+      gap: 8px;
     }
     .mobile-collection-tabs a {
       width: 100%;
@@ -252,14 +258,18 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
+      line-height: 1;
+      white-space: nowrap;
       color: var(--color-primary-button-background);
+      border-radius: 99px;
     }
     .mobile-collection-tabs a.active-tab {
         background: var(--color-primary-button-background);
         color: var(--color-primary-button-label);
+        order: -1;
     }
     .mobile-collection-tabs a:last-of-type {
-        border-left: 0;
+        /* border-left: 0; */
     }
     .mobile-collection-tabs a svg {
       width: 20px;
@@ -683,8 +693,7 @@
     {
       "type": "link_list",
       "id": "tabs_menu",
-      "label": "Mobile Tabs",
-      "info": "Supports upto two items only"
+      "label": "Mobile Tabs"
     },
     {
       "type": "header",

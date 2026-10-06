@@ -79,7 +79,7 @@
             "card_2_color": "#ffffff",
             "card_2_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\"><path fill=\"#fff\" d=\"M19 9.062s-5.188-.333-7 1.938c2-4.896 7-5.938 7-5.938v-2l5 4-5 4.019v-2.019zm-18.974 14.938h23.947l-11.973-11.607-11.974 11.607zm1.673-14l10.291-7.488 3.053 2.218c.712-.459 1.391-.805 1.953-1.054l-5.006-3.637-11.99 8.725v12.476l7.352-7.127-5.653-4.113zm15.753 4.892l6.548 6.348v-11.612l-6.548 5.264z\"></path></svg>",
             "card_2_heading": "Email",
-            "card_2_body": "<p><a href=\"mailto:support@ensoshisha.eu\" target=\"_blank\" title=\"support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
+            "card_2_body": "<p><a href=\"mailto:support@ensoshisha.eu\" title=\"support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
           }
         },
         "social_fc7fiH": {
@@ -116,9 +116,60 @@
         "show_left_content": true,
         "form_heading": "Contact Us",
         "padding_top": 64,
-        "padding_bottom": 64,
+        "padding_bottom": 32,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 16
+      }
+    },
+    "awards_HDNFdT": {
+      "type": "awards",
+      "blocks": {
+        "award_G8UyFL": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/Icons_all-05-webp.webp",
+            "title": "&nbsp;<a href=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\" title=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\"><strong>ENSŌ User Guide</strong></a>&nbsp;",
+            "subtitle": "",
+            "text": ""
+          }
+        },
+        "award_f3aaQp": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/Icons_all-01-webp.webp",
+            "title": "&nbsp;<a href=\"https://ensoshisha.com/pages/user-guide\" target=\"_blank\" title=\"User Guide Videos\"><strong>ENSŌ Video Guide</strong></a>&nbsp;",
+            "subtitle": "",
+            "text": ""
+          }
+        },
+        "award_RXHBxP": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/ICON_E150-04_8125116a-c00f-4faa-a366-9ffaa277b235.webp",
+            "title": "&nbsp;<a href=\"https://ensoshisha.com/pages/warranty\" target=\"_blank\" title=\"Warranty\"><strong>ENSŌ Warranty Registration</strong></a>&nbsp;",
+            "subtitle": "",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "award_G8UyFL",
+        "award_f3aaQp",
+        "award_RXHBxP"
+      ],
+      "name": "t:sections.awards.presets.name",
+      "settings": {
+        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
+        "eyebrow": "",
+        "heading": "",
+        "section_gap": 40,
+        "icon_bg": "#F2F2F2",
+        "cards_layout": "primary",
+        "logo_list": false,
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16
       }
     },
     "custom_liquid_W8RPpV": {
@@ -138,6 +189,7 @@
     "main",
     "hero_banner_V6dPzL",
     "contact_MFQGnq",
+    "awards_HDNFdT",
     "custom_liquid_W8RPpV"
   ]
 }

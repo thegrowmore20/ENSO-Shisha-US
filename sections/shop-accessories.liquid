@@ -113,13 +113,15 @@
           aria-label="{{ section.settings.heading | escape }}"
         >
           {%- for product in section_collection.products limit: section.settings.products_limit -%}
-            {%- if is_load_more -%}
-              <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
+            {% unless product.title contains 'Shipping Protection' %}
+              {%- if is_load_more -%}
+                <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
+                  {%- render 'card-product', product: product, section: section -%}
+                </div>
+              {%- else -%}
                 {%- render 'card-product', product: product, section: section -%}
-              </div>
-            {%- else -%}
-              {%- render 'card-product', product: product, section: section -%}
-            {%- endif -%}
+              {%- endif -%}
+            {% endunless %}
           {%- endfor -%}
         </div>
         {%- if is_carousel -%}

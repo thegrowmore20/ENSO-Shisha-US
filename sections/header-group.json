@@ -31,7 +31,7 @@
           "settings": {
             "mega_target_item": "Shop Accessories",
             "show_products": true,
-            "max_products": 5,
+            "max_products": 4,
             "view_all_text": "View All",
             "view_all_link": "shopify://collections/accesories",
             "image_heading": "",

@@ -27,7 +27,7 @@ body {
   top: 0;
   left: 0;
   width: 0%;
-  height: 5px;
+  height: 3.5px;
   background-color: #c8943a;
   z-index: 100;
   pointer-events: none;
@@ -361,6 +361,21 @@ h6, .h6 {
   color: #fff;
   border-color: #c8943a;
 }
+
+.quick-add-button[data-loading] { position: relative; }
+.quick-add-button[data-loading] span:first-of-type { visibility: hidden; }
+.quick-add-button .btn__spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: product-spin 0.6s linear infinite;
+}
+@keyframes product-spin { to { transform: rotate(360deg); } }
 
 @media screen and (max-width: 749px) {
   .btn {
@@ -1106,6 +1121,9 @@ img.product-card__image.product-card__secondary-image[alt="ENSŌ Diamond Pre-Ord
 /* mobile css */
 
 @media only screen and (max-width:767px) {
+  .site-header__logo {
+    max-width: 120px;
+  }
   #shopify-section-template--27698706678073__video_hero_slider_p6YT3f .video-hero-slider__content {
     max-width: 360px !important;
   }

@@ -166,7 +166,7 @@
 
                   <p class="product-form__error caption" data-add-to-cart-error hidden></p>
 
-                  {%- if block.settings.show_dynamic_checkout -%}
+                  {%- if block.settings.show_dynamic_checkout and product.available -%}
                     <div class="product-form__payment-button" data-dynamic-checkout>
                       {{ form | payment_button }}
                     </div>
@@ -342,13 +342,13 @@
 
             {%- when 'share_button' -%}
               <div class="product-block product-share" {{ block.shopify_attributes }}>
-                <button type="button" class="product-share__button" onclick="ProductShare_{{ section.id }}(this)">
+                <button type="button" class="product-share__button" onclick="ProductShare(this)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
                   <span data-share-label>{{ 'products.product.share' | t }}</span>
                 </button>
               </div>
               <script>
-                function ProductShare_{{ section.id }}(btn) {
+                function ProductShare(btn) {
                   var url = {{ shop.url | append: product.url | json }};
                   var title = {{ product.title | json }};
                   if (navigator.share) {
@@ -854,7 +854,11 @@
   .accordion__heading::-webkit-details-marker { display: none; }
   .accordion__icon { transition: transform 0.2s ease; flex-shrink: 0; }
   .accordion[open] .accordion__icon { transform: rotate(180deg); }
-  .accordion__content { margin-top: var(--space-3); }
+  .accordion__content { 
+    margin-top: var(--space-3); 
+    display: flow-root;
+  }
+  .accordion[open].is-closing .accordion__icon { transform: none; }
   .product-main__content .accordion__content h1,
   .product-main__content .accordion__content h2 {
     font-size: 20px;
