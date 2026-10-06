@@ -201,7 +201,8 @@
           "type": "item",
           "settings": {
             "title": "Stay in the moment",
-            "body": "<p>A hookah is an evening, not a task. No turning coals, no checking the heat, no numbers to watch.<\/p><p>Set it once and let it run: the temperature holds on its own for the whole session. What is left is the taste, the people around the table and the time itself, the clean moment the ritual was always about.<\/p>",
+            "body": "<p>A hookah is an evening, not a task. No turning coals, no checking the heat, no numbers to watch.</p><p>Set it once and let it run: the temperature holds on its own for the whole session. What is left is the taste, the people around the table and the time itself, the clean moment the ritual was always about.</p>",
+            "image": "shopify://shop_images/exp-tearoom.webp",
             "image_position": "50% 45%"
           }
         },
@@ -209,7 +210,8 @@
           "type": "item",
           "settings": {
             "title": "A ritual you already know",
-            "body": "<p>Nothing new to learn. You fill the cup the way you have always filled a bowl: your own tobacco, fluffed and airy or pressed and dense, a mesh on top.<\/p><p>No pods and no cartridges: any brand, any cut you like. The same hands and the same habit, only the coal is gone.<\/p>",
+            "body": "<p>Nothing new to learn. You fill the cup the way you have always filled a bowl: your own tobacco, fluffed and airy or pressed and dense, a mesh on top.</p><p>No pods and no cartridges: any brand, any cut you like. The same hands and the same habit, only the coal is gone.</p>",
+            "image": "shopify://shop_images/phil-cup.webp",
             "image_position": "52% 58%"
           }
         },
@@ -217,12 +219,18 @@
           "type": "item",
           "settings": {
             "title": "Why the charcoal had to go",
-            "body": "<p>Coal is the one part of the evening nobody loves. Ten minutes over a burner, tongs, ash on the table, the smell of coal in the room, and a burnt edge on the flavour whenever a piece sits too long.<\/p><p>ENSŌ replaces it with electric heat set to the degree. The blend warms evenly and never meets a flame, so what you taste is the tobacco you chose.<\/p>",
-            "image_position": "50% 50%"
+            "body": "<p>Coal is the one part of the evening nobody loves. Ten minutes over a burner, tongs, ash on the table, the smell of coal in the room, and a burnt edge on the flavour whenever a piece sits too long.</p><p>ENSŌ replaces it with electric heat set to the degree. The blend warms evenly and never meets a flame, so what you taste is the tobacco you chose.</p>",
+            "image_position": "50% 50%",
+            "video": "shopify://files/videos/phil-coal-loop.mp4",
+            "video_poster": "shopify://shop_images/phil-coal-poster.webp"
           }
         }
       },
-      "block_order": ["item_1", "item_2", "item_3"],
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3"
+      ],
       "settings": {
         "heading": "Made for the ritual",
         "lead": "What ENSŌ is built on",
@@ -268,10 +276,36 @@
           }
         }
       },
-      "block_order": ["safety_1", "safety_2", "safety_3", "safety_4"],
+      "block_order": [
+        "safety_1",
+        "safety_2",
+        "safety_3",
+        "safety_4"
+      ],
       "settings": {
         "heading": "Safety and certification",
         "lead": "One standard for every ENSŌ device",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "enso_diamond_row": {
+      "type": "enso-diamond-row",
+      "blocks": {
+        "feat_1": { "type": "feature", "settings": { "title": "Fits your hookah", "description": "Sits where the bowl sits, on the stem you already have" } },
+        "feat_2": { "type": "feature", "settings": { "title": "Pre-heat your way", "description": "0–15 minutes and 180–320 °C, you choose both" } },
+        "feat_3": { "type": "feature", "settings": { "title": "Profiles", "description": "Default, Phoenix, Wraith and Oracle, each in its own colour" } },
+        "feat_4": { "type": "feature", "settings": { "title": "Charge while you smoke", "description": "USB-C in, the session goes on" } }
+      },
+      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4"],
+      "settings": {
+        "eyebrow": "ENSŌ Diamond · Pre-order",
+        "heading": "Electric heat for the hookah you already own",
+        "cta_label": "Shop Diamond",
+        "cta_link": "shopify://products/enso-diamond-pre-order",
+        "image_position": "50% 38%",
         "padding_top": 40,
         "padding_bottom": 80,
         "padding_top_mobile": 24,
@@ -285,6 +319,7 @@
     "usps",
     "enso_system_video",
     "enso_phil",
-    "enso_safety"
+    "enso_safety",
+    "enso_diamond_row"
   ]
 }

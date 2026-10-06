@@ -1841,6 +1841,32 @@
       "presets": {
         "name": "Safety and certification"
       }
+    },
+    "enso_diamond_row": {
+      "name": "Diamond row",
+      "settings": {
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "cta_label": { "label": "Button label" },
+        "cta_link": { "label": "Button link" },
+        "image": { "label": "Image" },
+        "image_position": { "label": "Image position", "info": "CSS object-position, e.g. 50% 38%" },
+        "padding_header": { "content": "Padding" },
+        "padding_top": { "label": "Top (desktop)" },
+        "padding_bottom": { "label": "Bottom (desktop)" },
+        "padding_top_mobile": { "label": "Top (mobile)" },
+        "padding_bottom_mobile": { "label": "Bottom (mobile)" }
+      },
+      "blocks": {
+        "feature": {
+          "name": "Feature",
+          "settings": {
+            "title": { "label": "Title" },
+            "description": { "label": "Description" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond row" }
     }
   }
 }
