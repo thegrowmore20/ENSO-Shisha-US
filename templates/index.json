@@ -343,6 +343,7 @@
       "type": "shop-accessories",
       "settings": {
         "collection": "accessories",
+        "eyebrow": "",
         "heading": "Shop accessories",
         "layout": "carousel",
         "columns": "4",

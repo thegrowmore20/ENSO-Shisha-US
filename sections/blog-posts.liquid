@@ -1,99 +1,246 @@
-{%- liquid
-  assign scheme_class = 'color-surface'
-  render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
-  assign featured_blog = section.settings.blog
--%}
+{%- doc -%}
+  From the journal — 3-column dark photo-overlay card grid.
+  Matches handoff section #shopify-section-enso-blog.
+  Mobile: horizontal scroll snap (no pagination).
+{%- enddoc -%}
+
+{%- assign featured_blog = section.settings.blog -%}
 
 {% style %}
- .section-padding-{{ section.id }} {
-      display: block;
-      padding-top: {{ section.settings.padding_top_mobile }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-      max-width: 100%;
+  #section-blog-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #section-blog-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
     }
-
-  
-    .blog-posts__cta-desktop {
-      display: none;
-    }
-    .blogs__cta-mobile {
-      display: flex;
-      justify-content: center;
-      margin-top: var(--space-3)
-    }
-    
-
-    @media screen and (min-width: 750px) {
-      .section-padding-{{ section.id }} {
-        padding-top: {{ section.settings.padding_top }}px;
-        padding-bottom: {{ section.settings.padding_bottom }}px;
-      }
-      .blog-posts__cta-desktop {
-        display: flex;
-      }
-      .blogs__cta-mobile {
-        display: none;
-      }
-    }
-
-
-
+  }
 {% endstyle %}
 
-<section class="blog-posts {{ scheme_class }} section-padding-{{ section.id }}">
-  <div class="container">
-    <div class="blog-posts__header">
-      <div>
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="h2">{{ section.settings.heading }}</h2>
-        {%- endif -%}
-      </div>
-
+<section id="section-blog-{{ section.id }}" class="enso-journal-section">
+  <div class="enso-journal__inner">
+    <div class="enso-journal__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="enso-journal__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
       {%- if section.settings.cta_label != blank -%}
-        <a href="{{ section.settings.cta_link | default: featured_blog.url | default: '#' }}" class="btn btn--outline blog-posts__cta blog-posts__cta-desktop">
-          {{ section.settings.cta_label }}
+        <a class="enso-journal__cta" href="{{ section.settings.cta_link | default: featured_blog.url | default: '#' }}">
+          {{ section.settings.cta_label | escape }} ›
         </a>
       {%- endif -%}
     </div>
 
-    {%- if featured_blog -%}
-      <div class="grid grid--3 blog-posts__grid">
+    {%- if featured_blog and featured_blog.articles_count > 0 -%}
+      <div class="enso-journal__grid">
         {%- for article in featured_blog.articles limit: section.settings.posts_limit -%}
-          {%- render 'card-article', article: article -%}
+          <a class="enso-jcard" href="{{ article.url }}">
+            <div class="enso-jcard__media">
+              {%- if article.image -%}
+                {{
+                  article.image
+                  | image_url: width: 900
+                  | image_tag:
+                    widths: '450, 700, 900',
+                    sizes: '(max-width: 749px) 80vw, 33vw',
+                    alt: article.image.alt | default: article.title,
+                    loading: 'lazy',
+                    class: 'enso-jcard__img'
+                }}
+              {%- else -%}
+                <div class="enso-jcard__img-placeholder" aria-hidden="true"></div>
+              {%- endif -%}
+              <div class="enso-jcard__overlay" aria-hidden="true"></div>
+            </div>
+            <div class="enso-jcard__text">
+              <span class="enso-jcard__date">{{ article.published_at | date: '%B %-d, %Y' }}</span>
+              <b class="enso-jcard__title">{{ article.title | escape }}</b>
+              {%- if article.excerpt != blank -%}
+                <span class="enso-jcard__excerpt">{{ article.excerpt | strip_html }}</span>
+              {%- endif -%}
+              <span class="enso-jcard__read">Read the article ›</span>
+            </div>
+          </a>
         {%- endfor -%}
       </div>
-      {%- if section.settings.cta_label != blank -%}
-        <div class="blogs__cta-mobile">
-          <a href="{{ section.settings.cta_link | default: featured_blog.url | default: '#' }}" class="btn btn--outline blog-posts__cta blog-posts__cta-mobile">
-            {{ section.settings.cta_label }}
-          </a>
-        </div>
-      {%- endif -%}
     {%- elsif request.design_mode -%}
-      <p class="body-text text-muted">{{ 'sections.blog_posts.onboarding' | t }}</p>
+      <p class="body-text" style="opacity:0.5">Select a blog in section settings to show articles here.</p>
     {%- endif -%}
   </div>
 </section>
 
 {% stylesheet %}
-  .blog-posts__header {
+  .enso-journal__inner {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .enso-journal__head {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: var(--space-5);
-    margin-bottom: var(--space-6);
-    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 32px;
   }
 
-  .blog-posts__cta {
+  .enso-journal__heading {
+    font-family: var(--font-accent);
+    font-weight: var(--font-weight-heavy);
+    font-size: 42px;
+    line-height: 46px;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+
+  .enso-journal__cta {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: 15px;
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
     flex-shrink: 0;
   }
 
-  .blog-posts__grid {
-    row-gap: var(--space-6);
+  .enso-journal__cta:hover {
+    text-decoration: underline;
+  }
+
+  .enso-journal__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  /* ── Card ── */
+  .enso-jcard {
+    position: relative;
+    display: block;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #1a1813;
+    text-decoration: none;
+    aspect-ratio: 4 / 5;
+    color: #fff;
+  }
+
+  .enso-jcard__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .enso-jcard__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .enso-jcard:hover .enso-jcard__img {
+    transform: scale(1.03);
+  }
+
+  .enso-jcard__img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #2a2520;
+  }
+
+  .enso-jcard__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(20, 18, 14, 0) 38%,
+      rgba(20, 18, 14, 0.55) 62%,
+      rgba(20, 18, 14, 0.9) 100%
+    );
+  }
+
+  .enso-jcard__text {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .enso-jcard__date {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    font-size: 12px;
+    line-height: 16px;
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .enso-jcard__title {
+    font-family: var(--font-accent);
+    font-weight: var(--font-weight-heavy);
+    font-size: 26px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-wrap: balance;
+  }
+
+  .enso-jcard__excerpt {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 21px;
+    color: rgb(255 255 255 / 0.82);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .enso-jcard__read {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-semibold);
+    font-size: 13px;
+    color: rgb(255 255 255 / 0.9);
+    margin-top: 2px;
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 749px) {
+    .enso-journal__inner {
+      padding: 0 0 0 16px;
+    }
+
+    .enso-journal__head {
+      padding-right: 16px;
+      margin-bottom: 20px;
+    }
+
+    .enso-journal__heading {
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .enso-journal__grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
+      padding-right: 16px;
+      scrollbar-width: none;
+    }
+
+    .enso-journal__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .enso-jcard {
+      flex: 0 0 80%;
+      scroll-snap-align: start;
+      aspect-ratio: 4 / 5;
+    }
   }
 {% endstylesheet %}
 
@@ -103,33 +250,15 @@
   "tag": "section",
   "settings": [
     {
-      "type": "color",
-      "id": "color_background",
-      "label": "t:sections.all.background_color.label",
-      "default": "{{ settings.color_palette.background }}"
-    },
-    {
-      "type": "color",
-      "id": "color_text",
-      "label": "t:sections.all.text_color.label",
-      "default": "{{ settings.color_palette.foreground }}"
-    },
-    {
       "type": "blog",
       "id": "blog",
       "label": "t:sections.blog_posts.settings.blog.label"
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "t:sections.blog_posts.settings.eyebrow.label",
-      "default": "Journal"
-    },
-    {
-      "type": "text",
       "id": "heading",
       "label": "t:sections.blog_posts.settings.heading.label",
-      "default": "From the Journal"
+      "default": "From the journal"
     },
     {
       "type": "range",
@@ -144,7 +273,7 @@
       "type": "text",
       "id": "cta_label",
       "label": "t:sections.blog_posts.settings.cta_label.label",
-      "default": "Read More"
+      "default": "All articles"
     },
     {
       "type": "url",
@@ -160,40 +289,40 @@
       "id": "padding_top",
       "label": "Padding top — desktop",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 160,
+      "step": 8,
       "unit": "px",
-      "default": 48
+      "default": 40
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "label": "Padding bottom — desktop",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 160,
+      "step": 8,
       "unit": "px",
-      "default": 48
+      "default": 80
     },
     {
       "type": "range",
       "id": "padding_top_mobile",
       "label": "Padding top — mobile",
       "min": 0,
-      "max": 80,
+      "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 32
+      "default": 24
     },
     {
       "type": "range",
       "id": "padding_bottom_mobile",
       "label": "Padding bottom — mobile",
       "min": 0,
-      "max": 80,
+      "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 32
+      "default": 48
     }
   ],
   "presets": [
