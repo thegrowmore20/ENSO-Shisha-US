@@ -346,7 +346,7 @@
         "heading": "Shop accessories",
         "layout": "carousel",
         "columns": 4,
-        "columns_mobile": 1,
+        "columns_mobile": "1",
         "card_gap": 24,
         "products_limit": 8,
         "enable_quickadd": false,
