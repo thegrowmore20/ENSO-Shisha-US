@@ -1257,6 +1257,10 @@
         "heading": {
           "label": "Heading"
         },
+        "handle": {
+          "label": "Instagram handle",
+          "info": "Shown in the reel popup (e.g. enso.future)"
+        },
         "cta_label": {
           "label": "Button label"
         },
@@ -1278,6 +1282,15 @@
             },
             "link": {
               "label": "Instagram post link"
+            },
+            "like_count": {
+              "label": "Like count"
+            },
+            "comment_count": {
+              "label": "Comment count"
+            },
+            "caption": {
+              "label": "Caption"
             }
           }
         }

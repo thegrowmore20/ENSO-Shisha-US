@@ -1,6 +1,7 @@
 {%- liquid
   assign scheme_class = 'color-surface'
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
+  assign ig_handle = section.settings.handle | default: 'enso.future'
 -%}
 
 <instagram-reels class="instagram-reels {{ scheme_class }} section-padding">
@@ -29,93 +30,130 @@
     </div>
 
     <div class="instagram-reels__track">
-    <div class="instagram-reels__grid">
-      {%- for block in section.blocks -%}
-        {%- liquid
-          assign has_video = false
-          if block.settings.video and block.settings.video.sources.size > 0
-            assign has_video = true
-          endif
-        -%}
-        <a href="{{ block.settings.link | default: '#' }}"
-           class="reel"
-           data-igp="{{ forloop.index0 }}"
-           data-ig-link="{{ block.settings.link | escape }}"
-           {%- for source in block.settings.video.sources -%}
-             {%- if source.format == 'mp4' -%}data-ig-video="{{ source.url }}"{%- endif -%}
-           {%- endfor -%}
-           aria-label="Open Instagram reel"
-           {{ block.shopify_attributes }}>
-          <div class="reel__media">
-            {%- if block.settings.thumbnail -%}
-              <img
-                src="{{ block.settings.thumbnail | image_url: width: 500 }}"
-                alt="{{ block.settings.thumbnail.alt | escape }}"
-                width="{{ block.settings.thumbnail.width }}"
-                height="{{ block.settings.thumbnail.height }}"
-                loading="lazy"
-                class="reel__poster"
-              >
-            {%- else -%}
-              <img
-                src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Screenshot_2026-09-21_111535-removebg-preview.png?v=1789971478"
-                alt=""
-                loading="lazy"
-                class="reel__poster"
-              >
-            {%- endif -%}
+      <div class="instagram-reels__grid">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign has_video = false
+            if block.settings.video and block.settings.video.sources.size > 0
+              assign has_video = true
+            endif
+          -%}
+          <a href="{{ block.settings.link | default: '#' }}"
+             class="reel"
+             data-igp="{{ forloop.index0 }}"
+             data-ig-link="{{ block.settings.link | escape }}"
+             data-ig-likes="{{ block.settings.like_count | default: '' }}"
+             data-ig-comments="{{ block.settings.comment_count | default: '' }}"
+             data-ig-caption="{{ block.settings.caption | escape }}"
+             {%- for source in block.settings.video.sources -%}
+               {%- if source.format == 'mp4' -%}data-ig-video="{{ source.url }}"{%- endif -%}
+             {%- endfor -%}
+             aria-label="Open Instagram reel"
+             {{ block.shopify_attributes }}>
+            <div class="reel__media">
+              {%- if block.settings.thumbnail -%}
+                <img
+                  src="{{ block.settings.thumbnail | image_url: width: 500 }}"
+                  alt="{{ block.settings.thumbnail.alt | escape }}"
+                  width="{{ block.settings.thumbnail.width }}"
+                  height="{{ block.settings.thumbnail.height }}"
+                  loading="lazy"
+                  class="reel__poster"
+                >
+              {%- else -%}
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Screenshot_2026-09-21_111535-removebg-preview.png?v=1789971478"
+                  alt=""
+                  loading="lazy"
+                  class="reel__poster"
+                >
+              {%- endif -%}
 
-            {%- if has_video -%}
-              <template data-video-template>
-                <video class="reel__video" muted loop playsinline preload="none">
-                  {%- for source in block.settings.video.sources -%}
-                    {%- if source.format == 'mp4' -%}
-                      <source src="{{ source.url }}" type="{{ source.mime_type }}">
-                    {%- endif -%}
-                  {%- endfor -%}
-                </video>
-              </template>
-            {%- endif -%}
+              {%- if has_video -%}
+                <template data-video-template>
+                  <video class="reel__video" muted loop playsinline preload="none">
+                    {%- for source in block.settings.video.sources -%}
+                      {%- if source.format == 'mp4' -%}
+                        <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </video>
+                </template>
+              {%- endif -%}
 
-            <span class="reel__play">{%- render 'icon-play' -%}</span>
-          </div>
-        </a>
-      {%- endfor -%}
-    </div>
-    <div class="igr-nav">
-      <button class="igr-nav__btn" data-igr-prev aria-label="Previous posts">&#x2039;</button>
-      <button class="igr-nav__btn" data-igr-next aria-label="Next posts">&#x203a;</button>
-    </div>
+              <span class="reel__play">{%- render 'icon-play' -%}</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+      <div class="igr-nav">
+        <button class="igr-nav__btn" data-igr-prev aria-label="Previous posts">&#x2039;</button>
+        <button class="igr-nav__btn" data-igr-next aria-label="Next posts">&#x203a;</button>
+      </div>
     </div>
   </div>
 
+  <!-- Lightbox -->
   <div class="igv" id="igv-{{ section.id }}" hidden role="dialog" aria-modal="true" aria-label="Instagram reel">
     <div class="igv__backdrop"></div>
+
+    <!-- Close — top-right of viewport -->
+    <button class="igv__close" data-ig-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    <!-- Navigation — flanking the card in the backdrop -->
+    <button class="igv__arr igv__arr--l" data-ig-prev aria-label="Previous reel">&#x2039;</button>
+    <button class="igv__arr igv__arr--r" data-ig-next aria-label="Next reel">&#x203a;</button>
+
     <div class="igv__card">
+
+      <!-- Profile header — overlaid at top of video -->
       <div class="igv__top">
-        <div class="igv__profile">
-          <svg class="igv__ig-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
-          </svg>
-          <span class="igv__handle">{{ section.settings.cta_label | default: '@enso.future' | remove: ' ›' }}</span>
+        <div class="igv__av" aria-hidden="true">
+          {%- if settings.logo != blank -%}
+            <img src="{{ settings.logo | image_url: width: 52 }}" alt="" width="26" height="26" loading="eager">
+          {%- else -%}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+            </svg>
+          {%- endif -%}
         </div>
-        <a class="igv__view-link" href="#" target="_blank" rel="noopener" data-ig-href>View on Instagram ›</a>
+        <span class="igv__handle">{{ ig_handle | escape }}</span>
+        <a class="igv__view-link" href="#" target="_blank" rel="noopener" data-ig-href>View post</a>
       </div>
+
+      <!-- Video -->
       <div class="igv__media">
         <video class="igv__video" muted playsinline preload="none" loop></video>
       </div>
-      <button class="igv__prev" data-ig-prev aria-label="Previous reel">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="igv__next" data-ig-next aria-label="Next reel">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+
+      <!-- Footer — overlaid at bottom of video -->
+      <div class="igv__foot">
+        <span class="igv__stat igv__stat--likes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M12 21c0 0-7.5-4.6-9.5-9.3C1 8 3.6 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.6 0 6.2 3.5 4.7 7.2C19.5 16.4 12 21 12 21z"/>
+          </svg>
+          <span data-ig-likes-count></span>
+        </span>
+        <span class="igv__stat igv__stat--comments">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/>
+          </svg>
+          <span data-ig-comments-count></span>
+        </span>
+        <button class="igv__snd" type="button" aria-label="Sound on" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9H4z"/>
+            <path class="igv__mute-lines" d="M17 9l4 6M21 9l-4 6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <p class="igv__cap" data-ig-caption></p>
+      </div>
+
     </div>
-    <button class="igv__close" data-ig-close aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
   </div>
 </instagram-reels>
 
@@ -243,15 +281,6 @@
     transform: scale(1.06);
   }
 
-  .reel__placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: auto;
-  }
-
   .reel__media::after {
     content: '';
     position: absolute;
@@ -325,39 +354,72 @@
   .igv__backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(10, 10, 10, 0.88);
+    background: rgba(10, 10, 10, 0.85);
     cursor: pointer;
   }
 
+  /* Card */
   .igv__card {
     position: relative;
     z-index: 1;
-    width: min(360px, 90vw);
-    border-radius: 18px;
+    width: min(446px, 92vw);
+    aspect-ratio: 9 / 16;
+    max-height: 88vh;
+    border-radius: 22px;
     overflow: hidden;
-    background: #0a0a0a;
+    background: #111;
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
   }
 
+  /* Media fills the card */
+  .igv__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .igv__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Profile header — overlaid top */
   .igv__top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: rgba(10, 10, 10, 0.9);
+    gap: 10px;
+    padding: 18px 20px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
   }
 
-  .igv__profile {
+  .igv__av {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #fff;
     display: flex;
     align-items: center;
-    gap: 8px;
-  }
-
-  .igv__ig-icon {
-    width: 22px;
-    height: 22px;
-    color: #fff;
+    justify-content: center;
+    overflow: hidden;
     flex-shrink: 0;
+  }
+
+  .igv__av img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .igv__av svg {
+    width: 18px;
+    height: 18px;
+    color: #111;
   }
 
   .igv__handle {
@@ -365,72 +427,102 @@
     font-size: 13px;
     font-weight: var(--font-weight-semibold);
     color: #fff;
+    flex: 1;
   }
 
   .igv__view-link {
     font-family: var(--font-body);
     font-size: 13px;
     font-weight: var(--font-weight-semibold);
-    color: var(--palette-sand, #c8943a);
+    color: #fff;
     text-decoration: none;
     white-space: nowrap;
+    margin-left: auto;
   }
 
   .igv__view-link:hover {
     text-decoration: underline;
   }
 
-  .igv__media {
-    aspect-ratio: 9 / 16;
-    background: #000;
-    position: relative;
-  }
-
-  .igv__video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-
-  .igv__prev,
-  .igv__next {
+  /* Footer — overlaid bottom */
+  .igv__foot {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 2;
-    width: 40px;
-    height: 40px;
+    padding: 44px 20px 22px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 100%);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .igv__stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    color: #fff;
+  }
+
+  .igv__stat svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Mute button */
+  .igv__snd {
+    margin-left: auto;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
     border: none;
-    cursor: pointer;
+    background: rgba(0, 0, 0, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     color: #fff;
-    transition: background 0.2s ease;
+    flex-shrink: 0;
   }
 
-  .igv__prev:hover,
-  .igv__next:hover {
-    background: rgba(255, 255, 255, 0.3);
+  .igv__snd:hover {
+    background: rgba(0, 0, 0, 0.65);
   }
 
-  .igv__prev { left: 8px; }
-  .igv__next { right: 8px; }
-
-  .igv__prev svg,
-  .igv__next svg {
+  .igv__snd svg {
     width: 20px;
     height: 20px;
   }
 
+  .igv__snd.is-on .igv__mute-lines {
+    display: none;
+  }
+
+  /* Caption */
+  .igv__cap {
+    flex-basis: 100%;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Close button */
   .igv__close {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9001;
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 9002;
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -452,6 +544,62 @@
     width: 20px;
     height: 20px;
   }
+
+  /* Navigation arrows — outside the card */
+  .igv__arr {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9001;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    font-family: inherit;
+    padding: 0;
+  }
+
+  .igv__arr:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .igv__arr--l {
+    left: max(12px, calc(50% - 270px));
+  }
+
+  .igv__arr--r {
+    right: max(12px, calc(50% - 270px));
+  }
+
+  /* Focus rings */
+  .igv__close:focus-visible,
+  .igv__arr:focus-visible,
+  .igv__snd:focus-visible,
+  .igv__view-link:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .igv__arr {
+      top: auto;
+      bottom: 18px;
+      transform: none;
+    }
+
+    .igv__card {
+      max-height: 82vh;
+    }
+  }
 {% endstylesheet %}
 
 {% javascript %}
@@ -461,6 +609,7 @@
     #modal = null;
     #modalVideo = null;
     #modalHref = null;
+    #muted = true;
 
     connectedCallback() {
       this.#reels = [...this.querySelectorAll('a[data-igp]')];
@@ -479,6 +628,7 @@
 
       this.#initGridNav();
       this.#initDrag();
+      this.#initMute();
 
       this.#modal.querySelector('[data-ig-close]').addEventListener('click', () => this.#close());
       this.#modal.querySelector('.igv__backdrop').addEventListener('click', () => this.#close());
@@ -551,6 +701,17 @@
       window.addEventListener('mouseleave', stopDrag);
     }
 
+    #initMute() {
+      const btn = this.#modal && this.#modal.querySelector('.igv__snd');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        this.#muted = !this.#muted;
+        if (this.#modalVideo) this.#modalVideo.muted = this.#muted;
+        btn.classList.toggle('is-on', !this.#muted);
+        btn.setAttribute('aria-label', this.#muted ? 'Sound on' : 'Sound off');
+      });
+    }
+
     #open(index) {
       const reel = this.#reels[index];
       if (!reel) return;
@@ -558,12 +719,29 @@
 
       const videoSrc = reel.dataset.igVideo || '';
       const igLink = reel.dataset.igLink || '#';
+      const likes = reel.dataset.igLikes || '';
+      const comments = reel.dataset.igComments || '';
+      const caption = reel.dataset.igCaption || '';
 
       if (this.#modalHref) this.#modalHref.href = igLink;
+
+      const likesEl = this.#modal.querySelector('[data-ig-likes-count]');
+      const commentsEl = this.#modal.querySelector('[data-ig-comments-count]');
+      const captionEl = this.#modal.querySelector('[data-ig-caption]');
+      if (likesEl) likesEl.textContent = likes;
+      if (commentsEl) commentsEl.textContent = comments;
+      if (captionEl) captionEl.textContent = caption;
+
+      const sndBtn = this.#modal.querySelector('.igv__snd');
+      if (sndBtn) {
+        sndBtn.hidden = !videoSrc;
+        sndBtn.classList.toggle('is-on', !this.#muted);
+      }
 
       if (this.#modalVideo) {
         this.#modalVideo.pause();
         this.#modalVideo.src = videoSrc;
+        this.#modalVideo.muted = this.#muted;
         if (videoSrc) {
           this.#modalVideo.load();
           this.#modalVideo.play().catch(() => {});
@@ -631,6 +809,13 @@
     },
     {
       "type": "text",
+      "id": "handle",
+      "label": "t:sections.instagram_reels.settings.handle.label",
+      "default": "enso.future",
+      "info": "t:sections.instagram_reels.settings.handle.info"
+    },
+    {
+      "type": "text",
       "id": "cta_label",
       "label": "t:sections.instagram_reels.settings.cta_label.label",
       "default": "Follow @enso.future"
@@ -662,6 +847,21 @@
           "type": "url",
           "id": "link",
           "label": "t:sections.instagram_reels.blocks.reel.settings.link.label"
+        },
+        {
+          "type": "number",
+          "id": "like_count",
+          "label": "t:sections.instagram_reels.blocks.reel.settings.like_count.label"
+        },
+        {
+          "type": "number",
+          "id": "comment_count",
+          "label": "t:sections.instagram_reels.blocks.reel.settings.comment_count.label"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "t:sections.instagram_reels.blocks.reel.settings.caption.label"
         }
       ]
     }
