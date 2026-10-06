@@ -103,8 +103,6 @@
         "b_returns"
       ],
       "settings": {
-        "color_background": "#f5f5f4",
-        "color_text": "{{ settings.color_palette.foreground }}",
         "padding_top_desktop": 48,
         "padding_bottom_desktop": 48,
         "padding_top_mobile": 36,
