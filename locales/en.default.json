@@ -91,7 +91,9 @@
       "media_gallery": "Product media gallery",
       "view_media": "View media {{ index }}",
       "share": "Share",
-      "link_copied": "Link copied"
+      "link_copied": "Link copied",
+      "shop_now": "Shop now",
+      "pre_order": "Pre-order"
     }
   },
   "newsletter": {

@@ -1,32 +1,41 @@
+{%- doc -%}
+  Displays two (or more) signature product cards side by side with:
+  – a hover image that cross-fades in on desktop
+  – a swipeable horizontal strip of all images on mobile
+  – live Shopify price from the linked product
+  – no star ratings (house rule)
+
+  @param section.settings.heading  {String}  Section heading
+  @param section.settings.features {String}  Feature line (e.g. "Coal-Free · Cordless")
+  @param section.blocks[]          model blocks (see schema)
+{%- enddoc -%}
 {%- liquid
   assign scheme_class = 'color-surface'
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
 -%}
 
 {% style %}
- .section-padding-{{ section.id }} {
-      display: block;
-      padding-top: {{ section.settings.padding_top_mobile }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-      max-width: 100%;
+  .section-padding-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-padding-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
     }
-
-    @media screen and (min-width: 750px) {
-      .section-padding-{{ section.id }} {
-        padding-top: {{ section.settings.padding_top }}px;
-        padding-bottom: {{ section.settings.padding_bottom }}px;
-      }
-    }
+  }
 {% endstyle %}
 
 <section class="signature-models {{ scheme_class }} section-padding-{{ section.id }}">
   <div class="container">
+
     <div class="signature-models__header text-center">
       {%- if section.settings.eyebrow != blank -%}
-        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        <p class="eyebrow signature-models__eyebrow">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
-        <h2 class="h2">{{ section.settings.heading }}</h2>
+        <h2 class="h2 signature-models__heading">{{ section.settings.heading }}</h2>
       {%- endif -%}
       {%- if section.settings.features != blank -%}
         <p class="caption signature-models__features">{{ section.settings.features }}</p>
@@ -38,75 +47,111 @@
         {%- liquid
           assign model = block.settings.product
 
-          assign model_name = model.title | default: block.settings.name
-          assign model_image = model.featured_image
+          assign model_name = block.settings.name
+          if model_name == blank
+            assign model_name = model.title
+          endif
+
           assign model_url = model.url | default: '#'
 
-          assign model_excerpt = model.metafields.descriptors.subtitle.value
+          assign model_excerpt = block.settings.excerpt
           if model_excerpt == blank
-            assign model_excerpt = model.description | strip_html | truncatewords: 15
+            assign model_excerpt = model.metafields.descriptors.subtitle.value
           endif
           if model_excerpt == blank
-            assign model_excerpt = block.settings.excerpt
+            assign model_excerpt = model.description | strip_html | truncatewords: 18
           endif
+
+          assign primary_image = block.settings.image
+          if primary_image == blank
+            assign primary_image = model.featured_image
+          endif
+
+          assign hover_image = block.settings.hover_image
+          assign img_fit     = block.settings.image_object_fit | default: 'cover'
+          assign img_pos     = block.settings.image_object_position | default: '50% 50%'
 
           assign badge_label = block.settings.badge_label
           if badge_label == blank
-            if model.available == false and model != blank
+            if model != blank and model.available == false
               assign badge_label = 'products.product.sold_out' | t
-            elsif model.tags contains 'pre-order'
-              assign badge_label = 'Pre-Order'
-            elsif model.tags contains 'bestseller'
-              assign badge_label = 'Best Seller'
+            elsif model != blank and model.tags contains 'pre-order'
+              assign badge_label = 'products.product.pre_order' | t | default: 'Pre-order'
             endif
           endif
 
           assign cta_label = block.settings.cta_label
           if cta_label == blank
-            assign cta_label = 'products.product.choose_options' | t
+            assign cta_label = 'products.product.shop_now' | t | default: 'Shop now'
+          endif
+
+          assign is_first = false
+          if forloop.first
+            assign is_first = true
           endif
         -%}
 
         <div class="signature-model" {{ block.shopify_attributes }}>
-          <a href="{{ model_url }}" class="signature-model__media" aria-hidden="true" tabindex="-1">
+
+          {%- comment -%} Media block: desktop = single image + hover overlay; mobile = swipe strip {%- endcomment -%}
+          <a
+            href="{{ model_url }}"
+            class="signature-model__media"
+            aria-hidden="true"
+            tabindex="-1"
+          >
             {%- if badge_label != blank -%}
               <span class="badge signature-model__badge">{{ badge_label }}</span>
             {%- endif -%}
-            {%- if model_image -%}
+
+            {%- if primary_image -%}
               <img
-                src="{{ model_image | image_url: width: 1100 }}"
-                alt="{{ model_image.alt | default: model_name | escape }}"
-                width="{{ model_image.width }}"
-                height="{{ model_image.height }}"
-                loading="lazy"
+                src="{{ primary_image | image_url: width: 1100 }}"
+                srcset="
+                  {{ primary_image | image_url: width: 550 }} 550w,
+                  {{ primary_image | image_url: width: 900 }} 900w,
+                  {{ primary_image | image_url: width: 1100 }} 1100w"
+                sizes="(min-width: 750px) 45vw, 92vw"
+                alt="{{ primary_image.alt | default: model_name | escape }}"
+                width="{{ primary_image.width }}"
+                height="{{ primary_image.height }}"
+                loading="{% if is_first %}eager{% else %}lazy{% endif %}"
+                {% if is_first %}fetchpriority="high"{% endif %}
                 class="signature-model__image"
+                style="object-fit:{{ img_fit }};object-position:{{ img_pos }}"
               >
             {%- else -%}
               <div class="media-placeholder signature-model__placeholder">
                 {%- render 'icon-enso', class: 'media-placeholder__mark' -%}
               </div>
             {%- endif -%}
+
+            {%- if hover_image -%}
+              <img
+                src="{{ hover_image | image_url: width: 1100 }}"
+                alt=""
+                loading="lazy"
+                class="signature-model__image signature-model__image--hover"
+              >
+            {%- endif -%}
+
+            {%- comment -%} Additional gallery images — visible in mobile swipe strip only {%- endcomment -%}
+            {%- if block.settings.gallery_image_2 -%}
+              <img src="{{ block.settings.gallery_image_2 | image_url: width: 900 }}" alt="" loading="lazy" class="signature-model__image signature-model__image--gallery">
+            {%- endif -%}
+            {%- if block.settings.gallery_image_3 -%}
+              <img src="{{ block.settings.gallery_image_3 | image_url: width: 900 }}" alt="" loading="lazy" class="signature-model__image signature-model__image--gallery">
+            {%- endif -%}
+            {%- if block.settings.gallery_image_4 -%}
+              <img src="{{ block.settings.gallery_image_4 | image_url: width: 900 }}" alt="" loading="lazy" class="signature-model__image signature-model__image--gallery">
+            {%- endif -%}
           </a>
 
           <div class="signature-model__info">
             {%- if model_name != blank -%}
-              <h3 class="h4">
+              <h3 class="h4 signature-model__title">
                 <a href="{{ model_url }}">{{ model_name }}</a>
               </h3>
-            {%- endif -%}
-
-            {%- if model != blank -%}
-              <div class="card-product-rating"
-                aria-label="Rated {{ model.metafields.loox.avg_rating }} out of 5 based on {{ model.metafields.loox.num_reviews }} reviews">
-                <div class="loox-rating"
-                  data-pattern="[rating] ([count])"
-                  data-show-empty-stars="true"
-                  data-id="{{ model.id }}"
-                  data-rating="{{ model.metafields.loox.avg_rating }}"
-                  data-raters="{{ model.metafields.loox.num_reviews }}"
-                  data-floating-product-reviews-enabled="true">
-                </div>
-              </div>
             {%- endif -%}
 
             {%- if model != blank -%}
@@ -128,32 +173,52 @@
               {%- render 'icon-chevron', class: 'signature-model__cta-icon' -%}
             </a>
           </div>
+
         </div>
       {%- endfor -%}
     </div>
+
   </div>
 </section>
 
 {% stylesheet %}
+  /* ── Section header ─────────────────────────────────────────────── */
   .signature-models__header {
     max-width: 640px;
     margin-inline: auto;
     margin-bottom: var(--space-6);
   }
 
-  .signature-models__features {
-    margin-top: var(--space-4);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .signature-models__eyebrow {
+    margin-bottom: var(--space-3);
   }
 
+  .signature-models__heading {
+    margin-bottom: var(--space-3);
+  }
+
+  .signature-models__features {
+    margin-top: var(--space-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Grid ───────────────────────────────────────────────────────── */
   .signature-models__grid {
     align-items: start;
     gap: var(--space-7);
-    max-width: 900px;
+    max-width: 960px;
     margin-inline: auto;
   }
 
+  @media screen and (max-width: 749px) {
+    .signature-models__grid {
+      gap: var(--space-8);
+    }
+  }
+
+  /* ── Media block ────────────────────────────────────────────────── */
   .signature-model__media {
     position: relative;
     display: block;
@@ -162,56 +227,113 @@
     overflow: hidden;
     background-color: var(--color-background-raised);
     box-shadow: var(--shadow-md);
+    text-decoration: none;
   }
 
-  .signature-model__badge {
-    top: var(--space-4);
-    left: var(--space-4);
-  }
-
+  /* Primary image */
   .signature-model__image {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* overridden by inline style per card */
     transition: transform 0.7s var(--ease-out);
   }
 
-  .signature-model__media:hover .signature-model__image {
-    transform: scale(1.05);
+  .signature-model__media:hover .signature-model__image:not(.signature-model__image--hover) {
+    transform: scale(1.04);
   }
 
-  .signature-model__placeholder {
-    aspect-ratio: auto;
+  /* Hover image — cross-fade over the primary on desktop */
+  .signature-model__image--hover {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    object-fit: contain;
+    background: var(--palette-white);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    transform: none !important; /* no scale on the hover image */
   }
 
+  .signature-model__media:hover .signature-model__image--hover {
+    opacity: 1;
+  }
+
+  /* Gallery images — hidden on desktop, shown in mobile strip */
+  .signature-model__image--gallery {
+    display: none;
+  }
+
+  /* ── Mobile: horizontal swipe strip ────────────────────────────── */
+  @media screen and (max-width: 749px) {
+    .signature-model__media {
+      display: flex !important;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .signature-model__media::-webkit-scrollbar {
+      display: none;
+    }
+
+    .signature-model__media img {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: contain !important;
+      object-position: 50% 50% !important;
+      scroll-snap-align: start;
+      position: static !important;
+      opacity: 1 !important;
+      transform: none !important;
+      background: var(--palette-white);
+    }
+
+    .signature-model__image--gallery {
+      display: block;
+    }
+  }
+
+  /* ── Badge ──────────────────────────────────────────────────────── */
+  .signature-model__badge {
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .signature-model__badge {
+      display: none; /* hidden in swipe strip mode to avoid overlap */
+    }
+  }
+
+  /* ── Info ───────────────────────────────────────────────────────── */
   .signature-model__info {
     margin-top: var(--space-5);
   }
 
-  .signature-model__info .h-product {
-    font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.625rem);
-  }
-
-  .signature-model__info .h-product a {
+  .signature-model__title a {
+    text-decoration: none;
+    color: var(--color-text);
     transition: color 0.2s ease;
   }
 
-  .signature-model__info .h-product a:hover {
+  .signature-model__title a:hover {
     color: var(--color-accent);
-  }
-
-  .signature-model__info .card-product-rating {
-    margin-top: var(--space-3);
   }
 
   .signature-model__price {
     margin-top: var(--space-3);
     font-family: var(--font-accent);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-size: 18px;
     letter-spacing: -0.02em;
+    color: var(--color-text);
   }
 
   .signature-model__excerpt {
@@ -221,18 +343,33 @@
 
   .signature-model__cta {
     margin-top: var(--space-5);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
   }
 
   .signature-model__cta-icon {
     width: 12px;
     height: 12px;
     transform: rotate(-90deg);
+    flex-shrink: 0;
   }
 
-  @media screen and (max-width: 589px) {
-    .signature-models__grid {
-      gap: var(--space-8);
-    }
+  /* ── Placeholder (no image set) ─────────────────────────────────── */
+  .signature-model__placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .signature-model__placeholder .media-placeholder__mark {
+    width: 60px;
+    height: 60px;
+    opacity: 0.2;
   }
 {% endstylesheet %}
 
@@ -256,8 +393,7 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "t:sections.signature_models.settings.eyebrow.label",
-      "default": "The Collection"
+      "label": "t:sections.signature_models.settings.eyebrow.label"
     },
     {
       "type": "text",
@@ -273,32 +409,32 @@
     },
     {
       "type": "header",
-      "content": "Section spacing"
+      "content": "t:sections.all.padding.section_padding_heading"
     },
     {
       "type": "range",
       "id": "padding_top",
-      "label": "Padding top — desktop",
+      "label": "t:sections.all.padding.padding_top",
       "min": 0,
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 48
+      "default": 64
     },
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "Padding bottom — desktop",
+      "label": "t:sections.all.padding.padding_bottom",
       "min": 0,
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 48
+      "default": 64
     },
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "Padding top — mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
       "min": 0,
       "max": 80,
       "step": 4,
@@ -308,7 +444,7 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "Padding bottom — mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
       "min": 0,
       "max": 80,
       "step": 4,
@@ -328,6 +464,58 @@
           "info": "t:sections.signature_models.blocks.model.settings.product.info"
         },
         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.signature_models.blocks.model.settings.image.label",
+          "info": "t:sections.signature_models.blocks.model.settings.image.info"
+        },
+        {
+          "type": "select",
+          "id": "image_object_fit",
+          "label": "t:sections.signature_models.blocks.model.settings.image_object_fit.label",
+          "options": [
+            { "value": "cover", "label": "t:sections.signature_models.blocks.model.settings.image_object_fit.options.cover" },
+            { "value": "contain", "label": "t:sections.signature_models.blocks.model.settings.image_object_fit.options.contain" }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "text",
+          "id": "image_object_position",
+          "label": "t:sections.signature_models.blocks.model.settings.image_object_position.label",
+          "info": "t:sections.signature_models.blocks.model.settings.image_object_position.info",
+          "default": "50% 50%"
+        },
+        {
+          "type": "image_picker",
+          "id": "hover_image",
+          "label": "t:sections.signature_models.blocks.model.settings.hover_image.label",
+          "info": "t:sections.signature_models.blocks.model.settings.hover_image.info"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.signature_models.blocks.model.headers.gallery"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_image_2",
+          "label": "t:sections.signature_models.blocks.model.settings.gallery_image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_image_3",
+          "label": "t:sections.signature_models.blocks.model.settings.gallery_image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_image_4",
+          "label": "t:sections.signature_models.blocks.model.settings.gallery_image.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.signature_models.blocks.model.headers.card_text"
+        },
+        {
           "type": "text",
           "id": "badge_label",
           "label": "t:sections.signature_models.blocks.model.settings.badge_label.label",
@@ -337,7 +525,7 @@
           "type": "text",
           "id": "cta_label",
           "label": "t:sections.signature_models.blocks.model.settings.cta_label.label",
-          "default": "Shop Now"
+          "default": "Shop now"
         },
         {
           "type": "header",
@@ -362,8 +550,20 @@
     {
       "name": "t:sections.signature_models.presets.name",
       "blocks": [
-        { "type": "model", "settings": { "name": "ENSŌ", "cta_label": "Shop ENSŌ" } },
-        { "type": "model", "settings": { "name": "DIAMOND", "cta_label": "Pre-Order DIAMOND" } }
+        {
+          "type": "model",
+          "settings": {
+            "name": "ENSŌ Shisha 2026 Edition",
+            "cta_label": "Shop ENSŌ"
+          }
+        },
+        {
+          "type": "model",
+          "settings": {
+            "name": "ENSŌ Diamond",
+            "cta_label": "Pre-order Diamond"
+          }
+        }
       ]
     }
   ]

@@ -39,9 +39,44 @@
         "autoplay_interval": 9000,
         "video_quality": "720"
       }
+    },
+    "models": {
+      "type": "signature-models",
+      "blocks": {
+        "enso": {
+          "type": "model",
+          "settings": {
+            "product": "shopify://products/enso",
+            "image_object_fit": "cover",
+            "image_object_position": "50% 55%",
+            "cta_label": "Shop ENSŌ"
+          }
+        },
+        "diamond": {
+          "type": "model",
+          "settings": {
+            "product": "shopify://products/enso-diamond-pre-order",
+            "image_object_fit": "contain",
+            "cta_label": "Pre-order Diamond"
+          }
+        }
+      },
+      "block_order": [
+        "enso",
+        "diamond"
+      ],
+      "settings": {
+        "heading": "Shop signature models",
+        "features": "Coal-Free · Cordless · Magnetic",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
     }
   },
   "order": [
-    "hero"
+    "hero",
+    "models"
   ]
 }

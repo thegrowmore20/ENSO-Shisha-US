@@ -656,6 +656,13 @@
       },
       "remove_bottom_spacing": {
         "label": "Remove bottom spacing"
+      },
+      "padding": {
+        "section_padding_heading": "Section spacing",
+        "padding_top": "Padding top — desktop",
+        "padding_bottom": "Padding bottom — desktop",
+        "padding_top_mobile": "Padding top — mobile",
+        "padding_bottom_mobile": "Padding bottom — mobile"
       }
     },
     "header": {
@@ -1066,56 +1073,67 @@
     "signature_models": {
       "name": "Signature models",
       "settings": {
-        "color_scheme": {
-          "label": "Color scheme"
-        },
         "eyebrow": {
-          "label": "Eyebrow label"
+          "label": "Eyebrow"
         },
         "heading": {
           "label": "Heading"
         },
         "features": {
-          "label": "Feature line"
+          "label": "Feature line",
+          "info": "Short bullet list, e.g. Coal-Free · Cordless"
         }
       },
       "blocks": {
         "model": {
           "name": "Model",
+          "headers": {
+            "gallery": "Mobile gallery",
+            "card_text": "Card text",
+            "fallback": "Fallback (when no product is selected)"
+          },
           "settings": {
             "product": {
               "label": "Product",
-              "info": "When set, the fields below act as overrides."
+              "info": "Drives the title, price and URL automatically."
             },
             "image": {
-              "label": "Image",
-              "info": "Overrides the product's featured image"
+              "label": "Primary image",
+              "info": "Overrides the product's featured image."
             },
-            "name": {
-              "label": "Name",
-              "info": "Overrides the product title"
+            "image_object_fit": {
+              "label": "Image fit",
+              "options": {
+                "cover": "Fill (cover)",
+                "contain": "Fit inside (contain)"
+              }
+            },
+            "image_object_position": {
+              "label": "Image position",
+              "info": "CSS value, e.g. 50% 55% or center top"
+            },
+            "hover_image": {
+              "label": "Hover image",
+              "info": "Second image that cross-fades in on hover (desktop)."
+            },
+            "gallery_image": {
+              "label": "Gallery image"
             },
             "badge_label": {
-              "label": "Badge label",
-              "info": "e.g. Pre-Order, Best Seller"
-            },
-            "rating": {
-              "label": "Rating",
-              "info": "Set to 0 to hide the star rating"
-            },
-            "review_count": {
-              "label": "Review count label"
-            },
-            "excerpt": {
-              "label": "Excerpt",
-              "info": "Used only if the product has no subtitle metafield or description, or if no product is selected."
+              "label": "Badge",
+              "info": "e.g. Pre-order, Best Seller. Leave blank to auto-detect."
             },
             "cta_label": {
               "label": "Button label"
+            },
+            "name": {
+              "label": "Name",
+              "info": "Overrides the product title."
+            },
+            "excerpt": {
+              "label": "Excerpt",
+              "info": "Short description shown below the price."
             }
-          },
-          "headers": {
-            "fallback": "Fallback (when no product is selected)"
           }
         }
       },
