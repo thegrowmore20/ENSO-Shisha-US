@@ -98,9 +98,9 @@
         "heading": "Shop signature models",
         "features": "Coal-Free · Cordless · Magnetic",
         "padding_top": 80,
-        "padding_bottom": 40,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 20
+        "padding_bottom_mobile": 40
       }
     },
     "usps": {
@@ -227,9 +227,55 @@
         "heading": "Made for the ritual",
         "lead": "What ENSŌ is built on",
         "padding_top": 40,
-        "padding_bottom": 80,
+        "padding_bottom": 40,
         "padding_top_mobile": 20,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 20
+      }
+    },
+    "enso_safety": {
+      "type": "enso-safety",
+      "blocks": {
+        "safety_1": {
+          "type": "card",
+          "settings": {
+            "icon": "no-flame",
+            "title": "No flame, no coals",
+            "body": "ENSŌ heats electrically. No charcoal to light, no embers on the table, nothing burning in the room."
+          }
+        },
+        "safety_2": {
+          "type": "card",
+          "settings": {
+            "icon": "thermometer",
+            "title": "Heat held to the degree",
+            "body": "Every ENSŌ holds the temperature you set for the whole session, so the tobacco warms instead of burning."
+          }
+        },
+        "safety_3": {
+          "type": "card",
+          "settings": {
+            "icon": "battery",
+            "title": "Protected batteries",
+            "body": "Guarded against over-charge, over-discharge and over-temperature. Charging stops on its own when the battery is full."
+          }
+        },
+        "safety_4": {
+          "type": "card",
+          "settings": {
+            "icon": "shield",
+            "title": "Certified for the EU and the US",
+            "body": "CE and RoHS in Europe, FCC in the US, UN 38.3 transport tests for the batteries. The declarations are in ENSŌ Experience, under Warranty."
+          }
+        }
+      },
+      "block_order": ["safety_1", "safety_2", "safety_3", "safety_4"],
+      "settings": {
+        "heading": "Safety and certification",
+        "lead": "One standard for every ENSŌ device",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
       }
     }
   },
@@ -238,6 +284,7 @@
     "models",
     "usps",
     "enso_system_video",
-    "enso_phil"
+    "enso_phil",
+    "enso_safety"
   ]
 }

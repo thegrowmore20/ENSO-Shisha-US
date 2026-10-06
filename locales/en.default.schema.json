@@ -1808,6 +1808,39 @@
       "presets": {
         "name": "Philosophy accordion"
       }
+    },
+    "enso_safety": {
+      "name": "Safety and certification",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "lead": { "label": "Lead text" },
+        "padding_header": { "content": "Padding" },
+        "padding_top": { "label": "Top (desktop)" },
+        "padding_bottom": { "label": "Bottom (desktop)" },
+        "padding_top_mobile": { "label": "Top (mobile)" },
+        "padding_bottom_mobile": { "label": "Bottom (mobile)" }
+      },
+      "blocks": {
+        "card": {
+          "name": "Card",
+          "settings": {
+            "icon": {
+              "label": "Icon",
+              "options": {
+                "no_flame": "No flame",
+                "thermometer": "Thermometer",
+                "battery": "Battery",
+                "shield": "Shield"
+              }
+            },
+            "title": { "label": "Title" },
+            "body": { "label": "Body" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Safety and certification"
+      }
     }
   }
 }
