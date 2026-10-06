@@ -338,6 +338,89 @@
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 48
       }
+    },
+    "shop_accessories": {
+      "type": "shop-accessories",
+      "settings": {
+        "collection": "accessories",
+        "heading": "Shop accessories",
+        "layout": "carousel",
+        "columns": 4,
+        "columns_mobile": 1,
+        "card_gap": 24,
+        "products_limit": 8,
+        "enable_quickadd": false,
+        "cta_label": "View all",
+        "cta_link": "shopify://collections/accessories",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "enso_experience": {
+      "type": "split-showcase",
+      "blocks": {
+        "exp_slide": {
+          "type": "column",
+          "settings": {
+            "heading": "ENSŌ Experience",
+            "heading_color": "#ffffff",
+            "subheading": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
+            "button": "Open ENSŌ Experience",
+            "button_url": "/pages/experience"
+          }
+        }
+      },
+      "block_order": ["exp_slide"],
+      "settings": {
+        "width": "full",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "height_desktop": "large",
+        "height_tablet": "medium",
+        "height_mobile": "small",
+        "content_alignment": "center",
+        "content_width_desktop": 600,
+        "content_width_tablet": 500,
+        "content_width_mobile": 0,
+        "heading_size_desktop": 32,
+        "heading_size_mobile": 24,
+        "overlay_color": "#000000",
+        "overlay_opacity": 45,
+        "image_gap": 0
+      }
+    },
+    "instagram_feed": {
+      "type": "instagram-reels",
+      "blocks": {
+        "ig_1": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DP9sfM5kuZF/" } },
+        "ig_2": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DOrXNJAABsP/" } },
+        "ig_3": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DQ2FWgpk4uE/" } },
+        "ig_4": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DbIk6PkAwMD/" } },
+        "ig_5": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DYfENJns2FF/" } },
+        "ig_6": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DYKAPc0An7P/" } }
+      },
+      "block_order": ["ig_1", "ig_2", "ig_3", "ig_4", "ig_5", "ig_6"],
+      "settings": {
+        "heading": "Follow us on Instagram",
+        "cta_label": "@enso.future",
+        "cta_link": "https://instagram.com/enso.future"
+      }
+    },
+    "journal": {
+      "type": "blog-posts",
+      "settings": {
+        "blog": "journal",
+        "heading": "From the journal",
+        "posts_limit": 3,
+        "cta_label": "All articles",
+        "cta_link": "shopify://blogs/journal",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
     }
   },
   "order": [
@@ -348,6 +431,10 @@
     "enso_phil",
     "enso_safety",
     "enso_diamond_row",
-    "enso_awards"
+    "enso_awards",
+    "shop_accessories",
+    "enso_experience",
+    "instagram_feed",
+    "journal"
   ]
 }
