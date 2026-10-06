@@ -1796,18 +1796,6 @@
             "title": { "label": "Title" },
             "body": { "label": "Body" },
             "image": { "label": "Image" },
-            "image_position": {
-              "label": "Image position",
-              "info": "CSS object-position, e.g. 50% 45%"
-            },
-            "image_scale": {
-              "label": "Image zoom",
-              "info": "Use 135% for the cup close-up"
-            },
-            "image_scale_origin": {
-              "label": "Zoom origin",
-              "info": "CSS transform-origin, e.g. 52% 58%"
-            },
             "video": {
               "label": "Video",
               "info": "Replaces the image when this item is active"

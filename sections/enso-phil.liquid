@@ -2,10 +2,7 @@
   Philosophy accordion — "Made for the ritual".
   Two-column grid: accordion on left, switching image/video on right.
   Matches handoff section #shopify-section-enso-phil exactly.
-
-  @param section.settings.heading    Section heading
-  @param section.settings.lead       Lead paragraph below heading
-  @param section.blocks[]            Accordion items (type: item)
+  Image position/zoom are hardcoded per slot (not editor settings).
 {%- enddoc -%}
 
 {% style %}
@@ -54,19 +51,30 @@
               if block.settings.video_poster != blank
                 assign b_poster_url = block.settings.video_poster | image_url: width: 1200
               endif
-              assign b_scale = block.settings.image_scale | default: 100 | divided_by: 100.0
+              assign b_pos = '50% 50%'
+              assign b_scale = 1.0
+              assign b_origin = '50% 50%'
+              if forloop.index == 1
+                assign b_pos = '50% 45%'
+              elsif forloop.index == 2
+                assign b_pos = '52% 58%'
+                assign b_scale = 1.35
+                assign b_origin = '52% 58%'
+              endif
             -%}
             <details
               {% if forloop.first %}open{% endif %}
               data-img="{{ b_img_url }}"
-              data-pos="{{ block.settings.image_position | default: '50% 50%' }}"
+              data-pos="{{ b_pos }}"
               data-scale="{{ b_scale }}"
-              data-scale-origin="{{ block.settings.image_scale_origin | default: '50% 50%' }}"
+              data-scale-origin="{{ b_origin }}"
               {% if has_vid %}data-video="{{ b_vid_url }}" data-video-poster="{{ b_poster_url }}"{% endif %}
               {{ block.shopify_attributes }}
             >
               <summary>{{ block.settings.title | escape }}</summary>
-              <div>{{ block.settings.body }}</div>
+              <div class="enso-phil__body">
+                <div class="enso-phil__body-inner">{{ block.settings.body }}</div>
+              </div>
             </details>
           {%- endfor -%}
         </div>
@@ -92,7 +100,6 @@
             if first.settings.video_poster != blank
               assign f_poster_url = first.settings.video_poster | image_url: width: 1200
             endif
-            assign f_scale = first.settings.image_scale | default: 100 | divided_by: 100.0
           -%}
           <video
             data-phil-vid
@@ -106,7 +113,7 @@
             {% if first.settings.image != blank %}
               src="{{ first.settings.image | image_url: width: 1200 }}"
               alt="{{ first.settings.title | escape }}"
-              style="object-position: {{ first.settings.image_position | default: '50% 50%' }};{%- if f_scale != 1.0 %} transform: scale({{ f_scale }}); transform-origin: {{ first.settings.image_scale_origin | default: '50% 50%' }};{%- endif %}"
+              style="object-position: 50% 45%;"
             {% endif %}
             loading="lazy"
             {% if f_has_vid or first.settings.image == blank %}hidden{% endif %}
@@ -169,6 +176,7 @@
     font-weight: var(--font-weight-bold);
     font-size: 18px;
     line-height: 24px;
+    user-select: none;
   }
 
   .enso-phil__list summary::-webkit-details-marker { display: none; }
@@ -181,6 +189,7 @@
     line-height: 1;
     flex-shrink: 0;
     margin-left: 12px;
+    transition: color 0.2s;
   }
 
   .enso-phil__list details[open] summary::after {
@@ -188,7 +197,23 @@
     color: rgb(0 0 0 / 0.45);
   }
 
-  .enso-phil__list details > div {
+  /* Smooth open/close via grid-template-rows.
+     JS prevents default on summary click so the browser never
+     applies display:none — CSS owns the transition entirely. */
+  .enso-phil__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  details[open] .enso-phil__body {
+    grid-template-rows: 1fr;
+  }
+
+  .enso-phil__body-inner {
+    overflow: hidden;
+    min-height: 0;
     padding-bottom: 10px;
   }
 
@@ -276,22 +301,35 @@
         this.#items = [...this.querySelectorAll('.enso-phil__list details')];
 
         for (const item of this.#items) {
-          item.addEventListener('toggle', () => this.#onToggle(item));
+          const summary = item.querySelector('summary');
+          if (summary) {
+            summary.addEventListener('click', (e) => {
+              e.preventDefault();
+              this.#handleClick(item);
+            });
+          }
         }
       }
 
-      #onToggle(item) {
-        if (!item.open) {
+      #handleClick(item) {
+        if (item.open) {
+          const idx = this.#items.indexOf(item);
+          const next = this.#items[(idx + 1) % this.#items.length];
+          item.removeAttribute('open');
           if (!this.#items.some(x => x.open)) {
-            this.#items[(this.#items.indexOf(item) + 1) % this.#items.length].open = true;
+            next.setAttribute('open', '');
+            this.#updateMedia(next);
           }
-          return;
+        } else {
+          for (const x of this.#items) {
+            if (x !== item) x.removeAttribute('open');
+          }
+          item.setAttribute('open', '');
+          this.#updateMedia(item);
         }
+      }
 
-        for (const x of this.#items) {
-          if (x !== item) x.open = false;
-        }
-
+      #updateMedia(item) {
         if (!this.#img) return;
         this.#img.style.opacity = '0';
 
@@ -412,31 +450,6 @@
           "label": "t:sections.enso_phil.blocks.item.settings.image.label"
         },
         {
-          "type": "text",
-          "id": "image_position",
-          "label": "t:sections.enso_phil.blocks.item.settings.image_position.label",
-          "info": "t:sections.enso_phil.blocks.item.settings.image_position.info",
-          "default": "50% 50%"
-        },
-        {
-          "type": "range",
-          "id": "image_scale",
-          "label": "t:sections.enso_phil.blocks.item.settings.image_scale.label",
-          "info": "t:sections.enso_phil.blocks.item.settings.image_scale.info",
-          "min": 100,
-          "max": 150,
-          "step": 5,
-          "unit": "%",
-          "default": 100
-        },
-        {
-          "type": "text",
-          "id": "image_scale_origin",
-          "label": "t:sections.enso_phil.blocks.item.settings.image_scale_origin.label",
-          "info": "t:sections.enso_phil.blocks.item.settings.image_scale_origin.info",
-          "default": "50% 50%"
-        },
-        {
           "type": "video",
           "id": "video",
           "label": "t:sections.enso_phil.blocks.item.settings.video.label",
@@ -458,17 +471,14 @@
           "type": "item",
           "settings": {
             "title": "Stay in the moment",
-            "body": "<p>A hookah is an evening, not a task. No turning coals, no checking the heat, no numbers to watch.</p><p>Set it once and let it run: the temperature holds on its own for the whole session. What is left is the taste, the people around the table and the time itself, the clean moment the ritual was always about.</p>",
-            "image_position": "50% 45%"
+            "body": "<p>A hookah is an evening, not a task. No turning coals, no checking the heat, no numbers to watch.</p><p>Set it once and let it run: the temperature holds on its own for the whole session. What is left is the taste, the people around the table and the time itself, the clean moment the ritual was always about.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
             "title": "A ritual you already know",
-            "body": "<p>Nothing new to learn. You fill the cup the way you have always filled a bowl: your own tobacco, fluffed and airy or pressed and dense, a mesh on top.</p><p>No pods and no cartridges: any brand, any cut you like. The same hands and the same habit, only the coal is gone.</p>",
-            "image_scale": 135,
-            "image_scale_origin": "52% 58%"
+            "body": "<p>Nothing new to learn. You fill the cup the way you have always filled a bowl: your own tobacco, fluffed and airy or pressed and dense, a mesh on top.</p><p>No pods and no cartridges: any brand, any cut you like. The same hands and the same habit, only the coal is gone.</p>"
           }
         },
         {
