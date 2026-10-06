@@ -115,6 +115,23 @@
             loading="lazy"
             {% if f_has_vid or first.settings.image == blank %}hidden{% endif %}
           >
+          {%- liquid
+            assign show_placeholder = true
+            if f_has_vid
+              assign show_placeholder = false
+            endif
+            if first.settings.image != blank
+              assign show_placeholder = false
+            endif
+          -%}
+          <span
+            class="enso-phil__placeholder"
+            aria-hidden="true"
+            data-phil-placeholder
+            {% unless show_placeholder %}hidden{% endunless %}
+          >
+            {{ 'image-1' | placeholder_svg_tag: 'enso-phil__placeholder-svg' }}
+          </span>
         {%- endif -%}
       </div>
 
@@ -230,6 +247,26 @@
     position: relative;
   }
 
+  /* ── Placeholder (Shopify SVG, visible when no image/video) ── */
+  .enso-phil__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--palette-stone, #e8e3d8);
+  }
+
+  [data-phil-placeholder][hidden] {
+    display: none !important;
+  }
+
+  .enso-phil__placeholder-svg {
+    width: 60%;
+    height: auto;
+    opacity: 0.25;
+  }
+
   .enso-phil__media img {
     width: 100%;
     height: 100%;
@@ -290,11 +327,13 @@
     class EnsoPhill extends HTMLElement {
       #img = null;
       #vid = null;
+      #placeholder = null;
       #items = [];
 
       connectedCallback() {
         this.#img = this.querySelector('[data-phil-img]');
         this.#vid = this.querySelector('[data-phil-vid]');
+        this.#placeholder = this.querySelector('[data-phil-placeholder]');
         this.#items = [...this.querySelectorAll('.enso-phil__list details')];
 
         for (const item of this.#items) {
@@ -333,6 +372,7 @@
         setTimeout(() => {
           if (item.dataset.video) {
             this.#img.hidden = true;
+            if (this.#placeholder) this.#placeholder.hidden = true;
             if (this.#vid) {
               this.#vid.hidden = false;
               this.#vid.src = item.dataset.video;
@@ -344,9 +384,11 @@
             if (item.dataset.img) {
               this.#img.setAttribute('src', item.dataset.img);
               this.#img.hidden = false;
+              if (this.#placeholder) this.#placeholder.hidden = true;
             } else {
               this.#img.removeAttribute('src');
               this.#img.hidden = true;
+              if (this.#placeholder) this.#placeholder.hidden = false;
             }
             this.#img.style.objectPosition = item.dataset.pos || '50% 50%';
             this.#img.alt = item.querySelector('summary')?.textContent.trim() || '';
