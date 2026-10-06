@@ -1867,6 +1867,29 @@
         }
       },
       "presets": { "name": "Diamond row" }
+    },
+    "enso_awards": {
+      "name": "Awards",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "image": { "label": "Photo" },
+        "padding_header": { "content": "Padding" },
+        "padding_top": { "label": "Top (desktop)" },
+        "padding_bottom": { "label": "Bottom (desktop)" },
+        "padding_top_mobile": { "label": "Top (mobile)" },
+        "padding_bottom_mobile": { "label": "Bottom (mobile)" }
+      },
+      "blocks": {
+        "award": {
+          "name": "Award",
+          "settings": {
+            "logo": { "label": "Logo" },
+            "title": { "label": "Award name" },
+            "body": { "label": "Description" }
+          }
+        }
+      },
+      "presets": { "name": "Awards" }
     }
   }
 }

@@ -291,6 +291,33 @@
         "padding_bottom_mobile": 24
       }
     },
+    "enso_awards": {
+      "type": "enso-awards",
+      "blocks": {
+        "award_1": {
+          "type": "award",
+          "settings": {
+            "title": "Best Hookah, ShishaMesse 2025",
+            "body": "Named Best Hookah at ShishaMesse 2025 in Frankfurt: a modern alternative to the traditional setup, with clean electric heat, premium design and a refined session."
+          }
+        },
+        "award_2": {
+          "type": "award",
+          "settings": {
+            "title": "Red Dot Design Award 2026",
+            "body": "A Red Dot in Product Design, an outside confirmation of the direction the brand has held from day one: a modern, international object made around the ritual."
+          }
+        }
+      },
+      "block_order": ["award_1", "award_2"],
+      "settings": {
+        "heading": "World-class performance and design",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
     "enso_diamond_row": {
       "type": "enso-diamond-row",
       "blocks": {
@@ -320,6 +347,7 @@
     "enso_system_video",
     "enso_phil",
     "enso_safety",
-    "enso_diamond_row"
+    "enso_diamond_row",
+    "enso_awards"
   ]
 }
