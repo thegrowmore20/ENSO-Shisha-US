@@ -291,12 +291,64 @@
         "padding_bottom_mobile": 24
       }
     },
+    "enso_diamond_row": {
+      "type": "enso-diamond-row",
+      "blocks": {
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "title": "Fits your hookah",
+            "description": "Sits where the bowl sits, on the stem you already have"
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Pre-heat your way",
+            "description": "0–15 minutes and 180–320 °C, you choose both"
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "title": "Profiles",
+            "description": "Default, Phoenix, Wraith and Oracle, each in its own colour"
+          }
+        },
+        "feat_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Charge while you smoke",
+            "description": "USB-C in, the session goes on"
+          }
+        }
+      },
+      "block_order": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4"
+      ],
+      "settings": {
+        "eyebrow": "ENSŌ Diamond · Pre-order",
+        "heading": "Electric heat for the hookah you already own",
+        "cta_label": "Shop Diamond",
+        "cta_link": "shopify://products/enso-diamond-pre-order",
+        "image": "shopify://shop_images/heater-dial.webp",
+        "image_position": "50% 38%",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
     "enso_awards": {
       "type": "enso-awards",
       "blocks": {
         "award_1": {
           "type": "award",
           "settings": {
+            "logo": "shopify://shop_images/c3732052-SM_Logo-1.png",
             "title": "Best Hookah, ShishaMesse 2025",
             "body": "Named Best Hookah at ShishaMesse 2025 in Frankfurt: a modern alternative to the traditional setup, with clean electric heat, premium design and a refined session."
           }
@@ -304,35 +356,19 @@
         "award_2": {
           "type": "award",
           "settings": {
+            "logo": "shopify://shop_images/13b827ca-red-dot-logo_267589e5-2902-4976-afd4-8eae503eff58.jpg",
             "title": "Red Dot Design Award 2026",
             "body": "A Red Dot in Product Design, an outside confirmation of the direction the brand has held from day one: a modern, international object made around the ritual."
           }
         }
       },
-      "block_order": ["award_1", "award_2"],
+      "block_order": [
+        "award_1",
+        "award_2"
+      ],
       "settings": {
         "heading": "World-class performance and design",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
-      }
-    },
-    "enso_diamond_row": {
-      "type": "enso-diamond-row",
-      "blocks": {
-        "feat_1": { "type": "feature", "settings": { "title": "Fits your hookah", "description": "Sits where the bowl sits, on the stem you already have" } },
-        "feat_2": { "type": "feature", "settings": { "title": "Pre-heat your way", "description": "0–15 minutes and 180–320 °C, you choose both" } },
-        "feat_3": { "type": "feature", "settings": { "title": "Profiles", "description": "Default, Phoenix, Wraith and Oracle, each in its own colour" } },
-        "feat_4": { "type": "feature", "settings": { "title": "Charge while you smoke", "description": "USB-C in, the session goes on" } }
-      },
-      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4"],
-      "settings": {
-        "eyebrow": "ENSŌ Diamond · Pre-order",
-        "heading": "Electric heat for the hookah you already own",
-        "cta_label": "Shop Diamond",
-        "cta_link": "shopify://products/enso-diamond-pre-order",
-        "image_position": "50% 38%",
+        "image": "shopify://shop_images/award-square-m.webp",
         "padding_top": 40,
         "padding_bottom": 40,
         "padding_top_mobile": 24,
@@ -342,21 +378,25 @@
     "shop_accessories": {
       "type": "shop-accessories",
       "settings": {
-        "collection": "accessories",
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "collection": "accesories",
         "eyebrow": "",
         "heading": "Shop accessories",
         "layout": "carousel",
+        "load_more_step": 4,
         "columns": "4",
         "columns_mobile": "1",
         "card_gap": 24,
         "products_limit": 8,
         "enable_quickadd": false,
-        "cta_label": "View all",
-        "cta_link": "shopify://collections/accessories",
+        "quickadd_design": "secondary",
         "padding_top": 40,
         "padding_bottom": 40,
         "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
+        "padding_bottom_mobile": 24,
+        "cta_label": "View all",
+        "cta_link": "shopify://collections/accesories"
       }
     },
     "enso_experience": {
@@ -365,6 +405,8 @@
         "exp_slide": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/exp-tearoom_1.webp",
+            "image_mobile": "shopify://shop_images/exp-tearoom-mobile.webp",
             "heading": "ENSŌ Experience",
             "heading_color": "#ffffff",
             "subheading": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
@@ -373,14 +415,22 @@
           }
         }
       },
-      "block_order": ["exp_slide"],
+      "block_order": [
+        "exp_slide"
+      ],
       "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
         "width": "full",
+        "image_gap": 0,
         "margin_top": 0,
         "margin_bottom": 0,
         "height_desktop": "large",
+        "height_desktop_custom": 500,
         "height_tablet": "medium",
+        "height_tablet_custom": 500,
         "height_mobile": "small",
+        "height_mobile_custom": 500,
         "content_alignment": "center",
         "content_width_desktop": 600,
         "content_width_tablet": 500,
@@ -388,22 +438,109 @@
         "heading_size_desktop": 32,
         "heading_size_mobile": 24,
         "overlay_color": "#000000",
-        "overlay_opacity": 45,
-        "image_gap": 0
+        "overlay_opacity": 45
       }
     },
     "instagram_feed": {
       "type": "instagram-reels",
       "blocks": {
-        "ig_1": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DP9sfM5kuZF/" } },
-        "ig_2": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DOrXNJAABsP/" } },
-        "ig_3": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DQ2FWgpk4uE/" } },
-        "ig_4": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DbIk6PkAwMD/" } },
-        "ig_5": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DYfENJns2FF/" } },
-        "ig_6": { "type": "reel", "settings": { "link": "https://www.instagram.com/reel/DYKAPc0An7P/" } }
+        "ig_1": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-0.webp",
+            "video": "shopify://files/videos/ig-0.mp4",
+            "link": "https://www.instagram.com/reels/DP9sfM5kuZF/"
+          }
+        },
+        "ig_2": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-1.webp",
+            "video": "shopify://files/videos/ig-1.mp4",
+            "link": "https://www.instagram.com/reel/DOrXNJAABsP/"
+          }
+        },
+        "ig_3": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-2.webp",
+            "video": "shopify://files/videos/ig-2.mp4",
+            "link": "https://www.instagram.com/reel/DQ2FWgpk4uE/"
+          }
+        },
+        "ig_4": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-3.webp",
+            "video": "shopify://files/videos/ig-3.mp4",
+            "link": "https://www.instagram.com/reel/DbIk6PkAwMD/"
+          }
+        },
+        "ig_5": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-4.webp",
+            "video": "shopify://files/videos/ig-4.mp4",
+            "link": "https://www.instagram.com/reel/DYfENJns2FF/"
+          }
+        },
+        "reel_LLzUAG": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-5.webp",
+            "video": "shopify://files/videos/ig-5.mp4",
+            "link": ""
+          }
+        },
+        "reel_P3UqCd": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-6.webp",
+            "video": "shopify://files/videos/ig-6.mp4",
+            "link": ""
+          }
+        },
+        "reel_hHwWpp": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-7.webp",
+            "video": "shopify://files/videos/ig-7.mp4",
+            "link": ""
+          }
+        },
+        "reel_PEFVeR": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-8.webp",
+            "video": "shopify://files/videos/ig-8.mp4",
+            "link": ""
+          }
+        },
+        "reel_U8DcmK": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/ig-9.webp",
+            "video": "shopify://files/videos/ig-9.mp4",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["ig_1", "ig_2", "ig_3", "ig_4", "ig_5", "ig_6"],
+      "block_order": [
+        "ig_1",
+        "ig_2",
+        "ig_3",
+        "ig_4",
+        "ig_5",
+        "reel_LLzUAG",
+        "reel_P3UqCd",
+        "reel_hHwWpp",
+        "reel_PEFVeR",
+        "reel_U8DcmK"
+      ],
       "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "eyebrow": "",
         "heading": "Follow us on Instagram",
         "cta_label": "@enso.future",
         "cta_link": "https://instagram.com/enso.future"
@@ -412,7 +549,7 @@
     "journal": {
       "type": "blog-posts",
       "settings": {
-        "blog": "journal",
+        "blog": "news",
         "heading": "From the journal",
         "posts_limit": 3,
         "cta_label": "All articles",
@@ -431,8 +568,8 @@
     "enso_system_video",
     "enso_phil",
     "enso_safety",
-    "enso_awards",
     "enso_diamond_row",
+    "enso_awards",
     "shop_accessories",
     "enso_experience",
     "instagram_feed",
