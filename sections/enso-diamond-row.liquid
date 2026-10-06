@@ -17,11 +17,7 @@
 
 <div id="section-{{ section.id }}" class="enso-drow-section">
   <div class="enso-drow-section__container">
-    <a
-      class="enso-drow"
-      href="{{ section.settings.cta_link | default: '#' }}"
-      aria-label="{{ section.settings.heading | escape }}"
-    >
+    <div class="enso-drow">
       <div class="enso-drow__copy">
         {%- if section.settings.eyebrow != blank -%}
           <p class="enso-drow__eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -46,7 +42,7 @@
         {%- endif -%}
 
         {%- if section.settings.cta_label != blank -%}
-          <span class="btn btn--accent" aria-hidden="true">{{ section.settings.cta_label | escape }}</span>
+          <a class="btn btn--accent" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_label | escape }}</a>
         {%- endif -%}
       </div>
 
@@ -66,7 +62,7 @@
           {{ 'image' | placeholder_svg_tag: 'enso-drow__placeholder' }}
         {%- endif -%}
       </div>
-    </a>
+    </div>
   </div>
 </div>
 
