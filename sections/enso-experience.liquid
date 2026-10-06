@@ -47,7 +47,7 @@
           <p class="enso-exp__sub">{{ section.settings.subheading | escape }}</p>
         {%- endif -%}
         {%- if section.settings.cta_label != blank -%}
-          <a class="btn btn--primary enso-exp__btn" href="{{ section.settings.cta_link | default: '#' }}">
+          <a class="btn btn--accent enso-exp__btn" href="{{ section.settings.cta_link | default: '#' }}">
             {{ section.settings.cta_label | escape }}
           </a>
         {%- endif -%}
