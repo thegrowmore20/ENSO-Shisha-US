@@ -169,7 +169,6 @@
         "share_button_rLFP9t"
       ],
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "media_width": 55,
         "gallery_layout": "thumbnails_left",
@@ -221,7 +220,6 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 48,
         "padding_bottom": 48,
@@ -297,7 +295,6 @@
       ],
       "name": "t:sections.feature_videos.presets.name",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "Why ENSŌ Diamond",
         "heading": "A Modern Twist on a Classic Ritual",
         "width": "page",
@@ -329,8 +326,9 @@
         "slide-1"
       ],
       "settings": {
-        "color_scheme": "scheme-graphite",
-        "autoplay_interval": 6000
+        "autoplay_interval": 6000,
+        "color_background": "{{ settings.color_palette.graphite }}",
+        "color_text": "{{ settings.color_palette.cream }}"
       }
     },
     "17781581582224de0a": {
@@ -433,12 +431,12 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-paper",
         "width": "page",
         "padding_top": 56,
         "padding_bottom": 56,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 32,
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "17781584139ea65659": {
@@ -518,7 +516,6 @@
       "disabled": true,
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 48,
         "padding_bottom": 48,
@@ -558,7 +555,6 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 32,
         "padding_bottom": 0,
@@ -569,7 +565,6 @@
     "newsletter_diamond": {
       "type": "newsletter",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "heading": "Stay up to date",
         "text": "Sign up to find out more about the Diamond launch."
       }

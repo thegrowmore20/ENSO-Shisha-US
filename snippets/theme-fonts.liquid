@@ -1,0 +1,80 @@
+{%- doc -%}
+  Loads the web fonts picked in Theme settings > Typography from Shopify's
+  font CDN (no third-party font request) and preloads the two that paint
+  above the fold.
+
+  Only the weights the design uses are loaded: body 400/500/600/700,
+  accent 600/800, plus whichever weight each picker is set to. A weight the
+  chosen family doesn't offer is skipped, and a family shared by several
+  pickers is only declared once per weight.
+
+  @example
+  {% render 'theme-fonts' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign body_font = settings.type_body_font
+  assign heading_font = settings.type_heading_font
+  assign subheading_font = settings.type_subheading_font
+  assign accent_font = settings.type_accent_font
+
+  assign body_weights = '400,500,600,700' | split: ','
+  assign accent_weights = '600,800' | split: ','
+  assign loaded = ''
+-%}
+
+{%- unless body_font.system? -%}
+  {{ body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+{%- endunless -%}
+{%- unless accent_font.system? -%}
+  {{ accent_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+{%- endunless -%}
+
+{%- style -%}
+  {%- for weight in body_weights -%}
+    {%- assign face = body_font | font_modify: 'weight', weight -%}
+    {%- if face -%}
+      {%- assign key = face.family | append: '|' | append: face.weight | append: ';' -%}
+      {%- unless loaded contains key -%}
+        {{ face | font_face: font_display: 'swap' }}
+        {%- assign loaded = loaded | append: key -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- for weight in accent_weights -%}
+    {%- assign face = accent_font | font_modify: 'weight', weight -%}
+    {%- if face -%}
+      {%- assign key = face.family | append: '|' | append: face.weight | append: ';' -%}
+      {%- unless loaded contains key -%}
+        {{ face | font_face: font_display: 'swap' }}
+        {%- assign loaded = loaded | append: key -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} The exact variant each picker is set to, if not already declared above. {%- endcomment -%}
+  {%- assign key = body_font.family | append: '|' | append: body_font.weight | append: ';' -%}
+  {%- unless loaded contains key -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign loaded = loaded | append: key -%}
+  {%- endunless -%}
+
+  {%- assign key = heading_font.family | append: '|' | append: heading_font.weight | append: ';' -%}
+  {%- unless loaded contains key -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign loaded = loaded | append: key -%}
+  {%- endunless -%}
+
+  {%- assign key = subheading_font.family | append: '|' | append: subheading_font.weight | append: ';' -%}
+  {%- unless loaded contains key -%}
+    {{ subheading_font | font_face: font_display: 'swap' }}
+    {%- assign loaded = loaded | append: key -%}
+  {%- endunless -%}
+
+  {%- assign key = accent_font.family | append: '|' | append: accent_font.weight | append: ';' -%}
+  {%- unless loaded contains key -%}
+    {{ accent_font | font_face: font_display: 'swap' }}
+    {%- assign loaded = loaded | append: key -%}
+  {%- endunless -%}
+{%- endstyle -%}

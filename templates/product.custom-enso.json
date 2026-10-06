@@ -247,7 +247,6 @@
         "icon_text_block_MgRGUm"
       ],
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "media_width": 55,
         "gallery_layout": "thumbnails_left",
@@ -262,7 +261,6 @@
       "type": "product-meta-shorts",
       "name": "Product Shorts",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "metafield_namespace": "custom",
         "metafield_key": "product_short_videos",
         "heading": "Follow us on YouTube",
@@ -337,7 +335,6 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 32,
         "padding_bottom": 32,
@@ -385,7 +382,6 @@
       ],
       "name": "t:sections.feature_videos.presets.name",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "",
         "heading": "World Class Performance & Design",
         "width": "page",
@@ -429,7 +425,6 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 32,
         "padding_bottom": 64,
@@ -454,7 +449,6 @@
       "type": "hero-banner",
       "name": "Hero Banner",
       "settings": {
-        "color_scheme": "",
         "image": "shopify://shop_images/Enso-2.webp",
         "heading": "A revolutionary new way to elevate your herb experience",
         "heading_size_desktop": 36,
@@ -528,7 +522,6 @@
       ],
       "name": "t:sections.awards.presets.name",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "",
         "heading": "",
         "section_gap": 40,
@@ -545,7 +538,6 @@
       "type": "image-before-after",
       "name": "Image before/after",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "before_image": "shopify://shop_images/before_357us_web.webp",
         "after_image": "shopify://shop_images/after_420us_web.webp",
         "subheading": "Use the slider, left and right, to see",
@@ -617,7 +609,6 @@
       ],
       "name": "t:sections.feature_videos.presets.name",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "",
         "heading": "",
         "width": "page",
@@ -632,7 +623,6 @@
       "type": "shop-accessories",
       "name": "Shop accessories",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "collection": "accesories",
         "eyebrow": "Refine your Ritual with",
         "heading": "Ensō Accessories",
@@ -721,7 +711,6 @@
       "disabled": true,
       "name": "t:sections.awards.presets.name",
       "settings": {
-        "color_scheme": "scheme-paper",
         "eyebrow": "",
         "heading": "",
         "section_gap": 40,
@@ -731,7 +720,8 @@
         "padding_top": 48,
         "padding_bottom": 48,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 32,
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "image_slider_8AiJb4": {
@@ -777,7 +767,6 @@
       ],
       "name": "Image slider",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "heading": "How to Use",
         "heading_size_desktop": 36,
         "heading_size_mobile": 28,
@@ -1163,7 +1152,6 @@
       ],
       "name": "Image slider",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "heading": "User Guide",
         "heading_size_desktop": 36,
         "heading_size_mobile": 28,
@@ -1196,7 +1184,6 @@
       "type": "product-recommendations",
       "name": "Product recommendations",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "collection": "",
         "eyebrow": "",
         "heading": "Signature Models",
@@ -1272,7 +1259,6 @@
       "disabled": true,
       "name": "FAQs",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "",
         "heading": "FAQs",
         "header_alignment": "center",
@@ -1287,7 +1273,6 @@
       "type": "product-faqs",
       "name": "Product FAQs",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "Questions",
         "heading": "Before You Order"
       }

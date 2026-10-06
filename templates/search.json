@@ -12,9 +12,11 @@
     "main": {
       "type": "main-search",
       "settings": {
-        "color_scheme": "scheme-paper"
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

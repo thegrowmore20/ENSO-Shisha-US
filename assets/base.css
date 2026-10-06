@@ -13,9 +13,9 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.4;
+  font-weight: var(--font-body-weight);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
   background-color: var(--color-background);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
@@ -28,7 +28,7 @@ body {
   left: 0;
   width: 0%;
   height: 3.5px;
-  background-color: #c8943a;
+  background-color: var(--color-accent);
   z-index: 100;
   pointer-events: none;
   will-change: width;
@@ -73,48 +73,51 @@ p {
   margin: 0;
 }
 
+/* Heading scale. Sizes come from Theme settings > Typography (see
+   snippets/css-variables.liquid); the mobile values switch at 768px there. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+}
+
+.h0 {
+  font-size: var(--font-size-h0);
+  line-height: 1.05;
+}
 h1, .h1 {
-  font-size: 48px;
+  font-size: var(--font-size-h1);
 }
 h2, .h2 {
-  font-size: 36px;
+  font-size: var(--font-size-h2);
   line-height: 1.2;
 }
 h3, .h3 {
-  font-size: 30px;
+  font-size: var(--font-size-h3);
 }
 h4, .h4 {
-  font-size: 24px;
+  font-size: var(--font-size-h4);
 }
 h5, .h5 {
-  font-size: 20px;
+  font-size: var(--font-size-h5);
 }
 h6, .h6 {
-  font-size: 18px;
+  font-size: var(--font-size-h6);
 }
-@media screen and (max-width: 768px) {
-  h1, .h1 {
-    font-size: 32px;
-  }
-  h2, .h2 {
-    font-size: 28px;
-  }
-  h3, .h3 {
-    font-size: 24px;
-  }
-  h4, .h4 {
-    font-size: 20px;
-  }
-  h5, .h5 {
-    font-size: 18px;
-  }
-  h6, .h6 {
-    font-size: 16px;
-  }
+
+/* Paints a section with its own colors. The variables are the page colors
+   unless the section re-points them through snippets/surface-colors.liquid. */
+.color-surface {
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
 
@@ -277,6 +280,36 @@ h6, .h6 {
   letter-spacing: 0;
 }
 
+/* ---------- Logo (snippets/site-logo.liquid) ---------- */
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-logo__image {
+  display: block;
+  width: var(--logo-width);
+  height: auto;
+}
+
+.site-logo__inverse {
+  display: none;
+}
+
+/* On a dark background: show the inverse logo when there is one, otherwise
+   invert the default logo. */
+.site-logo--inverted:not(.site-logo--has-inverse) .site-logo__default {
+  filter: invert(1);
+}
+
+.site-logo--inverted.site-logo--has-inverse .site-logo__default {
+  display: none;
+}
+
+.site-logo--inverted.site-logo--has-inverse .site-logo__inverse {
+  display: block;
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
@@ -311,19 +344,51 @@ h6, .h6 {
   transform: scale(0.98);
 }
 
+/* Primary: the default button on light backgrounds. */
 .btn--primary {
-  
-  background-color: var(--color-accent);
+  background-color: var(--color-primary-button-background);
+  border-color: var(--color-primary-button-border);
   color: var(--color-primary-button-label);
-  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-button-hover-background);
+  border-color: var(--color-primary-button-hover-border);
   opacity: 1;
 }
-.btn--primary:hover {
-    background-color: var(--color-primary-button-background);
+
+/* Accent: the same button on dark and photo backgrounds. Sections whose
+   buttons always sit on media opt in with the modifier class or are listed
+   here. */
+.btn--accent,
+.video-hero-slider .btn,
+.split__item .btn,
+.site-footer .btn {
+  background-color: var(--color-accent-button-background);
+  border-color: var(--color-accent-button-background);
+  color: var(--color-accent-button-label);
 }
+
+.btn--accent:hover,
+.video-hero-slider .btn:hover,
+.split__item .btn:hover,
+.site-footer .btn:hover {
+  background-color: var(--color-accent-button-hover-background);
+  border-color: var(--color-accent-button-hover-background);
+  opacity: 1;
+}
+
 .btn--secondary {
   background-color: var(--color-secondary-button-background);
+  border-color: var(--color-secondary-button-border);
   color: var(--color-secondary-button-label);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-secondary-button-hover-background);
+  border-color: var(--color-secondary-button-hover-border);
+  color: var(--color-secondary-button-hover-label);
+  opacity: 1;
 }
 
 .btn--outline {
@@ -344,22 +409,27 @@ h6, .h6 {
   height: 20px;
 }
 .quick-add-button svg path {
-    stroke: #fff;
-    fill: #fff;
+  stroke: currentColor;
+  fill: currentColor;
 }
 .quick-add-button[data-loading] span:first-child,
 .quick-add-button[data-loading] svg {
   visibility: hidden;
 }
 
-/* All "Add to cart" buttons (product cards' quick-add + the PDP buy button)
-   use this fixed yellow regardless of color scheme, independent of
-   .btn--primary/.btn--secondary's scheme-driven colors used elsewhere. */
+/* "Add to cart" buttons (product cards' quick-add and the product page buy
+   button) are primary buttons. */
 .quick-add-button,
 .product-form__submit {
-  background-color: #c8943a;
-  color: #fff;
-  border-color: #c8943a;
+  background-color: var(--color-primary-button-background);
+  border-color: var(--color-primary-button-border);
+  color: var(--color-primary-button-label);
+}
+
+.quick-add-button:hover,
+.product-form__submit:hover {
+  background-color: var(--color-primary-button-hover-background);
+  opacity: 1;
 }
 
 .quick-add-button[data-loading] { position: relative; }
@@ -878,23 +948,6 @@ h6, .h6 {
   transform: scale(1.12);
 }
 
-.site-header__logo {
-    max-width: 160px;
-}
-
-.template-index header:not(.is-scrolled) .site-header__logo {
-    filter: invert(1);
-}
-header.is-scrolled {
-    border-bottom: 0 !important;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-header.site-header[data-mega-open]  .site-header__logo{
-   filter: none !important;
-}
-header {
-    border: none !important;
-}
 
 .site-header__mega {
     border: none !important;
@@ -940,13 +993,6 @@ div#comparison-table-container-6 tr:first-child th:first-child img {
 div#comparison-table-container-6 img.product-card__image.product-card__primary-image {
     object-fit: cover;
 }
-body.template-product .site-header a.site-header__logo.wordmark {
-    filter: none;
-}
-
-body.template-product .site-header {
-    box-shadow: #959da533 0 8px 24px;
-}
 .video-hero-slider__arrow--prev {
     left: calc(var(--page-margin) - 40px) !important;
 }
@@ -963,33 +1009,8 @@ button.video-hero-slider__arrow.video-hero-slider__arrow--next {
       right: 15px !important;
   }
 }
-.site-header[data-sticky=scroll_up] {
-    box-shadow: #959da533 0 8px 24px;
-}
 div[data-icon="icon_1"] img, div[data-icon="icon_2"] img {
     opacity: 0.5;
-}
-.template-index .site-header[data-sticky=scroll_up] {
-    /* box-shadow: none; */
-}
-
-.template-index .site-header[data-sticky=scroll_up] {
-    box-shadow: none;
-}
-
-.template-index .site-header[data-sticky=scroll_up].is-scrolled {
-    box-shadow: #959da533 0 8px 24px;
-}
-
-.template-index .site-header[data-sticky=scroll_up]:not(.is-scrolled) .site-header__logo {
-    filter: none;
-}
-.template-index .site-header[data-sticky=scroll_up] .site-header__bar .site-header__logo {
-    filter: invert(1);
-}
-
-.template-index .site-header[data-sticky=scroll_up].is-scrolled .site-header__bar .site-header__logo {
-    filter: none;
 }
 a.site-header__mega-view-all {
     order: 1;
@@ -1034,10 +1055,6 @@ a.btn.btn--outline:hover {
     max-width: max-content !important;
     padding: 14px 20px !important;
     margin: 10px 0px 0px !important;
-}
-a.wordmark.site-footer__logo img {
-    filter: invert(1);
-    max-width: 200px;
 }
 .price__current {
     color: #000 !important;
@@ -1121,9 +1138,6 @@ img.product-card__image.product-card__secondary-image[alt="ENSŌ Diamond Pre-Ord
 /* mobile css */
 
 @media only screen and (max-width:767px) {
-  .site-header__logo {
-    max-width: 120px;
-  }
   #shopify-section-template--27698706678073__video_hero_slider_p6YT3f .video-hero-slider__content {
     max-width: 360px !important;
   }

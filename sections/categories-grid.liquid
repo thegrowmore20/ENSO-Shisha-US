@@ -7,7 +7,8 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign scheme_class = 'color-surface'
+  render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
   assign heading_tag = section.settings.heading_html_tag
 -%}
 
@@ -207,10 +208,16 @@
   "name": "Category Grid",
   "settings": [
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.all.background_color.label",
+      "default": "{{ settings.color_palette.background }}"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.all.text_color.label",
+      "default": "{{ settings.color_palette.foreground }}"
     },
     {
       "type": "header",

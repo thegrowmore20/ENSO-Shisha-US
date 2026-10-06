@@ -17,17 +17,33 @@
       },
       "type_heading_font": {
         "label": "Heading font",
-        "info": "Montserrat carries the wordmark, product headings and buttons."
+        "info": "Default font for headings (h1 to h6), buttons and product titles."
       },
       "type_accent_font": {
-        "label": "Section heading & stat font",
-        "info": "Inter carries section headings and numerals, tracked tight."
+        "label": "Accent font",
+        "info": "Display headings, prices and numerals."
       },
       "body": {
         "content": "Body"
       },
       "type_body_font": {
-        "label": "Body font"
+        "label": "Body font",
+        "info": "Paragraphs, links, forms and navigation."
+      },
+      "headers": {
+        "fonts": "Fonts",
+        "sizes": "Sizes"
+      },
+      "type_subheading_font": {
+        "label": "Subheading font",
+        "info": "Eyebrows, labels and small uppercase headings."
+      },
+      "type_body_size": {
+        "label": "Body text size"
+      },
+      "type_heading_scale": {
+        "label": "Heading scale",
+        "info": "Scales every heading size (h0 to h6) up or down together."
       }
     },
     "colors": {
@@ -58,6 +74,47 @@
       },
       "button_label": {
         "label": "Button label"
+      },
+      "headers": {
+        "page": "Page",
+        "accent": "Accent and states",
+        "inverse": "Dark sections"
+      },
+      "color_background": {
+        "label": "Background"
+      },
+      "color_text": {
+        "label": "Text"
+      },
+      "color_text_muted": {
+        "label": "Muted text"
+      },
+      "color_surface": {
+        "label": "Raised surface",
+        "info": "Cards, tiles and light grey bands."
+      },
+      "color_border": {
+        "label": "Borders and dividers"
+      },
+      "color_accent": {
+        "label": "Accent",
+        "info": "Eyebrows, links on hover, the cart count and the scroll progress bar."
+      },
+      "color_accent_hover": {
+        "label": "Accent on hover"
+      },
+      "color_focus": {
+        "label": "Keyboard focus outline"
+      },
+      "color_error": {
+        "label": "Error messages"
+      },
+      "inverse_paragraph": "Default colors for dark sections such as the footer. Each section can still pick its own background and text color.",
+      "color_inverse_background": {
+        "label": "Background"
+      },
+      "color_inverse_text": {
+        "label": "Text"
       }
     },
     "layout": {
@@ -74,6 +131,19 @@
       },
       "tiktok": {
         "label": "TikTok"
+      },
+      "paragraph": "Links filled in here appear wherever the theme shows social icons: the footer and the mobile menu.",
+      "facebook": {
+        "label": "Facebook"
+      },
+      "youtube": {
+        "label": "YouTube"
+      },
+      "pinterest": {
+        "label": "Pinterest"
+      },
+      "x": {
+        "label": "X"
       }
     },
     "social_sharing": {
@@ -81,6 +151,133 @@
       "share_image": {
         "label": "Default share image",
         "info": "Used when a page has no image of its own. Recommended 1200 x 630px."
+      }
+    },
+    "logo": {
+      "name": "Logo and favicon",
+      "headers": {
+        "logo": "Logo",
+        "favicon": "Favicon"
+      },
+      "logo": {
+        "label": "Logo",
+        "info": "Used in the header, the mobile menu and the footer. A dark logo on a transparent background works best."
+      },
+      "logo_width": {
+        "label": "Logo width"
+      },
+      "logo_width_mobile": {
+        "label": "Logo width on mobile"
+      },
+      "logo_inverse": {
+        "label": "Logo for dark backgrounds",
+        "info": "Optional. Shown over the home page hero and in the footer. When empty, the main logo is colour-inverted there."
+      },
+      "favicon": {
+        "label": "Favicon",
+        "info": "Scaled down to 32 x 32px."
+      }
+    },
+    "buttons": {
+      "name": "Buttons",
+      "headers": {
+        "primary": "Primary button",
+        "accent": "Accent button",
+        "secondary": "Secondary button"
+      },
+      "primary_paragraph": "The default button on light backgrounds.",
+      "accent_paragraph": "The same button on dark and photo backgrounds.",
+      "background": {
+        "label": "Background"
+      },
+      "text": {
+        "label": "Text"
+      },
+      "border": {
+        "label": "Border"
+      },
+      "hover_background": {
+        "label": "Background on hover"
+      },
+      "hover_text": {
+        "label": "Text on hover"
+      }
+    },
+    "cart": {
+      "name": "Cart",
+      "cart_type": {
+        "label": "Cart type",
+        "info": "Drawer opens the cart in a side panel and keeps the shopper on the page. Page sends them to the cart page.",
+        "options": {
+          "drawer": "Drawer",
+          "page": "Page"
+        }
+      },
+      "cart_empty_button_link": {
+        "label": "Empty cart button link",
+        "info": "Where \"Continue shopping\" goes when the cart is empty. Defaults to all products."
+      },
+      "headers": {
+        "free_shipping": "Free shipping bar"
+      },
+      "free_shipping_enable": {
+        "label": "Show free shipping progress bar"
+      },
+      "free_shipping_threshold": {
+        "label": "Free shipping threshold",
+        "info": "In your store's currency, for example 75 for 75.00. Match it to your shipping rates: this bar does not change what is charged."
+      },
+      "free_shipping_message_before": {
+        "label": "Message before the threshold is reached",
+        "info": "Use [amount] for the amount still to go."
+      },
+      "free_shipping_message_after": {
+        "label": "Message once the threshold is reached"
+      },
+      "free_shipping_fill_color": {
+        "label": "Progress color"
+      },
+      "free_shipping_track_color": {
+        "label": "Track color"
+      },
+      "free_shipping_markets": {
+        "label": "Only show in these markets",
+        "info": "Optional. One market handle per line, for example eu. Leave empty to show in every market."
+      },
+      "free_shipping_countries": {
+        "label": "Only show in these countries",
+        "info": "Optional. One two-letter country code per line, for example DE. Leave empty to show in every country."
+      }
+    },
+    "badges": {
+      "name": "Badges",
+      "headers": {
+        "sold_out": "Sold out badge",
+        "sale": "Sale badge"
+      },
+      "background": {
+        "label": "Background"
+      },
+      "text": {
+        "label": "Text"
+      }
+    },
+    "product_cards": {
+      "name": "Product cards",
+      "headers": {
+        "swatches": "Swatches"
+      },
+      "enable_product_card_swatches": {
+        "label": "Show variant swatches on product cards",
+        "info": "Only appears on products that have one of the options below."
+      },
+      "swatch_color_option_name": {
+        "label": "Color option name",
+        "info": "The option name products use for color, for example Color or Colour."
+      },
+      "swatch_size_option_name": {
+        "label": "Size option name",
+        "info": "Used only when a product has no color option."
       }
     }
   },
@@ -486,10 +683,73 @@
           "label": "Color scheme"
         },
         "sticky": {
-          "label": "Sticky header"
+          "label": "Sticky header",
+          "options": {
+            "always": "Always",
+            "scroll_up": "On scroll up",
+            "none": "None"
+          }
         },
         "menu": {
           "label": "Menu"
+        },
+        "logo_paragraph": "The logo and its size are set in Theme settings > Logo and favicon.",
+        "headers": {
+          "menus": "Menus",
+          "icons": "Icons"
+        },
+        "mobile_menu": {
+          "label": "Mobile menu",
+          "info": "Optional. Shown in the mobile drawer instead of the main menu, so it can carry extra links."
+        },
+        "experience_link": {
+          "label": "Guides link",
+          "info": "Shows the book icon next to search. Leave empty to hide it."
+        },
+        "experience_label": {
+          "label": "Guides link label"
+        },
+        "show_account": {
+          "label": "Show account icon"
+        }
+      },
+      "blocks": {
+        "mega_menu": {
+          "name": "Mega menu",
+          "settings": {
+            "mega_target_item": {
+              "label": "Menu item",
+              "info": "The exact title of the main menu item this panel opens under."
+            },
+            "show_products": {
+              "label": "Show products",
+              "info": "Child links that point at a product are shown as product cards instead of text links."
+            },
+            "max_products": {
+              "label": "Products to show"
+            },
+            "view_all_text": {
+              "label": "View all link text",
+              "info": "Optional. Shown after the products."
+            },
+            "view_all_link": {
+              "label": "View all link",
+              "info": "Defaults to the menu item's own link."
+            },
+            "headers": {
+              "promo": "Promo image"
+            },
+            "image": {
+              "label": "Image"
+            },
+            "image_heading": {
+              "label": "Image heading"
+            },
+            "image_url": {
+              "label": "Image link",
+              "info": "Defaults to the menu item's own link."
+            }
+          }
         }
       }
     },
@@ -501,6 +761,21 @@
         },
         "menu": {
           "label": "Footer menu"
+        },
+        "logo_paragraph": "The logo is set in Theme settings > Logo and favicon; social links in Theme settings > Social media.",
+        "show_newsletter": {
+          "label": "Show newsletter sign-up"
+        },
+        "show_social": {
+          "label": "Show social icons",
+          "info": "Shown under the tagline."
+        },
+        "show_payment": {
+          "label": "Show payment icons"
+        },
+        "color_accent": {
+          "label": "Accent",
+          "info": "Column titles and links on hover."
         }
       },
       "blocks": {
@@ -512,6 +787,9 @@
             },
             "menu": {
               "label": "Menu"
+            },
+            "headers": {
+              "second_menu": "Second menu"
             }
           }
         },
@@ -532,6 +810,38 @@
             },
             "text": {
               "label": "Text"
+            }
+          }
+        },
+        "contact": {
+          "name": "Contact",
+          "settings": {
+            "contact_link_text": {
+              "label": "Contact link text"
+            },
+            "link": {
+              "label": "Link"
+            },
+            "open_new": {
+              "label": "Open in a new tab"
+            },
+            "headers": {
+              "whatsapp": "WhatsApp",
+              "phone": "Phone",
+              "email": "Email",
+              "location": "Location"
+            },
+            "whatsapp_number": {
+              "label": "WhatsApp number"
+            },
+            "phone_number": {
+              "label": "Phone number"
+            },
+            "email_address": {
+              "label": "Email address"
+            },
+            "location": {
+              "label": "Address"
             }
           }
         }

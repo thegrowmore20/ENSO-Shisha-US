@@ -147,7 +147,6 @@
         "accordion_bidD6a"
       ],
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "media_width": 55,
         "gallery_layout": "thumbnails_left",
@@ -196,7 +195,6 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 32,
         "padding_bottom": 32,
@@ -208,7 +206,6 @@
       "type": "product-recommendations",
       "name": "Product recommendations",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "collection": "",
         "eyebrow": "",
         "heading": "Signature Models",
@@ -231,7 +228,6 @@
       "type": "product-faqs",
       "name": "Product FAQs",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "",
         "heading": "FAQs"
       }

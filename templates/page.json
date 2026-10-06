@@ -11,9 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db"
-      }
+      "settings": {}
     }
   },
   "order": [

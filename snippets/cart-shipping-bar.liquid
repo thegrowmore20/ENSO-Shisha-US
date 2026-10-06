@@ -1,76 +1,137 @@
-{%- comment -%}
-Free shipping progress bar. Usage: {% render 'cart-shipping-bar' %}
-Reads settings.free_shipping_bar_* (theme settings) and cart.total_price
-for the current state. Self-updates on cart-change events via
-assets/cart-shipping-bar.js.
-{%- endcomment -%}
+{%- doc -%}
+  Free-shipping progress bar for the cart drawer and cart page, driven by
+  Theme settings > Cart. Shows how much is left to reach the threshold and
+  fills as the cart total grows; `assets/cart-shipping-bar.js` keeps it in
+  step with the cart without a reload.
 
-{%- if settings.free_shipping_bar_enable -%}
-	{%- liquid
-		assign threshold_cents = settings.free_shipping_bar_threshold | times: 100
-		assign remaining_cents = threshold_cents | minus: cart.total_price
-		if remaining_cents < 0
-			assign remaining_cents = 0
-		endif
-			
-		assign is_achieved = false
-		assign progress = 0
-		if threshold_cents <= 0 or cart.total_price >= threshold_cents
-		assign is_achieved = true
-		assign progress = 100
-		else
-		assign progress = cart.total_price | times: 100 | divided_by: threshold_cents
-		endif
-		
-		assign remaining_amount = remaining_cents | money
-	-%}
-			
-	<cart-shipping-bar
-		class="cart-shipping-bar"
-		data-threshold-cents="{{ threshold_cents }}"
-		data-message-below="{{ settings.free_shipping_bar_message_below }}"
-		data-message-achieved="{{ settings.free_shipping_bar_message_achieved | escape }}"
-		data-money-format="{{ shop.money_format }}"
-		style="--shipping-bar-fill-color: {{ settings.free_shipping_bar_fill_color }}; --shipping-bar-track-color: {{ settings.free_shipping_bar_track_color }};"
-	>
-		<p class="cart-shipping-bar__message" data-shipping-bar-message>
-			{%- if is_achieved -%}
-				{{ settings.free_shipping_bar_message_achieved }}
-			{%- else -%}
-				{{ settings.free_shipping_bar_message_below | replace: '[amount]', remaining_amount }}
-			{%- endif -%}
-		</p>
-		<div class="cart-shipping-bar__track">
-			<div class="cart-shipping-bar__fill" data-shipping-bar-fill style="width: {{ progress }}%;"></div>
-		</div>
-	</cart-shipping-bar>
-			
-	<script src="{{ 'cart-shipping-bar.js' | asset_url }}" defer="defer"></script>
+  Renders nothing when the bar is switched off, the threshold is not a
+  positive number, or the visitor's market or country is not on the
+  optional allow-lists.
+
+  @example
+  {% render 'cart-shipping-bar' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign show_bar = false
+  if settings.free_shipping_enable and settings.free_shipping_threshold > 0
+    assign show_bar = true
+  endif
+
+  comment
+    Optional allow-lists, one entry per line. A market handle or a country
+    ISO code must match the visitor's; an empty list allows everyone. When
+    both lists are filled, matching either one is enough.
+  endcomment
+  if show_bar
+    assign markets_raw = settings.free_shipping_markets | strip
+    assign countries_raw = settings.free_shipping_countries | strip
+
+    if markets_raw != blank or countries_raw != blank
+      assign show_bar = false
+
+      assign market_lines = markets_raw | newline_to_br | strip_newlines | split: '<br />'
+      for line in market_lines
+        assign handle = line | strip | handleize
+        if handle != blank and handle == localization.market.handle
+          assign show_bar = true
+          break
+        endif
+      endfor
+
+      assign country_lines = countries_raw | newline_to_br | strip_newlines | split: '<br />'
+      for line in country_lines
+        assign code = line | strip | upcase
+        if code != blank and code == localization.country.iso_code
+          assign show_bar = true
+          break
+        endif
+      endfor
+    endif
+  endif
+-%}
+
+{%- if show_bar -%}
+  {%- liquid
+    comment
+      The threshold is entered in the store currency, while cart.total_price
+      is in the visitor's currency. Liquid has no exchange rate, so this
+      first render assumes they match; cart-shipping-bar.js applies
+      Shopify.currency.rate as soon as it loads, which corrects the bar for
+      visitors paying in another currency.
+    endcomment
+    assign threshold_cents = settings.free_shipping_threshold | times: 100
+
+    assign remaining_cents = threshold_cents | minus: cart.total_price | at_least: 0
+    assign progress = 100
+    if remaining_cents > 0
+      assign progress = cart.total_price | times: 100.0 | divided_by: threshold_cents | round
+    endif
+    assign remaining_money = remaining_cents | money_without_trailing_zeros
+  -%}
+
+  <cart-shipping-bar
+    class="cart-shipping-bar"
+    data-threshold-cents="{{ threshold_cents }}"
+    data-message-before="{{ settings.free_shipping_message_before | escape }}"
+    data-message-after="{{ settings.free_shipping_message_after | escape }}"
+    data-currency="{{ cart.currency.iso_code }}"
+    data-locale="{{ request.locale.iso_code }}"
+    style="--shipping-bar-fill: {{ settings.free_shipping_fill_color }}; --shipping-bar-track: {{ settings.free_shipping_track_color }};"
+  >
+    <p class="cart-shipping-bar__message" data-shipping-bar-message aria-live="polite">
+      {%- if remaining_cents > 0 -%}
+        {{ settings.free_shipping_message_before | escape | replace: '[amount]', remaining_money }}
+      {%- else -%}
+        {{ settings.free_shipping_message_after | escape }}
+      {%- endif -%}
+    </p>
+    <div
+      class="cart-shipping-bar__track"
+      role="progressbar"
+      aria-label="{{ 'cart.general.free_shipping_progress' | t }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ progress }}"
+      data-shipping-bar-track
+    >
+      <div class="cart-shipping-bar__fill" data-shipping-bar-fill style="width: {{ progress }}%;"></div>
+    </div>
+  </cart-shipping-bar>
+
+  <script src="{{ 'cart-shipping-bar.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
-		
-		
-		
-<style>
-	.cart-shipping-bar {
-		display: block;
-		margin: 16px 0;
-		padding-inline: 20px
-	}
-	.cart-shipping-bar__message {
-		margin: 0 0 8px;
-		font-size: 13px;
-	}
-	.cart-shipping-bar__track {
-		width: 100%;
-		height: 6px;
-		border-radius: 999px;
-		background: var(--shipping-bar-track-color, #e5e5e5);
-		overflow: hidden;
-	}
-	.cart-shipping-bar__fill {
-		height: 100%;
-		border-radius: 999px;
-		background: var(--shipping-bar-fill-color, #000);
-		transition: width 0.4s ease;
-	}
-</style>
+
+{% stylesheet %}
+  .cart-shipping-bar {
+    display: block;
+    margin: var(--space-4) 0;
+    padding-inline: 20px;
+  }
+
+  .cart-shipping-bar__message {
+    margin: 0 0 var(--space-2);
+    font-size: 13px;
+  }
+
+  .cart-shipping-bar__track {
+    width: 100%;
+    height: 6px;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background-color: var(--shipping-bar-track, var(--color-border));
+  }
+
+  .cart-shipping-bar__fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background-color: var(--shipping-bar-fill, var(--color-accent));
+    transition: width 0.4s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cart-shipping-bar__fill {
+      transition: none;
+    }
+  }
+{% endstylesheet %}

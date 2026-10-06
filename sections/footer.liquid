@@ -1,5 +1,6 @@
 {%- liquid
-  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign scheme_class = 'color-surface'
+  render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text, accent: section.settings.color_accent
   assign current_year = 'now' | date: '%Y'
 
   assign policy_links = linklists.policies.links
@@ -8,17 +9,53 @@
   endif
 -%}
 
-<footer class="site-footer {{ scheme_class }}">
-  <div class="container section-padding">
+<div class="site-footer {{ scheme_class }}">
+  <div class="container site-footer__container">
     <div class="site-footer__top">
       <div class="site-footer__brand">
-        <a href="{{ routes.root_url }}" class="wordmark site-footer__logo">
-          <img src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Logo_text_web-01.webp?v=1790148101" />
+        <a href="{{ routes.root_url }}" class="site-footer__logo" aria-label="{{ shop.name }}">
+          {%- render 'site-logo', inverted: true, lazy: true -%}
         </a>
-        <p class="body-text text-muted site-footer__tagline">{{ 'sections.footer.tagline' | t }}</p>
+        <p class="body-text site-footer__tagline">{{ 'sections.footer.tagline' | t }}</p>
+
+        {%- if section.settings.show_newsletter -%}
+          {%- form 'customer', class: 'footer-signup', id: 'FooterSignup' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <label class="footer-signup__label" for="FooterSignupEmail">{{ 'sections.footer.newsletter.label' | t }}</label>
+            {%- if form.posted_successfully? -%}
+              <p class="footer-signup__message" role="status" tabindex="-1" autofocus>
+                {{ 'sections.footer.newsletter.success' | t }}
+              </p>
+            {%- else -%}
+              <span class="footer-signup__row">
+                <input
+                  id="FooterSignupEmail"
+                  type="email"
+                  name="contact[email]"
+                  value="{{ form.email }}"
+                  placeholder="{{ 'sections.footer.newsletter.placeholder' | t }}"
+                  autocomplete="email"
+                  autocapitalize="off"
+                  required
+                  {% if form.errors %}
+                    aria-invalid="true"
+                    aria-describedby="FooterSignupError"
+                  {% endif %}
+                >
+                <button type="submit">{{ 'sections.footer.newsletter.button' | t }}</button>
+              </span>
+              {%- if form.errors -%}
+                <p class="footer-signup__message" id="FooterSignupError" role="alert">
+                  {{ 'sections.footer.newsletter.error' | t }}
+                </p>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endform -%}
+        {%- endif -%}
+
         {%- if section.settings.show_social -%}
           <div class="site-footer__brand-social">
-            {%- render 'footer-social-icons' -%}
+            {%- render 'social-icons' -%}
           </div>
         {%- endif -%}
       </div>
@@ -29,7 +66,7 @@
             {%- case block.type -%}
               {%- when 'menu' -%}
                 {%- if block.settings.heading != blank -%}
-                  <p class="eyebrow site-footer__column-title">{{ block.settings.heading }}</p>
+                  <h2 class="eyebrow site-footer__column-title">{{ block.settings.heading }}</h2>
                 {%- endif -%}
                 <ul class="site-footer__links">
                   {%- for link in block.settings.menu.links -%}
@@ -39,7 +76,7 @@
 
                 {%- if block.settings.menu_1 != blank -%}
                   {%- if block.settings.heading_1 != blank -%}
-                    <p class="eyebrow site-footer__column-title site-footer__column-title--second">{{ block.settings.heading_1 }}</p>
+                    <h2 class="eyebrow site-footer__column-title site-footer__column-title--second">{{ block.settings.heading_1 }}</h2>
                   {%- endif -%}
                   <ul class="site-footer__links">
                     {%- for link in block.settings.menu_1.links -%}
@@ -50,7 +87,7 @@
 
               {%- when 'policies' -%}
                 {%- if block.settings.heading != blank -%}
-                  <p class="eyebrow site-footer__column-title">{{ block.settings.heading }}</p>
+                  <h2 class="eyebrow site-footer__column-title">{{ block.settings.heading }}</h2>
                 {%- endif -%}
                 <ul class="site-footer__links">
                   {%- for policy in shop.policies -%}
@@ -62,15 +99,15 @@
 
               {%- when 'text' -%}
                 {%- if block.settings.heading != blank -%}
-                  <p class="eyebrow site-footer__column-title">{{ block.settings.heading }}</p>
+                  <h2 class="eyebrow site-footer__column-title">{{ block.settings.heading }}</h2>
                 {%- endif -%}
                 {%- if block.settings.text != blank -%}
-                  <div class="body-text text-muted site-footer__text">{{ block.settings.text }}</div>
+                  <div class="body-text site-footer__text">{{ block.settings.text }}</div>
                 {%- endif -%}
 
               {%- when 'contact' -%}
                 {%- if block.settings.heading != blank -%}
-                  <p class="eyebrow site-footer__column-title">{{ block.settings.heading }}</p>
+                  <h2 class="eyebrow site-footer__column-title">{{ block.settings.heading }}</h2>
                 {%- endif -%}
                 {%- render 'contact-info',
                   contact_link: block.settings.contact_link_text,
@@ -96,20 +133,18 @@
     </div>
 
     {%- if section.settings.show_payment -%}
-      <div class="site-footer__payment-social">
-        <ul class="site-footer__payment" role="list">
-          {%- for type in shop.enabled_payment_types -%}
-            <li>{{ type | payment_type_svg_tag: class: 'site-footer__payment-icon' }}</li>
-          {%- endfor -%}
-        </ul>
-      </div>
+      <ul class="site-footer__payment" role="list">
+        {%- for type in shop.enabled_payment_types -%}
+          <li>{{ type | payment_type_svg_tag: class: 'site-footer__payment-icon' }}</li>
+        {%- endfor -%}
+      </ul>
     {%- endif -%}
 
     <hr class="hairline site-footer__divider">
 
     <div class="site-footer__bottom">
       {%- if policy_links != blank -%}
-        <nav class="site-footer__policies" aria-label="Policies">
+        <nav class="site-footer__policies" aria-label="{{ 'sections.footer.policies_label' | t }}">
           <ul role="list">
             {%- for link in policy_links -%}
               <li><a href="{{ link.url }}" class="caption footer-micro">{{ link.title }}</a></li>
@@ -119,62 +154,66 @@
       {%- endif -%}
       <p class="caption site-footer__copyright">
         &copy; {{ current_year }} <a href="{{ routes.root_url }}" class="site-footer__shop-link">{{ shop.name }}</a>
-        <a href="https://growmore.com" target="_blank" rel="noopener" class="footer-micro site-footer__credit">
-          Developed by <span class="site-footer__credit-word">GrowMore</span>
-          <span class="site-footer__credit-icon">{%- render 'icon-external-link' -%}</span>
-        </a>
       </p>
     </div>
   </div>
-</footer>
+</div>
 
-{% style %}
-  {% if section.settings.footer_bg_image != blank %}
-  footer.site-footer {
-    background-image: url('{{ section.settings.footer_bg_image | image_url: width: 1920 }}');
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
+{% stylesheet %}
+  .site-footer {
+    padding-top: 40px;
   }
-  footer.site-footer::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.34);
-    z-index: 0;
+
+  .site-footer__container {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-3);
   }
-  {% endif %}
-  footer.site-footer .container {
-    position: relative;
-    z-index: 1;
-  }
+
+  /* ---------- Top: brand column + link columns ---------- */
   .site-footer__top {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-6);
     margin-bottom: var(--space-6);
   }
 
-  @media screen and (max-width: 989px) {
+  .site-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 20px;
+  }
+
+  .site-footer__column--contact {
+    grid-column: 1 / -1;
+  }
+
+  @media screen and (min-width: 990px) {
     .site-footer__top {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(260px, 1.2fr) minmax(0, 2fr);
       gap: var(--space-7);
+    }
+
+    .site-footer__columns {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+
+    .site-footer__column--contact {
+      grid-column: auto;
     }
   }
 
   .site-footer__logo {
     display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-size: 20px;
   }
 
-  .site-footer__mark {
-    width: 26px;
-    height: 26px;
+  .site-footer__logo .site-logo__image {
+    width: 132px;
+  }
+
+  .site-footer__logo .site-logo__text {
+    font-size: 20px;
   }
 
   .site-footer__tagline {
@@ -182,36 +221,101 @@
     max-width: 32ch;
   }
 
+  /* ---------- Newsletter sign-up ---------- */
+  .footer-signup {
+    margin: 36px 0 var(--space-5);
+  }
+
+  @media screen and (min-width: 990px) {
+    .footer-signup {
+      max-width: 360px;
+    }
+  }
+
+  .footer-signup__label {
+    display: block;
+    margin-bottom: 10px;
+    font-family: var(--font-subheading);
+    font-weight: var(--font-weight-semibold);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--palette-sand);
+  }
+
+  .footer-signup__row {
+    display: flex;
+    height: 44px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);
+    border-radius: var(--radius-pill);
+    background-color: color-mix(in srgb, var(--color-text) 4%, transparent);
+  }
+
+  .footer-signup__row:focus-within {
+    border-color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  }
+
+  .footer-signup__row input {
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--space-4);
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--color-text);
+    font-size: 14px;
+  }
+
+  .footer-signup__row input::placeholder {
+    color: color-mix(in srgb, var(--color-text) 50%, transparent);
+  }
+
+  .footer-signup__row button {
+    flex: none;
+    margin: 4px;
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-text);
+    color: var(--color-background);
+    font-weight: var(--font-weight-bold);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: opacity 0.15s ease;
+  }
+
+  .footer-signup__row button:hover {
+    opacity: 0.88;
+  }
+
+  .footer-signup__row button:focus-visible {
+    outline: 2px solid var(--palette-sand);
+    outline-offset: 2px;
+  }
+
+  .footer-signup__message {
+    margin-top: var(--space-2);
+    font-size: 13px;
+    color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  }
+
   .site-footer__brand-social {
     margin-top: var(--space-5);
   }
 
-  .site-footer__columns {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: var(--space-6);
-  }
-
-  @media screen and (max-width: 749px) {
-    .site-footer__columns {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .site-footer__column--contact {
-      grid-column: 1 / -1;
-    }
-  }
-
-  .site-footer__column-title {
-    margin-bottom: var(--space-4);
+  /* ---------- Link columns ---------- */
+  .site-footer__column .eyebrow.site-footer__column-title {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-subheading);
+    font-weight: var(--font-weight-medium);
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--color-accent);
   }
 
   .site-footer__column-title--second {
     margin-top: var(--space-6);
-  }
-
-  .site-footer__column .eyebrow.site-footer__column-title {
-    font-size: 18px;
   }
 
   .site-footer__links {
@@ -226,12 +330,13 @@
   }
 
   .site-footer__link:hover {
+    color: var(--color-accent);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  .site-footer__link:hover {
-    color: var(--color-accent);
+  .site-footer__text {
+    color: var(--color-text-muted);
   }
 
   /* contact-info.liquid's own markup (snippets/contact-info.liquid) */
@@ -240,12 +345,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-4);
-    list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
   .contact-info-wrapper .contact-link {
+    display: flex;
     align-items: flex-start;
     gap: var(--space-3);
     color: var(--color-text);
@@ -255,25 +358,26 @@
   .contact-info-wrapper .contact-link:hover {
     color: var(--color-accent);
   }
+
   .contact-info-wrapper .contact-link:hover .contact-info-item {
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  /* icon-whatsapp/phone/email-address/location have no width/height of
-     their own, so an unstyled render blows up to the browser's 300x150
-     default replaced-element size. */
+  /* The contact icons have no size of their own and hardcode a white fill
+     or stroke instead of currentColor, so both are set here. */
   .contact-info-wrapper svg {
+    flex-shrink: 0;
     width: 16px;
     height: 16px;
     margin-top: 5px;
+    transition: transform 0.2s ease;
   }
 
-  /* Those same icons hardcode fill:#fff (or, for external-link, a literal
-     stroke="#ffffff" attribute) instead of using currentColor, so the text
-     color change above doesn't carry over to the icon on hover — override
-     both explicitly. CSS beats an SVG presentation attribute, so this wins
-     over external-link's inline stroke without !important. */
+  .contact-info-wrapper .contact-link:hover svg {
+    transform: scale(1.1);
+  }
+
   .contact-info-wrapper .contact-link:hover svg .st0 {
     fill: var(--color-accent);
   }
@@ -282,33 +386,14 @@
     stroke: var(--color-accent);
   }
 
-  footer.site-footer .section-padding {
-    padding-bottom: var(--space-3);
-  }
-
-  @media screen and (max-width: 749px) {
-    footer.site-footer .section-padding {
-      padding-bottom: var(--space-4);
-    }
-  }
-
-  /* Payment icons are the only thing in this row now that social icons
-     live under the tagline instead — always centered. */
-  .site-footer__payment-social {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-4);
-    margin-top: var(--space-3);
-  }
-
+  /* ---------- Payment icons ---------- */
   .site-footer__payment {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
+    margin-top: var(--space-3);
   }
 
   .site-footer__payment-icon {
@@ -317,33 +402,10 @@
     height: 20px;
   }
 
-  .footer-social-icons {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  .footer-social-icons__link {
-    display: flex;
-    width: 20px;
-    height: 20px;
-    color: var(--color-text);
-    transition: color 0.2s ease;
-  }
-
-  .footer-social-icons__link img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  .footer-social-icons__link:hover {
-    color: var(--color-accent);
-  }
-
+  /* ---------- Bottom bar ---------- */
   .site-footer__divider {
     margin-block: var(--space-4);
-    border-top-color: rgba(255, 255, 255, 0.06);
+    border-top-color: color-mix(in srgb, var(--color-text) 6%, transparent);
   }
 
   .site-footer__bottom {
@@ -351,22 +413,16 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    text-align: center;
     gap: var(--space-2) var(--space-4);
+    text-align: center;
     font-size: 12px;
   }
 
-  .site-footer__bottom * {
+  .site-footer__bottom .caption {
     font-size: inherit;
   }
 
-  @media screen and (min-width: 750px) {
-    .site-footer__bottom {
-      font-size: 14px;
-    }
-  }
-
-  /* Mobile: policies first, copyright+credit second. Desktop: reversed. */
+  /* Mobile: policies first, copyright second. Desktop: reversed. */
   .site-footer__policies {
     order: 1;
   }
@@ -376,6 +432,10 @@
   }
 
   @media screen and (min-width: 750px) {
+    .site-footer__bottom {
+      font-size: 14px;
+    }
+
     .site-footer__policies {
       order: 2;
     }
@@ -390,15 +450,10 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--space-1) var(--space-4);
-    list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
-  /* Resting state is dimmed; links brighten to the accent color on hover. */
   .site-footer__copyright,
-  .site-footer__policies a,
-  .site-footer__credit {
+  .site-footer__policies a {
     color: color-mix(in srgb, var(--color-text) 70%, transparent);
   }
 
@@ -411,49 +466,7 @@
   .site-footer__shop-link:hover {
     color: var(--color-accent);
   }
-
-  .site-footer__credit {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    margin-left: var(--space-1);
-  }
-
-  /* Hovering the link recolors only the "GrowMore" word and the icon —
-     "Developed by" stays at the dimmed resting color. */
-  .site-footer__credit-word {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: color 0.2s ease;
-  }
-
-  .site-footer__credit:hover .site-footer__credit-word {
-    color: var(--color-accent);
-  }
-
-  .site-footer__credit-icon {
-    display: inline-flex;
-    width: 12px;
-    height: 12px;
-    transition: transform 0.2s ease;
-  }
-
-  .site-footer__credit-icon svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* icon-external-link hardcodes stroke="#ffffff" instead of currentColor —
-     override it directly; CSS beats an SVG presentation attribute. */
-  .site-footer__credit:hover .site-footer__credit-icon {
-    transform: scale(1.2);
-  }
-
-  .site-footer__credit:hover .site-footer__credit-icon svg path {
-    stroke: var(--color-accent);
-  }
-{% endstyle %}
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -461,32 +474,50 @@
   "tag": "footer",
   "settings": [
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.footer.settings.color_scheme.label",
-      "default": "scheme-graphite"
-    },
-    {
-      "type": "image_picker",
-      "id": "footer_bg_image",
-      "label": "Background Image"
-    },
-    {
-      "type": "header",
-      "content": "Payment & social"
+      "type": "paragraph",
+      "content": "t:sections.footer.settings.logo_paragraph"
     },
     {
       "type": "checkbox",
-      "id": "show_payment",
-      "label": "Show payment icons",
+      "id": "show_newsletter",
+      "label": "t:sections.footer.settings.show_newsletter.label",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_social",
-      "label": "Show social media icons",
-      "info": "Shown below the tagline, under the ENSŌ logo.",
+      "label": "t:sections.footer.settings.show_social.label",
+      "info": "t:sections.footer.settings.show_social.info",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment",
+      "label": "t:sections.footer.settings.show_payment.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.headers.colors"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.all.background_color.label",
+      "default": "{{ settings.color_palette.ink }}"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.all.text_color.label",
+      "default": "{{ settings.color_palette.white }}"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "t:sections.footer.settings.color_accent.label",
+      "info": "t:sections.footer.settings.color_accent.info",
+      "default": "{{ settings.color_palette.gold }}"
     }
   ],
   "blocks": [
@@ -508,17 +539,17 @@
         },
         {
           "type": "header",
-          "content": "Second menu"
+          "content": "t:sections.footer.blocks.menu.settings.headers.second_menu"
         },
         {
           "type": "text",
           "id": "heading_1",
-          "label": "Heading"
+          "label": "t:sections.footer.blocks.menu.settings.heading.label"
         },
         {
           "type": "link_list",
           "id": "menu_1",
-          "label": "Menu"
+          "label": "t:sections.footer.blocks.menu.settings.menu.label"
         }
       ]
     },
@@ -557,110 +588,110 @@
       ]
     },
     {
-      "type" : "contact",
-      "name": "Contact",
+      "type": "contact",
+      "name": "t:sections.footer.blocks.contact.name",
       "settings": [
         {
           "type": "text",
           "id": "heading",
           "label": "t:sections.footer.blocks.text.settings.heading.label",
-          "default": "Heading"
+          "default": "Contact"
         },
         {
           "type": "text",
           "id": "contact_link_text",
-          "label": "Contact Link",
+          "label": "t:sections.footer.blocks.contact.settings.contact_link_text.label",
           "default": "Get In Touch"
         },
         {
           "type": "url",
           "id": "contact_url",
-          "label": "Contact Url"
+          "label": "t:sections.footer.blocks.contact.settings.link.label"
         },
         {
-          "type" : "checkbox",
-          "id" : "open_new_contact",
-          "label": "Open in New Tab",
+          "type": "checkbox",
+          "id": "open_new_contact",
+          "label": "t:sections.footer.blocks.contact.settings.open_new.label",
           "default": false
         },
         {
-          "type" : "header",
-          "content": "Whatsapp Us"
+          "type": "header",
+          "content": "t:sections.footer.blocks.contact.settings.headers.whatsapp"
         },
         {
           "type": "text",
-          "label": "Whatsapp Number",
-          "id": "whatsapp_number"
+          "id": "whatsapp_number",
+          "label": "t:sections.footer.blocks.contact.settings.whatsapp_number.label"
         },
         {
           "type": "url",
-          "label": "URL",
-          "id": "whatsapp_url"
+          "id": "whatsapp_url",
+          "label": "t:sections.footer.blocks.contact.settings.link.label"
         },
         {
-          "type" : "checkbox",
-          "id" : "open_new_whatsapp",
-          "label": "Open in New Tab",
+          "type": "checkbox",
+          "id": "open_new_whatsapp",
+          "label": "t:sections.footer.blocks.contact.settings.open_new.label",
           "default": false
         },
         {
-          "type" : "header",
-          "content": "Call Us"
+          "type": "header",
+          "content": "t:sections.footer.blocks.contact.settings.headers.phone"
         },
         {
           "type": "text",
-          "label": "Phone Number",
-          "id": "phone_number"
+          "id": "phone_number",
+          "label": "t:sections.footer.blocks.contact.settings.phone_number.label"
         },
         {
           "type": "url",
-          "label": "URL",
-          "id": "call_url"
+          "id": "call_url",
+          "label": "t:sections.footer.blocks.contact.settings.link.label"
         },
         {
-          "type" : "checkbox",
-          "id" : "open_new_call",
-          "label": "Open in New Tab",
+          "type": "checkbox",
+          "id": "open_new_call",
+          "label": "t:sections.footer.blocks.contact.settings.open_new.label",
           "default": false
         },
         {
-          "type" : "header",
-          "content": "Email Address"
+          "type": "header",
+          "content": "t:sections.footer.blocks.contact.settings.headers.email"
         },
         {
           "type": "text",
-          "label": "Email",
-          "id": "email_address"
+          "id": "email_address",
+          "label": "t:sections.footer.blocks.contact.settings.email_address.label"
         },
         {
           "type": "url",
-          "label": "Link",
-          "id": "email_url"
+          "id": "email_url",
+          "label": "t:sections.footer.blocks.contact.settings.link.label"
         },
         {
-          "type" : "checkbox",
-          "id" : "open_new_email",
-          "label": "Open in New Tab",
+          "type": "checkbox",
+          "id": "open_new_email",
+          "label": "t:sections.footer.blocks.contact.settings.open_new.label",
           "default": false
         },
         {
-          "type" : "header",
-          "content": "Location"
+          "type": "header",
+          "content": "t:sections.footer.blocks.contact.settings.headers.location"
         },
         {
           "type": "text",
-          "label": "Address",
-          "id": "location"
+          "id": "location",
+          "label": "t:sections.footer.blocks.contact.settings.location.label"
         },
         {
           "type": "url",
-          "label": "Link",
-          "id": "address_url"
+          "id": "address_url",
+          "label": "t:sections.footer.blocks.contact.settings.link.label"
         },
         {
-          "type" : "checkbox",
-          "id" : "open_new_address",
-          "label": "Open in New Tab",
+          "type": "checkbox",
+          "id": "open_new_address",
+          "label": "t:sections.footer.blocks.contact.settings.open_new.label",
           "default": false
         }
       ]
@@ -669,14 +700,8 @@
   "default": {
     "blocks": [
       { "type": "menu", "settings": { "heading": "Shop", "menu": "footer" } },
-      {
-        "type": "text",
-        "settings": {
-          "heading": "Support",
-          "text": "<p><a href=\"/pages/faq\">FAQ</a><br><a href=\"/pages/support\">Support</a><br><a href=\"/blogs/news\">Blog</a></p>"
-        }
-      },
-      { "type": "policies", "settings": { "heading": "Policies" } }
+      { "type": "menu", "settings": { "heading": "Quick Links", "menu": "footer" } },
+      { "type": "contact", "settings": { "heading": "Contact" } }
     ]
   }
 }

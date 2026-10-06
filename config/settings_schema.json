@@ -2,24 +2,294 @@
   {
     "name": "theme_info",
     "theme_name": "ENSO",
-    "theme_version": "0.1.0",
+    "theme_version": "0.2.0",
     "theme_author": "ENSO",
     "theme_documentation_url": "https://ensoshisha.com/",
     "theme_support_url": "https://ensoshisha.com/pages/support"
+  },
+  {
+    "name": "t:settings.logo.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.logo.headers.logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:settings.logo.logo.label",
+        "info": "t:settings.logo.logo.info"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 60,
+        "max": 240,
+        "step": 2,
+        "default": 112,
+        "unit": "px",
+        "label": "t:settings.logo.logo_width.label"
+      },
+      {
+        "type": "range",
+        "id": "logo_width_mobile",
+        "min": 60,
+        "max": 200,
+        "step": 2,
+        "default": 92,
+        "unit": "px",
+        "label": "t:settings.logo.logo_width_mobile.label"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_inverse",
+        "label": "t:settings.logo.logo_inverse.label",
+        "info": "t:settings.logo.logo_inverse.info"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.logo.headers.favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings.logo.favicon.label",
+        "info": "t:settings.logo.favicon.info"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.colors.name",
+    "settings": [
+      {
+        "type": "color_palette",
+        "id": "color_palette",
+        "default": {
+          "background": "#FFFFFF",
+          "foreground": "#000000",
+          "white": "#FFFFFF",
+          "ink": "#1D1D1F",
+          "graphite": "#1A1813",
+          "sand": "#C8943A",
+          "sand_deep": "#B3832F",
+          "bronze": "#96671F",
+          "gold": "#FBBC05",
+          "paper": "#FAF6EC",
+          "cream": "#F0E8D8",
+          "ivory": "#F8F5EF",
+          "linen": "#F5F1E6",
+          "mist": "#F5F5F4",
+          "stone": "#333333",
+          "line": "#E6E6E6",
+          "champagne": "#A8875A",
+          "error": "#9B3B2A",
+          "sale": "#EA4335"
+        }
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors.headers.page"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "t:settings.colors.color_background.label",
+        "default": "{{ settings.color_palette.background }}"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "t:settings.colors.color_text.label",
+        "default": "{{ settings.color_palette.foreground }}"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "t:settings.colors.color_text_muted.label",
+        "default": "{{ settings.color_palette.stone }}"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "t:settings.colors.color_surface.label",
+        "info": "t:settings.colors.color_surface.info",
+        "default": "{{ settings.color_palette.mist }}"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "t:settings.colors.color_border.label",
+        "default": "{{ settings.color_palette.line }}"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors.headers.accent"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "t:settings.colors.color_accent.label",
+        "info": "t:settings.colors.color_accent.info",
+        "default": "{{ settings.color_palette.sand }}"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_hover",
+        "label": "t:settings.colors.color_accent_hover.label",
+        "default": "{{ settings.color_palette.sand_deep }}"
+      },
+      {
+        "type": "color",
+        "id": "color_focus",
+        "label": "t:settings.colors.color_focus.label",
+        "default": "{{ settings.color_palette.bronze }}"
+      },
+      {
+        "type": "color",
+        "id": "color_error",
+        "label": "t:settings.colors.color_error.label",
+        "default": "{{ settings.color_palette.error }}"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors.headers.inverse"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:settings.colors.inverse_paragraph"
+      },
+      {
+        "type": "color",
+        "id": "color_inverse_background",
+        "label": "t:settings.colors.color_inverse_background.label",
+        "default": "{{ settings.color_palette.ink }}"
+      },
+      {
+        "type": "color",
+        "id": "color_inverse_text",
+        "label": "t:settings.colors.color_inverse_text.label",
+        "default": "{{ settings.color_palette.white }}"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.buttons.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.buttons.headers.primary"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:settings.buttons.primary_paragraph"
+      },
+      {
+        "type": "color",
+        "id": "button_primary_background",
+        "label": "t:settings.buttons.background.label",
+        "default": "{{ settings.color_palette.ink }}"
+      },
+      {
+        "type": "color",
+        "id": "button_primary_text",
+        "label": "t:settings.buttons.text.label",
+        "default": "{{ settings.color_palette.white }}"
+      },
+      {
+        "type": "color",
+        "id": "button_primary_hover_background",
+        "label": "t:settings.buttons.hover_background.label",
+        "default": "{{ settings.color_palette.foreground }}"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.buttons.headers.accent"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:settings.buttons.accent_paragraph"
+      },
+      {
+        "type": "color",
+        "id": "button_accent_background",
+        "label": "t:settings.buttons.background.label",
+        "default": "{{ settings.color_palette.sand }}"
+      },
+      {
+        "type": "color",
+        "id": "button_accent_text",
+        "label": "t:settings.buttons.text.label",
+        "default": "{{ settings.color_palette.white }}"
+      },
+      {
+        "type": "color",
+        "id": "button_accent_hover_background",
+        "label": "t:settings.buttons.hover_background.label",
+        "default": "{{ settings.color_palette.sand_deep }}"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.buttons.headers.secondary"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_background",
+        "label": "t:settings.buttons.background.label",
+        "default": "{{ settings.color_palette.mist }}"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_text",
+        "label": "t:settings.buttons.text.label",
+        "default": "{{ settings.color_palette.foreground }}"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_border",
+        "label": "t:settings.buttons.border.label",
+        "default": "{{ settings.color_palette.line }}"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_hover_background",
+        "label": "t:settings.buttons.hover_background.label",
+        "default": "{{ settings.color_palette.ink }}"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_hover_text",
+        "label": "t:settings.buttons.hover_text.label",
+        "default": "{{ settings.color_palette.white }}"
+      }
+    ]
   },
   {
     "name": "t:settings.typography.name",
     "settings": [
       {
         "type": "header",
-        "content": "t:settings.typography.headings.content"
+        "content": "t:settings.typography.headers.fonts"
       },
       {
         "type": "font_picker",
         "id": "type_heading_font",
-        "default": "montserrat_n4",
+        "default": "montserrat_n7",
         "label": "t:settings.typography.type_heading_font.label",
         "info": "t:settings.typography.type_heading_font.info"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "default": "montserrat_n4",
+        "label": "t:settings.typography.type_body_font.label",
+        "info": "t:settings.typography.type_body_font.info"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_subheading_font",
+        "default": "montserrat_n5",
+        "label": "t:settings.typography.type_subheading_font.label",
+        "info": "t:settings.typography.type_subheading_font.info"
       },
       {
         "type": "font_picker",
@@ -30,167 +300,31 @@
       },
       {
         "type": "header",
-        "content": "t:settings.typography.body.content"
+        "content": "t:settings.typography.headers.sizes"
       },
       {
-        "type": "font_picker",
-        "id": "type_body_font",
-        "default": "montserrat_n3",
-        "label": "t:settings.typography.type_body_font.label"
+        "type": "range",
+        "id": "type_body_size",
+        "min": 14,
+        "max": 18,
+        "step": 1,
+        "default": 16,
+        "unit": "px",
+        "label": "t:settings.typography.type_body_size.label"
+      },
+      {
+        "type": "range",
+        "id": "type_heading_scale",
+        "min": 80,
+        "max": 120,
+        "step": 5,
+        "default": 100,
+        "unit": "%",
+        "label": "t:settings.typography.type_heading_scale.label",
+        "info": "t:settings.typography.type_heading_scale.info"
       }
     ]
   },
-  {
-  "name": "t:settings.colors.name",
-  "settings": [
-    {
-      "type": "color_scheme_group",
-      "id": "color_schemes",
-      "definition": [
-        {
-          "type": "color",
-          "id": "background",
-          "label": "t:settings.colors.background.label",
-          "default": "#FAF6EC"
-        },
-        {
-          "type": "color",
-          "id": "background_raised",
-          "label": "t:settings.colors.background_raised.label",
-          "default": "#F2EDE3"
-        },
-        {
-          "type": "color",
-          "id": "text",
-          "label": "t:settings.colors.text.label",
-          "default": "#0A0A0A"
-        },
-        {
-          "type": "color",
-          "id": "text_muted",
-          "label": "t:settings.colors.text_muted.label",
-          "default": "#5A554B"
-        },
-        {
-          "type": "color",
-          "id": "border",
-          "label": "t:settings.colors.border.label",
-          "default": "#E3DDCC"
-        },
-        {
-          "type": "color",
-          "id": "accent",
-          "label": "t:settings.colors.accent.label",
-          "default": "#C8943A"
-        },
-        {
-          "type": "color",
-          "id": "accent_soft",
-          "label": "t:settings.colors.accent_soft.label",
-          "default": "#D4A758"
-        },
-
-        {
-          "type": "header",
-          "content": "Primary Button"
-        },
-        {
-          "type": "color",
-          "id": "primary_button_background",
-          "label": "Primary Button Background",
-          "default": "#1A1813"
-        },
-        {
-          "type": "color",
-          "id": "primary_button_label",
-          "label": "Primary Button Text Color",
-          "default": "#F0E8D8"
-        },
-        {
-          "type": "color",
-          "id": "primary_button_border",
-          "label": "Primary Button Border",
-          "default": "#1A1813"
-        },
-        {
-          "type": "color",
-          "id": "primary_button_hover_background",
-          "label": "Primary Button Hover Background",
-          "default": "#C8943A"
-        },
-        {
-          "type": "color",
-          "id": "primary_button_hover_label",
-          "label": "Primary Button Hover Text Color",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "color",
-          "id": "primary_button_hover_border",
-          "label": "Primary Button Hover Border",
-          "default": "#C8943A"
-        },
-
-        {
-          "type": "header",
-          "content": "Secondary Button"
-        },
-        {
-          "type": "color",
-          "id": "secondary_button_background",
-          "label": "Secondary Button Background",
-          "default": "#F2EDE3"
-        },
-        {
-          "type": "color",
-          "id": "secondary_button_label",
-          "label": "Secondary Button Text Color",
-          "default": "#0A0A0A"
-        },
-        {
-          "type": "color",
-          "id": "secondary_button_border",
-          "label": "Secondary Button Border",
-          "default": "#E3DDCC"
-        },
-        {
-          "type": "color",
-          "id": "secondary_button_hover_background",
-          "label": "Secondary Button Hover Background",
-          "default": "#1A1813"
-        },
-        {
-          "type": "color",
-          "id": "secondary_button_hover_label",
-          "label": "Secondary Button Hover Text Color",
-          "default": "#F0E8D8"
-        },
-        {
-          "type": "color",
-          "id": "secondary_button_hover_border",
-          "label": "Secondary Button Hover Border",
-          "default": "#1A1813"
-        }
-      ],
-
-      "role": {
-        "background": "background",
-        "text": "text",
-
-        "primary_button": "primary_button_background",
-        "on_primary_button": "primary_button_label",
-        "primary_button_border": "primary_button_border",
-
-        "secondary_button": "secondary_button_background",
-        "on_secondary_button": "secondary_button_label",
-        "secondary_button_border": "secondary_button_border",
-
-        "links": "accent",
-        "icons": "text"
-      }
-    }
-  ]
-},
   {
     "name": "t:settings.layout.name",
     "settings": [
@@ -200,20 +334,98 @@
         "min": 960,
         "max": 1800,
         "step": 20,
-        "default": 1600,
+        "default": 1440,
         "unit": "px",
         "label": "t:settings.layout.page_width.label"
       }
     ]
   },
   {
-    "name": "Favicon",
+    "name": "t:settings.cart.name",
     "settings": [
       {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon image",
-        "info": "Will be scaled down to 32 x 32px"
+        "type": "select",
+        "id": "cart_type",
+        "label": "t:settings.cart.cart_type.label",
+        "info": "t:settings.cart.cart_type.info",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "t:settings.cart.cart_type.options.drawer"
+          },
+          {
+            "value": "page",
+            "label": "t:settings.cart.cart_type.options.page"
+          }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "url",
+        "id": "cart_empty_button_link",
+        "label": "t:settings.cart.cart_empty_button_link.label",
+        "info": "t:settings.cart.cart_empty_button_link.info"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.cart.headers.free_shipping"
+      },
+      {
+        "type": "checkbox",
+        "id": "free_shipping_enable",
+        "label": "t:settings.cart.free_shipping_enable.label",
+        "default": false
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "t:settings.cart.free_shipping_threshold.label",
+        "info": "t:settings.cart.free_shipping_threshold.info",
+        "default": 75,
+        "visible_if": "{{ settings.free_shipping_enable }}"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_message_before",
+        "label": "t:settings.cart.free_shipping_message_before.label",
+        "info": "t:settings.cart.free_shipping_message_before.info",
+        "default": "Spend [amount] more for free shipping",
+        "visible_if": "{{ settings.free_shipping_enable }}"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_message_after",
+        "label": "t:settings.cart.free_shipping_message_after.label",
+        "default": "You have unlocked free shipping",
+        "visible_if": "{{ settings.free_shipping_enable }}"
+      },
+      {
+        "type": "color",
+        "id": "free_shipping_fill_color",
+        "label": "t:settings.cart.free_shipping_fill_color.label",
+        "default": "{{ settings.color_palette.sand }}",
+        "visible_if": "{{ settings.free_shipping_enable }}"
+      },
+      {
+        "type": "color",
+        "id": "free_shipping_track_color",
+        "label": "t:settings.cart.free_shipping_track_color.label",
+        "default": "{{ settings.color_palette.line }}",
+        "visible_if": "{{ settings.free_shipping_enable }}"
+      },
+      {
+        "type": "textarea",
+        "id": "free_shipping_markets",
+        "label": "t:settings.cart.free_shipping_markets.label",
+        "info": "t:settings.cart.free_shipping_markets.info",
+        "visible_if": "{{ settings.free_shipping_enable }}"
+      },
+      {
+        "type": "textarea",
+        "id": "free_shipping_countries",
+        "label": "t:settings.cart.free_shipping_countries.label",
+        "info": "t:settings.cart.free_shipping_countries.info",
+        "visible_if": "{{ settings.free_shipping_enable }}"
       }
     ]
   },
@@ -221,30 +433,38 @@
     "name": "t:settings.social.name",
     "settings": [
       {
-        "type": "text",
-        "id": "social_instagram_link",
-        "label": "t:settings.social.instagram.label",
-        "info": "t:settings.social.instagram.info"
+        "type": "paragraph",
+        "content": "t:settings.social.paragraph"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_facebook_link",
-        "label": "Facebook"
+        "label": "t:settings.social.facebook.label"
       },
       {
-        "type": "text",
+        "type": "url",
+        "id": "social_instagram_link",
+        "label": "t:settings.social.instagram.label"
+      },
+      {
+        "type": "url",
         "id": "social_youtube_link",
-        "label": "YouTube"
+        "label": "t:settings.social.youtube.label"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_tiktok_link",
         "label": "t:settings.social.tiktok.label"
       },
       {
-        "type": "text",
+        "type": "url",
+        "id": "social_pinterest_link",
+        "label": "t:settings.social.pinterest.label"
+      },
+      {
+        "type": "url",
         "id": "social_x_link",
-        "label": "X (Twitter)"
+        "label": "t:settings.social.x.label"
       }
     ]
   },
@@ -260,126 +480,69 @@
     ]
   },
   {
-    "name": "Cart",
+    "name": "t:settings.badges.name",
     "settings": [
       {
         "type": "header",
-        "content": "Free shipping bar"
-      },
-      {
-        "type": "checkbox",
-        "id": "free_shipping_bar_enable",
-        "label": "Show free shipping progress bar in cart",
-        "default": true
-      },
-      {
-        "type": "number",
-        "id": "free_shipping_bar_threshold",
-        "label": "Free shipping threshold",
-        "info": "Amount in your store's currency, e.g. 75 for $75.00",
-        "default": 75
-      },
-      {
-        "type": "text",
-        "id": "free_shipping_bar_message_below",
-        "label": "Message before threshold is reached",
-        "info": "Use [amount] to insert the remaining amount",
-        "default": "Spend [amount] more for free shipping!"
-      },
-      {
-        "type": "text",
-        "id": "free_shipping_bar_message_achieved",
-        "label": "Message once threshold is reached",
-        "default": "You've unlocked free shipping!"
-      },
-      {
-        "type": "color",
-        "id": "free_shipping_bar_fill_color",
-        "label": "Progress bar fill color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "id": "free_shipping_bar_track_color",
-        "label": "Progress bar track color",
-        "default": "#E5E5E5"
-      },
-      {
-        "type": "header",
-        "content": "Empty cart"
-      },
-      {
-        "type": "url",
-        "id": "cart_empty_button_link",
-        "label": "Empty cart button link",
-        "info": "Where the \"Continue shopping\" button links to when the cart is empty. Defaults to all products if left blank."
-      }
-    ]
-  },
-  {
-    "name": "Badges",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Sold out badge"
+        "content": "t:settings.badges.headers.sold_out"
       },
       {
         "type": "color",
         "id": "badge_sold_out_bg",
-        "label": "Background color",
-        "default": "#000000"
+        "label": "t:settings.badges.background.label",
+        "default": "{{ settings.color_palette.foreground }}"
       },
       {
         "type": "color",
         "id": "badge_sold_out_text",
-        "label": "Text color",
-        "default": "#FFFFFF"
+        "label": "t:settings.badges.text.label",
+        "default": "{{ settings.color_palette.white }}"
       },
       {
         "type": "header",
-        "content": "Sale / savings badge"
+        "content": "t:settings.badges.headers.sale"
       },
       {
         "type": "color",
         "id": "badge_sale_bg",
-        "label": "Background color",
-        "default": "#EA4335"
+        "label": "t:settings.badges.background.label",
+        "default": "{{ settings.color_palette.sale }}"
       },
       {
         "type": "color",
         "id": "badge_sale_text",
-        "label": "Text color",
-        "default": "#FFFFFF"
+        "label": "t:settings.badges.text.label",
+        "default": "{{ settings.color_palette.white }}"
       }
     ]
   },
   {
-    "name": "Product Cards",
+    "name": "t:settings.product_cards.name",
     "settings": [
       {
         "type": "header",
-        "content": "Swatches"
+        "content": "t:settings.product_cards.headers.swatches"
       },
       {
         "type": "checkbox",
         "id": "enable_product_card_swatches",
-        "label": "Enable variant swatches on product cards",
-        "info": "Shows selectable image swatches in the bottom-left corner of the card image. Only appears on products that have a matching option below — other products are unaffected.",
+        "label": "t:settings.product_cards.enable_product_card_swatches.label",
+        "info": "t:settings.product_cards.enable_product_card_swatches.info",
         "default": false
       },
       {
         "type": "text",
         "id": "swatch_color_option_name",
-        "label": "Color option name",
+        "label": "t:settings.product_cards.swatch_color_option_name.label",
         "default": "Color",
-        "info": "The exact option name (case-insensitive) products use for color, e.g. \"Color\" or \"Colour\". Leave blank to disable matching on color."
+        "info": "t:settings.product_cards.swatch_color_option_name.info"
       },
       {
         "type": "text",
         "id": "swatch_size_option_name",
-        "label": "Size option name",
+        "label": "t:settings.product_cards.swatch_size_option_name.label",
         "default": "Size",
-        "info": "Used only when a product has no matching color option. Leave blank to disable matching on size."
+        "info": "t:settings.product_cards.swatch_size_option_name.info"
       }
     ]
   }

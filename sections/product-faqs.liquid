@@ -1,5 +1,6 @@
 {%- liquid
-  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign scheme_class = 'color-surface'
+  render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
   assign faqs = product.metafields.custom.faqs.value
 -%}
 
@@ -533,4 +534,15 @@ document.addEventListener(
 })();
 </script>
 
-{% schema %} { "name": "Product FAQs", "tag": "section", "enabled_on": { "templates": ["product"] }, "settings": [ { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.faq.settings.color_scheme.label", "default": "scheme-paper" }, { "type": "text", "id": "eyebrow", "label": "t:sections.faq.settings.eyebrow.label", "default": "Questions" }, { "type": "text", "id": "heading", "label": "t:sections.faq.settings.heading.label", "default": "Before You Order" } ], "presets": [ { "name": "Product FAQs" } ] } {% endschema %}
+{% schema %} { "name": "Product FAQs", "tag": "section", "enabled_on": { "templates": ["product"] }, "settings": [ {
+   "type": "color",
+   "id": "color_background",
+   "label": "t:sections.all.background_color.label",
+   "default": "{{ settings.color_palette.background }}"
+ },
+ {
+   "type": "color",
+   "id": "color_text",
+   "label": "t:sections.all.text_color.label",
+   "default": "{{ settings.color_palette.foreground }}"
+ }, { "type": "text", "id": "eyebrow", "label": "t:sections.faq.settings.eyebrow.label", "default": "Questions" }, { "type": "text", "id": "heading", "label": "t:sections.faq.settings.heading.label", "default": "Before You Order" } ], "presets": [ { "name": "Product FAQs" } ] } {% endschema %}

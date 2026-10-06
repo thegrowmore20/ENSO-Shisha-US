@@ -1,0 +1,44 @@
+{%- doc -%}
+  The store logo from Theme settings > Logo and favicon, at the widths set
+  there (`--logo-width` / `--logo-width-mobile`). Falls back to the shop name
+  when no logo is uploaded.
+
+  On dark or photo backgrounds the parent adds `site-logo--inverted` (or the
+  header's own transparent-state selector does the same job): the inverse logo
+  is shown if one is uploaded, otherwise the default logo is colour-inverted.
+
+  @param {string} [class] - Extra classes for the wrapper
+  @param {boolean} [inverted] - Render for a dark background from the start
+  @param {boolean} [lazy] - Lazy-load the image (use below the fold)
+
+  @example
+  {% render 'site-logo', class: 'site-header__logo-image' %}
+  {% render 'site-logo', inverted: true, lazy: true %}
+{%- enddoc -%}
+
+{%- liquid
+  assign loading = 'eager'
+  if lazy
+    assign loading = 'lazy'
+  endif
+  assign sizes = settings.logo_width | append: 'px'
+-%}
+
+<span class="site-logo{% if settings.logo_inverse != blank %} site-logo--has-inverse{% endif %}{% if inverted %} site-logo--inverted{% endif %} {{ class }}">
+  {%- if settings.logo != blank -%}
+    {{
+      settings.logo
+      | image_url: width: 480
+      | image_tag: alt: shop.name, class: 'site-logo__image site-logo__default', widths: '120, 240, 360, 480', sizes: sizes, loading: loading
+    }}
+    {%- if settings.logo_inverse != blank -%}
+      {{
+        settings.logo_inverse
+        | image_url: width: 480
+        | image_tag: alt: '', class: 'site-logo__image site-logo__inverse', widths: '120, 240, 360, 480', sizes: sizes, loading: loading
+      }}
+    {%- endif -%}
+  {%- else -%}
+    <span class="site-logo__text wordmark">{{ shop.name }}</span>
+  {%- endif -%}
+</span>

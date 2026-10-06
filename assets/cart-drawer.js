@@ -11,6 +11,7 @@ function closeCartDrawer() {
 function updateCartItemCounts(count) {
   document.querySelectorAll(".cart-count").forEach((el) => {
     el.textContent = count;
+    el.hidden = Number(count) === 0;
   });
 }
 

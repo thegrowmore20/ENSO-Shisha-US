@@ -13,14 +13,13 @@
       "type": "main-page",
       "disabled": true,
       "settings": {
-        "color_scheme": "scheme-paper"
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "hero_banner_wq47mR": {
       "type": "hero-banner",
       "name": "Hero Banner",
       "settings": {
-        "color_scheme": "",
         "image": "shopify://shop_images/web_support-6290.webp",
         "heading": "{{ page.title }}",
         "heading_size_desktop": 56,

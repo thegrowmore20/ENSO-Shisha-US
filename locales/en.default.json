@@ -16,14 +16,14 @@
     }
   },
   "general": {
-    "meta": {
-      "tags": "Tagged \"{{ tags }}\"",
-      "page": "Page {{ page }}"
-    },
     "404": {
       "title": "Page Not Found",
       "subtext": "The page you're looking for doesn't exist. It may have moved, or the link may be wrong.",
       "link": "Return to the homepage"
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
     },
     "search": {
       "placeholder": "Search the ritual...",
@@ -60,7 +60,8 @@
     "go_to_slide": "Go to slide {{ count }}",
     "loading": "Loading...",
     "unit_price_separator": "per",
-    "breadcrumbs": "Breadcrumbs"
+    "breadcrumbs": "Breadcrumbs",
+    "new_tab": "(opens in a new tab)"
   },
   "header": {
     "menu": "Menu",
@@ -136,7 +137,8 @@
       "item_count": {
         "one": "{{ count }} item",
         "other": "{{ count }} items"
-      }
+      },
+      "free_shipping_progress": "Progress towards free shipping"
     }
   },
   "sections": {
@@ -242,11 +244,19 @@
       }
     },
     "footer": {
-      "tagline": "Your solo & party shisha ritual, without charcoal hassle.",
+      "tagline": "A Modern Twist on a Classic Ritual",
       "sign_off": "The ENSO team",
       "support": "support@ensoshisha.eu",
       "age_gate": "ENSO · 21+ only",
-      "copyright": "© {{ year }} ENSO. All rights reserved."
+      "copyright": "© {{ year }} ENSO. All rights reserved.",
+      "policies_label": "Policies",
+      "newsletter": {
+        "label": "Sign up for updates",
+        "placeholder": "Your email address",
+        "button": "Subscribe",
+        "success": "Thank you. You are on the list.",
+        "error": "Enter an email address like name@example.com"
+      }
     }
   }
 }

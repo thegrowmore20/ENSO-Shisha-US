@@ -1,6 +1,7 @@
 {%- liquid
   assign autoplay_interval = section.settings.autoplay_interval
-  assign scheme_class = 'color-' | append: section.settings.color_scheme
+  assign scheme_class = 'color-surface'
+  render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
 -%}
 
 <video-hero-slider class="video-hero-slider {{ scheme_class }}" data-autoplay="{{ autoplay_interval }}">
@@ -427,11 +428,16 @@
   "tag": "section",
   "settings": [
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "info": "Sets the button and accent colors. Overlay text stays light for contrast against video.",
-      "default": "scheme-graphite"
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.all.background_color.label",
+      "default": "{{ settings.color_palette.background }}"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.all.text_color.label",
+      "default": "{{ settings.color_palette.foreground }}"
     },
     {
       "type": "range",

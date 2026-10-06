@@ -13,7 +13,6 @@
       "type": "hero-banner",
       "name": "Hero Banner",
       "settings": {
-        "color_scheme": "",
         "image": "shopify://shop_images/Enso-2.webp",
         "heading": "{{ collection.title }}",
         "heading_size_desktop": 56,
@@ -42,7 +41,6 @@
     "main": {
       "type": "main-collection",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "enable_collection_content": false,
         "enable_filtering": true,
         "enable_sorting": true,

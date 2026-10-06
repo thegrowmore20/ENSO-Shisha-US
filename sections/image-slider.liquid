@@ -46,7 +46,8 @@ block version, not something this conversion was asked to change.
 	assign ai_gen_id = clean_id | slice: offset, 12
 	endif
 	
-	assign scheme_class = 'color-' | append: section.settings.color_scheme
+	assign scheme_class = 'color-surface'
+	render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
 	-%}
 	
 	{% style %}
@@ -1255,10 +1256,16 @@ block version, not something this conversion was asked to change.
 	"tag": "section",
 	"settings": [
 		{
-			"type": "color_scheme",
-			"id": "color_scheme",
-			"label": "Color scheme",
-			"default": "scheme-paper"
+			"type": "color",
+			"id": "color_background",
+			"label": "t:sections.all.background_color.label",
+			"default": "{{ settings.color_palette.background }}"
+		},
+		{
+			"type": "color",
+			"id": "color_text",
+			"label": "t:sections.all.text_color.label",
+			"default": "{{ settings.color_palette.foreground }}"
 		},
 		{
 			"type": "header",

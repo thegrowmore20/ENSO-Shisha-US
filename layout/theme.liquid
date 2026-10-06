@@ -3,34 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#FAF6EC">
+  <meta name="theme-color" content="{{ settings.color_background | default: '#ffffff' }}">
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 
   {%- render 'meta-tags' -%}
 
-  {% if settings.favicon != blank %}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-    {% endif %}
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
 
-  {%- liquid
-    assign heading_font = settings.type_heading_font
-    assign heading_font_extralight = heading_font | font_modify: 'weight', '200'
-    assign heading_font_light = heading_font | font_modify: 'weight', '300'
-    assign heading_font_medium = heading_font | font_modify: 'weight', '500'
-    assign heading_font_semibold = heading_font | font_modify: 'weight', '600'
-    assign body_font = settings.type_body_font
-    assign accent_font = settings.type_accent_font
-  -%}
-  {%- style -%}
-    {{ heading_font | font_face: font_display: 'swap' }}
-    {{ heading_font_extralight | font_face: font_display: 'swap' }}
-    {{ heading_font_light | font_face: font_display: 'swap' }}
-    {{ heading_font_medium | font_face: font_display: 'swap' }}
-    {{ heading_font_semibold | font_face: font_display: 'swap' }}
-    {{ body_font | font_face: font_display: 'swap' }}
-    {{ accent_font | font_face: font_display: 'swap' }}
-  {%- endstyle -%}
-
+  {%- render 'theme-fonts' -%}
   {%- render 'css-variables' -%}
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
@@ -39,32 +22,41 @@
 
   {{ content_for_header }}
 
-  <link rel="stylesheet" href="{{ 'cart-drawer.css' | asset_url }}">
+  {%- if settings.cart_type == 'drawer' -%}
+    {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
 </head>
 
 <body class="template-{{ request.page_type | handleize }}">
   <div class="scroll-progress-bar" data-scroll-progress></div>
 
-  <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+  <a class="skip-to-content-link" href="#MainContent">
     {{ 'accessibility.skip_to_content' | t }}
   </a>
 
   {% sections 'header-group' %}
 
-  <main id="MainContent">
+  <main id="MainContent" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
   {% section 'footer' %}
 
-  {% section 'cart-drawer' %}
-  <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
-  {% if settings.enable_product_card_swatches %}
-    <script src="{{ 'product-card-swatches.js' | asset_url }}" defer></script>
-  {% endif %}
+  {%- comment -%}
+    Theme settings > Cart > Cart type. With "drawer" the cart opens in a
+    side panel and add-to-cart stays on the page; with "page" neither the
+    drawer nor its script is loaded, so the cart icon and add-to-cart forms
+    fall back to the cart page.
+  {%- endcomment -%}
+  {%- if settings.cart_type == 'drawer' -%}
+    {% section 'cart-drawer' %}
+    <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  {%- if settings.enable_product_card_swatches -%}
+    <script src="{{ 'product-card-swatches.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
 
   {% render 'age-verification-popup' %}
-
-  {% section 'fix-footer-mobile' %}
 </body>
 </html>

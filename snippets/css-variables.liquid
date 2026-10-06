@@ -1,9 +1,119 @@
+{%- doc -%}
+  Outputs every global design token as a CSS custom property on :root:
+  the color palette and the color roles built on it (Theme settings > Colors
+  and Buttons), typography (Theme settings > Typography), spacing, radius,
+  layout and shadows. Rendered once in the <head> by layout/theme.liquid.
+
+  Sections that need different colors don't get a color scheme: they render
+  the `surface-colors` snippet, which re-points the same variables for that
+  section only.
+
+  @example
+  {% render 'css-variables' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign palette = settings.color_palette
+  assign body_font = settings.type_body_font
+  assign heading_font = settings.type_heading_font
+  assign subheading_font = settings.type_subheading_font
+  assign accent_font = settings.type_accent_font
+  assign heading_scale = settings.type_heading_scale | divided_by: 100.0
+-%}
+
 {%- style -%}
   :root {
-    --font-heading: {{ settings.type_heading_font.family }}, sans-serif;
-    --font-body: {{ settings.type_body_font.family }}, sans-serif;
-    --font-accent: {{ settings.type_accent_font.family }}, sans-serif;
+    /* ---------- Palette (Theme settings > Colors) ---------- */
+    --palette-background: {{ palette.background }};
+    --palette-foreground: {{ palette.foreground }};
+    --palette-white: {{ palette.white }};
+    --palette-ink: {{ palette.ink }};
+    --palette-graphite: {{ palette.graphite }};
+    --palette-sand: {{ palette.sand }};
+    --palette-sand-deep: {{ palette.sand_deep }};
+    --palette-bronze: {{ palette.bronze }};
+    --palette-gold: {{ palette.gold }};
+    --palette-paper: {{ palette.paper }};
+    --palette-cream: {{ palette.cream }};
+    --palette-ivory: {{ palette.ivory }};
+    --palette-linen: {{ palette.linen }};
+    --palette-mist: {{ palette.mist }};
+    --palette-stone: {{ palette.stone }};
+    --palette-line: {{ palette.line }};
+    --palette-champagne: {{ palette.champagne }};
+    --palette-error: {{ palette.error }};
+    --palette-sale: {{ palette.sale }};
 
+    /* ---------- Color roles ---------- */
+    --color-background: {{ settings.color_background }};
+    --color-background-raised: {{ settings.color_surface }};
+    --color-text: {{ settings.color_text }};
+    --color-text-muted: {{ settings.color_text_muted }};
+    --color-border: {{ settings.color_border }};
+    --color-accent: {{ settings.color_accent }};
+    --color-accent-hover: {{ settings.color_accent_hover }};
+    --color-accent-soft: {{ settings.color_accent_hover }};
+    --color-focus: {{ settings.color_focus }};
+    --color-error: {{ settings.color_error }};
+    --color-inverse-background: {{ settings.color_inverse_background }};
+    --color-inverse-text: {{ settings.color_inverse_text }};
+
+    /* Primary button: the default button on light backgrounds */
+    --color-primary-button-background: {{ settings.button_primary_background }};
+    --color-primary-button-label: {{ settings.button_primary_text }};
+    --color-primary-button-border: {{ settings.button_primary_background }};
+    --color-primary-button-hover-background: {{ settings.button_primary_hover_background }};
+    --color-primary-button-hover-label: {{ settings.button_primary_text }};
+    --color-primary-button-hover-border: {{ settings.button_primary_hover_background }};
+
+    /* Accent button: used on dark and photo backgrounds */
+    --color-accent-button-background: {{ settings.button_accent_background }};
+    --color-accent-button-label: {{ settings.button_accent_text }};
+    --color-accent-button-hover-background: {{ settings.button_accent_hover_background }};
+
+    /* Secondary button */
+    --color-secondary-button-background: {{ settings.button_secondary_background }};
+    --color-secondary-button-label: {{ settings.button_secondary_text }};
+    --color-secondary-button-border: {{ settings.button_secondary_border }};
+    --color-secondary-button-hover-background: {{ settings.button_secondary_hover_background }};
+    --color-secondary-button-hover-label: {{ settings.button_secondary_hover_text }};
+    --color-secondary-button-hover-border: {{ settings.button_secondary_hover_background }};
+
+    --badge-sold-out-bg: {{ settings.badge_sold_out_bg }};
+    --badge-sold-out-text: {{ settings.badge_sold_out_text }};
+    --badge-sale-bg: {{ settings.badge_sale_bg }};
+    --badge-sale-text: {{ settings.badge_sale_text }};
+
+    /* ---------- Typography (Theme settings > Typography) ---------- */
+    --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-subheading: {{ subheading_font.family }}, {{ subheading_font.fallback_families }};
+    --font-accent: {{ accent_font.family }}, {{ accent_font.fallback_families }};
+
+    --font-heading-weight: {{ heading_font.weight }};
+    --font-body-weight: {{ body_font.weight }};
+    --font-subheading-weight: {{ subheading_font.weight }};
+    --font-accent-weight: {{ accent_font.weight }};
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-heavy: 800;
+
+    --font-size-body: {{ settings.type_body_size }}px;
+    --line-height-body: 1.4;
+
+    --heading-scale: {{ heading_scale }};
+    --font-size-h0: calc(64px * var(--heading-scale));
+    --font-size-h1: calc(48px * var(--heading-scale));
+    --font-size-h2: calc(36px * var(--heading-scale));
+    --font-size-h3: calc(30px * var(--heading-scale));
+    --font-size-h4: calc(24px * var(--heading-scale));
+    --font-size-h5: calc(20px * var(--heading-scale));
+    --font-size-h6: calc(18px * var(--heading-scale));
+
+    /* ---------- Spacing, radius, layout ---------- */
     --space-1: 4px;
     --space-2: 8px;
     --space-3: 12px;
@@ -25,16 +135,15 @@
 
     --border-width: 1px;
 
-    /* Kept in sync by announcement-bar.liquid's own JS whenever it mounts,
-       resizes, or is removed — lets the transparent/fixed header (see
-       header.liquid) offset itself below the bar without needing to know
-       about it directly. Stays 0px when no announcement bar is on the page. */
-    --announcement-bar-height: 0px;
+    --logo-width: {{ settings.logo_width }}px;
+    --logo-width-mobile: {{ settings.logo_width_mobile }}px;
 
-    --badge-sold-out-bg: {{ settings.badge_sold_out_bg }};
-    --badge-sold-out-text: {{ settings.badge_sold_out_text }};
-    --badge-sale-bg: {{ settings.badge_sale_bg }};
-    --badge-sale-text: {{ settings.badge_sale_text }};
+    /* Measured from the rendered header by global.js. These are the handoff
+       heights, so the page does not jump before the script runs. */
+    --site-header-height: 64px;
+    /* Stays 0px: the theme has no announcement bar. Kept because the header
+       offsets itself by it. */
+    --announcement-bar-height: 0px;
 
     --shadow-sm: 0 1px 3px rgba(10, 10, 10, 0.07);
     --shadow-md: 0 12px 32px rgba(10, 10, 10, 0.10);
@@ -43,44 +152,27 @@
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  @media screen and (min-width: 990px) {
+    :root {
+      --site-header-height: 79px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    :root {
+      --font-size-h0: calc(44px * var(--heading-scale));
+      --font-size-h1: calc(32px * var(--heading-scale));
+      --font-size-h2: calc(28px * var(--heading-scale));
+      --font-size-h3: calc(24px * var(--heading-scale));
+      --font-size-h4: calc(20px * var(--heading-scale));
+      --font-size-h5: calc(18px * var(--heading-scale));
+      --font-size-h6: calc(16px * var(--heading-scale));
+    }
+  }
+
   @media screen and (max-width: 749px) {
     :root {
       --page-margin: var(--page-margin-mobile);
     }
   }
-
-  {%- for scheme in settings.color_schemes -%}
-
-  .color-{{ scheme.id }} {
-
-    --color-background: {{ scheme.settings.background }};
-    --color-background-raised: {{ scheme.settings.background_raised }};
-    --color-text: {{ scheme.settings.text }};
-    --color-text-muted: {{ scheme.settings.text_muted }};
-    --color-border: {{ scheme.settings.border }};
-    --color-accent: {{ scheme.settings.accent }};
-    --color-accent-soft: {{ scheme.settings.accent_soft }};
-
-    /* Primary Button */
-    --color-primary-button-background: {{ scheme.settings.primary_button_background }};
-    --color-primary-button-label: {{ scheme.settings.primary_button_label }};
-    --color-primary-button-border: {{ scheme.settings.primary_button_border }};
-    --color-primary-button-hover-background: {{ scheme.settings.primary_button_hover_background }};
-    --color-primary-button-hover-label: {{ scheme.settings.primary_button_hover_label }};
-    --color-primary-button-hover-border: {{ scheme.settings.primary_button_hover_border }};
-
-    /* Secondary Button */
-    --color-secondary-button-background: {{ scheme.settings.secondary_button_background }};
-    --color-secondary-button-label: {{ scheme.settings.secondary_button_label }};
-    --color-secondary-button-border: {{ scheme.settings.secondary_button_border }};
-    --color-secondary-button-hover-background: {{ scheme.settings.secondary_button_hover_background }};
-    --color-secondary-button-hover-label: {{ scheme.settings.secondary_button_hover_label }};
-    --color-secondary-button-hover-border: {{ scheme.settings.secondary_button_hover_border }};
-
-    background-color: var(--color-background);
-    color: var(--color-text);
-
-  }
-
-{%- endfor -%}
 {%- endstyle -%}

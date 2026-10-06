@@ -77,8 +77,9 @@
         ".video-hero-slider__scrim {position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: linear-gradient(0deg, #0a0a0a38, #0a0a0a1a 55%, #0a0a0a66);}"
       ],
       "settings": {
-        "color_scheme": "scheme-graphite",
-        "autoplay_interval": 9000
+        "autoplay_interval": 9000,
+        "color_background": "{{ settings.color_palette.graphite }}",
+        "color_text": "{{ settings.color_palette.cream }}"
       }
     },
     "signature-models": {
@@ -110,7 +111,6 @@
         "model-diamond"
       ],
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "",
         "heading": "Shop Signature Models",
         "features": "Coal-Free · Cordless · Magnetic",
@@ -125,7 +125,6 @@
       "disabled": true,
       "name": "Shop Signature Models",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "collection": "accesories",
         "eyebrow": "",
         "heading": "Shop Signature Models",
@@ -250,7 +249,6 @@
       "disabled": true,
       "name": "Category Grid",
       "settings": {
-        "color_scheme": "scheme-paper",
         "heading": "Shop Accessories",
         "heading_html_tag": "h2",
         "layout_width": "container",
@@ -262,7 +260,8 @@
         "padding_top_desktop": 60,
         "padding_bottom_desktop": 60,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 32,
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "general_usps_qJjMaL": {
@@ -337,11 +336,11 @@
       ],
       "name": "General USPs",
       "settings": {
-        "color_scheme": "",
         "padding_top_desktop": 48,
         "padding_bottom_desktop": 48,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 32,
+        "color_background": "{{ settings.color_palette.mist }}"
       }
     },
     "custom_section_Deziez": {
@@ -383,7 +382,6 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 64,
         "padding_bottom": 64,
@@ -416,7 +414,6 @@
       ],
       "name": "Video hero slider",
       "settings": {
-        "color_scheme": "",
         "autoplay_interval": 6000
       }
     },
@@ -425,7 +422,6 @@
       "disabled": true,
       "name": "Hero Banner",
       "settings": {
-        "color_scheme": "",
         "image": "shopify://shop_images/enso_award_16x9Edit_bf165e4f-81bb-48ae-851e-e210074ef171.png",
         "image_mobile": "shopify://shop_images/enso_award_4x5mobileedit.png",
         "heading": "A Modern Twist on a Classic Ritual",
@@ -519,7 +515,6 @@
         "feature-clouds"
       ],
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "Why ENSŌ",
         "heading": "Built Around the Ritual",
         "width": "page",
@@ -533,7 +528,6 @@
     "shop-accessories": {
       "type": "shop-accessories",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "collection": "accesories",
         "eyebrow": "",
         "heading": "Shop Accessories",
@@ -611,7 +605,6 @@
       ],
       "disabled": true,
       "settings": {
-        "color_scheme": "scheme-paper",
         "eyebrow": "Social Proof",
         "heading": "Why Do People Love ENSŌ?",
         "overall_rating": 4.8,
@@ -623,7 +616,8 @@
         "padding_top": 48,
         "padding_bottom": 48,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 32,
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "story-timeline": {
@@ -670,10 +664,10 @@
       ],
       "disabled": true,
       "settings": {
-        "color_scheme": "scheme-paper",
         "eyebrow": "Our Story",
         "heading": "A Decade in the Making",
-        "intro": "The Story: how a decade of AirVape heating expertise became ENSŌ, the coal-free hookah system."
+        "intro": "The Story: how a decade of AirVape heating expertise became ENSŌ, the coal-free hookah system.",
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "feature_videos_t4LGyh": {
@@ -716,7 +710,6 @@
       ],
       "name": "t:sections.feature_videos.presets.name",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "eyebrow": "",
         "heading": "World Class Performance & Design",
         "width": "page",
@@ -755,7 +748,6 @@
       ],
       "disabled": true,
       "settings": {
-        "color_scheme": "scheme-graphite",
         "eyebrow": "Recognition",
         "heading": "Industry Validation",
         "section_gap": 48,
@@ -765,7 +757,9 @@
         "padding_top": 64,
         "padding_bottom": 64,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 32,
+        "color_background": "{{ settings.color_palette.graphite }}",
+        "color_text": "{{ settings.color_palette.cream }}"
       }
     },
     "custom_section_XMUKtA": {
@@ -799,7 +793,6 @@
       ],
       "name": "Custom Section",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "width": "page",
         "padding_top": 64,
         "padding_bottom": 64,
@@ -843,11 +836,11 @@
       ],
       "disabled": true,
       "settings": {
-        "color_scheme": "scheme-paper",
         "eyebrow": "Community",
         "heading": "As Seen on Instagram",
         "cta_label": "Follow @enso.future",
-        "cta_link": ""
+        "cta_link": "",
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "split_showcase_9Jtmqe": {
@@ -894,7 +887,6 @@
       ],
       "name": "Split showcase",
       "settings": {
-        "color_scheme": "",
         "width": "full",
         "image_gap": 24,
         "margin_top": 0,
@@ -918,7 +910,6 @@
     "blog-posts": {
       "type": "blog-posts",
       "settings": {
-        "color_scheme": "scheme-2c477b01-2ddb-49a5-80d8-57ef741d29db",
         "blog": "news",
         "eyebrow": "",
         "heading": "From the Journal",
@@ -963,18 +954,18 @@
       ],
       "disabled": true,
       "settings": {
-        "color_scheme": "scheme-paper",
         "eyebrow": "Questions",
-        "heading": "Before You Order"
+        "heading": "Before You Order",
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     },
     "newsletter": {
       "type": "newsletter",
       "disabled": true,
       "settings": {
-        "color_scheme": "scheme-paper",
         "heading": "Your Ritual. Without Charcoal.",
-        "text": "Refined for 2026. Join the list for release updates."
+        "text": "Refined for 2026. Join the list for release updates.",
+        "color_background": "{{ settings.color_palette.paper }}"
       }
     }
   },

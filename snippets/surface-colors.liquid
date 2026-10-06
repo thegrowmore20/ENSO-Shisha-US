@@ -1,0 +1,44 @@
+{%- doc -%}
+  Per-section colors. Replaces the old color scheme picker: a section offers a
+  background and a text color (both defaulting to a palette color), and this
+  snippet re-points the global color variables for that section only. Muted
+  text, borders and raised surfaces are derived from the two so a dark
+  section stays readable without extra settings.
+
+  Outputs nothing when both colors match the page colors, so a default
+  section costs no CSS. Pair it with the `color-surface` class on the
+  section's wrapper, which paints the background and text color.
+
+  @param {color} [background] - Section background. Defaults to the page background
+  @param {color} [text] - Section text color. Defaults to the page text color
+  @param {color} [accent] - Optional accent override (links, eyebrows, hover)
+
+  @example
+  {% render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text %}
+{%- enddoc -%}
+
+{%- liquid
+  assign surface_background = background | default: settings.color_background
+  assign surface_text = text | default: settings.color_text
+
+  assign is_custom = false
+  if surface_background != settings.color_background or surface_text != settings.color_text or accent != blank
+    assign is_custom = true
+  endif
+-%}
+
+{%- if is_custom -%}
+  {%- style -%}
+    #shopify-section-{{ section.id }} {
+      --color-background: {{ surface_background }};
+      --color-text: {{ surface_text }};
+      --color-text-muted: color-mix(in srgb, {{ surface_text }} 72%, {{ surface_background }});
+      --color-border: color-mix(in srgb, {{ surface_text }} 14%, {{ surface_background }});
+      --color-background-raised: color-mix(in srgb, {{ surface_text }} 5%, {{ surface_background }});
+      {%- if accent != blank %}
+        --color-accent: {{ accent }};
+        --color-accent-hover: {{ accent }};
+      {%- endif %}
+    }
+  {%- endstyle -%}
+{%- endif -%}
