@@ -101,18 +101,16 @@
             aria-label="{{ first.settings.title | escape }}"
             {% unless f_has_vid %}hidden{% endunless %}
           ></video>
-          {%- if first.settings.image != blank -%}
-            <img
-              data-phil-img
+          <img
+            data-phil-img
+            {% if first.settings.image != blank %}
               src="{{ first.settings.image | image_url: width: 1200 }}"
               alt="{{ first.settings.title | escape }}"
-              loading="lazy"
               style="object-position: {{ first.settings.image_position | default: '50% 50%' }};{%- if f_scale != 1.0 %} transform: scale({{ f_scale }}); transform-origin: {{ first.settings.image_scale_origin | default: '50% 50%' }};{%- endif %}"
-              {% if f_has_vid %}hidden{% endif %}
-            >
-          {%- else -%}
-            <img data-phil-img src="" alt="" loading="lazy">
-          {%- endif -%}
+            {% endif %}
+            loading="lazy"
+            {% if f_has_vid or first.settings.image == blank %}hidden{% endif %}
+          >
         {%- endif -%}
       </div>
 
@@ -227,7 +225,8 @@
   }
 
   [data-phil-vid][hidden],
-  [data-phil-img][hidden] {
+  [data-phil-img][hidden],
+  [data-phil-img]:not([src]) {
     display: none !important;
   }
 
@@ -307,8 +306,13 @@
             }
           } else {
             if (this.#vid) { this.#vid.pause(); this.#vid.hidden = true; }
-            this.#img.hidden = false;
-            this.#img.src = item.dataset.img || '';
+            if (item.dataset.img) {
+              this.#img.setAttribute('src', item.dataset.img);
+              this.#img.hidden = false;
+            } else {
+              this.#img.removeAttribute('src');
+              this.#img.hidden = true;
+            }
             this.#img.style.objectPosition = item.dataset.pos || '50% 50%';
             this.#img.alt = item.querySelector('summary')?.textContent.trim() || '';
             const scale = parseFloat(item.dataset.scale) || 1;
