@@ -1,8 +1,8 @@
 {%- doc -%}
   Philosophy accordion — "Made for the ritual".
   Two-column grid: accordion on left, switching image/video on right.
-  Matches handoff section #shopify-section-enso-phil exactly.
-  Image position/zoom are hardcoded per slot (not editor settings).
+  image_position is a per-block text setting (CSS object-position).
+  image_scale and image_scale_origin are hardcoded per slot index.
 {%- enddoc -%}
 
 {% style %}
@@ -51,13 +51,10 @@
               if block.settings.video_poster != blank
                 assign b_poster_url = block.settings.video_poster | image_url: width: 1200
               endif
-              assign b_pos = '50% 50%'
+              assign b_pos = block.settings.image_position | default: '50% 50%'
               assign b_scale = 1.0
               assign b_origin = '50% 50%'
-              if forloop.index == 1
-                assign b_pos = '50% 45%'
-              elsif forloop.index == 2
-                assign b_pos = '52% 58%'
+              if forloop.index == 2
                 assign b_scale = 1.35
                 assign b_origin = '52% 58%'
               endif
@@ -113,7 +110,7 @@
             {% if first.settings.image != blank %}
               src="{{ first.settings.image | image_url: width: 1200 }}"
               alt="{{ first.settings.title | escape }}"
-              style="object-position: 50% 45%;"
+              style="object-position: {{ first.settings.image_position | default: '50% 50%' }};"
             {% endif %}
             loading="lazy"
             {% if f_has_vid or first.settings.image == blank %}hidden{% endif %}
@@ -448,6 +445,13 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.enso_phil.blocks.item.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "image_position",
+          "label": "t:sections.enso_phil.blocks.item.settings.image_position.label",
+          "info": "t:sections.enso_phil.blocks.item.settings.image_position.info",
+          "default": "50% 50%"
         },
         {
           "type": "video",

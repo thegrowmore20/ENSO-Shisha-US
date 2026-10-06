@@ -8,14 +8,14 @@
 
 {% style %}
   #usps-{{ section.id }} {
-    padding-top: 48px;
-    padding-bottom: 48px;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
   }
 
   @media screen and (max-width: 749px) {
     #usps-{{ section.id }} {
-      padding-top: 36px;
-      padding-bottom: 36px;
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
   }
 {% endstyle %}

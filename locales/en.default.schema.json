@@ -1796,6 +1796,7 @@
             "title": { "label": "Title" },
             "body": { "label": "Body" },
             "image": { "label": "Image" },
+            "image_position": { "label": "Image position", "info": "CSS object-position value, e.g. 50% 45%" },
             "video": {
               "label": "Video",
               "info": "Replaces the image when this item is active"
