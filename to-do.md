@@ -23,10 +23,10 @@ Every HTML page was driven in a browser at desktop and mobile widths. The findin
 
 | # | Item | Old file | In the HTML? | Proposal | Status |
 |---|---|---|---|---|---|
-| 1 | Design tokens: colours, fonts, spacing, buttons, headings | `css-variables`, `base.css` | Yes | Bring, trimmed | Built, not yet previewed |
-| 2 | Layout: skip link, meta tags, font loading | `theme.liquid`, `meta-tags` | Yes | Bring | Built, not yet previewed |
-| 3 | Header with dropdown menus and mobile menu | `header`, `nav-dropdown`, `mega-menu`, `site-header.js` | Yes | Rebuild to match the HTML | Built, not yet previewed (search still links to the search page: item 11) |
-| 4 | Footer | `footer`, `footer-social-icons`, `newsletter-signup-form` | Yes | Rebuild; fold `fix-footer-mobile` into it instead of a separate patch section | Built, not yet previewed |
+| 1 | Design tokens: colours, fonts, spacing, buttons, headings | `css-variables`, `base.css` | Yes | Bring, trimmed | Built and checked on the preview |
+| 2 | Layout: skip link, meta tags, font loading | `theme.liquid`, `meta-tags` | Yes | Bring | Built and checked on the preview |
+| 3 | Header with dropdown menus and mobile menu | `header`, `nav-dropdown`, `mega-menu`, `site-header.js` | Yes | Rebuild to match the HTML | Built and checked on the preview (search still links to the search page: item 11) |
+| 4 | Footer | `footer`, `footer-social-icons`, `newsletter-signup-form` | Yes | Rebuild; fold `fix-footer-mobile` into it instead of a separate patch section | Built and checked on the preview |
 | 5 | Cart drawer | `cart-drawer` section, JS and CSS | Yes | Bring, wired to the real cart | To do |
 | 6 | Age-verification popup | `age-verification-popup` | Yes, on every page | Bring (confirmed) | To do |
 | 7 | Scroll progress bar | `global.js` | Yes | Bring (tiny) | Kept as is (colour now follows the accent setting) |
@@ -162,7 +162,7 @@ Every HTML page was driven in a browser at desktop and mobile widths. The findin
 
 ## Step 1 notes (2026-10-06)
 
-Built: global settings (logo and favicon, colour palette and roles, buttons, typography, cart type, free shipping bar, social media), the CSS variables, the colour-scheme-to-palette migration across 35 sections and 17 templates, and the header and footer. Nothing has been previewed in a store yet.
+Built: global settings (logo and favicon, colour palette and roles, buttons, typography, cart type, free shipping bar, social media), the CSS variables, the colour-scheme-to-palette migration across 35 sections and 17 templates, and the header and footer. Header and footer were checked on the theme preview at 1440 and 390px against the HTML measurements; the other pages have not been reviewed yet.
 
 To set in the theme editor after uploading:
 
