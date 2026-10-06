@@ -1309,6 +1309,21 @@
         },
         "cta_link": {
           "label": "Button link"
+        },
+        "card_images_header": {
+          "content": "Card image overrides"
+        },
+        "card_images_info": {
+          "content": "Set these to pin specific images over each article's featured image."
+        },
+        "card_image_1": {
+          "label": "Card 1 image"
+        },
+        "card_image_2": {
+          "label": "Card 2 image"
+        },
+        "card_image_3": {
+          "label": "Card 3 image"
         }
       },
       "presets": {

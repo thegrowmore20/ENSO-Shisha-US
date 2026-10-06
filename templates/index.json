@@ -402,7 +402,7 @@
     "enso_experience": {
       "type": "enso-experience",
       "settings": {
-        "image": "shopify://shop_images/exp-tearoom_1.webp",
+        "image": "shopify://shop_images/enso-exp-tea.webp",
         "image_position": "50% 45%",
         "heading": "ENSŌ Experience",
         "subheading": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",

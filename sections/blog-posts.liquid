@@ -2,6 +2,8 @@
   From the journal — 3-column dark photo-overlay card grid.
   Matches handoff section #shopify-section-enso-blog.
   Mobile: horizontal scroll snap (no pagination).
+  card_image_1/2/3: optional image overrides; when set they replace the
+  article's own featured image for that slot.
 {%- enddoc -%}
 
 {%- assign featured_blog = section.settings.blog -%}
@@ -35,19 +37,40 @@
     {%- if featured_blog and featured_blog.articles_count > 0 -%}
       <div class="enso-journal__grid">
         {%- for article in featured_blog.articles limit: section.settings.posts_limit -%}
+          {%- liquid
+            case forloop.index
+              when 1
+                assign card_image = section.settings.card_image_1
+              when 2
+                assign card_image = section.settings.card_image_2
+              when 3
+                assign card_image = section.settings.card_image_3
+              else
+                assign card_image = nil
+            endcase
+            if card_image == blank
+              assign card_image = article.image
+            endif
+          -%}
           <a class="enso-jcard" href="{{ article.url }}">
             <div class="enso-jcard__media">
-              {%- if article.image -%}
+              {%- if card_image -%}
                 {{
-                  article.image
+                  card_image
                   | image_url: width: 900
                   | image_tag:
                     widths: '450, 700, 900',
                     sizes: '(max-width: 749px) 80vw, 33vw',
-                    alt: article.image.alt | default: article.title,
+                    alt: card_image.alt | default: article.title,
                     loading: 'lazy',
                     class: 'enso-jcard__img'
                 }}
+              {%- elsif forloop.index == 1 -%}
+                <img src="{{ 'jr-arch-redcup.jpg' | asset_url }}" class="enso-jcard__img" alt="{{ article.title | escape }}" loading="lazy" width="900" height="1125">
+              {%- elsif forloop.index == 2 -%}
+                <img src="{{ 'phil-moment.jpg' | asset_url }}" class="enso-jcard__img" alt="{{ article.title | escape }}" loading="lazy" width="900" height="1125">
+              {%- elsif forloop.index == 3 -%}
+                <img src="{{ 'phil-cup.jpg' | asset_url }}" class="enso-jcard__img" alt="{{ article.title | escape }}" loading="lazy" width="900" height="1125">
               {%- else -%}
                 <div class="enso-jcard__img-placeholder" aria-hidden="true"></div>
               {%- endif -%}
@@ -279,6 +302,29 @@
       "type": "url",
       "id": "cta_link",
       "label": "t:sections.blog_posts.settings.cta_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.blog_posts.settings.card_images_header.content"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.blog_posts.settings.card_images_info.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_1",
+      "label": "t:sections.blog_posts.settings.card_image_1.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_2",
+      "label": "t:sections.blog_posts.settings.card_image_2.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_3",
+      "label": "t:sections.blog_posts.settings.card_image_3.label"
     },
     {
       "type": "header",
