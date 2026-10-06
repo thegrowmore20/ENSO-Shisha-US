@@ -73,10 +73,73 @@
         "padding_top_mobile": 32,
         "padding_bottom_mobile": 32
       }
+    },
+    "usps": {
+      "type": "general-usps",
+      "blocks": {
+        "b_no_fire": {
+          "type": "column",
+          "settings": {
+            "icon_asset": "usp-no-fire",
+            "heading": "No fire"
+          }
+        },
+        "b_heat": {
+          "type": "column",
+          "settings": {
+            "icon_asset": "usp-heat",
+            "heading": "Heat control"
+          }
+        },
+        "b_battery": {
+          "type": "column",
+          "settings": {
+            "icon_asset": "usp-battery",
+            "heading": "Rechargeable"
+          }
+        },
+        "b_snap": {
+          "type": "column",
+          "settings": {
+            "icon_asset": "usp-snap",
+            "heading": "Snap on"
+          }
+        },
+        "b_warranty": {
+          "type": "column",
+          "settings": {
+            "icon_asset": "usp-warranty",
+            "heading": "2-year warranty"
+          }
+        },
+        "b_returns": {
+          "type": "column",
+          "settings": {
+            "icon_asset": "usp-returns",
+            "heading": "30-day returns"
+          }
+        }
+      },
+      "block_order": [
+        "b_no_fire",
+        "b_heat",
+        "b_battery",
+        "b_snap",
+        "b_warranty",
+        "b_returns"
+      ],
+      "settings": {
+        "color_background": "#FAF6EC",
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
     }
   },
   "order": [
     "hero",
+    "usps",
     "models"
   ]
 }

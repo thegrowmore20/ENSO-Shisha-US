@@ -1,8 +1,11 @@
-{%- comment -%}
-  General USPs — simple row of icon + label cards. No heading, no
-  subheading, no trust badges — just icons and text, laid out in a flex row
-  that wraps on narrow screens.
-{%- endcomment -%}
+{%- doc -%}
+  General USPs — simple row of icon + label cards.
+  Icons can be one of the six built-in SVG assets (set `icon_asset` to the
+  filename without extension, e.g. `usp-no-fire`) or a merchant-uploaded
+  image via the image_picker (`image`). Asset icons take precedence.
+
+  @param section.blocks[] column blocks (icon_asset | image, heading)
+{%- enddoc -%}
 
 {%- liquid
   assign scheme_class = 'color-surface'
@@ -30,7 +33,16 @@
         {%- for block in section.blocks -%}
           <div class="usps__item" {{ block.shopify_attributes }}>
             <div class="usps__icon">
-              {%- if block.settings.image != blank -%}
+              {%- if block.settings.icon_asset != blank -%}
+                <img
+                  src="{{ block.settings.icon_asset | append: '.svg' | asset_url }}"
+                  alt="{{ block.settings.heading | escape }}"
+                  width="44"
+                  height="44"
+                  loading="lazy"
+                  class="usps__icon-image"
+                >
+              {%- elsif block.settings.image != blank -%}
                 {{
                   block.settings.image
                   | image_url: width: 96
@@ -186,9 +198,26 @@
       "limit": 8,
       "settings": [
         {
+          "type": "select",
+          "id": "icon_asset",
+          "label": "Built-in icon",
+          "info": "Uses the SVG from the theme. Leave blank to use a custom image instead.",
+          "options": [
+            { "value": "", "label": "None — use custom image below" },
+            { "value": "usp-no-fire", "label": "No fire" },
+            { "value": "usp-heat", "label": "Heat control" },
+            { "value": "usp-battery", "label": "Rechargeable" },
+            { "value": "usp-snap", "label": "Snap on" },
+            { "value": "usp-warranty", "label": "Warranty" },
+            { "value": "usp-returns", "label": "Returns" }
+          ],
+          "default": ""
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Icon"
+          "label": "Custom icon image",
+          "info": "Overrides the built-in icon above."
         },
         {
           "type": "text",
@@ -203,12 +232,12 @@
     {
       "name": "General USPs",
       "blocks": [
-        { "type": "column", "settings": { "heading": "No Fire" } },
-        { "type": "column", "settings": { "heading": "Heat Control" } },
-        { "type": "column", "settings": { "heading": "Rechargeable" } },
-        { "type": "column", "settings": { "heading": "Plug & Play" } },
-        { "type": "column", "settings": { "heading": "Snap N' Go" } },
-        { "type": "column", "settings": { "heading": "Sleek Design" } }
+        { "type": "column", "settings": { "icon_asset": "usp-no-fire",  "heading": "No fire" } },
+        { "type": "column", "settings": { "icon_asset": "usp-heat",     "heading": "Heat control" } },
+        { "type": "column", "settings": { "icon_asset": "usp-battery",  "heading": "Rechargeable" } },
+        { "type": "column", "settings": { "icon_asset": "usp-snap",     "heading": "Snap on" } },
+        { "type": "column", "settings": { "icon_asset": "usp-warranty", "heading": "2-year warranty" } },
+        { "type": "column", "settings": { "icon_asset": "usp-returns",  "heading": "30-day returns" } }
       ]
     }
   ]
