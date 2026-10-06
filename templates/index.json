@@ -44,8 +44,63 @@
       "settings": {
         "color_background": "{{ settings.color_palette.background }}",
         "color_text": "{{ settings.color_palette.foreground }}",
+        "full_viewport_height": false,
+        "section_margin_bottom": 0,
+        "poster_loading": "eager",
         "autoplay_interval": 9000,
         "video_quality": "720"
+      }
+    },
+    "models": {
+      "type": "signature-models",
+      "blocks": {
+        "enso": {
+          "type": "model",
+          "settings": {
+            "product": "enso",
+            "image": "shopify://shop_images/g2-white.jpg",
+            "image_object_fit": "cover",
+            "image_object_position": "50% 55%",
+            "hover_image": "shopify://shop_images/enso-top.jpg",
+            "gallery_image_2": "shopify://shop_images/g3.jpg",
+            "gallery_image_3": "shopify://shop_images/g4.jpg",
+            "gallery_image_4": "shopify://shop_images/g5.jpg",
+            "badge_label": "",
+            "cta_label": "Shop ENSŌ",
+            "name": "",
+            "excerpt": "An all-in-one electric hookah. Your ritual, without charcoal: open system, no coals, full control."
+          }
+        },
+        "diamond": {
+          "type": "model",
+          "settings": {
+            "product": "enso-diamond-pre-order",
+            "image_object_fit": "contain",
+            "image_object_position": "50% 50%",
+            "gallery_image_2": "shopify://shop_images/g-3q-left.jpg",
+            "gallery_image_3": "shopify://shop_images/g-top-3q.jpg",
+            "gallery_image_4": "shopify://shop_images/g-open.jpg",
+            "badge_label": "",
+            "cta_label": "Pre-order Diamond",
+            "name": "",
+            "excerpt": "The electric heater for the hookah you already own. No coals, no ash, the same evening."
+          }
+        }
+      },
+      "block_order": [
+        "enso",
+        "diamond"
+      ],
+      "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "eyebrow": "",
+        "heading": "Shop signature models",
+        "features": "Coal-Free · Cordless · Magnetic",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
     "usps": {
@@ -109,70 +164,26 @@
         "padding_bottom_mobile": 36
       }
     },
-    "models": {
-      "type": "signature-models",
-      "blocks": {
-        "enso": {
-          "type": "model",
-          "settings": {
-            "product": "enso",
-            "image": "shopify://shop_images/g2-white.jpg",
-            "image_object_fit": "cover",
-            "image_object_position": "50% 55%",
-            "hover_image": "shopify://shop_images/enso-top.jpg",
-            "gallery_image_2": "shopify://shop_images/g3.jpg",
-            "gallery_image_3": "shopify://shop_images/g4.jpg",
-            "gallery_image_4": "shopify://shop_images/g5.jpg",
-            "badge_label": "",
-            "cta_label": "Shop ENSŌ",
-            "name": "",
-            "excerpt": "An all-in-one electric hookah. Your ritual, without charcoal: open system, no coals, full control."
-          }
-        },
-        "diamond": {
-          "type": "model",
-          "settings": {
-            "product": "enso-diamond-pre-order",
-            "image_object_fit": "contain",
-            "image_object_position": "50% 50%",
-            "gallery_image_2": "shopify://shop_images/g-3q-left.jpg",
-            "gallery_image_3": "shopify://shop_images/g-top-3q.jpg",
-            "gallery_image_4": "shopify://shop_images/g-open.jpg",
-            "badge_label": "",
-            "cta_label": "Pre-order Diamond",
-            "name": "",
-            "excerpt": "The electric heater for the hookah you already own. No coals, no ash, the same evening."
-          }
-        }
-      },
-      "block_order": [
-        "enso",
-        "diamond"
-      ],
-      "settings": {
-        "color_background": "{{ settings.color_palette.background }}",
-        "color_text": "{{ settings.color_palette.foreground }}",
-        "eyebrow": "",
-        "heading": "Shop signature models",
-        "features": "Coal-Free · Cordless · Magnetic",
-        "padding_top": 64,
-        "padding_bottom": 64,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
-      }
-    },
     "enso_system_video": {
       "type": "video-hero-slider",
       "blocks": {
         "slide_system": {
           "type": "slide",
           "settings": {
+            "thumbnail": "shopify://shop_images/6403a43b-Screenshot_2026-09-21_111535-removebg-preview.png",
+            "video": "shopify://files/videos/34b32e93-a726a9d69d414e18811fa97b77202100.HD-1080p-7.2Mbps-32265318.mp4",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
             "cta_label": "Explore the system",
-            "cta_link": "shopify://collections/all"
+            "cta_link": "shopify://products/enso"
           }
         }
       },
-      "block_order": ["slide_system"],
+      "block_order": [
+        "slide_system"
+      ],
       "settings": {
         "color_background": "{{ settings.color_palette.graphite }}",
         "color_text": "{{ settings.color_palette.ivory }}",
