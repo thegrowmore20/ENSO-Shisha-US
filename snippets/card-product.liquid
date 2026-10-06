@@ -151,17 +151,6 @@
   </div>
   <div class="product-card__info">
     <h3 class="h-feature product-card__title">{{ card_product.title }}</h3>
-    <div class="card-product-rating" 
-      aria-label="Rated {{ card_product.metafields.loox.avg_rating }} out of 5 based on {{ card_product.metafields.loox.num_reviews }} reviews">
-      <div class="loox-rating"
-        data-pattern="[rating] ([count])"
-          data-show-empty-stars="true"
-          data-id="{{ card_product.id }}"
-          data-rating="{{ card_product.metafields.loox.avg_rating }}"
-          data-raters="{{ card_product.metafields.loox.num_reviews }}"
-          data-floating-product-reviews-enabled="true">
-      </div>
-    </div>
     <div class="caption product-card__price">
       {% render 'price', product: card_product %}
     </div>

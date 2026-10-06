@@ -36,7 +36,15 @@
             assign has_video = true
           endif
         -%}
-        <a href="{{ block.settings.link | default: '#' }}" class="reel" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+        <a href="{{ block.settings.link | default: '#' }}"
+           class="reel"
+           data-igp="{{ forloop.index0 }}"
+           data-ig-link="{{ block.settings.link | escape }}"
+           {%- for source in block.settings.video.sources -%}
+             {%- if source.format == 'mp4' -%}data-ig-video="{{ source.url }}"{%- endif -%}
+           {%- endfor -%}
+           aria-label="Open Instagram reel"
+           {{ block.shopify_attributes }}>
           <div class="reel__media">
             {%- if block.settings.thumbnail -%}
               <img
@@ -73,6 +81,35 @@
         </a>
       {%- endfor -%}
     </div>
+  </div>
+
+  <div class="igv" id="igv-{{ section.id }}" hidden role="dialog" aria-modal="true" aria-label="Instagram reel">
+    <div class="igv__backdrop"></div>
+    <div class="igv__card">
+      <div class="igv__top">
+        <div class="igv__profile">
+          <svg class="igv__ig-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+          </svg>
+          <span class="igv__handle">{{ section.settings.cta_label | default: '@enso.future' | remove: ' ›' }}</span>
+        </div>
+        <a class="igv__view-link" href="#" target="_blank" rel="noopener" data-ig-href>View on Instagram ›</a>
+      </div>
+      <div class="igv__media">
+        <video class="igv__video" muted playsinline preload="none" loop></video>
+      </div>
+      <button class="igv__prev" data-ig-prev aria-label="Previous reel">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="igv__next" data-ig-next aria-label="Next reel">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <button class="igv__close" data-ig-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
   </div>
 </instagram-reels>
 
@@ -218,37 +255,246 @@
       scroll-snap-align: center;
     }
   }
+
+  /* ── Lightbox ── */
+  .igv {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .igv[hidden] {
+    display: none;
+  }
+
+  .igv__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.88);
+    cursor: pointer;
+  }
+
+  .igv__card {
+    position: relative;
+    z-index: 1;
+    width: min(360px, 90vw);
+    border-radius: 18px;
+    overflow: hidden;
+    background: #0a0a0a;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  }
+
+  .igv__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(10, 10, 10, 0.9);
+  }
+
+  .igv__profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .igv__ig-icon {
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .igv__handle {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    color: #fff;
+  }
+
+  .igv__view-link {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--palette-sand, #c8943a);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .igv__view-link:hover {
+    text-decoration: underline;
+  }
+
+  .igv__media {
+    aspect-ratio: 9 / 16;
+    background: #000;
+    position: relative;
+  }
+
+  .igv__video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .igv__prev,
+  .igv__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: background 0.2s ease;
+  }
+
+  .igv__prev:hover,
+  .igv__next:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .igv__prev { left: 8px; }
+  .igv__next { right: 8px; }
+
+  .igv__prev svg,
+  .igv__next svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .igv__close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9001;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: background 0.2s ease;
+  }
+
+  .igv__close:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .igv__close svg {
+    width: 20px;
+    height: 20px;
+  }
 {% endstylesheet %}
 
 {% javascript %}
   class InstagramReels extends HTMLElement {
+    #reels = [];
+    #currentIndex = 0;
+    #modal = null;
+    #modalVideo = null;
+    #modalHref = null;
+
     connectedCallback() {
-      const medias = [...this.querySelectorAll('.reel__media')];
-      if (!medias.length) return;
+      this.#reels = [...this.querySelectorAll('a[data-igp]')];
+      this.#modal = this.querySelector('.igv');
+      if (!this.#modal) return;
+
+      this.#modalVideo = this.#modal.querySelector('.igv__video');
+      this.#modalHref = this.#modal.querySelector('[data-ig-href]');
+
+      for (const reel of this.#reels) {
+        reel.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.#open(parseInt(reel.dataset.igp, 10));
+        });
+      }
+
+      this.#modal.querySelector('[data-ig-close]').addEventListener('click', () => this.#close());
+      this.#modal.querySelector('.igv__backdrop').addEventListener('click', () => this.#close());
+
+      this.#modal.querySelector('[data-ig-prev]').addEventListener('click', () => {
+        this.#open((this.#currentIndex - 1 + this.#reels.length) % this.#reels.length);
+      });
+      this.#modal.querySelector('[data-ig-next]').addEventListener('click', () => {
+        this.#open((this.#currentIndex + 1) % this.#reels.length);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (this.#modal.hidden) return;
+        if (e.key === 'Escape') this.#close();
+        if (e.key === 'ArrowLeft') this.#open((this.#currentIndex - 1 + this.#reels.length) % this.#reels.length);
+        if (e.key === 'ArrowRight') this.#open((this.#currentIndex + 1) % this.#reels.length);
+      });
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (!entry.isIntersecting) continue;
-            this.#loadVideo(entry.target);
-            observer.unobserve(entry.target);
-          }
-        },
-        { rootMargin: '200px' }
-      );
-
-      for (const media of medias) {
-        observer.observe(media);
+      if (!reduceMotion) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              this.#loadPreview(entry.target.querySelector('.reel__media'));
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: '200px' }
+        );
+        for (const reel of this.#reels) observer.observe(reel);
       }
     }
 
-    #loadVideo(media) {
+    #open(index) {
+      const reel = this.#reels[index];
+      if (!reel) return;
+      this.#currentIndex = index;
+
+      const videoSrc = reel.dataset.igVideo || '';
+      const igLink = reel.dataset.igLink || '#';
+
+      if (this.#modalHref) this.#modalHref.href = igLink;
+
+      if (this.#modalVideo) {
+        this.#modalVideo.pause();
+        this.#modalVideo.src = videoSrc;
+        if (videoSrc) {
+          this.#modalVideo.load();
+          this.#modalVideo.play().catch(() => {});
+        }
+      }
+
+      this.#modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      this.#modal.querySelector('[data-ig-close]').focus();
+    }
+
+    #close() {
+      if (this.#modalVideo) {
+        this.#modalVideo.pause();
+        this.#modalVideo.src = '';
+      }
+      this.#modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    #loadPreview(media) {
+      if (!media) return;
       const template = media.querySelector('[data-video-template]');
       if (!template) return;
-
       const video = template.content.firstElementChild.cloneNode(true);
       video.addEventListener('canplay', () => media.classList.add('is-ready'), { once: true });
       media.append(video);
@@ -256,7 +502,9 @@
     }
   }
 
-  customElements.define('instagram-reels', InstagramReels);
+  if (!customElements.get('instagram-reels')) {
+    customElements.define('instagram-reels', InstagramReels);
+  }
 {% endjavascript %}
 
 {% schema %}
