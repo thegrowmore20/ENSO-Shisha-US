@@ -955,10 +955,6 @@ h6, .h6 {
 .loox-rating .loox-icon {
   color: var(--color-accent) !important;
 }
-img.video-hero-slider__poster {
-    object-fit: contain;
-    background: #202020;
-}
 button.carousel__arrow.carousel__arrow--prev[disabled] {
     display: none;
 }
@@ -1000,15 +996,6 @@ div#comparison-table-container-6 img.product-card__image.product-card__primary-i
 button.video-hero-slider__arrow.video-hero-slider__arrow--next {
     right: calc(var(--page-margin) - 40px) !important;
 }
-@media only screen and (max-width: 1540px) {
-  .video-hero-slider__arrow--prev {
-    left: 15px !important;
-  }
-
-  button.video-hero-slider__arrow.video-hero-slider__arrow--next {
-      right: 15px !important;
-  }
-}
 div[data-icon="icon_1"] img, div[data-icon="icon_2"] img {
     opacity: 0.5;
 }
@@ -1040,21 +1027,6 @@ a.btn.btn--outline::after {
 
 a.btn.btn--outline:hover {
     text-decoration: underline;
-}
-.video-hero-slider__slide.is-active.is-ready .reserve-spot-button {
-    margin-left: 0;
-}
-
-.video-hero-slider__slide.is-active.is-ready .reserve-spot-form {
-    padding: 0;
-    margin: 0;
-    justify-content: flex-start !important;
-}
-
-.video-hero-slider__slide.is-active.is-ready .reserve-spot-form button {
-    max-width: max-content !important;
-    padding: 14px 20px !important;
-    margin: 10px 0px 0px !important;
 }
 .price__current {
     color: #000 !important;
@@ -1119,10 +1091,6 @@ img.product-card__image.product-card__secondary-image[alt="ENSŌ Diamond Pre-Ord
 .product-block.product-rich-text.product-rich-text--text-left.list-items {
     padding-top: 0;
 }
-.video-hero-slider__slide.is-active.is-ready .reserve-spot-form button {
-    letter-spacing: normal;
-    padding: 14px 35px !important;
-}
 
 
 
@@ -1138,10 +1106,6 @@ img.product-card__image.product-card__secondary-image[alt="ENSŌ Diamond Pre-Ord
 /* mobile css */
 
 @media only screen and (max-width:767px) {
-  #shopify-section-template--27698706678073__video_hero_slider_p6YT3f .video-hero-slider__content {
-    max-width: 360px !important;
-  }
-
   .split--height-mobile-small .split__media, .split--height-mobile-small .split__placeholder {
       height: auto;
       min-height: 410px !important;

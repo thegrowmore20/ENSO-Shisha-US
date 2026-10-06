@@ -18,7 +18,6 @@
   assign heading_font = settings.type_heading_font
   assign subheading_font = settings.type_subheading_font
   assign accent_font = settings.type_accent_font
-  assign heading_scale = settings.type_heading_scale | divided_by: 100.0
 -%}
 
 {%- style -%}
@@ -101,17 +100,16 @@
     --font-weight-bold: 700;
     --font-weight-heavy: 800;
 
-    --font-size-body: {{ settings.type_body_size }}px;
+    --font-size-body: 16px;
     --line-height-body: 1.4;
 
-    --heading-scale: {{ heading_scale }};
-    --font-size-h0: calc(64px * var(--heading-scale));
-    --font-size-h1: calc(48px * var(--heading-scale));
-    --font-size-h2: calc(36px * var(--heading-scale));
-    --font-size-h3: calc(30px * var(--heading-scale));
-    --font-size-h4: calc(24px * var(--heading-scale));
-    --font-size-h5: calc(20px * var(--heading-scale));
-    --font-size-h6: calc(18px * var(--heading-scale));
+    --font-size-h0: 64px;
+    --font-size-h1: 48px;
+    --font-size-h2: 36px;
+    --font-size-h3: 30px;
+    --font-size-h4: 24px;
+    --font-size-h5: 20px;
+    --font-size-h6: 18px;
 
     /* ---------- Spacing, radius, layout ---------- */
     --space-1: 4px;

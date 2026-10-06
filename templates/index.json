@@ -8,6 +8,40 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "hero": {
+      "type": "video-hero-slider",
+      "blocks": {
+        "slide_diamond": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/WhatsApp Video 2026-05-08 at 08.50.32.webm",
+            "heading": "A Modern Twist on a Classic Ritual",
+            "cta_label": "Shop now",
+            "cta_link": "shopify://products/enso-diamond-pre-order"
+          }
+        },
+        "slide_enso": {
+          "type": "slide",
+          "settings": {
+            "video": "shopify://files/videos/Enso_whiteview_1.mp4",
+            "heading": "Where tradition meets modern innovation",
+            "cta_label": "Shop now",
+            "cta_link": "shopify://products/enso"
+          }
+        }
+      },
+      "block_order": [
+        "slide_diamond",
+        "slide_enso"
+      ],
+      "settings": {
+        "autoplay_interval": 9000,
+        "video_quality": "720"
+      }
+    }
+  },
+  "order": [
+    "hero"
+  ]
 }

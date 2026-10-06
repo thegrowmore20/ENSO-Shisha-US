@@ -297,31 +297,6 @@
         "default": "inter_n8",
         "label": "t:settings.typography.type_accent_font.label",
         "info": "t:settings.typography.type_accent_font.info"
-      },
-      {
-        "type": "header",
-        "content": "t:settings.typography.headers.sizes"
-      },
-      {
-        "type": "range",
-        "id": "type_body_size",
-        "min": 14,
-        "max": 18,
-        "step": 1,
-        "default": 16,
-        "unit": "px",
-        "label": "t:settings.typography.type_body_size.label"
-      },
-      {
-        "type": "range",
-        "id": "type_heading_scale",
-        "min": 80,
-        "max": 120,
-        "step": 5,
-        "default": 100,
-        "unit": "%",
-        "label": "t:settings.typography.type_heading_scale.label",
-        "info": "t:settings.typography.type_heading_scale.info"
       }
     ]
   },
@@ -465,17 +440,6 @@
         "type": "url",
         "id": "social_x_link",
         "label": "t:settings.social.x.label"
-      }
-    ]
-  },
-  {
-    "name": "t:settings.social_sharing.name",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "share_image",
-        "label": "t:settings.social_sharing.share_image.label",
-        "info": "t:settings.social_sharing.share_image.info"
       }
     ]
   },

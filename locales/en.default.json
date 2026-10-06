@@ -61,7 +61,8 @@
     "loading": "Loading...",
     "unit_price_separator": "per",
     "breadcrumbs": "Breadcrumbs",
-    "new_tab": "(opens in a new tab)"
+    "new_tab": "(opens in a new tab)",
+    "slide_position": "Slide {{ index }} of {{ total }}"
   },
   "header": {
     "menu": "Menu",
@@ -257,6 +258,9 @@
         "success": "Thank you. You are on the list.",
         "error": "Enter an email address like name@example.com"
       }
+    },
+    "video_hero_slider": {
+      "label": "Featured"
     }
   }
 }

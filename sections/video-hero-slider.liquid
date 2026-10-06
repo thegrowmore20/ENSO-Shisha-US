@@ -1,10 +1,18 @@
 {%- liquid
   assign autoplay_interval = section.settings.autoplay_interval
+  assign video_quality = section.settings.video_quality | default: '720'
   assign scheme_class = 'color-surface'
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
+  assign total_blocks = section.blocks.size
 -%}
 
-<video-hero-slider class="video-hero-slider {{ scheme_class }}" data-autoplay="{{ autoplay_interval }}">
+<video-hero-slider
+  class="video-hero-slider {{ scheme_class }}"
+  role="region"
+  aria-roledescription="{{ 'accessibility.carousel' | t | default: 'Carousel' }}"
+  data-autoplay="{{ autoplay_interval }}"
+  data-quality="{{ video_quality }}"
+>
   {%- for block in section.blocks -%}
     {%- liquid
       assign has_upload = false
@@ -15,9 +23,13 @@
       if block.settings.video_url and block.settings.video_url.id != blank
         assign has_external = true
       endif
+      assign slide_num = forloop.index
     -%}
     <div
       class="video-hero-slider__slide{% if forloop.first %} is-active{% endif %}"
+      role="group"
+      aria-roledescription="{{ 'accessibility.slide' | t | default: 'Slide' }}"
+      aria-label="{{ 'accessibility.slide_position' | t: index: slide_num, total: total_blocks }}"
       data-slide
       data-index="{{ forloop.index0 }}"
       {{ block.shopify_attributes }}
@@ -33,28 +45,26 @@
             loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
             {% if forloop.first %}fetchpriority="high"{% endif %}
           >
-        {%- else -%}
-          <img
-            class="video-hero-slider__poster"
-            src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/Screenshot_2026-09-21_111535-removebg-preview.png?v=1789971478"
-            alt="{{ block.settings.heading | escape }}"
-            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-            {% if forloop.first %}fetchpriority="high"{% endif %}
-          >
         {%- endif -%}
 
         <div class="video-hero-slider__video-slot" data-video-slot></div>
 
         {%- if has_upload -%}
-          <template data-video-template data-video-kind="upload">
-            <video class="video-hero-slider__video" muted loop playsinline preload="none">
-              {%- for source in block.settings.video.sources -%}
-                {%- if source.format == 'mp4' -%}
-                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
-                {%- endif -%}
-              {%- endfor -%}
-            </video>
-          </template>
+          {%- liquid
+            assign sources_json = '['
+            assign mp4_first = true
+            for source in block.settings.video.sources
+              if source.format == 'mp4'
+                unless mp4_first
+                  assign sources_json = sources_json | append: ','
+                endunless
+                assign sources_json = sources_json | append: '{"url":"' | append: source.url | append: '","height":' | append: source.height | append: '}'
+                assign mp4_first = false
+              endif
+            endfor
+            assign sources_json = sources_json | append: ']'
+          -%}
+          <template data-video-template data-video-kind="upload" data-sources="{{ sources_json | escape }}"></template>
         {%- elsif has_external -%}
           <template data-video-template data-video-kind="{{ block.settings.video_url.type }}" data-video-id="{{ block.settings.video_url.id }}"></template>
         {%- endif -%}
@@ -67,21 +77,20 @@
           <p class="eyebrow video-hero-slider__eyebrow">{{ block.settings.eyebrow }}</p>
         {%- endif -%}
         {%- if block.settings.heading != blank -%}
-          <h2 class="h1 video-hero-slider__heading">{{ block.settings.heading }}</h2>
+          {%- if forloop.first -%}
+            <h1 class="h1 video-hero-slider__heading">{{ block.settings.heading }}</h1>
+          {%- else -%}
+            <h2 class="h1 video-hero-slider__heading">{{ block.settings.heading }}</h2>
+          {%- endif -%}
         {%- endif -%}
         {%- if block.settings.text != blank -%}
           <div class="body-text video-hero-slider__text">{{ block.settings.text }}</div>
         {%- endif -%}
-        {%- if block.settings.cta_label != blank -%}
-          <a href="{{ block.settings.cta_link | default: '#' }}" class="btn btn--primary video-hero-slider__cta">
+        {%- if block.settings.cta_label != blank and block.settings.cta_link != blank -%}
+          <a href="{{ block.settings.cta_link }}" class="btn btn--accent video-hero-slider__cta">
             {{ block.settings.cta_label }}
           </a>
         {%- endif -%}
-        {%- if block.settings.custom_liquid != blank -%}
-          <div class="custom-liquid">
-            {{ block.settings.custom_liquid }}
-          </div>
-        {% endif %}  
       </div>
     </div>
   {%- endfor -%}
@@ -94,14 +103,14 @@
       {%- render 'icon-chevron' -%}
     </button>
 
-    <div class="video-hero-slider__dots">
+    <div class="video-hero-slider__dots" aria-hidden="true">
       {%- for block in section.blocks -%}
         <button
           type="button"
           class="video-hero-slider__dot{% if forloop.first %} is-active{% endif %}"
           data-dot
           data-index="{{ forloop.index0 }}"
-          aria-label="{{ 'accessibility.go_to_slide' | t: count: forloop.index }}"
+          tabindex="-1"
         ></button>
       {%- endfor -%}
     </div>
@@ -109,12 +118,6 @@
 </video-hero-slider>
 
 {% stylesheet %}
-  /*
-    The section carries a color scheme so buttons and accents resolve their
-    tokens. Overlay text and scrim stay fixed light values regardless of that
-    scheme, because they sit on arbitrary merchant-supplied video footage where
-    contrast has to be guaranteed.
-  */
   .video-hero-slider {
     position: relative;
     display: block;
@@ -142,10 +145,10 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
+    background: var(--palette-graphite);
   }
 
-  .video-hero-slider__poster,
-  .video-hero-slider__poster-fallback {
+  .video-hero-slider__poster {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -155,9 +158,15 @@
     transition: transform 7s var(--ease-out);
   }
 
-  .video-hero-slider__slide.is-active .video-hero-slider__poster,
-  .video-hero-slider__slide.is-active .video-hero-slider__poster-fallback {
+  .video-hero-slider__slide.is-active .video-hero-slider__poster {
     transform: scale(1.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video-hero-slider__poster {
+      transition: none;
+      transform: none;
+    }
   }
 
   .video-hero-slider__video-slot {
@@ -176,16 +185,20 @@
     transition: opacity 0.8s ease;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .video-hero-slider__poster,
-    .video-hero-slider__poster-fallback {
-      transition: none;
-      transform: none;
-    }
-  }
-
   .video-hero-slider__slide.is-ready .video-hero-slider__video {
     opacity: 1;
+  }
+
+  .video-hero-slider__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.18) 45%,
+      rgba(0, 0, 0, 0.0) 70%
+    );
   }
 
   .video-hero-slider__content {
@@ -196,10 +209,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    /* Top padding clears the header, which overlays the hero rather than sitting above it. */
     padding-top: 120px;
     padding-bottom: var(--space-8);
-    color: #F5F1E6;
+    color: var(--palette-ivory);
   }
 
   .video-hero-slider__content > * {
@@ -207,18 +219,19 @@
   }
 
   .video-hero-slider__eyebrow {
-    color: var(--color-accent);
+    color: var(--palette-sand);
   }
 
   .video-hero-slider__heading {
     max-width: 20ch;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
+    color: var(--palette-ivory);
   }
 
   .video-hero-slider__text {
     margin-top: var(--space-3);
     max-width: 46ch;
-    color: rgba(245, 241, 230, 0.82);
+    color: color-mix(in srgb, var(--palette-ivory) 82%, transparent);
   }
 
   .video-hero-slider__cta {
@@ -227,17 +240,23 @@
     box-shadow: var(--shadow-md);
   }
 
-  .video-hero-slider__content .custom-liquid {
-    margin-top: var(--space-3);
-  }
-
+  /* ── Dots ── */
   .video-hero-slider__dots {
     position: absolute;
     z-index: 3;
     bottom: var(--space-6);
-    right: var(--page-margin);
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: var(--space-3);
+  }
+
+  @media screen and (min-width: 750px) {
+    .video-hero-slider__dots {
+      left: auto;
+      right: var(--page-margin);
+      transform: none;
+    }
   }
 
   .video-hero-slider__dot {
@@ -249,23 +268,48 @@
   }
 
   .video-hero-slider__dot.is-active {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     transform: scale(1.4);
   }
 
+  /* ── Arrows ── */
   .video-hero-slider__arrow {
+    display: none;
     position: absolute;
     z-index: 3;
     top: 50%;
     transform: translateY(-50%);
-    display: flex;
     align-items: center;
     justify-content: center;
     width: 44px;
     height: 44px;
     border-radius: var(--radius-pill);
     background-color: rgba(10, 10, 10, 0.3);
-    color: #F5F1E6;
+    color: var(--palette-ivory);
+  }
+
+  @media screen and (min-width: 750px) {
+    .video-hero-slider__arrow {
+      display: flex;
+    }
+
+    .video-hero-slider__arrow--prev {
+      left: 15px;
+    }
+
+    .video-hero-slider__arrow--next {
+      right: 15px;
+    }
+  }
+
+  @media screen and (min-width: 1541px) {
+    .video-hero-slider__arrow--prev {
+      left: calc(var(--page-margin) - 40px);
+    }
+
+    .video-hero-slider__arrow--next {
+      right: calc(var(--page-margin) - 40px);
+    }
   }
 
   .video-hero-slider__arrow .icon-chevron {
@@ -273,158 +317,180 @@
     height: 18px;
   }
 
-  .video-hero-slider__arrow--prev {
-    left: var(--page-margin);
-  }
-
   .video-hero-slider__arrow--prev .icon-chevron {
     transform: rotate(90deg);
-  }
-
-  .video-hero-slider__arrow--next {
-    right: var(--page-margin);
   }
 
   .video-hero-slider__arrow--next .icon-chevron {
     transform: rotate(-90deg);
   }
-
-  @media screen and (max-width: 749px) {
-    .video-hero-slider__arrow {
-      display: none;
-    }
-
-    .video-hero-slider__dots {
-      right: auto;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  }
 {% endstylesheet %}
 
 {% javascript %}
-  class VideoHeroSlider extends HTMLElement {
-    constructor() {
-      super();
-      this.slides = [...this.querySelectorAll('[data-slide]')];
-      this.dots = [...this.querySelectorAll('[data-dot]')];
-      this.prevButton = this.querySelector('[data-prev]');
-      this.nextButton = this.querySelector('[data-next]');
-      this.activeIndex = 0;
-      this.timer = null;
-      this.interval = Number(this.dataset.autoplay || 0);
-      this.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
+  if (!customElements.get('video-hero-slider')) {
+    class VideoHeroSlider extends HTMLElement {
+      #slides = [];
+      #dots = [];
+      #activeIndex = 0;
+      #timer = null;
+      #interval = 0;
+      #inView = false;
+      #touchStart = null;
+      #reduceMotion = false;
+      #quality = '720';
 
-    connectedCallback() {
-      if (!this.slides.length) return;
+      connectedCallback() {
+        this.#slides = [...this.querySelectorAll('[data-slide]')];
+        this.#dots   = [...this.querySelectorAll('[data-dot]')];
+        this.#interval = Number(this.dataset.autoplay || 0);
+        this.#quality  = this.dataset.quality || '720';
+        this.#reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      this.#loadSlide(this.activeIndex);
+        if (!this.#slides.length) return;
 
-      for (const dot of this.dots) {
-        dot.addEventListener('click', () => this.#goTo(Number(dot.dataset.index)));
-      }
+        this.#loadSlide(0);
 
-      this.prevButton?.addEventListener('click', () => this.#step(-1));
-      this.nextButton?.addEventListener('click', () => this.#step(1));
+        this.querySelector('[data-prev]')?.addEventListener('click', () => this.#step(-1));
+        this.querySelector('[data-next]')?.addEventListener('click', () => this.#step(1));
 
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          this.#stopAutoplay();
-        } else {
-          this.#startAutoplay();
+        for (const dot of this.#dots) {
+          dot.addEventListener('click', () => this.#goTo(Number(dot.dataset.index)));
         }
-      });
 
-      this.#startAutoplay();
-    }
+        this.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') this.#step(-1);
+          if (e.key === 'ArrowRight') this.#step(1);
+        });
 
-    #startAutoplay() {
-      this.#stopAutoplay();
-      if (this.reduceMotion || !this.interval || this.slides.length < 2) return;
-      this.timer = window.setInterval(() => this.#step(1), this.interval);
-    }
+        this.addEventListener('touchstart', (e) => {
+          this.#touchStart = e.touches[0];
+        }, { passive: true });
 
-    #stopAutoplay() {
-      if (this.timer) {
-        window.clearInterval(this.timer);
-        this.timer = null;
+        this.addEventListener('touchend', (e) => {
+          if (!this.#touchStart) return;
+          const dx = e.changedTouches[0].clientX - this.#touchStart.clientX;
+          const dy = e.changedTouches[0].clientY - this.#touchStart.clientY;
+          this.#touchStart = null;
+          if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+          this.#step(dx < 0 ? 1 : -1);
+        }, { passive: true });
+
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            this.#inView = entry.isIntersecting;
+            this.#syncPlayback();
+          },
+          { threshold: 0.3 }
+        );
+        observer.observe(this);
+
+        document.addEventListener('visibilitychange', () => this.#syncPlayback());
+      }
+
+      #syncPlayback() {
+        const active = this.#slides[this.#activeIndex];
+        const video = active?.querySelector('video');
+        const hidden = document.hidden || !this.#inView;
+        if (video) hidden ? video.pause() : video.play().catch(() => {});
+        if (hidden) this.#stopAutoplay(); else this.#startAutoplay();
+      }
+
+      #startAutoplay() {
+        this.#stopAutoplay();
+        if (this.#reduceMotion || !this.#interval || this.#slides.length < 2) return;
+        this.#timer = window.setInterval(() => this.#step(1), this.#interval);
+      }
+
+      #stopAutoplay() {
+        if (this.#timer) { window.clearInterval(this.#timer); this.#timer = null; }
+      }
+
+      #step(dir) {
+        this.#goTo((this.#activeIndex + dir + this.#slides.length) % this.#slides.length);
+      }
+
+      #goTo(index) {
+        if (index === this.#activeIndex || !this.#slides[index]) return;
+
+        // Pause outgoing video
+        this.#slides[this.#activeIndex].querySelector('video')?.pause();
+
+        this.#slides[this.#activeIndex].classList.remove('is-active');
+        this.#dots[this.#activeIndex]?.classList.remove('is-active');
+
+        this.#activeIndex = index;
+        this.#slides[this.#activeIndex].classList.add('is-active');
+        this.#dots[this.#activeIndex]?.classList.add('is-active');
+
+        this.#loadSlide(this.#activeIndex);
+        this.#startAutoplay();
+      }
+
+      #pickSource(sourcesJson) {
+        try {
+          const sources = JSON.parse(sourcesJson || '[]');
+          if (!sources.length) return null;
+          const targetH = window.innerWidth <= 480 ? 480
+            : this.#quality === '1080' ? 1080
+            : this.#quality === '480' ? 480
+            : 720;
+          const sorted = [...sources].sort((a, b) => a.height - b.height);
+          return (sorted.find(s => s.height >= targetH) || sorted[sorted.length - 1])?.url || null;
+        } catch { return null; }
+      }
+
+      #loadSlide(index) {
+        const slide = this.#slides[index];
+        if (!slide || slide.dataset.loaded) return;
+        slide.dataset.loaded = 'true';
+
+        const template = slide.querySelector('[data-video-template]');
+        const slot = slide.querySelector('[data-video-slot]');
+        if (!template || !slot || this.#reduceMotion) return;
+
+        const kind = template.dataset.videoKind;
+
+        if (kind === 'upload') {
+          const url = this.#pickSource(template.dataset.sources);
+          if (!url) return;
+          const video = document.createElement('video');
+          video.className = 'video-hero-slider__video';
+          video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'none';
+          const source = document.createElement('source');
+          source.src = url; source.type = 'video/mp4';
+          video.append(source);
+          video.addEventListener('canplay', () => slide.classList.add('is-ready'), { once: true });
+          slot.append(video);
+          video.play().catch(() => {});
+          return;
+        }
+
+        const videoId = template.dataset.videoId;
+        if (!videoId) return;
+
+        const iframe = document.createElement('iframe');
+        iframe.setAttribute('allow', 'autoplay; encrypted-media');
+        iframe.setAttribute('title', 'Background video');
+        iframe.className = 'video-hero-slider__video';
+
+        if (kind === 'vimeo') {
+          iframe.src = 'https://player.vimeo.com/video/' + videoId + '?autoplay=1&muted=1&loop=1&background=1&controls=0';
+        } else {
+          iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=0&playsinline=1&modestbranding=1&rel=0';
+        }
+
+        iframe.addEventListener('load', () => window.setTimeout(() => slide.classList.add('is-ready'), 300), { once: true });
+        slot.append(iframe);
       }
     }
 
-    #step(direction) {
-      const next = (this.activeIndex + direction + this.slides.length) % this.slides.length;
-      this.#goTo(next);
-    }
-
-    #goTo(index) {
-      if (index === this.activeIndex || !this.slides[index]) return;
-
-      this.slides[this.activeIndex].classList.remove('is-active');
-      this.dots[this.activeIndex]?.classList.remove('is-active');
-
-      this.activeIndex = index;
-
-      this.slides[this.activeIndex].classList.add('is-active');
-      this.dots[this.activeIndex]?.classList.add('is-active');
-
-      this.#loadSlide(this.activeIndex);
-      this.#startAutoplay();
-    }
-
-    #loadSlide(index) {
-      if (this.reduceMotion) return;
-
-      const slide = this.slides[index];
-      if (!slide || slide.dataset.loaded) return;
-      slide.dataset.loaded = 'true';
-
-      const template = slide.querySelector('[data-video-template]');
-      const slot = slide.querySelector('[data-video-slot]');
-      if (!template || !slot) return;
-
-      const kind = template.dataset.videoKind;
-
-      if (kind === 'upload') {
-        const video = template.content.firstElementChild.cloneNode(true);
-        video.addEventListener('canplay', () => slide.classList.add('is-ready'), { once: true });
-        slot.append(video);
-        video.play().catch(() => {});
-        return;
-      }
-
-      const videoId = template.dataset.videoId;
-      if (!videoId) return;
-
-      const iframe = document.createElement('iframe');
-      iframe.setAttribute('allow', 'autoplay; encrypted-media');
-      iframe.setAttribute('title', 'Background video');
-      iframe.className = 'video-hero-slider__video';
-
-      if (kind === 'vimeo') {
-        iframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1&controls=0`;
-      } else {
-        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&playsinline=1&modestbranding=1&rel=0`;
-      }
-
-      iframe.addEventListener(
-        'load',
-        () => {
-          window.setTimeout(() => slide.classList.add('is-ready'), 300);
-        },
-        { once: true }
-      );
-
-      slot.append(iframe);
-    }
+    customElements.define('video-hero-slider', VideoHeroSlider);
   }
-
-  customElements.define('video-hero-slider', VideoHeroSlider);
 {% endjavascript %}
 
 {% schema %}
 {
-  "name": "Video hero slider",
+  "name": "t:sections.video_hero_slider.name",
   "tag": "section",
   "settings": [
     {
@@ -442,42 +508,54 @@
     {
       "type": "range",
       "id": "autoplay_interval",
-      "label": "Autoplay interval",
-      "info": "Time between slides, in milliseconds. Set to 0 to disable autoplay.",
+      "label": "t:sections.video_hero_slider.settings.autoplay_interval.label",
+      "info": "t:sections.video_hero_slider.settings.autoplay_interval.info",
       "min": 0,
-      "max": 9000,
+      "max": 12000,
       "step": 500,
       "unit": "ms",
       "default": 6000
+    },
+    {
+      "type": "select",
+      "id": "video_quality",
+      "label": "t:sections.video_hero_slider.settings.video_quality.label",
+      "info": "t:sections.video_hero_slider.settings.video_quality.info",
+      "options": [
+        { "value": "480", "label": "t:sections.video_hero_slider.settings.video_quality.options.sd" },
+        { "value": "720", "label": "t:sections.video_hero_slider.settings.video_quality.options.hd" },
+        { "value": "1080", "label": "t:sections.video_hero_slider.settings.video_quality.options.full_hd" }
+      ],
+      "default": "720"
     }
   ],
   "blocks": [
     {
       "type": "slide",
-      "name": "Slide",
+      "name": "t:sections.video_hero_slider.blocks.slide.name",
       "settings": [
         {
           "type": "image_picker",
           "id": "thumbnail",
-          "label": "Thumbnail",
-          "info": "Shown until the video has fully loaded, so the slide never plays empty."
+          "label": "t:sections.video_hero_slider.blocks.slide.settings.thumbnail.label",
+          "info": "t:sections.video_hero_slider.blocks.slide.settings.thumbnail.info"
         },
         {
           "type": "video",
           "id": "video",
-          "label": "Upload video"
+          "label": "t:sections.video_hero_slider.blocks.slide.settings.video.label"
         },
         {
           "type": "video_url",
           "id": "video_url",
-          "label": "YouTube or Vimeo video URL",
+          "label": "t:sections.video_hero_slider.blocks.slide.settings.video_url.label",
+          "info": "t:sections.video_hero_slider.blocks.slide.settings.video_url.info",
           "accept": ["youtube", "vimeo"]
         },
         {
           "type": "text",
           "id": "eyebrow",
-          "label": "Eyebrow label",
-          "default": "Coal-Free Comfort"
+          "label": "Eyebrow"
         },
         {
           "type": "text",
@@ -488,57 +566,30 @@
         {
           "type": "richtext",
           "id": "text",
-          "label": "Body text",
-          "default": "<p>No charcoal, no carbon monoxide, no harsh aftertaste — ENSŌ delivers the ritual without the burden.</p>"
+          "label": "Body text"
         },
         {
           "type": "text",
           "id": "cta_label",
-          "label": "Button label",
-          "default": "Go Shop"
+          "label": "Button label"
         },
         {
           "type": "url",
           "id": "cta_link",
           "label": "Button link"
-        },
-        {
-          "id": "custom_liquid",
-          "type": "liquid",
-          "label": "Custom liquid"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Video hero slider",
+      "name": "t:sections.video_hero_slider.name",
       "blocks": [
         {
           "type": "slide",
           "settings": {
-            "eyebrow": "Coal-Free Comfort",
             "heading": "A Modern Twist on a Classic Ritual",
-            "text": "<p>No charcoal, no carbon monoxide, no harsh aftertaste — ENSŌ delivers the ritual without the burden.</p>",
-            "cta_label": "Go Shop"
-          }
-        },
-        {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "Cordless Convenience",
-            "heading": "Your Session, Untethered",
-            "text": "<p>A swap-out battery and fully portable build mean the ritual travels with you — no outlet, no setup.</p>",
-            "cta_label": "Shop ENSŌ"
-          }
-        },
-        {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "Magnetic Simplicity",
-            "heading": "Snap. Seal. Session.",
-            "text": "<p>Magnetically attachable mouthpieces make cleaning, sharing and switching effortless.</p>",
-            "cta_label": "Explore the System"
+            "cta_label": "Shop now"
           }
         }
       ]

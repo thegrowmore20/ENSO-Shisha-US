@@ -30,20 +30,9 @@
         "label": "Body font",
         "info": "Paragraphs, links, forms and navigation."
       },
-      "headers": {
-        "fonts": "Fonts",
-        "sizes": "Sizes"
-      },
       "type_subheading_font": {
         "label": "Subheading font",
         "info": "Eyebrows, labels and small uppercase headings."
-      },
-      "type_body_size": {
-        "label": "Body text size"
-      },
-      "type_heading_scale": {
-        "label": "Heading scale",
-        "info": "Scales every heading size (h0 to h6) up or down together."
       }
     },
     "colors": {
@@ -144,13 +133,6 @@
       },
       "x": {
         "label": "X"
-      }
-    },
-    "social_sharing": {
-      "name": "Social sharing image",
-      "share_image": {
-        "label": "Default share image",
-        "info": "Used when a page has no image of its own. Recommended 1200 x 630px."
       }
     },
     "logo": {
