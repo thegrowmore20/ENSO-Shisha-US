@@ -1777,6 +1777,48 @@
       "presets": {
         "name": "Newsletter signup"
       }
+    },
+    "enso_phil": {
+      "name": "Philosophy accordion",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "lead": { "label": "Lead text" },
+        "padding_header": { "content": "Padding" },
+        "padding_top": { "label": "Top (desktop)" },
+        "padding_bottom": { "label": "Bottom (desktop)" },
+        "padding_top_mobile": { "label": "Top (mobile)" },
+        "padding_bottom_mobile": { "label": "Bottom (mobile)" }
+      },
+      "blocks": {
+        "item": {
+          "name": "Item",
+          "settings": {
+            "title": { "label": "Title" },
+            "body": { "label": "Body" },
+            "image": { "label": "Image" },
+            "image_position": {
+              "label": "Image position",
+              "info": "CSS object-position, e.g. 50% 45%"
+            },
+            "image_scale": {
+              "label": "Image zoom",
+              "info": "Use 135% for the cup close-up"
+            },
+            "image_scale_origin": {
+              "label": "Zoom origin",
+              "info": "CSS transform-origin, e.g. 52% 58%"
+            },
+            "video": {
+              "label": "Video",
+              "info": "Replaces the image when this item is active"
+            },
+            "video_poster": { "label": "Video poster" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Philosophy accordion"
+      }
     }
   }
 }

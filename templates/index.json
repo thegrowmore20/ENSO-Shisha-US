@@ -193,12 +193,57 @@
         "autoplay_interval": 0,
         "video_quality": "720"
       }
+    },
+    "enso_phil": {
+      "type": "enso-phil",
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "title": "Stay in the moment",
+            "body": "<p>A hookah is an evening, not a task. No turning coals, no checking the heat, no numbers to watch.<\/p><p>Set it once and let it run: the temperature holds on its own for the whole session. What is left is the taste, the people around the table and the time itself, the clean moment the ritual was always about.<\/p>",
+            "image_position": "50% 45%",
+            "image_scale": 100,
+            "image_scale_origin": "50% 50%"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "title": "A ritual you already know",
+            "body": "<p>Nothing new to learn. You fill the cup the way you have always filled a bowl: your own tobacco, fluffed and airy or pressed and dense, a mesh on top.<\/p><p>No pods and no cartridges: any brand, any cut you like. The same hands and the same habit, only the coal is gone.<\/p>",
+            "image_position": "52% 58%",
+            "image_scale": 135,
+            "image_scale_origin": "52% 58%"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "title": "Why the charcoal had to go",
+            "body": "<p>Coal is the one part of the evening nobody loves. Ten minutes over a burner, tongs, ash on the table, the smell of coal in the room, and a burnt edge on the flavour whenever a piece sits too long.<\/p><p>ENSŌ replaces it with electric heat set to the degree. The blend warms evenly and never meets a flame, so what you taste is the tobacco you chose.<\/p>",
+            "image_position": "50% 50%",
+            "image_scale": 100,
+            "image_scale_origin": "50% 50%"
+          }
+        }
+      },
+      "block_order": ["item_1", "item_2", "item_3"],
+      "settings": {
+        "heading": "Made for the ritual",
+        "lead": "What ENSŌ is built on",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
     }
   },
   "order": [
     "hero",
     "models",
     "usps",
-    "enso_system_video"
+    "enso_system_video",
+    "enso_phil"
   ]
 }
