@@ -28,6 +28,7 @@
       {%- endif -%}
     </div>
 
+    <div class="instagram-reels__track">
     <div class="instagram-reels__grid">
       {%- for block in section.blocks -%}
         {%- liquid
@@ -80,6 +81,11 @@
           </div>
         </a>
       {%- endfor -%}
+    </div>
+    <div class="igr-nav">
+      <button class="igr-nav__btn" data-igr-prev aria-label="Previous posts">&#x2039;</button>
+      <button class="igr-nav__btn" data-igr-next aria-label="Next posts">&#x203a;</button>
+    </div>
     </div>
   </div>
 
@@ -152,18 +158,56 @@
     flex-shrink: 0;
   }
 
+  .instagram-reels__track {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
   .instagram-reels__grid {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 20px;
-    max-width: 1040px;
-    margin: 0 auto;
     scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
   }
 
   .instagram-reels__grid::-webkit-scrollbar {
     display: none;
+  }
+
+  .instagram-reels__grid.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+  }
+
+  .igr-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .igr-nav__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease;
+    font-family: inherit;
+    padding: 0;
+  }
+
+  .igr-nav__btn:hover {
+    border-color: rgba(0, 0, 0, 0.7);
   }
 
   .reel {
@@ -244,8 +288,12 @@
       font-size: 28px;
     }
 
-    .instagram-reels__grid {
+    .instagram-reels__track {
       max-width: none;
+      margin: 0;
+    }
+
+    .instagram-reels__grid {
       margin: 0 -16px;
       padding: 0 16px;
     }
@@ -253,6 +301,10 @@
     .reel {
       flex: 0 0 62%;
       scroll-snap-align: center;
+    }
+
+    .igr-nav {
+      display: none;
     }
   }
 
@@ -425,6 +477,9 @@
         });
       }
 
+      this.#initGridNav();
+      this.#initDrag();
+
       this.#modal.querySelector('[data-ig-close]').addEventListener('click', () => this.#close());
       this.#modal.querySelector('.igv__backdrop').addEventListener('click', () => this.#close());
 
@@ -456,6 +511,44 @@
         );
         for (const reel of this.#reels) observer.observe(reel);
       }
+    }
+
+    #initGridNav() {
+      const grid = this.querySelector('.instagram-reels__grid');
+      const prev = this.querySelector('[data-igr-prev]');
+      const next = this.querySelector('[data-igr-next]');
+      if (!grid || !prev || !next) return;
+      prev.addEventListener('click', () => grid.scrollBy({ left: -grid.clientWidth, behavior: 'smooth' }));
+      next.addEventListener('click', () => grid.scrollBy({ left: grid.clientWidth, behavior: 'smooth' }));
+    }
+
+    #initDrag() {
+      const grid = this.querySelector('.instagram-reels__grid');
+      if (!grid) return;
+      let dragging = false;
+      let startX = 0;
+      let scrollStart = 0;
+
+      grid.addEventListener('mousedown', (e) => {
+        dragging = true;
+        startX = e.pageX;
+        scrollStart = grid.scrollLeft;
+        grid.classList.add('is-dragging');
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        grid.scrollLeft = scrollStart - (e.pageX - startX);
+      });
+
+      const stopDrag = () => {
+        if (!dragging) return;
+        dragging = false;
+        grid.classList.remove('is-dragging');
+      };
+      window.addEventListener('mouseup', stopDrag);
+      window.addEventListener('mouseleave', stopDrag);
     }
 
     #open(index) {

@@ -79,8 +79,16 @@
             <div class="enso-jcard__text">
               <span class="enso-jcard__date">{{ article.published_at | date: '%B %-d, %Y' }}</span>
               <b class="enso-jcard__title">{{ article.title | escape }}</b>
-              {%- if article.excerpt != blank -%}
-                <span class="enso-jcard__excerpt">{{ article.excerpt | strip_html }}</span>
+              {%- liquid
+                assign card_excerpt = article.excerpt
+                if card_excerpt == blank
+                  assign card_excerpt = article.content | strip_html | strip_newlines | truncate: 180
+                else
+                  assign card_excerpt = card_excerpt | strip_html
+                endif
+              -%}
+              {%- if card_excerpt != blank -%}
+                <span class="enso-jcard__excerpt">{{ card_excerpt }}</span>
               {%- endif -%}
               <span class="enso-jcard__read">Read the article ›</span>
             </div>
@@ -106,6 +114,9 @@
     justify-content: space-between;
     gap: 24px;
     margin-bottom: 32px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .enso-journal__heading {
@@ -135,6 +146,8 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   /* ── Card ── */
@@ -208,7 +221,9 @@
     line-height: 30px;
     letter-spacing: -0.02em;
     color: #fff;
-    text-wrap: balance;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .enso-jcard__excerpt {
