@@ -9,13 +9,20 @@
  */
 {
   "current": {
-    "type_heading_font": "montserrat_n7",
-    "type_accent_font": "inter_n8",
-    "type_body_font": "montserrat_n4",
-    "page_width": 1440,
+    "logo": "shopify://shop_images/Logo_text_web-01.webp",
+    "logo_width": 112,
+    "logo_width_mobile": 92,
     "favicon": "shopify://shop_images/favicon2.png",
-    "social_instagram_link": "https://instagram.com/enso.future",
+    "type_heading_font": "montserrat_n7",
+    "type_body_font": "montserrat_n4",
+    "type_subheading_font": "montserrat_n5",
+    "type_accent_font": "inter_n8",
+    "page_width": 1440,
+    "cart_type": "page",
+    "free_shipping_enable": false,
+    "free_shipping_threshold": 500,
     "social_facebook_link": "https://www.facebook.com/share/16AJipvPXs/?mibextid=wwXIfr",
+    "social_instagram_link": "https://instagram.com/enso.future",
     "social_youtube_link": "https://www.youtube.com/@enso.future",
     "social_tiktok_link": "",
     "social_x_link": "",
@@ -90,14 +97,20 @@
           "contact_TDYpF8"
         ],
         "settings": {
-          "show_payment": false,
+          "show_newsletter": true,
           "show_social": true,
-          "show_newsletter": true
+          "show_payment": false,
+          "color_background": "{{ settings.color_palette.ink }}",
+          "color_text": "{{ settings.color_palette.white }}",
+          "color_accent": "{{ settings.color_palette.gold }}"
         }
       },
       "cart-drawer": {
         "type": "cart-drawer",
-        "settings": {}
+        "settings": {
+          "color_background": "{{ settings.color_palette.mist }}",
+          "color_text": "{{ settings.color_palette.foreground }}"
+        }
       }
     },
     "content_for_index": [],
@@ -120,14 +133,7 @@
         "disabled": false,
         "settings": {}
       }
-    },
-    "type_subheading_font": "montserrat_n5",
-    "logo": "shopify://shop_images/Logo_text_web-01.webp",
-    "logo_width": 112,
-    "logo_width_mobile": 92,
-    "cart_type": "drawer",
-    "free_shipping_enable": false,
-    "free_shipping_threshold": 500
+    }
   },
   "presets": {
     "Default": {
