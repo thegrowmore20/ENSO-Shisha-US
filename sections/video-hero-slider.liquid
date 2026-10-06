@@ -2,9 +2,68 @@
   assign autoplay_interval = section.settings.autoplay_interval
   assign video_quality = section.settings.video_quality | default: '720'
   assign scheme_class = 'color-surface'
+  assign full_vp = section.settings.full_viewport_height
+  assign poster_loading = section.settings.poster_loading | default: 'eager'
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
   assign total_blocks = section.blocks.size
 -%}
+
+{% if full_vp or section.settings.section_margin_bottom > 0 %}
+  {% style %}
+    {% if section.settings.section_margin_bottom > 0 %}
+      #shopify-section-{{ section.id }} {
+        margin-bottom: {{ section.settings.section_margin_bottom }}px;
+      }
+    {% endif %}
+
+    {% if full_vp %}
+      /* Full-viewport-height mode — matches handoff video_hero_slider_p6YT3f */
+      #shopify-section-{{ section.id }} .video-hero-slider {
+        background: #fff;
+      }
+      #shopify-section-{{ section.id }} .video-hero-slider__slide,
+      #shopify-section-{{ section.id }} .video-hero-slider__media {
+        position: relative;
+        height: 100svh;
+        min-height: 0;
+        max-height: none;
+        background: #fff;
+      }
+      #shopify-section-{{ section.id }} .video-hero-slider__media video,
+      #shopify-section-{{ section.id }} .video-hero-slider__poster {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #fff;
+      }
+      #shopify-section-{{ section.id }} .video-hero-slider__scrim {
+        display: none;
+      }
+      #shopify-section-{{ section.id }} .video-hero-slider__content {
+        position: absolute;
+        inset: auto 0 0;
+        height: auto;
+        min-height: 0;
+        padding: 0 0 40px;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        text-align: center;
+        max-width: none;
+      }
+      #shopify-section-{{ section.id }} .video-hero-slider__cta {
+        position: absolute;
+        left: 50%;
+        bottom: 40px;
+        transform: translateX(-50%);
+        margin: 0;
+      }
+    {% endif %}
+  {% endstyle %}
+{% endif %}
 
 <video-hero-slider
   class="video-hero-slider {{ scheme_class }}"
@@ -42,8 +101,8 @@
             alt="{{ block.settings.thumbnail.alt | default: block.settings.heading | escape }}"
             width="{{ block.settings.thumbnail.width }}"
             height="{{ block.settings.thumbnail.height }}"
-            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-            {% if forloop.first %}fetchpriority="high"{% endif %}
+            loading="{% if forloop.first and poster_loading == 'eager' %}eager{% else %}lazy{% endif %}"
+            {% if forloop.first and poster_loading == 'eager' %}fetchpriority="high"{% endif %}
           >
         {%- endif -%}
 
@@ -504,6 +563,34 @@
       "id": "color_text",
       "label": "t:sections.all.text_color.label",
       "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_viewport_height",
+      "label": "Full viewport height (100svh)",
+      "info": "Use for the standalone full-screen video section. Hides scrim and centers CTA at bottom.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "section_margin_bottom",
+      "label": "Bottom margin",
+      "min": 0,
+      "max": 200,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "poster_loading",
+      "label": "Poster image loading",
+      "info": "Eager (LCP) for the first above-fold hero only. Lazy for all below-fold video sections.",
+      "options": [
+        { "value": "eager", "label": "Eager (LCP)" },
+        { "value": "lazy", "label": "Lazy (below fold)" }
+      ],
+      "default": "eager"
     },
     {
       "type": "range",

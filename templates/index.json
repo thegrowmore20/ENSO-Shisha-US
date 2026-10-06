@@ -160,11 +160,34 @@
         "padding_top_mobile": 32,
         "padding_bottom_mobile": 32
       }
+    },
+    "enso_system_video": {
+      "type": "video-hero-slider",
+      "blocks": {
+        "slide_system": {
+          "type": "slide",
+          "settings": {
+            "cta_label": "Explore the system",
+            "cta_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["slide_system"],
+      "settings": {
+        "color_background": "{{ settings.color_palette.graphite }}",
+        "color_text": "{{ settings.color_palette.ivory }}",
+        "full_viewport_height": true,
+        "section_margin_bottom": 96,
+        "poster_loading": "lazy",
+        "autoplay_interval": 0,
+        "video_quality": "720"
+      }
     }
   },
   "order": [
     "hero",
     "models",
-    "usps"
+    "usps",
+    "enso_system_video"
   ]
 }
