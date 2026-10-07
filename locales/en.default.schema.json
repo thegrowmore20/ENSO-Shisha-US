@@ -1304,6 +1304,23 @@
         "name": "Help cards"
       }
     },
+    "warranty_claim": {
+      "name": "Warranty claim steps",
+      "settings": {
+        "heading": { "label": "Heading" }
+      },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "text": { "label": "Step description" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Warranty claim steps"
+      }
+    },
     "warranty_coverage": {
       "name": "Warranty coverage",
       "settings": {

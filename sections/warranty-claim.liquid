@@ -1,0 +1,149 @@
+{%- assign heading = section.settings.heading -%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="wr-in">
+  {%- if heading != blank -%}
+    <h2 class="wr-h2">{{ heading }}</h2>
+  {%- endif -%}
+
+  <ol class="wr-steps">
+    {%- for block in section.blocks -%}
+      <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+    {%- endfor -%}
+  </ol>
+</div>
+
+{% stylesheet %}
+  .wr-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    counter-reset: s;
+  }
+
+  .wr-steps li {
+    counter-increment: s;
+    border-top: 2px solid var(--color-text);
+    padding-top: 16px;
+    font-size: 15px;
+    line-height: 23px;
+    color: var(--color-text-muted);
+  }
+
+  .wr-steps li::before {
+    content: counter(s);
+    display: block;
+    font-family: var(--font-accent);
+    font-size: 28px;
+    line-height: 1;
+    font-weight: var(--font-weight-heavy);
+    margin-bottom: 10px;
+    color: #96671f;
+  }
+
+  @media screen and (max-width: 749px) {
+    .wr-steps {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px 14px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.warranty_claim.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.warranty_claim.settings.heading.label",
+      "default": "How to make a claim"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "t:sections.warranty_claim.blocks.step.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.warranty_claim.blocks.step.settings.text.label",
+          "default": "Step description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.warranty_claim.presets.name",
+      "blocks": [
+        { "type": "step", "settings": { "text": "Contact ENSŌ EU support with your order details" } },
+        { "type": "step", "settings": { "text": "Describe the issue and send the relevant information" } },
+        { "type": "step", "settings": { "text": "Follow the instructions from our support team" } },
+        { "type": "step", "settings": { "text": "If a return is needed, send the product as instructed" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

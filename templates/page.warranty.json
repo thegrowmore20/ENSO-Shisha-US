@@ -3,27 +3,9 @@
     "warranty_hero": {
       "type": "warranty-hero",
       "blocks": {
-        "tile_1": {
-          "type": "tile",
-          "settings": {
-            "stat": "2 years",
-            "description": "on ENSŌ products, for software errors, material defects and manufacturing faults"
-          }
-        },
-        "tile_2": {
-          "type": "tile",
-          "settings": {
-            "stat": "1 year",
-            "description": "on the ENSŌ battery, as a separate warranty"
-          }
-        },
-        "tile_3": {
-          "type": "tile",
-          "settings": {
-            "stat": "Return costs",
-            "description": "reasonable return costs are covered for valid warranty cases"
-          }
-        }
+        "tile_1": { "type": "tile", "settings": { "stat": "2 years", "description": "on ENSŌ products, for software errors, material defects and manufacturing faults" } },
+        "tile_2": { "type": "tile", "settings": { "stat": "1 year", "description": "on the ENSŌ battery, as a separate warranty" } },
+        "tile_3": { "type": "tile", "settings": { "stat": "Return costs", "description": "reasonable return costs are covered for valid warranty cases" } }
       },
       "block_order": ["tile_1", "tile_2", "tile_3"],
       "settings": {
@@ -58,7 +40,24 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 48
       }
+    },
+    "warranty_claim": {
+      "type": "warranty-claim",
+      "blocks": {
+        "step_1": { "type": "step", "settings": { "text": "Contact ENSŌ EU support with your order details" } },
+        "step_2": { "type": "step", "settings": { "text": "Describe the issue and send the relevant information" } },
+        "step_3": { "type": "step", "settings": { "text": "Follow the instructions from our support team" } },
+        "step_4": { "type": "step", "settings": { "text": "If a return is needed, send the product as instructed" } }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "settings": {
+        "heading": "How to make a claim",
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
     }
   },
-  "order": ["warranty_hero", "warranty_coverage"]
+  "order": ["warranty_hero", "warranty_coverage", "warranty_claim"]
 }
