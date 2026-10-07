@@ -13,6 +13,7 @@
   class="enso-exp"
   style="--enso-exp-mt: {{ margin_top }}px; --enso-exp-mb: {{ margin_bottom }}px;"
 >
+  <div class="container">
   <div class="enso-exp__item">
     <div class="enso-exp__media">
       {%- if img != blank -%}
@@ -58,13 +59,13 @@
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 {% stylesheet %}
   .enso-exp {
     margin-top: var(--enso-exp-mt, 0px);
     margin-bottom: var(--enso-exp-mb, 0px);
-    padding-inline: var(--page-margin);
   }
 
   .enso-exp__item {
@@ -108,7 +109,7 @@
     pointer-events: none;
   }
 
-  /* ── Content anchored bottom-left ── */
+  /* ── Content vertically centered, left-aligned ── */
   .enso-exp__content {
     position: relative;
     z-index: 2;
@@ -116,8 +117,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-end;
-    padding: 0 20px 56px 28px;
+    justify-content: center;
+    padding: 48px 20px 48px 28px;
   }
 
   .enso-exp__content-inner {
@@ -194,7 +195,7 @@
 
     .enso-exp__content {
       min-height: 600px;
-      padding: 0 20px 28px;
+      padding: 32px 20px;
     }
 
     .enso-exp__content-inner {
