@@ -24,7 +24,7 @@
 
     <div class="wr-cta__body">
       {%- if heading != blank -%}
-        <h2 class="wr-cta__heading">{{ heading }}</h2>
+        <h2 class="wr-h2">{{ heading }}</h2>
       {%- endif -%}
       {%- if body_text != blank -%}
         <p class="wr-cta__intro">{{ body_text }}</p>
@@ -48,6 +48,18 @@
 </div>
 
 {% stylesheet %}
+  .wr-in {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .wr-in {
+      padding: 0 16px;
+    }
+  }
+
   .wr-cta {
     display: flex;
     flex-wrap: wrap;
@@ -59,13 +71,8 @@
     padding: 32px;
   }
 
-  .wr-cta__heading {
+  .wr-cta .wr-h2 {
     margin: 0 0 6px;
-    font-family: var(--font-accent);
-    font-size: 30px;
-    line-height: 36px;
-    font-weight: var(--font-weight-heavy);
-    letter-spacing: -.02em;
   }
 
   .wr-cta__intro {

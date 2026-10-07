@@ -759,7 +759,7 @@
         "tab_3_label": "Orders, shipping and warranty",
         "footer_text": "More step-by-step help lives in <a href='/pages/experience'>ENSŌ Experience</a>: quick start, packing, the full manual and firmware.",
         "padding_top": 60,
-        "padding_bottom": 60,
+        "padding_bottom": 40,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }

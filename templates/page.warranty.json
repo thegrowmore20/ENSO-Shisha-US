@@ -12,9 +12,9 @@
         "heading": "Warranty",
         "lead": "ENSŌ products are built with thoughtful engineering, quality materials and reliable performance, and they are covered accordingly.",
         "padding_top": 56,
-        "padding_bottom": 32,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 16
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "warranty_coverage": {
@@ -38,7 +38,7 @@
         "padding_top": 0,
         "padding_bottom": 64,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48
+        "padding_bottom_mobile": 64
       }
     },
     "warranty_claim": {
@@ -55,7 +55,7 @@
         "padding_top": 0,
         "padding_bottom": 64,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48
+        "padding_bottom_mobile": 64
       }
     },
     "warranty_returns": {
@@ -73,7 +73,7 @@
         "padding_top": 0,
         "padding_bottom": 64,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48
+        "padding_bottom_mobile": 64
       }
     },
     "warranty_cta": {

@@ -61,6 +61,27 @@
 </div>
 
 {% stylesheet %}
+  .wr-in {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .wr-h2 {
+    margin: 0 0 16px;
+    font-family: var(--font-accent);
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -.02em;
+  }
+
+  @media screen and (max-width: 749px) {
+    .wr-in {
+      padding: 0 16px;
+    }
+  }
+
   .wr-ship {
     display: grid;
     grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
