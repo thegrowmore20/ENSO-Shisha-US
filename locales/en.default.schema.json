@@ -1273,7 +1273,12 @@
               "label": "Body text"
             },
             "link": {
-              "label": "Link"
+              "label": "Link",
+              "info": "Makes the whole card a link. Leave empty to use a popup instead"
+            },
+            "popup_body": {
+              "label": "Popup body",
+              "info": "If set (and no link), clicking the card opens this content in a modal"
             },
             "button_symbol": {
               "label": "Button symbol",

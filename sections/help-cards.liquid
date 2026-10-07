@@ -1,6 +1,7 @@
 {%- doc -%}
   Before and after you buy — 3-column card grid.
-  Each block is one card: icon select, heading, body, optional link, button symbol (arrow or plus).
+  Each block: icon, heading, body, link (makes it a <a>), popup_body (opens modal), button symbol.
+  If popup_body is set and no link, clicking the card opens a shared modal.
 {%- enddoc -%}
 
 {% style %}
@@ -31,15 +32,28 @@
           else
             assign btn_char = '+'
           endif
+          assign has_link = false
+          assign has_popup = false
+          if block.settings.link != blank
+            assign has_link = true
+          elsif block.settings.popup_body != blank
+            assign has_popup = true
+          endif
         -%}
 
-        {%- if block.settings.link != blank -%}
+        {%- if has_link -%}
           <a class="help-card" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+        {%- elsif has_popup -%}
+          <div class="help-card help-card--popup"
+               tabindex="0"
+               role="button"
+               data-popup-id="{{ block.id }}"
+               data-popup-title="{{ block.settings.heading | escape }}"
+               {{ block.shopify_attributes }}>
         {%- else -%}
           <div class="help-card" {{ block.shopify_attributes }}>
         {%- endif -%}
 
-          <!-- Icon -->
           <div class="help-card__icon" aria-hidden="true">
             {%- case block.settings.icon -%}
               {%- when 'book' -%}
@@ -79,14 +93,31 @@
 
           <span class="help-card__btn" aria-hidden="true">{{ btn_char }}</span>
 
-        {%- if block.settings.link != blank -%}
+        {%- if has_link -%}
           </a>
         {%- else -%}
           </div>
         {%- endif -%}
+
+        {%- if has_popup -%}
+          <template id="help-content-{{ block.id }}">
+            {{ block.settings.popup_body }}
+          </template>
+        {%- endif -%}
       {%- endfor -%}
     </div>
 
+  </div>
+
+  <!-- Shared popup modal -->
+  <div class="help-modal" id="help-modal-{{ section.id }}" role="dialog" aria-modal="true" aria-label="Help" hidden>
+    <div class="help-modal__box">
+      <div class="help-modal__head">
+        <h3 class="help-modal__title"></h3>
+        <button class="help-modal__close" data-help-close aria-label="Close">&#215;</button>
+      </div>
+      <div class="help-modal__body"></div>
+    </div>
   </div>
 </section>
 
@@ -119,11 +150,14 @@
     border-radius: 24px;
     padding: 36px 32px 80px;
     background: #fff;
-    cursor: pointer;
     transition: box-shadow 0.3s ease;
     text-decoration: none;
     color: var(--color-text);
     display: block;
+  }
+
+  .help-card--popup {
+    cursor: pointer;
   }
 
   .help-card:hover {
@@ -159,13 +193,13 @@
     color: var(--color-text);
   }
 
-  /* Body */
+  /* Body — muted gray matching handoff */
   .help-card__body {
     margin: 0;
     font-family: var(--font-body);
     font-size: 16px;
     line-height: 25px;
-    color: var(--palette-sand, #c8943a);
+    color: rgba(0, 0, 0, 0.72);
   }
 
   /* Arrow / plus button */
@@ -182,6 +216,108 @@
     font-size: 22px;
     line-height: 1;
     color: var(--color-text);
+  }
+
+  /* ── Modal ── */
+  .help-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .help-modal[hidden] {
+    display: none;
+  }
+
+  .help-modal__box {
+    background: #fff;
+    border-radius: 24px;
+    width: min(760px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    color: #000;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+  }
+
+  .help-modal__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 28px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .help-modal__title {
+    font-family: var(--font-accent);
+    font-weight: var(--font-weight-heavy);
+    font-size: 26px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #000;
+  }
+
+  .help-modal__close {
+    border: none;
+    background: none;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #000;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  .help-modal__close:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .help-modal__close:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  .help-modal__body {
+    padding: 24px 28px 32px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 26px;
+    color: #000;
+  }
+
+  .help-modal__body h4 {
+    font-family: var(--font-accent);
+    font-weight: var(--font-weight-heavy);
+    font-size: 17px;
+    line-height: 24px;
+    margin: 18px 0 4px;
+    color: #000;
+  }
+
+  .help-modal__body h4:first-child {
+    margin-top: 0;
+  }
+
+  .help-modal__body p {
+    margin: 0 0 12px;
+    color: rgba(0, 0, 0, 0.78);
+  }
+
+  .help-modal__body a {
+    color: #000;
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  }
+
+  .help-modal__body a:hover {
+    border-bottom-color: #000;
   }
 
   /* Mobile */
@@ -203,8 +339,78 @@
     .help-card {
       padding: 28px 24px 72px;
     }
+
+    .help-modal {
+      padding: 12px;
+      align-items: flex-end;
+    }
+
+    .help-modal__box {
+      max-height: 85vh;
+      border-radius: 20px 20px 12px 12px;
+    }
+
+    .help-modal__head {
+      padding: 16px 20px;
+    }
+
+    .help-modal__title {
+      font-size: 22px;
+      line-height: 28px;
+    }
+
+    .help-modal__body {
+      padding: 16px 20px 24px;
+      font-size: 15px;
+      line-height: 24px;
+    }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('.help-cards-section').forEach(function (section) {
+    const modal = section.querySelector('.help-modal');
+    if (!modal) return;
+
+    const titleEl = modal.querySelector('.help-modal__title');
+    const bodyEl = modal.querySelector('.help-modal__body');
+    let lastCard = null;
+
+    function openModal(card) {
+      const id = card.dataset.popupId;
+      const title = card.dataset.popupTitle || '';
+      const tpl = document.getElementById('help-content-' + id);
+      if (!tpl) return;
+
+      titleEl.textContent = title;
+      bodyEl.innerHTML = '';
+      bodyEl.appendChild(tpl.content.cloneNode(true));
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('[data-help-close]').focus();
+      lastCard = card;
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      if (lastCard) lastCard.focus();
+    }
+
+    for (const card of section.querySelectorAll('[data-popup-id]')) {
+      card.addEventListener('click', function () { openModal(card); });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); }
+      });
+    }
+
+    modal.querySelector('[data-help-close]').addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+  });
+{% endjavascript %}
 
 {% schema %}
 {
@@ -276,9 +482,20 @@
           "label": "t:sections.help_cards.blocks.card.settings.body.label"
         },
         {
+          "type": "header",
+          "content": "Card action"
+        },
+        {
           "type": "url",
           "id": "link",
-          "label": "t:sections.help_cards.blocks.card.settings.link.label"
+          "label": "t:sections.help_cards.blocks.card.settings.link.label",
+          "info": "t:sections.help_cards.blocks.card.settings.link.info"
+        },
+        {
+          "type": "richtext",
+          "id": "popup_body",
+          "label": "t:sections.help_cards.blocks.card.settings.popup_body.label",
+          "info": "t:sections.help_cards.blocks.card.settings.popup_body.info"
         },
         {
           "type": "select",
@@ -303,6 +520,7 @@
             "icon": "book",
             "heading": "Guides and how-tos",
             "body": "The first session step by step, packing the cup, temperatures, cleaning and firmware, in ENSŌ Experience.",
+            "link": "/pages/experience",
             "button_symbol": "arrow"
           }
         },

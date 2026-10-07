@@ -418,6 +418,7 @@
             "icon": "chat",
             "heading": "Support",
             "body": "A person answers at support@ensoshisha.eu. Guides, firmware and the manual live in ENSŌ Experience.",
+            "popup_body": "<h4>Ask us</h4><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version.</p><p><a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu ›</a></p><h4>Help yourself first</h4><p>The first session step by step, the full manual, cleaning and charging, and the firmware app live in ENSŌ Experience, made for the phone.</p><p><a href=\"/pages/experience\">Open ENSŌ Experience ›</a></p>",
             "button_symbol": "plus"
           }
         },
@@ -427,6 +428,7 @@
             "icon": "shield",
             "heading": "Warranty and returns",
             "body": "Two years on the device, one year on the battery. 14 days to return an unopened box, 30 days an opened one.",
+            "popup_body": "<h4>What is covered</h4><p>The device, the cap and the electronics for two years, the battery pack for one. Cups, mesh screens and adapters are consumables.</p><h4>How a claim works</h4><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced unit ships back from the nearest warehouse.</p><p><a href=\"mailto:support@ensoshisha.eu?subject=Warranty\">Write to support ›</a></p><h4>Thirty days to decide</h4><p>Within 30 days of delivery you can return the device in its box for a full refund. Return shipping is on us in the EU and the US.</p><p><a href=\"/pages/warranty\">Full warranty policy ›</a></p>",
             "button_symbol": "plus"
           }
         }
