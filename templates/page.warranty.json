@@ -12,9 +12,9 @@
         "heading": "Warranty",
         "lead": "ENSŌ products are built with thoughtful engineering, quality materials and reliable performance, and they are covered accordingly.",
         "padding_top": 56,
-        "padding_bottom": 0,
+        "padding_bottom": 64,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 48
       }
     },
     "warranty_coverage": {
