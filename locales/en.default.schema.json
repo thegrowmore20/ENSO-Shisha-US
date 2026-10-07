@@ -1304,6 +1304,25 @@
         "name": "Help cards"
       }
     },
+    "warranty_returns": {
+      "name": "Warranty returns",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "body_1": { "label": "First paragraph" },
+        "body_2": { "label": "Second paragraph" },
+        "note_header": { "content": "Note banner" },
+        "note_label": { "label": "Bold label" },
+        "note_text": { "label": "Note text" },
+        "addr_header": { "content": "Address card" },
+        "addr_eyebrow": { "label": "Eyebrow" },
+        "addr_company": { "label": "Company name" },
+        "addr_street": { "label": "Street address" },
+        "addr_phone": { "label": "Phone number" }
+      },
+      "presets": {
+        "name": "Warranty returns"
+      }
+    },
     "warranty_claim": {
       "name": "Warranty claim steps",
       "settings": {

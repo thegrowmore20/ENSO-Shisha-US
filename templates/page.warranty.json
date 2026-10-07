@@ -57,7 +57,25 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 48
       }
+    },
+    "warranty_returns": {
+      "type": "warranty-returns",
+      "settings": {
+        "heading": "Sending a product back",
+        "body_1": "Omni-Tech Design Kft covers reasonable return costs for valid warranty cases.",
+        "body_2": "Before sending anything back, contact ENSŌ EU support for the correct return instructions. Claims sent without prior contact may not be processed.",
+        "note_label": "Please note",
+        "note_text": "Returns sent cash on delivery are not accepted.",
+        "addr_eyebrow": "Return address",
+        "addr_company": "Omni-Tech Design Kft",
+        "addr_street": "Weiner Leo utca 12. fszt. 6.",
+        "addr_phone": "+36 20 598 9144",
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
     }
   },
-  "order": ["warranty_hero", "warranty_coverage", "warranty_claim"]
+  "order": ["warranty_hero", "warranty_coverage", "warranty_claim", "warranty_returns"]
 }

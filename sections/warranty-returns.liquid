@@ -1,0 +1,247 @@
+{%- liquid
+  assign heading        = section.settings.heading
+  assign body_1         = section.settings.body_1
+  assign body_2         = section.settings.body_2
+  assign note_label     = section.settings.note_label
+  assign note_text      = section.settings.note_text
+  assign addr_eyebrow   = section.settings.addr_eyebrow
+  assign addr_company   = section.settings.addr_company
+  assign addr_street    = section.settings.addr_street
+  assign addr_phone     = section.settings.addr_phone
+  assign addr_phone_url = addr_phone | remove: ' ' | prepend: 'tel:'
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="wr-in">
+  {%- if heading != blank -%}
+    <h2 class="wr-h2">{{ heading }}</h2>
+  {%- endif -%}
+
+  <div class="wr-ship">
+
+    <div class="wr-ship__text">
+      {%- if body_1 != blank -%}
+        <p>{{ body_1 }}</p>
+      {%- endif -%}
+      {%- if body_2 != blank -%}
+        <p>{{ body_2 }}</p>
+      {%- endif -%}
+      {%- if note_label != blank or note_text != blank -%}
+        <div class="wr-note">
+          {%- if note_label != blank -%}<b>{{ note_label }}</b>{%- endif -%}
+          {%- if note_text != blank -%}<span>{{ note_text }}</span>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="wr-addr">
+      {%- if addr_eyebrow != blank -%}
+        <h3>{{ addr_eyebrow }}</h3>
+      {%- endif -%}
+      {%- if addr_company != blank -%}<p>{{ addr_company }}</p>{%- endif -%}
+      {%- if addr_street != blank -%}<p>{{ addr_street }}</p>{%- endif -%}
+      {%- if addr_phone != blank -%}
+        <p>Phone <a href="{{ addr_phone_url }}">{{ addr_phone }}</a></p>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .wr-ship {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .wr-ship__text p {
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--color-text-muted);
+    max-width: 68ch;
+  }
+
+  .wr-note {
+    display: flex;
+    gap: 14px;
+    border-radius: 16px;
+    background: var(--color-background-raised);
+    padding: 18px 20px;
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 23px;
+  }
+
+  .wr-note b {
+    flex: none;
+  }
+
+  .wr-addr {
+    border-radius: 20px;
+    background: var(--color-text);
+    color: var(--color-background);
+    padding: 28px;
+  }
+
+  .wr-addr h3 {
+    margin: 0 0 12px;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .wr-addr p {
+    color: var(--color-background);
+    margin: 0 0 6px;
+    font-size: 16px;
+    max-width: none;
+  }
+
+  .wr-addr a {
+    color: var(--color-background);
+  }
+
+  @media screen and (max-width: 749px) {
+    .wr-ship {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.warranty_returns.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.warranty_returns.settings.heading.label",
+      "default": "Sending a product back"
+    },
+    {
+      "type": "text",
+      "id": "body_1",
+      "label": "t:sections.warranty_returns.settings.body_1.label",
+      "default": "Omni-Tech Design Kft covers reasonable return costs for valid warranty cases."
+    },
+    {
+      "type": "text",
+      "id": "body_2",
+      "label": "t:sections.warranty_returns.settings.body_2.label",
+      "default": "Before sending anything back, contact ENSŌ EU support for the correct return instructions. Claims sent without prior contact may not be processed."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.warranty_returns.settings.note_header.content"
+    },
+    {
+      "type": "text",
+      "id": "note_label",
+      "label": "t:sections.warranty_returns.settings.note_label.label",
+      "default": "Please note"
+    },
+    {
+      "type": "text",
+      "id": "note_text",
+      "label": "t:sections.warranty_returns.settings.note_text.label",
+      "default": "Returns sent cash on delivery are not accepted."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.warranty_returns.settings.addr_header.content"
+    },
+    {
+      "type": "text",
+      "id": "addr_eyebrow",
+      "label": "t:sections.warranty_returns.settings.addr_eyebrow.label",
+      "default": "Return address"
+    },
+    {
+      "type": "text",
+      "id": "addr_company",
+      "label": "t:sections.warranty_returns.settings.addr_company.label",
+      "default": "Omni-Tech Design Kft"
+    },
+    {
+      "type": "text",
+      "id": "addr_street",
+      "label": "t:sections.warranty_returns.settings.addr_street.label",
+      "default": "Weiner Leo utca 12. fszt. 6."
+    },
+    {
+      "type": "text",
+      "id": "addr_phone",
+      "label": "t:sections.warranty_returns.settings.addr_phone.label",
+      "default": "+36 20 598 9144"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.warranty_returns.presets.name"
+    }
+  ]
+}
+{% endschema %}
