@@ -1,5 +1,28 @@
-{%- assign meta_description = page_description | default: shop.description | default: shop.name -%}
-{%- assign meta_image = page_image | default: settings.share_image -%}
+{%- doc -%}
+  Renders all SEO and social-sharing meta tags: title, description, Open Graph,
+  Twitter/X Card, canonical link.
+
+  Relies on theme.liquid already having output charset, viewport and theme-color.
+
+  @param {object} [product] - Product object on product pages (used for price meta tags).
+{%- enddoc -%}
+
+{%- liquid
+  assign og_title       = page_title | default: shop.name
+  assign og_url         = canonical_url | default: request.origin
+  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_type        = 'website'
+
+  if request.page_type == 'product'
+    assign og_type = 'product'
+  elsif request.page_type == 'article'
+    assign og_type = 'article'
+  elsif request.page_type == 'password'
+    assign og_url = request.origin
+  endif
+
+  assign social_image = page_image | default: settings.share_image | default: shop.brand.square_logo | default: shop.brand.logo
+-%}
 
 <title>
   {{ page_title | default: shop.name }}
@@ -8,22 +31,34 @@
   {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
 </title>
 
-{% if meta_description != blank %}
-  <meta name="description" content="{{ meta_description | strip_html | truncate: 320 }}">
-{% endif %}
+<meta name="description" content="{{ og_description | strip_html | truncate: 320 | escape }}">
 
-<meta property="og:site_name" content="{{ shop.name }}">
-<meta property="og:url" content="{{ canonical_url }}">
-<meta property="og:title" content="{{ page_title | default: shop.name }}">
-<meta property="og:type" content="{% if template contains 'product' %}product{% else %}website{% endif %}">
-{% if meta_description != blank %}
-  <meta property="og:description" content="{{ meta_description | strip_html | truncate: 320 }}">
-{% endif %}
-{% if meta_image %}
-  <meta property="og:image" content="https:{{ meta_image | image_url: width: 1200 }}">
-  <meta property="og:image:secure_url" content="https:{{ meta_image | image_url: width: 1200 }}">
-  <meta property="og:image:width" content="1200">
-  <meta name="twitter:card" content="summary_large_image">
-{% endif %}
+<link rel="canonical" href="{{ og_url }}">
 
-<link rel="canonical" href="{{ canonical_url }}">
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:title" content="{{ og_title | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ og_description | strip_html | truncate: 320 | escape }}">
+
+{%- if social_image -%}
+  <meta property="og:image" content="https:{{ social_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ social_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="{{ social_image.width | default: 1200 }}">
+  <meta property="og:image:height" content="{{ social_image.height | default: 630 }}">
+{%- endif -%}
+
+{%- if request.page_type == 'product' and product -%}
+  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+{%- endif -%}
+
+{%- if settings.social_x_link != blank -%}
+  <meta name="twitter:site" content="{{ settings.social_x_link | split: '.com/' | last | prepend: '@' }}">
+{%- endif -%}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title | escape }}">
+<meta name="twitter:description" content="{{ og_description | strip_html | truncate: 320 | escape }}">
+{%- if social_image -%}
+  <meta name="twitter:image" content="https:{{ social_image | image_url: width: 1200 }}">
+{%- endif -%}
