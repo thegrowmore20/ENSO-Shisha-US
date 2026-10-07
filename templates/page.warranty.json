@@ -11,10 +11,10 @@
       "settings": {
         "heading": "Warranty",
         "lead": "ENSŌ products are built with thoughtful engineering, quality materials and reliable performance, and they are covered accordingly.",
-        "padding_top": 56,
-        "padding_bottom": 64,
+        "padding_top": 80,
+        "padding_bottom": 40,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 48
+        "padding_bottom_mobile": 24
       }
     },
     "warranty_coverage": {
@@ -35,10 +35,10 @@
         "covered_footnote": "Issues caused by defects in the product's software, materials or manufacturing process under normal use. When a valid issue is confirmed, ENSŌ EU assesses the product and provides an appropriate solution under the warranty terms.",
         "not_covered_heading": "Not covered",
         "not_covered_footnote": "Proper care and use are required to keep the warranty valid.",
-        "padding_top": 0,
-        "padding_bottom": 64,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 64
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "warranty_claim": {
@@ -52,10 +52,10 @@
       "block_order": ["step_1", "step_2", "step_3", "step_4"],
       "settings": {
         "heading": "How to make a claim",
-        "padding_top": 0,
-        "padding_bottom": 64,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 64
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "warranty_returns": {
@@ -70,10 +70,10 @@
         "addr_company": "Omni-Tech Design Kft",
         "addr_street": "Weiner Leo utca 12. fszt. 6.",
         "addr_phone": "+36 20 598 9144",
-        "padding_top": 0,
-        "padding_bottom": 64,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 64
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "warranty_cta": {
@@ -90,10 +90,10 @@
         "body_text": "Write to us with:",
         "btn_label": "support@ensoshisha.eu",
         "btn_email": "support@ensoshisha.eu",
-        "padding_top": 0,
-        "padding_bottom": 96,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 64
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 40
       }
     }
   },
