@@ -107,7 +107,8 @@
           </button>
         </div>
 
-        {%- for tab_key in 'diamond,enso,orders' | split: ',' -%}
+        {%- assign tab_keys = 'diamond,enso,orders' | split: ',' -%}
+        {%- for tab_key in tab_keys -%}
           <div class="faq-group" data-group="{{ tab_key }}" hidden>
             {%- for block in section.blocks -%}
               {%- if block.settings.tab == tab_key -%}
