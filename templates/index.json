@@ -418,7 +418,7 @@
             "icon": "chat",
             "heading": "Support",
             "body": "A person answers at support@ensoshisha.eu. Guides, firmware and the manual live in ENSŌ Experience.",
-            "popup_body": "<h4>Ask us</h4><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version.</p><p><a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu ›</a></p><h4>Help yourself first</h4><p>The first session step by step, the full manual, cleaning and charging, and the firmware app live in ENSŌ Experience, made for the phone.</p><p><a href=\"/pages/experience\">Open ENSŌ Experience ›</a></p>",
+            "popup_body": "<h4>Ask us</h4><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version.</p><p><a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu ›</a></p><h4>Help yourself first</h4><p>The first session step by step, the full manual, cleaning and charging, and the firmware app live in ENSŌ Experience, made for the phone.</p><p><a href=\"/pages/experience\">Open ENSŌ Experience ›</a></p><p><a href=\"/pages/contact\">Support page ›</a></p>",
             "button_symbol": "plus"
           }
         },
@@ -444,6 +444,19 @@
         "padding_bottom": 96,
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 48
+      }
+    },
+    "enso_experience": {
+      "type": "enso-experience-banner",
+      "settings": {
+        "heading": "ENSŌ Experience",
+        "text": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
+        "cta_label": "Open ENSŌ Experience",
+        "cta_link": "/pages/experience",
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 24
       }
     },
     "instagram_feed": {
@@ -576,8 +589,9 @@
     "enso_diamond_row",
     "enso_awards",
     "shop_accessories",
-    "help_cards",
+    "enso_experience",
     "instagram_feed",
-    "journal"
+    "journal",
+    "help_cards"
   ]
 }
