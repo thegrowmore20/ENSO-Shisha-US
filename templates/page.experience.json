@@ -20,10 +20,10 @@
             "image": "shopify://shop_images/g-3q-right.webp",
             "heading": "ENSŌ Diamond",
             "description": "The electric heater for the hookah you already own. Quick start, packing, the full manual and firmware.",
-            "app_url": "",
-            "app_reg_url": "",
-            "app_updates_url": "",
-            "app_recipes_url": "",
+            "app_url": "/pages/enso-app#diamond",
+            "app_reg_url": "/pages/enso-app#diamond-register",
+            "app_updates_url": "/pages/enso-app#diamond-updates",
+            "app_recipes_url": "/pages/enso-app#diamond-recipes",
             "url_1": "",
             "url_2": "",
             "url_3": "",
@@ -40,9 +40,9 @@
             "image": "shopify://shop_images/enso-2026-cut.webp",
             "heading": "ENSŌ 2026 Edition",
             "description": "The all-in-one electric hookah. Quick start, the full manual, troubleshooting, video guides and support.",
-            "app_url": "",
-            "app_reg_url": "",
-            "app_recipes_url": "",
+            "app_url": "/pages/enso-app#enso",
+            "app_reg_url": "/pages/enso-app#enso-register",
+            "app_recipes_url": "/pages/enso-app#enso-recipes",
             "url_1": "",
             "url_2": "",
             "url_3": "",
@@ -73,7 +73,7 @@
             "icon": "warranty",
             "heading": "Warranty registration",
             "description": "Two minutes, once. Two years on the device, one on the battery",
-            "url": ""
+            "url": "/pages/enso-app#register"
           }
         },
         "feat_updates": {
@@ -82,7 +82,7 @@
             "icon": "updates",
             "heading": "Software updates",
             "description": "ENSŌ Diamond: hear when new software is out",
-            "url": ""
+            "url": "/pages/enso-app#diamond-updates"
           }
         },
         "feat_trouble": {
@@ -91,7 +91,7 @@
             "icon": "troubleshooting",
             "heading": "Troubleshooting",
             "description": "Step-by-step fixes, with support one tap away",
-            "url": ""
+            "url": "/pages/enso-app#fix"
           }
         },
         "feat_recipes": {
@@ -100,7 +100,7 @@
             "icon": "recipes",
             "heading": "Recipes",
             "description": "On electric heat every tobacco smokes differently than on coal. Find what works, save it",
-            "url": ""
+            "url": "/pages/enso-app#recipes"
           }
         }
       },
@@ -109,7 +109,7 @@
         "eyebrow": "The ENSŌ app",
         "heading": "Register, update, fix and create",
         "description": "Quick start, the manual, troubleshooting, software updates, warranty registration and the blend maker, for the device you own. Add it to your home screen and it is one tap away.",
-        "cta_url": "",
+        "cta_url": "/pages/enso-app",
         "cta_label": "Open the ENSŌ app",
         "cta_note": "For ENSŌ 2026 and ENSŌ Diamond, made for the phone",
         "padding_top": 0,
