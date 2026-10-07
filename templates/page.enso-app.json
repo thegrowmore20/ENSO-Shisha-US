@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "enso_app": {
+      "type": "enso-app",
+      "settings": {}
+    }
+  },
+  "order": ["enso_app"]
+}

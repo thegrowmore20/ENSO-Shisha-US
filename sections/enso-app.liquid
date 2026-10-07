@@ -1,0 +1,1652 @@
+﻿{%- doc -%}
+  ENSŌ App page — renders the full ENSŌ help/guide PWA inline.
+  Source: experience/app.html from the HTML handoff (processed).
+  Diamond guide images served from Shopify CDN via window.ENSO_IMG_MAP.
+  The _img() function in enso-app.js maps relative paths to CDN URLs.
+{%- enddoc -%}
+
+<style>/* ═══ site build: simple layer (1 Oct 2026, Vadim) ═══
+   One device at a time, a home screen of big sections, a menu instead of the tab rows and the bottom bar,
+   steps as cards you swipe, larger type. The app's own screens and features stay as they are. */
+
+/* what goes: device tabs, the alerts bar, the stage, What's new, the tour, the bottom bar */
+.model-tabs,#ntBar,.ntbar,.stage,#bottomNav,.nav,.tour,.e2hero,.wn-pill,.help-btn,.prof-btn,.flow-hint,.wr-steps,.wr-shot,#gateNote{display:none!important}
+.scr-wrap{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 32px)!important}
+
+/* top bar */
+.sa-top{display:flex;align-items:center;gap:6px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px 8px;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0}
+.sa-top button{font:inherit;color:var(--ink);background:none;border:0;cursor:pointer}
+.sa-back{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.sa-back[hidden]{display:none}
+.sa-back svg,.sa-mbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sa-brand{display:flex;align-items:baseline;gap:8px;padding:6px 8px;min-width:0}
+.sa-brand b{font-size:17px;font-weight:600;letter-spacing:0}
+.sa-brand span{font-size:13px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sa-mbtn{margin-left:auto;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px!important;border:1px solid var(--border)!important;border-radius:var(--pill);font-size:14px!important;font-weight:600}
+.sa-top button:focus-visible,.sa-menu button:focus-visible,.sa-tile:focus-visible,.sa-pick:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* menu */
+.sa-menu{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.38);display:flex;justify-content:center;align-items:flex-start}
+.sa-menu[hidden]{display:none}
+.sa-menu__panel{width:100%;max-width:430px;background:var(--bg);border-radius:0 0 24px 24px;padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 18px;box-shadow:var(--sh-md);max-height:100dvh;overflow-y:auto}
+.sa-menu__head{display:flex;align-items:center;justify-content:space-between;height:44px;margin-bottom:6px}
+.sa-menu__head b{font-size:20px;font-weight:600}
+.sa-menu__head button{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:16px;cursor:pointer}
+.sa-menu nav{display:grid}
+.sa-menu nav button{display:flex;align-items:center;gap:14px;width:100%;padding:15px 4px;border:0;border-bottom:1px solid var(--border);background:none;color:var(--ink);font-size:17px;font-weight:500;line-height:1.3;font-family:inherit;text-align:left;cursor:pointer}
+.sa-menu nav button svg{width:22px;height:22px;flex-shrink:0;fill:none;stroke:var(--gold-ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sa-menu__foot{display:grid;gap:10px;margin-top:16px}
+.sa-menu__foot button{width:100%;padding:14px;border-radius:var(--pill);border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:15px;font-weight:600;font-family:inherit;cursor:pointer}
+
+/* section screens: a little larger than the app */
+.scr-title{font-size:23px!important}
+.scr-sub{font-size:14px!important}
+.topic{font-size:15px!important}
+.detail p,.result-card p,.sa-hit__b p{font-size:14.5px!important;line-height:1.6!important}
+.detail ol li,.result-card ol li,.sa-hit__b ol li{font-size:14.5px!important;line-height:1.55!important}
+
+/* steps as swipe cards */
+.sa-cards{display:grid;grid-auto-flow:column;grid-auto-columns:86%;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:4px -16px 0;padding:2px 16px 6px;scroll-padding:0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.sa-cards::-webkit-scrollbar{display:none}
+.sa-card{scroll-snap-align:start;border-radius:18px;overflow:hidden;background:var(--panel-light);border:1px solid var(--border);display:flex;flex-direction:column}
+.sa-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--panel-light)}
+.sa-card--scr img{object-fit:contain;background:#0b0b0c;padding:14px}
+.sa-card--fig img{object-fit:contain;padding:12px}
+.sa-card__b{padding:14px 16px 18px}
+.sa-card__n{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--gold-ink);margin-bottom:4px}
+.sa-card__b b{display:block;font-size:16px;font-weight:600;line-height:1.3;margin-bottom:6px}
+.sa-card__b p{font-size:14.5px!important;line-height:1.55!important;color:var(--ink-2)!important;margin:0!important;white-space:normal!important}
+.sa-swipe{font-size:12.5px!important;color:var(--ink-3)!important;text-align:right;margin:2px 0 6px!important}
+.sa-parts{margin-top:4px}
+.sa-parts pre{font-size:14px;line-height:1.7;font-family:inherit;white-space:pre-line;color:var(--ink-2);margin:0}
+.sa-intro{font-size:15px!important;line-height:1.55!important;color:var(--ink)!important;margin:0 0 12px!important;white-space:normal!important}
+
+/* v2: the app's own home, a little larger; its small device switch shows on home only */
+.search-bar{font-size:16px!important}
+.chip{font-size:13px!important;padding:9px 15px!important}
+.qc-title,.quick-card .qc-title{font-size:14.5px!important}
+.qc-sub,.quick-card .qc-sub{font-size:12px!important}
+.hint-bar .h-txt{font-size:13.5px!important}
+.hint-bar[hidden]{display:none!important}
+.footer-note{font-size:12.5px!important}
+.mtab{font-size:13px!important}
+.sa-card2{position:relative;margin:14px 16px 0;padding:16px 44px 16px 16px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh-sm)}
+.sa-card2[hidden]{display:none}
+.sa-card2 .sa-tag{display:block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-ink);margin-bottom:6px}
+.sa-card2 b{display:block;font-size:15.5px;font-weight:600;line-height:1.3;margin-bottom:4px}
+.sa-card2 p{font-size:13.5px;line-height:1.55;color:var(--ink-2);margin-bottom:8px}
+.sa-card2 a{font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none}
+.sa-card2.sa-reg{background:var(--panel-light);box-shadow:none;padding-right:16px}
+.sa-x{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;border:0;background:var(--accent-soft);color:var(--ink-2);font-size:12px;cursor:pointer}
+
+/* v3: start screen, Quick start, sections as rows, menu with devices */
+#chips,#quickGrid{display:none!important}
+.sa-h1{font-size:26px;line-height:1.15;font-weight:600;letter-spacing:-.4px;padding:24px 16px 6px;text-wrap:balance}
+.sa-lead{font-size:14.5px;color:var(--ink-2);line-height:1.5;padding:0 16px 16px}
+.sa-pick{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:14px;align-items:center;width:calc(100% - 32px);margin:0 16px 10px;padding:10px 14px 10px 10px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);box-shadow:var(--sh-sm);color:var(--ink);text-align:left;font-family:inherit;cursor:pointer}
+.sa-pick img{width:96px;height:96px;border-radius:12px;object-fit:cover;background:var(--panel-light)}
+.sa-pick b{display:block;font-size:16.5px;font-weight:600;margin-bottom:3px}
+.sa-pick small{font-size:13px;line-height:1.4;color:var(--ink-3)}
+.sa-pick i{font-style:normal;color:var(--ink-3);font-size:18px}
+.sa-sections[hidden]{display:none}
+.sa-ico{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--gold-soft);flex-shrink:0}
+.sa-ico svg{width:19px;height:19px;fill:none;stroke:var(--gold-ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sa-row{text-decoration:none;color:var(--ink);text-align:left}
+.sa-row .sa-ico{margin-right:12px}
+.sa-row__t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sa-row__t b{font-size:15px;font-weight:600}
+.sa-row__t small{font-size:12.5px;color:var(--ink-3);font-weight:400}
+.sa-qs{display:flex;align-items:center;gap:12px;width:calc(100% - 32px);margin:2px 16px 12px;padding:16px;border-radius:var(--r-md);border:1px solid rgba(207,168,114,.35);background:var(--gold-soft);color:var(--ink);text-align:left;font-family:inherit;cursor:pointer}
+.sa-qs b{display:block;font-size:17px;font-weight:600}
+.sa-qs small{font-size:13px;color:var(--ink-2)}
+.sa-qs .t-arrow{margin-left:auto;color:var(--ink-3);font-size:17px}
+.sa-qs .sa-ico{background:var(--surface)}
+.sa-qsbody{padding:0 16px}
+.sa-qsec{margin-bottom:22px}
+.sa-qsec h2{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600;margin:6px 0 10px}
+.sa-qsec h2 span{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:12px;display:flex;align-items:center;justify-content:center}
+.sa-q summary{list-style:none;cursor:pointer}
+.sa-q summary::-webkit-details-marker{display:none}
+.sa-q[open] summary .t-arrow{transform:rotate(90deg)}
+.sa-q .detail{margin-top:-4px}
+.sa-menu .topic{width:100%;margin:0 0 8px}
+.sa-menu nav{display:block}
+.sa-menu__h{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);margin:16px 4px 8px}
+.sa-menu__dev{display:grid;gap:8px}
+.sa-dev{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px 10px 10px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;text-align:left;cursor:pointer}
+.sa-dev.on{border-color:var(--gold)}
+.sa-dev i{margin-left:auto;font-style:normal;color:var(--gold-ink)}
+.sa-menu__foot button{display:flex;align-items:center;justify-content:center;gap:10px}
+.sa-menu__foot .sa-ico{width:26px;height:26px;background:none}
+
+/* v4: app-like home. Warranty first (both devices), software updates (Diamond), the app on the home screen,
+   then search, a big Quick start tile and a grid of section tiles */
+.sa-top-cards{display:grid;gap:10px;margin:14px 16px 14px}
+.sa-top-cards:empty{display:none}
+.sa-hero{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%;padding:20px 18px 18px;border:0;border-radius:20px;text-align:left;font-family:inherit;cursor:pointer;color:#F3E9DA;background:radial-gradient(140% 100% at 15% -10%,#4a3b31 0%,#2a2320 45%,#1e1a18 100%);box-shadow:0 14px 34px rgba(0,0,0,.18)}
+.sa-hero .sa-tag{display:inline-block;padding:4px 10px;border-radius:var(--pill);background:var(--gold);color:#231d1a;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+.sa-hero b{font-size:22px;line-height:1.2;font-weight:600;letter-spacing:-.3px;color:#fff;margin-top:4px}
+.sa-hero small{font-size:13.5px;line-height:1.5;color:rgba(243,233,218,.78);max-width:30ch}
+.sa-hero__go{margin-top:8px;padding:11px 22px;border-radius:var(--pill);background:#F3E9DA;color:#231d1a;font-size:14px;font-weight:700}
+.sa-pill,.sa-app{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);box-shadow:var(--sh-sm);color:var(--ink);text-align:left;font-family:inherit;cursor:pointer}
+.sa-pill b,.sa-app b{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.sa-pill small,.sa-app small{display:block;font-size:12.5px;line-height:1.45;color:var(--ink-3);margin-top:2px}
+.sa-pill .t-arrow{margin-left:auto;color:var(--ink-3);font-size:17px}
+.sa-app{background:var(--gold-soft);border-color:rgba(207,168,114,.35);box-shadow:none}
+.sa-app__ic{width:40px;height:40px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sa-app__ic svg{width:20px;height:20px;fill:none;stroke:var(--on-accent);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sa-app__go{margin-left:auto;padding:8px 14px;border-radius:var(--pill);background:var(--accent);color:var(--on-accent);font-size:13px;font-weight:700;flex-shrink:0}
+.sa-sections{margin-top:4px}
+.sa-qs{display:grid!important;grid-template-columns:minmax(0,1fr) 112px;align-items:center;gap:12px;width:calc(100% - 32px);margin:0 16px 10px;padding:0 0 0 18px!important;min-height:124px;overflow:hidden;border-radius:20px;border:1px solid rgba(207,168,114,.35);background:var(--gold-soft);color:var(--ink);text-align:left;font-family:inherit;cursor:pointer}
+.sa-qs__t{display:flex;flex-direction:column;gap:3px;padding:16px 0}
+.sa-qs .sa-tag{font-size:10px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold-ink)}
+.sa-qs b{font-size:21px!important;font-weight:600;letter-spacing:-.3px}
+.sa-qs small{font-size:13px;color:var(--ink-2);line-height:1.4}
+.sa-qs img{width:112px;height:124px;object-fit:cover;align-self:stretch}
+.sa-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 16px}
+.sa-tile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:104px;padding:11px 9px;border-radius:16px;border:1px solid var(--border);background:var(--surface);box-shadow:var(--sh-sm);color:var(--ink);text-align:left;font-family:inherit;cursor:pointer}
+.sa-tile:active,.sa-qs:active,.sa-hero:active,.sa-pill:active,.sa-app:active{transform:scale(.98)}
+.sa-tile .sa-ico{width:34px;height:34px;margin-bottom:4px}
+.sa-tile b{font-size:13px;font-weight:600;line-height:1.25;letter-spacing:-.15px;white-space:nowrap}
+.sa-tile small{font-size:11.5px;line-height:1.35;color:var(--ink-3);text-wrap:pretty}
+.sa-lead--pick{padding-top:4px}
+#scr-start .sa-top-cards{margin-top:4px}
+.ob-top{display:none!important}
+
+/* v5: phone mock-ups, the quiet device line for links from the website */
+.sa-card--mock{background:var(--panel-light)}
+.sa-mock{padding:16px 0 4px;display:flex;justify-content:center}
+.sa-mock svg{width:62%;max-width:180px;height:auto;display:block;filter:drop-shadow(0 10px 22px rgba(0,0,0,.18))}
+.ob-card .sa-cards{margin:0 -16px;padding:2px 16px 6px}
+.sa-oblist{display:block!important;margin:6px 0 4px;padding:0 16px;text-align:left}
+.sa-oblist .sa-cards{margin:0 -16px}
+.sa-tempbar{display:none;align-items:center;justify-content:space-between;gap:10px;padding:8px 16px;background:var(--panel-light);border-bottom:1px solid var(--border);font-size:13px;color:var(--ink-2);flex-shrink:0}
+body.sa-temp .sa-tempbar{display:flex}
+.sa-tempbar button{border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:var(--pill);padding:6px 12px;font:inherit;font-weight:600;cursor:pointer}
+.sa-sections .sa-top-cards{margin:14px 16px 0}
+
+/* v6: Software updates screen (Diamond) */
+#saSwBody{padding:0 16px 8px}
+#saSwBody .sa-card2{margin:12px 0 0}
+.sa-sw__latest{padding:20px 18px;border-radius:20px;color:#F3E9DA;background:radial-gradient(140% 100% at 15% -10%,#4a3b31 0%,#2a2320 45%,#1e1a18 100%)}
+.sa-sw__latest .sa-tag{display:inline-block;padding:4px 10px;border-radius:var(--pill);background:var(--gold);color:#231d1a;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+.sa-sw__latest b{display:block;font-size:24px;font-weight:600;color:#fff;margin:10px 0 6px;letter-spacing:-.3px}
+.sa-sw__latest p{font-size:14px;line-height:1.5;color:rgba(243,233,218,.8)}
+.sa-sw__notes{margin:10px 0 0 18px;font-size:13.5px;line-height:1.5;color:rgba(243,233,218,.9)}
+.sa-sw__h{font-size:18px;font-weight:600;margin:22px 0 10px}
+.sa-sw__note{font-size:13px;color:var(--ink-3);line-height:1.5;margin:4px 0 0}
+.sa-sw__alert p{margin-bottom:12px!important}
+.sa-sw__btn{border:0;cursor:pointer;font-family:inherit;background:var(--accent)!important;color:var(--on-accent)!important}
+.sa-sw__ok{color:var(--ink)!important}
+.sa-card2 p b{display:inline;font-size:inherit;margin:0}
+#scr-register .wr-hero{margin-bottom:18px}
+
+/* ENSŌ 2026 registration: reseller note and tutorial videos */
+.sa-enso-note{margin:0 16px 14px!important;padding-right:16px!important}
+.sa-enso-note[hidden],.sa-vids[hidden]{display:none!important}
+.sa-vids{padding:4px 16px 8px}
+.sa-vids__lead{font-size:14px;color:var(--ink-2);margin:-4px 0 12px;line-height:1.5}
+.sa-vid{display:flex;gap:12px;align-items:flex-start;padding:14px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);color:var(--ink);text-decoration:none}
+.sa-vid__ic svg{width:34px;height:34px;flex-shrink:0;fill:none;stroke:var(--gold-ink);stroke-width:1.6;color:var(--gold-ink)}
+.sa-vid b{display:block;font-size:15px;font-weight:600;margin-bottom:3px}
+.sa-vid small{display:block;font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+.sa-vid em{display:block;font-style:normal;font-size:13px;font-weight:600;color:var(--ink);margin-top:6px}
+.sa-vid--warn{background:var(--panel-light);border-color:rgba(179,38,30,.25)}
+
+.sa-qs img[src$='enso-2026-cut.png'],.sa-pick img[src$='enso-2026-cut.png']{object-fit:contain;background:transparent;padding:6px}
+
+/* desktop web version: side menu + wide content; the phone layout is unchanged */
+.sa-side{display:none}
+@media (min-width:900px){
+  .app{background:var(--page)}
+  .app{max-width:1240px!important;display:grid!important;grid-template-columns:272px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);grid-template-areas:"top top" "side temp" "side main";border-left:1px solid var(--border);border-right:1px solid var(--border)}
+  .sa-top{grid-area:top;padding:14px 28px 14px 20px}
+  .sa-mbtn{display:none!important}
+  .sa-tempbar{grid-area:temp}
+  .scr-wrap{grid-area:main}
+  .sa-side{grid-area:side;display:block;overflow-y:auto;padding:18px 16px 28px;border-right:1px solid var(--border);background:var(--bg)}
+  .sa-side nav{display:grid;gap:2px}
+  .sa-side__i,.sa-side__theme{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border:0;border-radius:12px;background:none;color:var(--ink);font-family:inherit;font-size:14.5px;font-weight:500;text-align:left;cursor:pointer}
+  .sa-side__i:hover,.sa-side__theme:hover{background:var(--surface-hover)}
+  .sa-side__i.on{background:var(--gold-soft);font-weight:600}
+  .sa-side .sa-ico{width:30px;height:30px}
+  .sa-side .sa-dev{margin-bottom:8px;font-size:14px}
+  .sa-side__theme{margin-top:14px;color:var(--ink-2)}
+  .scr{max-width:820px;margin:0 auto}
+  .sa-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px}
+  .sa-tile{min-height:120px;padding:16px}
+  .sa-tile b{font-size:15px}
+  .sa-cards{grid-auto-columns:calc(50% - 6px)!important;margin:4px 0 0!important;padding:2px 0 6px!important}
+  .sa-cards--mock{grid-auto-columns:calc(33.3% - 7px)!important}
+  .sa-qs{min-height:150px}.sa-qs img{width:150px;height:150px}
+}
+
+/* 2 Oct: ENSŌ 2026 tutorials play in place */
+.sa-vid--emb{flex-direction:column;gap:0;padding:0;overflow:hidden}
+.sa-vid__pl,.sa-vid__fr{display:block;width:100%;aspect-ratio:16/9;border:0;margin:0}
+.sa-vid__pl{position:relative;cursor:pointer;background:#111 center/cover no-repeat;padding:0}
+.sa-vid__pl::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .18)}
+.sa-vid__pl .sa-vid__ic{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;width:64px;height:64px;border-radius:50%;background:rgb(0 0 0 / .55);display:flex;align-items:center;justify-content:center}
+.sa-vid__pl .sa-vid__ic svg{width:40px;height:40px;stroke:#fff;color:#fff}
+.sa-vid__tx{padding:12px 14px 14px}
+.sa-vid__tx a{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--ink)}
+@media (min-width:900px){.sa-vids{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}.sa-vids>h2,.sa-vids>p,.sa-vid--warn{grid-column:1/-1}.sa-vids .sa-vid{margin:0}}
+
+/* 2 Oct: text-first steps */
+.sa-cards--steps{display:grid!important;grid-auto-flow:row!important;grid-template-columns:1fr!important;gap:0!important;overflow:visible!important;margin:4px 0 0!important;padding:0!important}
+.sa-cards--steps .sa-card{flex-direction:row-reverse;align-items:flex-start;gap:12px;border:0;border-top:1px solid var(--border);border-radius:0;background:none;padding:14px 0}
+.sa-cards--steps .sa-card img{width:92px;flex:none;aspect-ratio:4/5;border-radius:12px}
+.sa-cards--steps .sa-card--scr img{aspect-ratio:1;padding:6px;border-radius:50%}
+.sa-cards--steps .sa-card__b{padding:0;flex:1;min-width:0}
+.sa-cards--steps .sa-card__n{margin-bottom:2px}
+.sa-cards--steps .sa-card__b b{font-size:16.5px;font-weight:700}
+@media (min-width:900px){.sa-cards--steps{grid-template-columns:repeat(2,minmax(0,1fr))!important;column-gap:28px!important}.sa-cards--steps .sa-card img{width:120px}}
+.sa-cards--steps .sa-card img{width:124px}
+@media (min-width:900px){.sa-cards--steps .sa-card img{width:180px}}
+/* 2 Oct, Vadim (later): slides again, text on top, a big picture under it */
+.sa-cards--steps{display:grid!important;grid-auto-flow:column!important;grid-template-columns:none!important;grid-auto-columns:86%!important;gap:10px!important;overflow-x:auto!important;scroll-snap-type:x mandatory;margin:4px -16px 0!important;padding:2px 16px 6px!important}
+.sa-cards--steps .sa-card{flex-direction:column-reverse;justify-content:flex-end;gap:0;border:1px solid var(--border);border-radius:18px;background:var(--panel-light);padding:0;align-items:stretch}
+.sa-cards--steps .sa-card img,.sa-cards--steps .sa-card--scr img{width:100%!important;aspect-ratio:4/5;border-radius:0}
+.sa-cards--steps .sa-card--scr img{aspect-ratio:1;padding:16px;border-radius:0}
+.sa-cards--steps .sa-card__b{padding:14px 16px 12px}
+@media (min-width:900px){.sa-cards--steps{grid-auto-columns:calc(50% - 6px)!important;margin:4px 0 0!important;padding:2px 0 6px!important}.sa-cards--steps .sa-card img{width:100%!important}}
+
+/* 4 Oct: Quick start like the site */
+.saq{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:14px}
+.saq__s{background:var(--panel-light);border-radius:20px;padding:18px 16px 16px}
+.saq__n{display:inline-block;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--bg,#fff);font:800 14px/30px Inter,sans-serif;text-align:center;margin-bottom:10px}
+.saq__s h3{font-size:22px;line-height:28px;font-weight:800;margin:0 0 6px}
+.saq__s p{font-size:15px!important;line-height:23px!important;color:var(--ink-2)!important;margin:0 0 14px!important}
+.saq__pic{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:#fff}
+.saq__track{position:absolute;inset:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.saq__track::-webkit-scrollbar{display:none}
+.saq__track>img,.saq__dev{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:center}
+.saq__dev{position:relative;overflow:hidden;background:#fff}
+.saq__dev>img:first-child{position:absolute;width:300%;max-width:none;left:50%;top:50%;transform:translate(-50.17%,-57.6%)}
+.saq__scr{position:absolute;left:50%;top:50%;width:64.2%;transform:translate(-50%,-50%);border-radius:50%}
+.saq__dots{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:6px}
+.saq__dots i{width:7px;height:7px;border-radius:50%;background:rgb(0 0 0 / .2)}.saq__dots i.on{background:#000;width:20px;border-radius:999px}
+@media (min-width:900px){.saq{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* recipes read bigger */
+#scr-recipes{font-size:16px}
+#scr-recipes p,#scr-recipes li,#scr-recipes label,#scr-recipes .rc-sub,#scr-recipes small{font-size:15px!important;line-height:23px!important}
+#scr-recipes h2,#scr-recipes h3{font-size:20px!important;line-height:26px!important}
+
+</style>
+</head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark">
+<script>try{var _t=localStorage.getItem("ensoTheme");if(_t==="light"||_t==="dark")document.documentElement.dataset.theme=_t}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ENSŌ Help</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface-hover:#FAFAF8;
+  --ink:#1A1A1A; --ink-2:#6B6560; --ink-3:#9B9590;
+  --accent:#2C2825; --accent-soft:rgba(44,40,37,0.06);
+  --gold:#CFA872; --gold-soft:rgba(207,168,114,0.14); --gold-ink:#8a6a3a;
+  --border:rgba(0,0,0,0.06);
+  --sh-sm:0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --sh-md:0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+  --r-md:16px; --pill:100px;
+  --nav-h:68px; --tabs-h:52px; --stage-h:190px;
+  --panel-dark:#2F2A2B; --panel-light:#F7F6F4;
+}
+.app *,.app *::before,.app *::after{margin:0;padding:0;box-sizing:border-box}
+
+.app{
+  font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+}
+.app{display:flex;flex-direction:column;height:100dvh;max-width:430px;margin:0 auto;background:var(--bg)}
+
+/* ═══ MODEL TABS (top) ═══ */
+.model-tabs{
+  height:var(--tabs-h);display:flex;align-items:center;gap:8px;padding:10px 16px 6px;flex-shrink:0;
+}
+.mtab{
+  flex:1;padding:10px 4px;border-radius:var(--pill);border:1px solid var(--border);
+  background:var(--surface);font-family:inherit;font-size:12px;font-weight:600;
+  color:var(--ink-2);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;
+}
+.mtab.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.mtab .soon{font-size:8.5px;font-weight:700;letter-spacing:.8px;padding:2px 7px;border-radius:var(--pill);background:var(--gold-soft);color:var(--gold-ink)}
+.mtab.on .soon{background:rgba(255,255,255,0.18);color:#f0d9b8}
+
+/* ═══ VISUAL STAGE (persistent) ═══ */
+.stage{
+  height:var(--stage-h);margin:4px 16px 0;border-radius:20px;overflow:hidden;position:relative;
+  background:#1e1c1a;flex-shrink:0;box-shadow:var(--sh-sm);transition:background .3s;
+}
+.stage.light{background:var(--panel-light);border:1px solid var(--border)}
+.stage img{
+  width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  transition:opacity .25s ease;display:block;
+}
+.stage.contain img{object-fit:contain;padding:8px}
+.stage-cap{
+  position:absolute;bottom:10px;left:12px;right:12px;display:flex;align-items:center;gap:6px;
+  pointer-events:none;
+}
+.stage-cap span{
+  background:rgba(26,26,26,0.78);color:#fff;font-size:11px;font-weight:600;
+  padding:6px 12px;border-radius:var(--pill);backdrop-filter:blur(8px);letter-spacing:.3px;
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.stage.light .stage-cap span{background:var(--glass);color:var(--ink);border:1px solid var(--border)}
+
+/* ═══ SCROLL AREA ═══ */
+.scr-wrap{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 22px);-webkit-overflow-scrolling:touch;transition:padding-bottom .25s}
+body.ntbot-on .scr-wrap{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 62px)}
+body.news-open .ntbot{display:none}
+.scr{display:none;animation:fadeIn .25s ease}
+.scr.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Search */
+.search-wrap{margin:14px 16px 0;position:relative}
+.search-bar{
+  width:100%;padding:14px 48px 14px 18px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--pill);font-size:14.5px;font-family:inherit;color:var(--ink);outline:none;
+  box-shadow:var(--sh-sm);transition:all .2s;
+}
+.search-bar:focus{border-color:var(--accent);box-shadow:var(--sh-md)}
+.search-bar::placeholder{color:var(--ink-3)}
+.search-go{
+  position:absolute;right:5px;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:transform .15s;
+}
+.search-go:active{transform:translateY(-50%) scale(.9)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;padding:12px 16px 4px}
+.chip{
+  padding:8px 14px;background:var(--surface);border:1px solid rgba(0,0,0,0.08);
+  border-radius:var(--pill);font-size:12px;font-weight:500;font-family:inherit;color:var(--ink);
+  cursor:pointer;transition:all .15s;
+}
+.chip:active{transform:scale(.95);background:var(--accent-soft)}
+.results{padding:6px 16px 0}
+.result-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  box-shadow:var(--sh-sm);padding:16px;margin-bottom:12px;animation:slideUp .3s ease;
+}
+.result-card h3{font-size:15px;font-weight:600;margin-bottom:8px}
+.no-result{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:22px 18px;text-align:center;animation:slideUp .3s ease;margin-bottom:12px;
+}
+.no-result h3{font-size:14.5px;font-weight:600;margin-bottom:6px}
+.no-result p{font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:14px}
+
+/* Hint bar (Did you know) */
+.hint-bar{
+  margin:14px 16px 0;padding:13px 16px;background:var(--gold-soft);
+  border-radius:var(--r-md);display:flex;gap:10px;align-items:flex-start;
+  animation:slideUp .3s ease;cursor:pointer;border:1px solid rgba(207,168,114,0.2);
+}
+.hint-bar .h-ico{font-size:15px;flex-shrink:0;margin-top:1px}
+.hint-bar .h-txt{font-size:12.5px;color:var(--gold-ink);line-height:1.55}
+.hint-bar .h-txt b{font-weight:700}
+
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:14px 16px 6px}
+.quick-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  box-shadow:var(--sh-sm);padding:14px 13px;cursor:pointer;transition:all .15s;
+  display:flex;flex-direction:column;gap:5px;text-align:left;font-family:inherit;
+}
+.quick-card:active{transform:scale(.97)}
+.quick-card .qc-emoji{font-size:18px}
+.t-ico svg{width:24px;height:24px;display:block}
+.qc-ic svg{width:26px;height:26px;display:block}
+.h-ico svg{width:15px;height:15px;display:block}
+.fs-eye svg{width:15px;height:15px;display:block}
+.sup-pill svg{width:14px;height:14px;flex-shrink:0}
+.recipes-circle svg{width:44px;height:44px}
+
+.quick-card .qc-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3}
+.quick-card .qc-sub{font-size:11px;color:var(--ink-3)}
+
+/* Topics + details */
+.scr-title{font-size:21px;font-weight:600;letter-spacing:-.3px;padding:18px 16px 2px}
+.scr-sub{font-size:13px;color:var(--ink-2);padding:0 16px 12px;line-height:1.5}
+.topic{
+  display:flex;align-items:center;width:calc(100% - 32px);margin:0 16px 9px;
+  padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  font-size:14px;font-weight:500;font-family:inherit;color:var(--ink);cursor:pointer;
+  text-align:left;box-shadow:var(--sh-sm);transition:all .15s;-webkit-appearance:none;
+}
+.topic:active{transform:scale(.98)}
+.topic .t-ico{
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  margin-right:12px;flex-shrink:0;
+}
+.topic .t-arrow{margin-left:auto;color:var(--ink-3);font-size:17px;transition:transform .25s}
+.topic.open .t-arrow{transform:rotate(90deg)}
+.detail{
+  display:none;margin:2px 16px 13px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-md);
+  padding:16px;animation:slideUp .3s ease;
+}
+.detail.visible{display:block}
+.detail p, .result-card p{font-size:13.5px;color:var(--ink-2);line-height:1.65;white-space:pre-line}
+.detail ol, .result-card ol{list-style:none;counter-reset:st;padding:2px 0 0}
+.detail ol li, .result-card ol li{
+  counter-increment:st;position:relative;padding:10px 0 10px 40px;
+  font-size:13.5px;color:var(--ink-2);line-height:1.55;border-bottom:1px solid var(--border);
+}
+.detail ol li:last-child, .result-card ol li:last-child{border-bottom:none}
+.detail ol li::before, .result-card ol li::before{
+  content:counter(st);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:50%;
+  background:var(--accent);color:var(--on-accent);font-size:11.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* Flow steps — tap to show on stage */
+.fstep{
+  display:flex;align-items:center;gap:11px;width:100%;padding:11px 12px;margin-bottom:7px;
+  background:var(--panel-light);border:1px solid var(--border);border-radius:12px;
+  font-family:inherit;cursor:pointer;text-align:left;transition:all .15s;-webkit-appearance:none;
+}
+.fstep:active{transform:scale(.98)}
+.fstep.on{border-color:var(--gold);background:var(--gold-soft)}
+.fstep .fs-num{
+  width:23px;height:23px;border-radius:50%;background:var(--accent);color:var(--on-accent);
+  font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.fstep.on .fs-num{background:var(--gold-ink)}
+.fstep .fs-body{flex:1}
+.fstep .fs-t{font-size:12px;font-weight:700;letter-spacing:1px;color:var(--ink)}
+.fstep .fs-x{font-size:12.5px;color:var(--ink-2);line-height:1.5;margin-top:2px}
+.fstep .fs-eye{font-size:13px;color:var(--ink-3);flex-shrink:0}
+.flow-hint{font-size:11px;color:var(--ink-3);margin:2px 0 8px;text-align:center}
+
+/* Upsell card */
+.upsell{
+  display:flex;gap:12px;margin-top:14px;padding:13px;background:var(--gold-soft);
+  border:1px solid rgba(207,168,114,0.25);border-radius:14px;text-decoration:none;
+  transition:transform .15s;align-items:center;
+}
+.upsell:active{transform:scale(.98)}
+.upsell .up-img{
+  width:64px;height:64px;border-radius:11px;background:var(--panel-light);flex-shrink:0;
+  overflow:hidden;border:1px solid var(--border);
+}
+.upsell .up-img img{width:100%;height:100%;object-fit:cover}
+.upsell .up-body{flex:1;min-width:0}
+.upsell .up-tag{font-size:9.5px;font-weight:700;letter-spacing:1.2px;color:var(--gold-ink);margin-bottom:3px}
+.upsell .up-txt{font-size:12.5px;color:var(--ink);line-height:1.45;font-weight:500}
+.upsell .up-price{font-size:12px;color:var(--gold-ink);font-weight:700;margin-top:4px}
+.upsell .up-go{font-size:16px;color:var(--gold-ink);flex-shrink:0}
+
+/* Video card w/ duration */
+.vid-card{
+  display:block;margin-top:13px;border-radius:14px;overflow:hidden;
+  border:1px solid var(--border);box-shadow:var(--sh-sm);text-decoration:none;
+  transition:transform .15s;background:#000;
+}
+.vid-card:active{transform:scale(.98)}
+.vid-card .vc-wrap{position:relative}
+.vid-card img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.vid-card .vc-dur{
+  position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.8);color:#fff;
+  font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;
+}
+.vid-card .vc-bar{display:flex;align-items:center;gap:8px;padding:10px 13px;background:var(--surface)}
+.vid-card .vc-play{
+  width:25px;height:25px;border-radius:50%;background:var(--accent);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.vid-card .vc-play svg{width:9px;height:9px;fill:#fff;margin-left:2px}
+.vid-card .vc-title{font-size:12.5px;font-weight:600;color:var(--ink)}
+.vid-card .vc-src{font-size:10.5px;color:var(--ink-3);margin-left:auto}
+.vid-pill{
+  display:inline-flex;align-items:center;gap:6px;margin-top:11px;padding:8px 15px;
+  background:var(--gold-soft);color:var(--gold-ink);border:none;border-radius:var(--pill);
+  font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none;transition:all .15s;
+}
+.vid-pill:active{transform:scale(.96)}
+.vid-pill .dur{font-weight:600;opacity:.7}
+.sup-pill{
+  display:inline-flex;align-items:center;gap:6px;margin-top:11px;padding:8px 15px;
+  background:var(--accent-soft);color:var(--accent);border:none;border-radius:var(--pill);
+  font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none;transition:all .15s;
+}
+.sup-pill:active{transform:scale(.96)}
+.parts-toggle{display:flex;gap:8px;margin-bottom:4px}
+.parts-illu{
+  height:340px;border-radius:14px;margin:10px 0 4px;background:var(--panel-light);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.parts-illu img{max-width:94%;max-height:94%;object-fit:contain;display:block}
+.parts-toggle button{
+  flex:1;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--pill);
+  font-size:12.5px;font-weight:600;font-family:inherit;color:var(--ink-2);cursor:pointer;transition:all .15s;
+}
+.parts-toggle button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+
+/* Recipes */
+.recipes-hero{text-align:center;padding:34px 32px 0}
+.recipes-circle{
+  width:76px;height:76px;border-radius:50%;margin:0 auto 16px;
+  background:linear-gradient(145deg,#3a3632,#26231F);
+  display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:var(--sh-md);
+}
+.recipes-hero h2{font-size:20px;font-weight:600;margin-bottom:6px}
+.recipes-hero p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.soon-card{
+  margin:20px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  box-shadow:var(--sh-sm);padding:20px 18px;text-align:center;
+}
+.soon-tag{
+  display:inline-block;padding:4px 13px;background:var(--gold-soft);color:var(--gold-ink);
+  border-radius:var(--pill);font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:10px;
+}
+.soon-card p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.soon-btn{
+  display:block;width:calc(100% - 32px);margin:0 16px;padding:14px;
+  background:var(--mute);color:var(--ink-3);border:none;border-radius:var(--pill);
+  font-size:14px;font-weight:500;font-family:inherit;cursor:not-allowed;
+}
+
+/* Diamond screen */
+.dia-card{
+  margin:18px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  box-shadow:var(--sh-md);padding:22px 20px;text-align:center;animation:slideUp .3s ease;
+}
+.dia-card h2{font-size:20px;font-weight:600;margin:10px 0 8px}
+.dia-card p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.dia-price{display:flex;justify-content:center;gap:20px;margin:16px 0}
+.dia-price div{text-align:center}
+.dia-price .dp-v{font-size:18px;font-weight:700;color:var(--ink)}
+.dia-price .dp-l{font-size:10.5px;color:var(--ink-3);letter-spacing:.5px;margin-top:2px}
+.dia-btn{
+  display:inline-block;margin-top:6px;padding:13px 28px;background:var(--accent);color:var(--on-accent);
+  border-radius:var(--pill);font-size:14px;font-weight:600;text-decoration:none;transition:transform .15s;
+}
+.dia-btn:active{transform:scale(.96)}
+
+/* Bottom nav */
+.nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;height:auto;min-height:var(--nav-h);
+  background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;
+  padding:9px 8px;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 9px);z-index:100;
+}
+.nav button{
+  display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 9px;
+  background:none;border:none;cursor:pointer;min-width:58px;font-family:inherit;transition:transform .15s;
+}
+.nav button:active{transform:scale(.92)}
+.nav svg{width:21px;height:21px;stroke:var(--ink-3);fill:none;stroke-width:1.8;transition:stroke .2s}
+.nav .lbl{font-size:9.5px;font-weight:500;color:var(--ink-3);transition:color .2s}
+.nav button.on svg{stroke:var(--accent)}
+.nav button.on .lbl{color:var(--accent);font-weight:600}
+.footer-note{text-align:center;padding:18px 30px 6px;font-size:11px;color:var(--ink-3);line-height:1.6}
+.footer-note a{color:var(--ink-2);font-weight:600;text-decoration:none}
+@media(min-width:480px){
+  .app{border-left:1px solid var(--border);border-right:1px solid var(--border);box-shadow:0 0 60px rgba(0,0,0,0.05)}
+  .app{background:var(--page)}
+}
+
+/* ════════ RECIPES ════════ */
+.rc-tabs{display:flex;gap:6px;padding:14px 16px 6px}
+.rc-tab{flex:1;padding:9px;border-radius:var(--pill);border:1px solid var(--border);background:var(--surface);font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all .15s}
+.rc-tab.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.rc-view{display:none;animation:fadeIn .25s ease}
+.rc-view.on{display:block}
+.rc-intro{padding:6px 16px 8px;font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.rc-filters{display:flex;gap:6px;padding:4px 16px 10px;overflow-x:auto;scrollbar-width:none}
+.rc-filters::-webkit-scrollbar{display:none}
+.rc-chip{padding:6px 12px;border-radius:var(--pill);border:1px solid var(--border);background:var(--surface);font-family:inherit;font-size:11.5px;font-weight:600;color:var(--ink-2);white-space:nowrap;cursor:pointer}
+.rc-chip.on{background:var(--gold-soft);color:var(--gold-ink);border-color:transparent}
+
+/* feed grid */
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 16px}
+.rcard{background:radial-gradient(120% 90% at 30% 10%,#5a4a3e 0%,#3a312c 45%,#241f1d 100%);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .15s;position:relative;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.rcard .rc-brand{color:var(--gold);font-size:8px;font-weight:600;letter-spacing:3px;text-align:center;padding-top:12px;opacity:.9}
+.rcard .rc-title{color:#F3E9DA;font-size:11.5px;font-weight:500;letter-spacing:2.2px;text-transform:uppercase;text-align:center;padding:5px 10px 0;line-height:1.35;min-height:31px}
+.rcard:active{transform:scale(.97)}
+.rcard svg{width:100%;display:block}
+.rcard .rc-by{color:rgba(243,233,218,.5);font-size:10px;text-align:center;padding:2px 10px 4px}
+.rcard .rc-meta{display:flex;justify-content:space-around;padding:6px 8px 11px;border-top:1px solid rgba(255,255,255,.07);margin-top:4px}
+.rcard .rc-meta span{text-align:center;color:#F3E9DA;font-size:10.5px;font-weight:600}
+.rcard .rc-meta small{display:block;color:rgba(243,233,218,.45);font-size:7.5px;letter-spacing:1px;font-weight:500}
+.rcard .rc-votes{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.45);color:#fff;font-size:10.5px;font-weight:600;padding:4px 8px;border-radius:var(--pill);display:flex;align-items:center;gap:4px;backdrop-filter:blur(6px)}
+.rcard .rc-votes svg{width:10px;height:10px;fill:var(--gold)}
+
+/* detail */
+.rc-back{display:inline-flex;align-items:center;gap:6px;margin:12px 16px 4px;background:none;border:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.bigcard{margin:6px 16px 12px;border-radius:26px;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.22);background:var(--surface)}
+.bigcard .bc-scene{position:relative;background:radial-gradient(130% 80% at 28% 8%,#6a5747 0%,#43382f 40%,#241f1d 100%);padding:22px 18px 18px;text-align:center}
+.bigcard .bc-scene::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 100%,rgba(0,0,0,.35),transparent 70%);pointer-events:none}
+.bigcard .bc-brand{color:var(--gold);font-size:10px;font-weight:500;letter-spacing:5px;position:relative}
+.bigcard .bc-name{color:#F3E9DA;font-size:22px;font-weight:400;letter-spacing:6px;text-transform:uppercase;margin:10px 0 4px;line-height:1.25;position:relative}
+.bigcard .bc-by{color:rgba(243,233,218,.55);font-size:12px;margin-bottom:14px;position:relative}
+.bigcard .bc-save{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;z-index:2}
+.bigcard .bc-save svg{width:14px;height:14px;fill:none;stroke:#F3E9DA;stroke-width:1.8}
+.bigcard .bc-scene > svg.cup{width:62%;max-width:210px;margin:0 auto;display:block;position:relative;filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
+.bigcard .bc-stats{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;padding:16px 8px 14px;background:var(--surface)}
+.bigcard .bc-stat{text-align:center;border-right:1px solid var(--border)}
+.bigcard .bc-stat:last-child{border-right:none}
+.bigcard .bc-stat svg{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:6px}
+.bigcard .bc-stat b{display:block;color:var(--ink);font-size:14px;font-weight:500}
+.bigcard .bc-stat span{color:var(--ink-3);font-size:9px;letter-spacing:1.5px;text-transform:uppercase}
+.bigcard .bc-foot{display:flex;align-items:center;gap:10px;margin:0 12px 12px;padding:10px 12px;background:var(--bg);border-radius:100px}
+.bigcard .bc-av{width:32px;height:32px;border-radius:50%;background:var(--gold);color:#2F2A2B;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bigcard .bc-who{flex:1;min-width:0}
+.bigcard .bc-who b{display:block;font-size:12px;font-weight:600;color:var(--ink)}
+.bigcard .bc-who span{display:block;font-size:10.5px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bigcard .bc-cnt{display:flex;gap:6px;flex-shrink:0}
+.bigcard .bc-cnt span{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border-radius:100px;background:var(--surface);border:1px solid var(--border);font-size:10.5px;font-weight:600;color:var(--ink)}
+.bigcard .bc-cnt svg{width:11px;height:11px;fill:var(--gold);stroke:none}
+.rc-actions{display:flex;gap:8px;padding:0 16px 10px}
+.rc-act{flex:1;padding:11px 8px;border-radius:var(--pill);border:1px solid var(--border);background:var(--surface);font-family:inherit;font-size:12px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.rc-act:active{transform:scale(.96)}
+.rc-act.on{background:var(--gold-soft);color:var(--gold-ink);border-color:transparent}
+.rc-act svg{width:14px;height:14px}
+.rc-sec{margin:0 16px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 16px;box-shadow:var(--sh-sm)}
+.rc-sec h4{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--ink-3);margin-bottom:8px}
+.rc-sec p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.ing-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.ing-row:last-child{border-bottom:none}
+.ing-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.ing-row .ing-n{flex:1;color:var(--ink)}
+.ing-row .ing-p{font-weight:600;color:var(--ink)}
+.ing-row .ing-g{color:var(--ink-3);font-size:12px;min-width:38px;text-align:right}
+.cmt{padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.5}
+.cmt:last-child{border-bottom:none}
+.cmt b{color:var(--ink);font-weight:600}
+.cmt span{color:var(--ink-2)}
+.cmt-row{display:flex;gap:8px;margin-top:10px}
+.cmt-row input{flex:1;padding:10px 14px;border-radius:var(--pill);border:1px solid var(--border);font-family:inherit;font-size:13px;outline:none;background:var(--bg)}
+.cmt-row button{padding:10px 16px;border-radius:var(--pill);border:none;background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+
+/* create */
+.cr-preview{margin:6px 16px 10px;background:radial-gradient(120% 90% at 30% 10%,#5a4a3e 0%,#3a312c 45%,#241f1d 100%);border-radius:20px;padding:16px;display:flex;gap:14px;align-items:center}
+.cr-preview svg{width:118px;flex-shrink:0;filter:drop-shadow(0 10px 14px rgba(0,0,0,.4))}
+.cr-preview .cp-side{flex:1}
+.cr-preview .cp-name{color:#F3E9DA;font-size:14px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;line-height:1.3;min-height:19px}
+.cr-preview .cp-total{color:#f3e9da;font-size:12.5px;margin-top:8px}
+.cr-preview .cp-total b{font-size:20px;font-weight:600;display:block}
+.cr-preview .cp-ok{display:inline-block;margin-top:8px;padding:4px 10px;border-radius:var(--pill);font-size:10.5px;font-weight:700;letter-spacing:.6px}
+.cr-preview .cp-ok.good{background:var(--gold);color:#2F2A2B}
+.cr-preview .cp-ok.bad{background:rgba(255,255,255,.1);color:rgba(243,233,218,.7)}
+.cr-field{margin:0 16px 10px}
+.cr-field label{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--ink-3);margin-bottom:6px}
+.cr-field input,.cr-field textarea{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--border);font-family:inherit;font-size:14px;outline:none;background:var(--surface);color:var(--ink)}
+.cr-field textarea{min-height:64px;resize:vertical}
+.cr-field input:focus,.cr-field textarea:focus{border-color:var(--accent)}
+.fl-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.fl-color{width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--border);flex-shrink:0;cursor:pointer}
+.fl-row input{padding:10px 12px;border-radius:12px;border:1px solid var(--border);font-family:inherit;font-size:13.5px;outline:none;background:var(--surface);min-width:0}
+.fl-row .fl-n{flex:1}
+.fl-row .fl-p{width:64px;text-align:center}
+.fl-row .fl-g{width:60px;text-align:center}
+.fl-row .fl-u{font-size:11px;color:var(--ink-3);width:14px}
+.fl-row .fl-x{width:28px;height:28px;border-radius:50%;border:none;background:var(--accent-soft);color:var(--ink-2);font-size:14px;cursor:pointer;flex-shrink:0}
+.fl-add{width:100%;padding:11px;border-radius:12px;border:1px dashed rgba(0,0,0,.18);background:none;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-family:inherit;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.seg button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.temp-row{display:flex;align-items:center;gap:12px}
+.temp-row input[type=range]{flex:1;accent-color:var(--accent)}
+.temp-row b{font-size:20px;font-weight:600;min-width:64px;text-align:right}
+.cr-submit{display:block;width:calc(100% - 32px);margin:6px 16px 16px;padding:15px;border-radius:var(--pill);border:none;background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s}
+.cr-submit:active{transform:scale(.98)}
+.cr-submit:disabled{background:var(--mute-2);cursor:not-allowed}
+.cr-err{margin:0 16px 10px;font-size:12.5px;color:#8a4a2f;min-height:16px}
+
+/* share overlay */
+.share-ov{position:fixed;inset:0;background:rgba(20,17,15,.88);z-index:300;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px}
+.share-ov.on{display:flex}
+.share-ov img{max-width:min(88vw,360px);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.share-ov p{color:rgba(255,255,255,.7);font-size:12.5px;text-align:center;line-height:1.5}
+.share-ov .sh-btns{display:flex;gap:8px}
+.share-ov button{padding:11px 18px;border-radius:var(--pill);border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.share-ov .sh-go{background:var(--gold);color:#2F2A2B}
+.share-ov .sh-x{background:rgba(255,255,255,.12);color:#fff}
+
+
+/* ════════ FIRST-VISIT TOUR ════════ */
+.tour{position:fixed;inset:0;z-index:500;display:none}
+.tour.on{display:block}
+.tour-spot{position:absolute;border-radius:18px;box-shadow:0 0 0 9999px rgba(20,17,15,.74);transition:all .35s cubic-bezier(.4,0,.2,1);pointer-events:none;border:2px solid var(--gold)}
+.tour-bubble{position:absolute;width:min(300px,calc(100vw - 32px));background:var(--surface);border-radius:18px;padding:16px 16px 12px;box-shadow:0 20px 50px rgba(0,0,0,.35);transition:all .35s cubic-bezier(.4,0,.2,1);animation:slideUp .3s ease}
+.tour-bubble::before{content:"";position:absolute;width:16px;height:16px;background:var(--surface);transform:rotate(45deg);left:var(--ax,32px)}
+.tour-bubble.below::before{top:-8px}
+.tour-bubble.above::before{bottom:-8px}
+.tour-step{font-size:9.5px;font-weight:700;letter-spacing:1.6px;color:var(--gold-ink);margin-bottom:6px}
+.tour-title{font-size:16px;font-weight:600;letter-spacing:-.2px;margin-bottom:4px}
+.tour-text{font-size:13px;color:var(--ink-2);line-height:1.55}
+.tour-btns{display:flex;align-items:center;gap:8px;margin-top:14px}
+.tour-skip{background:none;border:none;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink-3);cursor:pointer;padding:8px 4px}
+.tour-dots{flex:1;display:flex;justify-content:center;gap:5px}
+.tour-dots i{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.12);display:block}
+.tour-dots i.on{background:var(--gold);width:16px;border-radius:3px}
+.tour-next{background:var(--accent);color:var(--on-accent);border:none;border-radius:var(--pill);padding:9px 18px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+
+.dials{display:flex;gap:10px}
+.dial-box{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:10px 8px 8px;text-align:center}
+.dial-name{font-size:9.5px;font-weight:700;letter-spacing:1.5px;color:var(--ink-3);margin-bottom:2px}
+.dial-box svg{width:100%;max-width:150px;display:block;margin:0 auto}
+.dial-box svg .nd{transition:transform .2s ease;transform-origin:60px 60px}
+.dial-box svg{cursor:pointer;user-select:none}
+.dial-ctl{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px}
+.dial-ctl button{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface);font-family:inherit;font-size:18px;color:var(--ink);cursor:pointer;line-height:1}
+.dial-ctl button:active{background:var(--accent-soft)}
+.dial-ctl b{font-size:16px;font-weight:600;min-width:58px}
+
+/* ════════ ENSŌ 2.0 INTRO ════════ */
+.e2hero{margin:12px 16px 4px;padding:20px 18px 16px;border-radius:22px;color:#F3E9DA;
+  background:radial-gradient(120% 90% at 20% 0%,#5a4636 0%,#3a2f28 45%,#231d1a 100%);box-shadow:var(--sh-md)}
+.e2-badge{display:inline-block;padding:4px 10px;border-radius:var(--pill);background:#B78B5E;color:#231d1a;font-size:9.5px;font-weight:700;letter-spacing:1.6px}
+.e2hero h2{font-size:30px;font-weight:600;letter-spacing:-.5px;margin:10px 0 4px;color:#fff}
+.e2-lead{font-size:14px;line-height:1.5;color:rgba(243,233,218,.85);margin-bottom:12px}
+.e2-row{padding:9px 0;border-top:1px solid rgba(255,255,255,.08)}
+.e2-row b{display:block;font-size:13.5px;font-weight:600;color:#E9CFA9;margin-bottom:2px}
+.e2-row span{display:block;font-size:12.5px;line-height:1.5;color:rgba(243,233,218,.8)}
+.e2-swatch{display:inline-block;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#C39A6C,#8B6A4E);vertical-align:-2px;margin-right:6px;border:1px solid rgba(255,255,255,.25)}
+
+/* Diamond product page */
+.dia-fine{margin-top:10px;font-size:11.5px;color:var(--ink-3);text-align:center}
+.dia-h{font-size:16px;font-weight:600;margin:16px 16px 8px}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 16px}
+.why{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 12px 11px;box-shadow:var(--sh-sm)}
+.why b{display:block;font-size:13px;font-weight:600;margin-bottom:3px}
+.why span{display:block;font-size:11.5px;color:var(--ink-2);line-height:1.45}
+.spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 16px 0}
+.spec-grid div{background:var(--panel-dark);border-radius:12px;padding:12px 4px;text-align:center}
+.spec-grid b{display:block;color:#F3E9DA;font-size:13px;font-weight:600}
+.spec-grid span{display:block;color:var(--gold);font-size:8px;letter-spacing:1px;margin-top:2px}
+
+/* ════════ WHAT'S NEW ════════ */
+.wn-pill{position:absolute;top:10px;right:10px;z-index:3;padding:7px 12px;border-radius:var(--pill);border:none;background:var(--gold);color:#231d1a;font-family:inherit;font-size:9.5px;font-weight:800;letter-spacing:1.4px;cursor:pointer;box-shadow:0 4px 14px rgba(207,168,114,.45);animation:wnPulse 2.6s ease-in-out infinite}
+.wn-pill.on{animation:none;background:#231d1a;color:var(--gold)}
+@keyframes wnPulse{0%,100%{transform:scale(1);box-shadow:0 4px 14px rgba(207,168,114,.45)}50%{transform:scale(1.06);box-shadow:0 6px 22px rgba(207,168,114,.75)}}
+.news{max-height:0;overflow:hidden;margin:0 16px;transition:max-height .45s cubic-bezier(.4,0,.2,1),margin .3s;flex-shrink:0}
+.news.on{max-height:62vh;margin-top:8px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.news.on .news-in{max-height:none;overflow:visible;padding-bottom:18px}
+.news-more{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+.news-in{background:radial-gradient(120% 90% at 20% 0%,#4a3b31 0%,#302823 50%,#1f1a18 100%);border-radius:18px;padding:16px 16px 14px;color:#F3E9DA;position:relative;box-shadow:var(--sh-md)}
+.news-x{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#F3E9DA;font-size:16px;cursor:pointer;line-height:1}
+.news-tag{display:inline-block;padding:3px 9px;border-radius:var(--pill);background:var(--gold);color:#231d1a;font-size:8.5px;font-weight:800;letter-spacing:1.4px}
+.news-t{font-size:17px;font-weight:600;margin:8px 0 4px;color:#fff;padding-right:28px}
+.news-p{font-size:12.5px;line-height:1.55;color:rgba(243,233,218,.82)}
+.news-btn{display:inline-block;margin-top:12px;padding:9px 16px;border-radius:var(--pill);background:var(--gold);color:#231d1a;font-size:12px;font-weight:700;text-decoration:none}
+.help-btn{position:absolute;top:10px;left:10px;z-index:3;width:28px;height:28px;border-radius:50%;border:1px solid rgba(0,0,0,.12);background:var(--glass);color:var(--ink);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--sh-sm)}
+.stage:not(.light) .help-btn{background:rgba(0,0,0,.45);color:#F3E9DA;border-color:rgba(255,255,255,.15)}
+.prof-btn{position:absolute;top:10px;left:44px;z-index:3;height:28px;min-width:28px;padding:0 9px;border-radius:var(--pill);
+  border:1px solid rgba(0,0,0,.12);background:var(--glass);color:var(--ink);font-family:inherit;font-size:11px;
+  font-weight:700;cursor:pointer;box-shadow:var(--sh-sm);display:flex;align-items:center;gap:5px}
+.stage:not(.light) .prof-btn{background:rgba(0,0,0,.45);color:#F3E9DA;border-color:rgba(255,255,255,.15)}
+.prof-btn .pb-av{width:18px;height:18px;border-radius:50%;background:var(--gold);color:#231d1a;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ════════ WARRANTY + PROFILE ════════ */
+.wr-hero{margin:14px 16px 0;padding:18px 16px;border-radius:20px;color:#F3E9DA;
+  background:radial-gradient(120% 90% at 20% 0%,#4a3b31 0%,#302823 50%,#1f1a18 100%);box-shadow:var(--sh-md)}
+.wr-hero .wr-tag{display:inline-block;padding:4px 10px;border-radius:var(--pill);background:var(--gold);color:#231d1a;font-size:9.5px;font-weight:800;letter-spacing:1.4px}
+.wr-shot{margin:14px 16px 0;border-radius:18px;overflow:hidden;background:var(--panel-light);border:1px solid var(--border);position:relative}
+.wr-shot img{width:100%;display:block;max-height:210px;object-fit:contain;padding:6px}
+.wr-shot span{position:absolute;left:10px;bottom:10px;background:var(--glass);color:var(--ink);font-size:10.5px;font-weight:600;padding:5px 11px;border-radius:var(--pill);border:1px solid var(--border)}
+.wr-steps{display:flex;flex-direction:column;gap:7px;margin-top:13px}
+.wr-steps div{display:flex;align-items:center;gap:10px}
+.wr-steps b{width:21px;height:21px;border-radius:50%;background:var(--gold);color:#231d1a;font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wr-steps span{font-size:12.5px;color:rgba(243,233,218,.88);line-height:1.4}
+.wr-hero h2{font-size:21px;font-weight:600;margin:10px 0 5px;color:#fff}
+.wr-hero p{font-size:12.5px;line-height:1.6;color:rgba(243,233,218,.82)}
+.wr-terms{display:flex;gap:8px;margin-top:12px}
+.wr-terms div{flex:1;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:9px 8px;text-align:center}
+.wr-terms b{display:block;font-size:14px;font-weight:700;color:#F3E9DA}
+.wr-terms span{display:block;font-size:8.5px;letter-spacing:1px;color:var(--gold);margin-top:2px}
+.wr-hint{margin:6px 0 0;font-size:11.5px;color:var(--ink-3);line-height:1.5}
+.serial-shot{margin-top:9px;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--panel-light);position:relative}
+.serial-shot img{width:100%;display:block}
+.serial-shot span{position:absolute;left:10px;bottom:10px;background:rgba(26,26,26,.82);color:#fff;font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:var(--pill);backdrop-filter:blur(6px)}
+.wr-hint b{color:var(--ink-2)}
+.wr-ok{margin:14px 16px;padding:18px 16px;border-radius:var(--r-md);background:var(--surface);border:1px solid rgba(207,168,114,.4);box-shadow:var(--sh-sm);text-align:center}
+.wr-ok .wo-check{width:46px;height:46px;border-radius:50%;background:var(--gold-soft);color:var(--gold-ink);font-size:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.wr-ok h3{font-size:17px;font-weight:600;margin-bottom:5px}
+.wr-ok p{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.pf-head{display:flex;align-items:center;gap:13px;margin:14px 16px 0;padding:16px;border-radius:20px;color:#F3E9DA;
+  background:radial-gradient(120% 90% at 20% 0%,#4a3b31 0%,#302823 50%,#1f1a18 100%);box-shadow:var(--sh-md)}
+.pf-av{width:46px;height:46px;border-radius:50%;background:var(--gold);color:#231d1a;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pf-who{flex:1;min-width:0}
+.pf-who b{display:block;font-size:16px;font-weight:600;color:#fff}
+.pf-who span{display:block;font-size:12px;color:rgba(243,233,218,.7);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dev-card{margin:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:15px 16px}
+.dev-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.dev-top b{font-size:14.5px;font-weight:600}
+.dev-pill{margin-left:auto;padding:4px 10px;border-radius:var(--pill);background:var(--gold-soft);color:var(--gold-ink);font-size:9.5px;font-weight:800;letter-spacing:.8px}
+.dev-pill.out{background:var(--mute);color:var(--ink-3)}
+.dev-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--border);font-size:12.5px}
+.dev-row span{color:var(--ink-3)}
+.dev-row b{color:var(--ink);font-weight:600;text-align:right}
+.fw-row{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;padding:11px 12px;border-radius:12px;
+  border:1px solid var(--border);background:var(--panel-light);font-family:inherit;cursor:pointer;text-align:left}
+.fw-row:active{transform:scale(.99)}
+.fw-row.ok{background:rgba(143,160,122,.14);border-color:rgba(143,160,122,.4)}
+.fw-row.due{background:var(--gold-soft);border-color:rgba(207,168,114,.45)}
+.fw-ico{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.fw-row.ok .fw-ico{background:#6E7F58;color:#fff}
+.fw-row.due .fw-ico{background:var(--gold);color:#231d1a}
+.fw-txt{flex:1;min-width:0}
+.fw-txt b{display:block;font-size:12.5px;font-weight:700;color:var(--ink)}
+.fw-txt span{display:block;font-size:11.5px;color:var(--ink-2);margin-top:1px}
+.fw-arrow{color:var(--ink-3);font-size:15px;transition:transform .25s}
+.fw-row.open .fw-arrow{transform:rotate(90deg)}
+.fw-panel{display:none;margin-top:8px;padding:13px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--border)}
+.fw-panel.open{display:block;animation:slideUp .25s ease}
+.fw-panel h4{font-size:11px;font-weight:700;letter-spacing:1.4px;color:var(--ink-3);margin-bottom:7px}
+.fw-panel ul{list-style:none;margin-bottom:10px}
+.fw-panel li{position:relative;padding:5px 0 5px 16px;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.fw-panel li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.fw-panel .fw-when{display:flex;align-items:center;gap:8px;margin-top:4px}
+.fw-panel input[type=date]{flex:1;padding:10px 12px;border-radius:12px;border:1px solid var(--border);font-family:inherit;font-size:13px;background:var(--surface);color:var(--ink)}
+.fw-panel .fw-save{padding:11px 14px;border-radius:var(--pill);border:none;background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sec-h{font-size:11px;font-weight:700;letter-spacing:1.4px;color:var(--ink-3);margin:4px 0 2px}
+.sec-h.more{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.fw-note{font-size:11.5px;color:var(--ink-3);line-height:1.5;margin-top:9px}
+.pf-act{display:block;width:calc(100% - 32px);margin:0 16px 10px;padding:13px;border-radius:var(--pill);border:1px solid var(--border);background:var(--surface);font-family:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
+.pf-act:active{transform:scale(.98)}
+.pf-act.gold{background:var(--gold-soft);border-color:rgba(207,168,114,.4);color:var(--gold-ink);font-weight:700}
+body.gated .nav,
+body.gated .ntbar,
+body.gated .ntbot,
+body.gated .wn-pill,
+body.gated .prof-btn,
+body.gated .model-tabs,
+body.gated .help-btn,
+body.gated .stage,
+body.onboarding .nav,
+body.onboarding .ntbar,
+body.onboarding .ntbot,
+body.onboarding .model-tabs,
+body.onboarding .stage{display:none !important}
+body.onboarding .scr-wrap{padding-bottom:28px}
+body.gated .scr-wrap{padding-bottom:28px}
+
+.legal{display:flex;gap:10px;align-items:flex-start;margin:4px 16px 10px;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--border)}
+.legal input{width:20px;height:20px;flex-shrink:0;margin-top:1px;accent-color:var(--accent)}
+.legal label{font-size:12px;line-height:1.55;color:var(--ink-2)}
+.legal a{color:var(--ink);font-weight:600;text-decoration:underline}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.gate-note{margin:0 16px 12px;padding:11px 14px;border-radius:12px;background:var(--gold-soft);border:1px solid rgba(207,168,114,.3);
+  font-size:12px;line-height:1.55;color:var(--gold-ink)}
+.ob-top{display:flex;align-items:center;gap:8px;padding:16px 16px 0}
+.ob-step{font-size:9.5px;font-weight:800;letter-spacing:1.6px;color:var(--gold-ink)}
+.ob-dots{display:flex;gap:5px;margin-left:auto}
+.ob-dots i{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.12);display:block}
+.ob-dots i.on{background:var(--gold);width:18px;border-radius:3px}
+.ob-h{font-size:24px;font-weight:600;letter-spacing:-.4px;padding:10px 16px 4px;line-height:1.2}
+.ob-p{font-size:13.5px;color:var(--ink-2);line-height:1.6;padding:0 16px 10px}
+.ob-card{margin:4px 16px 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:16px}
+.ob-why{margin:12px 16px 0;padding:13px 15px;border-radius:14px;background:var(--gold-soft);border:1px solid rgba(207,168,114,.28);font-size:12.5px;line-height:1.55;color:var(--gold-ink)}
+.ob-why b{font-weight:800}
+.ob-go{display:block;width:calc(100% - 32px);margin:16px 16px 8px;padding:15px;border-radius:var(--pill);border:none;background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.ob-go:active{transform:scale(.98)}
+.ob-go.gold{background:var(--gold);color:#231d1a}
+.ob-skip{display:block;width:100%;margin:0 0 10px;padding:10px;background:none;border:none;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink-3);cursor:pointer}
+.ob-bell{width:66px;height:66px;border-radius:50%;margin:4px auto 2px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center}
+.ob-bell svg{width:30px;height:30px;fill:none;stroke:var(--gold-ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ob-list{margin:10px 16px 0}
+.ob-list div{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.ob-list div:first-child{border-top:none}
+.ob-list b{color:var(--ink);font-weight:600}
+.ob-list i{color:var(--gold-ink);font-style:normal;font-weight:800}
+#scr-diamond,#scr-diasoon{padding-bottom:24px}
+.app{overflow:hidden}
+
+
+/* ════════ RECIPE OF THE MONTH ════════ */
+.champ{margin:0 16px 16px;border-radius:22px;overflow:hidden;position:relative;box-shadow:0 14px 40px rgba(0,0,0,.25);
+  background:radial-gradient(140% 100% at 15% -10%,#7a5a2e 0%,#4a3a24 38%,#231d1a 100%);color:#F3E9DA;cursor:pointer}
+.champ::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 14px);pointer-events:none}
+.champ-top{display:flex;align-items:center;gap:8px;padding:14px 16px 0;position:relative}
+.champ-crown{width:22px;height:22px;flex-shrink:0}
+.champ-tag{font-size:10px;font-weight:800;letter-spacing:2.2px;color:var(--gold)}
+.champ-cd{margin-left:auto;font-size:10px;font-weight:700;color:rgba(243,233,218,.65);letter-spacing:.4px;
+  background:rgba(0,0,0,.3);padding:4px 9px;border-radius:var(--pill)}
+.champ-body{display:flex;align-items:center;gap:14px;padding:12px 16px 14px;position:relative}
+.champ-cup{width:96px;flex-shrink:0;filter:drop-shadow(0 10px 16px rgba(0,0,0,.4))}
+.champ-info{flex:1;min-width:0}
+.champ-name{font-size:19px;font-weight:600;letter-spacing:-.2px;color:#fff;line-height:1.2}
+.champ-by{font-size:12px;color:rgba(243,233,218,.65);margin-top:2px}
+.champ-prize{margin-top:9px;font-size:11.5px;line-height:1.5;color:rgba(243,233,218,.9)}
+.champ-prize b{color:var(--gold);font-weight:700}
+.champ-stats{display:flex;gap:12px;margin-top:9px}
+.champ-stats span{font-size:11px;color:rgba(243,233,218,.75);display:flex;align-items:center;gap:4px}
+.champ-stats svg{width:11px;height:11px;fill:var(--gold)}
+.champ-podium{display:flex;gap:8px;padding:0 16px 16px;position:relative}
+.champ-p{flex:1;background:rgba(0,0,0,.28);border-radius:12px;padding:9px 8px;text-align:center;border:1px solid rgba(255,255,255,.07)}
+.champ-p .cp-rank{font-size:9px;font-weight:800;color:var(--gold);letter-spacing:1px}
+.champ-p .cp-name{font-size:11px;font-weight:600;color:#F3E9DA;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.champ-p .cp-v{font-size:9.5px;color:rgba(243,233,218,.55);margin-top:1px}
+.rcard.champ-1{box-shadow:0 0 0 2px var(--gold),0 8px 24px rgba(0,0,0,.18)}
+.rcard .rc-crown{position:absolute;top:8px;left:8px;width:18px;height:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+
+/* Diamond product page v2 */
+.dia-hero-wrap{margin:16px 16px 0;border-radius:18px;overflow:hidden;background:var(--panel-light);border:1px solid var(--border)}
+.dia-hero-img{width:100%;display:block}
+.dia-card{margin-top:12px}
+.dia-photocard{margin:0 16px 6px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--sh-sm)}
+.dia-photocard img{width:100%;display:block}
+.dia-pc-body{padding:14px 16px 15px}
+.dia-pc-body b{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+.dia-pc-body span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.spec-list{margin:0 16px}
+.spec-list div{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--border)}
+.spec-list div:last-child{border-bottom:none}
+.spec-list span{font-size:12.5px;color:var(--ink-3);flex-shrink:0}
+.spec-list b{font-size:12.5px;color:var(--ink);font-weight:600;text-align:right}
+.box-list{display:flex;flex-wrap:wrap;gap:7px;margin:0 16px 6px}
+.box-list span{padding:7px 12px;border-radius:var(--pill);background:var(--surface);border:1px solid var(--border);font-size:11.5px;font-weight:500;color:var(--ink-2)}
+
+.dacc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin:0 16px}
+.dacc-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:8px;text-decoration:none;display:flex;flex-direction:column;box-shadow:var(--sh-sm);transition:transform .15s}
+.dacc-card:active{transform:scale(.97)}
+.dacc-img{aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--panel-light);display:block;margin-bottom:7px}
+.dacc-img img{width:100%;height:100%;object-fit:cover;display:block}
+.dacc-n{font-size:11px;font-weight:600;color:var(--ink);line-height:1.25;flex:1}
+.dacc-p{font-size:11px;font-weight:700;color:var(--gold-ink);margin-top:3px}
+
+.roy{margin:0 16px 16px;border-radius:18px;padding:14px 16px;cursor:pointer;position:relative;overflow:hidden;
+  background:linear-gradient(120deg,#2a2320 0%,#3a2f26 55%,#1e1a18 100%);color:#F3E9DA;border:1px solid rgba(207,168,114,.35)}
+.roy::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(125deg,rgba(207,168,114,.07) 0 2px,transparent 2px 16px);pointer-events:none}
+.roy-top{display:flex;align-items:center;justify-content:space-between;position:relative}
+.roy-tag{font-size:10px;font-weight:800;letter-spacing:2px;color:var(--gold)}
+.roy-date{font-size:10px;font-weight:700;color:rgba(243,233,218,.6);background:rgba(0,0,0,.3);padding:3px 9px;border-radius:var(--pill)}
+.roy-body{font-size:12px;line-height:1.55;color:rgba(243,233,218,.85);margin-top:8px;position:relative}
+.roy-body b{color:#E9CFA9;font-weight:600}
+
+.model-tabs.dim{opacity:.4;transition:opacity .25s}
+.model-tabs.dim .mtab.on{background:var(--surface);color:var(--ink-2);border-color:var(--border)}
+.model-tabs.dim .mtab.on .soon{background:var(--gold-soft);color:var(--gold-ink)}
+
+.win-card{margin:8px 16px 12px;border-radius:18px;padding:15px 16px;color:#F3E9DA;position:relative;overflow:hidden;
+  background:linear-gradient(120deg,#2a2320 0%,#3a2f26 55%,#1e1a18 100%);border:1px solid rgba(207,168,114,.35)}
+.win-card::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(125deg,rgba(207,168,114,.07) 0 2px,transparent 2px 16px);pointer-events:none}
+.win-h{font-size:10px;font-weight:800;letter-spacing:2px;color:var(--gold);position:relative}
+.win-row{margin-top:10px;position:relative}
+.win-row b{display:block;font-size:12.5px;font-weight:700;color:#E9CFA9;margin-bottom:2px}
+.win-row span{display:block;font-size:11.5px;line-height:1.5;color:rgba(243,233,218,.82)}
+.win-foot{margin-top:11px;font-size:11px;font-weight:600;color:var(--gold);position:relative}
+
+/* ════════ INSTALL + NOTIFICATIONS ════════ */
+.iphone{width:100%;max-width:200px;display:block;margin:8px auto 10px}
+.inst-steps{counter-reset:ist;margin:2px 0 0}
+.inst-steps li{counter-increment:ist;list-style:none;position:relative;padding:7px 0 7px 30px;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.inst-steps li::before{content:counter(ist);position:absolute;left:0;top:7px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.inst-steps li b{color:var(--ink);font-weight:600}
+.nt-card{margin:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:18px 16px}
+.nt-lead{font-size:13px;color:var(--ink-2);line-height:1.6}
+.nt-promise{display:inline-block;margin-top:10px;padding:5px 11px;border-radius:var(--pill);background:var(--gold-soft);color:var(--gold-ink);font-size:10.5px;font-weight:700;letter-spacing:.6px}
+.nt-btn{display:block;width:100%;margin-top:14px;padding:14px;border-radius:var(--pill);border:none;background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:transform .15s}
+.nt-btn:active{transform:scale(.98)}
+.nt-btn.done{background:var(--gold-soft);color:var(--gold-ink);cursor:default}
+.nt-btn.off{background:var(--mute);color:var(--ink-3);cursor:not-allowed}
+.nt-note{margin-top:10px;font-size:11.5px;line-height:1.55;color:var(--ink-3);text-align:center}
+.nt-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-top:1px solid var(--border)}
+.nt-row:first-of-type{border-top:none}
+.nt-what{padding:11px 0;border-top:1px solid var(--border)}
+.nt-what:first-child{border-top:none;padding-top:2px}
+.nt-what b{display:block;font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.nt-what span{display:block;font-size:12px;line-height:1.5;color:var(--ink-2)}
+.nt-row .nt-txt{flex:1}
+.nt-row b{display:block;font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.nt-row span{display:block;font-size:12px;line-height:1.5;color:var(--ink-2)}
+.sw{width:46px;height:27px;border-radius:var(--pill);background:var(--mute-2);border:none;position:relative;flex-shrink:0;cursor:pointer;transition:background .2s;margin-top:2px}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.sw.on{background:var(--gold)}
+.sw.on::after{transform:translateX(19px)}
+.sw:disabled{opacity:.45;cursor:not-allowed}
+.nt-link{display:block;padding:13px;border-radius:var(--pill);border:1px solid rgba(207,168,114,.4);background:var(--gold-soft);color:var(--gold-ink);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.nt-link:active{transform:scale(.98)}
+.ntbar{display:none;align-items:center;gap:10px;margin:2px 16px 0;padding:9px 10px 9px 13px;border-radius:14px;
+  background:linear-gradient(120deg,#2a2320 0%,#3a2f26 60%,#1e1a18 100%);border:1px solid rgba(207,168,114,.35);
+  color:#F3E9DA;flex-shrink:0;animation:slideUp .35s ease;position:relative;overflow:hidden}
+.ntbar.on{display:flex}
+.ntbar::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(125deg,rgba(207,168,114,.07) 0 2px,transparent 2px 16px);pointer-events:none}
+.ntbar .nb-txt{flex:1;min-width:0;position:relative}
+.ntbar .nb-txt b{display:block;font-size:12.5px;font-weight:700;color:#E9CFA9;line-height:1.25}
+.ntbar .nb-txt span{display:block;font-size:11px;line-height:1.4;color:rgba(243,233,218,.75);margin-top:1px}
+.ntbot{position:fixed;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:99;display:none;
+  bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 18px);padding:0 16px;pointer-events:none}
+.ntbot.on{display:block}
+.ntbot .ntbot-in{display:flex;align-items:center;gap:10px;padding:8px 10px 8px 14px;border-radius:var(--pill);
+  background:rgba(35,29,26,.94);backdrop-filter:blur(10px);border:1px solid rgba(207,168,114,.3);
+  box-shadow:0 8px 24px rgba(0,0,0,.22);pointer-events:auto;animation:slideUp .3s ease}
+.ntbot b{flex:1;font-size:11.5px;font-weight:600;color:#F3E9DA;letter-spacing:.2px}
+.ntbot .sw{transform:scale(.82);transform-origin:right center;background:var(--gold)}
+.ntbot .sw::after{background:#231d1a}
+.ntbot .sw:not(.on){background:rgba(255,255,255,.2)}
+.ntbot .sw:not(.on)::after{background:#F3E9DA}
+.ntbar .nb-sw{position:relative;background:rgba(255,255,255,.18)}
+.ntbar .nb-sw::after{background:#F3E9DA}
+.ntbar .nb-sw.on{background:var(--gold)}
+
+
+/* ═══ site build: theme ═══ */
+:root{--mute:#EFEBE4;--mute-2:#DDD8D0;--glass:rgba(255,255,255,.9);--on-accent:#fff;--page:#FFFFFF;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141210;--surface:#1D1A17;--surface-hover:#25211D;--ink:#F0E8D8;--ink-2:#BDB3A5;--ink-3:#8C8379;--accent:#EDE4D3;--accent-soft:rgba(240,232,216,.08);--gold:#CFA872;--gold-soft:rgba(207,168,114,.16);--gold-ink:#DDB77F;--border:rgba(255,255,255,.09);--sh-sm:0 1px 2px rgba(0,0,0,.4);--sh-md:0 6px 20px rgba(0,0,0,.45);--panel-dark:#26211E;--panel-light:#211E1B;--mute:#2A2623;--mute-2:#3A3530;--glass:rgba(29,26,23,.9);--on-accent:#1A1813;--page:#0E0D0B;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141210;--surface:#1D1A17;--surface-hover:#25211D;--ink:#F0E8D8;--ink-2:#BDB3A5;--ink-3:#8C8379;--accent:#EDE4D3;--accent-soft:rgba(240,232,216,.08);--gold:#CFA872;--gold-soft:rgba(207,168,114,.16);--gold-ink:#DDB77F;--border:rgba(255,255,255,.09);--sh-sm:0 1px 2px rgba(0,0,0,.4);--sh-md:0 6px 20px rgba(0,0,0,.45);--panel-dark:#26211E;--panel-light:#211E1B;--mute:#2A2623;--mute-2:#3A3530;--glass:rgba(29,26,23,.9);--on-accent:#1A1813;--page:#0E0D0B;color-scheme:dark}
+.theme-btn{flex:0 0 36px;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--ink-2);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;font:inherit}
+.theme-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.theme-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.theme-tip{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 62px);transform:translateX(-50%);z-index:60;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:600;padding:7px 14px;border-radius:var(--pill);opacity:0;transition:opacity .2s;pointer-events:none}
+.theme-tip.on{opacity:1}
+.figs{display:flex;gap:10px;margin:10px 0 6px;flex-wrap:wrap}
+.figs .fig{flex:1 1 40%;min-width:0;max-width:100%;max-height:190px;object-fit:contain;background:var(--panel-light);border:1px solid var(--border);border-radius:12px;padding:10px}
+.fig-d{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fig-l{display:none}:root:not([data-theme="light"]) .fig-d{display:block}:root:not([data-theme="light"]) .soon-btn[style*="#E5E1DA"]{background:var(--mute)!important;color:var(--ink-3)!important}}
+:root[data-theme="dark"] .fig-l{display:none}:root[data-theme="dark"] .fig-d{display:block}:root[data-theme="dark"] .soon-btn[style*="#E5E1DA"]{background:var(--mute)!important;color:var(--ink-3)!important}
+</style></style>
+
+<div id="enso-app-root"><div class="app">
+
+  
+  <header class="sa-top">
+    <button class="sa-back" id="saBack" type="button" onclick="go('home')" aria-label="Back to home" hidden><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="sa-brand" type="button" onclick="go('home')" aria-label="Home"><b>ENSŌ</b><span id="saDevName"></span></button>
+    <button class="sa-mbtn" type="button" onclick="saMenu(true)" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
+  </header>
+  <aside class="sa-side" id="saSide" aria-label="Sections"></aside>
+  <div class="sa-tempbar"><span id="saTempTxt"></span><button id="saTempBtn" type="button"></button></div>
+  <div class="model-tabs">
+    <button class="mtab" id="mtab-enso" onclick="setModel('enso')">ENSŌ</button>
+    <button class="mtab on" id="mtab-enso2" onclick="setModel('enso2')">ENSŌ 2.0</button>
+    <button class="mtab" id="mtab-diamond" onclick="setModel('diamond')">ENSŌ Diamond</button>
+    <button class="theme-btn" id="themeBtn" type="button" onclick="cycleTheme()" aria-label="Theme: phone setting"></button>
+  </div>
+
+  
+  <div class="ntbar" id="ntBar">
+    <div class="nb-txt"><b id="nbTitle">Get software updates first</b><span id="nbSub">Know the moment new firmware lands — plus blends and tricks.</span></div>
+    <button class="sw nb-sw" id="nbSw" onclick="ntBarGo()" aria-label="Notifications"></button>
+  </div>
+
+  
+  <div class="stage" id="stage">
+    <img id="stageImg"  src="" alt="" onerror="this.style.opacity=0">
+    <div class="stage-cap"><span id="stageCap">ENSŌ 2.0</span></div>
+    <button class="wn-pill" id="wnPill" onclick="toggleNews()">WHAT'S NEW</button>
+    <button class="help-btn" onclick="startTour(true)" aria-label="Show me around">?</button>
+    <button class="prof-btn" id="profBtn" onclick="goProfile()"><span class="pb-av" id="pbAv">⌂</span><span id="pbTxt">Register warranty</span></button>
+  </div>
+  <div class="news" id="newsCard"></div>
+
+  
+  <div class="scr-wrap" id="wrap">
+<div class="scr" id="scr-start"><h1 class="sa-h1">Welcome to ENSŌ</h1><div id="saTopStart" class="sa-top-cards"></div><p class="sa-lead sa-lead--pick">Which one is yours? Pick it once, switch any time in the menu.</p><button class="sa-pick" id="saPickEnso" type="button" onclick="saPick('enso')"><img alt=""><span><b>ENSŌ 2026 Edition</b><small>The all-in-one electric hookah</small></span><i>›</i></button><button class="sa-pick" id="saPickDia" type="button" onclick="saPick('diamond')"><img alt=""><span><b>ENSŌ Diamond</b><small>Electric heat for the hookah you already own</small></span><i>›</i></button><div class="sa-card2 sa-news" id="saNewsStart" hidden></div></div><div class="scr" id="scr-qs"><h1 class="scr-title">Quick start</h1><div class="scr-sub" id="saQsSub"></div><div class="sa-qsbody" id="saQsBody"></div></div><div class="scr" id="scr-faq"><h1 class="scr-title">FAQ</h1><div class="scr-sub">The questions we hear most.</div><div id="saFaqBody"></div></div><div class="scr" id="scr-sw"><h1 class="scr-title">Software updates</h1><div class="scr-sub">ENSŌ Diamond</div><div id="saSwBody"></div></div><div class="scr" id="scr-guides"><h1 class="scr-title">Guides</h1><div class="scr-sub">Longer guides on the ENSŌ website.</div><div id="saGuidesBody"></div></div>
+
+
+    
+    <div class="scr active" id="scr-search">
+      <div class="e2hero" id="e2Hero">
+        <span class="e2-badge">COMING NOVEMBER 2026</span>
+        <h2>ENSŌ 2.0</h2>
+        <p class="e2-lead">Your favorite electronic shisha is back — and everything got bigger, cleaner and easier.</p>
+        <div class="e2-row"><b>Cleaning? Solved.</b><span>No more messy chamber. Virtually no cleaning or hard scrubbing, unlike the previous model.</span></div>
+        <div class="e2-row"><b>Airflow? Consider it done.</b><span>Drastically improved over the previous version, with virtually no draw restriction.</span></div>
+        <div class="e2-row"><b>Bigger everything.</b><span>Bigger water tank, bigger mouthpiece, and even crazier clouds.</span></div>
+        <div class="e2-row e2-color"><b>A new look.</b><span><i class="e2-swatch"></i>Introducing the new Noir Champagne color.</span></div>
+      </div>
+      <div id="saTop" class="sa-top-cards"></div>
+      <div class="search-wrap">
+        <input type="text" class="search-bar" id="q" placeholder="Ask anything about ENSŌ…"
+          onkeydown="if(event.key==='Enter')runSearch()">
+        <button class="search-go" onclick="runSearch()" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2" fill="none"/><path d="M21 21l-4.3-4.3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="chips" id="chips">
+        <button class="chip" onclick="chipSearch(this)">Turn on ENSŌ</button>
+        <button class="chip" onclick="chipSearch(this)">Pack a bowl</button>
+        <button class="chip" onclick="chipSearch(this)">Weak vapor</button>
+        <button class="chip" onclick="chipSearch(this)">Battery not charging</button>
+        <button class="chip" onclick="chipSearch(this)">Clean the device</button>
+      </div>
+      <div class="results" id="results"></div>
+      <div class="sa-sections" id="saSections"></div>
+      <div class="sa-card2 sa-news" id="saNews" hidden></div>
+      <div class="hint-bar" id="hintBar" onclick="nextHint(true)"></div>
+      <div class="quick-grid" id="quickGrid">
+        <button class="quick-card" onclick="jumpTo('howto','setup')">
+          <span class="qc-ic" data-ic="setup"></span><span class="qc-title">Quick Setup</span><span class="qc-sub">First session in 5 steps</span>
+        </button>
+        <button class="quick-card" onclick="jumpTo('howto','parts')">
+          <span class="qc-ic" data-ic="parts"></span><span class="qc-title">Parts Diagram</span><span class="qc-sub">Know your device</span>
+        </button>
+        <button class="quick-card" onclick="jumpTo('fix','weak-smoke')">
+          <span class="qc-ic" data-ic="weak-smoke"></span><span class="qc-title">Fix Weak Vapor</span><span class="qc-sub">Most common issue</span>
+        </button>
+        <button class="quick-card" onclick="jumpTo('howto','cleaning')">
+          <span class="qc-ic" data-ic="cleaning"></span><span class="qc-title">Cleaning Guide</span><span class="qc-sub">Keep it fresh</span>
+        </button>
+        <button class="quick-card" style="grid-column:1/-1" onclick="jumpTo('howto','acc')">
+          <span class="qc-ic" data-ic="acc"></span><span class="qc-title">Upgrade Your Unit</span><span class="qc-sub">Every accessory, one place</span>
+        </button>
+      </div>
+      <div class="footer-note">Can't find what you need?<br><a href="#" onclick="jumpTo('howto','acc');return false;">All accessories</a> · Email <a href="mailto:support@ensoshisha.com">support@ensoshisha.com</a> · <a href="#" onclick="startTour(true);return false;">Take the tour</a> · <a href="#" onclick="go('notify');return false;">Notifications</a> · <a href="#" onclick="goProfile();return false;">Warranty</a></div>
+    </div>
+
+    
+    <div class="scr" id="scr-howto">
+      <h1 class="scr-title">How to use ENSŌ</h1>
+      <div class="scr-sub">Tap a topic — the screen above always shows you where to look.</div>
+      <div id="howtoList"></div>
+      <div class="footer-note">Need more? <a href="mailto:support@ensoshisha.com">support@ensoshisha.com</a></div>
+    </div>
+
+    
+    <div class="scr" id="scr-fix">
+      <h1 class="scr-title">Troubleshoot</h1>
+      <div class="scr-sub">Pick your problem and follow the steps.</div>
+      <div id="fixList"></div>
+      <div class="footer-note">Still stuck? <a href="mailto:support@ensoshisha.com">support@ensoshisha.com</a></div>
+    </div>
+
+    
+    <div class="scr" id="scr-recipes">
+      <div class="rc-tabs">
+        <button class="rc-tab on" data-v="feed" onclick="rcView('feed')">Community</button>
+        <button class="rc-tab" data-v="create" onclick="rcView('create')">Create blend</button>
+        <button class="rc-tab" data-v="mine" onclick="rcView('mine')">My blends</button>
+      </div>
+
+      
+      <div class="rc-view on" id="rcv-feed">
+        <div class="champ" id="champCard"></div>
+        <div class="roy" onclick="royInfo()">
+          <div class="roy-top"><span class="roy-tag">✦ RECIPE OF THE YEAR</span><span class="roy-date">Dec 2027</span></div>
+          <div class="roy-body">The year's most-loved blend becomes real. Its creator co-designs a signature blend with <b>ENSŌ and a partner shisha-tobacco house</b> — carrying your recipe's name, sold in stores, with a share of the sales going to you.</div>
+        </div>
+        <div class="rc-intro"><b>Build a blend, share it, climb the board.</b> Electronic shisha changes everything — flavor, intensity, clouds. Create your mix, share the card, and the more people love and try it, the higher it climbs. Top the board and you win <b>Recipe of the Month</b>.</div>
+        <div class="rc-filters">
+          <button class="rc-chip on" onclick="rcFilter(this,'trending')">Trending</button>
+          <button class="rc-chip" onclick="rcFilter(this,'newest')">Newest</button>
+          <button class="rc-chip" onclick="rcFilter(this,'loved')">Most loved</button>
+          <button class="rc-chip" onclick="rcFilter(this,'enso2')">ENSŌ 2.0</button>
+          <button class="rc-chip" onclick="rcFilter(this,'diamond')">Diamond</button>
+        </div>
+        <div class="rc-grid" id="rcGrid"></div>
+      </div>
+
+      
+      <div class="rc-view" id="rcv-mine">
+        <div class="rc-intro">Blends you've created on this device. Share them to Instagram, or remix into something new.</div>
+        <div class="rc-grid" id="rcMine"></div>
+      </div>
+
+      
+      <div class="rc-view" id="rcv-detail">
+        <button class="rc-back" onclick="rcView(rcLastView)">‹ Back</button>
+        <div id="rcDetail"></div>
+      </div>
+
+      
+      <div class="rc-view" id="rcv-create">
+        <div class="win-card">
+          <div class="win-h">✦ WHAT YOU CAN WIN</div>
+          <div class="win-row"><b>Monthly</b><span>Top the board and win Recipe of the Month — an ENSŌ accessory package, a printed gold card of your blend, and a spot in the year-end race.</span></div>
+          <div class="win-row"><b>Yearly · Dec 2027</b><span>The year's most-loved blend becomes real: co-design a signature blend with ENSŌ and a partner shisha-tobacco house, carrying your recipe's name, sold in stores — with a share of the sales.</span></div>
+          <div class="win-foot">Make it, share it, and let the votes climb.</div>
+        </div>
+        <div class="cr-preview">
+          <div id="crCup"></div>
+          <div class="cp-side">
+            <div class="cp-name" id="cpName">Your blend</div>
+            <div class="cp-total"><b id="cpPct">0%</b><span id="cpG">0 g</span></div>
+            <span class="cp-ok bad" id="cpOk">NEEDS 100%</span>
+          </div>
+        </div>
+
+        <div class="cr-field"><label>BLEND NAME</label><input id="crName" placeholder="Midnight Marrakech" maxlength="32" oninput="crUpdate()"></div>
+        <div class="cr-field"><label>YOUR HANDLE</label><input id="crBy" placeholder="@yourname" maxlength="24"></div>
+        <div class="cr-field"><label>MADE FOR</label>
+          <div class="seg" id="crModel"><button onclick="crSeg('crModel',this)">ENSŌ</button><button class="on" onclick="crSeg('crModel',this)">ENSŌ 2.0</button><button onclick="crSeg('crModel',this)">Diamond</button></div>
+        </div>
+        <div class="cr-field" id="crModeField"><label>MODE</label>
+          <div class="seg" id="crMode"><button class="on" onclick="crSeg('crMode',this)">Original</button><button onclick="crSeg('crMode',this)">Green</button></div>
+        </div>
+
+        <div class="cr-field">
+          <label>FLAVORS · % OF CUP · GRAMS (OPTIONAL)</label>
+          <div id="crRows"></div>
+          <button class="fl-add" id="crAdd" onclick="crAddRow()">+ Add flavor (max 5)</button>
+        </div>
+
+        
+        <div id="tempSliders" style="display:none">
+          <div class="cr-field">
+            <label>PREHEAT TEMPERATURE</label>
+            <div class="temp-row"><input type="range" id="crTemp" min="180" max="330" step="5" value="180" oninput="crUpdate()"><b id="crTempV">180°C</b></div>
+          </div>
+          <div class="cr-field">
+            <label>SESSION HEAT</label>
+            <div class="temp-row"><input type="range" id="crHeat" min="180" max="330" step="5" value="210" oninput="crUpdate()"><b id="crHeatV">210°C</b></div>
+          </div>
+        </div>
+        
+        <div id="tempDials" class="cr-field">
+          <label>PREHEAT · SESSION HEAT — tap or drag the dials, like on the device</label>
+          <div class="dials">
+            <div class="dial-box">
+              <div class="dial-name">PREHEAT</div>
+              <div id="dialTemp"></div>
+              <div class="dial-ctl"><button onclick="dialStep('crTemp',-15)" aria-label="Lower preheat">−</button><b id="dialTempV">180°C</b><button onclick="dialStep('crTemp',15)" aria-label="Raise preheat">+</button></div>
+            </div>
+            <div class="dial-box">
+              <div class="dial-name">HEAT</div>
+              <div id="dialHeat"></div>
+              <div class="dial-ctl"><button onclick="dialStep('crHeat',-15)" aria-label="Lower heat">−</button><b id="dialHeatV">210°C</b><button onclick="dialStep('crHeat',15)" aria-label="Raise heat">+</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="cr-field"><label>NOTES (OPTIONAL)</label><textarea id="crDesc" placeholder="Packing tips, or anything special that you add to your session…" maxlength="240"></textarea></div>
+
+        <div class="cr-err" id="crErr"></div>
+        <button class="cr-submit" id="crSubmit" onclick="crSubmit()">Save & publish blend</button>
+      </div>
+    </div>
+
+    
+    <div class="scr" id="scr-diasoon"></div>
+    <div class="scr" id="scr-dfix">
+      <h1 class="scr-title">Diamond troubleshooting</h1>
+      <div class="scr-sub">Pick your problem and follow the steps.</div>
+      <div id="dfixList"></div>
+      <div class="footer-note">Still stuck? <a href="mailto:support@ensoshisha.eu">support@ensoshisha.eu</a></div>
+    </div>
+    <div class="scr" id="scr-dhow">
+      <h1 class="scr-title">How to use Diamond</h1>
+      <div class="scr-sub">Everything for your first session and the ones after it, in order. Tap a step to see it on the screen above.</div>
+      <div id="dhowList"></div>
+      <div class="footer-note">Questions? <a href="mailto:support@ensoshisha.eu">support@ensoshisha.eu</a></div>
+    </div>
+    <div class="scr" id="scr-diamond">
+      <div class="search-wrap" style="margin-top:14px">
+        <input type="text" class="search-bar" id="diaQ" placeholder="Ask about Diamond — setup, battery, cleaning…" onkeydown="if(event.key==='Enter')diaSearch()">
+        <button class="search-go" onclick="diaSearch()" aria-label="Search"><svg viewBox="0 0 24 24" width="17" height="17"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2" fill="none"/><path d="M21 21l-4.3-4.3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="chips" id="diaChips">
+        <button class="chip" onclick="diaChip(this)">Turn on Diamond</button>
+        <button class="chip" onclick="diaChip(this)">Fit on my hookah</button>
+        <button class="chip" onclick="diaChip(this)">Battery life</button>
+        <button class="chip" onclick="diaChip(this)">How to clean</button>
+      </div>
+      <div class="results" id="diaResults"></div>
+      <div class="dia-card">
+        <span class="soon-tag">PRE-ORDER · SHIPS OCTOBER 2026</span>
+        <h2>ENSŌ Diamond</h2>
+        <p>The electric heater for your hookah. It sits where the bowl sits and replaces the charcoal — no coals, no lighting, no waiting. Pack the cup, set the temperature, start.</p>
+        <div class="dia-price">
+          <div><div class="dp-v">€320</div><div class="dp-l">PRE-ORDER</div></div>
+          <div><div class="dp-v">€349</div><div class="dp-l">AFTER LAUNCH</div></div>
+        </div>
+        <a class="dia-btn" href="https://ensoshisha.eu/products/enso-diamond-pre-order" target="_blank" rel="noopener">Pre-order Diamond →</a>
+        <div class="dia-fine">Last pre-order price. 30 days to decide from delivery.</div>
+        <button class="nt-link" style="width:100%;margin-top:14px" onclick="go('notify')">Get software updates and first looks</button>
+      </div>
+
+      <h3 class="dia-h">A modern twist on a classic ritual</h3>
+      <div class="dia-photocard">
+        <img  src="" alt="Diamond on a hookah">
+        <div class="dia-pc-body"><b>Nothing else changes</b><span>Diamond replaces only the coals. The evening, the water and the hose are the ones you know. Warmed to a set temperature instead of scorched from above, so you taste the leaf and the molasses — not the coal.</span></div>
+      </div>
+
+      <h3 class="dia-h">One dial, every setting</h3>
+      <div class="why-grid">
+        <div class="why"><b>Precise heat</b><span>180–320 °C to the degree. Lower for blonde leaf, higher for dark.</span></div>
+        <div class="why"><b>Custom pre-heat</b><span>0–15 minutes before the first draw. Default 7 min at 275 °C.</span></div>
+        <div class="why"><b>Four profiles</b><span>Default, Phoenix, Wraith, Oracle — each remembers its own heat and pre-heat.</span></div>
+        <div class="why"><b>Haptic feedback</b><span>A small click under the finger at every step. Feel the setting change without looking.</span></div>
+        <div class="why"><b>No app, no account</b><span>Everything lives on the dial. No phone needed.</span></div>
+        <div class="why"><b>Charge while in use</b><span>USB-C, about 1.5 h with a 30 W supply — inside Diamond or on its own.</span></div>
+      </div>
+
+      <h3 class="dia-h">If a bowl fits, Diamond fits</h3>
+      <div class="dia-photocard">
+        <img  src="" alt="Diamond on a traditional hookah">
+        <div class="dia-pc-body"><b>Fits most traditional stems</b><span>Two silicone adapters in the box, long and short, seat Diamond on the stem you already have. Your stem, base and hose stay exactly as they are. Not sure about yours? Send a photo of the stem top to support@ensoshisha.eu.</span></div>
+      </div>
+
+      <h3 class="dia-h">Design your perfect bowl</h3>
+      <div class="dia-photocard">
+        <img  src="" alt="Packing the Diamond cup">
+        <div class="dia-pc-body"><b>10–15 g per bowl</b><span>Basket mesh for a loose, airy pack with more cloud. Flat screen for a denser, even pack and a steady, rich flavour. Most blends sit well at 250–270 °C.</span></div>
+      </div>
+
+      <h3 class="dia-h">Specs</h3>
+      <div class="spec-list">
+        <div><span>Session temperature</span><b>180–320 °C, 1° steps</b></div>
+        <div><span>Pre-heat</span><b>0–15 min · default 7 min at 275 °C</b></div>
+        <div><span>Runtime</span><b>About 90 min, pre-heat not included</b></div>
+        <div><span>Charging</span><b>USB-C · ~1.5 h at 30 W · charge in use</b></div>
+        <div><span>Dimensions</span><b>18 cm tall · 10 cm at the band · ~1 kg</b></div>
+        <div><span>Materials</span><b>Graphite body, copper stripe, vegan leather</b></div>
+        <div><span>Warranty</span><b>Two years · one year on the battery</b></div>
+        <div><span>Ships from</span><b>Hungary (EU) or Florida (US)</b></div>
+      </div>
+
+      <h3 class="dia-h">In the box</h3>
+      <div class="box-list">
+        <span>Diamond with thermo cap & battery</span><span>2 ceramic cups</span><span>Basket mesh</span><span>3 flat mesh screens</span><span>2 silicone adapters</span><span>Cup removal tool</span><span>Cleaning brush</span><span>USB-C cable</span>
+      </div>
+      <div class="footer-note">Bring your own hookah, tobacco and a 30 W USB-C supply. Questions before you order? <a href="mailto:support@ensoshisha.eu">support@ensoshisha.eu</a></div>
+    </div>
+
+
+    
+    <div class="scr" id="scr-register">
+      <div class="wr-shot"><img id="regShot" alt=""><span id="regShotCap">ENSŌ · 2026 Edition</span></div>
+
+      <div class="wr-hero">
+        <span class="wr-tag">WARRANTY</span>
+        <h2>Register your warranty</h2>
+        <p>Two minutes, once. It puts your warranty on record and tells the app which device you own.</p>
+        <div class="wr-steps">
+          <div><b>1</b><span>Register your warranty here</span></div>
+          <div><b>2</b><span>Add ENSŌ to your home screen</span></div>
+          <div><b>3</b><span>Turn on software update alerts</span></div>
+        </div>
+        <div class="wr-terms">
+          <div><b>2 years</b><span>DEVICE</span></div>
+          <div><b>1 year</b><span>BATTERY</span></div>
+          <div><b>30 days</b><span>TO RETURN</span></div>
+        </div>
+      </div>
+
+      <div class="gate-note" id="gateNote" style="display:none">Registering is how the app knows which device you own, so the guides, the troubleshooting and the software alerts all match it. It takes a minute.</div>
+
+      <div class="cr-field" style="margin-top:16px"><label>WHICH DEVICE</label>
+        <div class="seg" id="regModel">
+          <button class="on" onclick="crSeg('regModel',this);regShot()">ENSŌ</button>
+          <button onclick="crSeg('regModel',this);regShot()">ENSŌ 2.0</button>
+          <button onclick="crSeg('regModel',this);regShot()">Diamond</button>
+        </div>
+      </div>
+
+      <div class="cr-field"><label>SERIAL NUMBER</label>
+        <input id="regSerial" placeholder="e.g. DMD-0829001" maxlength="32" autocapitalize="characters" oninput="regValidate()">
+        <div class="serial-shot"><img  src="" alt="Serial number printed inside the battery compartment"><span>Serial is here — next to the QR code</span></div>
+        <div class="wr-hint"><b>Slide the battery out</b> — the serial is printed inside the battery compartment, right next to the QR code. Type it exactly as you see it; any format is fine.</div>
+      </div>
+
+      <div class="cr-field"><label>YOUR NAME</label><input id="regName" placeholder="Full name" maxlength="60" oninput="regValidate()"></div>
+      <div class="cr-field"><label>EMAIL</label><input id="regEmail" type="email" placeholder="you@email.com" maxlength="80" inputmode="email" oninput="regValidate()">
+        <div class="wr-hint">Your serial number and this email are the keys to your profile. Enter the same two on a new phone and everything comes back — devices, warranty dates, software dates. No password, nothing to confirm. The email is locked to the serial afterwards, so pick the one you keep.</div>
+      </div>
+      <div class="cr-field"><label>DATE OF PURCHASE</label><input id="regDate" type="date" oninput="regValidate()"></div>
+
+      <div class="cr-field"><label>WHERE YOU BOUGHT IT</label>
+        <div class="seg" id="regWhere" style="flex-wrap:wrap">
+          <button class="on" onclick="crSeg('regWhere',this)">ensoshisha.eu</button>
+          <button onclick="crSeg('regWhere',this)">ensoshisha.com</button>
+          <button onclick="crSeg('regWhere',this)">A shop</button>
+        </div>
+      </div>
+      <div class="cr-field"><label>ORDER NUMBER (OPTIONAL)</label><input id="regOrder" placeholder="#1234" maxlength="24"></div>
+
+      
+      <input class="hp" id="regNick" tabindex="-1" autocomplete="off" aria-hidden="true" placeholder="Leave empty">
+
+      <div class="legal">
+        <input type="checkbox" id="regAgree" onchange="regValidate()">
+        <label for="regAgree">I am over 18, I own this device, and I accept the
+          <a href="https://ensoshisha.eu/policies/terms-of-service" target="_blank" rel="noopener">Terms</a> and the
+          <a href="https://ensoshisha.eu/policies/privacy-policy" target="_blank" rel="noopener">Privacy Notice</a>.
+          We use these details to run your warranty — nothing else without asking.</label>
+      </div>
+
+      <div class="cr-err" id="regErr"></div>
+      <button class="cr-submit" id="regBtn" onclick="regSubmit()">Register and activate warranty</button>
+      <div class="footer-note">Your details stay on this device and go to ENSŌ support only. Questions? <a href="mailto:support@ensoshisha.com">support@ensoshisha.com</a></div>
+    </div>
+
+    
+    <div class="scr" id="scr-ob-install">
+      <div class="ob-top"><span class="ob-step">STEP 2 OF 3</span><span class="ob-dots"><i></i><i class="on"></i><i></i></span></div>
+      <h1 class="ob-h">Add ENSŌ to your home screen</h1>
+      <p class="ob-p">It opens like an app, full screen, one tap from your home screen — and on an iPhone it is the only way we can tell you about a software update.</p>
+      <div class="ob-card"><div id="obPhone"></div>
+        <ol class="inst-steps">
+          <li>Tap the <b>Share</b> button at the bottom of Safari.</li>
+          <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+          <li>Tap <b>Add</b>, then open ENSŌ from the new icon.</li>
+        </ol>
+        <div class="nt-note">On Android, open the ⋮ menu and choose <b>Install app</b>.</div>
+      </div>
+      <div class="ob-why"><b>Why it matters:</b> your warranty is registered to this device. The home screen icon is what keeps it, and your update alerts, with you.</div>
+      <button class="ob-go" onclick="obNext('notify')">I've added it</button>
+      <button class="ob-skip" onclick="obNext('notify')">I'll do this later</button>
+    </div>
+
+    
+    <div class="scr" id="scr-ob-notify">
+      <div class="ob-top"><span class="ob-step">STEP 3 OF 3</span><span class="ob-dots"><i></i><i></i><i class="on"></i></span></div>
+      <div class="ob-bell"><svg viewBox="0 0 24 24"><path d="M18 8.5a6 6 0 1 0-12 0c0 6-2.2 7.5-2.2 7.5h16.4S18 14.5 18 8.5z"/><path d="M13.7 19.5a2 2 0 0 1-3.4 0"/></svg></div>
+      <h1 class="ob-h" style="text-align:center">Get software updates first</h1>
+      <p class="ob-p" style="text-align:center">Your ENSŌ keeps getting better after you buy it. This is how you hear about it.</p>
+      <div class="ob-list">
+        <div><i>✓</i><span><b>Software updates</b> — new firmware for your exact device, and what it improves.</span></div>
+        <div><i>✓</i><span><b>First looks</b> — new accessories and restocks before they sell out.</span></div>
+        <div><i>✓</i><span><b>Blends &amp; tricks</b> — what the community is voting up.</span></div>
+      </div>
+      <div class="ob-why" style="text-align:center">A few a month. Pause them any time from your profile.</div>
+      <button class="ob-go gold" id="obNotifyBtn" onclick="obAskNotify()">Turn on updates</button>
+      <button class="ob-skip" onclick="obFinish()">Not now</button>
+      <div class="nt-note" id="obNotifyNote" style="padding:0 16px"></div>
+    </div>
+
+    
+    <div class="scr" id="scr-profile">
+      <div class="pf-head">
+        <div class="pf-av" id="pfAv">–</div>
+        <div class="pf-who"><b id="pfName">Your profile</b><span id="pfMail"></span><span id="pfLock" style="font-size:10.5px;color:rgba(243,233,218,.5);margin-top:3px"></span></div>
+      </div>
+      <h1 class="scr-title" style="font-size:17px;padding-bottom:0">Your devices</h1>
+      <div id="pfDevices"></div>
+      <h1 class="scr-title" style="font-size:17px;padding-bottom:0;margin-top:6px">Warranty &amp; service</h1>
+      <div class="scr-sub">Straight answers from support — returns, replacements, receipts, resellers.</div>
+      <div id="warrantyList"></div>
+      <button class="pf-act gold" onclick="regOpen()">+ Add a device, or bring one back</button>
+      <button class="pf-act" onclick="go('notify')" id="pfNotify">Notifications</button>
+      <button class="pf-act" onclick="go('recipes');rcView('mine')">My blends</button>
+      <button class="pf-act" id="pfSupport">Contact support</button>
+      <button class="pf-act" onclick="profileSignOut()" style="color:#8a4a2f">Sign out of this device</button>
+      <div class="footer-note">Signed in on this device only. Registering again on a new phone brings your devices back.</div>
+    </div>
+
+    
+    <div class="scr" id="scr-notify">
+      <h1 class="scr-title">Notifications</h1>
+      <div class="scr-sub">Software updates the day they land, plus blends worth stealing and first looks. A few a month, nothing else.</div>
+
+      <div class="nt-card" id="ntInstall" style="display:none">
+        <b style="display:block;font-size:14px;margin-bottom:6px">First, put ENSŌ on your home screen</b>
+        <div class="nt-lead">iPhone only sends notifications to apps that live on the home screen. It takes ten seconds.</div>
+        <div id="ntPhone"></div>
+        <ol class="inst-steps">
+          <li>Tap the <b>Share</b> button at the bottom of Safari.</li>
+          <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+          <li>Tap <b>Add</b>, then open ENSŌ from the new icon.</li>
+        </ol>
+        <div class="nt-note">On Android, open the ⋮ menu and choose <b>Install app</b>.</div>
+      </div>
+
+      <div class="nt-card">
+        <div class="nt-lead" id="ntLead">Your ENSŌ gets better over time — its software is upgradable, and we keep improving heat, airflow and battery behaviour. This is how you find out.</div>
+        <span class="nt-promise">A FEW A MONTH · NEVER SPAM</span>
+        <button class="nt-btn" id="ntBtn" onclick="notifyAsk()">Turn on notifications</button>
+        <div class="nt-note" id="ntNote"></div>
+        <button class="nt-link" id="ntReg" style="width:100%;margin-top:12px;display:none" onclick="goProfile()">Register your warranty →</button>
+      </div>
+
+      <div class="nt-card" id="ntPrefs">
+        <div class="nt-what"><b>Software updates</b><span>New firmware for your device the day it is out, and what it improves. Register your warranty and the alerts match your exact model.</span></div>
+        <div class="nt-what"><b>First looks</b><span>What is coming next, new accessories, and restocks before they sell out.</span></div>
+        <div class="nt-what"><b>Blends &amp; new tricks</b><span>The blends the community is voting up, and better ways to use your device.</span></div>
+        <div class="nt-row" id="ntPauseRow" style="display:none">
+          <div class="nt-txt"><b>Pause notifications</b><span>Stops everything without switching them off in your phone settings, so you can start again with one tap.</span></div>
+          <button class="sw" id="sw-pause" onclick="notifyPause()" aria-label="Pause notifications"></button>
+        </div>
+      </div>
+
+      <div class="footer-note">A few a month, that is the promise. Pause them here whenever you like.</div>
+    </div>
+
+  </div>
+
+
+    
+  <div class="ntbot" id="ntBot">
+    <div class="ntbot-in">
+      <b id="ntBotTxt">Notifications on</b>
+      <button class="sw on" id="ntBotSw" onclick="ntBarGo()" aria-label="Pause notifications"></button>
+    </div>
+  </div>
+
+  
+  <div class="sa-menu" id="saMenu" hidden role="dialog" aria-modal="true" aria-label="Menu" onclick="if(event.target===this)saMenu(false)"><div class="sa-menu__panel"><div class="sa-menu__head"><b>Menu</b><button type="button" onclick="saMenu(false)" aria-label="Close menu">&#10005;</button></div><nav id="saMenuNav"></nav><p class="sa-menu__h">Your device</p><div class="sa-menu__dev" id="saMenuDev"></div><div class="sa-menu__foot"><button type="button" id="saTheme" onclick="cycleTheme();saMenu(true)"></button></div></div></div>
+<nav class="nav" id="bottomNav">
+    <button class="on" data-s="search" onclick="go('search')">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
+      <span class="lbl">Search</span>
+    </button>
+    <button data-s="howto" onclick="go('howto')">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V2H6.5A2.5 2.5 0 004 4.5v15z"/></svg>
+      <span class="lbl">How to use</span>
+    </button>
+    <button data-s="fix" onclick="go('fix')">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <span class="lbl">Troubleshoot</span>
+    </button>
+    <button data-s="recipes" onclick="go('recipes')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-8H7v8M7 3v5h8M20 21H4a1 1 0 01-1-1V4a1 1 0 011-1h11l6 6v11a1 1 0 01-1 1z" stroke-linejoin="round"/></svg>
+      <span class="lbl">Recipes</span>
+    </button>
+  </nav>
+</div>
+
+<div class="tour" id="tour">
+  <div class="tour-spot" id="tourSpot"></div>
+  <div class="tour-bubble" id="tourBubble">
+    <div class="tour-step" id="tourStep"></div>
+    <div class="tour-title" id="tourTitle"></div>
+    <div class="tour-text" id="tourText"></div>
+    <div class="tour-btns">
+      <button class="tour-skip" onclick="endTour()">Skip</button>
+      <span class="tour-dots" id="tourDots"></span>
+      <button class="tour-next" id="tourNext" onclick="tourNext()">Next</button>
+    </div>
+  </div>
+</div>
+<div class="share-ov" id="shareOv">
+  <img id="shareImg" alt="Share card">
+  <p>Save this card and post it to Instagram.<br>Tag @enso.official · #ENSO #ModernRitual</p>
+  <div class="sh-btns"><button class="sh-go" id="shareGo">Share / Save</button><button class="sh-x" id="shareX">Close</button></div>
+</div></div>
+
+<script>
+window.ENSO_IMG_MAP = {
+  "before-charge":            "{{ 'before-charge.webp' | asset_url }}",
+  "battery-latch-closed":     "{{ 'battery-latch-closed.webp' | asset_url }}",
+  "battery-latch-open":       "{{ 'battery-latch-open.webp' | asset_url }}",
+  "battery-out":              "{{ 'battery-out.webp' | asset_url }}",
+  "pack-contacts":            "{{ 'pack-contacts.webp' | asset_url }}",
+  "battery-latch-close":      "{{ 'battery-latch-close.webp' | asset_url }}",
+  "charge-in":                "{{ 'charge-in.webp' | asset_url }}",
+  "charge-dots":              "{{ 'charge-dots.webp' | asset_url }}",
+  "cup-filled":               "{{ 'cup-filled.webp' | asset_url }}",
+  "switch-off-thumb":         "{{ 'switch-off-thumb.webp' | asset_url }}",
+  "flat-screen":              "{{ 'flat-screen.webp' | asset_url }}",
+  "basket-empty":             "{{ 'basket-empty.webp' | asset_url }}",
+  "pack-layer1":              "{{ 'pack-layer1.webp' | asset_url }}",
+  "pack-press":               "{{ 'pack-press.webp' | asset_url }}",
+  "pack-layer2":              "{{ 'pack-layer2.webp' | asset_url }}",
+  "flat-layer1":              "{{ 'flat-layer1.webp' | asset_url }}",
+  "flat-layer2":              "{{ 'flat-layer2.webp' | asset_url }}",
+  "flat-packed":              "{{ 'flat-packed.webp' | asset_url }}",
+  "chamber-empty":            "{{ 'chamber-empty.webp' | asset_url }}",
+  "cup-in-by-hand":           "{{ 'cup-in-by-hand.webp' | asset_url }}",
+  "cap-on-press-pad":         "{{ 'cap-on-press-pad.webp' | asset_url }}",
+  "cup-tool-seated":          "{{ 'cup-tool-seated.webp' | asset_url }}",
+  "cup-tool-lower":           "{{ 'cup-tool-lower.webp' | asset_url }}",
+  "cup-seated-tool-off":      "{{ 'cup-seated-tool-off.webp' | asset_url }}",
+  "hookah-adapter-two-hands": "{{ 'hookah-adapter-two-hands.webp' | asset_url }}",
+  "hookah-mount-two-hands":   "{{ 'hookah-mount-two-hands.webp' | asset_url }}",
+  "on-hookah-front":          "{{ 'on-hookah-front.webp' | asset_url }}",
+  "cap-parts-white":          "{{ 'cap-parts-white.webp' | asset_url }}",
+  "cap-holes":                "{{ 'cap-holes.webp' | asset_url }}",
+  "cap-off":                  "{{ 'cap-off.webp' | asset_url }}",
+  "cap-parts-rinse":          "{{ 'cap-parts-rinse.webp' | asset_url }}",
+  "clean-01-lift-cup-out":    "{{ 'clean-01-lift-cup-out.webp' | asset_url }}",
+  "clean-00b-loosen-edge":    "{{ 'clean-00b-loosen-edge.webp' | asset_url }}",
+  "clean-02-push-mesh-out":   "{{ 'clean-02-push-mesh-out.webp' | asset_url }}",
+  "clean-03-out-in-one-piece":"{{ 'clean-03-out-in-one-piece.webp' | asset_url }}",
+  "clean-04-rinse":           "{{ 'clean-04-rinse.webp' | asset_url }}",
+  "clean-05-scrubber":        "{{ 'clean-05-scrubber.webp' | asset_url }}",
+  "clean-06-soak":            "{{ 'clean-06-soak.webp' | asset_url }}",
+  "clean-capoff-back-brush":  "{{ 'clean-capoff-back-brush.webp' | asset_url }}",
+  "clean-shaft-brush":        "{{ 'clean-shaft-brush.webp' | asset_url }}",
+  "ok-rinse-shaft":           "{{ 'ok-rinse-shaft.webp' | asset_url }}",
+  "dont-water-bay":           "{{ 'dont-water-bay.webp' | asset_url }}",
+  "dont-water-battery":       "{{ 'dont-water-battery.webp' | asset_url }}",
+  "cable-alone":              "{{ 'cable-alone.webp' | asset_url }}",
+  "plate-fork-macro":         "{{ 'plate-fork-macro.webp' | asset_url }}",
+  "start_100":                "{{ 'start_100.webp' | asset_url }}",
+  "battery":                  "{{ 'battery.webp' | asset_url }}",
+  "continue":                 "{{ 'continue.webp' | asset_url }}",
+  "q-menu":                   "{{ 'q-menu.webp' | asset_url }}",
+  "q-timer":                  "{{ 'q-timer.webp' | asset_url }}",
+  "m-profiles":               "{{ 'm-profiles.webp' | asset_url }}",
+  "p-profiles":               "{{ 'p-profiles.webp' | asset_url }}",
+  "profile_default":          "{{ 'profile_default.webp' | asset_url }}",
+  "profile_phoenix":          "{{ 'profile_phoenix.webp' | asset_url }}",
+  "profile_wraith":           "{{ 'profile_wraith.webp' | asset_url }}",
+  "profile_oracle":           "{{ 'profile_oracle.webp' | asset_url }}",
+  "p-theme":                  "{{ 'p-theme.webp' | asset_url }}",
+  "p-volume":                 "{{ 'p-volume.webp' | asset_url }}",
+  "p-haptic":                 "{{ 'p-haptic.webp' | asset_url }}",
+  "p-brightness":             "{{ 'p-brightness.webp' | asset_url }}",
+  "p-screen":                 "{{ 'p-screen.webp' | asset_url }}",
+  "p-stats":                  "{{ 'p-stats.webp' | asset_url }}",
+  "lock":                     "{{ 'lock.webp' | asset_url }}",
+  "preheat-time-ring_0800":   "{{ 'preheat-time-ring_0800.webp' | asset_url }}",
+  "preheat":                  "{{ 'preheat.webp' | asset_url }}",
+  "session_280":              "{{ 'session_280.webp' | asset_url }}",
+  "cancel":                   "{{ 'cancel.webp' | asset_url }}",
+  "enso-2026-cut":            "{{ 'enso-2026-cut.webp' | asset_url }}",
+  "closed-start":             "{{ 'closed-start.webp' | asset_url }}",
+  "step-charge":              "{{ 'step-charge.webp' | asset_url }}",
+  "step-charge-ink":          "{{ 'step-charge-ink.webp' | asset_url }}",
+  "battery-remove":           "{{ 'battery-remove.webp' | asset_url }}",
+  "battery-remove-ink":       "{{ 'battery-remove-ink.webp' | asset_url }}",
+  "led-temp":                 "{{ 'led-temp.webp' | asset_url }}",
+  "led-temp-ink":             "{{ 'led-temp-ink.webp' | asset_url }}",
+  "dial-turn":                "{{ 'dial-turn.webp' | asset_url }}",
+  "dial-turn-ink":            "{{ 'dial-turn-ink.webp' | asset_url }}",
+  "tank-seat":                "{{ 'tank-seat.webp' | asset_url }}",
+  "tank-seat-ink":            "{{ 'tank-seat-ink.webp' | asset_url }}"
+};
+</script>
+<script src="{{ 'enso-app.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "t:sections.enso_app.name",
+  "settings": [],
+  "presets": [{ "name": "t:sections.enso_app.presets.name" }]
+}
+{% endschema %}
