@@ -1,4 +1,5 @@
 {
+  "layout": "enso-app",
   "sections": {
     "enso_app": {
       "type": "enso-app",

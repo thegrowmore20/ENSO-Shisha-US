@@ -6,16 +6,7 @@
 {%- enddoc -%}
 
 <style>
-/* ── Shopify integration: hide theme chrome, fill full viewport ── */
-.shopify-section-group-header-group,
-.shopify-section-group-footer-group { display: none !important; }
-body { overflow: hidden; }
-[id$="__enso_app"] {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  overflow: hidden;
-}
+/* ── Layout integration: app fills full width, no borders ── */
 [id$="__enso_app"] .app {
   max-width: 100% !important;
   margin: 0 !important;

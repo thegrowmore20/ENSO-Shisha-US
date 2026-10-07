@@ -33,7 +33,7 @@
       <div class="xapp__grid">
         {%- for block in section.blocks -%}
           {%- assign icon = block.settings.icon -%}
-          <a class="xapp__go" href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
+          <a class="xapp__go" href="{{ block.settings.url | default: '#' }}" target="_blank" rel="noopener noreferrer" {{ block.shopify_attributes }}>
             {%- case icon -%}
               {%- when 'warranty' -%}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 11 12 14 22 4"/></svg>
@@ -58,7 +58,7 @@
     {%- endif -%}
 
     <div class="xapp__foot">
-      <a class="btn btn--primary" href="{{ cta_url }}">{{ cta_lbl }}</a>
+      <a class="btn btn--primary" href="{{ cta_url }}" target="_blank" rel="noopener noreferrer">{{ cta_lbl }}</a>
       {%- if section.settings.cta_note != blank -%}
         <small>{{ section.settings.cta_note }}</small>
       {%- endif -%}
