@@ -1,6 +1,4 @@
 {%- liquid
-  assign margin_top = section.settings.margin_top
-  assign margin_bottom = section.settings.margin_bottom
   assign img = section.settings.image
   assign heading = section.settings.heading
   assign body_text = section.settings.text
@@ -9,10 +7,20 @@
   assign img_alt = img.alt | default: heading | escape
 -%}
 
-<section
-  class="enso-exp"
-  style="--enso-exp-mt: {{ margin_top }}px; --enso-exp-mb: {{ margin_bottom }}px;"
->
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<section class="enso-exp">
   <div class="container">
   <div class="enso-exp__item">
     <div class="enso-exp__media">
@@ -64,8 +72,7 @@
 
 {% stylesheet %}
   .enso-exp {
-    margin-top: var(--enso-exp-mt, 0px);
-    margin-bottom: var(--enso-exp-mb, 0px);
+    /* spacing controlled by {% style %} on the Shopify wrapper */
   }
 
   .enso-exp__item {
@@ -118,7 +125,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    padding: 32px 20px 32px 28px;
+    padding: 32px 20px 32px 48px;
   }
 
   .enso-exp__content-inner {
@@ -244,27 +251,47 @@
     },
     {
       "type": "header",
-      "content": "t:sections.all.spacing"
+      "content": "t:sections.all.padding.section_padding_heading"
     },
     {
       "type": "range",
-      "id": "margin_top",
-      "label": "t:sections.all.margin_top.label",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
       "min": 0,
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 0
+      "default": 24
     },
     {
       "type": "range",
-      "id": "margin_bottom",
-      "label": "t:sections.all.margin_bottom.label",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
       "min": 0,
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 0
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
     }
   ],
   "presets": [

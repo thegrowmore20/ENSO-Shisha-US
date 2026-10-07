@@ -1032,6 +1032,15 @@
         "autoplay_interval": {
           "label": "Autoplay interval",
           "info": "Time between slides, in milliseconds. Set to 0 to disable autoplay."
+        },
+        "video_quality": {
+          "label": "Video quality",
+          "info": "Higher quality looks sharper but takes longer to load.",
+          "options": {
+            "sd": "SD (480p)",
+            "hd": "HD (720p)",
+            "full_hd": "Full HD (1080p)"
+          }
         }
       },
       "blocks": {
@@ -1046,7 +1055,8 @@
               "label": "Upload video"
             },
             "video_url": {
-              "label": "YouTube or Vimeo video URL"
+              "label": "YouTube or Vimeo video URL",
+              "info": "Ignored when an uploaded video file is selected."
             },
             "eyebrow": {
               "label": "Eyebrow label"
