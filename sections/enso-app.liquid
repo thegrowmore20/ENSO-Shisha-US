@@ -5,6 +5,22 @@
   The _img() function in enso-app.js maps relative paths to CDN URLs.
 {%- enddoc -%}
 
+<style>
+/* ── Shopify integration: hide theme chrome, fill full viewport ── */
+.shopify-section-group-header-group,
+.shopify-section-group-footer-group { display: none !important; }
+body { overflow: hidden; }
+#shopify-section-enso_app {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+}
+#shopify-section-enso_app .app {
+  height: 100% !important;
+}
+</style>
+
 <style>/* ═══ site build: simple layer (1 Oct 2026, Vadim) ═══
    One device at a time, a home screen of big sections, a menu instead of the tab rows and the bottom bar,
    steps as cards you swipe, larger type. The app's own screens and features stay as they are. */
