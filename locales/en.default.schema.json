@@ -12,6 +12,9 @@
   "settings": {
     "typography": {
       "name": "Typography",
+      "headers": {
+        "fonts": "Fonts"
+      },
       "headings": {
         "content": "Headings & Structure"
       },
