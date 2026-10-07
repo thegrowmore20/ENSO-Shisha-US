@@ -34,7 +34,31 @@
         "padding_top_mobile": 32,
         "padding_bottom_mobile": 16
       }
+    },
+    "warranty_coverage": {
+      "type": "warranty-coverage",
+      "blocks": {
+        "cov_1": { "type": "covered_item", "settings": { "text": "Software errors" } },
+        "cov_2": { "type": "covered_item", "settings": { "text": "Material defects" } },
+        "cov_3": { "type": "covered_item", "settings": { "text": "Manufacturing or fabrication faults" } },
+        "no_1": { "type": "uncovered_item", "settings": { "text": "Improper handling" } },
+        "no_2": { "type": "uncovered_item", "settings": { "text": "Unusual or unintended use" } },
+        "no_3": { "type": "uncovered_item", "settings": { "text": "Damage from misuse, accidents or incorrect handling" } },
+        "no_4": { "type": "uncovered_item", "settings": { "text": "Modification or alteration outside recommended use" } }
+      },
+      "block_order": ["cov_1", "cov_2", "cov_3", "no_1", "no_2", "no_3", "no_4"],
+      "settings": {
+        "heading": "What the warranty covers",
+        "covered_heading": "Covered",
+        "covered_footnote": "Issues caused by defects in the product's software, materials or manufacturing process under normal use. When a valid issue is confirmed, ENSŌ EU assesses the product and provides an appropriate solution under the warranty terms.",
+        "not_covered_heading": "Not covered",
+        "not_covered_footnote": "Proper care and use are required to keep the warranty valid.",
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
     }
   },
-  "order": ["warranty_hero"]
+  "order": ["warranty_hero", "warranty_coverage"]
 }

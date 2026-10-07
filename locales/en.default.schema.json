@@ -1304,6 +1304,35 @@
         "name": "Help cards"
       }
     },
+    "warranty_coverage": {
+      "name": "Warranty coverage",
+      "settings": {
+        "heading": { "label": "Section heading" },
+        "covered_header": { "content": "Covered column" },
+        "covered_heading": { "label": "Heading" },
+        "covered_footnote": { "label": "Footnote" },
+        "not_covered_header": { "content": "Not covered column" },
+        "not_covered_heading": { "label": "Heading" },
+        "not_covered_footnote": { "label": "Footnote" }
+      },
+      "blocks": {
+        "covered_item": {
+          "name": "Covered item",
+          "settings": {
+            "text": { "label": "Item text" }
+          }
+        },
+        "uncovered_item": {
+          "name": "Not covered item",
+          "settings": {
+            "text": { "label": "Item text" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Warranty coverage"
+      }
+    },
     "warranty_hero": {
       "name": "Warranty hero",
       "settings": {
