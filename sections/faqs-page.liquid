@@ -14,29 +14,42 @@
   endcase
 -%}
 
+{% style %}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
 {%- if section.blocks.size > 0 -%}
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {%- assign first_question = true -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'question' -%}
-            {%- unless first_question -%},{%- endunless -%}
-            {%- assign first_question = false -%}
-            {
-              "@type": "Question",
-              "name": {{ block.settings.question | strip_html | json }},
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": {{ block.settings.answer | strip_html | json }}
-              }
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {%- assign first_q = true -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'question' -%}
+          {%- unless first_q -%},{%- endunless -%}
+          {%- assign first_q = false -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | strip_html | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | json }}
             }
-          {%- endif -%}
-        {%- endfor -%}
-      ]
-    }
+          }
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  }
   </script>
 {%- endif -%}
 
@@ -56,70 +69,100 @@
 
     {%- if section.blocks.size > 0 -%}
       <div class="faq-section__body">
-        {%- for block in section.blocks -%}
 
-          {%- if block.type == 'category' -%}
-            {%- if block.settings.label != blank -%}
-              <p class="faq-section__category" {{ block.shopify_attributes }}>
-                {{ block.settings.label }}
-              </p>
-            {%- endif -%}
+        {%- if section.settings.exp_label != blank -%}
+          <p class="faq-exp">{{ section.settings.exp_label }}</p>
+        {%- endif -%}
 
-          {%- elsif block.type == 'question' -%}
-            <details class="faq-item" {{ block.shopify_attributes }}>
-              <summary class="faq-item__trigger">
-                <span class="faq-item__question">{{ block.settings.question }}</span>
-                <span class="faq-item__icon" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 6L8 11L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </summary>
-              <div class="faq-item__panel">
-                <div class="faq-item__answer">{{ block.settings.answer }}</div>
-              </div>
-            </details>
+        <label class="faq-search" for="faqQ-{{ section.id }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="m20 20-3.5-3.5"/>
+          </svg>
+          <input
+            type="search"
+            id="faqQ-{{ section.id }}"
+            class="faq-search__input"
+            placeholder="{{ section.settings.search_placeholder | default: 'Search questions…' }}"
+            aria-label="{{ section.settings.search_placeholder | default: 'Search questions' }}"
+          >
+        </label>
 
+        <p class="faq-none" id="faqNone-{{ section.id }}" hidden>
+          {{ section.settings.no_results_text | default: 'No question matches that. Try another word, or write to' }}
+          {%- if section.settings.support_email != blank -%}
+            <a href="mailto:{{ section.settings.support_email }}">{{ section.settings.support_email }}</a>.
           {%- endif -%}
+        </p>
 
+        <div class="faq-tabs" id="faqTabs-{{ section.id }}" role="tablist">
+          <button type="button" role="tab" class="faq-tab" data-tab="diamond">
+            {{ section.settings.tab_1_label | default: 'ENSŌ Diamond' }}
+          </button>
+          <button type="button" role="tab" class="faq-tab" data-tab="enso">
+            {{ section.settings.tab_2_label | default: 'ENSŌ 2026 Edition' }}
+          </button>
+          <button type="button" role="tab" class="faq-tab" data-tab="orders">
+            {{ section.settings.tab_3_label | default: 'Orders, shipping and warranty' }}
+          </button>
+        </div>
+
+        {%- for tab_key in 'diamond,enso,orders' | split: ',' -%}
+          <div class="faq-group" data-group="{{ tab_key }}" hidden>
+            {%- for block in section.blocks -%}
+              {%- if block.settings.tab == tab_key -%}
+
+                {%- if block.type == 'category' -%}
+                  {%- if block.settings.label != blank -%}
+                    <p class="faq-section__category" {{ block.shopify_attributes }}>
+                      {{ block.settings.label }}
+                    </p>
+                  {%- endif -%}
+
+                {%- elsif block.type == 'question' -%}
+                  {%- assign item_id = block.settings.anchor_id | default: blank -%}
+                  {%- if item_id == blank -%}
+                    {%- assign item_id = 'q-' | append: block.id -%}
+                  {%- endif -%}
+                  <details class="faq-item" id="{{ item_id }}" {{ block.shopify_attributes }}>
+                    <summary class="faq-item__trigger">
+                      <span class="faq-item__question">{{ block.settings.question }}</span>
+                      <span class="faq-item__icon" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M3 6L8 11L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </summary>
+                    <div class="faq-item__panel">
+                      <div class="faq-item__answer">{{ block.settings.answer }}</div>
+                    </div>
+                  </details>
+
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
         {%- endfor -%}
+
+        {%- if section.settings.footer_text != blank -%}
+          <p class="faq-more">{{ section.settings.footer_text }}</p>
+        {%- endif -%}
+
       </div>
     {%- endif -%}
 
   </div>
 </section>
 
-{% style %}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top_mobile }}px;
-    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{% endstyle %}
-
 <style>
-  /* Layout */
   .faq-section__inner {
     max-width: {{ content_max_width }};
     margin-inline: auto;
   }
 
-  /* Header */
   .faq-section__header {
     text-align: {{ section.settings.header_alignment }};
     margin-bottom: 32px;
-  }
-
-  @media screen and (max-width: 749px) {
-    .faq-section__header {
-      margin-bottom: 32px;
-    }
   }
 
   .faq-section__eyebrow {
@@ -136,6 +179,91 @@
     margin: 0;
   }
 
+  /* Gold breadcrumb */
+  .faq-exp {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--palette-bronze, #96671f);
+    margin: 0 0 14px;
+  }
+
+  /* Search bar */
+  .faq-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 560px;
+    height: 52px;
+    border: 1.5px solid rgba(0, 0, 0, 0.14);
+    border-radius: var(--radius-pill);
+    padding: 0 20px;
+    margin: 0 0 18px;
+    background: var(--color-background);
+    cursor: text;
+  }
+
+  .faq-search:focus-within { border-color: var(--color-text); }
+
+  .faq-search svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    opacity: .55;
+  }
+
+  .faq-search__input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: inherit;
+  }
+
+  .faq-search__input::placeholder { color: var(--color-text-muted); }
+
+  /* No-results */
+  .faq-none { color: var(--color-text-muted); font-size: 15px; margin: 8px 0 24px; }
+  .faq-none a { color: var(--color-text); }
+
+  [hidden] { display: none !important; }
+
+  /* Tab bar */
+  .faq-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 28px;
+  }
+
+  .faq-tab {
+    border: 1.5px solid rgba(0, 0, 0, 0.12);
+    background: var(--color-background);
+    border-radius: var(--radius-pill);
+    padding: 12px 20px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: .04em;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .faq-tab[aria-selected="true"] {
+    background: var(--color-text);
+    color: var(--color-background);
+    border-color: var(--color-text);
+  }
+
   /* Category label */
   .faq-section__category {
     font-size: 24px;
@@ -146,24 +274,17 @@
     padding-bottom: 12px;
   }
 
-  .faq-section__category:first-child {
-    margin-top: 0;
-  }
+  .faq-section__category:first-child { margin-top: 0; }
 
-  /* FAQ list */
-  .faq-section__body {
-    opacity: 1;
-  }
+  /* FAQ item */
+  .faq-section__body { opacity: 1; }
 
-  /* Individual item */
   .faq-item {
-    border-bottom: 1px solid #8080803d;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.24);
     opacity: 1;
   }
 
-  .faq-section__category + .faq-item {
-    border-top: 1px solid #8080803d;
-  }
+  .faq-section__category + .faq-item { border-top: 1px solid rgba(128, 128, 128, 0.24); }
 
   .faq-item__trigger {
     display: flex;
@@ -176,16 +297,9 @@
     user-select: none;
   }
 
-  .faq-item__trigger::-webkit-details-marker {
-    display: none;
-  }
+  .faq-item__trigger::-webkit-details-marker { display: none; }
 
-  .faq-item__question {
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.4;
-    flex: 1;
-  }
+  .faq-item__question { font-size: 1rem; font-weight: 600; line-height: 1.4; flex: 1; }
 
   .faq-item__icon {
     flex-shrink: 0;
@@ -195,165 +309,184 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--color-text);
+    color: var(--color-background);
     transition: transform 0.25s ease;
   }
 
-  .faq-item__icon svg {
-    width: 45%;
-    height: 45%;
-  }
+  .faq-item__icon svg { width: 45%; height: 45%; }
+
+  .faq-item.is-open .faq-item__icon { transform: rotate(180deg); }
+
+  .faq-item { interpolate-size: numeric-only; }
+  .faq-item::details-content { transition: none; opacity: 1; block-size: auto; overflow: visible; }
+
+  .faq-item__panel { overflow: hidden; }
+
+  .faq-item__answer { padding-bottom: 20px; font-size: 0.9375rem; line-height: 1.7; }
+  .faq-item__answer p { margin: 0 0 12px; }
+  .faq-item__answer p:last-child { margin-bottom: 0; }
+  .faq-item__answer a { color: currentColor; text-underline-offset: 3px; }
+
+  /* Footer note */
+  .faq-more { margin: 32px 0 0; color: var(--color-text-muted); font-size: 15px; }
+  .faq-more a { color: var(--color-text); }
 
   @media screen and (max-width: 749px) {
-    .faq-item__icon {
-      width: 25px;
-      height: 25px;
-    }
-  }
-
-  .faq-item.is-open .faq-item__icon {
-    transform: rotate(180deg);
-  }
-
-  /* Some browsers now ship a built-in fade/resize transition on details
-     content (via ::details-content). We animate height ourselves via JS,
-     so disable the native one to stop it fighting our animation. */
-  .faq-item {
-    interpolate-size: numeric-only;
-  }
-
-  .faq-item::details-content {
-    transition: none;
-    opacity: 1;
-    block-size: auto;
-    overflow: visible;
-  }
-
-  .faq-item__panel {
-    overflow: hidden;
-  }
-
-  .faq-item__answer {
-    padding-bottom: 20px;
-    font-size: 0.9375rem;
-    line-height: 1.7;
-  }
-
-  .faq-item__answer p {
-    margin: 0 0 12px;
-  }
-
-  .faq-item__answer p:last-child {
-    margin-bottom: 0;
-  }
-
-  .faq-item__answer a {
-    color: currentColor;
-    text-underline-offset: 3px;
+    .faq-item__icon { width: 25px; height: 25px; }
+    .faq-tab { padding: 10px 14px; font-size: 12px; }
   }
 </style>
 
 <script>
   (function () {
-    function FaqAccordionItem(details, group) {
-      this.el = details;
-      this.group = group;
-      this.summary = details.querySelector('summary');
-      this.content = details.querySelector('.faq-item__panel');
-      this.animation = null;
-      this.isClosing = false;
-      this.isExpanding = false;
-      this.summary.addEventListener('click', this.onClick.bind(this));
-    }
+    function initFaqPage(sectionEl) {
+      var tabs   = [].slice.call(sectionEl.querySelectorAll('.faq-tab'));
+      var groups = [].slice.call(sectionEl.querySelectorAll('.faq-group'));
+      var qInput = sectionEl.querySelector('.faq-search__input');
+      var none   = sectionEl.querySelector('.faq-none');
+      var tabBar = sectionEl.querySelector('.faq-tabs');
+      var items  = [].slice.call(sectionEl.querySelectorAll('.faq-item'));
+      var cur    = null;
 
-    FaqAccordionItem.prototype.onClick = function (event) {
-      event.preventDefault();
-
-      if (this.isClosing || !this.el.open) {
-        this.open();
-      } else if (this.isExpanding || this.el.open) {
-        this.close();
+      function show(k) {
+        tabs.forEach(function (t) { t.setAttribute('aria-selected', t.dataset.tab === k); });
+        groups.forEach(function (g) { g.hidden = g.dataset.group !== k; });
       }
-    };
 
-    FaqAccordionItem.prototype.open = function () {
-      this.group.forEach(function (item) {
-        if (item !== this && (item.el.open || item.isExpanding)) {
-          item.close();
+      tabs.forEach(function (t) {
+        t.addEventListener('click', function () {
+          show(t.dataset.tab);
+          try { history.replaceState(null, '', '#' + t.dataset.tab); } catch (e) {}
+        });
+      });
+
+      function go(h) {
+        if (['diamond', 'enso', 'orders'].indexOf(h) > -1) { show(h); return true; }
+        var it = h && document.getElementById(h);
+        if (!it || !sectionEl.contains(it)) return false;
+        var g = it.closest('.faq-group');
+        if (g) show(g.dataset.group);
+        it.open = true;
+        function to() {
+          var y = it.getBoundingClientRect().top + scrollY - 110;
+          window.scrollTo({ top: y, behavior: 'auto' });
         }
-      }, this);
+        [80, 400, 1200].forEach(function (d) { setTimeout(to, d); });
+        addEventListener('load', to, { once: true });
+        return true;
+      }
 
-      this.el.style.overflow = 'hidden';
-      this.el.style.height = this.el.offsetHeight + 'px';
-      this.el.open = true;
-      this.el.classList.add('is-open');
-      window.requestAnimationFrame(this.expand.bind(this));
-    };
+      if (!go((location.hash || '').slice(1))) show('diamond');
+      addEventListener('hashchange', function () { go(location.hash.slice(1)); });
 
-    FaqAccordionItem.prototype.cancelAnimation = function () {
-      if (!this.animation) return;
-      this.animation.onfinish = null;
-      this.animation.oncancel = null;
-      this.animation.cancel();
-      this.animation = null;
-    };
+      if (qInput) {
+        qInput.addEventListener('input', function () {
+          var words = qInput.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+          if (!words.length) {
+            items.forEach(function (it) { it.hidden = false; it.open = false; });
+            tabBar.hidden = false;
+            none.hidden   = true;
+            show(cur || 'diamond');
+            cur = null;
+            return;
+          }
+          if (cur === null) {
+            var sel = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
+            cur = sel ? sel.dataset.tab : 'diamond';
+          }
+          tabBar.hidden = true;
+          groups.forEach(function (g) { g.hidden = false; });
+          var n = 0;
+          items.forEach(function (it) {
+            var t  = it.textContent.toLowerCase();
+            var ok = words.every(function (w) { return t.indexOf(w) > -1; });
+            it.hidden = !ok;
+            if (ok) n++;
+          });
+          groups.forEach(function (g) { g.hidden = !g.querySelector('.faq-item:not([hidden])'); });
+          none.hidden = n > 0;
+        });
+      }
 
-    FaqAccordionItem.prototype.expand = function () {
-      this.cancelAnimation();
-      this.isClosing = false;
-      this.isExpanding = true;
-      var startHeight = this.el.offsetHeight;
-      var endHeight = this.summary.offsetHeight + this.content.offsetHeight;
+      function FaqAccordionItem(details, group) {
+        this.el          = details;
+        this.group       = group;
+        this.summary     = details.querySelector('summary');
+        this.content     = details.querySelector('.faq-item__panel');
+        this.animation   = null;
+        this.isClosing   = false;
+        this.isExpanding = false;
+        this.summary.addEventListener('click', this.onClick.bind(this));
+      }
 
-      this.animation = this.el.animate(
-        { height: [startHeight + 'px', endHeight + 'px'] },
-        { duration: 300, easing: 'ease-out' }
-      );
-      this.animation.onfinish = function () { this.onAnimationFinish(true); }.bind(this);
-    };
+      FaqAccordionItem.prototype.onClick = function (e) {
+        e.preventDefault();
+        if (this.isClosing || !this.el.open) { this.open(); }
+        else if (this.isExpanding || this.el.open) { this.close(); }
+      };
 
-    FaqAccordionItem.prototype.close = function () {
-      this.cancelAnimation();
-      this.isExpanding = false;
-      this.isClosing = true;
-      this.el.style.overflow = 'hidden';
-      this.el.classList.remove('is-open');
-      var startHeight = this.el.offsetHeight;
-      var endHeight = this.summary.offsetHeight;
+      FaqAccordionItem.prototype.open = function () {
+        this.group.forEach(function (item) {
+          if (item !== this && (item.el.open || item.isExpanding)) item.close();
+        }, this);
+        this.el.style.overflow = 'hidden';
+        this.el.style.height   = this.el.offsetHeight + 'px';
+        this.el.open           = true;
+        this.el.classList.add('is-open');
+        window.requestAnimationFrame(this.expand.bind(this));
+      };
 
-      this.animation = this.el.animate(
-        { height: [startHeight + 'px', endHeight + 'px'] },
-        { duration: 300, easing: 'ease-out' }
-      );
-      this.animation.onfinish = function () { this.onAnimationFinish(false); }.bind(this);
-    };
+      FaqAccordionItem.prototype.cancelAnimation = function () {
+        if (!this.animation) return;
+        this.animation.onfinish = null;
+        this.animation.oncancel = null;
+        this.animation.cancel();
+        this.animation = null;
+      };
 
-    FaqAccordionItem.prototype.onAnimationFinish = function (open) {
-      this.el.open = open;
-      this.animation = null;
-      this.isClosing = false;
-      this.isExpanding = false;
-      this.el.style.height = '';
-      this.el.style.overflow = '';
-    };
+      FaqAccordionItem.prototype.expand = function () {
+        this.cancelAnimation();
+        this.isClosing = false; this.isExpanding = true;
+        var s = this.el.offsetHeight;
+        var e = this.summary.offsetHeight + this.content.offsetHeight;
+        this.animation = this.el.animate({ height: [s + 'px', e + 'px'] }, { duration: 300, easing: 'ease-out' });
+        this.animation.onfinish = function () { this.onAnimationFinish(true); }.bind(this);
+      };
 
-    function initFaqAccordion(container) {
-      var group = [];
-      container.querySelectorAll('.faq-item').forEach(function (details) {
-        group.push(new FaqAccordionItem(details, group));
+      FaqAccordionItem.prototype.close = function () {
+        this.cancelAnimation();
+        this.isExpanding = false; this.isClosing = true;
+        this.el.style.overflow = 'hidden';
+        this.el.classList.remove('is-open');
+        var s = this.el.offsetHeight;
+        var e = this.summary.offsetHeight;
+        this.animation = this.el.animate({ height: [s + 'px', e + 'px'] }, { duration: 300, easing: 'ease-out' });
+        this.animation.onfinish = function () { this.onAnimationFinish(false); }.bind(this);
+      };
+
+      FaqAccordionItem.prototype.onAnimationFinish = function (open) {
+        this.el.open         = open;
+        this.animation       = null;
+        this.isClosing       = false;
+        this.isExpanding     = false;
+        this.el.style.height   = '';
+        this.el.style.overflow = '';
+      };
+
+      var accordionGroup = [];
+      items.forEach(function (details) {
+        accordionGroup.push(new FaqAccordionItem(details, accordionGroup));
       });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      var section = document.getElementById('shopify-section-{{ section.id }}');
-      if (section) initFaqAccordion(section);
+      var s = document.getElementById('shopify-section-{{ section.id }}');
+      if (s) initFaqPage(s);
     });
 
     document.addEventListener('shopify:section:load', function (event) {
-      if (event.target.id === 'shopify-section-{{ section.id }}') {
-        initFaqAccordion(event.target);
-      }
+      if (event.target.id === 'shopify-section-{{ section.id }}') initFaqPage(event.target);
     });
   })();
 </script>
@@ -366,13 +499,13 @@
     {
       "type": "color",
       "id": "color_background",
-      "label": "t:sections.all.background_color.label",
+      "label": "Background color",
       "default": "{{ settings.color_palette.background }}"
     },
     {
       "type": "color",
       "id": "color_text",
-      "label": "t:sections.all.text_color.label",
+      "label": "Text color",
       "default": "{{ settings.color_palette.foreground }}"
     },
     {
@@ -383,13 +516,13 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "Questions"
+      "default": "Everything you need to know about ENSŌ"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Frequently Asked Questions"
+      "default": "Frequently asked questions"
     },
     {
       "type": "select",
@@ -409,9 +542,72 @@
         { "value": "narrow", "label": "Narrow (760px)" },
         { "value": "normal", "label": "Normal (1000px)" },
         { "value": "page_width", "label": "Page width" },
-        { "value": "full", "label": "Full width (100%)" }
+        { "value": "full", "label": "Full width" }
       ],
       "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb and search"
+    },
+    {
+      "type": "text",
+      "id": "exp_label",
+      "label": "Breadcrumb label",
+      "default": "ENSŌ Experience · FAQ"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Search the questions: battery, cleaning, shipping…"
+    },
+    {
+      "type": "text",
+      "id": "no_results_text",
+      "label": "No-results message",
+      "default": "No question matches that. Try another word, or write to"
+    },
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email",
+      "default": "support@ensoshisha.eu"
+    },
+    {
+      "type": "header",
+      "content": "Tabs"
+    },
+    {
+      "type": "text",
+      "id": "tab_1_label",
+      "label": "Tab 1 label",
+      "default": "ENSŌ Diamond",
+      "info": "Key: diamond"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_label",
+      "label": "Tab 2 label",
+      "default": "ENSŌ 2026 Edition",
+      "info": "Key: enso"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_label",
+      "label": "Tab 3 label",
+      "default": "Orders, shipping and warranty",
+      "info": "Key: orders"
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "footer_text",
+      "label": "Footer note",
+      "default": "More step-by-step help lives in <a href='/pages/experience'>ENSŌ Experience</a>: quick start, packing, the full manual and firmware."
     },
     {
       "type": "header",
@@ -468,6 +664,17 @@
       "name": "Category label",
       "settings": [
         {
+          "type": "select",
+          "id": "tab",
+          "label": "Tab",
+          "options": [
+            { "value": "diamond", "label": "ENSŌ Diamond" },
+            { "value": "enso", "label": "ENSŌ 2026 Edition" },
+            { "value": "orders", "label": "Orders, shipping and warranty" }
+          ],
+          "default": "diamond"
+        },
+        {
           "type": "text",
           "id": "label",
           "label": "Category name",
@@ -479,6 +686,23 @@
       "type": "question",
       "name": "Question",
       "settings": [
+        {
+          "type": "select",
+          "id": "tab",
+          "label": "Tab",
+          "options": [
+            { "value": "diamond", "label": "ENSŌ Diamond" },
+            { "value": "enso", "label": "ENSŌ 2026 Edition" },
+            { "value": "orders", "label": "Orders, shipping and warranty" }
+          ],
+          "default": "diamond"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID",
+          "info": "Used for deep-linking (e.g. q-battery-life). Leave blank to auto-generate."
+        },
         {
           "type": "text",
           "id": "question",
@@ -499,32 +723,11 @@
       "name": "FAQs",
       "blocks": [
         {
-          "type": "category",
-          "settings": { "label": "Product" }
-        },
-        {
           "type": "question",
           "settings": {
-            "question": "Does ENSO use charcoal?",
-            "answer": "<p>No. ENSO is fully electronic — controlled heat from 180 to 330°C, no charcoal, no ash, no open flame.</p>"
-          }
-        },
-        {
-          "type": "question",
-          "settings": {
-            "question": "Am I locked into proprietary pods?",
-            "answer": "<p>No. ENSO is an open system — bring your own molasses, always.</p>"
-          }
-        },
-        {
-          "type": "category",
-          "settings": { "label": "Shipping" }
-        },
-        {
-          "type": "question",
-          "settings": {
-            "question": "How long does shipping take?",
-            "answer": "<p>ENSO ships globally from our warehouses · approximately 2 weeks delivery.</p>"
+            "tab": "diamond",
+            "question": "What is Diamond?",
+            "answer": "<p>An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, no lighting, no waiting.</p>"
           }
         }
       ]

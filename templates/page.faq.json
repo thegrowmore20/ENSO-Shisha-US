@@ -25,7 +25,7 @@
         "heading_size_desktop": 56,
         "heading_size_mobile": 32,
         "heading_color": "#ffffff",
-        "subheading": "<p>Answers to the questions we hear most.</p>",
+        "subheading": "<p>ENSŌ Experience · answers for Diamond, the 2026 Edition and your order</p>",
         "button": "",
         "button_url": "",
         "width": "full",
@@ -48,160 +48,160 @@
     "faqs_page_qPxdTg": {
       "type": "faqs-page",
       "blocks": {
-        "category_mRdRyB": {
-          "type": "category",
-          "settings": {
-            "label": "Purchasing, Shipping & Billing FAQs"
-          }
-        },
-        "question_3DaX7y": {
+        "q_diamond_what_is": {
           "type": "question",
           "settings": {
-            "question": "Which payment methods do you accept?",
-            "answer": "<p>Visa, MasterCard, Apple Pay are supported at checkout.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-what-is-diamond",
+            "question": "What is Diamond?",
+            "answer": "<p>An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, no lighting, no waiting.</p>"
           }
         },
-        "question_cTiihw": {
+        "q_diamond_fit": {
           "type": "question",
           "settings": {
-            "question": "When will my card be charged?",
-            "answer": "<p>Your card (or other payment method) is authorised and captured immediately at<br/>checkout.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-will-it-fit-my-hookah",
+            "question": "Will it fit my hookah?",
+            "answer": "<p>It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a>.</p>"
           }
         },
-        "question_iFqbxe": {
+        "q_diamond_taste": {
           "type": "question",
           "settings": {
-            "question": "What if my card payment is declined?",
-            "answer": "<p>There are many reasons a card might be declined. You can always use another<br/>payment method.<br/>If you still have problems, please contact customer service by emailing:<br/><a href=\"mailto:support@ensoshisha.eu\" title=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
+            "tab": "diamond",
+            "anchor_id": "q-does-the-tobacco-taste-different",
+            "question": "Does the tobacco taste different?",
+            "answer": "<p>Cleaner. The blend is warmed to a set temperature instead of being scorched from above, so you taste the leaf and the molasses, not the coal.</p>"
           }
         },
-        "question_4mQKPc": {
+        "q_diamond_temp": {
           "type": "question",
           "settings": {
-            "question": "How will I know my order was placed successfully?",
-            "answer": "<p>Within a minute of checkout you’ll receive a confirmation e-mail with your order<br/>number. A second e-mail goes out once the parcel ships, followed by automatic<br/>tracking updates.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-what-temperature-should-i-use",
+            "question": "What temperature should I use?",
+            "answer": "<p>Most blends sit well at 250–270 °C. For a dark blend, start at 290 °C for the first minutes, then come down to 270 and 250 °C. Every tobacco is made for coal and behaves a little differently, so note what works and save it as a profile.</p>"
           }
         },
-        "question_YhcDK3": {
+        "q_diamond_battery": {
           "type": "question",
           "settings": {
-            "question": "Can I edit or cancel my order?",
-            "answer": "<p>If the parcel hasn’t been packed, we can still change the address, items, or quantities. Contact Support at <a href=\"mailto:support@ensoshisha.eu\" title=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a> immediately; once the label has been printed, the order is locked.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-how-long-does-the-battery-last",
+            "question": "How long does the battery last?",
+            "answer": "<p>About 90 minutes, pre-heat not included. Charge over USB-C while you smoke, or switch Diamond off, swap to a second Diamond Battery and switch it back on.</p>"
           }
         },
-        "question_BYVKtQ": {
+        "q_diamond_clean": {
           "type": "question",
           "settings": {
-            "question": "How do I return or replace a damaged or defective item?",
-            "answer": "<p>Photograph any damage or record a video of the issue, and contact Support at <a href=\"mailto:support@ensoshisha.com\" title=\"mailto:support@ensoshisha.com\">support@ensoshisha.com</a> within 48h of delivery. We’ll issue a prepaid label or ship a replacement at no cost once the claim is approved.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-how-do-i-clean-it",
+            "question": "How do I clean it?",
+            "answer": "<p>After every session, lift the cup out with the removal tool, empty it and brush the chamber. Once a week, soak the basket and the screens, rinse the cap and wipe the body with a cloth.</p>"
           }
         },
-        "question_XktBWD": {
+        "q_diamond_tobacco_amount": {
           "type": "question",
           "settings": {
-            "question": "Can I return an unused product for a refund?",
-            "answer": "<p>An unopened box can be returned within 14 days for a full refund. Opened units in<br/>Like-new condition may be returned within 30 days; a $25 refurbishment fee applies.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-how-much-tobacco-does-it-take",
+            "question": "How much tobacco does it take?",
+            "answer": "<p>10–15 g. Use the basket mesh for a loose, airy pack, or a flat screen for a denser pack. The packing guide has a starting point for each.</p>"
           }
         },
-        "question_GwkDDK": {
+        "q_diamond_preheat": {
           "type": "question",
           "settings": {
-            "question": "Do you offer wholesale pricing?",
-            "answer": "<p>Yes—write to <a href=\"mailto:hello@ensoshisha.com\" title=\"mailto:hello@ensoshisha.com\">hello@ensoshisha.com</a> with a short description of your company<br/>and the quantities required.<br/><br/></p>"
+            "tab": "diamond",
+            "anchor_id": "q-how-does-pre-heat-work",
+            "question": "How does pre-heat work?",
+            "answer": "<p>You set both the time, 0–15 minutes, and the temperature it warms to. Default is 7 minutes at 275 °C. Diamond tells you when it is ready.</p>"
           }
         },
-        "question_EUjp9J": {
+        "q_diamond_profiles": {
           "type": "question",
           "settings": {
-            "question": "How is my personal data used?",
-            "answer": "<p>We comply with GDPR. Your details are used solely to process orders, provide support, and—if you opt in—send product updates. We never sell or trade customer data. See our Privacy Policy for full details.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-what-are-profiles",
+            "question": "What are profiles?",
+            "answer": "<p>Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own colour. Open Menu, Profiles, and turn to choose.</p>"
           }
         },
-        "question_RrAcTi": {
+        "q_diamond_charge": {
           "type": "question",
           "settings": {
-            "question": "Where can I buy ENSŌ?",
-            "answer": "<p>Order directly at <a href=\"https://ensoshisha.com\" title=\"https://ensoshisha.com\">ensoshisha.com</a> or through resellers in your country.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-how-do-i-charge-it",
+            "question": "How do I charge it?",
+            "answer": "<p>Over USB-C, about 1.5 hours with a 30 W supply. The battery also charges on its own, outside Diamond. There is no charger in the box.</p>"
           }
         },
-        "question_BQQxzy": {
+        "q_diamond_app": {
           "type": "question",
           "settings": {
-            "question": "Can I order ENSŌ outside the US?",
-            "answer": "<p>Yes. We ship to the European Union, Canada, Malaysia, Hong Kong SAR, Israel,<br/>Japan, Qatar, Singapore, and South Korea via <a href=\"https://ensoshisha.com\" title=\"https://ensoshisha.com\">ensoshisha.com</a>. For Russia and<br/>the CIS, visit <a href=\"https://ensoshisha.ru\" title=\"https://ensoshisha.ru\">ensoshisha.ru</a>.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-do-i-need-an-app-wi-fi-or-an-account",
+            "question": "Do I need an app, Wi-Fi or an account?",
+            "answer": "<p>No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.eu, coming with the first update.</p>"
           }
         },
-        "question_hp4LDt": {
+        "q_diamond_touch": {
           "type": "question",
           "settings": {
-            "question": "How fast will my order ship and arrive?",
-            "answer": "<p>In-stock items leave the warehouse within 24h; typical shipping is 2-4 business days inside the US.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-can-i-touch-it-during-a-session",
+            "question": "Can I touch it during a session?",
+            "answer": "<p>Yes, by the band and the lower body. The cup and the cap are hot, the way a bowl and its foil would be. Let it cool 10 minutes before you open it.</p>"
           }
         },
-        "question_nb6JAr": {
+        "q_diamond_plane": {
           "type": "question",
           "settings": {
-            "question": "My country isn’t listed—can you still deliver?",
-            "answer": "<p>E-mail <a href=\"mailto:hello@ensoshisha.com\" title=\"mailto:hello@ensoshisha.com\">hello@ensoshisha.com</a> with your address and we’ll arrange a quote or put you in touch with a local partner.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-can-i-take-it-on-a-plane",
+            "question": "Can I take it on a plane?",
+            "answer": "<p>Yes, in hand luggage, like any device with a lithium battery. Take the pack out and carry it with you; never check it in.</p>"
           }
         },
-        "category_AHhwDJ": {
-          "type": "category",
-          "settings": {
-            "label": "Safety & Regulations FAQs"
-          }
-        },
-        "question_e6ab89": {
+        "q_diamond_spares": {
           "type": "question",
           "settings": {
-            "question": "What is the warranty period?",
-            "answer": "<p>There's a two years limnited warranty on electronics and mechanical parts within the US, and 6 months for the battery. Register the serial number at <a href=\"/pages/warranty\" title=\"Warranty\">ensoshisha.com/warranty</a> within 30 days of purchase to activate coverage.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-what-wears-out-and-can-i-buy-spares",
+            "question": "What wears out, and can I buy spares?",
+            "answer": "<p>The cups, screens, mesh and adapters wear like any bowl and grommet. Every one of them, plus the cap, battery and cable, is sold separately.</p>"
           }
         },
-        "question_AA6YMm": {
+        "q_diamond_warranty": {
           "type": "question",
           "settings": {
-            "question": "Is ENSŌ healthier than a charcoal hookah?",
-            "answer": "<p>Replacing coal cuts ~95 % of carbon monoxide, ash and embers, producing a<br/>smoother, cleaner vapour with far fewer indoor pollutants.</p>"
-          }
-        },
-        "question_cqpaRH": {
-          "type": "question",
-          "settings": {
-            "question": "Will ENSŌ set off smoke detectors?",
-            "answer": "<p>Unlikely in normal use. Heavy exhaled vapour directly into a detector may trigger particulate sensors; maintain ventilation.</p>"
-          }
-        },
-        "question_fXgqEH": {
-          "type": "question",
-          "settings": {
-            "question": "Can I use ENSŌ in bars, restaurants or hotels?",
-            "answer": "<p>Most venues that prohibit open flames accept ENSŌ. Always verify local rules and ventilation requirements first.</p>"
-          }
-        },
-        "question_kLhPHd": {
-          "type": "question",
-          "settings": {
-            "question": "How do I dispose of batteries and cups?",
-            "answer": "<p>Take spent Li-ion packs to any e-waste centre. Rinse aluminium cups and recycle with metal waste.</p>"
+            "tab": "diamond",
+            "anchor_id": "q-warranty-and-returns",
+            "question": "Warranty and returns?",
+            "answer": "<p>Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to <a href=\"mailto:support@ensoshisha.eu\">support</a> first.</p>"
           }
         },
         "category_hECena": {
           "type": "category",
           "settings": {
+            "tab": "enso",
             "label": "Accessories & Usage Conditions FAQs"
           }
         },
         "question_Qx9e79": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Is ENSŌ suitable for outdoor use?",
-            "answer": "<p>Yes— its sealed alloy body and cordless design suit patios, rooftops and parks. Avoid heavy rain or sand.</p>"
+            "answer": "<p>Yes — its sealed alloy body and cordless design suit patios, rooftops and parks. Avoid heavy rain or sand.</p>"
           }
         },
         "question_4U9ADi": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "What is the minimum and maximum ambient temperature for operation?",
             "answer": "<p>Operate the ENSŌ only within 5 °C – 40 °C (41 °F – 104 °F) to protect the battery and electronics.</p>"
           }
@@ -209,13 +209,15 @@
         "question_QHUUiK": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Which optional accessories are available?",
-            "answer": "<p>Extra batteries • Set of 3 ceramic cups • Thermocap •Set of 2 Flower Cup<br/>• Glass Collar • 20-/50-pack disposable cups •Gold-plated herb cup •Wax<br/>cup • Acrylic water tank with extended dip tube •Travel bag • 1.5 m hose<br/>& magnetic mouthpiece • Mouthpiece extension • Cup removal tool •<br/>Replacement glass & dip tube • Mesh screen kit • Scrub tool • Straps<br/>(See ▶ <a href=\"/collections/accesories\" title=\"Accessories\">Accessories</a>)</p>"
+            "answer": "<p>Extra batteries · Set of 3 ceramic cups · Thermocap · Set of 2 Flower Cup · Glass Collar · 20-/50-pack disposable cups · Gold-plated herb cup · Wax cup · Acrylic water tank with extended dip tube · Travel bag · 1.5 m hose and magnetic mouthpiece · Mouthpiece extension · Cup removal tool · Replacement glass and dip tube · Mesh screen kit · Scrub tool · Straps<br/>(See ▶ <a href=\"/collections/accesories\">Accessories</a>)</p>"
           }
         },
         "question_TqGEnT": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "What is the Flower Cup?",
             "answer": "<p>A deeper ceramic insert that holds up to 20 g. Stir halfway to refresh flavour.</p>"
           }
@@ -223,6 +225,7 @@
         "question_AWFNDz": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Can two people use ENSŌ at once?",
             "answer": "<p>Technically yes with a Y-adapter, but airflow drops. For best performance share one hose sequentially.</p>"
           }
@@ -230,40 +233,46 @@
         "question_99U3cE": {
           "type": "question",
           "settings": {
-            "question": "Flower Cup vs Glass Collar—what’s the difference?",
-            "answer": "<p>Flower Cup is a standalone large bowl (longer heat-up). Glass Collar sits on top<br/>of the standard ceramic cup to expand capacity with faster startup.</p>"
+            "tab": "enso",
+            "question": "Flower Cup vs Glass Collar — what's the difference?",
+            "answer": "<p>Flower Cup is a standalone large bowl (longer heat-up). Glass Collar sits on top of the standard ceramic cup to expand capacity with faster startup.</p>"
           }
         },
         "category_jaUHUp": {
           "type": "category",
           "settings": {
+            "tab": "enso",
             "label": "ENSŌ Device FAQs"
           }
         },
         "question_WkqMGT": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Can I swap batteries mid-session in ENSŌ?",
-            "answer": "<p>Absolutely—pop in a charged pack and resume immediately.</p>"
+            "answer": "<p>Absolutely — pop in a charged pack and resume immediately.</p>"
           }
         },
         "question_NA9RHj": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I turn ENSŌ on and off?",
-            "answer": "<p>Press and hold the Thermodial for three seconds. Orange LED indicator pulses<br/>= heating. Repeat to power down.</p>"
+            "answer": "<p>Press and hold the Thermodial for three seconds. Orange LED indicator pulses = heating. Repeat to power down.</p>"
           }
         },
         "question_hV3LRi": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "What temperature range and modes are available?",
-            "answer": "<p>Rotate the Thermodial 180 – 330 °C in 5 ° steps. Triple-press to activate G-Mode, which skips the 70 ° pre-heat and delivers a faster, flatter heat curve.</p>"
+            "answer": "<p>Rotate the Thermodial 180–330 °C in 5° steps. Triple-press to activate G-Mode, which skips the 70° pre-heat and delivers a faster, flatter heat curve.</p>"
           }
         },
         "question_eBkCXn": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "What do the LED colours indicate?",
             "answer": "<p>• Orange – Standard mode/heating<br/>• Green – G-Mode active<br/>• Blue – Temperature locked<br/>• Red – Low battery</p>"
           }
@@ -271,20 +280,23 @@
         "question_EB6eGV": {
           "type": "question",
           "settings": {
-            "question": "What’s the difference between ENSŌ Regular Orange mode and Green mode?",
-            "answer": "<p>In regular mode, the temperature is regulated by ENSŌ's sophisticated heating algorithm. Features a 70°C+ pre-heat in a 5-minute pre-heating program.<br/>In Green mode, the power distribution is<br/>more linear to counterbalance the cooling from more frequent draws. Features no extra heat in the 5-minute pre-heating time.</p>"
+            "tab": "enso",
+            "question": "What's the difference between ENSŌ Regular Orange mode and Green mode?",
+            "answer": "<p>In regular mode, the temperature is regulated by ENSŌ's sophisticated heating algorithm. Features a 70°C+ pre-heat in a 5-minute pre-heating program.<br/>In Green mode, the power distribution is more linear to counterbalance the cooling from more frequent draws. Features no extra heat in the 5-minute pre-heating time.</p>"
           }
         },
         "question_QnUEmL": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How to turn ENSŌ into Green mode?",
-            "answer": "<p>To get device into Green mode you should press the Thermodial 3 times.</p>"
+            "answer": "<p>To get the device into Green mode you should press the Thermodial 3 times.</p>"
           }
         },
         "question_kQqHaP": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I lock or unlock the temperature?",
             "answer": "<p>Press the Thermodial 5 times consecutively to toggle Lock (blue LED).</p>"
           }
@@ -292,6 +304,7 @@
         "question_4rhgWT": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I pause a session?",
             "answer": "<p>Turn the Thermodial down to 180 °C. The bowl will stay warm for up to 20 minutes; dial back up to resume.</p>"
           }
@@ -299,13 +312,15 @@
         "question_mmnJyz": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Can I adjust the draw or airflow in ENSŌ?",
-            "answer": "<p>Yes. First, avoid overpacking—keep the load between 8 and 15 g and leave a clear chimney in the centre of the bowl. If the pull is still too restricted, attach the optional Hose Adapter and any wide-bore (≈11–12 mm) silicone hose; the larger diameter can nearly double airflow for an effortless draw.</p>"
+            "answer": "<p>Yes. First, avoid overpacking — keep the load between 8 and 15 g and leave a clear chimney in the centre of the bowl. If the pull is still too restricted, attach the optional Hose Adapter and any wide-bore (≈11–12 mm) silicone hose; the larger diameter can nearly double airflow for an effortless draw.</p>"
           }
         },
         "question_XrGnma": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "What materials and dimensions does the ENSŌ have?",
             "answer": "<p>Zinc-alloy body, stainless-steel air path, heat-stable ceramic bowl, crystal-glass tank; footprint 33 × 12 cm.</p>"
           }
@@ -313,13 +328,15 @@
         "question_zKkwMW": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "What are the battery specifications?",
-            "answer": "<p>5,000 mAh / 55 Wh Li-ion, USB-C PD input 5–20 V (max 45 W). Pass-through vaping is supported once the pack has at least 5 % charge.</p>"
+            "answer": "<p>5,000 mAh / 55 Wh Li-ion, USB-C PD input 5–20 V (max 45 W). Pass-through vaping is supported once the pack has at least 5% charge.</p>"
           }
         },
         "question_CWzABb": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Is ENSŌ airline-friendly?",
             "answer": "<p>Yes. Each battery is well below the 100 Wh carry-on limit. Empty the water tank, remove the pack and store batteries in cabin luggage.</p>"
           }
@@ -327,68 +344,78 @@
         "question_reajbH": {
           "type": "question",
           "settings": {
-            "question": "What’s included in the box?",
-            "answer": "<p>ENSŌ Device<br/>USB-C Charger brick<br/>USB-C Charging cable<br/>Battery<br/>Rubber heat valve<br/>Metal lids<br/>10x Disposable cups<br/>2x Ceramic cups<br/>Multi tool<br/>5x Silicone mouthpiece tip<br/>1x Silicone mouthpiece guard<br/>Hose and Magnetic mouthpiece<br/>2x Cleaning brush<br/>ENSŌ wiping cloth<br/>Blowout valve<br/>Poking tool<br/>(<a href=\"https://youtu.be/_FuUpm6uevY?si=10N3Yllt5j1t4yKL\" target=\"_blank\">Watch ▶ What’s in the Box)</a></p>"
+            "tab": "enso",
+            "question": "What's included in the box?",
+            "answer": "<p>ENSŌ Device · USB-C Charger brick · USB-C Charging cable · Battery · Rubber heat valve · Metal lids · 10× Disposable cups · 2× Ceramic cups · Multi tool · 5× Silicone mouthpiece tip · 1× Silicone mouthpiece guard · Hose and Magnetic mouthpiece · 2× Cleaning brush · ENSŌ wiping cloth · Blowout valve · Poking tool<br/>(<a href=\"https://youtu.be/_FuUpm6uevY?si=10N3Yllt5j1t4yKL\" target=\"_blank\">Watch ▶ What's in the Box</a>)</p>"
           }
         },
         "question_zhFKGT": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How long should I charge the battery before the first session?",
-            "answer": "<p>About 3 h 30 m—the LED stops blinking once fully charged.</p>"
+            "answer": "<p>About 3 h 30 m — the LED stops blinking once fully charged.</p>"
           }
         },
         "question_aiXkgc": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I check the ENSŌ battery level?",
-            "answer": "<p>Insert the battery and single-click the Thermodial. Also, when turning on ENSŌ<br/>the LED indicator pulses from bottom (empty) to top (full).</p>"
+            "answer": "<p>Insert the battery and single-click the Thermodial. Also, when turning on ENSŌ the LED indicator pulses from bottom (empty) to top (full).</p>"
           }
         },
         "question_ewXGwD": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How long does a full charge last?",
-            "answer": "<p>Roughly 120 minutes of continuous use at 180–255 °C. Runtime shortens at Higher temperatures.</p>"
+            "answer": "<p>Roughly 120 minutes of continuous use at 180–255 °C. Runtime shortens at higher temperatures.</p>"
           }
         },
         "category_B4Bipf": {
           "type": "category",
           "settings": {
+            "tab": "enso",
             "label": "Cleaning & Maintenance FAQs"
           }
         },
         "question_gnaw7B": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I clean the heating chamber?",
-            "answer": "<p>Run hot water through the airway, scrub with the large brush and multitool. For<br/>stubborn build-up, wrap a strip of kitchen cloth around the flat end of the tool.</p><p>(Watch ▶ Alternative ways to Clean ENSŌ )</p>"
+            "answer": "<p>Run hot water through the airway, scrub with the large brush and multitool. For stubborn build-up, wrap a strip of kitchen cloth around the flat end of the tool.</p>"
           }
         },
         "question_4qRW6K": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I clean the Thermocap, hose and mouthpiece?",
-            "answer": "<p>Rinse under warm water; scrub the mouthpiece with the small brush supplied,<br/>then air-dry.</p>"
+            "answer": "<p>Rinse under warm water; scrub the mouthpiece with the small brush supplied, then air-dry.</p>"
           }
         },
         "question_Vpw7Gf": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I remove lingering odours?",
-            "answer": "<p>Clean all parts promptly after heavily flavoured sessions and allow them to dry<br/>completely in fresh air.</p>"
+            "answer": "<p>Clean all parts promptly after heavily flavoured sessions and allow them to dry completely in fresh air.</p>"
           }
         },
         "question_FJcrJF": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How often should I clean ENSŌ?",
-            "answer": "<p>Rinse cups after every session and perform a full brush routine every 3–5 bowls<br/>(weekly for heavy users).<br/><a href=\"https://youtu.be/NH74dp04elA?si=8oIL-X0td8dPj479\" target=\"_blank\">(Watch ▶ How to Clean)</a></p>"
+            "answer": "<p>Rinse cups after every session and perform a full brush routine every 3–5 bowls (weekly for heavy users).<br/><a href=\"https://youtu.be/NH74dp04elA?si=8oIL-X0td8dPj479\" target=\"_blank\">(Watch ▶ How to Clean)</a></p>"
           }
         },
         "question_3fwF3q": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How often should I change the water?",
             "answer": "<p>After every session for optimum flavour. Deep-clean the glass tank after 2–3 sessions.</p>"
           }
@@ -396,6 +423,7 @@
         "question_YAB3tc": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How do I clean the ceramic cup?",
             "answer": "<p>Soak for 30 min in warm water, scrape residue with the multitool, rinse and dry.</p>"
           }
@@ -403,6 +431,7 @@
         "question_f8GXDY": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Is ENSŌ waterproof?",
             "answer": "<p>The electronics are splash-resistant, but never submerge the battery compartment. Detach the pack before rinsing the chamber.</p>"
           }
@@ -410,19 +439,22 @@
         "category_ii3WMB": {
           "type": "category",
           "settings": {
+            "tab": "enso",
             "label": "Bowls, Packing & Flavours FAQs"
           }
         },
         "question_fEBpPW": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Can I vape dry herb or concentrates in ENSŌ?",
-            "answer": "<p>Yes. Use the ceramic cup with the mesh screen and wax pad, or add<br/>accessories:<br/>• Gold-plated herb cup – up to 1.5g at 260 °C+<br/>• Glass wax cup or cotton pad for oils; activate G-Mode.<br/>(<a href=\"https://youtu.be/cwhyL0X4rDA?si=KElvmvv5ao6nzR6U\" target=\"_blank\">Watch ▶ Herb Mode)</a></p>"
+            "answer": "<p>Yes. Use the ceramic cup with the mesh screen and wax pad, or add accessories:<br/>• Gold-plated herb cup — up to 1.5g at 260 °C+<br/>• Glass wax cup or cotton pad for oils; activate G-Mode.<br/>(<a href=\"https://youtu.be/cwhyL0X4rDA?si=KElvmvv5ao6nzR6U\" target=\"_blank\">Watch ▶ Herb Mode</a>)</p>"
           }
         },
         "question_fEYFBr": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How long does one ENSŌ bowl last?",
             "answer": "<p>45–60 min with the standard cup; up to 120 min with a Flower Cup (stir halfway).</p>"
           }
@@ -430,27 +462,31 @@
         "question_UTGXdV": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Can I mix two flavours in one bowl?",
-            "answer": "<p>Absolutely. Layer or split 50/50—just keep total mass under 15g and leave the airway clear. Put mint or spice notes on top for best effect.</p>"
+            "answer": "<p>Absolutely. Layer or split 50/50 — just keep total mass under 15g and leave the airway clear. Put mint or spice notes on top for best effect.</p>"
           }
         },
         "question_GtcLPa": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "What are the ENSŌ disposable cups for?",
-            "answer": "<p>Ten single-use aluminium cups ship with each kit—ideal for sticky mixes or rapid swaps. Rinse gently for up to three uses, then recycle.</p>"
+            "answer": "<p>Ten single-use aluminium cups ship with each kit — ideal for sticky mixes or rapid swaps. Rinse gently for up to three uses, then recycle.</p>"
           }
         },
         "question_Xtnxpk": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Can I load more than 15 g in ENSŌ?",
-            "answer": "<p>Yes—add the Flower Cup or Glass Collar accessory to fit up to 20g.</p>"
+            "answer": "<p>Yes — add the Flower Cup or Glass Collar accessory to fit up to 20g.</p>"
           }
         },
         "question_LXBNjR": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Can I use dark leaf tobacco in ENSŌ?",
             "answer": "<p>Yes, ENSŌ is designed for every tobacco and herbal molasses. For dark leafs we recommend to give it more heating time after pre-heat and use smaller leafs.</p>"
           }
@@ -458,39 +494,194 @@
         "question_VWMMe4": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "Which tobaccos or herbal blends work best with ENSŌ?",
-            "answer": "<p>ENSŌ handles any moist, molasses-based shisha—dark-leaf or blonde—as well as herbal mixes. Smaller leafs and semi-dense packing works the best. If your chosen tobacco have large leafs, you can cut them with scissors before loading into the bowl.</p>"
+            "answer": "<p>ENSŌ handles any moist, molasses-based shisha — dark-leaf or blonde — as well as herbal mixes. Smaller leafs and semi-dense packing works the best. If your chosen tobacco have large leafs, you can cut them with scissors before loading into the bowl.</p>"
           }
         },
         "question_b9chQP": {
           "type": "question",
           "settings": {
+            "tab": "enso",
             "question": "How much should I load and how should I pack it ENSŌ?",
-            "answer": "<p>Place 8 – 15g in the ceramic cup, semi-dense with a central airway. Start at 175 °C for 5–8 min, then step up 30–45 ° as needed.<br/><a href=\"https://youtu.be/4FlQ9ACwn00?si=58nw5sS5eecGmuC1\" target=\"_blank\">(Watch ▶ Mastering ENSŌ)</a></p>"
+            "answer": "<p>Place 8–15g in the ceramic cup, semi-dense with a central airway. Start at 175 °C for 5–8 min, then step up 30–45° as needed.<br/><a href=\"https://youtu.be/4FlQ9ACwn00?si=58nw5sS5eecGmuC1\" target=\"_blank\">(Watch ▶ Mastering ENSŌ)</a></p>"
+          }
+        },
+        "category_mRdRyB": {
+          "type": "category",
+          "settings": {
+            "tab": "orders",
+            "label": "Purchasing, Shipping & Billing FAQs"
+          }
+        },
+        "question_3DaX7y": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Which payment methods do you accept?",
+            "answer": "<p>Visa, MasterCard, Apple Pay are supported at checkout.</p>"
+          }
+        },
+        "question_cTiihw": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "When will my card be charged?",
+            "answer": "<p>Your card (or other payment method) is authorised and captured immediately at checkout.</p>"
+          }
+        },
+        "question_iFqbxe": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "What if my card payment is declined?",
+            "answer": "<p>There are many reasons a card might be declined. You can always use another payment method. If you still have problems, please contact customer service by emailing: <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
+          }
+        },
+        "question_4mQKPc": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "How will I know my order was placed successfully?",
+            "answer": "<p>Within a minute of checkout you'll receive a confirmation e-mail with your order number. A second e-mail goes out once the parcel ships, followed by automatic tracking updates.</p>"
+          }
+        },
+        "question_YhcDK3": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Can I edit or cancel my order?",
+            "answer": "<p>If the parcel hasn't been packed, we can still change the address, items, or quantities. Contact Support at <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a> immediately; once the label has been printed, the order is locked.</p>"
+          }
+        },
+        "question_BYVKtQ": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "How do I return or replace a damaged or defective item?",
+            "answer": "<p>Photograph any damage or record a video of the issue, and contact Support at <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a> within 48h of delivery. We'll issue a prepaid label or ship a replacement at no cost once the claim is approved.</p>"
+          }
+        },
+        "question_XktBWD": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Can I return an unused product for a refund?",
+            "answer": "<p>An unopened box can be returned within 14 days for a full refund. Opened units in like-new condition may be returned within 30 days; a $25 refurbishment fee applies.</p>"
+          }
+        },
+        "question_GwkDDK": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Do you offer wholesale pricing?",
+            "answer": "<p>Yes — write to <a href=\"mailto:hello@ensoshisha.com\">hello@ensoshisha.com</a> with a short description of your company and the quantities required.</p>"
+          }
+        },
+        "question_EUjp9J": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "How is my personal data used?",
+            "answer": "<p>We comply with GDPR. Your details are used solely to process orders, provide support, and — if you opt in — send product updates. We never sell or trade customer data. See our Privacy Policy for full details.</p>"
+          }
+        },
+        "question_RrAcTi": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Where can I buy ENSŌ?",
+            "answer": "<p>Order directly at <a href=\"https://ensoshisha.com\">ensoshisha.com</a> or through resellers in your country.</p>"
+          }
+        },
+        "question_BQQxzy": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Can I order ENSŌ outside the US?",
+            "answer": "<p>Yes. We ship to the European Union, Canada, Malaysia, Hong Kong SAR, Israel, Japan, Qatar, Singapore, and South Korea via <a href=\"https://ensoshisha.com\">ensoshisha.com</a>. For Russia and the CIS, visit <a href=\"https://ensoshisha.ru\">ensoshisha.ru</a>.</p>"
+          }
+        },
+        "question_hp4LDt": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "How fast will my order ship and arrive?",
+            "answer": "<p>In-stock items leave the warehouse within 24h; typical shipping is 2–4 business days inside the US.</p>"
+          }
+        },
+        "question_nb6JAr": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "My country isn't listed — can you still deliver?",
+            "answer": "<p>E-mail <a href=\"mailto:hello@ensoshisha.com\">hello@ensoshisha.com</a> with your address and we'll arrange a quote or put you in touch with a local partner.</p>"
+          }
+        },
+        "category_AHhwDJ": {
+          "type": "category",
+          "settings": {
+            "tab": "orders",
+            "label": "Safety & Regulations FAQs"
+          }
+        },
+        "question_e6ab89": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "What is the warranty period?",
+            "answer": "<p>There's a two-year limited warranty on electronics and mechanical parts, and 6 months for the battery. Register the serial number at <a href=\"/pages/warranty\">ensoshisha.com/warranty</a> within 30 days of purchase to activate coverage.</p>"
+          }
+        },
+        "question_AA6YMm": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Is ENSŌ healthier than a charcoal hookah?",
+            "answer": "<p>Replacing coal cuts ~95% of carbon monoxide, ash and embers, producing a smoother, cleaner vapour with far fewer indoor pollutants.</p>"
+          }
+        },
+        "question_cqpaRH": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Will ENSŌ set off smoke detectors?",
+            "answer": "<p>Unlikely in normal use. Heavy exhaled vapour directly into a detector may trigger particulate sensors; maintain ventilation.</p>"
+          }
+        },
+        "question_fXgqEH": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "Can I use ENSŌ in bars, restaurants or hotels?",
+            "answer": "<p>Most venues that prohibit open flames accept ENSŌ. Always verify local rules and ventilation requirements first.</p>"
+          }
+        },
+        "question_kLhPHd": {
+          "type": "question",
+          "settings": {
+            "tab": "orders",
+            "question": "How do I dispose of batteries and cups?",
+            "answer": "<p>Take spent Li-ion packs to any e-waste centre. Rinse aluminium cups and recycle with metal waste.</p>"
           }
         }
       },
       "block_order": [
-        "category_mRdRyB",
-        "question_3DaX7y",
-        "question_cTiihw",
-        "question_iFqbxe",
-        "question_4mQKPc",
-        "question_YhcDK3",
-        "question_BYVKtQ",
-        "question_XktBWD",
-        "question_GwkDDK",
-        "question_EUjp9J",
-        "question_RrAcTi",
-        "question_BQQxzy",
-        "question_hp4LDt",
-        "question_nb6JAr",
-        "category_AHhwDJ",
-        "question_e6ab89",
-        "question_AA6YMm",
-        "question_cqpaRH",
-        "question_fXgqEH",
-        "question_kLhPHd",
+        "q_diamond_what_is",
+        "q_diamond_fit",
+        "q_diamond_taste",
+        "q_diamond_temp",
+        "q_diamond_battery",
+        "q_diamond_clean",
+        "q_diamond_tobacco_amount",
+        "q_diamond_preheat",
+        "q_diamond_profiles",
+        "q_diamond_charge",
+        "q_diamond_app",
+        "q_diamond_touch",
+        "q_diamond_plane",
+        "q_diamond_spares",
+        "q_diamond_warranty",
         "category_hECena",
         "question_Qx9e79",
         "question_4U9ADi",
@@ -531,14 +722,42 @@
         "question_Xtnxpk",
         "question_LXBNjR",
         "question_VWMMe4",
-        "question_b9chQP"
+        "question_b9chQP",
+        "category_mRdRyB",
+        "question_3DaX7y",
+        "question_cTiihw",
+        "question_iFqbxe",
+        "question_4mQKPc",
+        "question_YhcDK3",
+        "question_BYVKtQ",
+        "question_XktBWD",
+        "question_GwkDDK",
+        "question_EUjp9J",
+        "question_RrAcTi",
+        "question_BQQxzy",
+        "question_hp4LDt",
+        "question_nb6JAr",
+        "category_AHhwDJ",
+        "question_e6ab89",
+        "question_AA6YMm",
+        "question_cqpaRH",
+        "question_fXgqEH",
+        "question_kLhPHd"
       ],
       "name": "FAQs",
       "settings": {
         "eyebrow": "Everything you need to know about ENSŌ",
-        "heading": "Frequently Asked Questions",
+        "heading": "Frequently asked questions",
         "header_alignment": "left",
         "content_width": "normal",
+        "exp_label": "ENSŌ Experience · FAQ",
+        "search_placeholder": "Search the questions: battery, cleaning, shipping…",
+        "no_results_text": "No question matches that. Try another word, or write to",
+        "support_email": "support@ensoshisha.eu",
+        "tab_1_label": "ENSŌ Diamond",
+        "tab_2_label": "ENSŌ 2026 Edition",
+        "tab_3_label": "Orders, shipping and warranty",
+        "footer_text": "More step-by-step help lives in <a href='/pages/experience'>ENSŌ Experience</a>: quick start, packing, the full manual and firmware.",
         "padding_top": 60,
         "padding_bottom": 60,
         "padding_top_mobile": 40,
