@@ -1,0 +1,777 @@
+{%- liquid
+  assign lead_article = blog.articles[0]
+  assign pair_1       = blog.articles[1]
+  assign pair_2       = blog.articles[2]
+-%}
+
+{% style %}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{% paginate blog.articles by 20 %}
+
+{%- liquid
+  # Determine tag for the tag section
+  assign tag_to_use = section.settings.tag_section_tag | strip
+  if tag_to_use == blank
+    assign winning_tag = ''
+    assign max_count = 0
+    for tag in blog.all_tags
+      assign count = 0
+      for a in blog.articles
+        if a.tags contains tag
+          assign count = count | plus: 1
+        endif
+      endfor
+      if count > max_count
+        assign max_count = count
+        assign winning_tag = tag
+      endif
+    endfor
+    assign tag_to_use = winning_tag
+  endif
+
+  # Featured article
+  assign featured_handle = section.settings.featured_article_handle | strip
+  assign featured_article = nil
+  if featured_handle != blank
+    for a in blog.articles
+      if a.handle == featured_handle
+        assign featured_article = a
+        break
+      endif
+    endfor
+  endif
+
+  # Build skip list: lead + pair + up to 3 tag articles + featured
+  assign skip_handles = ''
+  if lead_article
+    assign skip_handles = skip_handles | append: lead_article.handle | append: '|'
+  endif
+  if pair_1
+    assign skip_handles = skip_handles | append: pair_1.handle | append: '|'
+  endif
+  if pair_2
+    assign skip_handles = skip_handles | append: pair_2.handle | append: '|'
+  endif
+  assign tag_skip_count = 0
+  for a in blog.articles
+    if tag_skip_count >= 3
+      break
+    endif
+    if a.tags contains tag_to_use
+      assign skip_handles = skip_handles | append: a.handle | append: '|'
+      assign tag_skip_count = tag_skip_count | plus: 1
+    endif
+  endfor
+  if featured_article
+    assign skip_handles = skip_handles | append: featured_article.handle | append: '|'
+  endif
+-%}
+
+<div class="jr section-{{ section.id }}-padding">
+  <div class="jr-in">
+
+    {%- if paginate.current_page == 1 -%}
+
+    <!-- Header -->
+    <header class="jr-head">
+      <h1>{{ blog.title }}</h1>
+      {%- if section.settings.description != blank -%}
+        <p>{{ section.settings.description }}</p>
+      {%- endif -%}
+    </header>
+
+    <!-- Lead Article -->
+    {%- if lead_article -%}
+      {%- assign lead_dek = lead_article.excerpt | default: lead_article.content | strip_html | truncate: 180 -%}
+      <a class="jr-lead" href="{{ lead_article.url }}">
+        <span class="jr-img">
+          {%- if lead_article.image -%}
+            {{- lead_article.image | image_url: width: 1000 | image_tag:
+                loading: 'eager',
+                fetchpriority: 'high',
+                widths: '600, 900, 1000',
+                sizes: '(min-width: 750px) 56vw, 100vw',
+                alt: lead_article.image.alt | default: lead_article.title -}}
+          {%- endif -%}
+        </span>
+        <span>
+          <span class="jr-meta">{{ lead_article.published_at | date: '%B %-d, %Y' }}</span>
+          <span class="jr-t">{{ lead_article.title }}</span>
+          {%- if lead_dek != blank -%}
+            <span class="jr-dek">{{ lead_dek }}</span>
+          {%- endif -%}
+          <span class="jr-go">{{ 'sections.blog_journal.read_article' | t }}</span>
+        </span>
+      </a>
+    {%- endif -%}
+
+    <!-- 2-Column Pair -->
+    {%- if pair_1 or pair_2 -%}
+      <div class="jr-pair">
+        {%- if pair_1 -%}
+          {%- assign p1_dek = pair_1.excerpt | default: pair_1.content | strip_html | truncate: 140 -%}
+          <a class="jr-card" href="{{ pair_1.url }}">
+            <span class="jr-img">
+              {%- if pair_1.image -%}
+                {{- pair_1.image | image_url: width: 700 | image_tag:
+                    loading: 'lazy',
+                    widths: '400, 700',
+                    sizes: '(min-width: 750px) 40vw, 100vw',
+                    alt: pair_1.image.alt | default: pair_1.title -}}
+              {%- endif -%}
+            </span>
+            <span class="jr-meta">{{ pair_1.published_at | date: '%B %-d, %Y' }}</span>
+            <span class="jr-t">{{ pair_1.title }}</span>
+            {%- if p1_dek != blank -%}
+              <span class="jr-dek">{{ p1_dek }}</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+        {%- if pair_2 -%}
+          {%- assign p2_dek = pair_2.excerpt | default: pair_2.content | strip_html | truncate: 140 -%}
+          <a class="jr-card" href="{{ pair_2.url }}">
+            <span class="jr-img">
+              {%- if pair_2.image -%}
+                {{- pair_2.image | image_url: width: 700 | image_tag:
+                    loading: 'lazy',
+                    widths: '400, 700',
+                    sizes: '(min-width: 750px) 40vw, 100vw',
+                    alt: pair_2.image.alt | default: pair_2.title -}}
+              {%- endif -%}
+            </span>
+            <span class="jr-meta">{{ pair_2.published_at | date: '%B %-d, %Y' }}</span>
+            <span class="jr-t">{{ pair_2.title }}</span>
+            {%- if p2_dek != blank -%}
+              <span class="jr-dek">{{ p2_dek }}</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Tag Section -->
+    {%- if tag_to_use != blank -%}
+      {%- assign tag_render_count = 0 -%}
+      {%- assign has_tag_articles = false -%}
+      {%- for a in blog.articles -%}
+        {%- if a.tags contains tag_to_use -%}
+          {%- assign has_tag_articles = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if has_tag_articles -%}
+        <div class="jr-sec">
+          <h2>
+            {%- if section.settings.tag_section_heading != blank -%}
+              {{ section.settings.tag_section_heading }}
+            {%- else -%}
+              {{ tag_to_use }}
+            {%- endif -%}
+          </h2>
+        </div>
+        <div class="jr-three">
+          {%- for a in blog.articles -%}
+            {%- if tag_render_count >= 3 -%}{%- break -%}{%- endif -%}
+            {%- if a.tags contains tag_to_use -%}
+              {%- assign tag_dek = a.excerpt | default: a.content | strip_html | truncate: 120 -%}
+              <a class="jr-card" href="{{ a.url }}">
+                <span class="jr-img">
+                  {%- if a.image -%}
+                    {{- a.image | image_url: width: 500 | image_tag:
+                        loading: 'lazy',
+                        widths: '300, 500',
+                        sizes: '(min-width: 750px) 30vw, 80vw',
+                        alt: a.image.alt | default: a.title -}}
+                  {%- endif -%}
+                </span>
+                <span class="jr-meta">{{ a.published_at | date: '%B %-d, %Y' }}</span>
+                <span class="jr-t">{{ a.title }}</span>
+                {%- if tag_dek != blank -%}
+                  <span class="jr-dek">{{ tag_dek }}</span>
+                {%- endif -%}
+              </a>
+              {%- assign tag_render_count = tag_render_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    <!-- Featured Article (wide dark card) -->
+    {%- if featured_article -%}
+      {%- assign feat_dek = featured_article.excerpt | default: featured_article.content | strip_html | truncate: 180 -%}
+      <a class="jr-wide" href="{{ featured_article.url }}">
+        <span class="jr-body">
+          <span class="jr-meta">{{ featured_article.published_at | date: '%B %-d, %Y' }}</span>
+          <span class="jr-t">{{ featured_article.title }}</span>
+          {%- if feat_dek != blank -%}
+            <span class="jr-dek">{{ feat_dek }}</span>
+          {%- endif -%}
+        </span>
+        <span class="jr-img">
+          {%- if featured_article.image -%}
+            {{- featured_article.image | image_url: width: 1000 | image_tag:
+                loading: 'lazy',
+                widths: '600, 1000',
+                sizes: '(min-width: 750px) 55vw, 100vw',
+                alt: featured_article.image.alt | default: featured_article.title -}}
+          {%- endif -%}
+        </span>
+      </a>
+    {%- endif -%}
+
+    {%- endif -%}
+    <!-- end page-1-only content -->
+
+    <!-- Article List -->
+    {%- assign list_has_items = false -%}
+    {%- if paginate.current_page == 1 -%}
+      {%- for article in blog.articles -%}
+        {%- unless skip_handles contains article.handle -%}
+          {%- assign list_has_items = true -%}{%- break -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- if blog.articles.size > 0 -%}
+        {%- assign list_has_items = true -%}
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if list_has_items -%}
+      <div class="jr-sec">
+        <h2>{{ section.settings.list_heading | default: 'More from the journal' }}</h2>
+      </div>
+      <ul class="jr-list" id="JrList-{{ section.id }}">
+        {%- if paginate.current_page == 1 -%}
+          {%- for article in blog.articles -%}
+            {%- unless skip_handles contains article.handle -%}
+              {%- assign list_dek = article.excerpt | default: article.content | strip_html | truncate: 120 -%}
+              <li>
+                <a href="{{ article.url }}">
+                  <span class="l-d">{{ article.published_at | date: '%B %-d, %Y' }}</span>
+                  <span class="l-t">{{ article.title }}</span>
+                  {%- if list_dek != blank -%}
+                    <span class="l-x">{{ list_dek }}</span>
+                  {%- endif -%}
+                  <span class="l-a" aria-hidden="true">›</span>
+                </a>
+              </li>
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for article in blog.articles -%}
+            {%- assign list_dek = article.excerpt | default: article.content | strip_html | truncate: 120 -%}
+            <li>
+              <a href="{{ article.url }}">
+                <span class="l-d">{{ article.published_at | date: '%B %-d, %Y' }}</span>
+                <span class="l-t">{{ article.title }}</span>
+                {%- if list_dek != blank -%}
+                  <span class="l-x">{{ list_dek }}</span>
+                {%- endif -%}
+                <span class="l-a" aria-hidden="true">›</span>
+              </a>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if paginate.next -%}
+      <div class="jr-more" id="JrMore-{{ section.id }}">
+        <button
+          class="jr-more-btn btn btn--secondary"
+          data-next-url="{{ paginate.next.url }}"
+          data-list-id="JrList-{{ section.id }}"
+          data-more-id="JrMore-{{ section.id }}"
+          aria-label="{{ 'sections.blog_journal.load_more' | t }}"
+        >
+          {{ 'sections.blog_journal.load_more' | t }}
+        </button>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% endpaginate %}
+
+{% stylesheet %}
+  .jr {
+    color: var(--color-text);
+  }
+
+  .jr-in {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* Links */
+  .jr a { color: inherit; text-decoration: none; }
+  .jr a:focus-visible {
+    outline: 2px solid var(--palette-bronze, #96671f);
+    outline-offset: 4px;
+    border-radius: 12px;
+  }
+
+  /* Header */
+  .jr-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+
+  .jr-head h1 {
+    margin: 0;
+    font-family: var(--font-accent);
+    font-size: 64px;
+    line-height: 1;
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -.03em;
+  }
+
+  .jr-head p {
+    margin: 0;
+    max-width: 38ch;
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--color-text-muted);
+    text-align: right;
+  }
+
+  /* Image container */
+  .jr-img {
+    display: block;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--palette-linen, #f5f1e6);
+  }
+
+  .jr-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s cubic-bezier(.2, .8, .2, 1);
+  }
+
+  @media (hover: hover) {
+    .jr a:hover .jr-img img { transform: scale(1.025); }
+    .jr a:hover .jr-t {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .jr-img img { transition: none; }
+  }
+
+  /* Meta / date */
+  .jr-meta {
+    display: block;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    margin: 16px 0 6px;
+  }
+
+  /* Title */
+  .jr-t {
+    display: block;
+    font-family: var(--font-accent);
+    font-size: 26px;
+    line-height: 31px;
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -.02em;
+    text-wrap: balance;
+  }
+
+  /* Deck */
+  .jr-dek {
+    display: block;
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--color-text-muted);
+    text-wrap: pretty;
+    max-width: 52ch;
+  }
+
+  /* Lead hero */
+  .jr-lead {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 72px;
+  }
+
+  .jr-lead .jr-img { aspect-ratio: 4/3; }
+
+  .jr-lead .jr-t {
+    font-size: 44px;
+    line-height: 48px;
+    letter-spacing: -.025em;
+  }
+
+  .jr-lead .jr-dek {
+    font-size: 17px;
+    line-height: 28px;
+    margin-top: 14px;
+  }
+
+  .jr-go {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-text);
+    padding-bottom: 4px;
+  }
+
+  /* 2-column pair */
+  .jr-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    margin-bottom: 80px;
+  }
+
+  .jr-pair .jr-img { aspect-ratio: 4/5; }
+
+  /* Section divider */
+  .jr-sec {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 0 24px;
+  }
+
+  .jr-sec h2 {
+    margin: 0;
+    font-family: var(--font-accent);
+    font-size: 32px;
+    line-height: 38px;
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -.02em;
+  }
+
+  /* 3-column grid */
+  .jr-three {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin-bottom: 80px;
+  }
+
+  .jr-three .jr-img { aspect-ratio: 1; }
+  .jr-three .jr-t { font-size: 22px; line-height: 27px; }
+
+  /* Wide dark feature card */
+  .jr-wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    align-items: stretch;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--color-text);
+    color: var(--color-background);
+    margin-bottom: 88px;
+    text-decoration: none;
+  }
+
+  .jr-wide .jr-body {
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .jr-wide .jr-img {
+    border-radius: 0;
+    min-height: 460px;
+    position: relative;
+  }
+
+  .jr-wide .jr-img img {
+    position: absolute;
+    inset: 0;
+    object-position: 50% 60%;
+  }
+
+  .jr-wide .jr-meta { color: rgba(255, 255, 255, .55); margin-top: 0; }
+  .jr-wide .jr-t { font-size: 40px; line-height: 44px; }
+  .jr-wide .jr-dek { color: rgba(255, 255, 255, .75); }
+
+  /* Article list */
+  .jr-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .jr-list a {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr) minmax(0, 1fr) 24px;
+    gap: 24px;
+    align-items: baseline;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .jr-list .l-d { font-size: 13px; font-weight: var(--font-weight-medium); color: var(--color-text-muted); }
+  .jr-list .l-t { font-family: var(--font-accent); font-size: 19px; line-height: 25px; font-weight: var(--font-weight-bold); letter-spacing: -.01em; }
+  .jr-list .l-x { font-size: 14px; line-height: 22px; color: var(--color-text-muted); }
+  .jr-list .l-a { font-size: 18px; justify-self: end; transition: transform .2s; }
+
+  @media (hover: hover) {
+    .jr-list a:hover .l-a { transform: translateX(4px); }
+    .jr-list a:hover .l-t {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
+
+  /* Load more */
+  .jr-more {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 749px) {
+    .jr-in { padding: 0 16px; }
+
+    .jr-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .jr-head h1 { font-size: 44px; }
+    .jr-head p { text-align: left; }
+
+    .jr-lead {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      margin-bottom: 48px;
+    }
+
+    .jr-lead .jr-t { font-size: 30px; line-height: 35px; }
+    .jr-lead .jr-dek { font-size: 15px; line-height: 24px; }
+
+    .jr-pair {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+      margin-bottom: 56px;
+    }
+
+    .jr-three {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 14px;
+      margin: 0 -16px 56px;
+      padding: 0 16px;
+      scrollbar-width: none;
+    }
+
+    .jr-three::-webkit-scrollbar { display: none; }
+
+    .jr-three > a {
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+    }
+
+    .jr-wide {
+      grid-template-columns: minmax(0, 1fr);
+      margin-bottom: 56px;
+    }
+
+    .jr-wide .jr-img { min-height: 0; aspect-ratio: 4/3; order: -1; }
+    .jr-wide .jr-body { padding: 28px 22px 32px; }
+    .jr-wide .jr-t { font-size: 30px; line-height: 35px; }
+
+    .jr-sec h2 { font-size: 26px; line-height: 32px; }
+
+    .jr-list a {
+      grid-template-columns: minmax(0, 1fr) 20px;
+      gap: 4px 12px;
+      padding: 18px 0;
+    }
+
+    .jr-list .l-d { grid-column: 1; grid-row: 1; }
+    .jr-list .l-t { grid-column: 1; grid-row: 2; font-size: 17px; line-height: 23px; }
+    .jr-list .l-x { grid-column: 1; grid-row: 3; }
+    .jr-list .l-a { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.jr-more-btn');
+      if (!btn) return;
+      e.preventDefault();
+
+      const nextUrl  = btn.dataset.nextUrl;
+      const listId   = btn.dataset.listId;
+      const moreId   = btn.dataset.moreId;
+      const list     = document.getElementById(listId);
+      const moreWrap = document.getElementById(moreId);
+      if (!list || !nextUrl) return;
+
+      btn.setAttribute('aria-busy', 'true');
+      btn.disabled = true;
+
+      fetch(nextUrl)
+        .then(r => r.text())
+        .then(function (html) {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const newItems = doc.querySelectorAll('.jr-list li');
+          for (const li of newItems) {
+            list.appendChild(document.importNode(li, true));
+          }
+          const newBtn = doc.querySelector('.jr-more-btn');
+          if (newBtn) {
+            btn.dataset.nextUrl = newBtn.dataset.nextUrl;
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+          } else {
+            if (moreWrap) moreWrap.remove();
+          }
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
+        });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.blog_journal.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "description",
+      "label": "t:sections.blog_journal.settings.description.label",
+      "default": "Guides, culture and the ritual around shisha, from the people behind ENSŌ."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.blog_journal.settings.tag_header.content"
+    },
+    {
+      "type": "text",
+      "id": "tag_section_heading",
+      "label": "t:sections.blog_journal.settings.tag_section_heading.label",
+      "info": "t:sections.blog_journal.settings.tag_section_heading.info"
+    },
+    {
+      "type": "text",
+      "id": "tag_section_tag",
+      "label": "t:sections.blog_journal.settings.tag_section_tag.label",
+      "info": "t:sections.blog_journal.settings.tag_section_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.blog_journal.settings.featured_header.content"
+    },
+    {
+      "type": "text",
+      "id": "featured_article_handle",
+      "label": "t:sections.blog_journal.settings.featured_article_handle.label",
+      "info": "t:sections.blog_journal.settings.featured_article_handle.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.blog_journal.settings.list_header.content"
+    },
+    {
+      "type": "text",
+      "id": "list_heading",
+      "label": "t:sections.blog_journal.settings.list_heading.label",
+      "default": "More from the journal"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_desktop_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_mobile_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.blog_journal.presets.name"
+    }
+  ]
+}
+{% endschema %}

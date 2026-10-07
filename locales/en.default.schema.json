@@ -1522,6 +1522,41 @@
         "name": "Blog posts"
       }
     },
+    "blog_journal": {
+      "name": "Journal",
+      "settings": {
+        "description": {
+          "label": "Subheading"
+        },
+        "tag_header": {
+          "content": "Tag section"
+        },
+        "tag_section_heading": {
+          "label": "Section heading",
+          "info": "Leave blank to use the tag name"
+        },
+        "tag_section_tag": {
+          "label": "Tag",
+          "info": "Leave blank to auto-detect the most-used tag"
+        },
+        "featured_header": {
+          "content": "Featured article"
+        },
+        "featured_article_handle": {
+          "label": "Article handle",
+          "info": "Paste the article URL slug (e.g. my-article-title). Leave blank to hide this section"
+        },
+        "list_header": {
+          "content": "Article list"
+        },
+        "list_heading": {
+          "label": "List heading"
+        }
+      },
+      "presets": {
+        "name": "Journal"
+      }
+    },
     "contact": {
       "name": "Contact Form",
       "settings": {

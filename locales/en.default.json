@@ -217,6 +217,10 @@
     "blog_posts": {
       "onboarding": "Select a blog to display posts here."
     },
+    "blog_journal": {
+      "read_article": "Read the article",
+      "load_more": "Load more"
+    },
     "product_recommendations": {
       "onboarding": "Select a fallback collection to display product recommendations here."
     },

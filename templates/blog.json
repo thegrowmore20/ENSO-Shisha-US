@@ -9,20 +9,12 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-blog",
+    "blog_journal": {
+      "type": "blog-journal",
       "settings": {}
-    },
-    "newsletter_blog": {
-      "type": "newsletter",
-      "settings": {
-        "heading": "Subscribe to our newsletter",
-        "text": "Provide additional information about your newsletter and explain the benefits of subscribing to it."
-      }
     }
   },
   "order": [
-    "main",
-    "newsletter_blog"
+    "blog_journal"
   ]
 }
