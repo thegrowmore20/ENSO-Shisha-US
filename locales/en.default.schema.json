@@ -1614,7 +1614,7 @@
             "icon": { "label": "Icon" },
             "heading": { "label": "Heading" },
             "description": { "label": "Description" },
-            "url": { "label": "Link URL" }
+            "url": { "label": "Link URL", "info": "Leave blank to auto-link to the correct app screen. Include hash e.g. /pages/enso-app#recipes to override" }
           }
         }
       },

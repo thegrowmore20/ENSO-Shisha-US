@@ -12,7 +12,7 @@
 {% endstyle %}
 
 {%- liquid
-  assign cta_url  = section.settings.cta_url   | default: '#'
+  assign cta_url  = section.settings.cta_url   | default: '/pages/enso-app'
   assign cta_lbl  = section.settings.cta_label | default: 'Open the ENSŌ app'
 -%}
 
@@ -33,7 +33,27 @@
       <div class="xapp__grid">
         {%- for block in section.blocks -%}
           {%- assign icon = block.settings.icon -%}
-          <a class="xapp__go" href="{{ block.settings.url | default: '#' }}" target="_blank" rel="noopener noreferrer" {{ block.shopify_attributes }}>
+          {%- liquid
+            case icon
+              when 'warranty'
+                assign auto_hash = '#register'
+              when 'updates'
+                assign auto_hash = '#diamond-updates'
+              when 'troubleshooting'
+                assign auto_hash = '#fix'
+              when 'recipes'
+                assign auto_hash = '#recipes'
+              when 'quickstart'
+                assign auto_hash = '#quick'
+              else
+                assign auto_hash = ''
+            endcase
+            assign card_url = block.settings.url | default: ''
+            if card_url == blank
+              assign card_url = '/pages/enso-app' | append: auto_hash
+            endif
+          -%}
+          <a class="xapp__go" href="{{ card_url }}" target="_blank" rel="noopener noreferrer" {{ block.shopify_attributes }}>
             {%- case icon -%}
               {%- when 'warranty' -%}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 11 12 14 22 4"/></svg>
@@ -265,9 +285,10 @@
           "default": "Two minutes, once. Two years on the device, one on the battery"
         },
         {
-          "type": "url",
+          "type": "text",
           "id": "url",
-          "label": "t:sections.experience_app.blocks.feature.settings.url.label"
+          "label": "t:sections.experience_app.blocks.feature.settings.url.label",
+          "info": "t:sections.experience_app.blocks.feature.settings.url.info"
         }
       ]
     }
