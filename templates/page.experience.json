@@ -11,10 +11,116 @@
   "sections": {
     "experience_device_guide": {
       "type": "experience-device-guide",
-      "settings": {}
+      "blocks": {
+        "block_diamond": {
+          "type": "device_accordion",
+          "settings": {
+            "device_type": "diamond",
+            "device_id": "diamond",
+            "image": "shopify://shop_images/g-3q-right.webp",
+            "heading": "ENSŌ Diamond",
+            "description": "The electric heater for the hookah you already own. Quick start, packing, the full manual and firmware.",
+            "app_url": "",
+            "app_reg_url": "",
+            "app_updates_url": "",
+            "app_recipes_url": "",
+            "url_1": "",
+            "url_2": "",
+            "url_3": "",
+            "url_4": "",
+            "url_5": "",
+            "url_6": ""
+          }
+        },
+        "block_enso": {
+          "type": "device_accordion",
+          "settings": {
+            "device_type": "enso_2026",
+            "device_id": "enso",
+            "image": "shopify://shop_images/enso-2026-cut.webp",
+            "heading": "ENSŌ 2026 Edition",
+            "description": "The all-in-one electric hookah. Quick start, the full manual, troubleshooting, video guides and support.",
+            "app_url": "",
+            "app_reg_url": "",
+            "app_recipes_url": "",
+            "url_1": "",
+            "url_2": "",
+            "url_3": "",
+            "url_4": "",
+            "url_5": "",
+            "url_6": ""
+          }
+        }
+      },
+      "block_order": ["block_diamond", "block_enso"],
+      "settings": {
+        "eyebrow": "ENSŌ Experience",
+        "heading": "Guides for your ENSŌ",
+        "description": "Manuals, first steps, packing, cleaning and support for every owner.",
+        "devh_label": "Guides by device",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "experience_app": {
+      "type": "experience-app",
+      "blocks": {
+        "feat_warranty": {
+          "type": "feature",
+          "settings": {
+            "icon": "warranty",
+            "heading": "Warranty registration",
+            "description": "Two minutes, once. Two years on the device, one on the battery",
+            "url": ""
+          }
+        },
+        "feat_updates": {
+          "type": "feature",
+          "settings": {
+            "icon": "updates",
+            "heading": "Software updates",
+            "description": "ENSŌ Diamond: hear when new software is out",
+            "url": ""
+          }
+        },
+        "feat_trouble": {
+          "type": "feature",
+          "settings": {
+            "icon": "troubleshooting",
+            "heading": "Troubleshooting",
+            "description": "Step-by-step fixes, with support one tap away",
+            "url": ""
+          }
+        },
+        "feat_recipes": {
+          "type": "feature",
+          "settings": {
+            "icon": "recipes",
+            "heading": "Recipes",
+            "description": "On electric heat every tobacco smokes differently than on coal. Find what works, save it",
+            "url": ""
+          }
+        }
+      },
+      "block_order": ["feat_warranty", "feat_updates", "feat_trouble", "feat_recipes"],
+      "settings": {
+        "eyebrow": "The ENSŌ app",
+        "heading": "Register, update, fix and create",
+        "description": "Quick start, the manual, troubleshooting, software updates, warranty registration and the blend maker, for the device you own. Add it to your home screen and it is one tap away.",
+        "cta_url": "",
+        "cta_label": "Open the ENSŌ app",
+        "cta_note": "For ENSŌ 2026 and ENSŌ Diamond, made for the phone",
+        "padding_top": 0,
+        "padding_bottom": 96,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64
+      }
     }
   },
   "order": [
-    "experience_device_guide"
+    "experience_device_guide",
+    "experience_app"
   ]
 }

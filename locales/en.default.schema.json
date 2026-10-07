@@ -1566,43 +1566,59 @@
         "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "description": { "label": "Description" },
-        "devh_label": { "label": "\"Guides by device\" label" },
-        "header_diamond": { "content": "ENSŌ Diamond" },
-        "diamond_image": { "label": "Image" },
-        "diamond_heading": { "label": "Heading" },
-        "diamond_description": { "label": "Description" },
-        "diamond_app_url": { "label": "App URL" },
-        "diamond_url_quickstart": { "label": "Quick start URL" },
-        "diamond_url_manual": { "label": "Full manual URL" },
-        "diamond_url_packing": { "label": "Pack the cup URL" },
-        "diamond_url_cleaning": { "label": "Cleaning URL" },
-        "diamond_url_troubleshoot": { "label": "Troubleshooting URL" },
-        "diamond_url_firmware": { "label": "Firmware update URL" },
-        "header_enso": { "content": "ENSŌ 2026" },
-        "enso_image": { "label": "Image" },
-        "enso_heading": { "label": "Heading" },
-        "enso_description": { "label": "Description" },
-        "enso_app_url": { "label": "App URL" },
-        "enso_url_quickstart": { "label": "Quick start URL" },
-        "enso_url_manual": { "label": "Full manual URL" },
-        "enso_url_troubleshoot": { "label": "Troubleshooting URL" },
-        "enso_url_flavour": { "label": "Flavour guide URL" },
-        "enso_url_video": { "label": "Video guides URL" },
-        "enso_url_accessories": { "label": "Accessories URL" },
-        "header_app": { "content": "ENSŌ App" },
-        "app_eyebrow": { "label": "Eyebrow" },
-        "app_heading": { "label": "Heading" },
-        "app_description": { "label": "Description" },
-        "app_cta_url": { "label": "Button URL" },
-        "app_cta_label": { "label": "Button label" },
-        "app_cta_note": { "label": "Button note" },
-        "app_register_url": { "label": "Warranty reg URL" },
-        "app_updates_url": { "label": "Software updates URL" },
-        "app_fix_url": { "label": "Troubleshooting URL" },
-        "app_recipes_url": { "label": "Recipes URL" }
+        "devh_label": { "label": "\"Guides by device\" label" }
+      },
+      "blocks": {
+        "device_accordion": {
+          "name": "Device accordion",
+          "settings": {
+            "device_type": { "label": "Device type" },
+            "device_id": { "label": "Accordion ID", "info": "Use 'diamond' or 'enso' for deep linking" },
+            "image": { "label": "Image" },
+            "heading": { "label": "Heading" },
+            "description": { "label": "Description" },
+            "header_app": { "content": "App strip" },
+            "app_url": { "label": "App page URL" },
+            "app_reg_url": { "label": "Warranty registration URL" },
+            "app_updates_url": { "label": "Software updates URL", "info": "Diamond only" },
+            "app_recipes_url": { "label": "Recipes URL" },
+            "header_guides": { "content": "Guide cards" },
+            "url_1": { "label": "Guide 1 URL", "info": "Quick start" },
+            "url_2": { "label": "Guide 2 URL", "info": "Full manual" },
+            "url_3": { "label": "Guide 3 URL", "info": "Diamond: Pack cup / ENSŌ: Troubleshooting" },
+            "url_4": { "label": "Guide 4 URL", "info": "Diamond: Cleaning / ENSŌ: Flavour guide" },
+            "url_5": { "label": "Guide 5 URL", "info": "Diamond: Troubleshooting / ENSŌ: Video guides" },
+            "url_6": { "label": "Guide 6 URL", "info": "Diamond: Firmware / ENSŌ: Accessories" }
+          }
+        }
       },
       "presets": {
         "name": "Experience Device Guide"
+      }
+    },
+    "experience_app": {
+      "name": "ENSŌ App",
+      "settings": {
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "description": { "label": "Description" },
+        "cta_url": { "label": "Button URL" },
+        "cta_label": { "label": "Button label" },
+        "cta_note": { "label": "Button note" }
+      },
+      "blocks": {
+        "feature": {
+          "name": "Feature card",
+          "settings": {
+            "icon": { "label": "Icon" },
+            "heading": { "label": "Heading" },
+            "description": { "label": "Description" },
+            "url": { "label": "Link URL" }
+          }
+        }
+      },
+      "presets": {
+        "name": "ENSŌ App"
       }
     },
     "contact": {
