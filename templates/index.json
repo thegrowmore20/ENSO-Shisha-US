@@ -399,21 +399,6 @@
         "cta_link": "shopify://collections/accesories"
       }
     },
-    "enso_experience": {
-      "type": "enso-experience",
-      "settings": {
-        "image": "shopify://shop_images/enso-exp-tea.webp",
-        "image_position": "50% 45%",
-        "heading": "ENSŌ Experience",
-        "subheading": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
-        "cta_label": "Open ENSŌ Experience",
-        "cta_link": "/pages/experience",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
-      }
-    },
     "instagram_feed": {
       "type": "instagram-reels",
       "blocks": {
@@ -544,7 +529,6 @@
     "enso_diamond_row",
     "enso_awards",
     "shop_accessories",
-    "enso_experience",
     "instagram_feed",
     "journal"
   ]
