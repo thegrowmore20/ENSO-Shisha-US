@@ -659,8 +659,10 @@
       },
       "padding": {
         "section_padding_heading": "Section spacing",
-        "padding_top": "Padding top — desktop",
-        "padding_bottom": "Padding bottom — desktop",
+        "padding_desktop_heading": "Padding — desktop",
+        "padding_mobile_heading": "Padding — mobile",
+        "padding_top": "Top padding",
+        "padding_bottom": "Bottom padding",
         "padding_top_mobile": "Padding top — mobile",
         "padding_bottom_mobile": "Padding bottom — mobile"
       }
