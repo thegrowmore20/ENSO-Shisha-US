@@ -41,16 +41,7 @@
   endif
 
   # Featured article
-  assign featured_handle = section.settings.featured_article_handle | strip
-  assign featured_article = nil
-  if featured_handle != blank
-    for a in blog.articles
-      if a.handle == featured_handle
-        assign featured_article = a
-        break
-      endif
-    endfor
-  endif
+  assign featured_article = articles[section.settings.featured_article]
 
   # Build skip list: lead + pair + up to 3 tag articles + featured
   assign skip_handles = ''
@@ -704,10 +695,9 @@
       "content": "t:sections.blog_journal.settings.featured_header.content"
     },
     {
-      "type": "text",
-      "id": "featured_article_handle",
-      "label": "t:sections.blog_journal.settings.featured_article_handle.label",
-      "info": "t:sections.blog_journal.settings.featured_article_handle.info"
+      "type": "article",
+      "id": "featured_article",
+      "label": "t:sections.blog_journal.settings.featured_article.label"
     },
     {
       "type": "header",

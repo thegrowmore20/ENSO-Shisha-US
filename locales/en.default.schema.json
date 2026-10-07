@@ -1542,9 +1542,8 @@
         "featured_header": {
           "content": "Featured article"
         },
-        "featured_article_handle": {
-          "label": "Article handle",
-          "info": "Paste the article URL slug (e.g. my-article-title). Leave blank to hide this section"
+        "featured_article": {
+          "label": "Article"
         },
         "list_header": {
           "content": "Article list"
