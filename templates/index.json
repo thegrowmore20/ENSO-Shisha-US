@@ -400,41 +400,15 @@
       }
     },
     "enso_experience": {
-      "type": "split-showcase",
-      "blocks": {
-        "exp_block": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/enso-exp-tea.webp",
-            "heading": "ENSŌ Experience",
-            "heading_color": "#ffffff",
-            "subheading": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
-            "button": "Open ENSŌ Experience",
-            "button_url": "/pages/experience",
-            "button_style": "accent"
-          }
-        }
-      },
-      "block_order": ["exp_block"],
+      "type": "enso-experience",
       "settings": {
-        "width": "full",
-        "height_desktop": "custom",
-        "height_desktop_custom": 560,
-        "height_tablet": "custom",
-        "height_tablet_custom": 560,
-        "height_mobile": "custom",
-        "height_mobile_custom": 560,
-        "content_alignment": "left",
-        "content_width_desktop": 600,
-        "content_width_tablet": 500,
-        "content_width_mobile": 0,
-        "heading_size_desktop": 44,
-        "heading_size_mobile": 30,
-        "overlay_color": "#000000",
-        "overlay_opacity": 35,
+        "image": "shopify://shop_images/enso-exp-tea.webp",
+        "heading": "ENSŌ Experience",
+        "text": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
+        "cta_label": "Open ENSŌ Experience",
+        "cta_link": "/pages/experience",
         "margin_top": 0,
-        "margin_bottom": 0,
-        "image_gap": 24
+        "margin_bottom": 0
       }
     },
     "instagram_feed": {

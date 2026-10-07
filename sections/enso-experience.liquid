@@ -1,76 +1,84 @@
-{%- doc -%}
-  ENSŌ Experience — full-container card with image, left gradient overlay and centred copy.
-  Single card, border-radius 28px, min-height 560px. Desktop: left gradient, left-aligned copy.
-  Mobile: bottom gradient, copy at bottom.
-{%- enddoc -%}
+{%- liquid
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign img = section.settings.image
+  assign heading = section.settings.heading
+  assign body_text = section.settings.text
+  assign cta_label = section.settings.cta_label
+  assign cta_link = section.settings.cta_link
+  assign img_alt = img.alt | default: heading | escape
+-%}
 
-{% style %}
-  #section-exp-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
-  }
-  @media screen and (max-width: 749px) {
-    #section-exp-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-    }
-  }
-{% endstyle %}
-
-<section id="section-exp-{{ section.id }}" class="enso-exp-section">
-  <div class="enso-exp__container">
-    <div class="enso-exp__card">
-
-      {%- if section.settings.image != blank -%}
-        {{
-          section.settings.image
-          | image_url: width: 2000
-          | image_tag:
-            widths: '800, 1200, 1600, 2000',
-            sizes: '(max-width: 749px) 100vw, calc(100vw - 80px)',
-            alt: section.settings.image.alt | default: section.settings.heading,
-            loading: 'lazy',
-            class: 'enso-exp__image',
-            style: 'object-position: ' | append: section.settings.image_position | append: ';'
-        }}
+<section
+  class="enso-exp"
+  style="--enso-exp-mt: {{ margin_top }}px; --enso-exp-mb: {{ margin_bottom }}px;"
+>
+  <div class="enso-exp__item">
+    <div class="enso-exp__media">
+      {%- if img != blank -%}
+        <img
+          class="enso-exp__image"
+          src="{{ img | image_url: width: 2000 }}"
+          srcset="
+            {{ img | image_url: width: 750 }} 750w,
+            {{ img | image_url: width: 1100 }} 1100w,
+            {{ img | image_url: width: 1500 }} 1500w,
+            {{ img | image_url: width: 2000 }} 2000w
+          "
+          sizes="(max-width: 749px) 100vw, (max-width: 989px) 100vw, 100vw"
+          alt="{{ img_alt }}"
+          width="{{ img.width }}"
+          height="{{ img.height }}"
+          loading="eager"
+          fetchpriority="high"
+        >
       {%- else -%}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-exp__placeholder' }}
+        <div class="enso-exp__placeholder">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-exp__placeholder-svg' }}
+        </div>
       {%- endif -%}
+      <div class="enso-exp__overlay"></div>
+    </div>
 
-      <div class="enso-exp__overlay" aria-hidden="true"></div>
-
-      <div class="enso-exp__content">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="enso-exp__heading">{{ section.settings.heading | escape }}</h2>
+    <div class="enso-exp__content">
+      <div class="enso-exp__content-inner">
+        {%- if heading != blank -%}
+          <h2 class="enso-exp__heading">{{ heading }}</h2>
         {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="enso-exp__sub">{{ section.settings.subheading | escape }}</p>
+        {%- if body_text != blank -%}
+          <div class="enso-exp__subheading">
+            <p>{{ body_text }}</p>
+          </div>
         {%- endif -%}
-        {%- if section.settings.cta_label != blank -%}
-          <a class="btn btn--accent enso-exp__btn" href="{{ section.settings.cta_link | default: '#' }}">
-            {{ section.settings.cta_label | escape }}
+        {%- if cta_label != blank -%}
+          <a class="btn enso-exp__btn" href="{{ cta_link | default: '#' }}">
+            {{ cta_label }}
           </a>
         {%- endif -%}
       </div>
-
     </div>
   </div>
 </section>
 
 {% stylesheet %}
-  .enso-exp__container {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 40px;
+  .enso-exp {
+    margin-top: var(--enso-exp-mt, 0px);
+    margin-bottom: var(--enso-exp-mb, 0px);
+    padding-inline: var(--page-margin);
   }
 
-  .enso-exp__card {
+  .enso-exp__item {
     position: relative;
     border-radius: 28px;
     overflow: hidden;
-    min-height: 560px;
-    display: flex;
-    align-items: center;
+    min-height: 600px;
+  }
+
+  /* ── Image fills the card ── */
+  .enso-exp__media {
+    position: absolute;
+    inset: 0;
+    height: 100%;
   }
 
   .enso-exp__image {
@@ -79,161 +87,188 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    object-position: 50% 12%;
   }
 
-  .enso-exp__placeholder {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-  }
-
+  /* ── Gradient overlays ── */
+  /* Bottom-to-top base fade */
   .enso-exp__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.45) 38%,
-      rgba(0, 0, 0, 0) 64%
-    );
+    z-index: 1;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0) 25%, rgb(0 0 0 / .75) 100%);
   }
 
+  /* Desktop: left-to-right directional gradient */
+  .enso-exp__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgb(0 0 0 / .7) 0%, rgb(0 0 0 / .45) 38%, rgb(0 0 0 / 0) 64%);
+    pointer-events: none;
+  }
+
+  /* ── Content anchored bottom-left ── */
   .enso-exp__content {
     position: relative;
-    z-index: 1;
-    padding: 48px 56px;
-    max-width: 600px;
-    color: #fff;
+    z-index: 2;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0 20px 56px 28px;
+  }
+
+  .enso-exp__content-inner {
+    max-width: 440px;
   }
 
   .enso-exp__heading {
-    font-family: var(--font-accent);
-    font-weight: var(--font-weight-heavy);
-    font-size: 32px;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    font-size: 44px;
+    line-height: 48px;
     color: #fff;
-    margin: 0 0 16px;
-    text-wrap: balance;
   }
 
-  .enso-exp__sub {
-    font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 24px;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0 0 28px;
-    text-wrap: pretty;
+  .enso-exp__subheading {
+    color: #fff;
+    margin-bottom: 24px;
+    max-width: 44ch;
   }
 
+  .enso-exp__subheading p {
+    margin: 0;
+  }
+
+  /* Gold/sand button on this dark photo background */
   .enso-exp__btn {
-    display: inline-flex;
+    background: var(--palette-sand, #c8943a);
+    border-color: var(--palette-sand, #c8943a);
+    color: #fff;
+    padding: 16px 28px;
   }
 
+  .enso-exp__btn:hover {
+    background: var(--palette-sand-deep, #b3832f);
+    border-color: var(--palette-sand-deep, #b3832f);
+    color: #fff;
+  }
+
+  .enso-exp__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    background: rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .enso-exp__placeholder-svg {
+    width: 30%;
+    opacity: 0.3;
+  }
+
+  /* ── Mobile ── */
   @media screen and (max-width: 749px) {
-    .enso-exp__container {
-      padding: 0 16px;
+    .enso-exp__item {
+      border-radius: 22px;
+      min-height: 600px;
     }
 
-    .enso-exp__card {
-      min-height: 480px;
-      align-items: flex-end;
+    .enso-exp__image {
+      /* Pull left so device is visible, not background */
+      object-position: 38% 50%;
     }
 
+    /* Stronger bottom-to-top fade on mobile */
     .enso-exp__overlay {
-      background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.72) 0%,
-        rgba(0, 0, 0, 0.35) 50%,
-        rgba(0, 0, 0, 0) 75%
-      );
+      background: linear-gradient(180deg, rgb(0 0 0 / 0) 35%, rgb(0 0 0 / .85) 100%);
+    }
+
+    /* Mobile: swap to bottom-to-top directional gradient */
+    .enso-exp__media::after {
+      background: linear-gradient(0deg, rgb(0 0 0 / .72) 0%, rgb(0 0 0 / .35) 50%, rgb(0 0 0 / 0) 75%);
     }
 
     .enso-exp__content {
-      padding: 28px 24px 32px;
+      min-height: 600px;
+      padding: 0 20px 28px;
+    }
+
+    .enso-exp__content-inner {
       max-width: none;
     }
 
     .enso-exp__heading {
-      font-size: 24px;
+      font-size: 30px;
+      line-height: 34px;
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "ENSŌ Experience",
+  "name": "t:sections.enso_experience.name",
+  "tag": "section",
   "settings": [
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Background image"
-    },
-    {
-      "type": "text",
-      "id": "image_position",
-      "label": "Image focal point",
-      "default": "50% 45%",
-      "info": "CSS object-position, e.g. 50% 45%"
+      "label": "t:sections.enso_experience.settings.image.label"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "t:sections.enso_experience.settings.heading.label",
       "default": "ENSŌ Experience"
     },
     {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Body text",
-      "default": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone."
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "t:sections.enso_experience.settings.text.label",
+      "default": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates."
     },
     {
       "type": "text",
       "id": "cta_label",
-      "label": "Button label",
+      "label": "t:sections.enso_experience.settings.cta_label.label",
       "default": "Open ENSŌ Experience"
     },
     {
       "type": "url",
       "id": "cta_link",
-      "label": "Button link"
+      "label": "t:sections.enso_experience.settings.cta_link.label"
     },
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "t:sections.all.spacing"
     },
     {
       "type": "range",
-      "id": "padding_top",
-      "label": "Padding top — desktop",
-      "min": 0, "max": 160, "step": 8, "unit": "px", "default": 40
+      "id": "margin_top",
+      "label": "t:sections.all.margin_top.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom — desktop",
-      "min": 0, "max": 160, "step": 8, "unit": "px", "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_top_mobile",
-      "label": "Padding top — mobile",
-      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom_mobile",
-      "label": "Padding bottom — mobile",
-      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24
+      "id": "margin_bottom",
+      "label": "t:sections.all.margin_bottom.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
     }
   ],
   "presets": [
     {
-      "name": "ENSŌ Experience"
+      "name": "t:sections.enso_experience.presets.name"
     }
   ]
 }

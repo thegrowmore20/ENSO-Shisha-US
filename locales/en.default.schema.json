@@ -1294,8 +1294,8 @@
         "name": "Help cards"
       }
     },
-    "enso_experience_banner": {
-      "name": "ENSŌ Experience banner",
+    "enso_experience": {
+      "name": "ENSŌ Experience",
       "settings": {
         "image": { "label": "Background image" },
         "heading": { "label": "Heading" },
@@ -1304,7 +1304,7 @@
         "cta_link": { "label": "Button link" }
       },
       "presets": {
-        "name": "ENSŌ Experience banner"
+        "name": "ENSŌ Experience"
       }
     },
     "instagram_reels": {
