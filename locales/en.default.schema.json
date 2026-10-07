@@ -2205,6 +2205,12 @@
         }
       },
       "presets": { "name": "Awards" }
+    },
+    "enso_app": {
+      "name": "ENSŌ App (full)",
+      "presets": {
+        "name": "ENSŌ App (full)"
+      }
     }
   }
 }
