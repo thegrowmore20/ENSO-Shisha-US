@@ -39,17 +39,19 @@
       </div>
 
       <div class="exp-banner__content">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="exp-banner__heading">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
-        {%- if section.settings.text != blank -%}
-          <p class="exp-banner__text">{{ section.settings.text }}</p>
-        {%- endif -%}
-        {%- if section.settings.cta_label != blank -%}
-          <a class="btn btn--accent exp-banner__btn" href="{{ section.settings.cta_link | default: '#' }}">
-            {{ section.settings.cta_label | escape }}
-          </a>
-        {%- endif -%}
+        <div class="exp-banner__content-inner">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="exp-banner__heading">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <p class="exp-banner__text">{{ section.settings.text }}</p>
+          {%- endif -%}
+          {%- if section.settings.cta_label != blank -%}
+            <a class="btn btn--accent exp-banner__btn" href="{{ section.settings.cta_link | default: '#' }}">
+              {{ section.settings.cta_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
       </div>
 
     </div>
@@ -109,7 +111,11 @@
   .exp-banner__content {
     position: relative;
     z-index: 2;
-    padding: 0 28px 56px;
+    width: 100%;
+    padding: 0 20px 56px 28px;
+  }
+
+  .exp-banner__content-inner {
     max-width: 440px;
   }
 
@@ -139,7 +145,7 @@
   /* ── Mobile ── */
   @media screen and (max-width: 749px) {
     .exp-banner {
-      min-height: 600px;
+      min-height: 560px;
       border-radius: 22px;
     }
 
@@ -158,7 +164,10 @@
     }
 
     .exp-banner__content {
-      padding: 0 20px 28px;
+      padding: 0 16px 28px 20px;
+    }
+
+    .exp-banner__content-inner {
       max-width: none;
     }
 
