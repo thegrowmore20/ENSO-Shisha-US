@@ -399,6 +399,51 @@
         "cta_link": "shopify://collections/accesories"
       }
     },
+    "help_cards": {
+      "type": "help-cards",
+      "blocks": {
+        "card_guides": {
+          "type": "card",
+          "settings": {
+            "icon": "book",
+            "heading": "Guides and how-tos",
+            "body": "The first session step by step, packing the cup, temperatures, cleaning and firmware, in ENSŌ Experience.",
+            "link": "/pages/experience",
+            "button_symbol": "arrow"
+          }
+        },
+        "card_support": {
+          "type": "card",
+          "settings": {
+            "icon": "chat",
+            "heading": "Support",
+            "body": "A person answers at support@ensoshisha.eu. Guides, firmware and the manual live in ENSŌ Experience.",
+            "button_symbol": "plus"
+          }
+        },
+        "card_warranty": {
+          "type": "card",
+          "settings": {
+            "icon": "shield",
+            "heading": "Warranty and returns",
+            "body": "Two years on the device, one year on the battery. 14 days to return an unopened box, 30 days an opened one.",
+            "button_symbol": "plus"
+          }
+        }
+      },
+      "block_order": [
+        "card_guides",
+        "card_support",
+        "card_warranty"
+      ],
+      "settings": {
+        "heading": "Before and after you buy",
+        "padding_top": 56,
+        "padding_bottom": 96,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
+    },
     "instagram_feed": {
       "type": "instagram-reels",
       "blocks": {
@@ -529,6 +574,7 @@
     "enso_diamond_row",
     "enso_awards",
     "shop_accessories",
+    "help_cards",
     "instagram_feed",
     "journal"
   ]

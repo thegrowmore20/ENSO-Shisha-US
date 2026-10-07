@@ -1245,6 +1245,50 @@
         "name": "Awards"
       }
     },
+    "help_cards": {
+      "name": "Help cards",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        }
+      },
+      "blocks": {
+        "card": {
+          "name": "Card",
+          "settings": {
+            "icon": {
+              "label": "Icon",
+              "options": {
+                "book": "Book (Guides)",
+                "chat": "Chat bubble (Support)",
+                "shield": "Shield (Warranty)",
+                "star": "Star",
+                "box": "Box (Shipping)"
+              }
+            },
+            "heading": {
+              "label": "Heading"
+            },
+            "body": {
+              "label": "Body text"
+            },
+            "link": {
+              "label": "Link"
+            },
+            "button_symbol": {
+              "label": "Button symbol",
+              "options": {
+                "arrow": "Arrow ›",
+                "plus": "Plus +"
+              }
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Help cards"
+      }
+    },
     "instagram_reels": {
       "name": "Instagram reels",
       "settings": {
