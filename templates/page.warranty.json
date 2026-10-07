@@ -1,60 +1,40 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
+    "warranty_hero": {
+      "type": "warranty-hero",
+      "blocks": {
+        "tile_1": {
+          "type": "tile",
+          "settings": {
+            "stat": "2 years",
+            "description": "on ENSŌ products, for software errors, material defects and manufacturing faults"
+          }
+        },
+        "tile_2": {
+          "type": "tile",
+          "settings": {
+            "stat": "1 year",
+            "description": "on the ENSŌ battery, as a separate warranty"
+          }
+        },
+        "tile_3": {
+          "type": "tile",
+          "settings": {
+            "stat": "Return costs",
+            "description": "reasonable return costs are covered for valid warranty cases"
+          }
+        }
+      },
+      "block_order": ["tile_1", "tile_2", "tile_3"],
       "settings": {
-        "color_background": "{{ settings.color_palette.paper }}"
-      }
-    },
-    "hero_banner_wq47mR": {
-      "type": "hero-banner",
-      "name": "Hero Banner",
-      "settings": {
-        "image": "shopify://shop_images/web_support-6290.webp",
-        "heading": "{{ page.title }}",
-        "heading_size_desktop": 56,
-        "heading_size_mobile": 32,
-        "heading_color": "#FFFFFF",
-        "width": "full",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "height_desktop": "custom",
-        "height_desktop_custom": 300,
-        "height_tablet": "custom",
-        "height_tablet_custom": 300,
-        "height_mobile": "custom",
-        "height_mobile_custom": 300,
-        "content_alignment": "left",
-        "overlay_color": "#000000",
-        "overlay_opacity": 50
-      }
-    },
-    "custom_liquid_Kinr9G": {
-      "type": "custom-liquid",
-      "name": "Custom Liquid",
-      "settings": {
-        "content": "<div id=\"591ua8dzcY6T_df__FA0Nw\" class=\"pxFormGenerator\" style=\"margin: 0 auto;\"></div>",
-        "page_width": "page",
-        "padding_top": 48,
-        "padding_bottom": 48,
+        "heading": "Warranty",
+        "lead": "ENSŌ products are built with thoughtful engineering, quality materials and reliable performance, and they are covered accordingly.",
+        "padding_top": 56,
+        "padding_bottom": 32,
         "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_bottom_mobile": 16
       }
     }
   },
-  "order": [
-    "main",
-    "hero_banner_wq47mR",
-    "custom_liquid_Kinr9G"
-  ]
+  "order": ["warranty_hero"]
 }

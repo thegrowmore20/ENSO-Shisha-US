@@ -1304,6 +1304,25 @@
         "name": "Help cards"
       }
     },
+    "warranty_hero": {
+      "name": "Warranty hero",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "lead": { "label": "Lead paragraph" }
+      },
+      "blocks": {
+        "tile": {
+          "name": "Stat tile",
+          "settings": {
+            "stat": { "label": "Stat" },
+            "description": { "label": "Description" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Warranty hero"
+      }
+    },
     "enso_experience": {
       "name": "ENSŌ Experience",
       "settings": {

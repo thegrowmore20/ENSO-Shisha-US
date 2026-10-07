@@ -1,0 +1,249 @@
+{%- liquid
+  assign heading    = section.settings.heading
+  assign lead       = section.settings.lead
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="wr">
+  <div class="wr-in">
+
+    {%- if heading != blank -%}
+      <h1 class="wr-heading">{{ heading }}</h1>
+    {%- endif -%}
+
+    {%- if lead != blank -%}
+      <p class="wr-lead">{{ lead }}</p>
+    {%- endif -%}
+
+    <div class="wr-tiles">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tile' -%}
+          <div class="wr-tile" {{ block.shopify_attributes }}>
+            <b>{{ block.settings.stat }}</b>
+            <span>{{ block.settings.description }}</span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .wr {
+    color: var(--color-text);
+  }
+
+  .wr-in {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .wr-heading {
+    margin: 0 0 12px;
+    font-family: var(--font-accent);
+    font-size: 56px;
+    line-height: 1.05;
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -.03em;
+  }
+
+  .wr-lead {
+    margin: 0 0 40px;
+    max-width: 60ch;
+    font-size: 17px;
+    line-height: 28px;
+    color: var(--color-text-muted);
+  }
+
+  .wr-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+
+  .wr-tile {
+    border-radius: 20px;
+    background: var(--color-background-raised);
+    padding: 28px 26px;
+  }
+
+  .wr-tile b {
+    display: block;
+    font-family: var(--font-accent);
+    font-size: 40px;
+    line-height: 1;
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -.02em;
+    margin-bottom: 10px;
+  }
+
+  .wr-tile span {
+    font-size: 15px;
+    line-height: 23px;
+    color: var(--color-text-muted);
+  }
+
+  @media screen and (max-width: 749px) {
+    .wr-in {
+      padding: 0 16px;
+    }
+
+    .wr-heading {
+      font-size: 40px;
+    }
+
+    .wr-lead {
+      font-size: 15px;
+      line-height: 24px;
+      margin-bottom: 28px;
+    }
+
+    .wr-tiles {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+
+    .wr-tile {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 20px;
+    }
+
+    .wr-tile b {
+      font-size: 30px;
+      margin: 0;
+      flex: none;
+      min-width: 84px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.warranty_hero.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.warranty_hero.settings.heading.label",
+      "default": "Warranty"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "lead",
+      "label": "t:sections.warranty_hero.settings.lead.label",
+      "default": "ENSŌ products are built with thoughtful engineering, quality materials and reliable performance, and they are covered accordingly."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "t:sections.warranty_hero.blocks.tile.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat",
+          "label": "t:sections.warranty_hero.blocks.tile.settings.stat.label",
+          "default": "2 years"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "t:sections.warranty_hero.blocks.tile.settings.description.label",
+          "default": "on ENSŌ products, for software errors, material defects and manufacturing faults"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.warranty_hero.presets.name",
+      "blocks": [
+        {
+          "type": "tile",
+          "settings": {
+            "stat": "2 years",
+            "description": "on ENSŌ products, for software errors, material defects and manufacturing faults"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "stat": "1 year",
+            "description": "on the ENSŌ battery, as a separate warranty"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "stat": "Return costs",
+            "description": "reasonable return costs are covered for valid warranty cases"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
