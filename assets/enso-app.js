@@ -2370,3 +2370,14 @@ function saEnsoReg(on){
   if(!note){
     const field = document.getElementById('regSerial').closest('.cr-field');
     field.insertAdjacentHTML('beforebegin', '<div class="sa-card2 sa-enso-note" id="saEnsoNote"><span class="sa-tag">Before you register</span><p>Please watch out for unauthorized resellers. If you bought from a retailer that listed ENSŌ below the ensoshisha.com price, the product is not eligible for warranty.</p></div>');
+    const play = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m10 8.5 5.5 3.5-5.5 3.5z" fill="currentColor" stroke="none"/></svg>';
+    scr.insertAdjacentHTML('beforeend', '<div class="sa-vids" id="saEnsoVids"><h2 class="sa-sw__h">Before your first session</h2><p class="sa-vids__lead">To get the best from your ENSŌ, watch these short tutorials.</p>'
+      + SA_ENSO_VIDS.map(([id, t, x]) => id
+        ? `<div class="sa-vid sa-vid--emb"><button type="button" class="sa-vid__pl" onclick="saVidPlay(this,'${id}')" aria-label="Play: ${t}" style="background-image:url(https://i.ytimg.com/vi/${id}/hqdefault.jpg)"><span class="sa-vid__ic">${play}</span></button><div class="sa-vid__tx"><b>${t}</b>${x ? `<small>${x}</small>` : ''}<a href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">Watch on YouTube ›</a></div></div>`
+        : `<div class="sa-vid sa-vid--warn"><span><b>${t}</b><small>${x}</small></span></div>`).join('') + '</div>');
+    note = document.getElementById('saEnsoNote'); vids = document.getElementById('saEnsoVids');
+  }
+  note.hidden = !on; vids.hidden = !on;
+}
+
+saInit();
