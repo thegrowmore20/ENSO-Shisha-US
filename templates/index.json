@@ -399,64 +399,42 @@
         "cta_link": "shopify://collections/accesories"
       }
     },
-    "help_cards": {
-      "type": "help-cards",
+    "enso_experience": {
+      "type": "split-showcase",
       "blocks": {
-        "card_guides": {
-          "type": "card",
+        "exp_block": {
+          "type": "column",
           "settings": {
-            "icon": "book",
-            "heading": "Guides and how-tos",
-            "body": "The first session step by step, packing the cup, temperatures, cleaning and firmware, in ENSŌ Experience.",
-            "link": "/pages/experience",
-            "button_symbol": "arrow"
-          }
-        },
-        "card_support": {
-          "type": "card",
-          "settings": {
-            "icon": "chat",
-            "heading": "Support",
-            "body": "A person answers at support@ensoshisha.eu. Guides, firmware and the manual live in ENSŌ Experience.",
-            "popup_body": "<h4>Ask us</h4><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version.</p><p><a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu ›</a></p><h4>Help yourself first</h4><p>The first session step by step, the full manual, cleaning and charging, and the firmware app live in ENSŌ Experience, made for the phone.</p><p><a href=\"/pages/experience\">Open ENSŌ Experience ›</a></p><p><a href=\"/pages/contact\">Support page ›</a></p>",
-            "button_symbol": "plus"
-          }
-        },
-        "card_warranty": {
-          "type": "card",
-          "settings": {
-            "icon": "shield",
-            "heading": "Warranty and returns",
-            "body": "Two years on the device, one year on the battery. 14 days to return an unopened box, 30 days an opened one.",
-            "popup_body": "<h4>What is covered</h4><p>The device, the cap and the electronics for two years, the battery pack for one. Cups, mesh screens and adapters are consumables.</p><h4>How a claim works</h4><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced unit ships back from the nearest warehouse.</p><p><a href=\"mailto:support@ensoshisha.eu?subject=Warranty\">Write to support ›</a></p><h4>Thirty days to decide</h4><p>Within 30 days of delivery you can return the device in its box for a full refund. Return shipping is on us in the EU and the US.</p><p><a href=\"/pages/warranty\">Full warranty policy ›</a></p>",
-            "button_symbol": "plus"
+            "image": "shopify://shop_images/enso-exp-tea.webp",
+            "heading": "ENSŌ Experience",
+            "heading_color": "#ffffff",
+            "subheading": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
+            "button": "Open ENSŌ Experience",
+            "button_url": "/pages/experience",
+            "button_style": "accent"
           }
         }
       },
-      "block_order": [
-        "card_guides",
-        "card_support",
-        "card_warranty"
-      ],
+      "block_order": ["exp_block"],
       "settings": {
-        "heading": "Before and after you buy",
-        "padding_top": 56,
-        "padding_bottom": 96,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "enso_experience": {
-      "type": "enso-experience-banner",
-      "settings": {
-        "heading": "ENSŌ Experience",
-        "text": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
-        "cta_label": "Open ENSŌ Experience",
-        "cta_link": "/pages/experience",
-        "padding_top": 0,
-        "padding_bottom": 40,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 24
+        "width": "full",
+        "height_desktop": "custom",
+        "height_desktop_custom": 560,
+        "height_tablet": "custom",
+        "height_tablet_custom": 560,
+        "height_mobile": "custom",
+        "height_mobile_custom": 560,
+        "content_alignment": "left",
+        "content_width_desktop": 600,
+        "content_width_tablet": 500,
+        "content_width_mobile": 0,
+        "heading_size_desktop": 44,
+        "heading_size_mobile": 30,
+        "overlay_color": "#000000",
+        "overlay_opacity": 35,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "image_gap": 24
       }
     },
     "instagram_feed": {
@@ -467,7 +445,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-0.webp",
             "video": "shopify://files/videos/ig-0.mp4",
-            "link": "https://www.instagram.com/reels/DP9sfM5kuZF/"
+            "link": "https://www.instagram.com/reels/DP9sfM5kuZF/",
+            "caption": ""
           }
         },
         "ig_2": {
@@ -475,7 +454,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-1.webp",
             "video": "shopify://files/videos/ig-1.mp4",
-            "link": "https://www.instagram.com/reel/DOrXNJAABsP/"
+            "link": "https://www.instagram.com/reel/DOrXNJAABsP/",
+            "caption": ""
           }
         },
         "ig_3": {
@@ -483,7 +463,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-2.webp",
             "video": "shopify://files/videos/ig-2.mp4",
-            "link": "https://www.instagram.com/reel/DQ2FWgpk4uE/"
+            "link": "https://www.instagram.com/reel/DQ2FWgpk4uE/",
+            "caption": ""
           }
         },
         "ig_4": {
@@ -491,7 +472,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-3.webp",
             "video": "shopify://files/videos/ig-3.mp4",
-            "link": "https://www.instagram.com/reel/DbIk6PkAwMD/"
+            "link": "https://www.instagram.com/reel/DbIk6PkAwMD/",
+            "caption": ""
           }
         },
         "ig_5": {
@@ -499,7 +481,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-4.webp",
             "video": "shopify://files/videos/ig-4.mp4",
-            "link": "https://www.instagram.com/reel/DYfENJns2FF/"
+            "link": "https://www.instagram.com/reel/DYfENJns2FF/",
+            "caption": ""
           }
         },
         "reel_LLzUAG": {
@@ -507,7 +490,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-5.webp",
             "video": "shopify://files/videos/ig-5.mp4",
-            "link": ""
+            "link": "",
+            "caption": ""
           }
         },
         "reel_P3UqCd": {
@@ -515,7 +499,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-6.webp",
             "video": "shopify://files/videos/ig-6.mp4",
-            "link": ""
+            "link": "",
+            "caption": ""
           }
         },
         "reel_hHwWpp": {
@@ -523,7 +508,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-7.webp",
             "video": "shopify://files/videos/ig-7.mp4",
-            "link": ""
+            "link": "",
+            "caption": ""
           }
         },
         "reel_PEFVeR": {
@@ -531,7 +517,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-8.webp",
             "video": "shopify://files/videos/ig-8.mp4",
-            "link": ""
+            "link": "",
+            "caption": ""
           }
         },
         "reel_U8DcmK": {
@@ -539,7 +526,8 @@
           "settings": {
             "thumbnail": "shopify://shop_images/ig-9.webp",
             "video": "shopify://files/videos/ig-9.mp4",
-            "link": ""
+            "link": "",
+            "caption": ""
           }
         }
       },
@@ -560,6 +548,7 @@
         "color_text": "{{ settings.color_palette.foreground }}",
         "eyebrow": "",
         "heading": "Follow us on Instagram",
+        "handle": "enso.future",
         "cta_label": "@enso.future",
         "cta_link": "https://instagram.com/enso.future"
       }
@@ -574,6 +563,56 @@
         "cta_link": "shopify://blogs/journal",
         "padding_top": 40,
         "padding_bottom": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "help_cards": {
+      "type": "help-cards",
+      "blocks": {
+        "card_guides": {
+          "type": "card",
+          "settings": {
+            "icon": "book",
+            "heading": "Guides and how-tos",
+            "body": "The first session step by step, packing the cup, temperatures, cleaning and firmware, in ENSŌ Experience.",
+            "link": "/pages/experience",
+            "popup_body": "",
+            "button_symbol": "arrow"
+          }
+        },
+        "card_support": {
+          "type": "card",
+          "settings": {
+            "icon": "chat",
+            "heading": "Support",
+            "body": "A person answers at support@ensoshisha.eu. Guides, firmware and the manual live in ENSŌ Experience.",
+            "link": "",
+            "popup_body": "<h4>Ask us</h4><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version.</p><p><a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu ›</a></p><h4>Help yourself first</h4><p>The first session step by step, the full manual, cleaning and charging, and the firmware app live in ENSŌ Experience, made for the phone.</p><p><a href=\"/pages/experience\">Open ENSŌ Experience ›</a></p><p><a href=\"/pages/contact\">Support page ›</a></p>",
+            "button_symbol": "plus"
+          }
+        },
+        "card_warranty": {
+          "type": "card",
+          "settings": {
+            "icon": "shield",
+            "heading": "Warranty and returns",
+            "body": "Two years on the device, one year on the battery. 14 days to return an unopened box, 30 days an opened one.",
+            "link": "",
+            "popup_body": "<h4>What is covered</h4><p>The device, the cap and the electronics for two years, the battery pack for one. Cups, mesh screens and adapters are consumables.</p><h4>How a claim works</h4><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced unit ships back from the nearest warehouse.</p><p><a href=\"mailto:support@ensoshisha.eu?subject=Warranty\">Write to support ›</a></p><h4>Thirty days to decide</h4><p>Within 30 days of delivery you can return the device in its box for a full refund. Return shipping is on us in the EU and the US.</p><p><a href=\"/pages/warranty\">Full warranty policy ›</a></p>",
+            "button_symbol": "plus"
+          }
+        }
+      },
+      "block_order": [
+        "card_guides",
+        "card_support",
+        "card_warranty"
+      ],
+      "settings": {
+        "heading": "Before and after you buy",
+        "padding_top": 56,
+        "padding_bottom": 96,
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 48
       }
