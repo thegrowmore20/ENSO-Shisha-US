@@ -3,12 +3,31 @@
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
 -%}
 
-<div class="page {{ scheme_class }} section-padding">
-  <div class="container page__inner">
-    <h1 class="h-section text-center">{{ page.title }}</h1>
-    <div class="body-text page__content">{{ page.content }}</div>
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{%- if section.settings.show_title or section.settings.show_content -%}
+  <div class="page {{ scheme_class }}">
+    <div class="container page__inner">
+      {%- if section.settings.show_title -%}
+        <h1 class="h-section text-center">{{ page.title }}</h1>
+      {%- endif -%}
+      {%- if section.settings.show_content and page.content != blank -%}
+        <div class="body-text page__content">{{ page.content }}</div>
+      {%- endif -%}
+    </div>
   </div>
-</div>
+{%- endif -%}
 
 {% stylesheet %}
   .page__inner {
@@ -27,6 +46,18 @@
   "tag": "section",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "t:sections.main-page.settings.show_title.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content",
+      "label": "t:sections.main-page.settings.show_content.label",
+      "default": true
+    },
+    {
       "type": "color",
       "id": "color_background",
       "label": "t:sections.all.background_color.label",
@@ -37,6 +68,54 @@
       "id": "color_text",
       "label": "t:sections.all.text_color.label",
       "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_desktop_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_mobile_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
     }
   ]
 }

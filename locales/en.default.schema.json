@@ -1644,7 +1644,15 @@
       "name": "Cart"
     },
     "main-page": {
-      "name": "Page"
+      "name": "Page",
+      "settings": {
+        "show_title": {
+          "label": "Show title"
+        },
+        "show_content": {
+          "label": "Show description"
+        }
+      }
     },
     "main-search": {
       "name": "Search results"
