@@ -1559,6 +1559,52 @@
         "name": "Journal"
       }
     },
+    "experience_device_guide": {
+      "name": "Experience Device Guide",
+      "settings": {
+        "header_page": { "content": "Page" },
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "description": { "label": "Description" },
+        "devh_label": { "label": "\"Guides by device\" label" },
+        "header_diamond": { "content": "ENSŌ Diamond" },
+        "diamond_image": { "label": "Image" },
+        "diamond_heading": { "label": "Heading" },
+        "diamond_description": { "label": "Description" },
+        "diamond_app_url": { "label": "App URL" },
+        "diamond_url_quickstart": { "label": "Quick start URL" },
+        "diamond_url_manual": { "label": "Full manual URL" },
+        "diamond_url_packing": { "label": "Pack the cup URL" },
+        "diamond_url_cleaning": { "label": "Cleaning URL" },
+        "diamond_url_troubleshoot": { "label": "Troubleshooting URL" },
+        "diamond_url_firmware": { "label": "Firmware update URL" },
+        "header_enso": { "content": "ENSŌ 2026" },
+        "enso_image": { "label": "Image" },
+        "enso_heading": { "label": "Heading" },
+        "enso_description": { "label": "Description" },
+        "enso_app_url": { "label": "App URL" },
+        "enso_url_quickstart": { "label": "Quick start URL" },
+        "enso_url_manual": { "label": "Full manual URL" },
+        "enso_url_troubleshoot": { "label": "Troubleshooting URL" },
+        "enso_url_flavour": { "label": "Flavour guide URL" },
+        "enso_url_video": { "label": "Video guides URL" },
+        "enso_url_accessories": { "label": "Accessories URL" },
+        "header_app": { "content": "ENSŌ App" },
+        "app_eyebrow": { "label": "Eyebrow" },
+        "app_heading": { "label": "Heading" },
+        "app_description": { "label": "Description" },
+        "app_cta_url": { "label": "Button URL" },
+        "app_cta_label": { "label": "Button label" },
+        "app_cta_note": { "label": "Button note" },
+        "app_register_url": { "label": "Warranty reg URL" },
+        "app_updates_url": { "label": "Software updates URL" },
+        "app_fix_url": { "label": "Troubleshooting URL" },
+        "app_recipes_url": { "label": "Recipes URL" }
+      },
+      "presets": {
+        "name": "Experience Device Guide"
+      }
+    },
     "contact": {
       "name": "Contact Form",
       "settings": {

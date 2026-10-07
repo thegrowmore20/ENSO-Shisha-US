@@ -1,0 +1,1063 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{%- liquid
+  assign diamond_img   = section.settings.diamond_image
+  assign diamond_head  = section.settings.diamond_heading  | default: 'ENSŌ Diamond'
+  assign diamond_desc  = section.settings.diamond_description | default: 'The electric heater for the hookah you already own. Quick start, packing, the full manual and firmware.'
+  assign diamond_app   = section.settings.diamond_app_url  | default: '#'
+  assign enso_img      = section.settings.enso_image
+  assign enso_head     = section.settings.enso_heading     | default: 'ENSŌ 2026 Edition'
+  assign enso_desc     = section.settings.enso_description | default: 'The all-in-one electric hookah. Quick start, the full manual, troubleshooting, video guides and support.'
+  assign enso_app      = section.settings.enso_app_url     | default: '#'
+  assign app_eyebrow   = section.settings.app_eyebrow      | default: 'The ENSŌ app'
+  assign app_head      = section.settings.app_heading      | default: 'Register, update, fix and create'
+  assign app_desc      = section.settings.app_description  | default: 'Quick start, the manual, troubleshooting, software updates, warranty registration and the blend maker, for the device you own.'
+  assign app_cta_url   = section.settings.app_cta_url      | default: '#'
+  assign app_cta_lbl   = section.settings.app_cta_label    | default: 'Open the ENSŌ app'
+  assign app_cta_note  = section.settings.app_cta_note     | default: 'For ENSŌ 2026 and ENSŌ Diamond, made for the phone'
+-%}
+
+<div class="xi-wrap" data-xi id="XiSection-{{ section.id }}">
+
+  <!-- Page header -->
+  <section class="xi-head">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="xi-eyebrow eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h1>{{ section.settings.heading | default: 'Guides for your ENSŌ' }}</h1>
+    {%- if section.settings.description != blank -%}
+      <p class="xi-desc">{{ section.settings.description }}</p>
+    {%- endif -%}
+  </section>
+
+  <!-- Search bar -->
+  <div class="xi-search">
+    <div class="xs">
+      <div class="xs__box">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          id="XiSearch-{{ section.id }}"
+          type="search"
+          placeholder="{{ 'sections.experience_device_guide.search_placeholder' | t }}"
+          autocomplete="off"
+          aria-label="{{ 'sections.experience_device_guide.search_placeholder' | t }}"
+          data-xi-search-input
+        >
+      </div>
+      <div id="XiResults-{{ section.id }}" class="xs__res" hidden data-xi-search-results></div>
+    </div>
+  </div>
+
+  <!-- Guides by device -->
+  {%- assign devh = section.settings.devh_label | default: 'Guides by device' -%}
+  <h2 class="xi-devh">{{ devh }}</h2>
+
+  <ul class="xh-list" role="list">
+
+    <!-- ENSŌ Diamond accordion -->
+    <li>
+      <details class="xh" id="diamond" data-xi-acc>
+        <summary>
+          {%- if diamond_img != blank -%}
+            <div class="xh__img">
+              {{- diamond_img | image_url: width: 600 | image_tag:
+                    alt: diamond_head,
+                    loading: 'lazy',
+                    widths: '300, 600',
+                    sizes: '(min-width: 750px) 300px, 50vw' -}}
+            </div>
+          {%- else -%}
+            <div class="xh__img xh__img--empty"></div>
+          {%- endif -%}
+          <div class="xh__txt">
+            <h2>{{ diamond_head }}</h2>
+            <p>{{ diamond_desc }}</p>
+          </div>
+          <span class="xh__open" aria-hidden="true">
+            <span class="o">{{ 'sections.experience_device_guide.show_guides' | t }}</span>
+            <span class="c">{{ 'sections.experience_device_guide.hide_guides' | t }}</span>
+          </span>
+        </summary>
+
+        <div class="xh__body-wrap">
+          <div class="xh__body">
+
+            <!-- In-app strip -->
+            <div class="xh__app">
+              <p class="xh__apph">{{ 'sections.experience_device_guide.in_app' | t }}</p>
+              <div class="xh__appg">
+                <a href="{{ section.settings.diamond_app_url | default: diamond_app }}#diamond-register">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 11 12 14 22 4"/></svg>
+                  <b>{{ 'sections.experience_device_guide.warranty_registration' | t }}</b>
+                </a>
+                <a href="{{ section.settings.diamond_app_url | default: diamond_app }}#diamond-updates">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-4.49"/></svg>
+                  <b>{{ 'sections.experience_device_guide.software_updates' | t }}</b>
+                </a>
+                <a href="{{ section.settings.diamond_app_url | default: diamond_app }}#diamond-recipes">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  <b>{{ 'sections.experience_device_guide.recipes' | t }}</b>
+                </a>
+              </div>
+              <a class="xh__appall" href="{{ diamond_app }}">{{ 'sections.experience_device_guide.open_app' | t }}</a>
+            </div>
+
+            <!-- Guide grid -->
+            <ul class="xh__grid" role="list">
+              {%- assign d_qs   = section.settings.diamond_url_quickstart   | default: '#' -%}
+              {%- assign d_man  = section.settings.diamond_url_manual       | default: '#' -%}
+              {%- assign d_pack = section.settings.diamond_url_packing      | default: '#' -%}
+              {%- assign d_cln  = section.settings.diamond_url_cleaning     | default: '#' -%}
+              {%- assign d_trbl = section.settings.diamond_url_troubleshoot | default: '#' -%}
+              {%- assign d_firm = section.settings.diamond_url_firmware     | default: '#' -%}
+              <li>
+                <a href="{{ d_qs }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  <b>{{ 'sections.experience_device_guide.quick_start' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.diamond_qs_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ d_man }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  <b>{{ 'sections.experience_device_guide.full_manual' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.diamond_manual_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ d_pack }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  <b>{{ 'sections.experience_device_guide.pack_cup' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.diamond_pack_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ d_cln }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                  <b>{{ 'sections.experience_device_guide.cleaning' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.diamond_clean_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ d_trbl }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  <b>{{ 'sections.experience_device_guide.troubleshooting' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.diamond_trbl_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ d_firm }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-4.49"/></svg>
+                  <b>{{ 'sections.experience_device_guide.software_updates' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.diamond_firm_desc' | t }}</span>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </details>
+    </li>
+
+    <!-- ENSŌ 2026 accordion -->
+    <li>
+      <details class="xh" id="enso" data-xi-acc>
+        <summary>
+          {%- if enso_img != blank -%}
+            <div class="xh__img">
+              {{- enso_img | image_url: width: 600 | image_tag:
+                    alt: enso_head,
+                    loading: 'lazy',
+                    widths: '300, 600',
+                    sizes: '(min-width: 750px) 300px, 50vw' -}}
+            </div>
+          {%- else -%}
+            <div class="xh__img xh__img--empty"></div>
+          {%- endif -%}
+          <div class="xh__txt">
+            <h2>{{ enso_head }}</h2>
+            <p>{{ enso_desc }}</p>
+          </div>
+          <span class="xh__open" aria-hidden="true">
+            <span class="o">{{ 'sections.experience_device_guide.show_guides' | t }}</span>
+            <span class="c">{{ 'sections.experience_device_guide.hide_guides' | t }}</span>
+          </span>
+        </summary>
+
+        <div class="xh__body-wrap">
+          <div class="xh__body">
+
+            <!-- In-app strip -->
+            <div class="xh__app">
+              <p class="xh__apph">{{ 'sections.experience_device_guide.in_app' | t }}</p>
+              <div class="xh__appg">
+                <a href="{{ section.settings.enso_app_url | default: enso_app }}#enso-register">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 11 12 14 22 4"/></svg>
+                  <b>{{ 'sections.experience_device_guide.warranty_registration' | t }}</b>
+                </a>
+                <a href="{{ section.settings.enso_app_url | default: enso_app }}#enso-recipes">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  <b>{{ 'sections.experience_device_guide.recipes' | t }}</b>
+                </a>
+              </div>
+              <a class="xh__appall" href="{{ enso_app }}">{{ 'sections.experience_device_guide.open_app' | t }}</a>
+            </div>
+
+            <!-- Guide grid -->
+            <ul class="xh__grid" role="list">
+              {%- assign e_qs   = section.settings.enso_url_quickstart   | default: '#' -%}
+              {%- assign e_man  = section.settings.enso_url_manual       | default: '#' -%}
+              {%- assign e_trbl = section.settings.enso_url_troubleshoot | default: '#' -%}
+              {%- assign e_flav = section.settings.enso_url_flavour      | default: '#' -%}
+              {%- assign e_vid  = section.settings.enso_url_video        | default: '#' -%}
+              {%- assign e_acc  = section.settings.enso_url_accessories  | default: '#' -%}
+              <li>
+                <a href="{{ e_qs }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  <b>{{ 'sections.experience_device_guide.quick_start' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.enso_qs_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ e_man }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  <b>{{ 'sections.experience_device_guide.full_manual' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.enso_manual_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ e_trbl }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  <b>{{ 'sections.experience_device_guide.troubleshooting' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.enso_trbl_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ e_flav }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <b>{{ 'sections.experience_device_guide.flavour_guide' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.enso_flav_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ e_vid }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><polygon points="8 21 16 21 12 17"/></svg>
+                  <b>{{ 'sections.experience_device_guide.video_guides' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.enso_vid_desc' | t }}</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ e_acc }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                  <b>{{ 'sections.experience_device_guide.accessories' | t }}</b>
+                  <span>{{ 'sections.experience_device_guide.enso_acc_desc' | t }}</span>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </details>
+    </li>
+
+  </ul>
+
+  <!-- ENSŌ App section -->
+  <section class="xapp xapp--below" id="app" aria-labelledby="XiAppH-{{ section.id }}">
+    <div class="xapp__txt">
+      {%- if app_eyebrow != blank -%}
+        <p class="eyebrow">{{ app_eyebrow }}</p>
+      {%- endif -%}
+      <h2 id="XiAppH-{{ section.id }}">{{ app_head }}</h2>
+      {%- if app_desc != blank -%}
+        <p>{{ app_desc }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="xapp__grid">
+      {%- assign a_reg = section.settings.app_register_url | default: '#' -%}
+      {%- assign a_upd = section.settings.app_updates_url  | default: '#' -%}
+      {%- assign a_fix = section.settings.app_fix_url      | default: '#' -%}
+      {%- assign a_rec = section.settings.app_recipes_url  | default: '#' -%}
+      <a class="xapp__go" href="{{ a_reg }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 11 12 14 22 4"/></svg>
+        <b>{{ 'sections.experience_device_guide.warranty_registration' | t }}</b>
+        <span>{{ 'sections.experience_device_guide.app_register_desc' | t }}</span>
+      </a>
+      <a class="xapp__go" href="{{ a_upd }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-4.49"/></svg>
+        <b>{{ 'sections.experience_device_guide.software_updates' | t }}</b>
+        <span>{{ 'sections.experience_device_guide.app_updates_desc' | t }}</span>
+      </a>
+      <a class="xapp__go" href="{{ a_fix }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <b>{{ 'sections.experience_device_guide.troubleshooting' | t }}</b>
+        <span>{{ 'sections.experience_device_guide.app_fix_desc' | t }}</span>
+      </a>
+      <a class="xapp__go" href="{{ a_rec }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <b>{{ 'sections.experience_device_guide.recipes' | t }}</b>
+        <span>{{ 'sections.experience_device_guide.app_recipes_desc' | t }}</span>
+      </a>
+    </div>
+
+    <div class="xapp__foot">
+      <a class="btn btn--primary" href="{{ app_cta_url }}">{{ app_cta_lbl }}</a>
+      {%- if app_cta_note != blank -%}
+        <small>{{ app_cta_note }}</small>
+      {%- endif -%}
+    </div>
+  </section>
+
+</div>
+
+{% stylesheet %}
+  /* ── Wrapper ── */
+  .xi-wrap {
+    max-width: var(--page-width, 1400px);
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 40px);
+  }
+
+  /* ── Page header ── */
+  .xi-head {
+    max-width: 720px;
+    padding-bottom: 28px;
+  }
+  .xi-eyebrow {
+    color: var(--palette-sand, #c8943a);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 12px;
+  }
+  .xi-head h1 {
+    font-family: var(--font-accent);
+    font-size: clamp(36px, 5vw, 48px);
+    line-height: 1.08;
+    font-weight: var(--font-weight-heavy);
+    margin: 0 0 16px;
+    color: var(--color-text);
+  }
+  .xi-desc {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* ── Search ── */
+  .xi-search { margin-bottom: 48px; }
+  .xs { position: relative; max-width: 600px; }
+  .xs__box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 56px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0 22px;
+    background: #fff;
+    transition: border-color .2s;
+  }
+  .xs__box:focus-within { border-color: var(--color-text); }
+  .xs__box svg { flex-shrink: 0; color: var(--color-text-muted); }
+  .xs__box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    font-family: var(--font-body);
+    color: var(--color-text);
+  }
+  .xs__box input::placeholder { color: var(--color-text-muted); }
+  .xs__res {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0; right: 0;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md, 0 8px 24px rgba(0,0,0,.1));
+    z-index: 100;
+  }
+  .xs__res a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .xs__res a:last-child { border-bottom: none; }
+  .xs__res a:hover, .xs__res a:focus-visible { background: var(--color-background-raised, #f5f5f5); }
+  .xs__res small { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--color-text-muted); }
+  .xs__res b { font-size: 14px; font-weight: var(--font-weight-semibold); }
+  .xs__res span { font-size: 13px; color: var(--color-text-muted); }
+  .xs__none { padding: 14px 18px; font-size: 14px; color: var(--color-text-muted); margin: 0; }
+
+  /* ── Guides heading ── */
+  .xi-devh {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin: 0 0 16px;
+  }
+
+  /* ── Accordion list ── */
+  .xh-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 80px;
+    border-top: 1px solid var(--color-border);
+  }
+  .xh-list > li { border-bottom: 1px solid var(--color-border); }
+
+  .xh summary {
+    display: grid;
+    grid-template-columns: 280px 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .xh summary::-webkit-details-marker { display: none; }
+  .xh summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+
+  .xh__img {
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-background-raised, #f5f5f5);
+  }
+  .xh__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .xh__img--empty { background: var(--color-background-raised, #f5f5f5); }
+
+  .xh__txt h2 {
+    font-family: var(--font-accent);
+    font-size: 28px;
+    line-height: 1.12;
+    font-weight: var(--font-weight-heavy);
+    margin: 0 0 10px;
+    color: var(--color-text);
+  }
+  .xh__txt p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .xh__open {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: 1.5px solid var(--color-text);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+  }
+  .xh__open .c { display: none; }
+  .xh[open] .xh__open .o { display: none; }
+  .xh[open] .xh__open .c { display: inline; }
+
+  /* ── Smooth body animation ── */
+  .xh__body-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .35s ease;
+  }
+  .xh[open] .xh__body-wrap { grid-template-rows: 1fr; }
+  .xh__body-wrap > .xh__body { overflow: hidden; }
+  .xh__body { padding: 4px 24px 32px; }
+
+  /* ── In-app strip ── */
+  .xh__app {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    background: var(--palette-linen, #f5f2eb);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .xh__apph {
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--color-text-muted);
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .xh__appg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+  }
+  .xh__appg a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #fff;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    border: 1px solid transparent;
+    transition: border-color .2s;
+  }
+  .xh__appg a:hover, .xh__appg a:focus-visible { border-color: var(--color-text); }
+  .xh__appg a svg { stroke: var(--palette-sand, #c8943a); flex-shrink: 0; }
+  .xh__appall {
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── Guide grid ── */
+  .xh__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .xh__grid a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 18px 22px;
+    background: #fff;
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .xh__grid a:hover, .xh__grid a:focus-visible {
+    border-color: var(--color-text);
+    box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,.07));
+  }
+  .xh__grid a svg { stroke: var(--palette-sand, #c8943a); margin-bottom: 4px; }
+  .xh__grid b { font-size: 17px; line-height: 1.3; font-weight: var(--font-weight-semibold); }
+  .xh__grid span { font-size: 13px; line-height: 1.5; color: var(--color-text-muted); }
+
+  /* ── App section ── */
+  .xapp {
+    background: var(--palette-linen, #f5f2eb);
+    border-radius: 28px;
+    padding: 36px;
+    display: grid;
+    gap: 28px;
+  }
+  .xapp__txt { max-width: 680px; }
+  .xapp__txt .eyebrow {
+    color: var(--palette-sand, #c8943a);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 12px;
+  }
+  .xapp__txt h2 {
+    font-family: var(--font-accent);
+    font-size: 32px;
+    line-height: 1.1;
+    font-weight: var(--font-weight-heavy);
+    margin: 0 0 12px;
+    color: var(--color-text);
+  }
+  .xapp__txt p { font-size: 15px; line-height: 1.65; color: var(--color-text-muted); margin: 0; }
+  .xapp__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .xapp__go {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--color-background);
+    border-radius: 20px;
+    padding: 22px 20px 24px;
+    text-decoration: none;
+    color: var(--color-text);
+    border: 1px solid transparent;
+    transition: border-color .2s;
+  }
+  .xapp__go:hover, .xapp__go:focus-visible { border-color: var(--color-text); }
+  .xapp__go svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: var(--palette-sand, #c8943a);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 8px;
+  }
+  .xapp__go b    { font-size: 17px; line-height: 1.3; font-weight: var(--font-weight-semibold); }
+  .xapp__go span { font-size: 14px; line-height: 1.55; color: var(--color-text-muted); }
+  .xapp__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+  }
+  .xapp__foot small { font-size: 13px; color: var(--color-text-muted); }
+  .xapp--below { margin: 64px 0 0; }
+
+  /* ── Responsive ── */
+  @media screen and (max-width: 749px) {
+    .xi-wrap { padding: 0 16px; }
+    .xi-head { padding-bottom: 20px; }
+    .xi-head h1 { font-size: 34px; line-height: 1.12; }
+    .xi-search { margin-bottom: 32px; }
+    .xs__box { height: 52px; }
+
+    .xh summary {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+    }
+    .xh__img { aspect-ratio: 16/10; }
+    .xh__txt h2 { font-size: 26px; }
+    .xh__open { justify-self: start; }
+    .xh__body { padding: 4px 16px 24px; }
+    .xh__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .xh__grid a { padding: 16px 14px 18px; }
+    .xh__grid b { font-size: 15px; }
+    .xh__grid span { font-size: 12px; }
+    .xh__app { flex-direction: column; align-items: flex-start; padding: 14px; gap: 10px; }
+    .xh__appg { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+    .xh__appg a { border-radius: 14px; padding: 10px 14px; }
+
+    .xh-list { padding-bottom: 40px; }
+
+    .xapp { padding: 24px 16px; gap: 20px; border-radius: 20px; }
+    .xapp__txt h2 { font-size: 28px; }
+    .xapp__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .xapp__go { padding: 18px 14px 20px; border-radius: 16px; }
+    .xapp__go b  { font-size: 15px; }
+    .xapp__go span { font-size: 13px; }
+    .xapp--below { margin-top: 40px; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    /* ── Accordion (smooth + exclusive + hash routing) ── */
+    var sections = document.querySelectorAll('[data-xi]');
+    sections.forEach(function (wrap) {
+      var accs = wrap.querySelectorAll('[data-xi-acc]');
+
+      accs.forEach(function (det) {
+        var sum = det.querySelector('summary');
+        sum.addEventListener('click', function (e) {
+          e.preventDefault();
+          var wasOpen = det.hasAttribute('open');
+          accs.forEach(function (d) { d.removeAttribute('open'); });
+          if (!wasOpen) det.setAttribute('open', '');
+        });
+      });
+
+      function openId(id) {
+        accs.forEach(function (d) {
+          if (d.id === id) { d.setAttribute('open', ''); }
+          else { d.removeAttribute('open'); }
+        });
+      }
+
+      var h = (location.hash || '').slice(1);
+      if (h === 'diamond' || h === 'enso') openId(h);
+
+      window.addEventListener('hashchange', function () {
+        var k = location.hash.slice(1);
+        if (k === 'diamond' || k === 'enso') openId(k);
+      });
+    });
+
+    /* ── Search ── */
+    document.querySelectorAll('[data-xi]').forEach(function (wrap) {
+      var input = wrap.querySelector('[data-xi-search-input]');
+      var res   = wrap.querySelector('[data-xi-search-results]');
+      if (!input || !res) return;
+
+      var idx = [];
+      wrap.querySelectorAll('.xh__grid a').forEach(function (a) {
+        var d = a.closest('[data-xi-acc]');
+        var k = (d && d.id === 'diamond') ? 'Diamond guide' : 'ENSŌ 2026 guide';
+        idx.push({
+          k: k,
+          t: (a.querySelector('b') || a).textContent,
+          s: ((a.querySelector('span') || {}).textContent || ''),
+          u: a.getAttribute('href')
+        });
+      });
+
+      function esc(x) {
+        return String(x).replace(/[&<>"]/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+      }
+
+      function run() {
+        var v = input.value.trim().toLowerCase();
+        if (!v) { res.hidden = true; res.innerHTML = ''; return; }
+        var ws = v.split(/\s+/);
+        var hits = idx.map(function (x) {
+          var t = (x.t + ' ' + x.s + ' ' + x.k).toLowerCase();
+          if (!ws.every(function (w) { return t.indexOf(w) >= 0; })) return null;
+          var sc = ws.reduce(function (a, w) {
+            return a + (x.t.toLowerCase().indexOf(w) >= 0 ? 2 : 1);
+          }, 0);
+          return { x: x, sc: sc };
+        }).filter(Boolean).sort(function (a, b) { return b.sc - a.sc; }).slice(0, 8);
+
+        res.hidden = false;
+        res.innerHTML = hits.length
+          ? hits.map(function (h) {
+              return '<a href="' + esc(h.x.u) + '">'
+                + '<small>' + esc(h.x.k) + '</small>'
+                + '<b>' + esc(h.x.t) + '</b>'
+                + (h.x.s ? '<span>' + esc(h.x.s.slice(0, 140)) + (h.x.s.length > 140 ? '…' : '') + '</span>' : '')
+                + '</a>';
+            }).join('')
+          : '<p class="xs__none">No matches found.</p>';
+      }
+
+      input.addEventListener('input', run);
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { input.value = ''; run(); }
+      });
+    });
+
+    /* ── Animated search placeholder ── */
+    document.querySelectorAll('[data-xi-search-input]').forEach(function (q) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var Q = [
+        'Will Diamond fit my hookah?',
+        'How long does the battery last?',
+        'What temperature should I use?',
+        'How do I clean the chamber?',
+        'What is the warranty?',
+        'How do I update the firmware?',
+        'How much tobacco goes in the cup?',
+        'Can I take it on a plane?'
+      ];
+      var base = q.getAttribute('placeholder');
+      var i = 0, c = 0, del = false, t = null, stopped = false;
+
+      function tick() {
+        if (stopped) return;
+        var w = Q[i];
+        if (!del) {
+          c++;
+          q.placeholder = w.slice(0, c);
+          if (c === w.length) { del = true; t = setTimeout(tick, 1600); return; }
+          t = setTimeout(tick, 55);
+        } else {
+          c--;
+          q.placeholder = c ? w.slice(0, c) : ' ';
+          if (c === 0) { del = false; i = (i + 1) % Q.length; t = setTimeout(tick, 350); return; }
+          t = setTimeout(tick, 25);
+        }
+      }
+
+      q.addEventListener('focus', function () { stopped = true; clearTimeout(t); q.placeholder = base; });
+      q.addEventListener('blur', function () { stopped = false; tick(); });
+      tick();
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.experience_device_guide.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.experience_device_guide.settings.header_page.content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.experience_device_guide.settings.eyebrow.label",
+      "default": "ENSŌ Experience"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.experience_device_guide.settings.heading.label",
+      "default": "Guides for your ENSŌ"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:sections.experience_device_guide.settings.description.label",
+      "default": "Manuals, first steps, packing, cleaning and support for every owner."
+    },
+    {
+      "type": "text",
+      "id": "devh_label",
+      "label": "t:sections.experience_device_guide.settings.devh_label.label",
+      "default": "Guides by device"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.experience_device_guide.settings.header_diamond.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "diamond_image",
+      "label": "t:sections.experience_device_guide.settings.diamond_image.label"
+    },
+    {
+      "type": "text",
+      "id": "diamond_heading",
+      "label": "t:sections.experience_device_guide.settings.diamond_heading.label",
+      "default": "ENSŌ Diamond"
+    },
+    {
+      "type": "textarea",
+      "id": "diamond_description",
+      "label": "t:sections.experience_device_guide.settings.diamond_description.label",
+      "default": "The electric heater for the hookah you already own. Quick start, packing, the full manual and firmware."
+    },
+    {
+      "type": "url",
+      "id": "diamond_app_url",
+      "label": "t:sections.experience_device_guide.settings.diamond_app_url.label"
+    },
+    {
+      "type": "url",
+      "id": "diamond_url_quickstart",
+      "label": "t:sections.experience_device_guide.settings.diamond_url_quickstart.label"
+    },
+    {
+      "type": "url",
+      "id": "diamond_url_manual",
+      "label": "t:sections.experience_device_guide.settings.diamond_url_manual.label"
+    },
+    {
+      "type": "url",
+      "id": "diamond_url_packing",
+      "label": "t:sections.experience_device_guide.settings.diamond_url_packing.label"
+    },
+    {
+      "type": "url",
+      "id": "diamond_url_cleaning",
+      "label": "t:sections.experience_device_guide.settings.diamond_url_cleaning.label"
+    },
+    {
+      "type": "url",
+      "id": "diamond_url_troubleshoot",
+      "label": "t:sections.experience_device_guide.settings.diamond_url_troubleshoot.label"
+    },
+    {
+      "type": "url",
+      "id": "diamond_url_firmware",
+      "label": "t:sections.experience_device_guide.settings.diamond_url_firmware.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.experience_device_guide.settings.header_enso.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "enso_image",
+      "label": "t:sections.experience_device_guide.settings.enso_image.label"
+    },
+    {
+      "type": "text",
+      "id": "enso_heading",
+      "label": "t:sections.experience_device_guide.settings.enso_heading.label",
+      "default": "ENSŌ 2026 Edition"
+    },
+    {
+      "type": "textarea",
+      "id": "enso_description",
+      "label": "t:sections.experience_device_guide.settings.enso_description.label",
+      "default": "The all-in-one electric hookah. Quick start, the full manual, troubleshooting, video guides and support."
+    },
+    {
+      "type": "url",
+      "id": "enso_app_url",
+      "label": "t:sections.experience_device_guide.settings.enso_app_url.label"
+    },
+    {
+      "type": "url",
+      "id": "enso_url_quickstart",
+      "label": "t:sections.experience_device_guide.settings.enso_url_quickstart.label"
+    },
+    {
+      "type": "url",
+      "id": "enso_url_manual",
+      "label": "t:sections.experience_device_guide.settings.enso_url_manual.label"
+    },
+    {
+      "type": "url",
+      "id": "enso_url_troubleshoot",
+      "label": "t:sections.experience_device_guide.settings.enso_url_troubleshoot.label"
+    },
+    {
+      "type": "url",
+      "id": "enso_url_flavour",
+      "label": "t:sections.experience_device_guide.settings.enso_url_flavour.label"
+    },
+    {
+      "type": "url",
+      "id": "enso_url_video",
+      "label": "t:sections.experience_device_guide.settings.enso_url_video.label"
+    },
+    {
+      "type": "url",
+      "id": "enso_url_accessories",
+      "label": "t:sections.experience_device_guide.settings.enso_url_accessories.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.experience_device_guide.settings.header_app.content"
+    },
+    {
+      "type": "text",
+      "id": "app_eyebrow",
+      "label": "t:sections.experience_device_guide.settings.app_eyebrow.label",
+      "default": "The ENSŌ app"
+    },
+    {
+      "type": "text",
+      "id": "app_heading",
+      "label": "t:sections.experience_device_guide.settings.app_heading.label",
+      "default": "Register, update, fix and create"
+    },
+    {
+      "type": "textarea",
+      "id": "app_description",
+      "label": "t:sections.experience_device_guide.settings.app_description.label",
+      "default": "Quick start, the manual, troubleshooting, software updates, warranty registration and the blend maker, for the device you own. Add it to your home screen and it is one tap away."
+    },
+    {
+      "type": "url",
+      "id": "app_cta_url",
+      "label": "t:sections.experience_device_guide.settings.app_cta_url.label"
+    },
+    {
+      "type": "text",
+      "id": "app_cta_label",
+      "label": "t:sections.experience_device_guide.settings.app_cta_label.label",
+      "default": "Open the ENSŌ app"
+    },
+    {
+      "type": "text",
+      "id": "app_cta_note",
+      "label": "t:sections.experience_device_guide.settings.app_cta_note.label",
+      "default": "For ENSŌ 2026 and ENSŌ Diamond, made for the phone"
+    },
+    {
+      "type": "url",
+      "id": "app_register_url",
+      "label": "t:sections.experience_device_guide.settings.app_register_url.label"
+    },
+    {
+      "type": "url",
+      "id": "app_updates_url",
+      "label": "t:sections.experience_device_guide.settings.app_updates_url.label"
+    },
+    {
+      "type": "url",
+      "id": "app_fix_url",
+      "label": "t:sections.experience_device_guide.settings.app_fix_url.label"
+    },
+    {
+      "type": "url",
+      "id": "app_recipes_url",
+      "label": "t:sections.experience_device_guide.settings.app_recipes_url.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_desktop_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_mobile_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.experience_device_guide.presets.name"
+    }
+  ]
+}
+{% endschema %}
