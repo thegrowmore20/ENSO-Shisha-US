@@ -75,7 +75,27 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 48
       }
+    },
+    "warranty_cta": {
+      "type": "warranty-cta",
+      "blocks": {
+        "item_1": { "type": "item", "settings": { "text": "your order number and details" } },
+        "item_2": { "type": "item", "settings": { "text": "the product" } },
+        "item_3": { "type": "item", "settings": { "text": "a description of the issue" } },
+        "item_4": { "type": "item", "settings": { "text": "photos or a short video, if you have them" } }
+      },
+      "block_order": ["item_1", "item_2", "item_3", "item_4"],
+      "settings": {
+        "heading": "Need help with a claim?",
+        "body_text": "Write to us with:",
+        "btn_label": "support@ensoshisha.eu",
+        "btn_email": "support@ensoshisha.eu",
+        "padding_top": 0,
+        "padding_bottom": 96,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64
+      }
     }
   },
-  "order": ["warranty_hero", "warranty_coverage", "warranty_claim", "warranty_returns"]
+  "order": ["warranty_hero", "warranty_coverage", "warranty_claim", "warranty_returns", "warranty_cta"]
 }

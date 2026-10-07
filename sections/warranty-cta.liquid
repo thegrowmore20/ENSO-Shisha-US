@@ -1,0 +1,223 @@
+{%- liquid
+  assign heading   = section.settings.heading
+  assign body_text = section.settings.body_text
+  assign btn_label = section.settings.btn_label
+  assign btn_email = section.settings.btn_email
+  assign btn_href  = 'mailto:' | append: btn_email
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="wr-in">
+  <div class="wr-cta">
+
+    <div class="wr-cta__body">
+      {%- if heading != blank -%}
+        <h2 class="wr-cta__heading">{{ heading }}</h2>
+      {%- endif -%}
+      {%- if body_text != blank -%}
+        <p class="wr-cta__intro">{{ body_text }}</p>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="wr-cta__list">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    {%- if btn_email != blank -%}
+      <a class="wr-btn" href="{{ btn_href }}">
+        {{- btn_label | default: btn_email -}}
+      </a>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .wr-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 32px;
+  }
+
+  .wr-cta__heading {
+    margin: 0 0 6px;
+    font-family: var(--font-accent);
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -.02em;
+  }
+
+  .wr-cta__intro {
+    margin: 0;
+    font-size: 15px;
+    line-height: 25px;
+  }
+
+  .wr-cta__list {
+    list-style: disc;
+    margin: 10px 0 0;
+    padding-left: 20px;
+    font-size: 15px;
+    line-height: 25px;
+    color: var(--color-text-muted);
+  }
+
+  .wr-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 52px;
+    padding: 0 28px;
+    border-radius: var(--radius-pill);
+    background: var(--color-text);
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+
+  .wr-btn:hover {
+    background: var(--color-text-muted);
+  }
+
+  .wr-in a:focus-visible {
+    outline: 2px solid #96671f;
+    outline-offset: 3px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .wr-cta {
+      padding: 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.warranty_cta.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.warranty_cta.settings.heading.label",
+      "default": "Need help with a claim?"
+    },
+    {
+      "type": "text",
+      "id": "body_text",
+      "label": "t:sections.warranty_cta.settings.body_text.label",
+      "default": "Write to us with:"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.warranty_cta.settings.btn_header.content"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "t:sections.warranty_cta.settings.btn_label.label",
+      "default": "support@ensoshisha.eu"
+    },
+    {
+      "type": "text",
+      "id": "btn_email",
+      "label": "t:sections.warranty_cta.settings.btn_email.label",
+      "default": "support@ensoshisha.eu"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.warranty_cta.blocks.item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.warranty_cta.blocks.item.settings.text.label",
+          "default": "List item"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.warranty_cta.presets.name",
+      "blocks": [
+        { "type": "item", "settings": { "text": "your order number and details" } },
+        { "type": "item", "settings": { "text": "the product" } },
+        { "type": "item", "settings": { "text": "a description of the issue" } },
+        { "type": "item", "settings": { "text": "photos or a short video, if you have them" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

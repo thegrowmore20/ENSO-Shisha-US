@@ -1304,6 +1304,27 @@
         "name": "Help cards"
       }
     },
+    "warranty_cta": {
+      "name": "Warranty CTA",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "body_text": { "label": "Intro text" },
+        "btn_header": { "content": "Button" },
+        "btn_label": { "label": "Button label" },
+        "btn_email": { "label": "Email address" }
+      },
+      "blocks": {
+        "item": {
+          "name": "List item",
+          "settings": {
+            "text": { "label": "Item text" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Warranty CTA"
+      }
+    },
     "warranty_returns": {
       "name": "Warranty returns",
       "settings": {
