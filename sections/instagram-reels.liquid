@@ -132,18 +132,6 @@
 
       <!-- Footer — overlaid at bottom of video -->
       <div class="igv__foot">
-        <span class="igv__stat igv__stat--likes">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M12 21c0 0-7.5-4.6-9.5-9.3C1 8 3.6 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.6 0 6.2 3.5 4.7 7.2C19.5 16.4 12 21 12 21z"/>
-          </svg>
-          <span data-ig-likes-count></span>
-        </span>
-        <span class="igv__stat igv__stat--comments">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/>
-          </svg>
-          <span data-ig-comments-count></span>
-        </span>
         <button class="igv__snd" type="button" aria-label="Sound on" hidden>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9H4z"/>
@@ -459,22 +447,6 @@
     gap: 14px;
   }
 
-  .igv__stat {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: var(--font-weight-semibold);
-    color: #fff;
-  }
-
-  .igv__stat svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-  }
-
   /* Mute button */
   .igv__snd {
     margin-left: auto;
@@ -719,17 +691,11 @@
 
       const videoSrc = reel.dataset.igVideo || '';
       const igLink = reel.dataset.igLink || '#';
-      const likes = reel.dataset.igLikes || '';
-      const comments = reel.dataset.igComments || '';
       const caption = reel.dataset.igCaption || '';
 
       if (this.#modalHref) this.#modalHref.href = igLink;
 
-      const likesEl = this.#modal.querySelector('[data-ig-likes-count]');
-      const commentsEl = this.#modal.querySelector('[data-ig-comments-count]');
       const captionEl = this.#modal.querySelector('[data-ig-caption]');
-      if (likesEl) likesEl.textContent = likes;
-      if (commentsEl) commentsEl.textContent = comments;
       if (captionEl) captionEl.textContent = caption;
 
       const sndBtn = this.#modal.querySelector('.igv__snd');
