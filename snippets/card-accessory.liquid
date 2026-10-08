@@ -5,22 +5,33 @@
 {%- enddoc -%}
 
 {%- liquid
-  assign variant = product.variants.first
-  assign img = product.featured_image
-  assign img2 = product.images[1]
-  assign description = product.description | strip_html | strip | truncate: 140
+  assign variant = product.selected_or_first_available_variant
+  assign img     = product.featured_image
+  assign img2    = product.images[1]
+  assign popup_compat = product.metafields.custom.compatiblity_with
 -%}
+
+{%- capture img_url_list -%}
+  {%- for pimg in product.images limit: 5 -%}
+    {%- unless forloop.first -%};{%- endunless -%}
+    {{- pimg | image_url: width: 800 -}}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture popup_headline -%}{{ product.metafields.custom.headline | metafield_tag }}{%- endcapture -%}
+{%- capture popup_shortdesc -%}{{ product.metafields.custom.short_description | metafield_tag }}{%- endcapture -%}
 
 <article class="acc-card"
   data-popup-title="{{ product.title | escape }}"
-  data-popup-img="{{ product.featured_image | image_url: width: 800 }}"
-  data-popup-img-alt="{{ product.featured_image.alt | default: product.title | escape }}"
+  data-popup-images="{{ img_url_list | strip }}"
+  data-popup-img-alt="{{ img.alt | default: product.title | escape }}"
   data-popup-price="{{ product.price | money }}"
-  data-popup-variant="{{ product.selected_or_first_available_variant.id }}"
+  data-popup-variant="{{ variant.id }}"
   data-popup-url="{{ product.url }}"
   data-popup-available="{{ product.available }}"
-  data-popup-desc="{{ product.description | escape }}"
-  data-popup-fits="{{ product.metafields.custom.fits | escape }}"
+  data-popup-compat="{{ popup_compat | escape }}"
+  data-popup-headline="{{ popup_headline | escape }}"
+  data-popup-shortdesc="{{ popup_shortdesc | escape }}"
 >
   <a class="acc-card__img" href="{{ product.url }}" tabindex="-1">
     {%- if img != blank -%}
@@ -51,7 +62,7 @@
   </a>
 
   <h3 class="acc-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-  <p class="acc-card__desc">{{ description }}</p>
+  <p class="acc-card__desc">{{ product.description | strip_html | strip | truncate: 140 }}</p>
 
   <div class="acc-card__foot">
     <div class="acc-card__price">
