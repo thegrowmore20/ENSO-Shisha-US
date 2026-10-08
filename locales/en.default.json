@@ -62,7 +62,9 @@
     "unit_price_separator": "per",
     "breadcrumbs": "Breadcrumbs",
     "new_tab": "(opens in a new tab)",
-    "slide_position": "Slide {{ index }} of {{ total }}"
+    "slide_position": "Slide {{ index }} of {{ total }}",
+    "slide": "Slide",
+    "carousel": "Carousel"
   },
   "header": {
     "menu": "Menu",
@@ -93,7 +95,9 @@
       "share": "Share",
       "link_copied": "Link copied",
       "shop_now": "Shop now",
-      "pre_order": "Pre-order"
+      "pre_order": "Pre-order",
+      "view_full_details": "View full details",
+      "quick_view": "Quick view"
     }
   },
   "newsletter": {
