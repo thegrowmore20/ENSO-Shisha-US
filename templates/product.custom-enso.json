@@ -331,6 +331,39 @@
     },
     "help": {
       "type": "help-cards",
+      "blocks": {
+        "card_warranty": {
+          "type": "card",
+          "settings": {
+            "icon": "shield",
+            "heading": "Warranty and returns",
+            "body": "Two years on Diamond, one year on the battery. 14 days unopened, 30 days opened to return.",
+            "popup_body": "<p><strong>What is covered</strong></p><p>The device, the heater and the electronics for two years, the battery for one. Cups, mesh screens and mouthpieces are consumables and are sold separately.</p><p><strong>How a claim works</strong></p><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced unit ships back from the nearest warehouse. <a href=\"mailto:support@ensoshisha.eu?subject=Warranty\">Write to support</a></p><p><strong>Returns</strong></p><p>14 days from delivery for an unopened box, 30 days for an opened one. Write to support first; the address and the steps are on the warranty page. <a href=\"/pages/warranty\">Warranty and returns</a></p>",
+            "button_symbol": "plus"
+          }
+        },
+        "card_support": {
+          "type": "card",
+          "settings": {
+            "icon": "chat",
+            "heading": "Support",
+            "body": "A person answers at support@ensoshisha.eu. Guides, firmware and the manual live in ENSŌ Experience.",
+            "popup_body": "<p><strong>Ask us</strong></p><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version from the Battery screen. <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a></p><p><strong>Help yourself first</strong></p><p>Quick Start for the first session, the full manual, cleaning and charging, and the firmware page are in ENSŌ Experience, made for the phone. <a href=\"/pages/enso-experience\">Open ENSŌ Experience</a></p><p><strong>Firmware</strong></p><p>Updates come over USB-C from a page on ensoshisha.eu. What the first owners ask for shapes what the next update brings.</p>",
+            "button_symbol": "plus"
+          }
+        },
+        "card_wholesale": {
+          "type": "card",
+          "settings": {
+            "icon": "building",
+            "heading": "Wholesale and distribution",
+            "body": "Lounges, shops and distributors: one contact for pricing, demo units and territory questions.",
+            "popup_body": "<p><strong>For lounges and shops</strong></p><p>Trade pricing from small quantities, a demo unit programme and printed material for the counter. Delivery from our EU and US warehouses.</p><p><strong>For distributors</strong></p><p>Territory agreements for countries we do not ship to directly, with marketing assets, training and firmware support from the team.</p><p><strong>Get in touch</strong></p><p>Tell us who you are, where you are and roughly how many units you have in mind. We answer with a price list and the next step. <a href=\"mailto:support@ensoshisha.eu?subject=Wholesale%20and%20distribution\">Write to the wholesale team</a></p>",
+            "button_symbol": "plus"
+          }
+        }
+      },
+      "block_order": ["card_warranty", "card_support", "card_wholesale"],
       "settings": {
         "heading": "Before and after you buy",
         "padding_top": 40,
