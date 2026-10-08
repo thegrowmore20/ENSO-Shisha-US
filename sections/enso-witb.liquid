@@ -136,7 +136,6 @@
   .enso-witb {
     padding-top: var(--witb-pt-m, 40px);
     padding-bottom: var(--witb-pb-m, 24px);
-    overflow-x: hidden;
   }
   @media screen and (min-width: 750px) {
     .enso-witb {
@@ -240,14 +239,16 @@
     .enso-witb__co-s    { display: inline; }
   }
 
-  /* Tiles grid — 2-col by default (sits in the right column at desktop) */
+  /* Tiles grid */
   .enso-witb__tiles {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
-  /* Full-width at tablet (single-column layout, stacked) */
-  @media screen and (max-width: 991px) and (min-width: 600px) {
+  @media screen and (min-width: 750px) {
+    .enso-witb__tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  @media screen and (max-width: 991px) {
     .enso-witb__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 
