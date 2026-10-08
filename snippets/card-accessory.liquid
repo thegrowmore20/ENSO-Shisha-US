@@ -1,0 +1,68 @@
+{%- doc -%}
+  Accessory product card — handoff `.acc article` design.
+  Parameters:
+    product  {object}  Shopify product object (required)
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.variants.first
+  assign img = product.featured_image
+  assign img2 = product.images[1]
+  assign description = product.description | strip_html | strip | truncate: 140
+-%}
+
+<article class="acc-card">
+  <a class="acc-card__img" href="{{ product.url }}" tabindex="-1">
+    {%- if img != blank -%}
+      <img
+        src="{{ img | image_url: width: 600 }}"
+        srcset="{{ img | image_url: width: 300 }} 300w, {{ img | image_url: width: 600 }} 600w"
+        sizes="(max-width: 749px) 72vw, 25vw"
+        alt="{{ img.alt | default: product.title | escape }}"
+        width="{{ img.width }}"
+        height="{{ img.height }}"
+        loading="lazy"
+      >
+      {%- if img2 != blank -%}
+        <img
+          src="{{ img2 | image_url: width: 600 }}"
+          srcset="{{ img2 | image_url: width: 300 }} 300w, {{ img2 | image_url: width: 600 }} 600w"
+          sizes="(max-width: 749px) 72vw, 25vw"
+          alt="{{ img2.alt | default: product.title | escape }}"
+          width="{{ img2.width }}"
+          height="{{ img2.height }}"
+          loading="lazy"
+          aria-hidden="true"
+        >
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'acc-card__placeholder' }}
+    {%- endif -%}
+  </a>
+
+  <h3 class="acc-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+  <p class="acc-card__desc">{{ description }}</p>
+
+  <div class="acc-card__foot">
+    <div class="acc-card__price">
+      <b>{{ product.price | money }}</b>
+      {%- unless product.available -%}
+        <small class="acc-card__oos">{{ 'products.product.sold_out' | t }}</small>
+      {%- endunless -%}
+    </div>
+
+    {%- if product.available -%}
+      <form action="/cart/add" method="post" class="acc-card__form">
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="acc-card__btn">
+          {{ 'products.product.add_to_cart' | t }}
+        </button>
+      </form>
+    {%- else -%}
+      <a class="acc-card__btn acc-card__btn--remind" href="{{ product.url }}">
+        Remind me
+      </a>
+    {%- endif -%}
+  </div>
+</article>

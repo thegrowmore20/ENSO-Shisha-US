@@ -219,27 +219,17 @@
       }
     },
     "shop_accessories": {
-      "type": "shop-accessories",
+      "type": "accessories-carousel",
       "settings": {
-        "color_background": "{{ settings.color_palette.background }}",
-        "color_text": "{{ settings.color_palette.foreground }}",
         "collection": "accesories",
-        "eyebrow": "",
         "heading": "Accessories for ENSŌ",
-        "layout": "carousel",
-        "load_more_step": 4,
-        "columns": "4",
-        "columns_mobile": "1",
-        "card_gap": 24,
         "products_limit": 8,
-        "enable_quickadd": false,
-        "quickadd_design": "secondary",
+        "cta_label": "View all accessories",
+        "cta_link": "/collections/accesories",
         "padding_top": 72,
         "padding_bottom": 40,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 24,
-        "cta_label": "View all accessories",
-        "cta_link": "/collections/accesories"
+        "padding_bottom_mobile": 24
       }
     },
     "guide_banner": {

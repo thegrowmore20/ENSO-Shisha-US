@@ -1185,6 +1185,20 @@
         "name": "Signature models"
       }
     },
+    "accessories_carousel": {
+      "name": "Accessories carousel",
+      "settings": {
+        "collection": { "label": "Collection" },
+        "heading": { "label": "Heading" },
+        "products_limit": { "label": "Products to show" },
+        "header_cta": { "content": "View all button" },
+        "cta_label": { "label": "Button label" },
+        "cta_link": { "label": "Button link" }
+      },
+      "presets": {
+        "name": "Accessories carousel"
+      }
+    },
     "shop_accessories": {
       "name": "Shop accessories",
       "settings": {

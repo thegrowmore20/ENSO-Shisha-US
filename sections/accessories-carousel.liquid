@@ -1,0 +1,410 @@
+{%- liquid
+  assign coll = section.settings.collection
+  assign heading = section.settings.heading
+  assign cta_label = section.settings.cta_label
+  assign cta_link = section.settings.cta_link | default: coll.url | default: '/collections/all'
+  assign limit = section.settings.products_limit
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<section class="acc-section" aria-label="{{ heading | escape }}">
+  {%- if heading != blank -%}
+    <div class="container">
+      <div class="acc-section__head">
+        <h2 class="acc-section__heading">{{ heading }}</h2>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="acc-wrap">
+    <button class="acc-arrow acc-arrow--l" type="button" id="AccArrowPrev-{{ section.id }}" aria-label="{{ 'accessibility.previous_slide' | t }}">&#8249;</button>
+
+    <div class="acc-track" id="AccTrack-{{ section.id }}" role="region" aria-label="{{ heading | escape }}">
+      {%- if coll != blank -%}
+        {%- for product in coll.products limit: limit -%}
+          {%- unless product.title contains 'Shipping Protection' -%}
+            {%- render 'card-accessory', product: product -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- elsif request.design_mode -%}
+        {%- for i in (1..4) -%}
+          <article class="acc-card acc-card--placeholder">
+            <div class="acc-card__img">{{ 'product-' | append: i | placeholder_svg_tag: 'acc-card__placeholder' }}</div>
+            <h3 class="acc-card__title">Accessory {{ i }}</h3>
+            <p class="acc-card__desc">Product description goes here.</p>
+            <div class="acc-card__foot">
+              <div class="acc-card__price"><b>€0.00</b></div>
+              <span class="acc-card__btn">Add to cart</span>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <button class="acc-arrow acc-arrow--r" type="button" id="AccArrowNext-{{ section.id }}" aria-label="{{ 'accessibility.next_slide' | t }}">&#8250;</button>
+  </div>
+
+  {%- if cta_label != blank -%}
+    <div class="container">
+      <div class="acc-section__viewall">
+        <a class="acc-section__viewall-btn" href="{{ cta_link }}">{{ cta_label }}</a>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .acc-section__head {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .acc-section__heading {
+    font-size: 32px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .acc-section__heading { font-size: 40px; }
+  }
+
+  /* Carousel wrap — relative so arrows can position against it */
+  .acc-wrap {
+    position: relative;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-top: 8px;
+  }
+
+  /* Arrow buttons */
+  .acc-arrow {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 0;
+    background: rgb(0 0 0 / .75);
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    transition: background 0.2s;
+  }
+
+  .acc-arrow:hover { background: #000; }
+  .acc-arrow--l { left: calc(50% - 640px - 24px); }
+  .acc-arrow--r { right: calc(50% - 640px - 24px); }
+
+  /* Scrollable track */
+  .acc-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 0 0 8px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .acc-track::-webkit-scrollbar { display: none; }
+
+  /* Cards */
+  .acc-card {
+    flex: 0 0 calc((100% - 60px) / 4);
+    scroll-snap-align: start;
+    border: 1px solid var(--color-border, rgb(0 0 0 / .12));
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: box-shadow 0.3s;
+    min-width: 0;
+  }
+
+  .acc-card:hover { box-shadow: 0 12px 40px rgb(0 0 0 / .08); }
+
+  /* Image block */
+  .acc-card__img {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    border: 1px solid var(--color-border, rgb(0 0 0 / .1));
+    margin-bottom: 14px;
+    background: #fff;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+  }
+
+  .acc-card__img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6%;
+    transition: opacity 0.45s, transform 0.9s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .acc-card__img img + img { opacity: 0; padding: 0; object-fit: cover; }
+  .acc-card:hover .acc-card__img img + img { opacity: 1; }
+  .acc-card:hover .acc-card__img img:first-child:last-child { transform: scale(1.04); }
+
+  .acc-card__placeholder { width: 100%; height: 100%; opacity: 0.3; }
+
+  /* Text */
+  .acc-card__title {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+  }
+
+  .acc-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .acc-card__title a:hover { text-decoration: underline; }
+
+  .acc-card__desc {
+    font-size: 13px;
+    color: var(--color-text-muted, rgb(0 0 0 / .55));
+    line-height: 19px;
+    margin: 0;
+  }
+
+  /* Price + CTA row */
+  .acc-card__foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 6px;
+  }
+
+  .acc-card__price {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .acc-card__price b {
+    font-family: var(--font-accent);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .acc-card__oos {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted, rgb(0 0 0 / .5));
+  }
+
+  /* CTA buttons */
+  .acc-card__form { margin: 0; }
+
+  .acc-card__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 12px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .acc-card__btn:hover { opacity: 0.8; }
+
+  .acc-card__btn--remind {
+    background: transparent;
+    color: #000;
+    border: 1.5px solid rgb(0 0 0 / .3);
+  }
+
+  .acc-card__btn--remind:hover {
+    border-color: #000;
+    opacity: 1;
+  }
+
+  /* View all */
+  .acc-section__viewall {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+  }
+
+  .acc-section__viewall-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 16px 32px;
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid rgb(0 0 0 / .25);
+    border-radius: 999px;
+    transition: border-color 0.2s;
+  }
+
+  .acc-section__viewall-btn:hover { border-color: #000; }
+
+  /* Mobile */
+  @media screen and (max-width: 749px) {
+    .acc-track { padding: 0 16px 8px; }
+    .acc-card { flex: 0 0 72vw; }
+    .acc-arrow { display: none; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    const section = document.currentScript.closest('.shopify-section') ||
+                    document.querySelector('[data-section-id]');
+    const trackEl = section && section.querySelector('.acc-track');
+    const prevBtn = section && section.querySelector('.acc-arrow--l');
+    const nextBtn = section && section.querySelector('.acc-arrow--r');
+
+    if (!trackEl) return;
+
+    function cardWidth() {
+      const card = trackEl.querySelector('.acc-card');
+      if (!card) return 0;
+      return card.getBoundingClientRect().width + 20;
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => trackEl.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+    if (nextBtn) nextBtn.addEventListener('click', () => trackEl.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.accessories_carousel.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.accessories_carousel.settings.collection.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.accessories_carousel.settings.heading.label",
+      "default": "Accessories for ENSŌ"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "t:sections.accessories_carousel.settings.products_limit.label",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "t:sections.accessories_carousel.settings.header_cta.content"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:sections.accessories_carousel.settings.cta_label.label",
+      "default": "View all accessories"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "t:sections.accessories_carousel.settings.cta_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.accessories_carousel.presets.name"
+    }
+  ]
+}
+{% endschema %}
