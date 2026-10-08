@@ -82,11 +82,11 @@
           <p class="enso-exp__text">{{ body_text }}</p>
         {%- endif -%}
         <div class="enso-exp__chips">
-          <a class="enso-exp__chip" href="{{ section.settings.chip_1_url | default: '/pages/experience#enso' }}">Quick start</a>
-          <a class="enso-exp__chip" href="{{ section.settings.chip_2_url | default: '/pages/experience#enso' }}">Full manual</a>
-          <a class="enso-exp__chip" href="{{ section.settings.chip_3_url | default: '/pages/faq' }}">FAQ</a>
-          <a class="enso-exp__chip" href="{{ section.settings.chip_4_url | default: '/pages/warranty' }}">Warranty</a>
-          <a class="enso-exp__chip" href="{{ section.settings.chip_5_url | default: '/pages/experience#enso' }}">Firmware app</a>
+          <span class="enso-exp__chip">Quick start</span>
+          <span class="enso-exp__chip">Full manual</span>
+          <span class="enso-exp__chip">FAQ</span>
+          <span class="enso-exp__chip">Warranty</span>
+          <span class="enso-exp__chip">Firmware app</span>
         </div>
         {%- if cta_label != blank -%}
           <span class="enso-exp__btn">{{ cta_label }} <i>&rarr;</i></span>
@@ -324,35 +324,6 @@
       "step": 2,
       "unit": "px",
       "default": 28
-    },
-    {
-      "type": "header",
-      "content": "Chip links"
-    },
-    {
-      "type": "url",
-      "id": "chip_1_url",
-      "label": "Quick start URL"
-    },
-    {
-      "type": "url",
-      "id": "chip_2_url",
-      "label": "Full manual URL"
-    },
-    {
-      "type": "url",
-      "id": "chip_3_url",
-      "label": "FAQ URL"
-    },
-    {
-      "type": "url",
-      "id": "chip_4_url",
-      "label": "Warranty URL"
-    },
-    {
-      "type": "url",
-      "id": "chip_5_url",
-      "label": "Firmware app URL"
     },
     {
       "type": "header",
