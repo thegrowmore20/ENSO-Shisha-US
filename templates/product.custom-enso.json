@@ -131,7 +131,7 @@
         "width": "page",
         "media_width": 55,
         "gallery_layout": "thumbnails_bottom",
-        "enable_sticky_info": true,
+        "enable_sticky_info": false,
         "padding_top": 64,
         "padding_bottom": 32,
         "padding_top_mobile": 32,
