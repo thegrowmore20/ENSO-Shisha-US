@@ -220,7 +220,29 @@
                   {%- endif -%}
                 </ul>
 
-                <!-- In-app strip (bottom repeat) -->
+                <!-- In-app strip (bottom repeat — only when guide links exist) -->
+                {%- liquid
+                  assign has_guides = false
+                  if b.url_1 != blank
+                    assign has_guides = true
+                  endif
+                  if b.url_2 != blank
+                    assign has_guides = true
+                  endif
+                  if b.url_3 != blank
+                    assign has_guides = true
+                  endif
+                  if b.url_4 != blank
+                    assign has_guides = true
+                  endif
+                  if b.url_5 != blank
+                    assign has_guides = true
+                  endif
+                  if b.url_6 != blank
+                    assign has_guides = true
+                  endif
+                -%}
+                {%- if has_guides -%}
                 <div class="xh__app xh__app--bottom">
                   <p class="xh__apph">{{ 'sections.experience_device_guide.in_app' | t }}</p>
                   <div class="xh__appg">
@@ -251,6 +273,7 @@
                   </div>
                   <a class="xh__appall" href="{{ b_app }}" target="_blank" rel="noopener noreferrer">{{ 'sections.experience_device_guide.open_app' | t }}</a>
                 </div>
+                {%- endif -%}
 
               </div>
             </div>

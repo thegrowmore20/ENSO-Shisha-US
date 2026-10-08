@@ -48,15 +48,19 @@
     <ol class="qs">
       {%- for block in section.blocks -%}
         {%- liquid
-          assign imgs = ''
-          assign img_count = 0
-          for i in (1..4)
-            assign img_key = 'image_' | append: i
-            assign img_val = block.settings[img_key]
-            if img_val != blank
-              assign img_count = img_count | plus: 1
-            endif
-          endfor
+          assign has_images = false
+          if block.settings.image_1 != blank
+            assign has_images = true
+          endif
+          if block.settings.image_2 != blank
+            assign has_images = true
+          endif
+          if block.settings.image_3 != blank
+            assign has_images = true
+          endif
+          if block.settings.image_4 != blank
+            assign has_images = true
+          endif
         -%}
         <li class="qs__s" id="{{ block.id }}" {{ block.shopify_attributes }}>
           <div class="qs__tx">
@@ -67,24 +71,28 @@
             {%- endif -%}
           </div>
 
-          {%- if img_count > 0 -%}
+          {%- if has_images -%}
             <div class="qs__pic qs__pic--seq">
               <div class="qs__track" aria-label="{{ block.settings.heading }} — step images">
-                {%- for i in (1..4) -%}
-                  {%- assign img_key = 'image_' | append: i -%}
-                  {%- assign img_val = block.settings[img_key] -%}
-                  {%- if img_val != blank -%}
-                    {{- img_val | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
-                  {%- endif -%}
-                {%- endfor -%}
+                {%- if block.settings.image_1 != blank -%}
+                  {{- block.settings.image_1 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                {%- endif -%}
+                {%- if block.settings.image_2 != blank -%}
+                  {{- block.settings.image_2 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                {%- endif -%}
+                {%- if block.settings.image_3 != blank -%}
+                  {{- block.settings.image_3 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                {%- endif -%}
+                {%- if block.settings.image_4 != blank -%}
+                  {{- block.settings.image_4 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                {%- endif -%}
               </div>
               <div class="qs__dots" aria-hidden="true">
-                {%- for i in (1..4) -%}
-                  {%- assign img_key = 'image_' | append: i -%}
-                  {%- if block.settings[img_key] != blank -%}
-                    <i{% if forloop.first %} class="on"{% endif %}></i>
-                  {%- endif -%}
-                {%- endfor -%}
+                {%- assign dot_first = true -%}
+                {%- if block.settings.image_1 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                {%- if block.settings.image_2 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                {%- if block.settings.image_3 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                {%- if block.settings.image_4 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
               </div>
             </div>
           {%- endif -%}
