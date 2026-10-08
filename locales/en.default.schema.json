@@ -1447,10 +1447,19 @@
       "name": "ENSŌ Experience",
       "settings": {
         "image": { "label": "Background image" },
+        "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "text": { "label": "Body text" },
         "cta_label": { "label": "Button label" },
         "cta_link": { "label": "Button link" }
+      },
+      "blocks": {
+        "chip": {
+          "name": "Chip",
+          "settings": {
+            "label": { "label": "Label" }
+          }
+        }
       },
       "presets": {
         "name": "ENSŌ Experience"

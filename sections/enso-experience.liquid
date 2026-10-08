@@ -1,5 +1,6 @@
 {%- liquid
   assign img = section.settings.image
+  assign eyebrow = section.settings.eyebrow
   assign heading = section.settings.heading
   assign body_text = section.settings.text
   assign cta_label = section.settings.cta_label
@@ -22,71 +23,75 @@
 
 <section class="enso-exp">
   <div class="container">
-  <div class="enso-exp__item">
-    <div class="enso-exp__media">
-      {%- if img != blank -%}
-        <img
-          class="enso-exp__image"
-          src="{{ img | image_url: width: 2000 }}"
-          srcset="
-            {{ img | image_url: width: 750 }} 750w,
-            {{ img | image_url: width: 1100 }} 1100w,
-            {{ img | image_url: width: 1500 }} 1500w,
-            {{ img | image_url: width: 2000 }} 2000w
-          "
-          sizes="(max-width: 749px) 100vw, (max-width: 989px) 100vw, 100vw"
-          alt="{{ img_alt }}"
-          width="{{ img.width }}"
-          height="{{ img.height }}"
-          loading="eager"
-          fetchpriority="high"
-        >
-      {%- else -%}
-        <div class="enso-exp__placeholder">
-          {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-exp__placeholder-svg' }}
-        </div>
-      {%- endif -%}
-      <div class="enso-exp__overlay"></div>
-    </div>
-
-    <div class="enso-exp__content">
-      <div class="enso-exp__content-inner">
-        {%- if heading != blank -%}
-          <h2 class="enso-exp__heading">{{ heading }}</h2>
-        {%- endif -%}
-        {%- if body_text != blank -%}
-          <div class="enso-exp__subheading">
-            <p>{{ body_text }}</p>
+    <div class="enso-exp__item">
+      <div class="enso-exp__media">
+        {%- if img != blank -%}
+          <img
+            class="enso-exp__image"
+            src="{{ img | image_url: width: 2000 }}"
+            srcset="
+              {{ img | image_url: width: 750 }} 750w,
+              {{ img | image_url: width: 1100 }} 1100w,
+              {{ img | image_url: width: 1500 }} 1500w,
+              {{ img | image_url: width: 2000 }} 2000w
+            "
+            sizes="(max-width: 749px) 100vw, 100vw"
+            alt="{{ img_alt }}"
+            width="{{ img.width }}"
+            height="{{ img.height }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {%- else -%}
+          <div class="enso-exp__placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-exp__placeholder-svg' }}
           </div>
         {%- endif -%}
-        {%- if cta_label != blank -%}
-          <a class="btn enso-exp__btn" href="{{ cta_link | default: '#' }}">
-            {{ cta_label }}
-          </a>
-        {%- endif -%}
+        <div class="enso-exp__overlay"></div>
+      </div>
+
+      <div class="enso-exp__content">
+        <div class="enso-exp__content-inner">
+          {%- if eyebrow != blank -%}
+            <p class="eyebrow enso-exp__eyebrow">{{ eyebrow }}</p>
+          {%- endif -%}
+          {%- if heading != blank -%}
+            <h2 class="enso-exp__heading">{{ heading }}</h2>
+          {%- endif -%}
+          {%- if body_text != blank -%}
+            <p class="enso-exp__text">{{ body_text }}</p>
+          {%- endif -%}
+          {%- if section.blocks.size > 0 -%}
+            <div class="enso-exp__chips">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.label != blank -%}
+                  <span class="enso-exp__chip" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {%- if cta_label != blank -%}
+            <a class="enso-exp__btn" href="{{ cta_link | default: '#' }}">
+              {{ cta_label }} →
+            </a>
+          {%- endif -%}
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </section>
 
 {% stylesheet %}
-  .enso-exp {
-    /* spacing controlled by {% style %} on the Shopify wrapper */
-  }
-
   .enso-exp__item {
     position: relative;
     border-radius: 28px;
     overflow: hidden;
-    min-height: 600px;
+    min-height: 540px;
   }
 
-  /* ── Image fills the card ── */
   .enso-exp__media {
     position: absolute;
     inset: 0;
-    height: 100%;
   }
 
   .enso-exp__image {
@@ -95,78 +100,96 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 12%;
+    object-position: 62% 45%;
+    filter: brightness(0.62);
   }
 
-  /* ── Gradient overlays ── */
-  /* Bottom-to-top base fade */
   .enso-exp__overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(180deg, rgb(0 0 0 / 0) 25%, rgb(0 0 0 / .75) 100%);
+    background: linear-gradient(90deg, rgb(0 0 0 / .55) 0%, rgb(0 0 0 / .3) 50%, rgb(0 0 0 / 0) 75%);
   }
 
-  /* Desktop: left-to-right directional gradient */
-  .enso-exp__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgb(0 0 0 / .7) 0%, rgb(0 0 0 / .45) 38%, rgb(0 0 0 / 0) 64%);
-    pointer-events: none;
-  }
-
-  /* ── Content vertically centered, left-aligned ── */
   .enso-exp__content {
     position: relative;
     z-index: 2;
-    min-height: 600px;
+    min-height: 540px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: center;
-    padding: 32px 20px 32px 48px;
+    padding: 56px 48px;
   }
 
   .enso-exp__content-inner {
-    max-width: 410px;
+    max-width: 440px;
+  }
+
+  .enso-exp__eyebrow {
+    color: rgb(255 255 255 / .75);
+    margin: 0 0 16px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .enso-exp__heading {
-    margin: 0 0 26px;
-    font-size: 44px;
-    line-height: 48px;
+    margin: 0 0 20px;
+    font-size: 40px;
+    line-height: 1.1;
     color: #fff;
+    font-weight: var(--font-weight-bold);
   }
 
-  .enso-exp__subheading {
-    color: #fff;
-    margin-bottom: 36px;
-    max-width: 44ch;
+  .enso-exp__text {
+    color: rgb(255 255 255 / .85);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 28px;
   }
 
-  .enso-exp__subheading p {
-    margin: 0;
+  .enso-exp__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
   }
 
-  /* Gold/sand button on this dark photo background */
+  .enso-exp__chip {
+    display: inline-block;
+    border: 1px solid rgb(255 255 255 / .55);
+    color: rgb(255 255 255 / .9);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
   .enso-exp__btn {
-    background: var(--palette-sand, #c8943a);
-    border-color: var(--palette-sand, #c8943a);
-    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: #000;
+    border-radius: 999px;
     padding: 16px 28px;
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s;
   }
 
   .enso-exp__btn:hover {
-    background: var(--palette-sand-deep, #b3832f);
-    border-color: var(--palette-sand-deep, #b3832f);
-    color: #fff;
+    opacity: 0.88;
   }
 
   .enso-exp__placeholder {
     width: 100%;
     height: 100%;
-    min-height: 600px;
+    min-height: 540px;
     background: rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
@@ -178,31 +201,24 @@
     opacity: 0.3;
   }
 
-  /* ── Mobile ── */
   @media screen and (max-width: 749px) {
     .enso-exp__item {
       border-radius: 22px;
-      min-height: 600px;
+      min-height: 520px;
     }
 
     .enso-exp__image {
-      /* Pull left so device is visible, not background */
       object-position: 38% 50%;
     }
 
-    /* Stronger bottom-to-top fade on mobile */
     .enso-exp__overlay {
-      background: linear-gradient(180deg, rgb(0 0 0 / 0) 35%, rgb(0 0 0 / .85) 100%);
-    }
-
-    /* Mobile: swap to bottom-to-top directional gradient */
-    .enso-exp__media::after {
-      background: linear-gradient(0deg, rgb(0 0 0 / .72) 0%, rgb(0 0 0 / .35) 50%, rgb(0 0 0 / 0) 75%);
+      background: linear-gradient(0deg, rgb(0 0 0 / .7) 0%, rgb(0 0 0 / .35) 60%, rgb(0 0 0 / 0) 85%);
     }
 
     .enso-exp__content {
-      min-height: 600px;
-      padding: 24px 20px;
+      min-height: 520px;
+      padding: 28px 20px;
+      justify-content: flex-end;
     }
 
     .enso-exp__content-inner {
@@ -210,8 +226,11 @@
     }
 
     .enso-exp__heading {
-      font-size: 30px;
-      line-height: 34px;
+      font-size: 28px;
+    }
+
+    .enso-exp__chips {
+      display: none;
     }
   }
 {% endstylesheet %}
@@ -228,15 +247,21 @@
     },
     {
       "type": "text",
-      "id": "heading",
-      "label": "t:sections.enso_experience.settings.heading.label",
+      "id": "eyebrow",
+      "label": "t:sections.enso_experience.settings.eyebrow.label",
       "default": "ENSŌ Experience"
     },
     {
       "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.enso_experience.settings.heading.label",
+      "default": "You have seen what it is<br>Now see how it is used"
+    },
+    {
+      "type": "text",
       "id": "text",
       "label": "t:sections.enso_experience.settings.text.label",
-      "default": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates."
+      "default": "The 2026 Edition, told the other way round: the first session step by step, the manual, cleaning, the flavour guide and the firmware app. Made for the phone."
     },
     {
       "type": "text",
@@ -294,9 +319,30 @@
       "default": 24
     }
   ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "t:sections.enso_experience.blocks.chip.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.enso_experience.blocks.chip.settings.label.label",
+          "default": "Quick start"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "t:sections.enso_experience.presets.name"
+      "name": "t:sections.enso_experience.presets.name",
+      "blocks": [
+        { "type": "chip", "settings": { "label": "Quick start" } },
+        { "type": "chip", "settings": { "label": "Full manual" } },
+        { "type": "chip", "settings": { "label": "FAQ" } },
+        { "type": "chip", "settings": { "label": "Warranty" } },
+        { "type": "chip", "settings": { "label": "Firmware app" } }
+      ]
     }
   ]
 }
