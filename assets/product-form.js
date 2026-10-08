@@ -47,7 +47,7 @@ if (!customElements.get('product-info')) {
             });
             pill.classList.add('is-selected');
             pill.setAttribute('aria-checked', 'true');
-            group.querySelector('[data-selected-value]').textContent = pill.dataset.optionValue;
+            const selVal = group.querySelector('[data-selected-value]'); if (selVal) selVal.textContent = pill.dataset.optionValue;
 
             this.#onSelectionChange();
           });

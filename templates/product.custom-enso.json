@@ -22,16 +22,17 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "stock_badge": {
+          "type": "stock_badge",
+          "settings": {
+            "in_stock_text": "In stock · Ships now",
+            "out_of_stock_text": "Out of stock"
+          }
+        },
         "title": {
           "type": "title",
           "settings": {
             "heading_size": 36
-          }
-        },
-        "price": {
-          "type": "price",
-          "settings": {
-            "show_unit_price": false
           }
         },
         "text_headline": {
@@ -52,14 +53,60 @@
             "show_icon": false
           }
         },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        },
         "variant_picker": {
           "type": "variant_picker",
+          "settings": {
+            "style": "card"
+          }
+        },
+        "variant_note": {
+          "type": "variant_note",
           "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_unit_price": false
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true
+            "show_dynamic_checkout": false
+          }
+        },
+        "trust_strip": {
+          "type": "trust_strip",
+          "settings": {
+            "item_1_heading": "30 days to decide",
+            "item_1_body": "From delivery",
+            "item_2_heading": "Real people answer",
+            "item_2_body": "Email support, in English",
+            "item_3_heading": "EU prices include VAT",
+            "item_3_body": "US prices before sales tax"
+          }
+        },
+        "specs_inline": {
+          "type": "specs_inline",
+          "settings": {}
+        },
+        "witb_inline": {
+          "type": "witb_inline",
+          "settings": {
+            "heading": "In the box"
+          }
+        },
+        "contact_text": {
+          "type": "text",
+          "settings": {
+            "content": "<p>Questions before you order: <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu<\/a><\/p>",
+            "alignment": "left",
+            "text_size": "small",
+            "show_icon": false
           }
         },
         "accordion_description": {
@@ -67,22 +114,6 @@
           "settings": {
             "heading": "Description",
             "content": "{{ product.metafields.custom.description | metafield_tag }}",
-            "default_open": false
-          }
-        },
-        "accordion_specs": {
-          "type": "accordion",
-          "settings": {
-            "heading": "Specifications",
-            "content": "{{ product.metafields.custom.specifications | metafield_tag }}",
-            "default_open": false
-          }
-        },
-        "accordion_witb": {
-          "type": "accordion",
-          "settings": {
-            "heading": "What's in the box",
-            "content": "{{ product.metafields.custom.what_s_in_the_box | metafield_tag }}",
             "default_open": false
           }
         },
@@ -94,14 +125,6 @@
             "default_open": false
           }
         },
-        "accordion_warranty": {
-          "type": "accordion",
-          "settings": {
-            "heading": "Warranty and support",
-            "content": "{{ product.metafields.custom.lifetime_waranty | metafield_tag }}",
-            "default_open": false
-          }
-        },
         "accordion_why": {
           "type": "accordion",
           "settings": {
@@ -109,21 +132,34 @@
             "content": "{{ product.metafields.custom.why_choose_enso | metafield_tag }}",
             "default_open": false
           }
+        },
+        "accordion_warranty": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Warranty and support",
+            "content": "{{ product.metafields.custom.lifetime_waranty | metafield_tag }}",
+            "default_open": false
+          }
         }
       },
       "block_order": [
+        "stock_badge",
         "title",
-        "price",
         "text_headline",
         "text_hook",
+        "tags",
         "variant_picker",
+        "variant_note",
+        "price",
         "buy_buttons",
+        "trust_strip",
+        "specs_inline",
+        "witb_inline",
+        "contact_text",
         "accordion_description",
-        "accordion_specs",
-        "accordion_witb",
         "accordion_how",
-        "accordion_warranty",
-        "accordion_why"
+        "accordion_why",
+        "accordion_warranty"
       ],
       "settings": {
         "color_background": "{{ settings.color_palette.background }}",

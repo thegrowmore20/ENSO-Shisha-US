@@ -79,36 +79,157 @@
                 {%- endfor -%}
               </template>
 
+            {%- when 'stock_badge' -%}
+              <div class="product-stock-badge product-block" data-stock-badge {{ block.shopify_attributes }}>
+                {%- if current_variant.available -%}
+                  <p class="product-stock-badge__text">
+                    <i class="product-stock-badge__dot product-stock-badge__dot--in" aria-hidden="true"></i>
+                    {{ block.settings.in_stock_text | default: 'In stock · Ships now' }}
+                  </p>
+                {%- else -%}
+                  <p class="product-stock-badge__text">
+                    <i class="product-stock-badge__dot" aria-hidden="true"></i>
+                    {{ block.settings.out_of_stock_text | default: 'Out of stock' }}
+                  </p>
+                {%- endif -%}
+              </div>
+              <template data-stock-badge-templates>
+                {%- for variant in product.variants -%}
+                  <div data-variant-stock-id="{{ variant.id }}">
+                    {%- if variant.available -%}
+                      <p class="product-stock-badge__text">
+                        <i class="product-stock-badge__dot product-stock-badge__dot--in" aria-hidden="true"></i>
+                        {{ block.settings.in_stock_text | default: 'In stock · Ships now' }}
+                      </p>
+                    {%- else -%}
+                      <p class="product-stock-badge__text">
+                        <i class="product-stock-badge__dot" aria-hidden="true"></i>
+                        {{ block.settings.out_of_stock_text | default: 'Out of stock' }}
+                      </p>
+                    {%- endif -%}
+                  </div>
+                {%- endfor -%}
+              </template>
+
+            {%- when 'tags' -%}
+              {%- if product.tags.size > 0 -%}
+                <div class="product-chips product-block" {{ block.shopify_attributes }}>
+                  {%- for tag in product.tags -%}
+                    <span class="product-chip">{{ tag }}</span>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
             {%- when 'variant_picker' -%}
               {%- unless product.has_only_default_variant -%}
-                <div class="variant-picker product-block" {{ block.shopify_attributes }}>
-                  {%- for option in product.options_with_values -%}
-                    <div class="variant-picker__option" data-option-index="{{ forloop.index0 }}" data-option-name="{{ option.name | escape | downcase }}">
-                      <span class="variant-picker__label">
-                        {{ option.name }}: <strong data-selected-value>{{ option.selected_value }}</strong>
-                      </span>
-                      <div class="variant-picker__pills" role="radiogroup" aria-label="{{ option.name | escape }}">
+                {%- if block.settings.style == 'card' -%}
+                  <div class="variant-card-picker product-block" {{ block.shopify_attributes }}>
+                    {%- for option in product.options_with_values -%}
+                      {%- assign opt_idx = forloop.index0 -%}
+                      <div class="variant-card-picker__group" data-option-index="{{ opt_idx }}" data-option-name="{{ option.name | escape | downcase }}" role="radiogroup" aria-label="{{ option.name | escape }}">
+                        <span data-selected-value hidden>{{ option.selected_value }}</span>
                         {%- for value in option.values -%}
+                          {%- assign card_variant = nil -%}
+                          {%- for v in product.variants -%}
+                            {%- if v.options[opt_idx] == value and card_variant == nil -%}
+                              {%- assign card_variant = v -%}
+                            {%- endif -%}
+                          {%- endfor -%}
                           <button
                             type="button"
-                            class="pill{% if option.selected_value == value %} is-selected{% endif %}"
+                            class="pill variant-card{% if option.selected_value == value %} is-selected{% endif %}"
                             role="radio"
                             aria-checked="{% if option.selected_value == value %}true{% else %}false{% endif %}"
                             data-option-value="{{ value | escape }}"
                           >
-                            {{ value }}
+                            <span class="variant-card__left">
+                              <b class="variant-card__name">{{ value }}</b>
+                              {%- if card_variant != nil and card_variant.metafields.custom.availability_text != blank -%}
+                                <small class="variant-card__avail">{{ card_variant.metafields.custom.availability_text }}</small>
+                              {%- endif -%}
+                            </span>
+                            {%- if card_variant != nil -%}
+                              <em class="variant-card__price">{{ card_variant.price | money }}</em>
+                            {%- endif -%}
                           </button>
                         {%- endfor -%}
                       </div>
-                    </div>
-                  {%- endfor -%}
-                </div>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <div class="variant-picker product-block" {{ block.shopify_attributes }}>
+                    {%- for option in product.options_with_values -%}
+                      <div class="variant-picker__option" data-option-index="{{ forloop.index0 }}" data-option-name="{{ option.name | escape | downcase }}">
+                        <span class="variant-picker__label">
+                          {{ option.name }}: <strong data-selected-value>{{ option.selected_value }}</strong>
+                        </span>
+                        <div class="variant-picker__pills" role="radiogroup" aria-label="{{ option.name | escape }}">
+                          {%- for value in option.values -%}
+                            <button
+                              type="button"
+                              class="pill{% if option.selected_value == value %} is-selected{% endif %}"
+                              role="radio"
+                              aria-checked="{% if option.selected_value == value %}true{% else %}false{% endif %}"
+                              data-option-value="{{ value | escape }}"
+                            >
+                              {{ value }}
+                            </button>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
 
                 {%- comment -%} Used only for combination matching / availability / featured media — never for price display {%- endcomment -%}
                 <script type="application/json" data-product-variants>
                   {{ product.variants | json }}
                 </script>
               {%- endunless -%}
+
+            {%- when 'variant_note' -%}
+              {%- assign first_note = current_variant.metafields.custom.note_text | default: '' -%}
+              <p class="product-variant-note product-block" data-variant-note {% if first_note == blank %}hidden{% endif %} {{ block.shopify_attributes }}>
+                {{- first_note -}}
+              </p>
+              <template data-variant-note-templates>
+                {%- for variant in product.variants -%}
+                  <span data-variant-note-id="{{ variant.id }}">{{ variant.metafields.custom.note_text }}</span>
+                {%- endfor -%}
+              </template>
+
+            {%- when 'trust_strip' -%}
+              <ul class="product-trust product-block" {{ block.shopify_attributes }}>
+                <li class="product-trust__item">
+                  <svg class="product-trust__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <div><b>{{ block.settings.item_1_heading | default: '30 days to decide' }}</b><span>{{ block.settings.item_1_body | default: 'From delivery' }}</span></div>
+                </li>
+                <li class="product-trust__item">
+                  <svg class="product-trust__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4.5 6v5.2c0 4.6 3.2 8.4 7.5 9.8 4.3-1.4 7.5-5.2 7.5-9.8V6L12 3Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
+                  <div><b>{{ block.settings.item_2_heading | default: 'Real people answer' }}</b><span>{{ block.settings.item_2_body | default: 'Email support, in English' }}</span></div>
+                </li>
+                <li class="product-trust__item">
+                  <svg class="product-trust__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16v11H4zM8 7V5h8v2" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M4 12h16" stroke="currentColor" stroke-width="1.75"/></svg>
+                  <div><b>{{ block.settings.item_3_heading | default: 'EU prices include VAT' }}</b><span>{{ block.settings.item_3_body | default: 'US prices before sales tax' }}</span></div>
+                </li>
+              </ul>
+
+            {%- when 'specs_inline' -%}
+              {%- if product.metafields.custom.specifications != blank -%}
+                <div class="product-facts product-block" {{ block.shopify_attributes }}>
+                  {{ product.metafields.custom.specifications | metafield_tag }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'witb_inline' -%}
+              {%- if product.metafields.custom.what_s_in_the_box != blank -%}
+                <div class="product-inbox product-block" {{ block.shopify_attributes }}>
+                  {%- if block.settings.heading != blank -%}
+                    <b class="product-inbox__heading">{{ block.settings.heading }}</b>
+                  {%- endif -%}
+                  <div class="product-inbox__content">{{ product.metafields.custom.what_s_in_the_box | metafield_tag }}</div>
+                </div>
+              {%- endif -%}
 
             {%- when 'quantity' -%}
               {%- comment -%}
@@ -976,8 +1097,187 @@
   }
 {% endstyle %}
 
+{% style %}
+
+  /* ---------- Stock badge ---------- */
+  .product-stock-badge { margin-top: 0; }
+  .product-stock-badge__text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: rgb(0 0 0 / .72);
+    margin: 0;
+  }
+  .product-stock-badge__dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgb(0 0 0 / .3);
+    box-shadow: none;
+    flex: none;
+  }
+  .product-stock-badge__dot--in {
+    background: #16a34a;
+    box-shadow: 0 0 0 3px rgb(22 163 74 / .2);
+  }
+
+  /* ---------- Tags / chips ---------- */
+  .product-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .product-chip {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 13px;
+    color: var(--color-text);
+  }
+
+  /* ---------- Card variant picker ---------- */
+  .variant-card-picker { margin-top: var(--space-5); }
+  .variant-card-picker__group { display: flex; flex-direction: column; gap: 8px; }
+  .variant-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: var(--color-background);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: border-color 0.15s ease;
+  }
+  .variant-card.is-selected { border-color: var(--color-text); }
+  .variant-card:hover:not(.is-selected) { border-color: var(--color-accent); }
+  .variant-card.is-unavailable { opacity: 0.4; cursor: not-allowed; text-decoration: none; }
+  .variant-card__left { display: flex; flex-direction: column; gap: 2px; }
+  .variant-card__name { font-size: 15px; font-weight: 600; }
+  .variant-card__avail { font-size: 13px; color: var(--color-text-muted); font-weight: 400; }
+  .variant-card__price {
+    font-style: normal;
+    font-family: var(--font-accent);
+    font-weight: 800;
+    font-size: 17px;
+    flex: none;
+    color: var(--color-text);
+  }
+
+  /* ---------- Variant note ---------- */
+  .product-variant-note {
+    font-size: 13px;
+    color: rgb(0 0 0 / .65);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ---------- Trust strip ---------- */
+  .product-trust {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .product-trust__item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgb(0 0 0 / .72);
+  }
+  .product-trust__item b { color: var(--color-text); display: block; }
+  .product-trust__item span { display: block; }
+  .product-trust__icon { width: 22px; height: 22px; color: var(--color-text); flex: none; }
+
+  /* ---------- Specs inline (2-col bullets) ---------- */
+  .product-facts {
+    padding-top: 18px;
+    border-top: 1px solid var(--color-border);
+  }
+  .product-facts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 20px;
+  }
+  .product-facts li {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgb(0 0 0 / .78);
+    padding-left: 14px;
+    position: relative;
+  }
+  .product-facts li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-text);
+  }
+
+  /* ---------- In the box ---------- */
+  .product-inbox {
+    border-top: 1px solid var(--color-border);
+    padding-top: 16px;
+  }
+  .product-inbox__heading {
+    display: block;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+  .product-inbox__content {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgb(0 0 0 / .72);
+  }
+  .product-inbox__content p { margin: 0; }
+
+  @media screen and (max-width: 749px) {
+    .product-trust { grid-template-columns: 1fr; gap: 14px; }
+    .product-trust__item { flex-direction: row; align-items: flex-start; gap: 10px; }
+    .product-facts ul { grid-template-columns: 1fr; }
+  }
+
+{% endstyle %}
+
 {% javascript %}
-  // Fallback for browsers without native <details name="..."> exclusive-accordion support.
+  document.addEventListener('variant:change', function (e) {
+    var variant = e.detail && e.detail.variant;
+    if (!variant) return;
+
+    var badge = document.querySelector('[data-stock-badge]');
+    var badgeTpl = document.querySelector('[data-stock-badge-templates]');
+    if (badge && badgeTpl) {
+      var bItem = badgeTpl.content.querySelector('[data-variant-stock-id="' + variant.id + '"]');
+      if (bItem) badge.innerHTML = bItem.innerHTML;
+    }
+
+    var note = document.querySelector('[data-variant-note]');
+    var noteTpl = document.querySelector('[data-variant-note-templates]');
+    if (note && noteTpl) {
+      var nItem = noteTpl.content.querySelector('[data-variant-note-id="' + variant.id + '"]');
+      var text = nItem ? nItem.textContent.trim() : '';
+      note.textContent = text;
+      note.hidden = !text;
+    }
+  });
+
   if (!('HTMLDetailsElement' in window) || !('name' in HTMLDetailsElement.prototype)) {
     document.addEventListener('toggle', function (event) {
       var details = event.target;
@@ -1114,7 +1414,56 @@
         { "type": "checkbox", "id": "show_unit_price", "label": "Show unit price", "default": false }
       ]
     },
-    { "type": "variant_picker", "name": "Variant picker", "limit": 1 },
+    {
+      "type": "stock_badge",
+      "name": "Stock badge",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "in_stock_text", "label": "In stock text", "default": "In stock · Ships now" },
+        { "type": "text", "id": "out_of_stock_text", "label": "Out of stock text", "default": "Out of stock" }
+      ]
+    },
+    { "type": "tags", "name": "Product tags", "limit": 1 },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Picker style",
+          "options": [
+            { "value": "pill", "label": "Pills" },
+            { "value": "card", "label": "Cards (with price)" }
+          ],
+          "default": "pill"
+        }
+      ]
+    },
+    { "type": "variant_note", "name": "Variant note", "limit": 1 },
+    {
+      "type": "trust_strip",
+      "name": "Trust strip",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "item_1_heading", "label": "Item 1 heading", "default": "30 days to decide" },
+        { "type": "text", "id": "item_1_body",    "label": "Item 1 body",    "default": "From delivery" },
+        { "type": "text", "id": "item_2_heading", "label": "Item 2 heading", "default": "Real people answer" },
+        { "type": "text", "id": "item_2_body",    "label": "Item 2 body",    "default": "Email support, in English" },
+        { "type": "text", "id": "item_3_heading", "label": "Item 3 heading", "default": "EU prices include VAT" },
+        { "type": "text", "id": "item_3_body",    "label": "Item 3 body",    "default": "US prices before sales tax" }
+      ]
+    },
+    { "type": "specs_inline", "name": "Specifications (inline)", "limit": 1 },
+    {
+      "type": "witb_inline",
+      "name": "What's in the box (inline)",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "In the box" }
+      ]
+    },
     { "type": "quantity", "name": "Quantity selector", "limit": 1 },
     {
       "type": "buy_buttons",
