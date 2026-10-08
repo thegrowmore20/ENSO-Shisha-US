@@ -47,7 +47,7 @@
 
 <section class="enso-exp">
   <div class="container">
-    <a class="enso-exp__item" href="{{ cta_link | default: '#' }}">
+    <div class="enso-exp__item">
       {%- if img != blank -%}
         <img
           class="enso-exp__image"
@@ -89,10 +89,10 @@
           <span class="enso-exp__chip">Firmware app</span>
         </div>
         {%- if cta_label != blank -%}
-          <span class="enso-exp__btn">{{ cta_label }} <i>&rarr;</i></span>
+          <a class="enso-exp__btn" href="{{ cta_link | default: '#' }}">{{ cta_label }} <i>&rarr;</i></a>
         {%- endif -%}
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -106,8 +106,6 @@
     overflow: hidden;
     background: #07080a;
     color: #fff;
-    text-decoration: none;
-    transition: none;
   }
 
   .enso-exp__item::after {
@@ -127,6 +125,7 @@
     transition: transform 1.4s cubic-bezier(.2,.8,.2,1);
   }
 
+  .enso-exp__btn:hover ~ .enso-exp__image,
   .enso-exp__item:hover .enso-exp__image {
     transform: scale(1.04);
   }
@@ -200,7 +199,7 @@
     transition: transform 0.35s;
   }
 
-  .enso-exp__item:hover .enso-exp__btn i {
+  .enso-exp__btn:hover i {
     transform: translateX(6px);
   }
 

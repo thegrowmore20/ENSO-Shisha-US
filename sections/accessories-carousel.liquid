@@ -65,6 +65,34 @@
   {%- endif -%}
 </section>
 
+<div class="acc-qv" id="AccQuickView-{{ section.id }}" role="dialog" aria-modal="true" aria-label="{{ 'products.product.quick_view' | t | default: 'Quick view' }}" hidden>
+  <div class="acc-qv__backdrop"></div>
+  <div class="acc-qv__box">
+    <button class="acc-qv__close" aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">&#215;</button>
+    <div class="acc-qv__inner">
+      <div class="acc-qv__media">
+        <img class="acc-qv__img" src="" alt="" width="600" height="600" loading="lazy">
+      </div>
+      <div class="acc-qv__body">
+        <p class="acc-qv__fits"></p>
+        <h3 class="acc-qv__title"></h3>
+        <div class="acc-qv__desc"></div>
+        <div class="acc-qv__foot">
+          <div class="acc-qv__price-row">
+            <span class="acc-qv__price"></span>
+            <form class="acc-qv__form" action="/cart/add" method="post">
+              <input type="hidden" name="id" value="">
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="acc-qv__atc">{{ 'products.product.add_to_cart' | t }}</button>
+            </form>
+          </div>
+          <a class="acc-qv__details" href="">{{ 'products.product.view_full_details' | t | default: 'View full details' }} ›</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% stylesheet %}
   .acc-section__head {
     text-align: center;
@@ -310,7 +338,182 @@
     .acc-arrow { display: none; }
   }
 
-  /* Centered add-to-cart toast */
+  /* ── Quick-view popup ── */
+  .acc-qv {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .acc-qv[hidden] { display: none; }
+
+  .acc-qv__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / .45);
+    backdrop-filter: blur(2px);
+  }
+
+  .acc-qv__box {
+    position: relative;
+    background: #fff;
+    border-radius: 24px;
+    width: min(860px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+    box-shadow: 0 24px 80px rgb(0 0 0 / .18);
+    animation: accQvIn .22s ease;
+  }
+
+  @keyframes accQvIn {
+    from { opacity: 0; transform: scale(.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .acc-qv__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgb(0 0 0 / .15);
+    background: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    z-index: 1;
+    transition: background 0.15s;
+  }
+
+  .acc-qv__close:hover { background: #f5f5f5; }
+
+  .acc-qv__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .acc-qv__media {
+    border: 1px solid rgb(0 0 0 / .1);
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .acc-qv__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6%;
+    display: block;
+  }
+
+  .acc-qv__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 8px;
+  }
+
+  .acc-qv__fits {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(0 0 0 / .45);
+    margin: 0;
+  }
+
+  .acc-qv__title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .acc-qv__desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgb(0 0 0 / .7);
+  }
+
+  .acc-qv__desc p { margin: 0 0 8px; }
+  .acc-qv__desc strong, .acc-qv__desc b { color: #000; font-weight: 700; display: block; margin-top: 12px; }
+
+  .acc-qv__foot {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .acc-qv__price-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid rgb(0 0 0 / .12);
+    border-radius: 14px;
+    padding: 16px 20px;
+  }
+
+  .acc-qv__price {
+    font-family: var(--font-accent);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .acc-qv__form { margin: 0; }
+
+  .acc-qv__atc {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .acc-qv__atc:hover { opacity: 0.8; }
+
+  .acc-qv__details {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .acc-qv__box { padding: 20px; }
+    .acc-qv__inner { grid-template-columns: 1fr; gap: 20px; }
+    .acc-qv__title { font-size: 22px; }
+  }
+
+  /* ── Centered add-to-cart toast ── */
   .acc-cart-toast {
     position: fixed;
     top: 50%;
@@ -342,7 +545,9 @@
     const trackEl = section && section.querySelector('.acc-track');
     const prevBtn = section && section.querySelector('.acc-arrow--l');
     const nextBtn = section && section.querySelector('.acc-arrow--r');
+    const qv      = section && section.nextElementSibling; // the .acc-qv dialog
 
+    // ── Carousel arrows ──
     if (trackEl) {
       const cardWidth = () => {
         const card = trackEl.querySelector('.acc-card');
@@ -352,6 +557,55 @@
       if (nextBtn) nextBtn.addEventListener('click', () => trackEl.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
     }
 
+    // ── Quick-view popup ──
+    function openQV(card) {
+      if (!qv) return;
+      const d = card.dataset;
+      qv.querySelector('.acc-qv__img').src        = d.popupImg || '';
+      qv.querySelector('.acc-qv__img').alt        = d.popupImgAlt || '';
+      const fits = qv.querySelector('.acc-qv__fits');
+      fits.textContent = d.popupFits || '';
+      fits.hidden = !d.popupFits;
+      qv.querySelector('.acc-qv__title').textContent   = d.popupTitle || '';
+      qv.querySelector('.acc-qv__desc').innerHTML      = d.popupDesc || '';
+      qv.querySelector('.acc-qv__price').textContent   = d.popupPrice || '';
+      qv.querySelector('.acc-qv__form input[name="id"]').value = d.popupVariant || '';
+      qv.querySelector('.acc-qv__details').href        = d.popupUrl || '';
+      const atcBtn = qv.querySelector('.acc-qv__atc');
+      const available = d.popupAvailable !== 'false';
+      atcBtn.disabled = !available;
+      atcBtn.textContent = available ? atcBtn.textContent : 'Out of stock';
+      qv.hidden = false;
+      document.body.style.overflow = 'hidden';
+      qv.querySelector('.acc-qv__close').focus();
+    }
+
+    function closeQV() {
+      if (!qv) return;
+      qv.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    if (qv) {
+      qv.querySelector('.acc-qv__backdrop').addEventListener('click', closeQV);
+      qv.querySelector('.acc-qv__close').addEventListener('click', closeQV);
+      qv.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeQV(); });
+    }
+
+    // Open on image or title click
+    if (trackEl) {
+      trackEl.addEventListener('click', (e) => {
+        const imgLink   = e.target.closest('.acc-card__img');
+        const titleLink = e.target.closest('.acc-card__title a');
+        if (!imgLink && !titleLink) return;
+        const card = e.target.closest('.acc-card');
+        if (!card || !card.dataset.popupTitle) return;
+        e.preventDefault();
+        openQV(card);
+      });
+    }
+
+    // ── Add-to-cart toast ──
     function showToast(msg) {
       let toast = document.getElementById('acc-cart-toast');
       if (!toast) {
@@ -366,14 +620,9 @@
       toast._t = setTimeout(() => toast.classList.remove('is-visible'), 2800);
     }
 
-    document.addEventListener('submit', (e) => {
-      const form = e.target.closest('.acc-card__form');
-      if (!form) return;
-      e.preventDefault();
-
-      const btn = form.querySelector('.acc-card__btn[type="submit"]');
+    function handleAddToCart(form, productTitle) {
+      const btn = form.querySelector('[type="submit"]');
       const variantId = form.querySelector('input[name="id"]')?.value;
-      const productTitle = form.closest('.acc-card')?.querySelector('.acc-card__title')?.textContent?.trim() ?? '';
       const originalLabel = btn ? btn.innerHTML : '';
 
       if (btn) {
@@ -390,6 +639,7 @@
         .then(r => r.json())
         .then(data => {
           showToast((data.product_title || productTitle) + ' added');
+          closeQV();
           document.dispatchEvent(new CustomEvent('cart:updated'));
           fetch('/cart.js')
             .then(r => r.json())
@@ -406,12 +656,19 @@
         })
         .catch(() => {})
         .finally(() => {
-          if (btn) {
-            btn.style.width = '';
-            btn.innerHTML = originalLabel;
-            btn.disabled = false;
-          }
+          if (btn) { btn.style.width = ''; btn.innerHTML = originalLabel; btn.disabled = false; }
         });
+    }
+
+    // Intercept card forms AND quick-view form
+    document.addEventListener('submit', (e) => {
+      const form = e.target.closest('.acc-card__form, .acc-qv__form');
+      if (!form) return;
+      e.preventDefault();
+      const title = form.closest('.acc-card')?.querySelector('.acc-card__title')?.textContent?.trim()
+        || qv?.querySelector('.acc-qv__title')?.textContent?.trim()
+        || '';
+      handleAddToCart(form, title);
     });
   })();
 {% endjavascript %}

@@ -11,7 +11,17 @@
   assign description = product.description | strip_html | strip | truncate: 140
 -%}
 
-<article class="acc-card">
+<article class="acc-card"
+  data-popup-title="{{ product.title | escape }}"
+  data-popup-img="{{ product.featured_image | image_url: width: 800 }}"
+  data-popup-img-alt="{{ product.featured_image.alt | default: product.title | escape }}"
+  data-popup-price="{{ product.price | money }}"
+  data-popup-variant="{{ product.selected_or_first_available_variant.id }}"
+  data-popup-url="{{ product.url }}"
+  data-popup-available="{{ product.available }}"
+  data-popup-desc="{{ product.description | escape }}"
+  data-popup-fits="{{ product.metafields.custom.fits | escape }}"
+>
   <a class="acc-card__img" href="{{ product.url }}" tabindex="-1">
     {%- if img != blank -%}
       <img
