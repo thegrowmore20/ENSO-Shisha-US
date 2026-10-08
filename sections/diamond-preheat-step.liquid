@@ -1,0 +1,774 @@
+{%- doc -%}
+  Step 5 of the Diamond quick-start guide: "Pre-heat, then your heat".
+  Renders a composite carousel using the .lv animated dial UI overlaid on
+  the device body photo, matching the handoff quick.html step 5 exactly.
+  Includes "Read more" and "Back" footer links.
+{%- enddoc -%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{%- liquid
+  assign back_url   = section.settings.back_url   | default: '/pages/enso-experience'
+  assign back_label = section.settings.back_label | default: 'ENSŌ Experience'
+-%}
+
+<div class="qs-wrap">
+  <div class="qs">
+    <div class="qs__s">
+
+      <div class="qs__tx">
+        <span class="qs__n" aria-hidden="true">{{ section.settings.step_number | default: '5' }}</span>
+        <h2>{{ section.settings.heading | default: 'Pre-heat, then your heat' }}</h2>
+        {%- if section.settings.body != blank -%}
+          <p>{{ section.settings.body }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="qs__pic qs__pic--seq">
+        <div class="qs__track" aria-label="{{ section.settings.heading }} — step images">
+
+          <!-- Slide 1: Start Pre-heat animated sequence -->
+          <div class="qs__mac">
+            <div class="mac">
+              <div class="dev">
+                {%- if section.settings.device_image != blank -%}
+                  {{- section.settings.device_image | image_url: width: 1200 | image_tag:
+                      loading: 'lazy',
+                      widths: '600, 900, 1200',
+                      sizes: '(min-width: 990px) 600px, 100vw',
+                      alt: section.settings.heading -}}
+                {%- endif -%}
+                <div class="lv" data-scene="qstart" role="img" aria-label="Start Pre-heat: 7 minutes at 275 °C"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Pre-heat Timer animated sequence -->
+          <div class="qs__mac">
+            <div class="mac">
+              <div class="dev">
+                {%- if section.settings.device_image != blank -%}
+                  {{- section.settings.device_image | image_url: width: 1200 | image_tag:
+                      loading: 'lazy',
+                      widths: '600, 900, 1200',
+                      sizes: '(min-width: 990px) 600px, 100vw',
+                      alt: section.settings.heading -}}
+                {%- endif -%}
+                <div class="lv" data-scene="qtimer" role="img" aria-label="Pre-heat Timer: set the time"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="qs__dots" aria-hidden="true">
+          <i class="on"></i>
+          <i></i>
+        </div>
+
+        <div class="qs__caps">
+          {%- if section.settings.caption_1 != blank -%}
+            <span class="on">{{ section.settings.caption_1 }}</span>
+          {%- endif -%}
+          {%- if section.settings.caption_2 != blank -%}
+            <span>{{ section.settings.caption_2 }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {%- if section.settings.more_url != blank -%}
+    <p class="qs__more">
+      <a href="{{ section.settings.more_url }}">{{ section.settings.more_label | default: 'Read more in the full manual ›' }}</a>
+      {%- if section.settings.more_note != blank -%}
+        <span>{{ section.settings.more_note }}</span>
+      {%- endif -%}
+    </p>
+  {%- endif -%}
+
+  <div class="cl-back">
+    <a href="{{ back_url }}">‹ Back to {{ back_label }}</a>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* ── Shared layout (mirrors diamond-quick-start) ── */
+  .qs-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+  .qs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+  }
+  .qs__s {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1.15fr);
+    gap: 40px;
+    align-items: center;
+    background: var(--palette-mist, #F5F5F4);
+    border-radius: 28px;
+    padding: 28px 28px 28px 40px;
+  }
+  .qs__n {
+    display: inline-block;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--color-text);
+    color: var(--color-background);
+    font-family: var(--font-accent);
+    font-size: 17px;
+    line-height: 40px;
+    font-weight: var(--font-weight-heavy);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .qs__tx h2 {
+    font-family: var(--font-accent);
+    font-size: 34px;
+    line-height: 40px;
+    letter-spacing: -.02em;
+    font-weight: var(--font-weight-heavy);
+    margin: 0 0 10px;
+    color: var(--color-text);
+  }
+  .qs__tx p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 27px;
+    color: rgba(0,0,0,.74);
+    max-width: 40ch;
+  }
+
+  /* ── Picture container ── */
+  .qs__pic {
+    position: relative;
+    aspect-ratio: 5/4;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  /* ── Scroll track ── */
+  .qs__track {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .qs__track::-webkit-scrollbar { display: none; }
+
+  /* ── Composite slide cell ── */
+  .qs__mac {
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: center;
+    position: relative;
+  }
+
+  /* ── Device mockup wrapper ── */
+  .mac {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  /* ── Device photo layer — zoomed in to frame the dial area ── */
+  .dev {
+    position: absolute;
+    width: 300%;
+    max-width: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50.17%, -57.6%);
+  }
+  .dev img {
+    width: 100%;
+    display: block;
+  }
+
+  /* ── Dots ── */
+  .qs__dots {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 12px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    pointer-events: none;
+  }
+  .qs__dots i {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.18);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all .2s;
+  }
+  .qs__dots i.on { background: #000; width: 22px; border-radius: 999px; }
+
+  /* ── Slide captions ── */
+  .qs__caps {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 34px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .qs__caps span {
+    display: none;
+    background: #fff;
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-family: var(--font-heading);
+    font-size: 12.5px;
+    line-height: 16px;
+    font-weight: var(--font-weight-bold);
+    box-shadow: 0 2px 10px rgba(0,0,0,.12);
+  }
+  .qs__caps span.on { display: inline-block; }
+
+  /* ── Manual link ── */
+  .qs__more {
+    display: grid;
+    gap: 4px;
+    margin: 32px 0 64px;
+  }
+  .qs__more a {
+    font-family: var(--font-accent);
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: var(--font-weight-heavy);
+    color: var(--color-text);
+    text-decoration: none;
+    border-bottom: 2px solid var(--palette-sand, #c8943a);
+    justify-self: start;
+    padding-bottom: 2px;
+  }
+  .qs__more a:hover { border-bottom-color: var(--color-text); }
+  .qs__more span {
+    font-size: 15px;
+    color: rgba(0,0,0,.55);
+  }
+
+  /* ── Back link ── */
+  .cl-back { padding: 0 0 8px; }
+  .cl-back a {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    text-decoration: none;
+    border-bottom: 2px solid var(--palette-sand, #c8943a);
+    padding-bottom: 2px;
+  }
+  .cl-back a:hover { border-bottom-color: var(--color-text); }
+
+  /* ════════════════════════════════════════
+     .lv — animated dial UI
+  ════════════════════════════════════════ */
+  .lv {
+    position: relative;
+    width: 74%; max-width: 300px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #0a0a0c;
+    box-shadow: 0 0 0 6px #2a2622, 0 12px 30px rgba(0,0,0,.45);
+    container-type: inline-size;
+    overflow: hidden;
+    font-family: Inter, system-ui, sans-serif;
+    color: #f0e8d8;
+    transition: box-shadow .35s ease;
+  }
+  /* inside .dev — position over the device photo dial area */
+  .dev .lv {
+    position: absolute;
+    left: 50.17%; top: 57.6%;
+    width: 21.4%;
+    transform: translate(-50%, -50%);
+    box-shadow: none;
+    max-width: none;
+  }
+  .lv.press {
+    box-shadow: 0 0 0 .9cqw rgba(226,97,76,.95), 0 0 4cqw 1cqw rgba(226,97,76,.5) !important;
+  }
+  /* turn arc */
+  .lv::after {
+    content: "";
+    position: absolute; inset: 1%;
+    border-radius: 50%;
+    pointer-events: none; opacity: 0; z-index: 2;
+    background: conic-gradient(from 0deg, transparent 0 62%, rgba(226,97,76,.15) 72%, rgba(226,97,76,.75) 88%, transparent 92%);
+    -webkit-mask: radial-gradient(circle closest-side, transparent 94%, #000 95%, #000 98%, transparent 99%);
+    mask: radial-gradient(circle closest-side, transparent 94%, #000 95%, #000 98%, transparent 99%);
+  }
+  .lv.tr-cw::after  { opacity: 1; animation: lv-arcw  .5s linear; }
+  .lv.tr-ccw::after { opacity: 1; animation: lv-arccw .5s linear; }
+  @keyframes lv-arcw  { from { transform: rotate(0) }              to { transform: rotate(180deg) } }
+  @keyframes lv-arccw { from { transform: rotate(0) scaleX(-1) }   to { transform: rotate(-180deg) scaleX(-1) } }
+  @media (prefers-reduced-motion: reduce) {
+    .lv.tr-cw::after, .lv.tr-ccw::after { animation: none; }
+  }
+  /* screen slides */
+  .lv__s {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    opacity: 0; transition: opacity .22s;
+  }
+  .lv__s.on { opacity: 1; }
+  /* battery */
+  .lv__bat {
+    display: flex; align-items: center; justify-content: center; gap: .8cqw;
+  }
+  .lv__bat svg { width: 2.6cqw; height: 3.6cqw; fill: #f0e8d8; vertical-align: 0; }
+  /* typography */
+  .lv .r  { color: #e2614c; }
+  .lv .g  { color: #a6a39b; }
+  .lv .t-start { font: 700 9.9cqw/1.17 Inter, sans-serif; color: #e2614c; }
+  .lv .arr {
+    position: absolute; top: 50%;
+    width: 0; height: 0;
+    border-top: 1.9cqw solid transparent;
+    border-bottom: 1.9cqw solid transparent;
+    transform: translateY(-50%);
+  }
+  .lv .arr.l  { left: 18.8%; border-right: 2.9cqw solid #e2614c; }
+  .lv .arr.r2 { right: 18.8%; border-left: 2.9cqw solid #e2614c; }
+  .lv .t-lbl  { font: 600 7.7cqw/1.1 Inter, sans-serif; color: #e2614c; margin-top: 4%; }
+  .lv .t-big  { font: 700 15.6cqw/1.08 Inter, sans-serif; font-variant-numeric: tabular-nums; }
+  .lv .t-mid  { font: 400 7.4cqw/1.2 Inter, sans-serif; font-variant-numeric: tabular-nums; }
+  .lv .t-cap  { font: 500 2.9cqw/1 Inter, sans-serif; letter-spacing: .14em; color: #a6a39b; margin-top: 2.6cqw; text-transform: uppercase; }
+  .lv .t-huge {
+    font: 700 22cqw/1 Inter, sans-serif;
+    color: #e2614c;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.01em;
+    position: relative;
+  }
+  .lv .t-huge sup { position: absolute; left: 100%; top: 0; font-size: 1em; line-height: 1; vertical-align: baseline; }
+  .lv .t-time { font: 700 10.6cqw/1.1 Inter, sans-serif; font-variant-numeric: tabular-nums; margin-top: 2cqw; }
+  .lv .mono   { font-family: monospace; }
+  .lv .t-cap.mono { letter-spacing: .2em; font-size: 3.2cqw; }
+  .lv .t-cap.r    { color: #e2614c; }
+  .lv .t-q  { font: 700 9.7cqw/1.13 Inter, sans-serif; color: #e2614c; }
+  .lv .ring {
+    position: relative; width: 40%; aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    margin: 2.6cqw 0;
+  }
+  .lv .ring svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+  .lv .ring b   { font: 400 9.4cqw/1 monospace; color: #e2614c; letter-spacing: -.03em; }
+  .lv .pills { display: flex; gap: 5.5cqw; margin-top: 6cqw; }
+  .lv .pill  {
+    font: 700 4.6cqw/1 Inter, sans-serif;
+    padding: 2.9cqw 4.6cqw;
+    border-radius: 999px;
+    border: .55cqw solid #e2614c;
+    color: #e2614c;
+    min-width: 9cqw;
+    transition: background .2s, color .2s;
+  }
+  .lv .pill.sel { background: #e2614c; color: #1a0f0c; }
+  @media (prefers-reduced-motion: reduce) { .lv__s, .lv { transition: none; } }
+
+  /* ── Hint chip ── */
+  .lv-hint {
+    position: absolute; left: 50%; top: 5%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex; align-items: center; gap: 7px;
+    background: #000; color: #fff;
+    border-radius: 999px;
+    padding: 6px 13px 6px 10px;
+    font-family: var(--font-heading);
+    font-size: 12.5px;
+    line-height: 16px;
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+    opacity: 0; transition: opacity .2s;
+    pointer-events: none;
+  }
+  .lv-hint.on { opacity: 1; }
+  .lv-hint svg { width: 16px; height: 16px; flex: none; }
+  @media (prefers-reduced-motion: reduce) { .lv-hint { transition: none; } }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 749px) {
+    .qs-wrap { padding: 0 16px; }
+    .qs__s {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 20px 16px;
+      border-radius: 22px;
+    }
+    .qs__n { width: 34px; height: 34px; font-size: 15px; line-height: 34px; margin-bottom: 10px; }
+    .qs__tx h2 { font-size: 26px; line-height: 32px; }
+    .qs__tx p  { font-size: 16px; line-height: 24px; }
+    .qs__pic   { aspect-ratio: 4/5; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  /* ── helpers ── */
+  function mmss(s) { var m = Math.floor(s / 60), x = s % 60; return m + ':' + (x < 10 ? '0' : '') + x; }
+  function mm2(s)  { var m = Math.floor(s / 60), x = s % 60; return (m < 10 ? '0' : '') + m + ':' + (x < 10 ? '0' : '') + x; }
+
+  var BOLT = '<svg viewBox="0 0 10 14"><path d="M6 0 0 8h4l-1 6 7-9H6l1-5z"/></svg>';
+
+  var HINT = {
+    turn:  ['Turn',          '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M13 8a5 5 0 1 1-1.6-3.7"/><path d="M12 1.5v3.2H8.8"/></svg>'],
+    click: ['Click',         '<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><circle cx="8" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".5"/></svg>'],
+    save:  ['Click to save', '<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><circle cx="8" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".5"/></svg>']
+  };
+
+  var SCR = {
+    start: '<div class="lv__bat">' + BOLT + '100%</div><i class="arr l"></i><i class="arr r2"></i><div class="t-start">Start<br>Pre-heat</div>',
+    timer: '<div class="t-cap mono r" style="margin:0">Pre-heat timer</div><div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#2a2a2e" stroke-width="3.2"/><circle class="arc" cx="50" cy="50" r="46" fill="none" stroke="#e2614c" stroke-width="3.2" stroke-linecap="round" pathLength="100" stroke-dasharray="53 100"/></svg><b data-k="tm">08:00</b></div><div class="t-cap mono" style="color:#f0e8d8;letter-spacing:.12em;margin:0">mm:ss</div>',
+    pre:   '<div class="lv__bat">' + BOLT + '100%</div><div class="t-lbl">Pre-heating</div><div class="t-big" data-k="pt">3:30</div><div class="t-mid" data-k="pc">275°C</div><div class="t-cap">Remaining</div>',
+    adj:   '<div class="lv__bat">' + BOLT + '100%</div><div class="t-huge" data-k="at">275<sup>°</sup></div><div class="t-cap" style="margin-top:6cqw">Adjust temp</div>',
+    qt:    '<div class="lv__bat">' + BOLT + '100%</div><i class="arr l"></i><i class="arr r2"></i><div class="t-start">Pre-heat<br>Timer</div><div class="t-mid" style="color:#f0e8d8;margin-top:2cqw" data-k="qtm">07:00</div>',
+    can:   '<div class="lv__bat">' + BOLT + '100%</div><div class="t-q">Cancel<br>Pre-heat?</div><div class="pills"><span class="pill" data-k="no">No</span><span class="pill" data-k="yes">Yes</span></div>'
+  };
+
+  var SCENES = {
+    qstart: function () {
+      var a = [['start', {}, 1400], ['start', {}, 380, 'click', 1]];
+      for (var s = 420; s >= 417; s--) a.push(['pre', { pt: s, pc: 275 }, 700]);
+      for (var c = 274; c >= 260; c--) a.push(['adj', { at: c }, 110, 'turn']);
+      a.push(['adj', { at: 260 }, 900]);
+      for (s = 415; s >= 413; s--) a.push(['pre', { pt: s, pc: 260 }, 700]);
+      return a;
+    },
+    qtimer: function () {
+      return [
+        ['qt',    {},          1400],
+        ['qt',    {},           500, 'click', 1],
+        ['timer', { tm: 420 },  900],
+        ['timer', { tm: 480 },  700, 'turn'],
+        ['timer', { tm: 540 },  900, 'turn'],
+        ['timer', { tm: 540 },  700, 'save', 1],
+        ['start', {},          1400]
+      ];
+    }
+  };
+
+  /* Guard: define LVsetup once even if this section renders multiple times */
+  if (!window.LVsetup) {
+    window.LVsetup = function setup(el) {
+      var name  = el.dataset.scene;
+      var steps = SCENES[name] && SCENES[name]();
+      if (!steps) return;
+
+      /* build one hidden screen div per unique screen key */
+      var used = {};
+      steps.forEach(function (s) { used[s[0]] = 1; });
+      el.innerHTML = Object.keys(used).map(function (k) {
+        return '<div class="lv__s" data-s="' + k + '">' + SCR[k] + '</div>';
+      }).join('');
+
+      var host = el.closest('.qs__mac, .mac') || el.parentNode;
+      var hint = document.createElement('span');
+      hint.className = 'lv-hint';
+      host.appendChild(hint);
+
+      function show(st) {
+        var k = st[0], v = st[1] || {};
+        [].forEach.call(el.children, function (c) {
+          c.classList.toggle('on', c.dataset.s === k);
+        });
+        var q = function (x) { return el.querySelector('[data-s="' + k + '"] [data-k="' + x + '"]'); };
+
+        if (k === 'timer') {
+          var tmEl = q('tm');
+          if (tmEl) tmEl.textContent = mm2(v.tm);
+          var arc = el.querySelector('[data-s="timer"] .arc');
+          if (arc) arc.setAttribute('stroke-dasharray', (v.tm / 900 * 100).toFixed(1) + ' 100');
+        }
+        if (k === 'pre') {
+          var pt = q('pt'); if (pt) pt.textContent = mmss(v.pt);
+          var pc = q('pc'); if (pc) pc.textContent = v.pc + '°C';
+        }
+        if (k === 'adj') { var at = q('at'); if (at) at.innerHTML = v.at + '<sup>°</sup>'; }
+        if (k === 'qt')  { var qtm = q('qtm'); if (qtm) qtm.textContent = mm2(v.tm || 420); }
+        if (k === 'can') {
+          var no  = q('no');  if (no)  no.classList.toggle('sel',  v.sel === 'no');
+          var yes = q('yes'); if (yes) yes.classList.toggle('sel', v.sel === 'yes');
+        }
+
+        /* hint chip */
+        var h = st[3] && HINT[st[3]];
+        if (h) hint.innerHTML = h[1] + h[0];
+        hint.classList.toggle('on', !!h);
+
+        /* turn arc */
+        var tv = v.at || v.tm || v.pt || 0;
+        if (/^(turn|slow|fast)$/.test(st[3] || '')) {
+          var dir = (el._lt !== undefined && tv < el._lt && k === el._lk) ? 'tr-ccw' : 'tr-cw';
+          var now = Date.now();
+          if (!el._arcT || now - el._arcT > 900 || !el.classList.contains(dir)) {
+            el.classList.remove('tr-cw', 'tr-ccw');
+            void el.offsetWidth;
+            el.classList.add(dir);
+            el._arcT = now;
+          }
+        }
+        el._lt = tv; el._lk = k;
+        el.classList.toggle('press', !!st[4]);
+      }
+
+      var still = +(el.dataset.still || 0);
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { show(steps[still]); return; }
+
+      var i = 0, timer = null, vis = false;
+
+      function tick() {
+        show(steps[i]);
+        var d = steps[i][2];
+        i = (i + 1) % steps.length;
+        timer = setTimeout(tick, i === 0 ? d + 500 : d);
+      }
+
+      show(steps[still]);
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (e.isIntersecting && !vis)      { vis = true;  i = 0; tick(); }
+            else if (!e.isIntersecting && vis) { vis = false; clearTimeout(timer); }
+          });
+        }, { threshold: 0.35 }).observe(el);
+      } else {
+        tick();
+      }
+    };
+  }
+
+  /* Boot all .lv[data-scene] on the page */
+  [].forEach.call(document.querySelectorAll('.lv[data-scene]'), window.LVsetup);
+
+  /* Carousel: dots + captions + drag (guarded — skip already-bound tracks) */
+  [].forEach.call(document.querySelectorAll('.qs__pic--seq'), function (pic) {
+    if (pic.dataset.bound) return;
+    pic.dataset.bound = '1';
+
+    var track = pic.querySelector('.qs__track');
+    if (!track) return;
+    var dots = pic.querySelectorAll('.qs__dots i');
+    var caps = pic.querySelectorAll('.qs__caps span');
+
+    function updateActive() {
+      var idx = Math.round(track.scrollLeft / track.clientWidth);
+      [].forEach.call(dots, function (d, j) { d.classList.toggle('on', j === idx); });
+      [].forEach.call(caps, function (c, j) { c.classList.toggle('on', j === idx); });
+    }
+
+    track.addEventListener('scroll', updateActive, { passive: true });
+
+    [].forEach.call(dots, function (d, j) {
+      d.addEventListener('click', function () {
+        track.scrollTo({ left: j * track.clientWidth, behavior: 'smooth' });
+      });
+    });
+
+    /* Mouse / trackpad drag */
+    var dragging = false, startX = 0, startScroll = 0;
+
+    function snapToNearest() {
+      var w = track.clientWidth;
+      var idx = Math.round(track.scrollLeft / w);
+      track.scrollTo({ left: idx * w, behavior: 'smooth' });
+      if ('onscrollend' in window) {
+        track.addEventListener('scrollend', function restoreSnap() {
+          track.style.scrollSnapType = '';
+          track.removeEventListener('scrollend', restoreSnap);
+          updateActive();
+        });
+      } else {
+        setTimeout(function () { track.style.scrollSnapType = ''; updateActive(); }, 400);
+      }
+    }
+
+    track.addEventListener('mousedown', function (e) {
+      dragging = true;
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.style.cursor = 'grabbing';
+      track.style.scrollSnapType = 'none';
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!dragging) return;
+      track.scrollLeft = startScroll - (e.clientX - startX);
+    });
+    window.addEventListener('mouseup', function () {
+      if (!dragging) return;
+      dragging = false;
+      track.style.cursor = '';
+      snapToNearest();
+    });
+    [].forEach.call(track.querySelectorAll('img'), function (img) {
+      img.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    });
+  });
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.diamond_preheat_step.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.diamond_preheat_step.settings.step_heading"
+    },
+    {
+      "type": "text",
+      "id": "step_number",
+      "label": "t:sections.diamond_preheat_step.settings.step_number.label",
+      "default": "5"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.diamond_preheat_step.settings.heading.label",
+      "default": "Pre-heat, then your heat"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "t:sections.diamond_preheat_step.settings.body.label",
+      "default": "Hold the dial to switch on. Click Start Pre-heat: it runs at once, 7 minutes at 275 °C. Turn the dial to your heat. Want a different time? From Start Pre-heat turn right to Pre-heat Timer, click and set the minutes."
+    },
+    {
+      "type": "image_picker",
+      "id": "device_image",
+      "label": "t:sections.diamond_preheat_step.settings.device_image.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_preheat_step.settings.captions_heading"
+    },
+    {
+      "type": "text",
+      "id": "caption_1",
+      "label": "t:sections.diamond_preheat_step.settings.caption_1.label",
+      "default": "Start Pre-heat: 7 min · 275 °C"
+    },
+    {
+      "type": "text",
+      "id": "caption_2",
+      "label": "t:sections.diamond_preheat_step.settings.caption_2.label",
+      "default": "Set the pre-heat time"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_preheat_step.settings.nav_heading"
+    },
+    {
+      "type": "url",
+      "id": "back_url",
+      "label": "t:sections.diamond_preheat_step.settings.back_url.label"
+    },
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "t:sections.diamond_preheat_step.settings.back_label.label",
+      "default": "ENSŌ Experience"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_preheat_step.settings.footer_heading"
+    },
+    {
+      "type": "url",
+      "id": "more_url",
+      "label": "t:sections.diamond_preheat_step.settings.more_url.label"
+    },
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "t:sections.diamond_preheat_step.settings.more_label.label",
+      "default": "Read more in the full manual ›"
+    },
+    {
+      "type": "text",
+      "id": "more_note",
+      "label": "t:sections.diamond_preheat_step.settings.more_note.label",
+      "default": "Temperature in coals, profiles, the cap, cleaning and more"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_desktop_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0, "max": 80, "step": 2, "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.padding_mobile_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0, "max": 80, "step": 2, "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    { "name": "t:sections.diamond_preheat_step.presets.name" }
+  ]
+}
+{% endschema %}

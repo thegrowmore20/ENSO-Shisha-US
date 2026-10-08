@@ -107,18 +107,20 @@
     </ol>
   {%- endif -%}
 
-  {%- if section.settings.more_url != blank -%}
-    <p class="qs__more">
-      <a href="{{ section.settings.more_url }}">{{ section.settings.more_label | default: 'Read more in the full manual ›' }}</a>
-      {%- if section.settings.more_note != blank -%}
-        <span>{{ section.settings.more_note }}</span>
-      {%- endif -%}
-    </p>
-  {%- endif -%}
+  {%- unless section.settings.hide_footer -%}
+    {%- if section.settings.more_url != blank -%}
+      <p class="qs__more">
+        <a href="{{ section.settings.more_url }}">{{ section.settings.more_label | default: 'Read more in the full manual ›' }}</a>
+        {%- if section.settings.more_note != blank -%}
+          <span>{{ section.settings.more_note }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
 
-  <div class="cl-back">
-    <a href="{{ back_url }}">‹ Back to {{ back_label }}</a>
-  </div>
+    <div class="cl-back">
+      <a href="{{ back_url }}">‹ Back to {{ back_label }}</a>
+    </div>
+  {%- endunless -%}
 
 </div>
 
@@ -360,14 +362,21 @@
 
 {% javascript %}
   document.querySelectorAll('.qs__pic--seq').forEach(function(pic) {
+    // Guard: skip if already bound by another section (e.g. diamond-preheat-step)
+    if (pic.dataset.bound) return;
+    pic.dataset.bound = '1';
+
     const track = pic.querySelector('.qs__track');
     const dots = pic.querySelectorAll('.qs__dots i');
     if (!track) return;
 
     function updateDots() {
-      if (!dots.length) return;
       const index = Math.round(track.scrollLeft / track.clientWidth);
       dots.forEach(function(dot, i) { dot.classList.toggle('on', i === index); });
+      // Also sync captions if present (used by diamond-preheat-step)
+      pic.querySelectorAll('.qs__caps span').forEach(function(cap, i) {
+        cap.classList.toggle('on', i === index);
+      });
     }
 
     track.addEventListener('scroll', updateDots, { passive: true });
@@ -488,6 +497,13 @@
     {
       "type": "header",
       "content": "t:sections.diamond_quick_start.settings.footer_heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_footer",
+      "label": "t:sections.diamond_quick_start.settings.hide_footer.label",
+      "info": "t:sections.diamond_quick_start.settings.hide_footer.info",
+      "default": false
     },
     {
       "type": "url",

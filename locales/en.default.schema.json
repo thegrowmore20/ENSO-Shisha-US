@@ -1635,6 +1635,7 @@
         "subheading": { "label": "Subheading" },
         "safety_note": { "label": "Safety note" },
         "footer_heading": { "content": "Footer" },
+        "hide_footer": { "label": "Hide footer links", "info": "Enable when the Diamond Pre-heat Step section provides the footer" },
         "more_url": { "label": "Manual link URL" },
         "more_label": { "label": "Manual link label" },
         "more_note": { "label": "Manual link note" }
@@ -1655,6 +1656,29 @@
       },
       "presets": {
         "name": "Diamond Quick Start"
+      }
+    },
+    "diamond_preheat_step": {
+      "name": "Diamond Pre-heat Step",
+      "settings": {
+        "step_heading":    { "content": "Step" },
+        "step_number":     { "label": "Step number" },
+        "heading":         { "label": "Heading" },
+        "body":            { "label": "Body text" },
+        "device_image":    { "label": "Device photo" },
+        "captions_heading":{ "content": "Slide captions" },
+        "caption_1":       { "label": "Slide 1 caption" },
+        "caption_2":       { "label": "Slide 2 caption" },
+        "nav_heading":     { "content": "Navigation" },
+        "back_url":        { "label": "Back link URL" },
+        "back_label":      { "label": "Back link label" },
+        "footer_heading":  { "content": "Footer" },
+        "more_url":        { "label": "Manual link URL" },
+        "more_label":      { "label": "Manual link label" },
+        "more_note":       { "label": "Manual link note" }
+      },
+      "presets": {
+        "name": "Diamond Pre-heat Step"
       }
     },
     "contact": {

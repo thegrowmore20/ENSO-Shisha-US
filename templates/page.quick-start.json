@@ -16,39 +16,51 @@
           "type": "step",
           "settings": {
             "heading": "Charge it",
-            "body": "USB-C straight into the battery, about 1.5 hours to full. It also charges inside Diamond. All four dots lit: full."
+            "body": "USB-C straight into the battery, about 1.5 hours to full. It also charges inside Diamond. All four dots lit: full.",
+            "image_1": "shopify://shop_images/before-charge.webp",
+            "image_2": "shopify://shop_images/charge-in.webp",
+            "image_3": "shopify://shop_images/charge-dots.webp"
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
             "heading": "Pack the cup",
-            "body": "10–15 g, pressed just a little, to the edge of the mesh."
+            "body": "10–15 g, pressed just a little, to the edge of the mesh.",
+            "image_1": "shopify://shop_images/basket-empty.webp",
+            "image_2": "shopify://shop_images/pack-layer1.webp",
+            "image_3": "shopify://shop_images/pack-press.webp",
+            "image_4": "shopify://shop_images/cup-filled.webp"
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
             "heading": "Cup in, cap on",
-            "body": "Set the cup into the chamber and put the cap on by its rubber pads. Then turn the plate with the fork of the cup tool until all four holes are open."
+            "body": "Set the cup into the chamber and put the cap on by its rubber pads. Then turn the plate with the fork of the cup tool until all four holes are open.",
+            "image_1": "shopify://shop_images/chamber-empty.webp",
+            "image_2": "shopify://shop_images/cup-in-by-hand.webp",
+            "image_3": "shopify://shop_images/cap-on-press-pad.webp",
+            "image_4": "shopify://shop_images/plate-fork-macro.webp"
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
             "heading": "On your hookah",
-            "body": "The adapter on the stem only half-way, Diamond on top, then press: they slide down together."
+            "body": "The adapter on the stem only half-way, Diamond on top, then press: they slide down together.",
+            "image_1": "shopify://shop_images/hookah-adapter-two-hands.webp",
+            "image_2": "shopify://shop_images/hookah-mount-two-hands.webp",
+            "image_3": "shopify://shop_images/on-hookah-front.webp"
           }
         },
-        "step_5": {
-          "type": "step",
-          "settings": {
-            "heading": "Pre-heat, then your heat",
-            "body": "Hold the dial to switch on. Click Start Pre-heat: it runs at once, 7 minutes at 275 °C. Turn the dial to your heat. Want a different time? From Start Pre-heat turn right to Pre-heat Timer, click and set the minutes."
-          }
-        }
       },
-      "block_order": ["step_1", "step_2", "step_3", "step_4", "step_5"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
       "settings": {
         "back_url": "/pages/enso-experience",
         "back_label": "ENSŌ Experience",
@@ -57,15 +69,36 @@
         "heading": "Quick start",
         "subheading": "Your first session in five steps.",
         "safety_note": "Keep the battery and its contacts dry.",
+        "hide_footer": true,
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "diamond_preheat_step": {
+      "type": "diamond-preheat-step",
+      "settings": {
+        "step_number": "5",
+        "heading": "Pre-heat, then your heat",
+        "body": "Hold the dial to switch on. Click Start Pre-heat: it runs at once, 7 minutes at 275 °C. Turn the dial to your heat. Want a different time? From Start Pre-heat turn right to Pre-heat Timer, click and set the minutes.",
+        "device_image": "shopify://shop_images/closed-start.webp",
+        "caption_1": "Start Pre-heat: 7 min · 275 °C",
+        "caption_2": "Set the pre-heat time",
+        "back_url": "/pages/enso-experience",
+        "back_label": "ENSŌ Experience",
         "more_url": "/pages/enso-diamond-manual",
         "more_label": "Read more in the full manual ›",
         "more_note": "Temperature in coals, profiles, the cap, cleaning and more",
-        "padding_top": 40,
+        "padding_top": 18,
         "padding_bottom": 80,
-        "padding_top_mobile": 24,
+        "padding_top_mobile": 18,
         "padding_bottom_mobile": 40
       }
     }
   },
-  "order": ["diamond_quick_start"]
+  "order": [
+    "diamond_quick_start",
+    "diamond_preheat_step"
+  ]
 }
