@@ -98,7 +98,7 @@
             </div>
           {% endif %}
           {% if section.settings.button != blank %}
-            <a class="btn btn--primary banner__button" href="{{ section.settings.button_url }}">
+            <a class="btn btn--outline banner__button" href="{{ section.settings.button_url }}">
               {{ section.settings.button }}
             </a>
           {% endif %}
@@ -309,6 +309,17 @@
 
   .banner__button {
     margin-top: var(--space-4);
+    background-color: transparent;
+    color: #fff;
+    border-color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .banner__button:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border-color: #fff;
   }
 
   @media screen and (min-width: 750px) and (max-width: 989px) {
