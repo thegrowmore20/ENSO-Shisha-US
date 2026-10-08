@@ -37,6 +37,9 @@
         {%- for block in section.blocks -%}
           {%- case block.type -%}
 
+            {%- when 'accordion', 'collapsible_content' -%}
+              {%- comment -%} Rendered in product-main__accordions below the gallery {%- endcomment -%}
+
             {%- when 'vendor' -%}
               {%- if product.vendor != blank -%}
                 <p class="eyebrow product-vendor product-block" {{ block.shopify_attributes }}>{{ product.vendor }}</p>
@@ -207,17 +210,7 @@
               </div>
 
             {%- when 'accordion' -%}
-              {%- if block.settings.heading != blank and block.settings.content != blank -%}
-                <details class="accordion" name="product-accordion-{{ section.id }}" {% if block.settings.default_open %}open{% endif %} {{ block.shopify_attributes }}>
-                  <summary class="accordion__heading">
-                    {{ block.settings.heading }}
-                    <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                  </summary>
-                  <div class="accordion__content body-text text-muted">
-                    {{ block.settings.content }}
-                  </div>
-                </details>
-              {%- endif -%}
+              {%- comment -%} Handled in product-main__accordions {%- endcomment -%}
 
             {%- when 'custom_liquid' -%}
               <div class="product-custom-liquid product-block" {{ block.shopify_attributes }}>
@@ -366,17 +359,7 @@
               </script>
 
             {%- when 'collapsible_content' -%}
-              {%- if block.settings.heading != blank or block.settings.content != blank -%}
-                <details class="accordion" name="product-accordion-{{ section.id }}" {% if block.settings.collapse_open %}open{% endif %} {{ block.shopify_attributes }}>
-                  <summary class="accordion__heading">
-                    {{ block.settings.heading }}
-                    <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-                  </summary>
-                  <div class="accordion__content body-text text-muted">
-                    {{ block.settings.content }}
-                  </div>
-                </details>
-              {%- endif -%}
+              {%- comment -%} Handled in product-main__accordions {%- endcomment -%}
 
             {%- when 'addons' -%}
               <div class="product-addons product-block">
@@ -391,6 +374,41 @@
           {%- endcase -%}
         {%- endfor -%}
     </product-info>
+
+    <div class="product-main__accordions">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'accordion' -%}
+            {%- if block.settings.heading != blank and block.settings.content != blank -%}
+              <details class="accordion" name="product-accordion-{{ section.id }}" {% if block.settings.default_open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="accordion__heading">
+                  {{ block.settings.heading }}
+                  <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </summary>
+                <div class="accordion__content body-text text-muted">
+                  {{ block.settings.content }}
+                </div>
+              </details>
+            {%- endif -%}
+
+          {%- when 'collapsible_content' -%}
+            {%- if block.settings.heading != blank or block.settings.content != blank -%}
+              <details class="accordion" name="product-accordion-{{ section.id }}" {% if block.settings.collapse_open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="accordion__heading">
+                  {{ block.settings.heading }}
+                  <svg class="accordion__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </summary>
+                <div class="accordion__content body-text text-muted">
+                  {{ block.settings.content }}
+                </div>
+              </details>
+            {%- endif -%}
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
   </div>
 </div>
 
@@ -423,31 +441,27 @@
   .product-main__inner {
     display: grid;
     grid-template-columns: var(--product-media-width, 50%) 1fr;
-    gap: var(--space-8);
-    /* Without this, the grid stretches both columns to match the taller
-       one's height every time an accordion opens/closes — which recomputes
-       the sticky media column's pinned range and makes it visibly jump. */
+    grid-template-areas:
+      "media content"
+      "accordions content";
+    column-gap: var(--space-8);
+    row-gap: var(--space-5);
     align-items: start;
   }
+
+  .product-main__media     { grid-area: media; min-width: 0; }
+  .product-main__content   { grid-area: content; }
+  .product-main__accordions { grid-area: accordions; min-width: 0; }
 
   @media screen and (max-width: 989px) {
     .product-main__inner {
       grid-template-columns: 1fr;
-      gap: var(--space-6);
+      grid-template-areas:
+        "media"
+        "content"
+        "accordions";
+      gap: var(--space-4);
     }
-  }
-
-  /*
-    Grid items default to min-width: auto, meaning a wide-enough descendant
-    (here, the horizontally-scrolling mobile thumbnail row) can force this
-    track — and with it the whole page — wider than the viewport instead of
-    scrolling within it. min-width: 0 lets the grid item actually shrink to
-    the track's available space, same fix .product-main__media already
-    relies on further down the tree at every level that holds the thumbnail
-    row.
-  */
-  .product-main__media {
-    min-width: 0;
   }
 
   @media screen and (min-width: 990px) {
@@ -466,6 +480,20 @@
     .product-main__content {
       /* padding-inline: var(--page-margin); */
     }
+  }
+
+  /* Mobile: product info rendered as a rounded card */
+  @media screen and (max-width: 989px) {
+    .product-main__content {
+      background: var(--color-background-raised, rgba(0,0,0,0.03));
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+    }
+  }
+
+  /* Close the accordion list with a bottom border on the last item */
+  .product-main__accordions .accordion:last-child {
+    border-bottom: 1px solid var(--color-border);
   }
 
   /* ---------- Media gallery ---------- */

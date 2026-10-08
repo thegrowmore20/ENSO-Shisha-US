@@ -130,7 +130,7 @@
         "color_text": "{{ settings.color_palette.foreground }}",
         "width": "page",
         "media_width": 55,
-        "gallery_layout": "thumbnails_left",
+        "gallery_layout": "thumbnails_bottom",
         "enable_sticky_info": true,
         "padding_top": 64,
         "padding_bottom": 32,
