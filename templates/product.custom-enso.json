@@ -178,6 +178,44 @@
         "padding_bottom_mobile": 24
       }
     },
+    "enso_witb": {
+      "type": "enso-witb",
+      "blocks": {
+        "co_thermocap": { "type": "callout", "settings": { "label": "Glass ThermoCap", "label_short": "ThermoCap", "pos_x": 49.5, "pos_y": 9.9, "align_left": false } },
+        "co_strap":     { "type": "callout", "settings": { "label": "Brown leather strap", "label_short": "Strap", "pos_x": 41.0, "pos_y": 18.9, "align_left": true } },
+        "co_mp":        { "type": "callout", "settings": { "label": "Mouthpiece · 15 cm", "label_short": "Mouthpiece", "pos_x": 63.0, "pos_y": 29.5, "align_left": false } },
+        "co_valve":     { "type": "callout", "settings": { "label": "Blow-out valve", "label_short": "Valve", "pos_x": 34.0, "pos_y": 47.0, "align_left": true } },
+        "co_hose":      { "type": "callout", "settings": { "label": "Hose · 1.5 m", "label_short": "Hose", "pos_x": 70.0, "pos_y": 62.0, "align_left": false } },
+        "co_tank":      { "type": "callout", "settings": { "label": "Glass water tank", "label_short": "Tank", "pos_x": 40.5, "pos_y": 86.5, "align_left": true } },
+        "co_diptube":   { "type": "callout", "settings": { "label": "Dip tube", "label_short": "Dip tube", "pos_x": 49.5, "pos_y": 83.5, "align_left": false } },
+        "tile_battery": { "type": "tile", "settings": { "name": "Battery", "quantity": "1×" } },
+        "tile_cups":    { "type": "tile", "settings": { "name": "Ceramic cups", "quantity": "2×" } },
+        "tile_caps":    { "type": "tile", "settings": { "name": "Disposable capsules", "quantity": "10×" } },
+        "tile_tool":    { "type": "tile", "settings": { "name": "3-in-1 multi-tool + glove", "quantity": "1×" } },
+        "tile_screen":  { "type": "tile", "settings": { "name": "Mesh screens", "quantity": "2×" } },
+        "li_usbc":      { "type": "list_item", "settings": { "quantity": "1×", "name": "USB-C cable", "note": "wall adapter not included" } },
+        "li_tips":      { "type": "list_item", "settings": { "quantity": "5×", "name": "Silicone mouth tips" } },
+        "li_brushes":   { "type": "list_item", "settings": { "quantity": "1 set", "name": "Cleaning brushes", "note": "for the shaft" } },
+        "li_balls":     { "type": "list_item", "settings": { "quantity": "5×", "name": "Glass balls", "note": "for the blow-out valve" } },
+        "li_wipe":      { "type": "list_item", "settings": { "quantity": "1×", "name": "ENSŌ screen wipe" } },
+        "li_warranty":  { "type": "list_item", "settings": { "quantity": "1×", "name": "Warranty card" } },
+        "li_manual":    { "type": "list_item", "settings": { "quantity": "1×", "name": "User manual" } }
+      },
+      "block_order": [
+        "co_thermocap", "co_strap", "co_mp", "co_valve", "co_hose", "co_tank", "co_diptube",
+        "tile_battery", "tile_cups", "tile_caps", "tile_tool", "tile_screen",
+        "li_usbc", "li_tips", "li_brushes", "li_balls", "li_wipe", "li_warranty", "li_manual"
+      ],
+      "settings": {
+        "eyebrow": "What is in the box",
+        "heading": "Everything to start a session",
+        "hint_text": "Tap a part to see what it is. The wall adapter is not included.",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 24
+      }
+    },
     "why_enso": {
       "type": "feature-videos",
       "blocks": {
@@ -422,6 +460,7 @@
   "order": [
     "enso_hero",
     "main",
+    "enso_witb",
     "why_enso",
     "shop_accessories",
     "guide_banner",
