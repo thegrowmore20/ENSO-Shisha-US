@@ -83,8 +83,8 @@
       <div class="acc-qv__body">
         <p class="acc-qv__compat"></p>
         <h3 class="acc-qv__title"></h3>
-        <div class="acc-qv__shortdesc"></div>
         <div class="acc-qv__headline"></div>
+        <div class="acc-qv__shortdesc"></div>
 
         <div class="acc-qv__foot">
           <div class="acc-qv__price-row">
@@ -555,9 +555,10 @@
     color: rgb(0 0 0 / .7);
   }
 
-  .acc-qv__headline p { margin: 0 0 6px; }
+  .acc-qv__headline p { margin: 0 0 8px; }
+  .acc-qv__headline p:last-child { margin-bottom: 0; }
   .acc-qv__headline strong,
-  .acc-qv__headline b { color: #000; font-weight: 700; display: block; margin-top: 10px; }
+  .acc-qv__headline b { color: #000; font-weight: 700; display: block; margin-top: 14px; }
   .acc-qv__headline[hidden] { display: none; }
 
   .acc-qv__foot {
@@ -568,13 +569,9 @@
   }
 
   .acc-qv__price-row {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
     align-items: center;
     gap: 16px;
-    border: 1px solid rgb(0 0 0 / .12);
-    border-radius: 14px;
-    padding: 16px 20px;
   }
 
   .acc-qv__price {
