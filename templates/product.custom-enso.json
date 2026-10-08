@@ -76,6 +76,7 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
+            "show_quantity": false,
             "show_dynamic_checkout": false
           }
         },
@@ -168,6 +169,7 @@
         "media_width": 55,
         "gallery_layout": "thumbnails_bottom",
         "enable_sticky_info": false,
+        "show_info_border": true,
         "padding_top": 80,
         "padding_bottom": 40,
         "padding_top_mobile": 40,
