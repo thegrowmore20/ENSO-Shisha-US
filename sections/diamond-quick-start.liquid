@@ -74,11 +74,7 @@
                   {%- assign img_key = 'image_' | append: i -%}
                   {%- assign img_val = block.settings[img_key] -%}
                   {%- if img_val != blank -%}
-                    {{- img_val | image_url: width: 680 | image_tag:
-                        loading: 'lazy',
-                        widths: '400, 680',
-                        sizes: '(min-width: 990px) 380px, 100vw',
-                        alt: block.settings.heading -%}}
+                    {{- img_val | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
                   {%- endif -%}
                 {%- endfor -%}
               </div>
