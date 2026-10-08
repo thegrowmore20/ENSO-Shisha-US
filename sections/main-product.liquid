@@ -881,13 +881,18 @@
     font-weight: 600;
   }
   .accordion__heading::-webkit-details-marker { display: none; }
-  .accordion__icon { transition: transform 0.2s ease; flex-shrink: 0; }
-  .accordion[open] .accordion__icon { transform: rotate(180deg); }
-  .accordion__content { 
-    margin-top: var(--space-3); 
+  .accordion__icon { display: none; }
+  .accordion__heading::after {
+    content: "+";
+    font: 400 22px/1 var(--font-body, sans-serif);
+    flex-shrink: 0;
+    color: var(--color-text);
+  }
+  .accordion[open] > .accordion__heading::after { content: "−"; }
+  .accordion__content {
+    margin-top: var(--space-3);
     display: flow-root;
   }
-  .accordion[open].is-closing .accordion__icon { transform: none; }
   .product-main__content .accordion__content h1,
   .product-main__content .accordion__content h2 {
     font-size: 20px;
