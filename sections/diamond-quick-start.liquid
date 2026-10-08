@@ -48,17 +48,21 @@
     <ol class="qs">
       {%- for block in section.blocks -%}
         {%- liquid
-          assign has_images = false
+          assign img_count = 0
           if block.settings.image_1 != blank
-            assign has_images = true
+            assign img_count = img_count | plus: 1
           endif
           if block.settings.image_2 != blank
-            assign has_images = true
+            assign img_count = img_count | plus: 1
           endif
           if block.settings.image_3 != blank
-            assign has_images = true
+            assign img_count = img_count | plus: 1
           endif
           if block.settings.image_4 != blank
+            assign img_count = img_count | plus: 1
+          endif
+          assign has_images = false
+          if img_count > 0
             assign has_images = true
           endif
         -%}
@@ -87,13 +91,15 @@
                   {{- block.settings.image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
                 {%- endif -%}
               </div>
-              <div class="qs__dots" aria-hidden="true">
-                {%- assign dot_first = true -%}
-                {%- if block.settings.image_1 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-                {%- if block.settings.image_2 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-                {%- if block.settings.image_3 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-                {%- if block.settings.image_4 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-              </div>
+              {%- if img_count > 1 -%}
+                <div class="qs__dots" aria-hidden="true">
+                  {%- assign dot_first = true -%}
+                  {%- if block.settings.image_1 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                  {%- if block.settings.image_2 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                  {%- if block.settings.image_3 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                  {%- if block.settings.image_4 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                </div>
+              {%- endif -%}
             </div>
           {%- endif -%}
         </li>
@@ -248,6 +254,7 @@
   .qs__track {
     position: absolute;
     inset: 0;
+    z-index: 1;
     display: flex;
     gap: 0;
     overflow-x: auto;
@@ -271,6 +278,7 @@
     left: 0;
     right: 0;
     bottom: 12px;
+    z-index: 2;
     display: flex;
     justify-content: center;
     gap: 7px;
@@ -370,16 +378,38 @@
       });
     });
 
-    // Mouse / trackpad drag — keep scroll-snap active; just move scrollLeft directly
+    // Mouse / trackpad drag
+    // Disable scroll-snap during drag (Chromium snaps on programmatic scrollLeft),
+    // restore via scrollend event or 400ms timeout after mouseup.
     let dragging = false;
     let startX = 0;
     let startScroll = 0;
+
+    function snapToNearest() {
+      const w = track.clientWidth;
+      const index = Math.round(track.scrollLeft / w);
+      track.scrollTo({ left: index * w, behavior: 'smooth' });
+      // Re-enable snap once the scroll settles
+      if ('onscrollend' in window) {
+        track.addEventListener('scrollend', function restoreSnap() {
+          track.style.scrollSnapType = '';
+          track.removeEventListener('scrollend', restoreSnap);
+          updateDots();
+        });
+      } else {
+        setTimeout(function() {
+          track.style.scrollSnapType = '';
+          updateDots();
+        }, 400);
+      }
+    }
 
     track.addEventListener('mousedown', function(e) {
       dragging = true;
       startX = e.clientX;
       startScroll = track.scrollLeft;
       track.style.cursor = 'grabbing';
+      track.style.scrollSnapType = 'none';
       e.preventDefault();
     });
 
@@ -392,9 +422,7 @@
       if (!dragging) return;
       dragging = false;
       track.style.cursor = '';
-      const index = Math.round(track.scrollLeft / track.clientWidth);
-      track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
-      updateDots();
+      snapToNearest();
     });
 
     track.querySelectorAll('img').forEach(function(img) {
