@@ -1085,6 +1085,35 @@
         "name": "Video hero slider"
       }
     },
+    "enso_hero_video": {
+      "name": "ENSŌ hero video",
+      "settings": {
+        "video": {
+          "label": "Video"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "subline": {
+          "label": "Subline"
+        },
+        "cta_label": {
+          "label": "Button label"
+        },
+        "cta_link": {
+          "label": "Button link"
+        },
+        "margin_top": {
+          "label": "Top margin"
+        },
+        "margin_bottom": {
+          "label": "Bottom margin"
+        }
+      },
+      "presets": {
+        "name": "ENSŌ hero video"
+      }
+    },
     "signature_models": {
       "name": "Signature models",
       "settings": {
@@ -1712,6 +1741,10 @@
       "settings": {
         "color_scheme": {
           "label": "Color scheme"
+        },
+        "anchor_id": {
+          "label": "Section anchor ID",
+          "info": "Add this id= value to the section so in-page links can scroll here (e.g. whyenso)."
         },
         "eyebrow": {
           "label": "Eyebrow label"

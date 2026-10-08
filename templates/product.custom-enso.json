@@ -9,37 +9,33 @@
  */
 {
   "sections": {
+    "enso_hero": {
+      "type": "enso-hero-video",
+      "settings": {
+        "heading": "An all-in-one portable hookah",
+        "subline": "Your ritual. Without charcoal. Open system, full control.",
+        "cta_label": "Learn more",
+        "cta_link": "#whyenso",
+        "margin_top": 24,
+        "margin_bottom": 24
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
-        "title_BMUCcV": {
+        "title": {
           "type": "title",
           "settings": {
             "heading_size": 36
           }
         },
-        "loox_reviews_loox_rating_naNHW9": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "contentSize": 16,
-            "pattern": "[rating] ([count])",
-            "hideText": false,
-            "alignment": "",
-            "layout": "",
-            "textColor": "",
-            "starColor": "",
-            "showAllReviews": false,
-            "looxOpenFloatingWidget": false,
-            "emptyRatingWidget": false
-          }
-        },
-        "price_KNKNd3": {
+        "price": {
           "type": "price",
           "settings": {
             "show_unit_price": false
           }
         },
-        "text_NYbrwf": {
+        "text_headline": {
           "type": "text",
           "settings": {
             "content": "{{ product.metafields.custom.headline | metafield_tag }}",
@@ -48,7 +44,7 @@
             "show_icon": false
           }
         },
-        "text_7y3chH": {
+        "text_hook": {
           "type": "text",
           "settings": {
             "content": "{{ product.metafields.custom.hook_text | metafield_tag }}",
@@ -57,59 +53,17 @@
             "show_icon": false
           }
         },
-        "text_edq8xi": {
-          "type": "text",
-          "settings": {
-            "content": "<p>Customers outside the US and Canada <a href=\"https://ensoshisha.eu/\" title=\"https://ensoshisha.eu/\">visit ensoshisha.eu</a></p>",
-            "alignment": "left",
-            "text_size": "medium",
-            "show_icon": false
-          }
-        },
-        "variant_picker_bbi9yP": {
+        "variant_picker": {
           "type": "variant_picker",
           "settings": {}
         },
-        "quantity_qDQky3": {
-          "type": "quantity",
-          "settings": {}
-        },
-        "buy_buttons_9DLDVw": {
+        "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true
           }
         },
-        "delivery_dates_mAMQ47": {
-          "type": "delivery_dates",
-          "settings": {
-            "delivery_from": 3,
-            "delivery_to": 5
-          }
-        },
-        "icon_text_block_zVkywK": {
-          "type": "icon_text_block",
-          "settings": {
-            "icon_text_class": "",
-            "layout": "inline",
-            "inline_mobile_columns": "4",
-            "icon_1": "shopify://shop_images/2_Product_Page_Return.svg",
-            "text_1": "<p>30 Days<br/>Return</p>",
-            "icon_2": "shopify://shop_images/1.Product_Page_2_year_warranty.svg",
-            "text_2": "<p>2 years<br/>Warranty Ltd.</p>",
-            "icon_3": "shopify://shop_images/icon_Delivery-1.svg",
-            "text_3": "<p>Free Delivery<br/>100+ USD</p>",
-            "text_4": "",
-            "icon_5": "shopify://shop_images/icon_Secure.svg",
-            "text_5": "<p>Secure<br/>Transaction</p>",
-            "text_6": "",
-            "icon_size": 50,
-            "text_size": 14,
-            "text_color": "#000000",
-            "icon_bg_color": ""
-          }
-        },
-        "accordion_wUV8pN": {
+        "accordion_description": {
           "type": "accordion",
           "settings": {
             "heading": "Description",
@@ -117,7 +71,7 @@
             "default_open": false
           }
         },
-        "accordion_eiBJVX": {
+        "accordion_specs": {
           "type": "accordion",
           "settings": {
             "heading": "Specifications",
@@ -125,7 +79,7 @@
             "default_open": false
           }
         },
-        "accordion_LTJQTM": {
+        "accordion_witb": {
           "type": "accordion",
           "settings": {
             "heading": "What's in the box",
@@ -133,15 +87,7 @@
             "default_open": false
           }
         },
-        "accordion_6jLrRt": {
-          "type": "accordion",
-          "settings": {
-            "heading": "Parts & Accessories",
-            "content": "{{ product.metafields.custom.parts_accessories | metafield_tag }}",
-            "default_open": false
-          }
-        },
-        "accordion_biFxj7": {
+        "accordion_how": {
           "type": "accordion",
           "settings": {
             "heading": "How to use",
@@ -149,102 +95,36 @@
             "default_open": false
           }
         },
-        "accordion_LahRTA": {
+        "accordion_warranty": {
           "type": "accordion",
           "settings": {
-            "heading": "Warranty & Support",
+            "heading": "Warranty and support",
             "content": "{{ product.metafields.custom.lifetime_waranty | metafield_tag }}",
             "default_open": false
           }
         },
-        "accordion_DEaRgh": {
+        "accordion_why": {
           "type": "accordion",
           "settings": {
-            "heading": "Why Choose ENSŌ?",
+            "heading": "Why choose ENSŌ",
             "content": "{{ product.metafields.custom.why_choose_enso | metafield_tag }}",
             "default_open": false
-          }
-        },
-        "accordion_j3rGHV": {
-          "type": "accordion",
-          "disabled": true,
-          "settings": {
-            "heading": "Material",
-            "content": "<ul><li>Sturdy Zinc alloy body</li><li>Glass water tank</li><li>Porcelain heating chamber</li><li>Porcelain tobacco cup</li><li>Aluminum disposable tobacco cup</li><li>Stainless steel mouthpiece</li><li>Vegan leather strap</li></ul>",
-            "default_open": false
-          }
-        },
-        "icon_text_block_X3qkBR": {
-          "type": "icon_text_block",
-          "disabled": true,
-          "settings": {
-            "icon_text_class": "homepage-usps-info",
-            "layout": "vertical",
-            "inline_mobile_columns": "4",
-            "icon_1": "shopify://shop_images/FAST_HEAT-UP.webp",
-            "text_1": "<p><strong>FAST HEAT-UP</strong><br/>Ready to go in seconds</p>",
-            "icon_2": "shopify://shop_images/PURE_FLAVOUR.webp",
-            "text_2": "<p><strong>PURE FLAVOUR</strong><br/>Crisp vapor with precision</p>",
-            "icon_3": "shopify://shop_images/EASY_TO_USE.webp",
-            "text_3": "<p><strong>EASY TO USE</strong><br/>Effortless enjoyment</p>",
-            "text_4": "",
-            "icon_5": "shopify://shop_images/LONG_BATTERY_LIFE.webp",
-            "text_5": "<p><strong>LASTS LONGER</strong><br/>Enjoy more sessions</p>",
-            "text_6": "",
-            "icon_size": 50,
-            "text_size": 14,
-            "text_color": "#000000",
-            "icon_bg_color": ""
-          }
-        },
-        "icon_text_block_MgRGUm": {
-          "type": "icon_text_block",
-          "disabled": true,
-          "settings": {
-            "icon_text_class": "",
-            "layout": "inline",
-            "inline_mobile_columns": "3",
-            "icon_1": "shopify://shop_images/Icons-01.webp",
-            "text_1": "",
-            "icon_2": "shopify://shop_images/Icons-02.webp",
-            "text_2": "",
-            "icon_3": "shopify://shop_images/Icons-03.webp",
-            "text_3": "",
-            "icon_4": "shopify://shop_images/Icons_enso-04.webp",
-            "text_4": "",
-            "icon_5": "shopify://shop_images/Icons-05.webp",
-            "text_5": "",
-            "icon_6": "shopify://shop_images/Icons-06.webp",
-            "text_6": "",
-            "icon_size": 60,
-            "text_size": 14,
-            "text_color": "#000000",
-            "icon_bg_color": ""
           }
         }
       },
       "block_order": [
-        "title_BMUCcV",
-        "loox_reviews_loox_rating_naNHW9",
-        "price_KNKNd3",
-        "text_NYbrwf",
-        "text_7y3chH",
-        "text_edq8xi",
-        "variant_picker_bbi9yP",
-        "quantity_qDQky3",
-        "buy_buttons_9DLDVw",
-        "delivery_dates_mAMQ47",
-        "icon_text_block_zVkywK",
-        "accordion_wUV8pN",
-        "accordion_eiBJVX",
-        "accordion_LTJQTM",
-        "accordion_6jLrRt",
-        "accordion_biFxj7",
-        "accordion_LahRTA",
-        "accordion_DEaRgh",
-        "accordion_j3rGHV",
-        "icon_text_block_X3qkBR",
-        "icon_text_block_MgRGUm"
+        "title",
+        "price",
+        "text_headline",
+        "text_hook",
+        "variant_picker",
+        "buy_buttons",
+        "accordion_description",
+        "accordion_specs",
+        "accordion_witb",
+        "accordion_how",
+        "accordion_warranty",
+        "accordion_why"
       ],
       "settings": {
         "width": "page",
@@ -257,344 +137,59 @@
         "padding_bottom_mobile": 16
       }
     },
-    "product_meta_shorts_MYTHGe": {
-      "type": "product-meta-shorts",
-      "name": "Product Shorts",
-      "settings": {
-        "metafield_namespace": "custom",
-        "metafield_key": "product_short_videos",
-        "heading": "Follow us on YouTube",
-        "heading_size_desktop": 36,
-        "heading_size_mobile": 28,
-        "subheading_text": "@enso.future",
-        "subheading_link": "https://www.youtube.com/@enso.future",
-        "subheading_icon_start": "<svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" width=\"25\" height=\"25\" viewbox=\"0 0 48 48\"><path fill=\"#FF3D00\" d=\"M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z\"></path><path fill=\"#FFF\" d=\"M20 31L20 17 32 24z\"></path></svg>",
-        "subheading_icon_end": "",
-        "header_spacing": 32,
-        "muted": true,
-        "play_button_size": 48,
-        "play_button_color": "#ff0000",
-        "video_border_radius": 12,
-        "slides_desktop": 4,
-        "slides_medium": 3,
-        "slides_mobile": 2,
-        "slide_gap": 15,
-        "desktop_width_percent": 100,
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16,
-        "show_arrows": true,
-        "show_dots": true,
-        "controls_spacing": 25,
-        "arrow_size": 40,
-        "arrow_background": "#000000",
-        "arrow_color": "#ffffff",
-        "arrow_hover_background": "#333333",
-        "arrow_hover_color": "#ffffff",
-        "dot_size": 8,
-        "dot_color": "#cccccc",
-        "dot_active_color": "#000000"
-      }
-    },
-    "custom_section_V3gNry": {
-      "type": "custom-section",
-      "blocks": {
-        "loox_reviews_loox_dynamic_section_VheXTX": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "reviews_to_display": "",
-            "default_tab": "automatic",
-            "only_photos": false,
-            "aggregated": false,
-            "limit": 5,
-            "hide_thumbnails": false,
-            "maxwidth": 1200,
-            "is_sample": true
-          }
-        },
-        "header": {
-          "type": "heading",
-          "static": true,
-          "settings": {
-            "heading": "Why People Love Enso?",
-            "heading_size_desktop": 36,
-            "heading_size_mobile": 28,
-            "subheading": "",
-            "subheading_link": "",
-            "subheading_icon_start": "",
-            "subheading_icon_end": "",
-            "alignment": "vertical",
-            "header_spacing_bottom": 32
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "loox_reviews_loox_dynamic_section_VheXTX"
-      ],
-      "name": "Custom Section",
-      "settings": {
-        "width": "page",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16
-      }
-    },
-    "feature_videos_imV8px": {
+    "why_enso": {
       "type": "feature-videos",
       "blocks": {
-        "feature_zLBGNh": {
+        "feature_coal_free": {
           "type": "feature",
           "settings": {
-            "thumbnail": "shopify://shop_images/ENSO_Award_Winning.webp",
+            "video": "shopify://files/videos/f178638f-881118a7195845919250bb1bb8d1af0a.HD-720p-4.5Mbps-77491262.mp4",
             "video_url": "",
-            "content_small_image": "shopify://shop_images/SM_Logo-1.webp",
-            "eyebrow": "",
-            "heading": "Award-Winning Performance",
-            "text": "<p>ENSŌ recognized as Best Hookah at the 2025 Frankfurt Shisha Messe event, stands out as a modern alternative to traditional setups, combining clean electric heat, premium design, and a refined session experience.</p>",
-            "cta_label": "",
-            "cta_link": "",
-            "text_position": "left",
-            "text_vertical_position": "center"
-          }
-        },
-        "feature_qKVK7f": {
-          "type": "feature",
-          "settings": {
-            "thumbnail": "shopify://shop_images/PD2026_RD_white_t_1e9ae56c-e03c-4e41-8563-ae53c438d7bb.webp",
-            "video_url": "",
-            "content_small_image": "shopify://shop_images/red-dot-logo_267589e5-2902-4976-afd4-8eae503eff58.webp",
-            "eyebrow": "",
-            "heading": "Red Dot Design Award 2026 Winner",
-            "text": "<p>ENSŌ received the Red Dot Design Award 2026 in Product Design - a third party validation of the direction the brand has held from day one: a modern, international, ritual-focused object. Award-winning design, now refined for better performance in 2026.</p>",
-            "cta_label": "",
-            "cta_link": "",
-            "text_position": "left",
-            "text_vertical_position": "center"
-          }
-        }
-      },
-      "block_order": [
-        "feature_zLBGNh",
-        "feature_qKVK7f"
-      ],
-      "name": "t:sections.feature_videos.presets.name",
-      "settings": {
-        "eyebrow": "",
-        "heading": "World Class Performance & Design",
-        "width": "page",
-        "show_media_shadow": false,
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16
-      }
-    },
-    "custom_section_dXQm4P": {
-      "type": "custom-section",
-      "blocks": {
-        "custom_liquid_qBLV6i": {
-          "type": "custom-liquid",
-          "name": "Custom Liquid",
-          "settings": {
-            "custom_liquid": "<style>\n\t.aplus-v2.desktop {\n\t\tmin-width: 800px;\n\t\tmargin-left: auto;\n\t\tmargin-right: auto;\n\t\tword-wrap: break-word;\n\t\toverflow-wrap: break-word;\n\t\tword-break: break-word;\n\t}\n\t.aplus-v2 .premium-aplus .aplus-h1 {\n\t\tfont-size: 32px;\n\t\tline-height: 1.2em;\n\t\tfont-weight: 500;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .table-container {\n\t\tposition: relative;\n\t\topacity: 1;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .table-slider {\n\t\toverflow-x: auto;\n\t\toverflow-y: visible;\n\t\twidth: 100%;\n\t\t{% comment %} border: 1px solid #d5d9d9; {% endcomment %}\n\t\tborder-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered {\n\t\tborder-width: 0px;\n\t\tborder-color: #d5d9d9;\n\t\tborder-style: solid;\n\t\tborder-radius: 8px;\n\t\tmargin-left: auto;\n\t\tmargin-right: auto;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child {\n\t\tborder-bottom-left-radius: 8px;\n\t\tborder-bottom-right-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child td {\n\t\t{% comment %} border-bottom: 0; {% endcomment %}\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child td:first-child {\n\t\tborder-bottom-left-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child td:last-child {\n\t\tborder-bottom-right-radius: 8px;\n\t}\n\tth.aplus-data-column.top-header {\n    \tborder: 0;\n\t}\n\ttd.attribute.a-text-bold.column-cell-1 {\n    \tborder-top-left-radius: 8px;\n\t}\n\ttr.first-content-row td:last-child {\n\t\tborder-top-right-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .scroll-width {\n\t\toverflow-x: scroll;\n\t\toverflow-y: visible;\n\t}\n\ttable.a-bordered {\n\t\tborder-start-start-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-start-end-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-end-start-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-end-end-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-width: var(--__TxpzNygdu, .0625rem);\n\t\tmargin-bottom: 22px;\n\t\tborder-style: solid;\n\t\tborder-color: var(--__dChNmAmGoMXsTxp, #d5d9d9);\n\t\tborder-collapse: separate;\n\t\tborder-spacing: 0;\n\t\toverflow: hidden;\n\t}\n\ttd, th {\n\t\tpadding: .1875rem;\n\t\tvertical-align: top;\n\t}\n\ttable.a-bordered td, table.a-bordered th {\n\t\tborder-bottom: 1px solid #d5d9d9;\n\t\tborder-right: 1px solid #d5d9d9;\n\t\tborder-color: #dfd9d9;\n\t\tpadding-block-start: 8px;\n\t\tpadding-inline-start: .75rem;\n\t\tpadding-inline-end: .75rem;\n\t\tpadding-block-end: 8px;\n\t\tbackground-color: var(--__dChNmAmGoMXsPxT, #fff);\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered td, .aplus-v2 .premium-aplus-module-5 table.a-bordered th {\n\t\tbackground-color: #fff;\n\t\tvertical-align: middle;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 td.attribute.empty {\n\t\theight: 300px;\n\t\tborder-top-left-radius: 8px;\n\t\tborder: 0;\n\t}\n\ttr.first-content-row td {\n\t\tborder-top: 1px solid #d5d9d9;\n\t}\n\t.aplus-v2 .premium-aplus-module-5.enso-comparison td.attribute.empty {\n\t\theight: 250px;\n\t}\n\ttd.aplus-data-column.secondary-content-column:last-of-type,\n\tth.aplus-data-column.top-header:last-child {\n    \t{% comment %} border-right: 0; {% endcomment %}\n\t}\n\tth.aplus-data-column.top-header:last-child {\n    border-top-right-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .attribute, .aplus-v2 .premium-aplus-module-5 .active-item {\n\t\tposition: sticky;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 td.attribute {\n\t\tmin-width: 230px;\n\t\ttop: auto;\n\t\tleft: 0;\n\t\tz-index: 39;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 td.attribute:not(.empty) {\n\t\tbackground-color: #f8f8f8;\n\t\tborder-left: 1px solid #d5d9d9;\n\t}\n\t\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered td, .aplus-v2 .premium-aplus-module-5 table.a-bordered th {\n\t\tbackground-color: #fff;\n\t}\n.aplus-v2 .premium-aplus-module-5 table.a-bordered th.active-item {\n    border: 1px solid #d5d9d9;\n    border-bottom: 0;\n    border-top-left-radius: 12px;\n    border-top-right-radius: 12px;\n}\n\t.aplus-v2 .aplus-review-right-padding {\n\t\tpadding-right: 0.1rem;\n\t}\n\t\n\t.aplus-v2 .premium-aplus-module-5 td.active-item, \n\t.aplus-v2 .premium-aplus-module-5 th.active-item {\n\t\ttop: auto;\n\t\tleft: 230px;\n\t\tz-index: 39;\n\t}\n\t.comparison-metric-name {\n\t\tfont-weight: 600;\n\t\tfont-size: 14px;\n\t}\n\ttd.aplus-data-column {\n\t\tfont-size: 14px;\n\t\ttext-align: center;\n\t\tpadding: 9px !important;\n\t}\n\t.comparison-product-card .product-card {\n\t\tborder: 0;\n\t\tpadding: 0;\n\t}\n\t.comparison-product-card .custom-wishlist-button,\n\t.comparison-product-card .product-badges-container,\n  .comparison-product-card .info-badge,\n\t.comparison-product-card .mt-4.empty\\:hidden {\n\t\tdisplay: none\n\t}\n\t.comparison-product-card .group\\/media:hover .group-hover\\/media\\:opacity-100 {\n\t\topacity: 0;\n\t}\n\t.comparison-product-card .product-card:hover {\n\t\ttransform: translateY(0)\n\t}\n\t.comparison-product-card h2.product-name {\n\t\t-webkit-line-clamp: 1;\n\t\tmin-height: 25px;\n\t\tfont-size: 14px;\n\t}\n\t.comparison-product-card .add-to-cart-span {\n\t\tfont-size: 14px;\n\t}\n\t.enso-comparison .comparison-product-card quick-add-button,\n\t.enso-comparison .comparison-product-card .product-card__info {\n\t\tdisplay: none;\n\t}\n\n\t.enso-comparison .comparison-product-card .product-card-media.media.rounded-block {\n    padding-bottom: 0;\n\t}\n\ttd.aplus-data-column.active.active-item.second-sticky-column,\n\tth.aplus-data-column.top-header,\n\ttd.aplus-data-column.secondary-content-column {\n\t\tmax-width: 230px;\n\t\twidth: 230px;\n\t\tmin-width: 230px;\n\t}\n\t@media (max-width: 992px) {\n\t\t[data-aplus-section-container] {\n\t\t\tpadding: 0;\n\t\t}\n\t\t.aplus-v2.desktop {\n\t\t\tmin-width: 100%;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.attribute {\n\t\t\tmin-width: 170px;\n\t\t\tleft: -1px;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.active-item, \n\t\t.aplus-v2 .premium-aplus-module-5 th.active-item {\n\t\t\tleft: 169px;\n\t\t\tz-index: 3;\n\t\t}\n\t}\n\t\n\t/* mobile design */\n\t@media (max-width: 768px){\n\t\t.aplus-v2 .premium-aplus-module-5 table.a-bordered {\n\t\t\twidth: 100%;\n\t\t}\n\t\ttd.aplus-data-column.active.active-item.second-sticky-column {\n\t\t\tleft: 0;\n\t\t\ttext-align: left;\n\t\t\tdisplay: inline-flex;\n\t\t\theight: 85px;\n\t\t\talign-items: end;\n\t\t}\n\t\ttd.attribute.empty.first-sticky-column,\n\t\t.aplus-v2 .premium-aplus-module-5.enso-comparison td.attribute.empty {\n\t\t\tdisplay: none !important;\n\t\t}\n\t\ttd.aplus-data-column.secondary-content-column {\n    \tvertical-align: bottom;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.active-item, .aplus-v2 .premium-aplus-module-5 th.active-item {\n\t\t\tleft: 0px;\n\t\t\tz-index: 3;\n\t\t\tposition: relative;\n    \t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.attribute {\n\t\t\tmin-width: 170px;\n\t\t\tleft: -1px;\n\t\t\tposition: absolute;\n\t\t\tbackground: transparent;\t\tbackground-color: transparent !important;\nheight: 85px;\t\t\tpointer-events: none;\n    \t}\n\t\ttd.aplus-data-column.active.active-item.second-sticky-column {\n    \tleft: 0;\n    \ttext-align: left;\n    \tdisplay: inline-flex;\n    \theight: 85px;\n    \talign-items: end;\n\t\t}\n\t\ttable.a-bordered td, table.a-bordered th {\n\t\t\tborder-right: 0;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 table.a-bordered td,\n\t\t.aplus-v2 .premium-aplus-module-5 table.a-bordered th {\n\t\t\tvertical-align: bottom;\n\t\t}\n\t\ttd.aplus-data-column.active.active-item.second-sticky-column, th.aplus-data-column.top-header, td.aplus-data-column.secondary-content-column {\n\t\t\tmax-width: 150px;\n\t\t\twidth: 150px;\n\t\t\tmin-width: 150px;\n\t}\n\t}\n</style>\n\n<div data-aplus-section-container>\n\t<div class=\"aplus-v2 desktop\">\n<div class=\"premium-aplus premium-aplus-module-5 aplus-container-3 comparison-table enso-comparison\">  \n\t\t\t<div id=\"comparison-table-container-6\" data-comparison-name=\"comparison-table-container-6\" class=\"a-section a-spacing-none table-container\">  \n\t\t\t<div class=\"table-slider scroll-wrapper-bottom\">\n\t\t\t\t<table class=\"a-bordered a-horizontal-stripes scroll-width\">\n\t\t\t\t\t<tbody>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<tr class=\"header-row\">\n\t\t\t\t\t\t\t<td class=\"attribute empty\"></td>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<th class=\"aplus-data-column top-header active active-item\">\n\t\t\t\t\t\t\t\t<div class=\"comparison-product-card\">\n\t\t\t\t\t\t\t\t\t{% render 'card-product', card_product: product %}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<th class=\"aplus-data-column top-header\">\n\t\t\t\t\t\t\t\t<div class=\"relative overflow-hidden group/media\">\n\t\t\t\t\t\t\t\t\t<a href=\"{{ url }}\" tabindex=\"-1\" data-instant aria-label=\"{{ card_product.title | default: 'Product' }}\">\n\t\t\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card-media media rounded-block [--aspect-ratio:--product-card-image-aspect] md:pb-6\"\n\t\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t\t<lqip-element class=\"image-loader h-full\">\n\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"https://cdn.shopify.com/s/files/1/0777/8339/files/71Bhm4vc2SL._SX679.webp?v=1777371233&width=450\"\n\t\t\t\t\t\t\t\t\t\twidths=\"200, 360, 450\" loading=\"lazy\" width=\"\" height=\"\" alt=\"coal hookah image\"\n\t\t\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card__image product-thumbnail-shade\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</lqip-element>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<th class=\"aplus-data-column top-header\">\n\t\t\t\t\t\t\t\t\t<div class=\"relative overflow-hidden group/media\">\n\t\t\t\t\t\t\t\t\t\t<a href=\"{{ url }}\" tabindex=\"-1\" data-instant aria-label=\"{{ card_product.title | default: 'Product' }}\">\n\t\t\t\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card-media media rounded-block [--aspect-ratio:--product-card-image-aspect] md:pb-6\"\n\t\t\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t\t\t<lqip-element class=\"image-loader h-full\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"https://cdn.shopify.com/s/files/1/0777/8339/files/51z90B1mVTL._AC_SY300_SX300_QL70_ML2.jpg?v=1775046681&width=450\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\twidths=\"200, 360, 450\" loading=\"lazy\" width=\"\" height=\"\" alt=\"home vape\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card__image product-thumbnail-shade\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</lqip-element>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t{% for entry in selected_features %}{% endfor %}\n\t\t\t\t\t\t\t\t<tr class=\"first-content-row\">\n\t\t\t\t\t\t\t\t\t<td class=\"attribute a-text-bold column-cell-1\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"a-text-bold\"> Category </span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t{%- comment -%} Current product value {%- endcomment -%}\n\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t\t\t\t\t\t\tElectric hookah\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t\tCoal hookah\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t\tHome vape\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t{%- comment -%} Compared products values {%- endcomment -%}\n\t\t\t\t\t\t\t\t\t{% for cp in compare_products %}\n\t\t\t\t\t\t\t\t\t\t{% unless cp.id == product.id %}\n\t\t\t\t\t\t\t\t\t\t\t{% assign cp_compare_key = cp.metafields.custom.compare_key.value %}\n\t\t\t\t\t\t\t\t\t\t\t{% if cp_compare_key == blank %}\n\t\t\t\t\t\t\t\t\t\t\t\t{% assign cp_compare_key = cp.handle | replace: '-', '_' %}\n\t\t\t\t\t\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t{% assign cp_value = entry[cp_compare_key] | metafield_tag %}\n\t\t\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column\" style=\"min-width: 230px;\">\n\t\t\t\t\t\t\t\t\t\t\t\t{% if cp_value != blank %}\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{ cp_value.value | default: cp_value }}\n\t\t\t\t\t\t\t\t\t\t\t\t{% else %}\n\t\t\t\t\t\t\t\t\t\t\t\t\t—\n\t\t\t\t\t\t\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t{% endunless %}\n\t\t\t\t\t\t\t\t\t{% endfor %}\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<tr>   \n\t\t\t\t\t\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t\t\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"a-text-bold\"> Heat style </span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t\t\t\t\t\t<span class=\"description\">\n\t\t\t\t\t\t\t\t\t\tClean electric\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</td>      \n\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t<span class=\"description\">\n\t\t\t\t\t\t\t\t\t\tBurning coal\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</td>           \n\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t<span class=\"description\">\n\t\t\t\t\t\t\t\t\t\tDry heat\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</td>      \n\t\t\t\t\t\t\t</tr> \n\t\t\t\t\t\t\t\n\t\t<tr>   \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> What you use </span>\n\t\t\t\t</div>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tMolasses + dry herb\n\t\t\t\t</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tShisha molasses\n\t\t\t\t</span>\n\t\t\t</td>           \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tDry herb\n\t\t\t\t</span>\n\t\t\t</td>      \n\n\t\t</tr> \n\t\t\t\t\t\t\n\t\t<tr>   \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Flavor quality </span>\n\t\t\t\t</div>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tPure flavor\n\t\t\t\t</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tCoal-tainted\n\t\t\t\t</span>\n\t\t\t</td>           \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tHerb taste\n\t\t\t\t</span>\n\t\t\t</td>      \n\n\t\t</tr>\n\t\t\t\t\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Cloud style </span> \n\t\t\t\t</div>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Big clouds</span>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Heavy smoke</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Light vapor</span>\n\t\t\t</td> \n\t\t\n\t\t</tr>\n\t\t\t\t\n\t\t\t\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\">Session vibe</span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Party or solo ritual</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Old-school ritual</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Solo sessions</span>\n\t\t\t</td> \n\t\t</tr> \n\t\t\t\n\t\t<tr>   \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\">Session time</span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Long sessions</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Long sessions</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Short sessions</span>\n\t\t\t</td> \n\t\t\n\t\t</tr>\n\t\t\n\t\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\">Setup</span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Fast setup</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Messy prep</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Simple use</span>\n\t\t\t</td>\n\t\t\n\n\t\t</tr>  \n\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Portability </span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Cord-free</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Bulky setup</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Plug-in only</span>\n\t\t\t</td>\n\t\t\n\t\t</tr>\n\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Best for </span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Modern hookah</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Traditional smokers</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Personal vaping</span>\n\t\t\t</td>\n\n\t\t</tr>\n\n\t</tbody>\n</table>\n</div>\n</div>\n<div class=\"text-center\">\n\t<strong>Pure flavor. Big clouds. Modern hookah sessions without coal, flame, or the mess</strong>\n</div> \n</div>\n</div>\n</div>"
-          },
-          "blocks": {}
-        },
-        "header": {
-          "type": "heading",
-          "static": true,
-          "settings": {
-            "heading": "Why Enso Wins",
-            "heading_size_desktop": 36,
-            "heading_size_mobile": 28,
-            "subheading": "",
-            "subheading_link": "",
-            "subheading_icon_start": "",
-            "subheading_icon_end": "",
-            "alignment": "vertical",
-            "header_spacing_bottom": 32
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "custom_liquid_qBLV6i"
-      ],
-      "name": "Custom Section",
-      "settings": {
-        "width": "page",
-        "padding_top": 32,
-        "padding_bottom": 64,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 32
-      }
-    },
-    "custom_liquid_jejczc": {
-      "type": "custom-liquid",
-      "disabled": true,
-      "name": "Custom Liquid",
-      "settings": {
-        "content": "<style>\n\t.aplus-v2.desktop {\n\t\tmin-width: 800px;\n\t\tmargin-left: auto;\n\t\tmargin-right: auto;\n\t\tword-wrap: break-word;\n\t\toverflow-wrap: break-word;\n\t\tword-break: break-word;\n\t}\n\t.aplus-v2 .premium-aplus .aplus-h1 {\n\t\tfont-size: 32px;\n\t\tline-height: 1.2em;\n\t\tfont-weight: 500;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .table-container {\n\t\tposition: relative;\n\t\topacity: 1;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .table-slider {\n\t\toverflow-x: auto;\n\t\toverflow-y: visible;\n\t\twidth: 100%;\n\t\t{% comment %} border: 1px solid #d5d9d9; {% endcomment %}\n\t\tborder-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered {\n\t\tborder-width: 0px;\n\t\tborder-color: #d5d9d9;\n\t\tborder-style: solid;\n\t\tborder-radius: 8px;\n\t\tmargin-left: auto;\n\t\tmargin-right: auto;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child {\n\t\tborder-bottom-left-radius: 8px;\n\t\tborder-bottom-right-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child td {\n\t\t{% comment %} border-bottom: 0; {% endcomment %}\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child td:first-child {\n\t\tborder-bottom-left-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered tr:last-child td:last-child {\n\t\tborder-bottom-right-radius: 8px;\n\t}\n\tth.aplus-data-column.top-header {\n    \tborder: 0;\n\t}\n\ttd.attribute.a-text-bold.column-cell-1 {\n    \tborder-top-left-radius: 8px;\n\t}\n\ttr.first-content-row td:last-child {\n\t\tborder-top-right-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .scroll-width {\n\t\toverflow-x: scroll;\n\t\toverflow-y: visible;\n\t}\n\ttable.a-bordered {\n\t\tborder-start-start-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-start-end-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-end-start-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-end-end-radius: var(--__TxpmBlwIJ, .5rem);\n\t\tborder-width: var(--__TxpzNygdu, .0625rem);\n\t\tmargin-bottom: 22px;\n\t\tborder-style: solid;\n\t\tborder-color: var(--__dChNmAmGoMXsTxp, #d5d9d9);\n\t\tborder-collapse: separate;\n\t\tborder-spacing: 0;\n\t\toverflow: hidden;\n\t}\n\ttd, th {\n\t\tpadding: .1875rem;\n\t\tvertical-align: top;\n\t}\n\ttable.a-bordered td, table.a-bordered th {\n\t\tborder-bottom: 1px solid #d5d9d9;\n\t\tborder-right: 1px solid #d5d9d9;\n\t\tborder-color: #dfd9d9;\n\t\tpadding-block-start: 8px;\n\t\tpadding-inline-start: .75rem;\n\t\tpadding-inline-end: .75rem;\n\t\tpadding-block-end: 8px;\n\t\tbackground-color: var(--__dChNmAmGoMXsPxT, #fff);\n\t}\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered td, .aplus-v2 .premium-aplus-module-5 table.a-bordered th {\n\t\tbackground-color: #fff;\n\t\tvertical-align: middle;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 td.attribute.empty {\n\t\theight: 300px;\n\t\tborder-top-left-radius: 8px;\n\t\tborder: 0;\n\t}\n\ttr.first-content-row td {\n\t\tborder-top: 1px solid #d5d9d9;\n\t}\n\t.aplus-v2 .premium-aplus-module-5.enso-comparison td.attribute.empty {\n\t\theight: 250px;\n\t}\n\ttd.aplus-data-column.secondary-content-column:last-of-type,\n\tth.aplus-data-column.top-header:last-child {\n    \t{% comment %} border-right: 0; {% endcomment %}\n\t}\n\tth.aplus-data-column.top-header:last-child {\n    border-top-right-radius: 8px;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 .attribute, .aplus-v2 .premium-aplus-module-5 .active-item {\n\t\tposition: sticky;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 td.attribute {\n\t\tmin-width: 230px;\n\t\ttop: auto;\n\t\tleft: 0;\n\t\tz-index: 100;\n\t}\n\t.aplus-v2 .premium-aplus-module-5 td.attribute:not(.empty) {\n\t\tbackground-color: #f8f8f8;\n\t\tborder-left: 1px solid #d5d9d9;\n\t}\n\t\n\t.aplus-v2 .premium-aplus-module-5 table.a-bordered td, .aplus-v2 .premium-aplus-module-5 table.a-bordered th {\n\t\tbackground-color: #fff;\n\t}\n.aplus-v2 .premium-aplus-module-5 table.a-bordered th.active-item {\n    border: 1px solid #d5d9d9;\n    border-bottom: 0;\n    border-top-left-radius: 12px;\n    border-top-right-radius: 12px;\n}\n\t.aplus-v2 .aplus-review-right-padding {\n\t\tpadding-right: 0.1rem;\n\t}\n\t\n\t.aplus-v2 .premium-aplus-module-5 td.active-item, \n\t.aplus-v2 .premium-aplus-module-5 th.active-item {\n\t\ttop: auto;\n\t\tleft: 230px;\n\t\tz-index: 100;\n\t}\n\t.comparison-metric-name {\n\t\tfont-weight: 600;\n\t\tfont-size: 14px;\n\t}\n\ttd.aplus-data-column {\n\t\tfont-size: 14px;\n\t\ttext-align: center;\n\t\tpadding: 9px !important;\n\t}\n\t.comparison-product-card .product-card {\n\t\tborder: 0;\n\t\tpadding: 0;\n\t}\n\t.comparison-product-card .custom-wishlist-button,\n\t.comparison-product-card .product-badges-container,\n  .comparison-product-card .info-badge,\n\t.comparison-product-card .mt-4.empty\\:hidden {\n\t\tdisplay: none\n\t}\n\t.comparison-product-card .group\\/media:hover .group-hover\\/media\\:opacity-100 {\n\t\topacity: 0;\n\t}\n\t.comparison-product-card .product-card:hover {\n\t\ttransform: translateY(0)\n\t}\n\t.comparison-product-card h2.product-name {\n\t\t-webkit-line-clamp: 1;\n\t\tmin-height: 25px;\n\t\tfont-size: 14px;\n\t}\n\t.comparison-product-card .add-to-cart-span {\n\t\tfont-size: 14px;\n\t}\n\t.enso-comparison .comparison-product-card quick-add-button,\n\t.enso-comparison .comparison-product-card .product-card__info {\n\t\tdisplay: none;\n\t}\n\n\t.enso-comparison .comparison-product-card .product-card-media.media.rounded-block {\n    padding-bottom: 0;\n\t}\n\ttd.aplus-data-column.active.active-item.second-sticky-column,\n\tth.aplus-data-column.top-header,\n\ttd.aplus-data-column.secondary-content-column {\n\t\tmax-width: 230px;\n\t\twidth: 230px;\n\t\tmin-width: 230px;\n\t}\n\t@media (max-width: 992px) {\n\t\t[data-aplus-section-container] {\n\t\t\tpadding: 0;\n\t\t}\n\t\t.aplus-v2.desktop {\n\t\t\tmin-width: 100%;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.attribute {\n\t\t\tmin-width: 170px;\n\t\t\tleft: -1px;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.active-item, \n\t\t.aplus-v2 .premium-aplus-module-5 th.active-item {\n\t\t\tleft: 169px;\n\t\t\tz-index: 3;\n\t\t}\n\t}\n\t\n\t/* mobile design */\n\t@media (max-width: 768px){\n\t\t.aplus-v2 .premium-aplus-module-5 table.a-bordered {\n\t\t\twidth: 100%;\n\t\t}\n\t\ttd.aplus-data-column.active.active-item.second-sticky-column {\n\t\t\tleft: 0;\n\t\t\ttext-align: left;\n\t\t\tdisplay: inline-flex;\n\t\t\theight: 85px;\n\t\t\talign-items: end;\n\t\t}\n\t\ttd.attribute.empty.first-sticky-column,\n\t\t.aplus-v2 .premium-aplus-module-5.enso-comparison td.attribute.empty {\n\t\t\tdisplay: none !important;\n\t\t}\n\t\ttd.aplus-data-column.secondary-content-column {\n    \tvertical-align: bottom;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.active-item, .aplus-v2 .premium-aplus-module-5 th.active-item {\n\t\t\tleft: 0px;\n\t\t\tz-index: 3;\n\t\t\tposition: relative;\n    \t}\n\t\t.aplus-v2 .premium-aplus-module-5 td.attribute {\n\t\t\tmin-width: 170px;\n\t\t\tleft: -1px;\n\t\t\tposition: absolute;\n\t\t\tbackground: transparent;\t\tbackground-color: transparent !important;\nheight: 85px;\t\t\tpointer-events: none;\n    \t}\n\t\ttd.aplus-data-column.active.active-item.second-sticky-column {\n    \tleft: 0;\n    \ttext-align: left;\n    \tdisplay: inline-flex;\n    \theight: 85px;\n    \talign-items: end;\n\t\t}\n\t\ttable.a-bordered td, table.a-bordered th {\n\t\t\tborder-right: 0;\n\t\t}\n\t\t.aplus-v2 .premium-aplus-module-5 table.a-bordered td,\n\t\t.aplus-v2 .premium-aplus-module-5 table.a-bordered th {\n\t\t\tvertical-align: bottom;\n\t\t}\n\t\ttd.aplus-data-column.active.active-item.second-sticky-column, th.aplus-data-column.top-header, td.aplus-data-column.secondary-content-column {\n\t\t\tmax-width: 150px;\n\t\t\twidth: 150px;\n\t\t\tmin-width: 150px;\n\t}\n\t}\n</style>\n\n<div data-aplus-section-container>\n\t<div class=\"aplus-v2 desktop\">\n<div class=\"premium-aplus premium-aplus-module-5 aplus-container-3 comparison-table enso-comparison\">\n<div class=\"\n        section-header\n        text-center\n      \">\n  <h2 class=\"heading h2\">\n  WHY ENSO WINS?\n  </h2>\n    </div>   \n\t\t\t<div id=\"comparison-table-container-6\" data-comparison-name=\"comparison-table-container-6\" class=\"a-section a-spacing-none table-container\">  \n\t\t\t<div class=\"table-slider scroll-wrapper-bottom\">\n\t\t\t\t<table class=\"a-bordered a-horizontal-stripes scroll-width\">\n\t\t\t\t\t<tbody>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<tr class=\"header-row\">\n\t\t\t\t\t\t\t<td class=\"attribute empty\"></td>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<th class=\"aplus-data-column top-header active active-item\">\n\t\t\t\t\t\t\t\t<div class=\"comparison-product-card\">\n\t\t\t\t\t\t\t\t\t{% render 'card-product', card_product: product %}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<th class=\"aplus-data-column top-header\">\n\t\t\t\t\t\t\t\t<div class=\"relative overflow-hidden group/media\">\n\t\t\t\t\t\t\t\t\t<a href=\"{{ url }}\" tabindex=\"-1\" data-instant aria-label=\"{{ card_product.title | default: 'Product' }}\">\n\t\t\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card-media media rounded-block [--aspect-ratio:--product-card-image-aspect] md:pb-6\"\n\t\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t\t<lqip-element class=\"image-loader h-full\">\n\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"https://cdn.shopify.com/s/files/1/0777/8339/files/71Bhm4vc2SL._SX679.webp?v=1777371233&width=450\"\n\t\t\t\t\t\t\t\t\t\twidths=\"200, 360, 450\" loading=\"lazy\" width=\"\" height=\"\" alt=\"coal hookah image\"\n\t\t\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card__image product-thumbnail-shade\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</lqip-element>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<th class=\"aplus-data-column top-header\">\n\t\t\t\t\t\t\t\t\t<div class=\"relative overflow-hidden group/media\">\n\t\t\t\t\t\t\t\t\t\t<a href=\"{{ url }}\" tabindex=\"-1\" data-instant aria-label=\"{{ card_product.title | default: 'Product' }}\">\n\t\t\t\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card-media media rounded-block [--aspect-ratio:--product-card-image-aspect] md:pb-6\"\n\t\t\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t\t\t<lqip-element class=\"image-loader h-full\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<img src=\"https://cdn.shopify.com/s/files/1/0777/8339/files/51z90B1mVTL._AC_SY300_SX300_QL70_ML2.jpg?v=1775046681&width=450\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\twidths=\"200, 360, 450\" loading=\"lazy\" width=\"\" height=\"\" alt=\"home vape\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass=\"product-card__image product-thumbnail-shade\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</lqip-element>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t{% for entry in selected_features %}{% endfor %}\n\t\t\t\t\t\t\t\t<tr class=\"first-content-row\">\n\t\t\t\t\t\t\t\t\t<td class=\"attribute a-text-bold column-cell-1\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"a-text-bold\"> Category </span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t{%- comment -%} Current product value {%- endcomment -%}\n\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t\t\t\t\t\t\tElectric hookah\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t\tCoal hookah\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t\tHome vape\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t{%- comment -%} Compared products values {%- endcomment -%}\n\t\t\t\t\t\t\t\t\t{% for cp in compare_products %}\n\t\t\t\t\t\t\t\t\t\t{% unless cp.id == product.id %}\n\t\t\t\t\t\t\t\t\t\t\t{% assign cp_compare_key = cp.metafields.custom.compare_key.value %}\n\t\t\t\t\t\t\t\t\t\t\t{% if cp_compare_key == blank %}\n\t\t\t\t\t\t\t\t\t\t\t\t{% assign cp_compare_key = cp.handle | replace: '-', '_' %}\n\t\t\t\t\t\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t{% assign cp_value = entry[cp_compare_key] | metafield_tag %}\n\t\t\t\t\t\t\t\t\t\t\t<td class=\"aplus-data-column\" style=\"min-width: 230px;\">\n\t\t\t\t\t\t\t\t\t\t\t\t{% if cp_value != blank %}\n\t\t\t\t\t\t\t\t\t\t\t\t\t{{ cp_value.value | default: cp_value }}\n\t\t\t\t\t\t\t\t\t\t\t\t{% else %}\n\t\t\t\t\t\t\t\t\t\t\t\t\t—\n\t\t\t\t\t\t\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t{% endunless %}\n\t\t\t\t\t\t\t\t\t{% endfor %}\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<tr>   \n\t\t\t\t\t\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t\t\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"a-text-bold\"> Heat style </span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t\t\t\t\t\t<span class=\"description\">\n\t\t\t\t\t\t\t\t\t\tClean electric\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</td>      \n\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t<span class=\"description\">\n\t\t\t\t\t\t\t\t\t\tBurning coal\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</td>           \n\t\t\t\t\t\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t\t\t\t\t\t<span class=\"description\">\n\t\t\t\t\t\t\t\t\t\tDry heat\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</td>      \n\t\t\t\t\t\t\t</tr> \n\t\t\t\t\t\t\t\n\t\t<tr>   \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> What you use </span>\n\t\t\t\t</div>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tMolasses + dry herb\n\t\t\t\t</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tShisha molasses\n\t\t\t\t</span>\n\t\t\t</td>           \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tDry herb\n\t\t\t\t</span>\n\t\t\t</td>      \n\n\t\t</tr> \n\t\t\t\t\t\t\n\t\t<tr>   \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Flavor quality </span>\n\t\t\t\t</div>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tPure flavor\n\t\t\t\t</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tCoal-tainted\n\t\t\t\t</span>\n\t\t\t</td>           \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">\n\t\t\t\t\tHerb taste\n\t\t\t\t</span>\n\t\t\t</td>      \n\n\t\t</tr>\n\t\t\t\t\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Cloud style </span> \n\t\t\t\t</div>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Big clouds</span>\n\t\t\t</td>\n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Heavy smoke</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Light vapor</span>\n\t\t\t</td> \n\t\t\n\t\t</tr>\n\t\t\t\t\n\t\t\t\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\">Session vibe</span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Party or solo ritual</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Old-school ritual</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Solo sessions</span>\n\t\t\t</td> \n\t\t</tr> \n\t\t\t\n\t\t<tr>   \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\">Session time</span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Long sessions</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Long sessions</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Short sessions</span>\n\t\t\t</td> \n\t\t\n\t\t</tr>\n\t\t\n\t\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\">Setup</span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Fast setup</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Messy prep</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Simple use</span>\n\t\t\t</td>\n\t\t\n\n\t\t</tr>  \n\t\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Portability </span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Cord-free</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Bulky setup</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Plug-in only</span>\n\t\t\t</td>\n\t\t\n\t\t</tr>\n\n\t\t<tr>  \n\t\t\t<td class=\"attribute a-text-bold\">\n\t\t\t\t<div class=\"comparison-metric-name \" data-inline-content=\"\" data-position=\"triggerRight\">\n\t\t\t\t\t<span class=\"a-text-bold\"> Best for </span>\n\t\t\t\t</div>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column active active-item second-sticky-column\">\n\t\t\t\t<span class=\"description\">Modern hookah</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Traditional smokers</span>\n\t\t\t</td>      \n\t\t\t<td class=\"aplus-data-column secondary-content-column\">\n\t\t\t\t<span class=\"description\">Personal vaping</span>\n\t\t\t</td>\n\n\t\t</tr>\n\n\t</tbody>\n</table>\n</div>\n</div>\n<div class=\"text-center\">\n\t<strong>Pure flavor. Big clouds. Modern hookah sessions without coal, flame, or the mess</strong>\n</div> \n</div>\n</div>\n</div>",
-        "page_width": "page",
-        "padding_top": 32,
-        "padding_bottom": 64,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 32
-      }
-    },
-    "hero_banner_hBTWdw": {
-      "type": "hero-banner",
-      "name": "Hero Banner",
-      "settings": {
-        "image": "shopify://shop_images/Enso-2.webp",
-        "heading": "A revolutionary new way to elevate your herb experience",
-        "heading_size_desktop": 36,
-        "heading_size_mobile": 24,
-        "heading_color": "#ffffff",
-        "subheading": "<p>With <strong>ENSŌ </strong>you can now prolong your vaping session and enjoy amazing clouds in the process by mixing your favorite herb with nicotine-free herbal molasses. This method allows you to have full control over your herb dosage over longer vaping sessions while enjoying, pure, flavorful clouds.</p>",
-        "button": "",
-        "button_url": "",
-        "width": "full",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "height_desktop": "large",
-        "height_desktop_custom": 500,
-        "height_tablet": "medium",
-        "height_tablet_custom": 500,
-        "height_mobile": "small",
-        "height_mobile_custom": 500,
-        "content_alignment": "center",
-        "content_width_desktop": 600,
-        "content_width_tablet": 500,
-        "content_width_mobile": 0,
-        "overlay_color": "#000000",
-        "overlay_opacity": 0
-      }
-    },
-    "awards_krpjdM": {
-      "type": "awards",
-      "blocks": {
-        "award_qUMTEz": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/ICON_E150-01_837259cd-43e2-4bbe-9f1a-9327bb3c37be.webp",
-            "title": "Crafted for Exploration",
-            "subtitle": "",
-            "text": "Mix, match, and experiment with endless flavor and herb combinations to find your personal favorite. ENSŌ turns every session into a journey of discovery."
-          }
-        },
-        "award_QhXRbK": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/ICON_E150-02_debadcea-dcf3-4918-8e67-3d667256a003.webp",
-            "title": "45min sessions of Enjoyment",
-            "subtitle": "",
-            "text": "Enjoy pure, consistent flavor and long-lasting sessions with ENSŌ. Experience rich clouds, smooth performance, and lasting durability—perfect for elevating your downtime."
-          }
-        },
-        "award_AxhanA": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/ICON_E150-03_318a2fa7-cf65-4f21-bbb6-84c305facdd7.webp",
-            "title": "Modern Meets Timeless",
-            "subtitle": "",
-            "text": "Blend the timeless ritual of hookah with the modern lifestyle of herb vaping. Enso redefines how you unwind."
-          }
-        },
-        "award_kcYXKp": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/ICON_E150-04_8125116a-c00f-4faa-a366-9ffaa277b235.webp",
-            "title": "Easy to use / Easy to clean",
-            "subtitle": "",
-            "text": "Effortless quick setup, easy to use, easy to clean, and always ready when you are. Have up to 2.5 hours of battery on one charge."
-          }
-        }
-      },
-      "block_order": [
-        "award_qUMTEz",
-        "award_QhXRbK",
-        "award_AxhanA",
-        "award_kcYXKp"
-      ],
-      "name": "t:sections.awards.presets.name",
-      "settings": {
-        "eyebrow": "",
-        "heading": "",
-        "section_gap": 40,
-        "icon_bg": "",
-        "cards_layout": "primary",
-        "logo_list": false,
-        "padding_top": 64,
-        "padding_bottom": 32,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 16
-      }
-    },
-    "image_before_after_tXWPEV": {
-      "type": "image-before-after",
-      "name": "Image before/after",
-      "settings": {
-        "before_image": "shopify://shop_images/before_357us_web.webp",
-        "after_image": "shopify://shop_images/after_420us_web.webp",
-        "subheading": "Use the slider, left and right, to see",
-        "heading": "What difference a few minutes can make",
-        "heading_size_desktop": 36,
-        "heading_size_mobile": 28,
-        "content": "",
-        "text_position": "center",
-        "heading_html_tag": "h2",
-        "handle_color": "#ffffff",
-        "initial_position": 50,
-        "width": "page",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16
-      }
-    },
-    "feature_videos_aUAxLp": {
-      "type": "feature-videos",
-      "blocks": {
-        "feature_MPNktk": {
-          "type": "feature",
-          "settings": {
-            "video": "shopify://files/videos/Thermocap.webm",
-            "video_url": "",
-            "eyebrow": "",
-            "heading": "Pure, flavourful vapor - fully electric.",
-            "text": "<p>Enjoy pure, flavorful vapors without the risks. Enso's fully electric design eliminates 95% of toxic carbon monoxide and harmful chemicals associated with burning coal.</p>",
-            "cta_label": "",
-            "cta_link": "",
-            "text_position": "left",
-            "text_vertical_position": "center"
-          }
-        },
-        "feature_DRktYK": {
-          "type": "feature",
-          "settings": {
-            "video": "shopify://files/videos/battery_114b6808-804c-468b-a49f-af2bd90d1dc9.webm",
-            "video_url": "",
-            "eyebrow": "",
-            "heading": "Cordless",
-            "text": "<p>Enjoy the best shisha moments with friends anywhere. The Enso features a swap-out battery for easy, on-the-go use.</p>",
+            "eyebrow": "Why ENSŌ",
+            "heading": "Coal-Free Comfort",
+            "text": "<p>No charcoal means no toxic carbon monoxide and none of the harmful chemicals that come with an open flame. Just clean, controlled heat — and a session that tastes like what you actually put in it.</p>",
             "cta_label": "",
             "cta_link": "",
             "text_position": "right",
             "text_vertical_position": "center"
           }
         },
-        "feature_GeqWbY": {
+        "feature_cordless": {
           "type": "feature",
           "settings": {
-            "video": "shopify://files/videos/Mag_anim_home.webm",
+            "video": "shopify://files/videos/e0f4f545-ab3eb3b3a4e74553991a274732af51b9.HD-720p-4.5Mbps-77492579.mp4",
             "video_url": "",
             "eyebrow": "",
-            "heading": "Simplicity",
-            "text": "<p>The magnetically attachable mouthpieces effortlessly eliminate the clutter and hassle of awkwardly hanging shisha pipes.</p>",
+            "heading": "Cordless Convenience",
+            "text": "<p>A swap-out battery keeps the session going, and the whole system is built to travel. No outlet, no setup, no infrastructure — the ritual goes where you go.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "left",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature_magnetic": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/eac855a0-da6f5b12bd4140049bb0a9473dd6d095.HD-720p-4.5Mbps-79892443.mp4",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Magnetic Simplicity",
+            "text": "<p>Magnetically attachable mouthpieces snap into place and lift right off — so sharing, switching and cleaning take seconds instead of minutes.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "right",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature_clouds": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/eaa9436a-928b86f2b2c54f409d83866a94dee497.HD-1080p-7.2Mbps-33843180.mp4",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Formidable Clouds",
+            "text": "<p>ENSŌ's custom heating algorithm holds temperature precisely where it needs to be, drawing out dense, consistent clouds from the first draw to the last.</p>",
             "cta_label": "",
             "cta_link": "",
             "text_position": "left",
@@ -603,14 +198,15 @@
         }
       },
       "block_order": [
-        "feature_MPNktk",
-        "feature_DRktYK",
-        "feature_GeqWbY"
+        "feature_coal_free",
+        "feature_cordless",
+        "feature_magnetic",
+        "feature_clouds"
       ],
-      "name": "t:sections.feature_videos.presets.name",
       "settings": {
-        "eyebrow": "",
-        "heading": "",
+        "anchor_id": "whyenso",
+        "eyebrow": "Why ENSŌ",
+        "heading": "Built around the ritual",
         "width": "page",
         "show_media_shadow": false,
         "padding_top": 32,
@@ -619,682 +215,132 @@
         "padding_bottom_mobile": 16
       }
     },
-    "shop_accessories_C9Qcnn": {
+    "shop_accessories": {
       "type": "shop-accessories",
-      "name": "Shop accessories",
       "settings": {
         "collection": "accesories",
-        "eyebrow": "Refine your Ritual with",
-        "heading": "Ensō Accessories",
-        "layout": "grid_load_more",
-        "load_more_step": 4,
-        "columns": "4",
-        "columns_mobile": "1",
-        "card_gap": 24,
-        "products_limit": 10,
-        "enable_quickadd": true,
-        "quickadd_design": "secondary",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16,
-        "cta_label": "View All Accessories",
-        "cta_link": ""
-      }
-    },
-    "awards_pxKk6U": {
-      "type": "awards",
-      "blocks": {
-        "award_FwaUcE": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons-01.webp",
-            "title": "",
-            "subtitle": "",
-            "text": ""
-          }
-        },
-        "award_yNw7tG": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons-02.webp",
-            "title": "",
-            "subtitle": "",
-            "text": ""
-          }
-        },
-        "award_tMWrnQ": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons-03.webp",
-            "title": "",
-            "subtitle": "",
-            "text": ""
-          }
-        },
-        "award_L8qzP9": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons_enso-04.webp",
-            "title": "",
-            "subtitle": "",
-            "text": ""
-          }
-        },
-        "award_zTDxDQ": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons-06.webp",
-            "title": "",
-            "subtitle": "",
-            "text": ""
-          }
-        },
-        "award_Je4R6X": {
-          "type": "award",
-          "settings": {
-            "image": "shopify://shop_images/Icons-05.webp",
-            "title": "",
-            "subtitle": "",
-            "text": ""
-          }
-        }
-      },
-      "block_order": [
-        "award_FwaUcE",
-        "award_yNw7tG",
-        "award_tMWrnQ",
-        "award_L8qzP9",
-        "award_zTDxDQ",
-        "award_Je4R6X"
-      ],
-      "disabled": true,
-      "name": "t:sections.awards.presets.name",
-      "settings": {
         "eyebrow": "",
-        "heading": "",
-        "section_gap": 40,
-        "icon_bg": "",
-        "cards_layout": "primary",
-        "logo_list": true,
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32,
-        "color_background": "{{ settings.color_palette.paper }}"
-      }
-    },
-    "image_slider_8AiJb4": {
-      "type": "image-slider",
-      "blocks": {
-        "slide_XBXjed": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Unboxing-01.webp",
-            "text": "ENSŌ Unboxing",
-            "link": "https://www.youtube.com/watch?v=kAVGefMbILA",
-            "open_in_new_tab": true
-          }
-        },
-        "slide_cKfrea": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Quick_setup-01.webp",
-            "text": "ENSŌ Quick Setup",
-            "link": "https://www.youtube.com/watch?v=hm01ZbaWdpY",
-            "open_in_new_tab": true
-          }
-        },
-        "slide_39J7Kj": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Cleaning-01.webp",
-            "text": "ENSŌ Cleaning",
-            "link": "https://www.youtube.com/watch?v=gAHT4Sp2tOM",
-            "open_in_new_tab": true
-          }
-        }
-      },
-      "block_order": [
-        "slide_XBXjed",
-        "slide_cKfrea",
-        "slide_39J7Kj"
-      ],
-      "custom_css": [
-        ".ai-slider-slide-slider8aijb4:hover {transform: scale(1.1); transition: 0.3s all;}",
-        ".ai-slider-slide-slider8aijb4:not(:hover) {transform: scale(1); transition: 0.3s all;}",
-        ".ai-slider-slide-slider8aijb4 {padding: 40px 20px;}"
-      ],
-      "name": "Image slider",
-      "settings": {
-        "heading": "How to Use",
-        "heading_size_desktop": 36,
-        "heading_size_mobile": 28,
-        "data_source": "manual",
-        "metafield_namespace": "custom",
-        "metafield_key": "user_guide",
-        "enable_manual_popup": false,
-        "width": "page",
-        "aspect_ratio": "auto",
-        "slides_desktop": 3,
-        "slides_tablet": 3,
-        "slides_mobile": 1,
-        "slide_gap": 16,
-        "slide_border_radius": 12,
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16,
-        "show_arrows": true,
-        "show_dots": true,
-        "arrow_color": "#ffffff",
-        "arrow_background": "#000000",
-        "dot_color": "#000000",
-        "autoplay": false,
-        "autoplay_speed": 3000,
-        "infinite_loop": true
-      }
-    },
-    "image_slider_HaX8rb": {
-      "type": "image-slider",
-      "blocks": {
-        "slide_9F7yVa": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_01.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": true
-          }
-        },
-        "slide_F4xNKY": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_02.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": true
-          }
-        },
-        "slide_6GQeBt": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_03.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": true
-          }
-        },
-        "slide_wKydfY": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_04.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_8fBztb": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_05.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_7QHXhd": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_06.webp",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_j6ePxQ": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_07.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_zhzCXF": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_08.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_AqiNFm": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_09.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_NqXmKX": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_10.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_8Tzxif": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_11.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_KK6gmw": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_12.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_KhqUVY": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_13.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_rfr9hP": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_14.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_Rw6RRC": {
-          "type": "slide",
-          "settings": {
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_KbEL7g": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_14.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_frK78g": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_15.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_z3rc4d": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_16.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_XCH3hD": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_17.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_kGm4tJ": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_18.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_x4aMbr": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_19.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_gLBwxF": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_19.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_KNVrGW": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_20.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_RgHCLe": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_21.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_ePyAU3": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_22.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_m6NyHT": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_23.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_ffD4BH": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_24.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_MiUnGD": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_25.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_zrEcqJ": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_26.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_xnqfch": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_28.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_T9qYeT": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_29.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_7ArEEp": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_30.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_p9PVVN": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_31.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_88nUFH": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_32.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        },
-        "slide_jQBmWy": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/page_33.png",
-            "text": "",
-            "link": "",
-            "open_in_new_tab": false
-          }
-        }
-      },
-      "block_order": [
-        "slide_9F7yVa",
-        "slide_F4xNKY",
-        "slide_6GQeBt",
-        "slide_wKydfY",
-        "slide_8fBztb",
-        "slide_7QHXhd",
-        "slide_j6ePxQ",
-        "slide_zhzCXF",
-        "slide_AqiNFm",
-        "slide_NqXmKX",
-        "slide_8Tzxif",
-        "slide_KK6gmw",
-        "slide_KhqUVY",
-        "slide_rfr9hP",
-        "slide_Rw6RRC",
-        "slide_KbEL7g",
-        "slide_frK78g",
-        "slide_z3rc4d",
-        "slide_XCH3hD",
-        "slide_kGm4tJ",
-        "slide_x4aMbr",
-        "slide_gLBwxF",
-        "slide_KNVrGW",
-        "slide_RgHCLe",
-        "slide_ePyAU3",
-        "slide_m6NyHT",
-        "slide_ffD4BH",
-        "slide_MiUnGD",
-        "slide_zrEcqJ",
-        "slide_xnqfch",
-        "slide_T9qYeT",
-        "slide_7ArEEp",
-        "slide_p9PVVN",
-        "slide_88nUFH",
-        "slide_jQBmWy"
-      ],
-      "name": "Image slider",
-      "settings": {
-        "heading": "User Guide",
-        "heading_size_desktop": 36,
-        "heading_size_mobile": 28,
-        "data_source": "manual",
-        "metafield_namespace": "custom",
-        "metafield_key": "user_guide",
-        "enable_manual_popup": true,
-        "width": "page",
-        "aspect_ratio": "auto",
-        "slides_desktop": 4,
-        "slides_tablet": 3,
-        "slides_mobile": 2,
-        "slide_gap": 16,
-        "slide_border_radius": 12,
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16,
-        "show_arrows": true,
-        "show_dots": true,
-        "arrow_color": "#ffffff",
-        "arrow_background": "#000000",
-        "dot_color": "#000000",
-        "autoplay": false,
-        "autoplay_speed": 3000,
-        "infinite_loop": true
-      }
-    },
-    "product_recommendations_ADkJeU": {
-      "type": "product-recommendations",
-      "name": "Product recommendations",
-      "settings": {
-        "collection": "",
-        "eyebrow": "",
-        "heading": "Signature Models",
+        "heading": "Accessories for ENSŌ",
         "layout": "carousel",
         "columns": "4",
         "columns_mobile": "1",
         "card_gap": 24,
-        "products_limit": 4,
-        "enable_quickadd": true,
-        "quickadd_design": "secondary",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16,
-        "cta_label": "",
-        "cta_link": ""
+        "products_limit": 8,
+        "enable_quickadd": false,
+        "padding_top": 72,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 24,
+        "cta_label": "View all accessories",
+        "cta_link": "/collections/accesories"
       }
     },
-    "faqs_page_Tbjgat": {
-      "type": "faqs-page",
+    "guide_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "image": "shopify://shop_images/jr-arch-cup.jpg",
+        "heading": "Pack your blend",
+        "heading_size_desktop": 40,
+        "heading_size_mobile": 28,
+        "heading_color": "#ffffff",
+        "subheading": "<p>Blonde or dark leaf, one flavour or your own mix: thin layers, pressed just a little, and the right heat. The steps are in the ENSŌ 2026 manual.</p>",
+        "button": "How to pack the cup",
+        "button_url": "/pages/enso-2026-manual",
+        "width": "full",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "height_desktop": "large",
+        "height_desktop_custom": 520,
+        "height_tablet": "large",
+        "height_tablet_custom": 520,
+        "height_mobile": "medium",
+        "height_mobile_custom": 400,
+        "content_alignment": "left",
+        "content_width_desktop": 560,
+        "content_width_tablet": 480,
+        "content_width_mobile": 0,
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "enso_awards_section": {
+      "type": "enso-awards",
       "blocks": {
-        "question_zgbhyB": {
-          "type": "question",
+        "award_sm": {
+          "type": "award",
           "settings": {
-            "question": "What changed in ENSŌ 2026?",
-            "answer": "<p>A new glass top (Glass ThermoCap), a wider 1.5 m vapor hose, a redesigned 15 cm mouthpiece, and a fast-charge Battery Plus (full in ~1.5 h, down from ~3 h). Key features: magnetic mouthpiece, cordless operation, portability, and temperature control. The design also received the Red Dot Design Award 2026 in Product Design.</p>"
+            "logo": "shopify://shop_images/SM_Logo-1.webp",
+            "title": "Best Hookah, ShishaMesse 2025",
+            "body": "Named Best Hookah at ShishaMesse 2025 in Frankfurt: a modern alternative to the traditional setup, with clean electric heat, premium design and a refined session."
           }
         },
-        "question_WMtzmA": {
-          "type": "question",
+        "award_reddot": {
+          "type": "award",
           "settings": {
-            "question": "How does the heat work?",
-            "answer": "<p>A stepless electronic dial sets the temperature from 180 to 330 °C in 5° steps. A fixed 5-minute pre-heat reaches your setting, then holds it steady through the session — so the last draw lands like the first.</p>"
-          }
-        },
-        "question_x4ND8H": {
-          "type": "question",
-          "settings": {
-            "question": "Has the airflow improved for 2026?",
-            "answer": "<p>Yes. The wider, longer 1.5 m hose and the redesigned 15 cm magnetic mouthpiece open up the draw — less resistance, more air, a smoother and more even pull from the first minute to the last.</p>"
-          }
-        },
-        "question_MrFrAn": {
-          "type": "question",
-          "settings": {
-            "question": "Can I use my own molasses?",
-            "answer": "<p>Yes. ENSŌ is an open system — the medical porcelain chamber accepts any standard shisha brand or loose-leaf blend. No proprietary pods. No charcoal, no fire, no ash.</p>"
-          }
-        },
-        "question_7PJXzz": {
-          "type": "question",
-          "settings": {
-            "question": "How long does the battery last?",
-            "answer": "<p>Approximately 90 to 120 minutes per charge depending on temperature. The fast-charge Battery Plus reaches a full charge in about 1.5 hours — down from ~3 h on the previous edition.</p>"
-          }
-        },
-        "question_7k4K7g": {
-          "type": "question",
-          "settings": {
-            "question": "How does shipping work?",
-            "answer": "<p>ENSŌ ships globally. Region-specific shipping is calculated at checkout. Average delivery is about 2 weeks; tracking is provided once the order ships.</p>"
+            "logo": "shopify://shop_images/red-dot-logo_267589e5-2902-4976-afd4-8eae503eff58.webp",
+            "title": "Red Dot Design Award 2026",
+            "body": "A Red Dot in Product Design, an outside confirmation of the direction the brand has held from day one: a modern, international object made around the ritual."
           }
         }
       },
       "block_order": [
-        "question_zgbhyB",
-        "question_WMtzmA",
-        "question_x4ND8H",
-        "question_MrFrAn",
-        "question_7PJXzz",
-        "question_7k4K7g"
+        "award_sm",
+        "award_reddot"
       ],
-      "disabled": true,
-      "name": "FAQs",
       "settings": {
-        "eyebrow": "",
-        "heading": "FAQs",
-        "header_alignment": "center",
-        "content_width": "normal",
-        "padding_top": 32,
-        "padding_bottom": 64,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 32
+        "heading": "World-class performance and design",
+        "image": "shopify://shop_images/award-square-m.jpg",
+        "padding_top": 88,
+        "padding_bottom": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
-    "product_faqs_Y7VCaL": {
+    "product_faqs": {
       "type": "product-faqs",
-      "name": "Product FAQs",
       "settings": {
-        "eyebrow": "Questions",
-        "heading": "Before You Order"
+        "eyebrow": "",
+        "heading": "Frequently asked questions",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "enso_experience": {
+      "type": "enso-experience",
+      "settings": {
+        "image": "shopify://shop_images/enso-exp-tea.jpg",
+        "heading": "You have seen what it is — now see how it is used",
+        "text": "The 2026 Edition, told the other way round: the first session step by step, the manual, cleaning, the flavour guide and the firmware app. Made for the phone.",
+        "cta_label": "Open ENSŌ Experience",
+        "cta_link": "/pages/enso-experience",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "help": {
+      "type": "help-cards",
+      "settings": {
+        "heading": "Before and after you buy",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 40
       }
     }
   },
   "order": [
+    "enso_hero",
     "main",
-    "product_meta_shorts_MYTHGe",
-    "custom_section_V3gNry",
-    "feature_videos_imV8px",
-    "custom_section_dXQm4P",
-    "custom_liquid_jejczc",
-    "hero_banner_hBTWdw",
-    "awards_krpjdM",
-    "image_before_after_tXWPEV",
-    "feature_videos_aUAxLp",
-    "shop_accessories_C9Qcnn",
-    "awards_pxKk6U",
-    "image_slider_8AiJb4",
-    "image_slider_HaX8rb",
-    "product_recommendations_ADkJeU",
-    "faqs_page_Tbjgat",
-    "product_faqs_Y7VCaL"
+    "why_enso",
+    "shop_accessories",
+    "guide_banner",
+    "enso_awards_section",
+    "product_faqs",
+    "enso_experience",
+    "help"
   ]
 }

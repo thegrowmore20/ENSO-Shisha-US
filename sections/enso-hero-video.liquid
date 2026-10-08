@@ -1,0 +1,227 @@
+{%- liquid
+  assign heading = section.settings.heading
+  assign subline = section.settings.subline
+  assign cta_label = section.settings.cta_label
+  assign cta_link = section.settings.cta_link
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+-%}
+
+{% stylesheet %}
+.enso-hero {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.enso-hero__video {
+  width: 100%;
+  height: min(84vh, 920px);
+  object-fit: cover;
+  display: block;
+  opacity: .94;
+}
+
+.enso-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0), rgb(0 0 0 / .6));
+  pointer-events: none;
+}
+
+.enso-hero__copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 40px 56px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  z-index: 1;
+}
+
+.enso-hero__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.enso-hero__heading {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-semibold);
+  font-size: 52px;
+  line-height: 56px;
+  max-width: 16ch;
+  color: #fff;
+  text-shadow: 0 2px 24px rgb(0 0 0 / .35);
+  margin: 0;
+  letter-spacing: -.01em;
+}
+
+.enso-hero__subline {
+  color: rgb(255 255 255 / .85);
+  font-size: 15px;
+  line-height: 22px;
+  margin: 10px 0 0;
+}
+
+.enso-hero__cta {
+  flex: 0 0 auto;
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  border-radius: 999px;
+  padding: 20px 40px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-bold);
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity .2s;
+}
+
+.enso-hero__cta:hover {
+  opacity: .85;
+}
+
+@media screen and (max-width: 749px) {
+  .enso-hero__video {
+    height: min(64vh, 560px);
+  }
+
+  .enso-hero__copy {
+    padding: 0 16px 28px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .enso-hero__heading {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  .enso-hero__subline {
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+}
+{% endstylesheet %}
+
+<div
+  id="shopify-section-{{ section.id }}"
+  class="video-hero-slider"
+  style="margin-top: {{ margin_top }}px; margin-bottom: {{ margin_bottom }}px;"
+>
+  <div class="enso-hero">
+    {%- if section.settings.video != blank -%}
+      <video
+        class="enso-hero__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+      >
+        {%- for source in section.settings.video.sources -%}
+          {%- if source.format == 'mp4' -%}
+            <source src="{{ source.url }}" type="video/mp4">
+          {%- endif -%}
+        {%- endfor -%}
+      </video>
+    {%- else -%}
+      <div class="enso-hero__video enso-hero__video--placeholder">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-hero__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    <div class="enso-hero__copy">
+      <div class="enso-hero__text">
+        {%- if heading != blank -%}
+          <h2 class="enso-hero__heading">{{ heading }}</h2>
+        {%- endif -%}
+        {%- if subline != blank -%}
+          <p class="enso-hero__subline">{{ subline }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if cta_label != blank and cta_link != blank -%}
+        <a href="{{ cta_link }}" class="enso-hero__cta">{{ cta_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.enso_hero_video.name",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.enso_hero_video.settings.video.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.enso_hero_video.settings.heading.label",
+      "default": "An all-in-one portable hookah"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "t:sections.enso_hero_video.settings.subline.label",
+      "default": "Your ritual. Without charcoal. Open system, full control."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:sections.enso_hero_video.settings.cta_label.label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "t:sections.enso_hero_video.settings.cta_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "t:sections.enso_hero_video.settings.margin_top.label",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "t:sections.enso_hero_video.settings.margin_bottom.label",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.enso_hero_video.presets.name"
+    }
+  ]
+}
+{% endschema %}

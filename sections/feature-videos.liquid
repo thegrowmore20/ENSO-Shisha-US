@@ -29,7 +29,7 @@
     }
 {% endstyle %}
 
-<section class="{{ section_class }} section-padding-{{ section.id }}">
+<section class="{{ section_class }} section-padding-{{ section.id }}"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | escape }}"{% endif %}>
   <div class="{% if section.settings.width == 'page' %}container{% endif %}">
     {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
       <div class="feature-videos__header text-center">
@@ -221,6 +221,12 @@
       "id": "color_text",
       "label": "t:sections.all.text_color.label",
       "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "t:sections.feature_videos.settings.anchor_id.label",
+      "info": "t:sections.feature_videos.settings.anchor_id.info"
     },
     {
       "type": "text",
