@@ -61,15 +61,13 @@
           {%- if body_text != blank -%}
             <p class="enso-exp__text">{{ body_text }}</p>
           {%- endif -%}
-          {%- if section.blocks.size > 0 -%}
-            <div class="enso-exp__chips">
-              {%- for block in section.blocks -%}
-                {%- if block.settings.label != blank -%}
-                  <span class="enso-exp__chip" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
+          <div class="enso-exp__chips">
+            <span class="enso-exp__chip">Quick start</span>
+            <span class="enso-exp__chip">Full manual</span>
+            <span class="enso-exp__chip">FAQ</span>
+            <span class="enso-exp__chip">Warranty</span>
+            <span class="enso-exp__chip">Firmware app</span>
+          </div>
           {%- if cta_label != blank -%}
             <a class="enso-exp__btn" href="{{ cta_link | default: '#' }}">
               {{- cta_label }} &rarr;
@@ -319,30 +317,9 @@
       "default": 24
     }
   ],
-  "blocks": [
-    {
-      "type": "chip",
-      "name": "t:sections.enso_experience.blocks.chip.name",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "t:sections.enso_experience.blocks.chip.settings.label.label",
-          "default": "Quick start"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
-      "name": "t:sections.enso_experience.presets.name",
-      "blocks": [
-        { "type": "chip", "settings": { "label": "Quick start" } },
-        { "type": "chip", "settings": { "label": "Full manual" } },
-        { "type": "chip", "settings": { "label": "FAQ" } },
-        { "type": "chip", "settings": { "label": "Warranty" } },
-        { "type": "chip", "settings": { "label": "Firmware app" } }
-      ]
+      "name": "t:sections.enso_experience.presets.name"
     }
   ]
 }

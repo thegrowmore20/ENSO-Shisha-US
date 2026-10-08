@@ -316,14 +316,6 @@
     },
     "enso_experience": {
       "type": "enso-experience",
-      "blocks": {
-        "chip_qs":  { "type": "chip", "settings": { "label": "Quick start" } },
-        "chip_fm":  { "type": "chip", "settings": { "label": "Full manual" } },
-        "chip_faq": { "type": "chip", "settings": { "label": "FAQ" } },
-        "chip_w":   { "type": "chip", "settings": { "label": "Warranty" } },
-        "chip_app": { "type": "chip", "settings": { "label": "Firmware app" } }
-      },
-      "block_order": ["chip_qs", "chip_fm", "chip_faq", "chip_w", "chip_app"],
       "settings": {
         "image": "shopify://shop_images/enso-exp-tea.webp",
         "eyebrow": "ENSŌ Experience",
