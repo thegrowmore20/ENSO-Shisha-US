@@ -252,8 +252,11 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
   }
   .qs__track::-webkit-scrollbar { display: none; }
+  .qs__track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
   .qs__track img {
     flex: 0 0 100%;
     width: 100%;
@@ -345,17 +348,54 @@
   document.querySelectorAll('.qs__pic--seq').forEach(function(pic) {
     const track = pic.querySelector('.qs__track');
     const dots = pic.querySelectorAll('.qs__dots i');
-    if (!track || !dots.length) return;
+    if (!track) return;
 
-    track.addEventListener('scroll', function() {
+    function updateDots() {
+      if (!dots.length) return;
       const index = Math.round(track.scrollLeft / track.clientWidth);
       dots.forEach(function(dot, i) { dot.classList.toggle('on', i === index); });
-    }, { passive: true });
+    }
+
+    track.addEventListener('scroll', updateDots, { passive: true });
 
     dots.forEach(function(dot, i) {
       dot.addEventListener('click', function() {
         track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
       });
+    });
+
+    // Mouse drag support
+    let startX = 0;
+    let startScroll = 0;
+    let dragging = false;
+
+    track.addEventListener('mousedown', function(e) {
+      dragging = true;
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.classList.add('is-dragging');
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      track.scrollLeft = startScroll - dx;
+    });
+
+    window.addEventListener('mouseup', function() {
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove('is-dragging');
+      // Re-enable scroll-snap and snap to nearest slide
+      const index = Math.round(track.scrollLeft / track.clientWidth);
+      track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
+      updateDots();
+    });
+
+    // Prevent image drag interference
+    track.querySelectorAll('img').forEach(function(img) {
+      img.addEventListener('dragstart', function(e) { e.preventDefault(); });
     });
   });
 {% endjavascript %}
