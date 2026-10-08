@@ -80,6 +80,11 @@
                   <path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/>
                   <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
                 </svg>
+              {%- when 'building' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-5 9 5v10H3z"/>
+                  <path d="M3 9l9 5 9-5M12 14v5"/>
+                </svg>
             {%- endcase -%}
           </div>
 
@@ -465,7 +470,8 @@
             { "value": "chat",   "label": "t:sections.help_cards.blocks.card.settings.icon.options.chat" },
             { "value": "shield", "label": "t:sections.help_cards.blocks.card.settings.icon.options.shield" },
             { "value": "star",   "label": "t:sections.help_cards.blocks.card.settings.icon.options.star" },
-            { "value": "box",    "label": "t:sections.help_cards.blocks.card.settings.icon.options.box" }
+            { "value": "box",      "label": "t:sections.help_cards.blocks.card.settings.icon.options.box" },
+            { "value": "building", "label": "t:sections.help_cards.blocks.card.settings.icon.options.building" }
           ],
           "default": "book"
         },

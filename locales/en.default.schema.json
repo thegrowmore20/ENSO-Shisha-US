@@ -1307,7 +1307,8 @@
                 "chat": "Chat bubble (Support)",
                 "shield": "Shield (Warranty)",
                 "star": "Star",
-                "box": "Box (Shipping)"
+                "box": "Box (Shipping)",
+                "building": "Building (Wholesale)"
               }
             },
             "heading": {
