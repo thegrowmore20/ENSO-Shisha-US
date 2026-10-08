@@ -48,6 +48,15 @@
           "type": "tags",
           "settings": {}
         },
+        "text_JLGqNX": {
+          "type": "text",
+          "settings": {
+            "content": "<p>The standard battery takes about 3 hours to charge fully (Battery Plus: about 1 hour 45 minutes). Same 2026 Edition. In the box: the 2026 glass ThermoCap, hose and magnetic mouthpiece, plus a spare hose and a short mouthpiece.</p>",
+            "alignment": "left",
+            "text_size": "medium",
+            "show_icon": false
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -56,7 +65,9 @@
         },
         "variant_note": {
           "type": "variant_note",
-          "settings": {}
+          "settings": {
+            "default_text": ""
+          }
         },
         "price": {
           "type": "price",
@@ -95,7 +106,7 @@
         "contact_text": {
           "type": "text",
           "settings": {
-            "content": "<p>Questions before you order: <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu<\/a><\/p>",
+            "content": "<p>Questions before you order: <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a></p>",
             "alignment": "left",
             "text_size": "small",
             "show_icon": false
@@ -139,6 +150,7 @@
         "title",
         "text_headline",
         "tags",
+        "text_JLGqNX",
         "variant_picker",
         "variant_note",
         "price",
@@ -156,7 +168,7 @@
         "color_background": "{{ settings.color_palette.background }}",
         "color_text": "{{ settings.color_palette.foreground }}",
         "width": "page",
-        "media_width": 55,
+        "media_width": 50,
         "gallery_layout": "thumbnails_bottom",
         "enable_sticky_info": false,
         "show_info_border": true,
