@@ -16,35 +16,50 @@
           "type": "step",
           "settings": {
             "heading": "Charge it",
-            "body": "USB-C straight into the battery, about 1.5 hours to full. It also charges inside Diamond. All four dots lit: full."
+            "body": "USB-C straight into the battery, about 1.5 hours to full. It also charges inside Diamond. All four dots lit: full.",
+            "image_1": "shopify://shop_images/before-charge.webp",
+            "image_2": "shopify://shop_images/charge-in.webp",
+            "image_3": "shopify://shop_images/charge-dots.webp"
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
             "heading": "Pack the cup",
-            "body": "10–15 g, pressed just a little, to the edge of the mesh."
+            "body": "10–15 g, pressed just a little, to the edge of the mesh.",
+            "image_1": "shopify://shop_images/basket-empty.webp",
+            "image_2": "shopify://shop_images/pack-layer1.webp",
+            "image_3": "shopify://shop_images/pack-press.webp",
+            "image_4": "shopify://shop_images/cup-filled.webp"
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
             "heading": "Cup in, cap on",
-            "body": "Set the cup into the chamber and put the cap on by its rubber pads. Then turn the plate with the fork of the cup tool until all four holes are open."
+            "body": "Set the cup into the chamber and put the cap on by its rubber pads. Then turn the plate with the fork of the cup tool until all four holes are open.",
+            "image_1": "shopify://shop_images/chamber-empty.webp",
+            "image_2": "shopify://shop_images/cup-in-by-hand.webp",
+            "image_3": "shopify://shop_images/cap-on-press-pad.webp",
+            "image_4": "shopify://shop_images/plate-fork-macro.webp"
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
             "heading": "On your hookah",
-            "body": "The adapter on the stem only half-way, Diamond on top, then press: they slide down together."
+            "body": "The adapter on the stem only half-way, Diamond on top, then press: they slide down together.",
+            "image_1": "shopify://shop_images/hookah-adapter-two-hands.webp",
+            "image_2": "shopify://shop_images/hookah-mount-two-hands.webp",
+            "image_3": "shopify://shop_images/on-hookah-front.webp"
           }
         },
         "step_5": {
           "type": "step",
           "settings": {
             "heading": "Pre-heat, then your heat",
-            "body": "Hold the dial to switch on. Click Start Pre-heat: it runs at once, 7 minutes at 275 °C. Turn the dial to your heat. Want a different time? From Start Pre-heat turn right to Pre-heat Timer, click and set the minutes."
+            "body": "Hold the dial to switch on. Click Start Pre-heat: it runs at once, 7 minutes at 275 °C. Turn the dial to your heat. Want a different time? From Start Pre-heat turn right to Pre-heat Timer, click and set the minutes.",
+            "image_1": "shopify://shop_images/closed-start.webp"
           }
         }
       },
