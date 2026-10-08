@@ -1622,6 +1622,41 @@
         "name": "ENSŌ App"
       }
     },
+    "diamond_quick_start": {
+      "name": "Diamond Quick Start",
+      "settings": {
+        "nav_heading": { "content": "Navigation" },
+        "back_url": { "label": "Back link URL" },
+        "back_label": { "label": "Back link label" },
+        "device_label": { "label": "Device name" },
+        "hero_heading": { "content": "Hero" },
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" },
+        "safety_note": { "label": "Safety note" },
+        "footer_heading": { "content": "Footer" },
+        "more_url": { "label": "Manual link URL" },
+        "more_label": { "label": "Manual link label" },
+        "more_note": { "label": "Manual link note" }
+      },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "heading": { "label": "Heading" },
+            "body": { "label": "Body text" },
+            "images_heading": { "content": "Images" },
+            "image_1": { "label": "Image 1" },
+            "image_2": { "label": "Image 2" },
+            "image_3": { "label": "Image 3" },
+            "image_4": { "label": "Image 4" }
+          }
+        }
+      },
+      "presets": {
+        "name": "Diamond Quick Start"
+      }
+    },
     "contact": {
       "name": "Contact Form",
       "settings": {
