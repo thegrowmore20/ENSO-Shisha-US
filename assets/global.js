@@ -611,7 +611,7 @@ if (siteHeader) {
   let lastScrollY = window.scrollY;
 
   const heroSection = document.querySelector('#MainContent > .shopify-section:first-child');
-  const isHeroOverlay = () => !!(heroSection && heroSection.querySelector('.video-hero-slider'));
+  const isHeroOverlay = () => document.body.classList.contains('template--index') && !!(heroSection && heroSection.querySelector('.video-hero-slider'));
 
   const setHeaderHeightVar = () => {
     document.documentElement.style.setProperty('--site-header-height', siteHeader.offsetHeight + 'px');

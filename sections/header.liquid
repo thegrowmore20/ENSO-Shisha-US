@@ -554,11 +554,11 @@
     site-header.js). The selector below is mirrored by isHeroOverlay() in
     global.js: keep the two in sync.
   */
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) {
+  body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) {
     padding-top: 0;
   }
 
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header {
+  body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header {
     position: fixed;
     top: var(--announcement-bar-height, 0px);
     left: 0;
@@ -567,27 +567,27 @@
     transition: top 0.2s ease, transform 0.2s ease;
   }
 
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header__bar {
+  body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header__bar {
     position: static;
   }
 
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) {
+  body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) {
     background-color: transparent;
     color: var(--palette-linen);
     box-shadow: none;
   }
 
   /* No inverse logo uploaded: invert the default one. */
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) .site-header__logo .site-logo:not(.site-logo--has-inverse) .site-logo__default {
+  body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) .site-header__logo .site-logo:not(.site-logo--has-inverse) .site-logo__default {
     filter: invert(1);
   }
 
   /* Inverse logo uploaded: swap the two images. */
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) .site-header__logo .site-logo--has-inverse .site-logo__default {
+  body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) .site-header__logo .site-logo--has-inverse .site-logo__default {
     display: none;
   }
 
-  body:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) .site-header__logo .site-logo--has-inverse .site-logo__inverse {
+  body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) .site-header__logo .site-logo--has-inverse .site-logo__inverse {
     display: block;
   }
 {% endstylesheet %}
