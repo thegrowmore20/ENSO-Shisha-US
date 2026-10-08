@@ -143,7 +143,7 @@
         "feature_coal_free": {
           "type": "feature",
           "settings": {
-            "video": "shopify://files/videos/f178638f-881118a7195845919250bb1bb8d1af0a.HD-720p-4.5Mbps-77491262.mp4",
+            "video": "",
             "video_url": "",
             "eyebrow": "Why ENSŌ",
             "heading": "Coal-Free Comfort",
@@ -157,7 +157,7 @@
         "feature_cordless": {
           "type": "feature",
           "settings": {
-            "video": "shopify://files/videos/e0f4f545-ab3eb3b3a4e74553991a274732af51b9.HD-720p-4.5Mbps-77492579.mp4",
+            "video": "",
             "video_url": "",
             "eyebrow": "",
             "heading": "Cordless Convenience",
@@ -171,7 +171,7 @@
         "feature_magnetic": {
           "type": "feature",
           "settings": {
-            "video": "shopify://files/videos/eac855a0-da6f5b12bd4140049bb0a9473dd6d095.HD-720p-4.5Mbps-79892443.mp4",
+            "video": "",
             "video_url": "",
             "eyebrow": "",
             "heading": "Magnetic Simplicity",
@@ -185,7 +185,7 @@
         "feature_clouds": {
           "type": "feature",
           "settings": {
-            "video": "shopify://files/videos/eaa9436a-928b86f2b2c54f409d83866a94dee497.HD-1080p-7.2Mbps-33843180.mp4",
+            "video": "",
             "video_url": "",
             "eyebrow": "",
             "heading": "Formidable Clouds",
