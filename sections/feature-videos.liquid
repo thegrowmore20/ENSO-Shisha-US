@@ -132,8 +132,15 @@
   .feature-row__media {
     grid-area: media;
     aspect-ratio: 4 / 3;
-    border-radius: var(--radius-xl);
+    border: 1px solid rgb(0 0 0 / .08);
+    border-radius: 24px;
+    overflow: hidden;
+    background: #f5f5f4;
     box-shadow: var(--shadow-md);
+  }
+
+  .feature-row__media video {
+    border-radius: 24px;
   }
 
   .feature-row__media--no-shadow {
