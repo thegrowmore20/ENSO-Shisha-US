@@ -6,11 +6,6 @@
 -%}
 
 {% stylesheet %}
-.shopify-section .video-hero-slider {
-  min-height: 0;
-  overflow: visible;
-}
-
 .enso-hero {
   position: relative;
   overflow: hidden;
@@ -132,8 +127,7 @@
 }
 {% endstylesheet %}
 
-<div class="video-hero-slider">
-  <div class="enso-hero">
+<div class="enso-hero">
     {%- if section.settings.video != blank -%}
       <video
         class="enso-hero__video"
@@ -174,7 +168,6 @@
       </div>
     </div>
   </div>
-</div>
 
 {% schema %}
 {
