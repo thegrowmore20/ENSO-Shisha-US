@@ -41,6 +41,17 @@
   </a>
 
   <h3 class="acc-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+  <div class="acc-card__rating"
+    aria-label="Rated {{ product.metafields.loox.avg_rating | default: '0' }} out of 5 based on {{ product.metafields.loox.num_reviews | default: '0' }} reviews">
+    <div class="loox-rating"
+      data-pattern="[rating] ([count])"
+      data-show-empty-stars="true"
+      data-id="{{ product.id }}"
+      data-rating="{{ product.metafields.loox.avg_rating | default: '0' }}"
+      data-raters="{{ product.metafields.loox.num_reviews | default: '0' }}"
+      data-floating-product-reviews-enabled="true">
+    </div>
+  </div>
   <p class="acc-card__desc">{{ description }}</p>
 
   <div class="acc-card__foot">
