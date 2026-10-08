@@ -226,7 +226,7 @@
         "products_limit": 8,
         "cta_label": "View all accessories",
         "cta_link": "/collections/accesories",
-        "padding_top": 72,
+        "padding_top": 40,
         "padding_bottom": 40,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 24

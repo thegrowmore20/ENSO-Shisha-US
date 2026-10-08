@@ -293,26 +293,90 @@
     .acc-card { flex: 0 0 72vw; }
     .acc-arrow { display: none; }
   }
+
+  /* Centered add-to-cart toast */
+  .acc-cart-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.92);
+    background: #000;
+    color: #fff;
+    padding: 16px 28px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+
+  .acc-cart-toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 {% endstylesheet %}
 
 {% javascript %}
   (function () {
-    const section = document.currentScript.closest('.shopify-section') ||
-                    document.querySelector('[data-section-id]');
+    const section = document.currentScript.closest('.shopify-section');
     const trackEl = section && section.querySelector('.acc-track');
     const prevBtn = section && section.querySelector('.acc-arrow--l');
     const nextBtn = section && section.querySelector('.acc-arrow--r');
 
-    if (!trackEl) return;
-
-    function cardWidth() {
-      const card = trackEl.querySelector('.acc-card');
-      if (!card) return 0;
-      return card.getBoundingClientRect().width + 20;
+    if (trackEl) {
+      const cardWidth = () => {
+        const card = trackEl.querySelector('.acc-card');
+        return card ? card.getBoundingClientRect().width + 20 : 0;
+      };
+      if (prevBtn) prevBtn.addEventListener('click', () => trackEl.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+      if (nextBtn) nextBtn.addEventListener('click', () => trackEl.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
     }
 
-    if (prevBtn) prevBtn.addEventListener('click', () => trackEl.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
-    if (nextBtn) nextBtn.addEventListener('click', () => trackEl.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
+    function showToast(msg) {
+      let toast = document.getElementById('acc-cart-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'acc-cart-toast';
+        toast.className = 'acc-cart-toast';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.classList.add('is-visible');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => toast.classList.remove('is-visible'), 2800);
+    }
+
+    document.addEventListener('submit', (e) => {
+      const form = e.target.closest('.acc-card__form');
+      if (!form) return;
+      e.preventDefault();
+
+      const btn = form.querySelector('.acc-card__btn[type="submit"]');
+      const variantId = form.querySelector('input[name="id"]')?.value;
+      const productTitle = form.closest('.acc-card')?.querySelector('.acc-card__title')?.textContent?.trim() ?? '';
+      const originalLabel = btn ? btn.textContent : '';
+
+      if (btn) { btn.textContent = '…'; btn.disabled = true; }
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: JSON.stringify({ id: variantId, quantity: 1 })
+      })
+        .then(r => r.json())
+        .then(data => {
+          showToast((data.product_title || productTitle) + ' added');
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (btn) { btn.textContent = originalLabel; btn.disabled = false; }
+        });
+    });
   })();
 {% endjavascript %}
 
@@ -368,7 +432,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 72
+      "default": 40
     },
     {
       "type": "range",
