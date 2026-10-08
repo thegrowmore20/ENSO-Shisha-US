@@ -391,6 +391,18 @@
         .then(data => {
           showToast((data.product_title || productTitle) + ' added');
           document.dispatchEvent(new CustomEvent('cart:updated'));
+          fetch('/cart.js')
+            .then(r => r.json())
+            .then(cart => {
+              if (typeof updateCartItemCounts === 'function') {
+                updateCartItemCounts(cart.item_count);
+              } else {
+                document.querySelectorAll('.cart-count').forEach(el => {
+                  el.textContent = cart.item_count;
+                  el.hidden = cart.item_count === 0;
+                });
+              }
+            });
         })
         .catch(() => {})
         .finally(() => {
