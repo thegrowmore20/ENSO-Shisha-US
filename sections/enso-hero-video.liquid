@@ -3,8 +3,6 @@
   assign subline = section.settings.subline
   assign cta_label = section.settings.cta_label
   assign cta_link = section.settings.cta_link
-  assign margin_top = section.settings.margin_top
-  assign margin_bottom = section.settings.margin_bottom
 -%}
 
 {% stylesheet %}
@@ -23,6 +21,12 @@
   opacity: .94;
 }
 
+.enso-hero__placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .enso-hero::after {
   content: '';
   position: absolute;
@@ -39,12 +43,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0 40px 56px;
+  padding-bottom: 56px;
+  z-index: 1;
+}
+
+.enso-hero__copy-inner {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  z-index: 1;
 }
 
 .enso-hero__text {
@@ -99,7 +106,10 @@
   }
 
   .enso-hero__copy {
-    padding: 0 16px 28px;
+    padding-bottom: 28px;
+  }
+
+  .enso-hero__copy-inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
@@ -117,11 +127,7 @@
 }
 {% endstylesheet %}
 
-<div
-  id="shopify-section-{{ section.id }}"
-  class="video-hero-slider"
-  style="margin-top: {{ margin_top }}px; margin-bottom: {{ margin_bottom }}px;"
->
+<div class="video-hero-slider">
   <div class="enso-hero">
     {%- if section.settings.video != blank -%}
       <video
@@ -145,18 +151,22 @@
     {%- endif -%}
 
     <div class="enso-hero__copy">
-      <div class="enso-hero__text">
-        {%- if heading != blank -%}
-          <h2 class="enso-hero__heading">{{ heading }}</h2>
-        {%- endif -%}
-        {%- if subline != blank -%}
-          <p class="enso-hero__subline">{{ subline }}</p>
-        {%- endif -%}
-      </div>
+      <div class="container">
+        <div class="enso-hero__copy-inner">
+          <div class="enso-hero__text">
+            {%- if heading != blank -%}
+              <h2 class="enso-hero__heading">{{ heading }}</h2>
+            {%- endif -%}
+            {%- if subline != blank -%}
+              <p class="enso-hero__subline">{{ subline }}</p>
+            {%- endif -%}
+          </div>
 
-      {%- if cta_label != blank and cta_link != blank -%}
-        <a href="{{ cta_link }}" class="enso-hero__cta">{{ cta_label }}</a>
-      {%- endif -%}
+          {%- if cta_label != blank and cta_link != blank -%}
+            <a href="{{ cta_link }}" class="enso-hero__cta">{{ cta_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -192,30 +202,6 @@
       "type": "url",
       "id": "cta_link",
       "label": "t:sections.enso_hero_video.settings.cta_link.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "margin_top",
-      "label": "t:sections.enso_hero_video.settings.margin_top.label",
-      "min": 0,
-      "max": 80,
-      "step": 4,
-      "unit": "px",
-      "default": 24
-    },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "label": "t:sections.enso_hero_video.settings.margin_bottom.label",
-      "min": 0,
-      "max": 80,
-      "step": 4,
-      "unit": "px",
-      "default": 24
     }
   ],
   "presets": [
