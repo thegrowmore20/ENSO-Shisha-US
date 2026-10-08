@@ -362,7 +362,6 @@
 
 {% javascript %}
   document.querySelectorAll('.qs__pic--seq').forEach(function(pic) {
-    // Guard: skip if already bound by another section (e.g. diamond-preheat-step)
     if (pic.dataset.bound) return;
     pic.dataset.bound = '1';
 
@@ -371,9 +370,9 @@
     if (!track) return;
 
     function updateDots() {
+      if (!dots.length) return;
       const index = Math.round(track.scrollLeft / track.clientWidth);
       dots.forEach(function(dot, i) { dot.classList.toggle('on', i === index); });
-      // Also sync captions if present (used by diamond-preheat-step)
       pic.querySelectorAll('.qs__caps span').forEach(function(cap, i) {
         cap.classList.toggle('on', i === index);
       });

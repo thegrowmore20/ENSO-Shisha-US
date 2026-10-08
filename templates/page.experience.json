@@ -23,8 +23,9 @@
             "app_url": "/pages/enso-app#diamond",
             "app_reg_url": "/pages/enso-app#diamond-register",
             "app_updates_url": "/pages/enso-app#diamond-updates",
+            "app_fix_url": "",
             "app_recipes_url": "/pages/enso-app#diamond-recipes",
-            "url_1": "",
+            "url_1": "shopify://pages/enso-diamond-quick-start",
             "url_2": "",
             "url_3": "",
             "url_4": "",
@@ -42,6 +43,8 @@
             "description": "The all-in-one electric hookah. Quick start, the full manual, troubleshooting, video guides and support.",
             "app_url": "/pages/enso-app#enso",
             "app_reg_url": "/pages/enso-app#enso-register",
+            "app_updates_url": "",
+            "app_fix_url": "",
             "app_recipes_url": "/pages/enso-app#enso-recipes",
             "url_1": "",
             "url_2": "",
@@ -52,7 +55,10 @@
           }
         }
       },
-      "block_order": ["block_diamond", "block_enso"],
+      "block_order": [
+        "block_diamond",
+        "block_enso"
+      ],
       "settings": {
         "eyebrow": "ENSŌ Experience",
         "heading": "Guides for your ENSŌ",
@@ -104,7 +110,12 @@
           }
         }
       },
-      "block_order": ["feat_warranty", "feat_updates", "feat_trouble", "feat_recipes"],
+      "block_order": [
+        "feat_warranty",
+        "feat_updates",
+        "feat_trouble",
+        "feat_recipes"
+      ],
       "settings": {
         "eyebrow": "The ENSŌ app",
         "heading": "Register, update, fix and create",

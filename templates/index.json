@@ -526,7 +526,11 @@
         "heading": "Follow us on Instagram",
         "handle": "enso.future",
         "cta_label": "@enso.future",
-        "cta_link": "https://instagram.com/enso.future"
+        "cta_link": "https://instagram.com/enso.future",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "journal": {
@@ -590,7 +594,7 @@
         "padding_top": 40,
         "padding_bottom": 80,
         "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
+        "padding_bottom_mobile": 40
       }
     }
   },

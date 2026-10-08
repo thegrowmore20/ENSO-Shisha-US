@@ -53,7 +53,7 @@
             "image_2": "shopify://shop_images/hookah-mount-two-hands.webp",
             "image_3": "shopify://shop_images/on-hookah-front.webp"
           }
-        },
+        }
       },
       "block_order": [
         "step_1",
@@ -69,7 +69,6 @@
         "heading": "Quick start",
         "subheading": "Your first session in five steps.",
         "safety_note": "Keep the battery and its contacts dry.",
-        "hide_footer": true,
         "padding_top": 40,
         "padding_bottom": 0,
         "padding_top_mobile": 24,

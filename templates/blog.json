@@ -11,7 +11,17 @@
   "sections": {
     "blog_journal": {
       "type": "blog-journal",
-      "settings": {}
+      "settings": {
+        "description": "Guides, culture and the ritual around shisha, from the people behind ENSŌ.",
+        "tag_section_heading": "",
+        "tag_section_tag": "",
+        "featured_article": "news/what-is-electric-shisha",
+        "list_heading": "More from the journal",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
