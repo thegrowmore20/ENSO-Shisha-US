@@ -6,6 +6,11 @@
   assign cta_label = section.settings.cta_label
   assign cta_link = section.settings.cta_link
   assign img_alt = img.alt | default: heading | escape
+
+  assign height_desktop = section.settings.height_desktop
+  assign content_max_width = section.settings.content_max_width
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile = section.settings.heading_size_mobile
 -%}
 
 {% style %}
@@ -13,83 +18,102 @@
     padding-top: {{ section.settings.padding_top_mobile }}px;
     padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
   }
+  #shopify-section-{{ section.id }} .enso-exp__item {
+    min-height: 520px;
+  }
+  #shopify-section-{{ section.id }} .enso-exp__copy {
+    max-width: {{ content_max_width }}px;
+  }
+  #shopify-section-{{ section.id }} .enso-exp__heading {
+    font-size: {{ heading_size_mobile }}px;
+  }
   @media screen and (min-width: 750px) {
     #shopify-section-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    {%- if height_desktop == 'small' -%}
+      #shopify-section-{{ section.id }} .enso-exp__item { min-height: 480px; }
+    {%- elsif height_desktop == 'medium' -%}
+      #shopify-section-{{ section.id }} .enso-exp__item { min-height: 600px; }
+    {%- else -%}
+      #shopify-section-{{ section.id }} .enso-exp__item { min-height: min(78vh, 760px); }
+    {%- endif -%}
+    #shopify-section-{{ section.id }} .enso-exp__heading {
+      font-size: {{ heading_size_desktop }}px;
     }
   }
 {% endstyle %}
 
 <section class="enso-exp">
   <div class="container">
-    <div class="enso-exp__item">
-      <div class="enso-exp__media">
-        {%- if img != blank -%}
-          <img
-            class="enso-exp__image"
-            src="{{ img | image_url: width: 2000 }}"
-            srcset="
-              {{ img | image_url: width: 750 }} 750w,
-              {{ img | image_url: width: 1100 }} 1100w,
-              {{ img | image_url: width: 1500 }} 1500w,
-              {{ img | image_url: width: 2000 }} 2000w
-            "
-            sizes="(max-width: 749px) 100vw, 100vw"
-            alt="{{ img_alt }}"
-            width="{{ img.width }}"
-            height="{{ img.height }}"
-            loading="eager"
-            fetchpriority="high"
-          >
-        {%- else -%}
-          <div class="enso-exp__placeholder">
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-exp__placeholder-svg' }}
-          </div>
-        {%- endif -%}
-        <div class="enso-exp__overlay"></div>
-      </div>
-
-      <div class="enso-exp__content">
-        <div class="enso-exp__content-inner">
-          {%- if eyebrow != blank -%}
-            <p class="eyebrow enso-exp__eyebrow">{{ eyebrow }}</p>
-          {%- endif -%}
-          {%- if heading != blank -%}
-            <h2 class="enso-exp__heading">{{ heading }}</h2>
-          {%- endif -%}
-          {%- if body_text != blank -%}
-            <p class="enso-exp__text">{{ body_text }}</p>
-          {%- endif -%}
-          <div class="enso-exp__chips">
-            <span class="enso-exp__chip">Quick start</span>
-            <span class="enso-exp__chip">Full manual</span>
-            <span class="enso-exp__chip">FAQ</span>
-            <span class="enso-exp__chip">Warranty</span>
-            <span class="enso-exp__chip">Firmware app</span>
-          </div>
-          {%- if cta_label != blank -%}
-            <a class="enso-exp__btn" href="{{ cta_link | default: '#' }}">
-              {{- cta_label }} &rarr;
-            </a>
-          {%- endif -%}
+    <a class="enso-exp__item" href="{{ cta_link | default: '#' }}">
+      {%- if img != blank -%}
+        <img
+          class="enso-exp__image"
+          src="{{ img | image_url: width: 2000 }}"
+          srcset="
+            {{ img | image_url: width: 750 }} 750w,
+            {{ img | image_url: width: 1100 }} 1100w,
+            {{ img | image_url: width: 1500 }} 1500w,
+            {{ img | image_url: width: 2000 }} 2000w
+          "
+          sizes="(max-width: 749px) 100vw, 100vw"
+          alt="{{ img_alt }}"
+          width="{{ img.width }}"
+          height="{{ img.height }}"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        <div class="enso-exp__placeholder">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-exp__placeholder-svg' }}
         </div>
+      {%- endif -%}
+
+      <div class="enso-exp__copy">
+        {%- if eyebrow != blank -%}
+          <p class="eyebrow enso-exp__eyebrow">{{ eyebrow }}</p>
+        {%- endif -%}
+        {%- if heading != blank -%}
+          <h2 class="enso-exp__heading">{{ heading }}</h2>
+        {%- endif -%}
+        {%- if body_text != blank -%}
+          <p class="enso-exp__text">{{ body_text }}</p>
+        {%- endif -%}
+        <div class="enso-exp__chips">
+          <a class="enso-exp__chip" href="{{ section.settings.chip_1_url | default: '/pages/experience#enso' }}">Quick start</a>
+          <a class="enso-exp__chip" href="{{ section.settings.chip_2_url | default: '/pages/experience#enso' }}">Full manual</a>
+          <a class="enso-exp__chip" href="{{ section.settings.chip_3_url | default: '/pages/faq' }}">FAQ</a>
+          <a class="enso-exp__chip" href="{{ section.settings.chip_4_url | default: '/pages/warranty' }}">Warranty</a>
+          <a class="enso-exp__chip" href="{{ section.settings.chip_5_url | default: '/pages/experience#enso' }}">Firmware app</a>
+        </div>
+        {%- if cta_label != blank -%}
+          <span class="enso-exp__btn">{{ cta_label }} <i>&rarr;</i></span>
+        {%- endif -%}
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
 {% stylesheet %}
   .enso-exp__item {
     position: relative;
+    display: flex;
+    align-items: flex-end;
     border-radius: 28px;
     overflow: hidden;
-    min-height: 540px;
+    background: #07080a;
+    color: #fff;
+    text-decoration: none;
+    transition: none;
   }
 
-  .enso-exp__media {
+  .enso-exp__item::after {
+    content: "";
     position: absolute;
     inset: 0;
+    background: linear-gradient(90deg, rgb(7 8 10 / .78) 0%, rgb(7 8 10 / .35) 55%, rgb(7 8 10 / 0) 100%);
   }
 
   .enso-exp__image {
@@ -99,32 +123,22 @@
     height: 100%;
     object-fit: cover;
     object-position: 62% 45%;
-    filter: brightness(0.62);
+    transition: transform 1.4s cubic-bezier(.2,.8,.2,1);
   }
 
-  .enso-exp__overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(90deg, rgb(0 0 0 / .55) 0%, rgb(0 0 0 / .3) 50%, rgb(0 0 0 / 0) 75%);
+  .enso-exp__item:hover .enso-exp__image {
+    transform: scale(1.04);
   }
 
-  .enso-exp__content {
+  .enso-exp__copy {
     position: relative;
-    z-index: 2;
-    min-height: 540px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 56px 48px;
-  }
-
-  .enso-exp__content-inner {
-    max-width: 440px;
+    z-index: 1;
+    padding: 64px 40px;
+    margin-left: max(0px, calc((100% - 1520px) / 2));
   }
 
   .enso-exp__eyebrow {
-    color: rgb(255 255 255 / .75);
+    color: rgb(255 255 255 / .7);
     margin: 0 0 16px;
     font-size: 12px;
     letter-spacing: 0.14em;
@@ -132,62 +146,66 @@
   }
 
   .enso-exp__heading {
-    margin: 0 0 20px;
-    font-size: 40px;
+    margin: 0 0 12px;
     line-height: 1.1;
     color: #fff;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.01em;
   }
 
   .enso-exp__text {
     color: rgb(255 255 255 / .85);
     font-size: 15px;
     line-height: 1.6;
-    margin: 0 0 28px;
+    margin: 0 0 20px;
   }
 
   .enso-exp__chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 32px;
+    margin-bottom: 26px;
   }
 
   .enso-exp__chip {
     display: inline-block;
-    border: 1px solid rgb(255 255 255 / .55);
-    color: rgb(255 255 255 / .9);
+    border: 1px solid rgb(255 255 255 / .45);
+    color: #fff;
     border-radius: 999px;
-    padding: 6px 14px;
+    padding: 6px 12px;
     font-size: 13px;
     line-height: 1;
     white-space: nowrap;
+    text-decoration: none;
   }
 
   .enso-exp__btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     background: #fff;
     color: #000;
     border-radius: 999px;
-    padding: 16px 28px;
-    font-size: 14px;
+    padding: 16px 26px;
+    font-size: 15px;
     font-weight: var(--font-weight-bold);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: opacity 0.2s;
   }
 
-  .enso-exp__btn:hover {
-    opacity: 0.88;
+  .enso-exp__btn i {
+    font-style: normal;
+    transition: transform 0.35s;
+  }
+
+  .enso-exp__item:hover .enso-exp__btn i {
+    transform: translateX(6px);
   }
 
   .enso-exp__placeholder {
     width: 100%;
-    height: 100%;
-    min-height: 540px;
+    min-height: 520px;
     background: rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
@@ -202,29 +220,18 @@
   @media screen and (max-width: 749px) {
     .enso-exp__item {
       border-radius: 22px;
-      min-height: 520px;
     }
 
-    .enso-exp__image {
-      object-position: 38% 50%;
+    .enso-exp__item::after {
+      background: linear-gradient(180deg, rgb(7 8 10 / 0) 0%, rgb(7 8 10 / .85) 60%);
     }
 
-    .enso-exp__overlay {
-      background: linear-gradient(0deg, rgb(0 0 0 / .7) 0%, rgb(0 0 0 / .35) 60%, rgb(0 0 0 / 0) 85%);
-    }
-
-    .enso-exp__content {
-      min-height: 520px;
+    .enso-exp__copy {
       padding: 28px 20px;
-      justify-content: flex-end;
     }
 
-    .enso-exp__content-inner {
-      max-width: none;
-    }
-
-    .enso-exp__heading {
-      font-size: 28px;
+    .enso-exp__text {
+      display: none;
     }
 
     .enso-exp__chips {
@@ -271,6 +278,80 @@
       "type": "url",
       "id": "cta_link",
       "label": "t:sections.enso_experience.settings.cta_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.enso_experience.settings.header_layout.content"
+    },
+    {
+      "type": "select",
+      "id": "height_desktop",
+      "label": "t:sections.enso_experience.settings.height_desktop.label",
+      "options": [
+        { "value": "small", "label": "t:sections.enso_experience.settings.height_desktop.options.small" },
+        { "value": "medium", "label": "t:sections.enso_experience.settings.height_desktop.options.medium" },
+        { "value": "large", "label": "t:sections.enso_experience.settings.height_desktop.options.large" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "t:sections.enso_experience.settings.content_max_width.label",
+      "min": 320,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 540
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "t:sections.enso_experience.settings.heading_size_desktop.label",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "t:sections.enso_experience.settings.heading_size_mobile.label",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Chip links"
+    },
+    {
+      "type": "url",
+      "id": "chip_1_url",
+      "label": "Quick start URL"
+    },
+    {
+      "type": "url",
+      "id": "chip_2_url",
+      "label": "Full manual URL"
+    },
+    {
+      "type": "url",
+      "id": "chip_3_url",
+      "label": "FAQ URL"
+    },
+    {
+      "type": "url",
+      "id": "chip_4_url",
+      "label": "Warranty URL"
+    },
+    {
+      "type": "url",
+      "id": "chip_5_url",
+      "label": "Firmware app URL"
     },
     {
       "type": "header",

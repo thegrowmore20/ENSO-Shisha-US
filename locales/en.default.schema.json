@@ -1452,7 +1452,19 @@
         "heading": { "label": "Heading" },
         "text": { "label": "Body text" },
         "cta_label": { "label": "Button label" },
-        "cta_link": { "label": "Button link" }
+        "cta_link": { "label": "Button link" },
+        "header_layout": { "content": "Layout" },
+        "height_desktop": {
+          "label": "Desktop height",
+          "options": {
+            "small": "Small (480px)",
+            "medium": "Medium (600px)",
+            "large": "Large (fluid)"
+          }
+        },
+        "content_max_width": { "label": "Content max width" },
+        "heading_size_desktop": { "label": "Heading size — desktop" },
+        "heading_size_mobile": { "label": "Heading size — mobile" }
       },
       "presets": {
         "name": "ENSŌ Experience"
