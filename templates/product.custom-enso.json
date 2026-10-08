@@ -32,22 +32,13 @@
         "title": {
           "type": "title",
           "settings": {
-            "heading_size": 36
+            "heading_size": 28
           }
         },
         "text_headline": {
           "type": "text",
           "settings": {
             "content": "{{ product.metafields.custom.headline | metafield_tag }}",
-            "alignment": "left",
-            "text_size": "medium",
-            "show_icon": false
-          }
-        },
-        "text_hook": {
-          "type": "text",
-          "settings": {
-            "content": "{{ product.metafields.custom.hook_text | metafield_tag }}",
             "alignment": "left",
             "text_size": "medium",
             "show_icon": false
@@ -147,7 +138,6 @@
         "stock_badge",
         "title",
         "text_headline",
-        "text_hook",
         "tags",
         "variant_picker",
         "variant_note",

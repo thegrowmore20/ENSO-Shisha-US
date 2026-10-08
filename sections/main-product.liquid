@@ -846,8 +846,11 @@
   .product-main__type { opacity: 0.7; }
 
   .product-main__title {
-    margin: var(--space-3) 0 0;
-    line-height: 1.15;
+    margin: 0;
+    line-height: 1.21;
+    font-family: var(--font-accent);
+    font-weight: var(--font-weight-heavy);
+    letter-spacing: -0.025em;
   }
 
   .product-main__description {
@@ -861,7 +864,7 @@
     gap: var(--space-2);
     flex-wrap: wrap;
   }
-  .price__current { color: var(--color-accent); font-size: 20px; }
+  .price__current { color: var(--color-text); font-size: 28px; font-family: var(--font-accent); font-weight: var(--font-weight-bold); }
   /* .price--on-sale .price__current--sale { color: #c0392b; } */
   .price__compare-at { opacity: 0.6; }
   .price__sold-out { opacity: 0.6; }
@@ -1185,21 +1188,22 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
   }
   .product-trust__item {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
     font-size: 13px;
-    line-height: 1.45;
-    color: rgb(0 0 0 / .72);
+    line-height: 1.4;
   }
-  .product-trust__item b { color: var(--color-text); display: block; }
-  .product-trust__item span { display: block; }
-  .product-trust__icon { width: 22px; height: 22px; color: var(--color-text); flex: none; }
+  .product-trust__item b { color: var(--color-text); display: block; font-weight: 600; }
+  .product-trust__item span { display: block; color: rgb(0 0 0 / .6); }
+  .product-trust__icon { width: 20px; height: 20px; color: var(--color-text); flex: none; margin-bottom: 2px; }
 
   /* ---------- Specs inline (2-col bullets) ---------- */
   .product-facts {
