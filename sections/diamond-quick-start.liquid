@@ -75,16 +75,16 @@
             <div class="qs__pic qs__pic--seq">
               <div class="qs__track" aria-label="{{ block.settings.heading }} — step images">
                 {%- if block.settings.image_1 != blank -%}
-                  {{- block.settings.image_1 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                  {{- block.settings.image_1 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
                 {%- endif -%}
                 {%- if block.settings.image_2 != blank -%}
-                  {{- block.settings.image_2 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                  {{- block.settings.image_2 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
                 {%- endif -%}
                 {%- if block.settings.image_3 != blank -%}
-                  {{- block.settings.image_3 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                  {{- block.settings.image_3 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
                 {%- endif -%}
                 {%- if block.settings.image_4 != blank -%}
-                  {{- block.settings.image_4 | image_url: width: 680 | image_tag: loading: 'lazy', widths: '400, 680', sizes: '(min-width: 990px) 380px, 100vw', alt: block.settings.heading -}}
+                  {{- block.settings.image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
                 {%- endif -%}
               </div>
               <div class="qs__dots" aria-hidden="true">
@@ -249,14 +249,15 @@
     position: absolute;
     inset: 0;
     display: flex;
+    gap: 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     cursor: grab;
     user-select: none;
+    -webkit-user-select: none;
   }
   .qs__track::-webkit-scrollbar { display: none; }
-  .qs__track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
   .qs__track img {
     flex: 0 0 100%;
     width: 100%;
@@ -316,14 +317,19 @@
   /* Back link */
   .cl-back {
     padding: 0 0 8px;
-    font-size: 14px;
   }
   .cl-back a {
-    color: rgba(0,0,0,.6);
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
     text-decoration: none;
-    font-weight: var(--font-weight-medium);
+    border-bottom: 2px solid var(--palette-sand, #c8943a);
+    padding-bottom: 2px;
   }
-  .cl-back a:hover { color: var(--color-text); }
+  .cl-back a:hover { border-bottom-color: var(--color-text); }
 
   /* Mobile */
   @media screen and (max-width: 749px) {
@@ -364,36 +370,33 @@
       });
     });
 
-    // Mouse drag support
+    // Mouse / trackpad drag — keep scroll-snap active; just move scrollLeft directly
+    let dragging = false;
     let startX = 0;
     let startScroll = 0;
-    let dragging = false;
 
     track.addEventListener('mousedown', function(e) {
       dragging = true;
       startX = e.clientX;
       startScroll = track.scrollLeft;
-      track.classList.add('is-dragging');
+      track.style.cursor = 'grabbing';
       e.preventDefault();
     });
 
     window.addEventListener('mousemove', function(e) {
       if (!dragging) return;
-      const dx = e.clientX - startX;
-      track.scrollLeft = startScroll - dx;
+      track.scrollLeft = startScroll - (e.clientX - startX);
     });
 
     window.addEventListener('mouseup', function() {
       if (!dragging) return;
       dragging = false;
-      track.classList.remove('is-dragging');
-      // Re-enable scroll-snap and snap to nearest slide
+      track.style.cursor = '';
       const index = Math.round(track.scrollLeft / track.clientWidth);
       track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
       updateDots();
     });
 
-    // Prevent image drag interference
     track.querySelectorAll('img').forEach(function(img) {
       img.addEventListener('dragstart', function(e) { e.preventDefault(); });
     });
