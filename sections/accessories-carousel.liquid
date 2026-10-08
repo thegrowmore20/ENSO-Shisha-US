@@ -229,6 +229,22 @@
   }
 
   /* CTA buttons */
+  /* Loading spinner inside the button */
+  .acc-btn-spinner {
+    display: block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: accSpin 0.65s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes accSpin {
+    to { transform: rotate(360deg); }
+  }
+
   .acc-card__form { margin: 0; }
 
   .acc-card__btn {
@@ -358,9 +374,13 @@
       const btn = form.querySelector('.acc-card__btn[type="submit"]');
       const variantId = form.querySelector('input[name="id"]')?.value;
       const productTitle = form.closest('.acc-card')?.querySelector('.acc-card__title')?.textContent?.trim() ?? '';
-      const originalLabel = btn ? btn.textContent : '';
+      const originalLabel = btn ? btn.innerHTML : '';
 
-      if (btn) { btn.textContent = '…'; btn.disabled = true; }
+      if (btn) {
+        btn.style.width = btn.offsetWidth + 'px';
+        btn.innerHTML = '<span class="acc-btn-spinner"></span>';
+        btn.disabled = true;
+      }
 
       fetch('/cart/add.js', {
         method: 'POST',
@@ -374,7 +394,11 @@
         })
         .catch(() => {})
         .finally(() => {
-          if (btn) { btn.textContent = originalLabel; btn.disabled = false; }
+          if (btn) {
+            btn.style.width = '';
+            btn.innerHTML = originalLabel;
+            btn.disabled = false;
+          }
         });
     });
   })();
