@@ -178,6 +178,86 @@
         "padding_bottom_mobile": 24
       }
     },
+    "why_enso": {
+      "type": "feature-videos",
+      "blocks": {
+        "feature_coal_free": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/Thermocap.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Coal-Free Comfort",
+            "text": "<p>No charcoal means no toxic carbon monoxide and none of the harmful chemicals that come with an open flame. Just clean, controlled heat — and a session that tastes like what you actually put in it.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "left",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature_cordless": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/battery_114b6808-804c-468b-a49f-af2bd90d1dc9.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Cordless Convenience",
+            "text": "<p>A swap-out battery keeps the session going, and the whole system is built to travel. No outlet, no setup, no infrastructure — the ritual goes where you go.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "right",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature_magnetic": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/Mag_anim_home.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Magnetic Simplicity",
+            "text": "<p>Magnetically attachable mouthpieces snap into place and lift right off — so sharing, switching and cleaning take seconds instead of minutes.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "left",
+            "text_vertical_position": "center"
+          }
+        },
+        "feature_clouds": {
+          "type": "feature",
+          "settings": {
+            "video": "shopify://files/videos/Xray_mobile.webm",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "Formidable Clouds",
+            "text": "<p>ENSŌ's custom heating algorithm holds temperature precisely where it needs to be, drawing out dense, consistent clouds from the first draw to the last.</p>",
+            "cta_label": "",
+            "cta_link": "",
+            "text_position": "right",
+            "text_vertical_position": "center"
+          }
+        }
+      },
+      "block_order": [
+        "feature_coal_free",
+        "feature_cordless",
+        "feature_magnetic",
+        "feature_clouds"
+      ],
+      "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "anchor_id": "whyenso",
+        "eyebrow": "Why ENSŌ",
+        "heading": "Built around the ritual",
+        "width": "page",
+        "show_media_shadow": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
     "enso_witb": {
       "type": "enso-witb",
       "blocks": {
@@ -405,86 +485,6 @@
         "padding_bottom_mobile": 24
       }
     },
-    "why_enso": {
-      "type": "feature-videos",
-      "blocks": {
-        "feature_coal_free": {
-          "type": "feature",
-          "settings": {
-            "video": "shopify://files/videos/Thermocap.webm",
-            "video_url": "",
-            "eyebrow": "",
-            "heading": "Coal-Free Comfort",
-            "text": "<p>No charcoal means no toxic carbon monoxide and none of the harmful chemicals that come with an open flame. Just clean, controlled heat — and a session that tastes like what you actually put in it.</p>",
-            "cta_label": "",
-            "cta_link": "",
-            "text_position": "left",
-            "text_vertical_position": "center"
-          }
-        },
-        "feature_cordless": {
-          "type": "feature",
-          "settings": {
-            "video": "shopify://files/videos/battery_114b6808-804c-468b-a49f-af2bd90d1dc9.webm",
-            "video_url": "",
-            "eyebrow": "",
-            "heading": "Cordless Convenience",
-            "text": "<p>A swap-out battery keeps the session going, and the whole system is built to travel. No outlet, no setup, no infrastructure — the ritual goes where you go.</p>",
-            "cta_label": "",
-            "cta_link": "",
-            "text_position": "right",
-            "text_vertical_position": "center"
-          }
-        },
-        "feature_magnetic": {
-          "type": "feature",
-          "settings": {
-            "video": "shopify://files/videos/Mag_anim_home.webm",
-            "video_url": "",
-            "eyebrow": "",
-            "heading": "Magnetic Simplicity",
-            "text": "<p>Magnetically attachable mouthpieces snap into place and lift right off — so sharing, switching and cleaning take seconds instead of minutes.</p>",
-            "cta_label": "",
-            "cta_link": "",
-            "text_position": "left",
-            "text_vertical_position": "center"
-          }
-        },
-        "feature_clouds": {
-          "type": "feature",
-          "settings": {
-            "video": "shopify://files/videos/Xray_mobile.webm",
-            "video_url": "",
-            "eyebrow": "",
-            "heading": "Formidable Clouds",
-            "text": "<p>ENSŌ's custom heating algorithm holds temperature precisely where it needs to be, drawing out dense, consistent clouds from the first draw to the last.</p>",
-            "cta_label": "",
-            "cta_link": "",
-            "text_position": "right",
-            "text_vertical_position": "center"
-          }
-        }
-      },
-      "block_order": [
-        "feature_coal_free",
-        "feature_cordless",
-        "feature_magnetic",
-        "feature_clouds"
-      ],
-      "settings": {
-        "color_background": "{{ settings.color_palette.background }}",
-        "color_text": "{{ settings.color_palette.foreground }}",
-        "anchor_id": "whyenso",
-        "eyebrow": "Why ENSŌ",
-        "heading": "Built around the ritual",
-        "width": "page",
-        "show_media_shadow": false,
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
-      }
-    },
     "shop_accessories": {
       "type": "accessories-carousel",
       "settings": {
@@ -524,8 +524,8 @@
         "height_mobile": "custom",
         "height_mobile_custom": 520,
         "content_alignment": "left",
-        "content_vertical_alignment": "center",
-        "content_width_desktop": 560,
+        "content_vertical_alignment": "bottom",
+        "content_width_desktop": 480,
         "content_width_tablet": 480,
         "content_width_mobile": 0,
         "use_gradient": true,
@@ -649,8 +649,8 @@
   "order": [
     "enso_hero",
     "main",
-    "enso_witb",
     "why_enso",
+    "enso_witb",
     "shop_accessories",
     "guide_banner",
     "enso_awards_section",
