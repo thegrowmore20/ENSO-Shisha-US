@@ -35,6 +35,7 @@
 <section
   class="enso-witb"
   id="shopify-section-{{ sid }}"
+  data-sid="{{ sid }}"
   style="
     --witb-pt: {{ st.padding_top }}px;
     --witb-pb: {{ st.padding_bottom }}px;
@@ -454,9 +455,10 @@
 
 {% javascript %}
 (function () {
-  var sid = '{{ sid }}';
-  var sectionEl = document.getElementById('shopify-section-' + sid);
+  /* Liquid is NOT processed in {% javascript %} blocks — read sid from data attribute */
+  var sectionEl = document.querySelector('.enso-witb[data-sid]');
   if (!sectionEl) return;
+  var sid = sectionEl.dataset.sid;
 
   var sheet   = document.getElementById('WitbSheet-' + sid);
   var shX     = document.getElementById('WitbSheetX-' + sid);
@@ -493,7 +495,7 @@
 
     /* images */
     shGal.innerHTML = '';
-    var imgs = tpl.querySelectorAll('img');
+    var imgs = tpl.content.querySelectorAll('img');
     imgs.forEach(function (img) {
       var el = document.createElement('img');
       el.src = img.src; el.alt = img.alt;
