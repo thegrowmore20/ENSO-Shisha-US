@@ -22,7 +22,15 @@
       <h1>Diamond manual</h1>
       <p>From the box to your first cup, and everything after. Read it in order the first time, then search or jump to what you need.</p>
     </div>
-    <img src="{{ 'dm-m-hero-front-start.jpg' | file_url }}" alt="Diamond, the screen reading Start Pre-heat">
+    {%- if section.settings.hero_image != blank -%}
+      {{- section.settings.hero_image | image_url: width: 800 | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: section.settings.hero_image.alt | default: 'Diamond, the screen reading Start Pre-heat',
+          width: section.settings.hero_image.width,
+          height: section.settings.hero_image.height
+      -}}
+    {%- endif -%}
   </section>
   <label class="search search--top"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="mn-q" type="search" placeholder="Search the manual: battery, plate, clean…" aria-label="Search the manual"><small id="mn-n"></small></label>
   <section class="bs" id="safety" aria-labelledby="bs-h"><h2 id="bs-h">Before you start</h2><div class="slider tslider slider--care" style="--n:3"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Keep the contacts dry</b><p>The contacts sit at the bottom of the battery bay and on the end of the battery. They never get wet.</p></figcaption><div class="ts__pic ts__pic--img"><img src="{{ 'dm-s-before-contacts.jpg' | file_url }}" alt="" loading="lazy"><span class="mk mk--info mk--c" style="left:32.7%;top:22%"><i></i><span>USB-C port</span></span><span class="mk mk--warn mk--c" style="left:50.0%;top:79%"><i></i><span>Contacts: keep dry</span></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Keep the battery dry</b><p>The battery never goes under water. Everything else rinses from the top, with the battery fitted.</p></figcaption><div class="ts__pic ts__pic--img"><img src="{{ 'dm-s-battery-dry.jpg' | file_url }}" alt="" loading="lazy"></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Let the battery cool before charging</b><p>After a session the battery is warm. Give it time to cool, then plug it in.</p></figcaption><div class="ts__pic ts__pic--img"><img src="{{ 'dm-s-before-charge.jpg' | file_url }}" alt="" loading="lazy"></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
@@ -54,6 +62,19 @@
 {
   "name": "Diamond Manual",
   "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
     {
       "type": "range",
       "id": "padding_top",
