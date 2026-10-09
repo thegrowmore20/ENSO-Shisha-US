@@ -17,7 +17,7 @@
         "height_mobile": "custom",
         "height_mobile_custom": 260,
         "content_alignment": "left",
-        "content_vertical_alignment": "bottom",
+        "content_vertical_alignment": "top",
         "overlay_color": "#000000",
         "overlay_opacity": 40,
         "use_gradient": true,
