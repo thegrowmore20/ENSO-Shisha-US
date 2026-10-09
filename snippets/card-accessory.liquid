@@ -40,6 +40,10 @@
     assign _has_diamond = true
     assign _has_enso    = true
   endif
+  if product.tags contains 'mixed'
+    assign _has_diamond = true
+    assign _has_enso    = true
+  endif
   if _has_diamond and _has_enso
     assign _dev_val = 'both'
   elsif _has_diamond
