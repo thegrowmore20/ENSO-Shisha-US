@@ -447,6 +447,31 @@ h6, .h6 {
 }
 @keyframes product-spin { to { transform: rotate(360deg); } }
 
+/* Global ATC toast — centered on screen, used by all popups and page ATC actions */
+.atc-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  z-index: 10000;
+  pointer-events: none;
+  background: #111;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 14px 28px;
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.atc-toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
 /* Global AJAX ATC loading state — add .is-loading to any .btn during fetch */
 .btn.is-loading {
   position: relative;

@@ -14,8 +14,7 @@
       <template
         id="witb-tpl-{{ block.id }}"
         data-title="{{ prod.title | escape }}"
-        data-lead="{{ prod.metafields.custom.lead | default: '' | escape }}"
-        data-fits="{{ b.fits_label | default: st.default_fits_label | escape }}"
+        data-fits="{{ prod.metafields.custom.compatiblity_with | default: b.fits_label | default: st.default_fits_label | escape }}"
         data-price="{{ av_variant.price | money }}"
         data-available="{{ prod.available }}"
         data-vid="{{ av_variant.id | default: prod.variants.first.id }}"
@@ -24,15 +23,14 @@
         {%- for img in prod.images limit: 3 -%}
           <img src="{{ img | image_url: width: 900 }}" alt="{{ img.alt | default: prod.title | escape }}">
         {%- endfor -%}
+        <div class="witb-d-headline">{{ prod.metafields.custom.headline | metafield_tag }}</div>
         <div class="witb-d-what">
-          {%- if prod.metafields.custom.what_it_is != blank -%}
-            {{ prod.metafields.custom.what_it_is | metafield_tag }}
+          {%- if prod.metafields.custom.short_description != blank -%}
+            {{ prod.metafields.custom.short_description | metafield_tag }}
           {%- else -%}
             <p>{{ prod.description | strip_html | truncatewords: 60 }}</p>
           {%- endif -%}
         </div>
-        <div class="witb-d-why">{{ prod.metafields.custom.why | metafield_tag }}</div>
-        <div class="witb-d-how">{{ prod.metafields.custom.how_to_use | metafield_tag }}</div>
         <div class="witb-d-variants">
           {%- for v in prod.variants -%}
             <span data-vid="{{ v.id }}" data-price="{{ v.price | money }}" data-available="{{ v.available }}">{{ v.title | escape }}</span>
@@ -178,7 +176,7 @@
 </section>
 
 <!-- Cart-add toast notification -->
-<div class="witb-toast" id="WitbToast-{{ sid }}" aria-live="polite" aria-atomic="true"></div>
+<div class="atc-toast" id="WitbToast-{{ sid }}" aria-live="polite" aria-atomic="true"></div>
 
 <!-- Product sheet overlay -->
 <div
@@ -201,13 +199,8 @@
       <div class="witb-sheet__body" id="WitbSheetBody-{{ sid }}">
         <span class="witb-sheet__fits" id="WitbSheetFits-{{ sid }}"></span>
         <h2 class="witb-sheet__title" id="WitbSheetTitle-{{ sid }}"></h2>
-        <p class="witb-sheet__lead" id="WitbSheetLead-{{ sid }}" hidden></p>
-        <h3 class="witb-sheet__h3 witb-sheet__h3--what">{{ 'witb.what_it_is' | t | default: 'What it is' }}</h3>
+        <div class="witb-sheet__lead" id="WitbSheetLead-{{ sid }}" hidden></div>
         <div class="witb-sheet__what" id="WitbSheetWhat-{{ sid }}"></div>
-        <h3 class="witb-sheet__h3 witb-sheet__h3--why">{{ 'witb.why' | t | default: 'Why' }}</h3>
-        <div id="WitbSheetWhy-{{ sid }}"></div>
-        <h3 class="witb-sheet__h3 witb-sheet__h3--how">{{ 'witb.how' | t | default: 'How to use it' }}</h3>
-        <div id="WitbSheetHow-{{ sid }}"></div>
         <div class="witb-sheet__vars" id="WitbSheetVars-{{ sid }}"></div>
         <div class="witb-sheet__buy">
           <span class="witb-sheet__price" id="WitbSheetPrice-{{ sid }}"></span>
@@ -444,18 +437,8 @@
   margin: 0 0 18px; font-size: 17px; line-height: 26px;
   color: rgb(0 0 0 / .78);
 }
-.witb-sheet__h3 { font: 800 15px/22px var(--font-accent); margin: 16px 0 2px; }
-.witb-sheet__what,
-.witb-sheet__body div { color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
-.witb-sheet__what p,
-.witb-sheet__body div p { margin: 0 0 8px; color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
-.witb-sheet__body p { margin: 0 0 8px; color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
-.witb-sheet__h3--what,
-.witb-sheet__h3--why,
-.witb-sheet__h3--how { display: none; }
-.witb-sheet__body.has-what .witb-sheet__h3--what { display: block; }
-.witb-sheet__body.has-why  .witb-sheet__h3--why  { display: block; }
-.witb-sheet__body.has-how  .witb-sheet__h3--how  { display: block; }
+.witb-sheet__what { color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
+.witb-sheet__what p { margin: 0 0 8px; color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
 .witb-sheet__buy {
   display: flex; align-items: center; gap: 18px;
   margin-top: 22px; padding-top: 22px;
@@ -501,19 +484,7 @@
 .witb-sheet__full:hover { opacity: .7; }
 
 /* Cart-add toast */
-.witb-toast {
-  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(16px);
-  z-index: 500; pointer-events: none;
-  background: #111; color: #fff;
-  font: 600 14px/1 var(--font-heading);
-  padding: 14px 24px; border-radius: 999px;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity .25s, transform .25s;
-}
-.witb-toast.is-on {
-  opacity: 1; transform: translateX(-50%) translateY(0);
-}
+/* Toast uses global .atc-toast from base.css */
 {% endstyle %}
 
 {% javascript %}
@@ -534,8 +505,6 @@
   var shTitle = document.getElementById('WitbSheetTitle-' + sid);
   var shLead  = document.getElementById('WitbSheetLead-' + sid);
   var shWhat  = document.getElementById('WitbSheetWhat-' + sid);
-  var shWhy   = document.getElementById('WitbSheetWhy-' + sid);
-  var shHow   = document.getElementById('WitbSheetHow-' + sid);
   var shBody   = document.getElementById('WitbSheetBody-' + sid);
   var shVars   = document.getElementById('WitbSheetVars-' + sid);
   var shPrice  = document.getElementById('WitbSheetPrice-' + sid);
@@ -603,27 +572,17 @@
     /* text */
     shFits.textContent  = d.fits  || '';
     shTitle.textContent = d.title || '';
-    shLead.textContent  = d.lead  || '';
 
-    var whatEl = tpl.content.querySelector('.witb-d-what');
-    var whyEl  = tpl.content.querySelector('.witb-d-why');
-    var howEl  = tpl.content.querySelector('.witb-d-how');
+    var headlineEl = tpl.content.querySelector('.witb-d-headline');
+    var whatEl     = tpl.content.querySelector('.witb-d-what');
+    shLead.innerHTML = headlineEl ? headlineEl.innerHTML : '';
+    shLead.hidden    = !headlineEl || headlineEl.textContent.trim() === '';
     shWhat.innerHTML = whatEl ? whatEl.innerHTML : '';
-    shWhy.innerHTML  = whyEl  ? whyEl.innerHTML  : '';
-    shHow.innerHTML  = howEl  ? howEl.innerHTML  : '';
-
-    var hasWhat = shWhat.textContent.trim() !== '';
-    var hasWhy  = whyEl ? whyEl.textContent.trim()  !== '' : false;
-    var hasHow  = howEl ? howEl.textContent.trim()  !== '' : false;
 
     if (shBody) {
-      shBody.classList.toggle('has-what', hasWhat);
-      shBody.classList.toggle('has-why',  hasWhy);
-      shBody.classList.toggle('has-how',  hasHow);
+      shBody.classList.toggle('has-what', shWhat.textContent.trim() !== '');
     }
 
-    /* lead — hide element when empty to collapse its space */
-    shLead.hidden = !d.lead;
     shUrl.href = d.url || '#';
 
     /* variant pills */
