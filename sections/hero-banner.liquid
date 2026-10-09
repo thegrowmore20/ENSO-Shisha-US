@@ -3,7 +3,7 @@
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
 
   assign has_image = false
-  if section.settings.image != blank or section.settings.image_mobile != blank
+  if section.settings.image != blank or section.settings.image_mobile != blank or section.settings.image_file != blank
     assign has_image = true
   endif
 
@@ -105,6 +105,14 @@
           alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
           width="{{ section.settings.image.width }}"
           height="{{ section.settings.image.height }}"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- elsif section.settings.image_file != blank -%}
+        <img
+          class="banner__image banner__image--desktop"
+          src="{{ section.settings.image_file | file_url }}"
+          alt="{{ section.settings.heading | escape }}"
           loading="eager"
           fetchpriority="high"
         >
@@ -446,6 +454,12 @@
       "type": "image_picker",
       "id": "image",
       "label": "Desktop image"
+    },
+    {
+      "type": "text",
+      "id": "image_file",
+      "label": "Desktop image (Shopify Files filename)",
+      "info": "Filename only, e.g. acc-hero.webp. Used when no image picker image is set."
     },
     {
       "type": "image_picker",

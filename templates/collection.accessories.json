@@ -21,7 +21,8 @@
         "overlay_color": "#000000",
         "overlay_opacity": 40,
         "use_gradient": true,
-        "gradient_direction": "180"
+        "gradient_direction": "180",
+        "image_file": "acc-hero.webp"
       }
     },
     "acc_shop": {
