@@ -130,11 +130,13 @@
     background: linear-gradient(90deg, rgb(0 0 0 / .72) 0%, rgb(0 0 0 / .35) 45%, rgb(0 0 0 / 0) 70%);
   }
 
-  /* Text block — bottom-left */
+  /* Text block — pinned to bottom-left of card */
   .pack-blend__copy {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     z-index: 2;
-    padding: 64px 40px;
+    padding: 0 40px 48px;
     max-width: 60ch;
   }
 
@@ -187,7 +189,7 @@
     }
 
     .pack-blend__copy {
-      padding: 28px 20px;
+      padding: 0 20px 32px;
       max-width: none;
     }
 
