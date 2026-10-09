@@ -65,45 +65,6 @@
   {%- endif -%}
 </section>
 
-<div class="acc-qv" id="AccQuickView-{{ section.id }}" role="dialog" aria-modal="true" aria-label="{{ 'products.product.quick_view' | t | default: 'Quick view' }}" hidden>
-  <div class="acc-qv__backdrop"></div>
-  <div class="acc-qv__box">
-    <button class="acc-qv__close" type="button" aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">&#215;</button>
-    <div class="acc-qv__inner">
-
-      <!-- Gallery slider -->
-      <div class="acc-qv__gallery">
-        <div class="acc-qv__gallery-track"></div>
-        <button class="acc-qv__gprev" type="button" aria-label="{{ 'accessibility.previous_slide' | t }}">&#8249;</button>
-        <button class="acc-qv__gnext" type="button" aria-label="{{ 'accessibility.next_slide' | t }}">&#8250;</button>
-        <div class="acc-qv__dots" role="tablist"></div>
-      </div>
-
-      <!-- Body -->
-      <div class="acc-qv__body">
-        <p class="acc-qv__compat"></p>
-        <h3 class="acc-qv__title"></h3>
-        <div class="acc-qv__headline"></div>
-        <div class="acc-qv__shortdesc"></div>
-
-        <div class="acc-qv__foot">
-          <div class="acc-qv__price-row">
-            <span class="acc-qv__price"></span>
-            <form class="acc-qv__form" action="/cart/add" method="post">
-              <input type="hidden" name="id" value="">
-              <input type="hidden" name="quantity" value="1">
-              <button type="submit" class="acc-qv__atc">{{ 'products.product.add_to_cart' | t }}</button>
-            </form>
-          </div>
-          <a class="acc-qv__remind" href="">Remind me when in stock</a>
-          <a class="acc-qv__details" href="">{{ 'products.product.view_full_details' | t | default: 'View full details' }} ›</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 {% stylesheet %}
   .acc-section__head {
     text-align: center;
@@ -349,575 +310,116 @@
     .acc-arrow { display: none; }
   }
 
-  /* ── Quick-view popup ── */
-  .acc-qv {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-  }
-
-  .acc-qv[hidden] { display: none; }
-
-  .acc-qv__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgb(0 0 0 / .45);
-    backdrop-filter: blur(2px);
-  }
-
-  .acc-qv__box {
-    position: relative;
-    background: #fff;
-    border-radius: 24px;
-    width: min(900px, 100%);
-    max-height: 92vh;
-    overflow-y: auto;
-    padding: 32px;
-    box-shadow: 0 24px 80px rgb(0 0 0 / .18);
-    animation: accQvIn .22s ease;
-  }
-
-  @keyframes accQvIn {
-    from { opacity: 0; transform: scale(.96); }
-    to   { opacity: 1; transform: scale(1); }
-  }
-
-  .acc-qv__close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 0;
-    background: #e2e2e2;
-    color: #000;
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    z-index: 1;
-    transition: background 0.15s;
-  }
-
-  .acc-qv__close:hover { background: #d0d0d0; }
-
-  .acc-qv__inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 36px;
-    align-items: start;
-  }
-
-  /* Gallery */
-  .acc-qv__gallery {
-    position: relative;
-    border: 1px solid rgb(0 0 0 / .1);
-    border-radius: 16px;
-    overflow: hidden;
-    aspect-ratio: 1;
-    background: #fff;
-  }
-
-  .acc-qv__gallery-track {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-
-  .acc-qv__slide {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.28s ease;
-    pointer-events: none;
-  }
-
-  .acc-qv__slide.is-active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .acc-qv__slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 6%;
-    display: block;
-  }
-
-  .acc-qv__gprev,
-  .acc-qv__gnext {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgb(0 0 0 / .1);
-    font-size: 22px;
-    line-height: 1;
-    cursor: pointer;
-    z-index: 2;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 2px 8px rgb(0 0 0 / .08);
-    transition: background 0.15s;
-  }
-
-  .acc-qv__gprev:hover,
-  .acc-qv__gnext:hover { background: #fff; }
-
-  .acc-qv__gprev { left: 10px; }
-  .acc-qv__gnext { right: 10px; }
-
-  .acc-qv__gprev[hidden],
-  .acc-qv__gnext[hidden] { display: none; }
-
-  .acc-qv__dots {
-    position: absolute;
-    bottom: 12px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    padding: 0;
-    margin: 0;
-  }
-
-  .acc-qv__dots[hidden] { display: none; }
-
-  .acc-qv__dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgb(0 0 0 / .2);
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-    transition: background 0.2s;
-    flex-shrink: 0;
-  }
-
-  .acc-qv__dot.is-active { background: #000; }
-
-  /* Body */
-  .acc-qv__body {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding-right: 8px;
-  }
-
-  .acc-qv__compat {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgb(0 0 0 / .45);
-    margin: 0;
-  }
-
-  .acc-qv__compat[hidden] { display: none; }
-
-  .acc-qv__title {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    margin: 0;
-    color: #000;
-  }
-
-  .acc-qv__shortdesc {
-    font-size: 15px;
-    color: #000;
-    margin: 0;
-  }
-
-  .acc-qv__shortdesc * { font-size: 15px; color: inherit; }
-  .acc-qv__shortdesc a { color: #000; text-decoration: none; }
-  .acc-qv__shortdesc p { margin: 0; }
-  .acc-qv__shortdesc h3 { font-size: 15px; font-weight: 700; margin: 16px 0 2px; }
-  .acc-qv__shortdesc[hidden] { display: none; }
-
-  .acc-qv__headline {
-    font-size: 17px;
-    line-height: 1.65;
-    color: #000;
-  }
-
-  .acc-qv__headline * { font-size: 17px; color: inherit; }
-  .acc-qv__headline a { color: #000; text-decoration: none; }
-  .acc-qv__headline p { margin: 0 0 8px; }
-  .acc-qv__headline p:last-child { margin-bottom: 0; }
-  .acc-qv__headline[hidden] { display: none; }
-
-  .acc-qv__foot {
-    margin-top: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .acc-qv__price-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    border: 1px solid rgb(0 0 0 / .12);
-    border-radius: 14px;
-    padding: 14px 16px;
-  }
-
-  .acc-qv__price {
-    font-family: var(--font-accent);
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-  }
-
-  .acc-qv__form { margin: 0; flex: 1; }
-
-  .acc-qv__atc {
-    width: 100%;
-    background: #000;
-    color: #fff;
-    border: 0;
-    border-radius: 999px;
-    padding: 14px 20px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .acc-qv__atc:hover:not(:disabled) { opacity: 0.8; }
-
-  .acc-qv__atc--oos {
-    background: #888;
-    cursor: default;
-  }
-
-  .acc-qv__remind {
-    font-size: 13px;
-    font-weight: 500;
-    color: #000;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    align-self: flex-start;
-  }
-
-  .acc-qv__remind[hidden] { display: none; }
-
-  .acc-qv__details {
-    font-size: 14px;
-    font-weight: 500;
-    color: #000;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    align-self: flex-start;
-  }
-
-  @media screen and (max-width: 749px) {
-    .acc-qv__box { padding: 20px 16px; }
-    .acc-qv__inner { grid-template-columns: 1fr; gap: 20px; }
-    .acc-qv__title { font-size: 22px; }
-    .acc-qv__gallery { max-height: 72vw; }
-  }
-
-  /* Toast uses global .atc-toast from base.css */
 {% endstylesheet %}
 
 {% javascript %}
-  (function () {
+(function () {
 
-    // ── Toast ──
-    function showToast(msg) {
-      let toast = document.getElementById('acc-cart-toast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'acc-cart-toast';
-        toast.className = 'atc-toast';
-        toast.setAttribute('aria-live', 'polite');
-        toast.setAttribute('aria-atomic', 'true');
-        document.body.appendChild(toast);
-      }
-      toast.textContent = msg;
-      toast.classList.add('is-on');
-      clearTimeout(toast._t);
-      toast._t = setTimeout(() => toast.classList.remove('is-on'), 2800);
+  /* ── Card-level ATC (direct form on the card, not popup) ── */
+  function handleCardAtc(form, productTitle) {
+    var btn = form.querySelector('[type="submit"]');
+    var variantId = form.querySelector('input[name="id"]') && form.querySelector('input[name="id"]').value;
+    var originalLabel = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.style.width = btn.offsetWidth + 'px';
+      btn.innerHTML = '<span class="acc-btn-spinner"></span>';
+      btn.disabled = true;
     }
-
-    // ── Add to cart ──
-    function handleAddToCart(form, qv, productTitle) {
-      const btn = form.querySelector('[type="submit"]');
-      const variantId = form.querySelector('input[name="id"]')?.value;
-      const originalLabel = btn ? btn.innerHTML : '';
-      if (btn) {
-        btn.style.width = btn.offsetWidth + 'px';
-        btn.innerHTML = '<span class="acc-btn-spinner"></span>';
-        btn.disabled = true;
-      }
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-        body: JSON.stringify({ id: variantId, quantity: 1 })
-      })
-        .then(r => r.json())
-        .then(data => {
-          showToast((data.product_title || productTitle) + ' added');
-          if (qv) { qv.hidden = true; document.body.style.overflow = ''; }
-          document.dispatchEvent(new CustomEvent('cart:updated'));
-          fetch('/cart.js').then(r => r.json()).then(cart => {
-            if (typeof updateCartItemCounts === 'function') {
-              updateCartItemCounts(cart.item_count);
-            } else {
-              document.querySelectorAll('.cart-count').forEach(el => {
-                el.textContent = cart.item_count;
-                el.hidden = cart.item_count === 0;
-              });
-            }
-          });
-        })
-        .catch(() => {})
-        .finally(() => {
-          if (btn) { btn.style.width = ''; btn.innerHTML = originalLabel; btn.disabled = false; }
-        });
-    }
-
-    // ── Initialise each carousel instance ──
-    function initCarousel(trackEl) {
-      const shopifySection = trackEl.closest('.shopify-section');
-      const prevBtn = shopifySection && shopifySection.querySelector('.acc-arrow--l');
-      const nextBtn = shopifySection && shopifySection.querySelector('.acc-arrow--r');
-      const qv      = shopifySection && shopifySection.querySelector('.acc-qv');
-
-      // Arrows
-      const cardWidth = () => {
-        const card = trackEl.querySelector('.acc-card');
-        return card ? card.getBoundingClientRect().width + 20 : 0;
-      };
-      if (prevBtn) prevBtn.addEventListener('click', () => trackEl.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
-      if (nextBtn) nextBtn.addEventListener('click', () => trackEl.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
-
-      // ── Gallery builder (clears old images first = no stale flash) ──
-      function buildGallery(images, defaultAlt) {
-        const track   = qv.querySelector('.acc-qv__gallery-track');
-        const dotsEl  = qv.querySelector('.acc-qv__dots');
-        const gPrev   = qv.querySelector('.acc-qv__gprev');
-        const gNext   = qv.querySelector('.acc-qv__gnext');
-
-        // Clear immediately so old image never shows
-        track.innerHTML  = '';
-        dotsEl.innerHTML = '';
-
-        let current = 0;
-
-        images.forEach((src, i) => {
-          const slide = document.createElement('div');
-          slide.className = 'acc-qv__slide';
-          const img = document.createElement('img');
-          img.src = src;
-          img.alt = defaultAlt;
-          img.width = 600;
-          img.height = 600;
-          img.loading = i === 0 ? 'eager' : 'lazy';
-          slide.appendChild(img);
-          track.appendChild(slide);
-
-          if (images.length > 1) {
-            const dot = document.createElement('button');
-            dot.className = 'acc-qv__dot';
-            dot.type = 'button';
-            dot.setAttribute('aria-label', 'Image ' + (i + 1) + ' of ' + images.length);
-            dot.dataset.idx = i;
-            dotsEl.appendChild(dot);
-          }
-        });
-
-        const allSlides = () => track.querySelectorAll('.acc-qv__slide');
-        const allDots   = () => dotsEl.querySelectorAll('.acc-qv__dot');
-
-        function goTo(idx) {
-          const slides = allSlides();
-          const dots   = allDots();
-          if (!slides.length) return;
-          slides[current].classList.remove('is-active');
-          dots[current]?.classList.remove('is-active');
-          current = ((idx % images.length) + images.length) % images.length;
-          slides[current].classList.add('is-active');
-          dots[current]?.classList.add('is-active');
-        }
-
-        goTo(0);
-
-        dotsEl.onclick = (e) => {
-          const dot = e.target.closest('.acc-qv__dot');
-          if (dot) goTo(parseInt(dot.dataset.idx));
-        };
-
-        gPrev.onclick = () => goTo(current - 1);
-        gNext.onclick = () => goTo(current + 1);
-
-        const multi = images.length > 1;
-        gPrev.hidden = !multi;
-        gNext.hidden = !multi;
-        dotsEl.hidden = !multi;
-      }
-
-      // ── Check if rich-text HTML is empty ──
-      function isEmptyHtml(html) {
-        if (!html) return true;
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-        return tmp.textContent.trim() === '';
-      }
-
-      // ── Populate & open popup ──
-      function openQV(card) {
-        if (!qv) return;
-        const d = card.dataset;
-
-        // Gallery — clear old content before showing popup
-        const images = (d.popupImages || '').split(';').filter(Boolean);
-        buildGallery(images.length ? images : [''], d.popupImgAlt || d.popupTitle || '');
-
-        // Compatibility With (above title)
-        const compatEl = qv.querySelector('.acc-qv__compat');
-        if (d.popupCompat) {
-          compatEl.textContent = d.popupCompat;
-          compatEl.hidden = false;
-        } else {
-          compatEl.textContent = '';
-          compatEl.hidden = true;
-        }
-
-        // Title
-        qv.querySelector('.acc-qv__title').textContent = d.popupTitle || '';
-
-        // Short Description
-        const shortdescEl = qv.querySelector('.acc-qv__shortdesc');
-        if (!isEmptyHtml(d.popupShortdesc)) {
-          shortdescEl.innerHTML = d.popupShortdesc;
-          shortdescEl.hidden = false;
-        } else {
-          shortdescEl.innerHTML = '';
-          shortdescEl.hidden = true;
-        }
-
-        // Headline
-        const headlineEl = qv.querySelector('.acc-qv__headline');
-        if (!isEmptyHtml(d.popupHeadline)) {
-          headlineEl.innerHTML = d.popupHeadline;
-          headlineEl.hidden = false;
-        } else {
-          headlineEl.innerHTML = '';
-          headlineEl.hidden = true;
-        }
-
-        // Price
-        qv.querySelector('.acc-qv__price').textContent = d.popupPrice || '';
-
-        // Variant id
-        qv.querySelector('.acc-qv__form input[name="id"]').value = d.popupVariant || '';
-
-        // ATC / OOS state
-        const atcBtn   = qv.querySelector('.acc-qv__atc');
-        const remindEl = qv.querySelector('.acc-qv__remind');
-        const available = d.popupAvailable !== 'false';
-
-        if (available) {
-          atcBtn.textContent = 'Add to Cart';
-          atcBtn.classList.remove('acc-qv__atc--oos');
-          atcBtn.disabled = false;
-          remindEl.hidden = true;
-        } else {
-          atcBtn.textContent = 'Out of Stock';
-          atcBtn.classList.add('acc-qv__atc--oos');
-          atcBtn.disabled = true;
-          remindEl.href   = d.popupUrl || '';
-          remindEl.hidden = false;
-        }
-
-        // View full details
-        qv.querySelector('.acc-qv__details').href = d.popupUrl || '';
-
-        // Show
-        qv.hidden = false;
-        document.body.style.overflow = 'hidden';
-        qv.querySelector('.acc-qv__close').focus();
-      }
-
-      function closeQV() {
-        if (!qv) return;
-        qv.hidden = true;
-        document.body.style.overflow = '';
-      }
-
-      if (qv) {
-        qv.querySelector('.acc-qv__backdrop').addEventListener('click', closeQV);
-        qv.querySelector('.acc-qv__close').addEventListener('click', closeQV);
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !qv.hidden) closeQV(); });
-
-        qv.querySelector('.acc-qv__form').addEventListener('submit', (e) => {
-          e.preventDefault();
-          const title = qv.querySelector('.acc-qv__title')?.textContent?.trim() || '';
-          handleAddToCart(e.target, qv, title);
-        });
-      }
-
-      // Click on card image or title → open popup
-      trackEl.addEventListener('click', (e) => {
-        const imgLink   = e.target.closest('.acc-card__img');
-        const titleLink = e.target.closest('.acc-card__title a');
-        if (!imgLink && !titleLink) return;
-        const card = e.target.closest('.acc-card[data-popup-title]');
-        if (!card) return;
-        e.preventDefault();
-        openQV(card);
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (window.__showProductToast) window.__showProductToast(data.product_title || productTitle);
+      document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
+      return fetch('/cart.js').then(function (r) { return r.json(); });
+    })
+    .then(function (cart) {
+      document.querySelectorAll('.cart-count').forEach(function (el) {
+        el.textContent = cart.item_count;
+        el.hidden = cart.item_count === 0;
       });
+    })
+    .catch(function () {})
+    .finally(function () {
+      if (btn) { btn.style.width = ''; btn.innerHTML = originalLabel; btn.disabled = false; }
+    });
+  }
 
-      // Card add-to-cart form
-      trackEl.addEventListener('submit', (e) => {
-        const form = e.target.closest('.acc-card__form');
-        if (!form) return;
-        e.preventDefault();
-        const title = form.closest('.acc-card')?.querySelector('.acc-card__title')?.textContent?.trim() || '';
-        handleAddToCart(form, qv, title);
-      });
-    }
+  /* ── Open global popup from card data attributes ── */
+  function openFromCard(card) {
+    var d = card.dataset;
+    var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
+      return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
+    });
+    document.dispatchEvent(new CustomEvent('product:popup', {
+      bubbles: true,
+      detail: {
+        title:     d.popupTitle     || '',
+        fits:      d.popupCompat    || '',
+        price:     d.popupPrice     || '',
+        available: d.popupAvailable !== 'false',
+        vid:       d.popupVariant   || '',
+        url:       d.popupUrl       || '',
+        images:    images,
+        headline:  d.popupHeadline  || '',
+        shortdesc: d.popupShortdesc || '',
+        variants:  []
+      }
+    }));
+  }
 
-    function boot() {
-      document.querySelectorAll('.acc-track').forEach(trackEl => {
-        if (trackEl.dataset.accInit) return;
-        trackEl.dataset.accInit = '1';
-        initCarousel(trackEl);
-      });
-    }
+  /* ── Initialise each carousel instance ── */
+  function initCarousel(trackEl) {
+    var section = trackEl.closest('.shopify-section');
+    var prevBtn = section && section.querySelector('.acc-arrow--l');
+    var nextBtn = section && section.querySelector('.acc-arrow--r');
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', boot);
-    } else {
-      boot();
-    }
+    var cardWidth = function () {
+      var card = trackEl.querySelector('.acc-card');
+      return card ? card.getBoundingClientRect().width + 20 : 0;
+    };
+    if (prevBtn) prevBtn.addEventListener('click', function () { trackEl.scrollBy({ left: -cardWidth(), behavior: 'smooth' }); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { trackEl.scrollBy({ left: cardWidth(), behavior: 'smooth' }); });
 
-  })();
+    /* click image or title → global popup */
+    trackEl.addEventListener('click', function (e) {
+      var imgLink   = e.target.closest('.acc-card__img');
+      var titleLink = e.target.closest('.acc-card__title a');
+      if (!imgLink && !titleLink) return;
+      var card = e.target.closest('.acc-card[data-popup-title]');
+      if (!card) return;
+      e.preventDefault();
+      openFromCard(card);
+    });
+
+    /* card form ATC */
+    trackEl.addEventListener('submit', function (e) {
+      var form = e.target.closest('.acc-card__form');
+      if (!form) return;
+      e.preventDefault();
+      var titleEl = form.closest('.acc-card') && form.closest('.acc-card').querySelector('.acc-card__title');
+      handleCardAtc(form, titleEl ? titleEl.textContent.trim() : '');
+    });
+  }
+
+  function boot() {
+    document.querySelectorAll('.acc-track').forEach(function (trackEl) {
+      if (trackEl.dataset.accInit) return;
+      trackEl.dataset.accInit = '1';
+      initCarousel(trackEl);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();
 {% endjavascript %}
 
 {% schema %}

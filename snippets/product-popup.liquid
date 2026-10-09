@@ -1,0 +1,414 @@
+{% doc %}
+  Global product quick-view popup — rendered once from layout/theme.liquid.
+  Open by dispatching: document.dispatchEvent(new CustomEvent('product:popup', { detail: {...} }))
+
+  detail shape:
+    title       {string}   Product title
+    fits        {string}   Compatibility label
+    price       {string}   Formatted price
+    available   {boolean}  Whether variant is purchasable
+    vid         {string}   Variant ID to add
+    url         {string}   Product URL
+    images      {Array}    [{src, alt}, ...]
+    headline    {string}   HTML (custom.headline rich-text metafield)
+    shortdesc   {string}   HTML (custom.short_description rich-text metafield)
+    variants    {Array}    [{vid, price, available, title}] — omit or [] for single-variant
+{% enddoc %}
+
+<div class="product-popup" id="ProductPopup" role="dialog" aria-modal="true" aria-labelledby="ProductPopupTitle" hidden>
+  <div class="product-popup__backdrop"></div>
+  <div class="product-popup__box">
+    <button class="product-popup__x" id="ProductPopupClose" type="button" aria-label="{{ 'accessibility.close' | t }}">&#215;</button>
+    <div class="product-popup__in">
+
+      <div class="product-popup__media">
+        <div class="product-popup__gal" id="ProductPopupGal"></div>
+        <button class="product-popup__arr product-popup__arr--l" id="ProductPopupPrev" type="button" aria-label="{{ 'accessibility.previous_slide' | t }}">&#8249;</button>
+        <button class="product-popup__arr product-popup__arr--r" id="ProductPopupNext" type="button" aria-label="{{ 'accessibility.next_slide' | t }}">&#8250;</button>
+        <div class="product-popup__dots" id="ProductPopupDots"></div>
+      </div>
+
+      <div class="product-popup__body">
+        <span class="product-popup__fits" id="ProductPopupFits"></span>
+        <h2 class="product-popup__title" id="ProductPopupTitle"></h2>
+        <div class="product-popup__headline" id="ProductPopupHeadline"></div>
+        <div class="product-popup__desc" id="ProductPopupDesc"></div>
+        <div class="product-popup__vars" id="ProductPopupVars"></div>
+        <div class="product-popup__buy">
+          <span class="product-popup__price" id="ProductPopupPrice"></span>
+          <button class="product-popup__atc btn btn--primary" id="ProductPopupAtc" type="button" data-vid="">
+            {{- 'products.product.add_to_cart' | t -}}
+          </button>
+        </div>
+        <a class="product-popup__remind" id="ProductPopupRemind" href="#" hidden>
+          {{- 'witb.remind_me' | t | default: 'Remind me when in stock' -}}
+        </a>
+        <a class="product-popup__full" id="ProductPopupUrl" href="#">
+          {{- 'witb.view_full_details' | t | default: 'View full details ›' -}}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── Product popup ── */
+.product-popup {
+  position: fixed; inset: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.product-popup[hidden] { display: none !important; }
+.product-popup.is-on   { opacity: 1; pointer-events: auto; }
+
+.product-popup__backdrop {
+  position: absolute; inset: 0; background: rgb(0 0 0 / .4);
+}
+.product-popup__box {
+  position: relative; background: #fff; border-radius: 28px;
+  width: min(960px, 100%); max-height: 88vh; overflow-y: auto;
+  transform: translateY(24px);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.product-popup.is-on .product-popup__box { transform: none; }
+
+.product-popup__x {
+  position: absolute; right: 20px; top: 20px; z-index: 2;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 0; background: rgb(0 0 0 / .06); font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.product-popup__in {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 36px; padding: 28px 40px 40px; align-items: start;
+}
+@media screen and (max-width: 680px) {
+  .product-popup__in { grid-template-columns: 1fr; padding: 20px 20px 32px; gap: 20px; }
+}
+
+/* Gallery */
+.product-popup__media {
+  aspect-ratio: 1; background: #fff;
+  border: 1px solid rgb(0 0 0 / .1); border-radius: 22px;
+  overflow: hidden; position: relative;
+}
+.product-popup__gal { position: relative; width: 100%; height: 100%; }
+.product-popup__gal img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; padding: 10%; box-sizing: border-box;
+  opacity: 0; transition: opacity .2s;
+}
+.product-popup__gal img.is-on { opacity: 1; }
+.product-popup__dots {
+  position: absolute; left: 0; right: 0; bottom: 12px;
+  display: flex; justify-content: center; gap: 6px;
+}
+.product-popup__dots[hidden] { display: none; }
+.product-popup__dots i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgb(0 0 0 / .2); display: block;
+}
+.product-popup__dots i.is-on { background: #000; }
+.product-popup__arr {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; border-radius: 50%; border: 0;
+  background: rgb(255 255 255 / .9); box-shadow: 0 2px 10px rgb(0 0 0 / .15);
+  cursor: pointer; font: 400 20px/1 sans-serif;
+  display: flex; align-items: center; justify-content: center;
+}
+.product-popup__arr[hidden] { display: none; }
+.product-popup__arr--l { left: 10px; }
+.product-popup__arr--r { right: 10px; }
+
+/* Body */
+.product-popup__body { display: flex; flex-direction: column; gap: 12px; }
+
+.product-popup__fits {
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  font-weight: 700; color: #666; display: block;
+}
+.product-popup__fits:empty { display: none; }
+
+.product-popup__title {
+  font-family: var(--font-accent); font-weight: 700;
+  font-size: 26px; line-height: 1.15; letter-spacing: -.01em;
+  margin: 0; color: #000;
+}
+
+.product-popup__headline { font-size: 17px; line-height: 1.65; color: #000; margin: 0; }
+.product-popup__headline * { font-size: 17px; color: inherit; }
+.product-popup__headline a { color: #000; text-decoration: none; }
+.product-popup__headline p { margin: 0 0 8px; }
+.product-popup__headline p:last-child { margin-bottom: 0; }
+.product-popup__headline:empty { display: none; }
+
+.product-popup__desc { color: #000; font-size: 15px; line-height: 1.55; margin: 0; }
+.product-popup__desc * { font-size: 15px; color: inherit; }
+.product-popup__desc a { color: #000; text-decoration: none; }
+.product-popup__desc p { margin: 0; }
+.product-popup__desc h3 { font-size: 15px; font-weight: 700; margin: 16px 0 2px; }
+.product-popup__desc:empty { display: none; }
+
+.product-popup__vars { display: flex; flex-wrap: wrap; gap: 8px; }
+.product-popup__vars:empty { display: none; }
+.product-popup__vpill {
+  padding: 7px 16px; border-radius: 50px;
+  border: 1.5px solid rgb(0 0 0 / .2); background: #fff;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s; line-height: 1.2;
+}
+.product-popup__vpill:hover { border-color: rgb(0 0 0 / .6); }
+.product-popup__vpill.is-active { background: #000; color: #fff; border-color: #000; }
+.product-popup__vpill.is-oos { opacity: .4; }
+
+.product-popup__buy {
+  display: flex; align-items: center; gap: 16px;
+  border: 1px solid rgb(0 0 0 / .12); border-radius: 14px; padding: 14px 16px;
+}
+.product-popup__price {
+  font-family: var(--font-accent); font-size: 22px; font-weight: 800;
+  letter-spacing: -0.01em; white-space: nowrap; flex-shrink: 0;
+}
+.product-popup__atc {
+  padding: 14px 24px !important; font-size: 13px !important;
+  height: auto !important; flex: 1; border-radius: 999px !important;
+}
+.product-popup__atc:disabled {
+  background: #888 !important; border-color: #888 !important;
+  color: #fff !important; opacity: 1; cursor: default;
+}
+
+.product-popup__remind {
+  font-size: 14px; font-weight: 600; color: #000;
+  text-decoration: underline; text-underline-offset: 3px;
+  align-self: flex-start;
+}
+.product-popup__remind[hidden] { display: none; }
+.product-popup__remind:hover { opacity: .7; }
+
+.product-popup__full {
+  display: inline-block; font-weight: 600; font-size: 14px; color: #000;
+  text-decoration: underline; text-underline-offset: 3px;
+  align-self: flex-start;
+}
+.product-popup__full:hover { opacity: .7; }
+</style>
+
+<script>
+(function () {
+  var popup  = document.getElementById('ProductPopup');
+  if (!popup) return;
+
+  var elClose  = document.getElementById('ProductPopupClose');
+  var elBack   = popup.querySelector('.product-popup__backdrop');
+  var elGal    = document.getElementById('ProductPopupGal');
+  var elPrev   = document.getElementById('ProductPopupPrev');
+  var elNext   = document.getElementById('ProductPopupNext');
+  var elDots   = document.getElementById('ProductPopupDots');
+  var elFits   = document.getElementById('ProductPopupFits');
+  var elTitle  = document.getElementById('ProductPopupTitle');
+  var elHead   = document.getElementById('ProductPopupHeadline');
+  var elDesc   = document.getElementById('ProductPopupDesc');
+  var elVars   = document.getElementById('ProductPopupVars');
+  var elPrice  = document.getElementById('ProductPopupPrice');
+  var elAtc    = document.getElementById('ProductPopupAtc');
+  var elRemind = document.getElementById('ProductPopupRemind');
+  var elUrl    = document.getElementById('ProductPopupUrl');
+
+  var ADD_LABEL  = elAtc.textContent.trim();
+  var lastFocus  = null;
+  var galIdx     = 0;
+  var galLen     = 0;
+  var toastTimer = null;
+
+  /* ── Toast ── */
+  function showToast(title) {
+    var t = document.querySelector('.atc-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.className = 'atc-toast';
+      t.setAttribute('aria-live', 'polite');
+      t.setAttribute('aria-atomic', 'true');
+      document.body.appendChild(t);
+    }
+    t.textContent = (title ? title + ' ' : '') + 'added';
+    t.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('is-on'); }, 3000);
+  }
+  window.__showProductToast = showToast;
+
+  /* ── Gallery ── */
+  function buildGallery(images) {
+    elGal.innerHTML = '';
+    elDots.innerHTML = '';
+    galIdx = 0;
+    galLen = images.length;
+    images.forEach(function (img, i) {
+      var el = document.createElement('img');
+      el.src = img.src; el.alt = img.alt || '';
+      el.loading = i === 0 ? 'eager' : 'lazy';
+      if (i === 0) el.classList.add('is-on');
+      elGal.appendChild(el);
+      if (images.length > 1) {
+        var dot = document.createElement('i');
+        if (i === 0) dot.classList.add('is-on');
+        elDots.appendChild(dot);
+      }
+    });
+    var multi = images.length > 1;
+    elPrev.hidden = !multi;
+    elNext.hidden = !multi;
+    elDots.hidden = !multi;
+  }
+
+  function galGoTo(i) {
+    if (galLen <= 1) return;
+    var imgs = elGal.querySelectorAll('img');
+    var dots = elDots.querySelectorAll('i');
+    i = ((i % galLen) + galLen) % galLen;
+    if (imgs[galIdx]) imgs[galIdx].classList.remove('is-on');
+    if (dots[galIdx]) dots[galIdx].classList.remove('is-on');
+    galIdx = i;
+    if (imgs[galIdx]) imgs[galIdx].classList.add('is-on');
+    if (dots[galIdx]) dots[galIdx].classList.add('is-on');
+  }
+
+  /* ── Variant state ── */
+  function setVariant(vid, price, available) {
+    var avail = (available !== false && available !== 'false');
+    elPrice.textContent = price || '';
+    elAtc.dataset.vid   = vid   || '';
+    elAtc.disabled      = !avail;
+    elAtc.textContent   = avail ? ADD_LABEL : 'Out of stock';
+    elRemind.hidden     = avail;
+  }
+
+  /* ── Open ── */
+  function openPopup(d) {
+    buildGallery(d.images || []);
+    elFits.textContent   = d.fits  || '';
+    elTitle.textContent  = d.title || '';
+    elHead.innerHTML     = d.headline  || '';
+    elDesc.innerHTML     = d.shortdesc || '';
+    elUrl.href           = d.url || '#';
+
+    /* variant pills */
+    elVars.innerHTML = '';
+    var variants = d.variants || [];
+    if (variants.length > 1) {
+      variants.forEach(function (v) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        var isActive = String(v.vid) === String(d.vid);
+        var isOos    = v.available === false || v.available === 'false';
+        btn.className = 'product-popup__vpill'
+          + (isActive ? ' is-active' : '')
+          + (isOos    ? ' is-oos'    : '');
+        btn.dataset.vid       = v.vid;
+        btn.dataset.price     = v.price;
+        btn.dataset.available = v.available;
+        btn.textContent = v.title + ' · ' + v.price;
+        elVars.appendChild(btn);
+      });
+    }
+
+    setVariant(d.vid, d.price, d.available);
+
+    lastFocus = document.activeElement;
+    popup.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        popup.classList.add('is-on');
+        elClose.focus();
+      });
+    });
+  }
+
+  /* ── Close ── */
+  function closePopup() {
+    popup.classList.remove('is-on');
+    setTimeout(function () {
+      popup.hidden = true;
+      document.body.style.overflow = '';
+    }, 280);
+    if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+  }
+
+  /* ── ATC ── */
+  elAtc.addEventListener('click', function () {
+    var vid = elAtc.dataset.vid;
+    if (!vid || elAtc.disabled) return;
+    elAtc.disabled = true;
+    elAtc.classList.add('is-loading');
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ id: parseInt(vid, 10), quantity: 1 })
+    })
+    .then(function (r) {
+      if (!r.ok) return r.json().then(function (e) { throw new Error(e.description || e.message || 'Error'); });
+      return r.json();
+    })
+    .then(function () {
+      return fetch('/cart.js').then(function (r) { return r.json(); });
+    })
+    .then(function (cart) {
+      document.querySelectorAll('.cart-count').forEach(function (el) {
+        el.textContent = cart.item_count;
+        el.hidden = cart.item_count === 0;
+      });
+      return fetch('/?section_id=cart-drawer').then(function (r) { return r.text(); });
+    })
+    .then(function (html) {
+      var tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      var newD = tmp.querySelector('.cart-drawer');
+      var oldD = document.querySelector('.cart-drawer');
+      if (newD && oldD) oldD.innerHTML = newD.innerHTML;
+      if (oldD) oldD.classList.add('cart-drawer--active');
+      document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true }));
+      document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
+    })
+    .then(function () {
+      elAtc.classList.remove('is-loading');
+      showToast(elTitle.textContent.trim());
+      setTimeout(function () { elAtc.disabled = false; }, 400);
+    })
+    .catch(function () {
+      elAtc.classList.remove('is-loading');
+      elAtc.disabled = false;
+    });
+  });
+
+  /* ── Gallery nav ── */
+  elPrev.addEventListener('click', function () { galGoTo(galIdx - 1); });
+  elNext.addEventListener('click', function () { galGoTo(galIdx + 1); });
+
+  /* ── Variant pills ── */
+  elVars.addEventListener('click', function (e) {
+    var btn = e.target.closest('.product-popup__vpill');
+    if (!btn) return;
+    elVars.querySelectorAll('.product-popup__vpill').forEach(function (p) { p.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    setVariant(btn.dataset.vid, btn.dataset.price, btn.dataset.available);
+  });
+
+  /* ── Close handlers ── */
+  elClose.addEventListener('click', closePopup);
+  elBack.addEventListener('click',  closePopup);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !popup.hidden) closePopup();
+  });
+
+  /* ── Listen for open requests from any section ── */
+  document.addEventListener('product:popup', function (e) { openPopup(e.detail); });
+})();
+</script>

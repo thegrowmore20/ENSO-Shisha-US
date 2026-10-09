@@ -175,46 +175,6 @@
   </div>
 </section>
 
-<!-- Cart-add toast notification -->
-<div class="atc-toast" id="WitbToast-{{ sid }}" aria-live="polite" aria-atomic="true"></div>
-
-<!-- Product sheet overlay -->
-<div
-  class="witb-sheet"
-  id="WitbSheet-{{ sid }}"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="WitbSheetTitle-{{ sid }}"
-  hidden
->
-  <div class="witb-sheet__box">
-    <button class="witb-sheet__x" id="WitbSheetX-{{ sid }}" aria-label="{{ 'accessibility.close' | t }}">&#215;</button>
-    <div class="witb-sheet__in">
-      <div class="witb-sheet__media" id="WitbSheetMedia-{{ sid }}" data-n="0">
-        <div class="witb-sheet__gal" id="WitbSheetGal-{{ sid }}"></div>
-        <button class="witb-sheet__arr witb-sheet__arr--l" id="WitbSheetPrev-{{ sid }}" type="button" aria-label="Previous photo">&#8249;</button>
-        <button class="witb-sheet__arr witb-sheet__arr--r" id="WitbSheetNext-{{ sid }}" type="button" aria-label="Next photo">&#8250;</button>
-        <div class="witb-sheet__dots" id="WitbSheetDots-{{ sid }}"></div>
-      </div>
-      <div class="witb-sheet__body" id="WitbSheetBody-{{ sid }}">
-        <span class="witb-sheet__fits" id="WitbSheetFits-{{ sid }}"></span>
-        <h2 class="witb-sheet__title" id="WitbSheetTitle-{{ sid }}"></h2>
-        <div class="witb-sheet__lead" id="WitbSheetLead-{{ sid }}" hidden></div>
-        <div class="witb-sheet__what" id="WitbSheetWhat-{{ sid }}"></div>
-        <div class="witb-sheet__vars" id="WitbSheetVars-{{ sid }}"></div>
-        <div class="witb-sheet__buy">
-          <span class="witb-sheet__price" id="WitbSheetPrice-{{ sid }}"></span>
-          <button class="witb-sheet__atc btn btn--primary" id="WitbSheetAtc-{{ sid }}" type="button" data-vid="">
-            {{- 'products.product.add_to_cart' | t -}}
-          </button>
-        </div>
-        <a class="witb-sheet__remind" id="WitbSheetRemind-{{ sid }}" href="#">{{ 'witb.remind_me' | t | default: 'Remind me when in stock' }}</a>
-        <a class="witb-sheet__full" id="WitbSheetUrl-{{ sid }}" href="#">{{ 'witb.view_full_details' | t | default: 'View full details ›' }}</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 {% style %}
 .enso-witb {
   padding-top: var(--witb-pt-m, 40px);
@@ -351,379 +311,54 @@
 }
 .witb__hint { text-align: center; color: #8a8a8a; font-size: 13px; margin: 14px 0 0; }
 
-/* Sheet */
-.witb-sheet {
-  position: fixed; inset: 0; z-index: 300;
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px;
-  background: rgb(0 0 0 / .4);
-  opacity: 0; pointer-events: none;
-  transition: opacity .25s;
-}
-.witb-sheet[hidden]  { display: none !important; }
-.witb-sheet.is-on    { opacity: 1; pointer-events: auto; }
-.witb-sheet__box {
-  background: #fff;
-  border-radius: 28px;
-  width: min(960px, 100%);
-  max-height: 88vh; overflow: auto;
-  transform: translateY(24px);
-  transition: transform .35s cubic-bezier(.2,.8,.2,1);
-  position: relative;
-}
-.witb-sheet.is-on .witb-sheet__box { transform: none; }
-.witb-sheet__x {
-  position: absolute; right: 20px; top: 20px; z-index: 2;
-  width: 38px; height: 38px; border-radius: 50%;
-  border: 0; background: rgb(0 0 0 / .06); font-size: 22px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.witb-sheet__in {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 36px; padding: 28px 40px 40px; align-items: start;
-}
-@media screen and (max-width: 680px) {
-  .witb-sheet__in { grid-template-columns: 1fr; padding: 20px 20px 32px; gap: 20px; }
-}
-.witb-sheet__media {
-  aspect-ratio: 1; background: #fff;
-  border: 1px solid rgb(0 0 0 / .1); border-radius: 22px;
-  overflow: hidden; position: relative;
-}
-.witb-sheet__gal {
-  display: flex; height: 100%;
-  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
-}
-.witb-sheet__gal::-webkit-scrollbar { display: none; }
-.witb-sheet__gal img {
-  flex: 0 0 100%; width: 100%; height: 100%;
-  object-fit: contain; padding: 10%; box-sizing: border-box;
-  scroll-snap-align: start;
-}
-.witb-sheet__dots {
-  position: absolute; left: 0; right: 0; bottom: 12px;
-  display: flex; justify-content: center; gap: 6px;
-}
-.witb-sheet__dots i { width: 7px; height: 7px; border-radius: 50%; background: rgb(0 0 0 / .2); }
-.witb-sheet__dots i.is-on { background: #000; }
-.witb-sheet__arr {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 36px; height: 36px; border-radius: 50%; border: 0;
-  background: rgb(255 255 255 / .9); box-shadow: 0 2px 10px rgb(0 0 0 / .15);
-  cursor: pointer; font: 400 20px/1 sans-serif;
-  display: flex; align-items: center; justify-content: center;
-}
-.witb-sheet__arr--l { left: 10px; }
-.witb-sheet__arr--r { right: 10px; }
-.witb-sheet__media[data-n="0"] .witb-sheet__arr,
-.witb-sheet__media[data-n="1"] .witb-sheet__arr,
-.witb-sheet__media[data-n="0"] .witb-sheet__dots,
-.witb-sheet__media[data-n="1"] .witb-sheet__dots { display: none; }
-.witb-sheet__body {
-  display: flex; flex-direction: column; gap: 12px;
-}
-.witb-sheet__fits {
-  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-  font-weight: 700; color: #666; display: block;
-}
-.witb-sheet__fits:empty { display: none; }
-.witb-sheet__title {
-  font-family: var(--font-accent);
-  font-weight: 700;
-  font-size: 26px; line-height: 1.15; letter-spacing: -.01em;
-  margin: 0;
-  color: #000;
-}
-.witb-sheet__lead {
-  margin: 0; font-size: 17px; line-height: 1.65;
-  color: #000;
-}
-.witb-sheet__lead * { font-size: 17px; color: inherit; }
-.witb-sheet__lead a { color: #000; text-decoration: none; }
-.witb-sheet__lead p { margin: 0 0 8px; }
-.witb-sheet__lead p:last-child { margin-bottom: 0; }
-.witb-sheet__what { color: #000; font-size: 15px; line-height: 1.55; margin: 0; }
-.witb-sheet__what * { font-size: 15px; color: inherit; }
-.witb-sheet__what a { color: #000; text-decoration: none; }
-.witb-sheet__what p { margin: 0; }
-.witb-sheet__what h3 { font-size: 15px; font-weight: 700; margin: 16px 0 2px; }
-.witb-sheet__buy {
-  display: flex; align-items: center; gap: 16px;
-  border: 1px solid rgb(0 0 0 / .12);
-  border-radius: 14px;
-  padding: 14px 16px;
-}
-.witb-sheet__price { font-family: var(--font-accent); font-size: 22px; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; flex-shrink: 0; }
-.witb-sheet__atc {
-  padding: 14px 24px !important; font-size: 13px !important;
-  height: auto !important; flex: 1;
-  border-radius: 999px !important;
-}
-.witb-sheet__atc:disabled {
-  background: #888 !important; border-color: #888 !important;
-  color: #fff !important; opacity: 1; cursor: default;
-}
-.witb-sheet__remind {
-  display: none;
-  font-size: 14px; font-weight: 600; color: #000;
-  text-decoration: underline; text-underline-offset: 3px;
-  align-self: flex-start;
-}
-.witb-sheet__remind.is-visible { display: block; }
-.witb-sheet__remind:hover { opacity: .7; }
-.witb-sheet__vars {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin: 0;
-}
-.witb-sheet__vars:empty { display: none; }
-.witb-sheet__vpill {
-  padding: 7px 16px; border-radius: 50px;
-  border: 1.5px solid rgb(0 0 0 / .2); background: #fff;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: background .15s, color .15s, border-color .15s;
-  line-height: 1.2;
-}
-.witb-sheet__vpill:hover { border-color: rgb(0 0 0 / .6); }
-.witb-sheet__vpill.is-active { background: #000; color: #fff; border-color: #000; }
-.witb-sheet__vpill.is-oos { opacity: .4; }
-.witb-sheet__full {
-  display: inline-block;
-  font-weight: 600; font-size: 14px; color: #000;
-  text-decoration: underline; text-underline-offset: 3px;
-  align-self: flex-start;
-}
-.witb-sheet__full:hover { opacity: .7; }
-
-/* Cart-add toast */
-/* Toast uses global .atc-toast from base.css */
 {% endstyle %}
 
 {% javascript %}
 (function () {
-  /* Liquid is NOT processed in {% javascript %} blocks — read sid from data attribute */
   var sectionEl = document.querySelector('.enso-witb[data-sid]');
   if (!sectionEl) return;
-  var sid = sectionEl.dataset.sid;
 
-  var sheet   = document.getElementById('WitbSheet-' + sid);
-  var shX     = document.getElementById('WitbSheetX-' + sid);
-  var shGal   = document.getElementById('WitbSheetGal-' + sid);
-  var shDots  = document.getElementById('WitbSheetDots-' + sid);
-  var shMedia = document.getElementById('WitbSheetMedia-' + sid);
-  var shPrev  = document.getElementById('WitbSheetPrev-' + sid);
-  var shNext  = document.getElementById('WitbSheetNext-' + sid);
-  var shFits  = document.getElementById('WitbSheetFits-' + sid);
-  var shTitle = document.getElementById('WitbSheetTitle-' + sid);
-  var shLead  = document.getElementById('WitbSheetLead-' + sid);
-  var shWhat  = document.getElementById('WitbSheetWhat-' + sid);
-  var shBody   = document.getElementById('WitbSheetBody-' + sid);
-  var shVars   = document.getElementById('WitbSheetVars-' + sid);
-  var shPrice  = document.getElementById('WitbSheetPrice-' + sid);
-  var shAtc    = document.getElementById('WitbSheetAtc-' + sid);
-  var shRemind = document.getElementById('WitbSheetRemind-' + sid);
-  var shUrl    = document.getElementById('WitbSheetUrl-' + sid);
-
-  var shToast  = document.getElementById('WitbToast-' + sid);
-  var toastTimer = null;
-
-  function showToast(name) {
-    if (!shToast) return;
-    shToast.textContent = name + ' added';
-    shToast.classList.add('is-on');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () {
-      shToast.classList.remove('is-on');
-    }, 3000);
-  }
-
-  var lastFocus = null;
-  var addLabel  = shAtc ? shAtc.textContent.trim() : 'Add to cart';
-  var oosLabel  = 'Out of stock';
-
-  function setVariant(vid, price, available) {
-    var avail = (available !== 'false' && available !== false);
-    shPrice.textContent = price || '';
-    shAtc.dataset.vid   = vid   || '';
-    shAtc.disabled      = !avail;
-    shAtc.textContent   = avail ? addLabel : oosLabel;
-    if (shRemind) shRemind.classList.toggle('is-visible', !avail);
-  }
-
-  function closeSheet() {
-    if (!sheet) return;
-    sheet.classList.remove('is-on');
-    setTimeout(function () { sheet.hidden = true; }, 280);
-    if (lastFocus) { lastFocus.focus(); lastFocus = null; }
-  }
-
-  function openSheet(tpl) {
-    if (!sheet || !tpl) return;
+  function openFromTemplate(tpl) {
+    if (!tpl) return;
     var d = tpl.dataset;
 
-    /* images */
-    shGal.innerHTML = '';
-    var imgs = tpl.content.querySelectorAll('img');
-    imgs.forEach(function (img) {
-      var el = document.createElement('img');
-      el.src = img.src; el.alt = img.alt;
-      shGal.appendChild(el);
-    });
-    shGal.scrollLeft = 0;
-    var n = imgs.length;
-    shMedia.dataset.n = n;
-
-    /* dots */
-    shDots.innerHTML = '';
-    for (var k = 0; k < n; k++) {
-      var dot = document.createElement('i');
-      if (k === 0) dot.classList.add('is-on');
-      shDots.appendChild(dot);
-    }
-
-    /* text */
-    shFits.textContent  = d.fits  || '';
-    shTitle.textContent = d.title || '';
+    var imgs    = Array.from(tpl.content.querySelectorAll('img'));
+    var images  = imgs.map(function (img) { return { src: img.src, alt: img.alt }; });
 
     var headlineEl = tpl.content.querySelector('.witb-d-headline');
     var whatEl     = tpl.content.querySelector('.witb-d-what');
-    shLead.innerHTML = headlineEl ? headlineEl.innerHTML : '';
-    shLead.hidden    = !headlineEl || headlineEl.textContent.trim() === '';
-    shWhat.innerHTML = whatEl ? whatEl.innerHTML : '';
+    var varEl      = tpl.content.querySelector('.witb-d-variants');
+    var varSpans   = varEl ? Array.from(varEl.querySelectorAll('[data-vid]')) : [];
 
-    if (shBody) {
-      shBody.classList.toggle('has-what', shWhat.textContent.trim() !== '');
-    }
+    var variants = varSpans.length > 1 ? varSpans.map(function (vs) {
+      return {
+        vid:       vs.dataset.vid,
+        price:     vs.dataset.price,
+        available: vs.dataset.available,
+        title:     vs.textContent.trim()
+      };
+    }) : [];
 
-    shUrl.href = d.url || '#';
-
-    /* variant pills */
-    var varEl    = tpl.content.querySelector('.witb-d-variants');
-    var varSpans = varEl ? Array.from(varEl.querySelectorAll('[data-vid]')) : [];
-    if (shVars) shVars.innerHTML = '';
-
-    if (varSpans.length > 1 && shVars) {
-      varSpans.forEach(function (vs, i) {
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.dataset.vid       = vs.dataset.vid;
-        btn.dataset.price     = vs.dataset.price;
-        btn.dataset.available = vs.dataset.available;
-        var isActive = vs.dataset.vid === d.vid;
-        var isOos    = vs.dataset.available === 'false';
-        btn.className = 'witb-sheet__vpill' + (isActive ? ' is-active' : '') + (isOos ? ' is-oos' : '');
-        btn.textContent = vs.textContent + ' · ' + vs.dataset.price;
-        shVars.appendChild(btn);
-      });
-    }
-
-    /* set initial buy-section state from first-available variant */
-    setVariant(d.vid, d.price, d.available);
-
-    lastFocus = document.activeElement;
-    sheet.hidden = false;
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        sheet.classList.add('is-on');
-        shX.focus();
-      });
-    });
+    document.dispatchEvent(new CustomEvent('product:popup', {
+      bubbles: true,
+      detail: {
+        title:     d.title    || '',
+        fits:      d.fits     || '',
+        price:     d.price    || '',
+        available: d.available !== 'false',
+        vid:       d.vid      || '',
+        url:       d.url      || '',
+        images:    images,
+        headline:  headlineEl ? headlineEl.innerHTML : '',
+        shortdesc: whatEl     ? whatEl.innerHTML     : '',
+        variants:  variants
+      }
+    }));
   }
 
-  /* gallery navigation */
-  function galPage() {
-    var w = shGal.clientWidth;
-    return w > 0 ? Math.round(shGal.scrollLeft / w) : 0;
-  }
-  function galGoTo(i) {
-    var n = parseInt(shMedia.dataset.n, 10) || 0;
-    i = Math.max(0, Math.min(n - 1, i));
-    shGal.scrollLeft = i * shGal.clientWidth;
-  }
-  shGal.addEventListener('scroll', function () {
-    var i = galPage();
-    shDots.querySelectorAll('i').forEach(function (d, k) {
-      d.classList.toggle('is-on', k === i);
-    });
-  }, { passive: true });
-  shPrev.addEventListener('click', function () { galGoTo(galPage() - 1); });
-  shNext.addEventListener('click', function () { galGoTo(galPage() + 1); });
-
-  /* variant pill clicks */
-  if (shVars) {
-    shVars.addEventListener('click', function (e) {
-      var btn = e.target.closest('.witb-sheet__vpill');
-      if (!btn) return;
-      shVars.querySelectorAll('.witb-sheet__vpill').forEach(function (p) {
-        p.classList.remove('is-active');
-      });
-      btn.classList.add('is-active');
-      setVariant(btn.dataset.vid, btn.dataset.price, btn.dataset.available);
-    });
-  }
-
-  /* add to cart — full update: count badges + drawer refresh + open drawer */
-  shAtc.addEventListener('click', function () {
-    var vid = shAtc.dataset.vid;
-    if (!vid || shAtc.disabled) return;
-    shAtc.disabled = true;
-    shAtc.classList.add('is-loading');
-
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-      body: JSON.stringify({ id: parseInt(vid, 10), quantity: 1 })
-    })
-    .then(function (r) {
-      if (!r.ok) return r.json().then(function (e) { throw new Error(e.description || e.message || 'Error'); });
-      return r.json();
-    })
-    .then(function () {
-      /* update cart count badge */
-      return fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
-        document.querySelectorAll('.cart-count').forEach(function (el) {
-          el.textContent = cart.item_count;
-          el.hidden = cart.item_count === 0;
-        });
-        /* refresh drawer HTML via Section Rendering API */
-        return fetch('/?section_id=cart-drawer').then(function (r) { return r.text(); }).then(function (html) {
-          var tmp = document.createElement('div');
-          tmp.innerHTML = html;
-          var newDrawer = tmp.querySelector('.cart-drawer');
-          var oldDrawer = document.querySelector('.cart-drawer');
-          if (newDrawer && oldDrawer) oldDrawer.innerHTML = newDrawer.innerHTML;
-          /* open drawer */
-          if (oldDrawer) oldDrawer.classList.add('cart-drawer--active');
-          document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true }));
-          document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
-        });
-      });
-    })
-    .then(function () {
-      shAtc.classList.remove('is-loading');
-      showToast(shTitle.textContent.trim());
-      setTimeout(function () {
-        shAtc.disabled = false;
-      }, 400);
-    })
-    .catch(function () {
-      shAtc.classList.remove('is-loading');
-      shAtc.disabled = false;
-    });
-  });
-
-  /* close */
-  shX.addEventListener('click', closeSheet);
-  sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !sheet.hidden) closeSheet();
-  });
-
-  /* open on click */
   sectionEl.querySelectorAll('[data-witb-id]').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var tpl = document.getElementById('witb-tpl-' + btn.dataset.witbId);
-      if (tpl) openSheet(tpl);
+      openFromTemplate(document.getElementById('witb-tpl-' + btn.dataset.witbId));
     });
   });
 })();
