@@ -33,6 +33,11 @@
         </div>
         <div class="witb-d-why">{{ prod.metafields.custom.why | metafield_tag }}</div>
         <div class="witb-d-how">{{ prod.metafields.custom.how_to_use | metafield_tag }}</div>
+        <div class="witb-d-variants">
+          {%- for v in prod.variants -%}
+            <span data-vid="{{ v.id }}" data-price="{{ v.price | money }}" data-available="{{ v.available }}">{{ v.title | escape }}</span>
+          {%- endfor -%}
+        </div>
       </template>
     {%- endif -%}
   {%- endif -%}
@@ -195,6 +200,7 @@
         <span class="witb-sheet__fits" id="WitbSheetFits-{{ sid }}"></span>
         <h2 class="witb-sheet__title" id="WitbSheetTitle-{{ sid }}"></h2>
         <p class="witb-sheet__lead" id="WitbSheetLead-{{ sid }}"></p>
+        <div class="witb-sheet__vars" id="WitbSheetVars-{{ sid }}"></div>
         <h3 class="witb-sheet__h3">{{ 'witb.what_it_is' | t | default: 'What it is' }}</h3>
         <p id="WitbSheetWhat-{{ sid }}"></p>
         <h3 class="witb-sheet__h3 witb-sheet__h3--why">{{ 'witb.why' | t | default: 'Why' }}</h3>
@@ -462,6 +468,21 @@
 }
 .witb-sheet__remind.is-visible { display: block; }
 .witb-sheet__remind:hover { opacity: .7; }
+.witb-sheet__vars {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 14px 0 0;
+}
+.witb-sheet__vars:empty { margin: 0; }
+.witb-sheet__vpill {
+  padding: 7px 16px; border-radius: 50px;
+  border: 1.5px solid rgb(0 0 0 / .2); background: #fff;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+  line-height: 1.2;
+}
+.witb-sheet__vpill:hover { border-color: rgb(0 0 0 / .6); }
+.witb-sheet__vpill.is-active { background: #000; color: #fff; border-color: #000; }
+.witb-sheet__vpill.is-oos { opacity: .4; }
 .witb-sheet__full {
   display: inline-block; margin-top: 14px;
   font-weight: 600; font-size: 14px; color: #000;
@@ -491,6 +512,7 @@
   var shWhy   = document.getElementById('WitbSheetWhy-' + sid);
   var shHow   = document.getElementById('WitbSheetHow-' + sid);
   var shBody   = document.getElementById('WitbSheetBody-' + sid);
+  var shVars   = document.getElementById('WitbSheetVars-' + sid);
   var shPrice  = document.getElementById('WitbSheetPrice-' + sid);
   var shAtc    = document.getElementById('WitbSheetAtc-' + sid);
   var shRemind = document.getElementById('WitbSheetRemind-' + sid);
@@ -499,6 +521,15 @@
   var lastFocus = null;
   var addLabel  = shAtc ? shAtc.textContent.trim() : 'Add to cart';
   var oosLabel  = 'Out of stock';
+
+  function setVariant(vid, price, available) {
+    var avail = (available !== 'false' && available !== false);
+    shPrice.textContent = price || '';
+    shAtc.dataset.vid   = vid   || '';
+    shAtc.disabled      = !avail;
+    shAtc.textContent   = avail ? addLabel : oosLabel;
+    if (shRemind) shRemind.classList.toggle('is-visible', !avail);
+  }
 
   function closeSheet() {
     if (!sheet) return;
@@ -553,15 +584,30 @@
 
     /* lead — hide element when empty to collapse its space */
     shLead.hidden = !d.lead;
-    shPrice.textContent = d.price || '';
     shUrl.href = d.url || '#';
 
-    var available = d.available !== 'false';
-    shAtc.disabled = !available;
-    shAtc.textContent = available ? addLabel : oosLabel;
-    shAtc.dataset.vid = d.vid || '';
-    /* remind me link — shown only when out of stock */
-    if (shRemind) shRemind.classList.toggle('is-visible', !available);
+    /* variant pills */
+    var varEl    = tpl.content.querySelector('.witb-d-variants');
+    var varSpans = varEl ? Array.from(varEl.querySelectorAll('[data-vid]')) : [];
+    if (shVars) shVars.innerHTML = '';
+
+    if (varSpans.length > 1 && shVars) {
+      varSpans.forEach(function (vs, i) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.vid       = vs.dataset.vid;
+        btn.dataset.price     = vs.dataset.price;
+        btn.dataset.available = vs.dataset.available;
+        var isActive = vs.dataset.vid === d.vid;
+        var isOos    = vs.dataset.available === 'false';
+        btn.className = 'witb-sheet__vpill' + (isActive ? ' is-active' : '') + (isOos ? ' is-oos' : '');
+        btn.textContent = vs.textContent + ' · ' + vs.dataset.price;
+        shVars.appendChild(btn);
+      });
+    }
+
+    /* set initial buy-section state from first-available variant */
+    setVariant(d.vid, d.price, d.available);
 
     lastFocus = document.activeElement;
     sheet.hidden = false;
@@ -591,6 +637,19 @@
   }, { passive: true });
   shPrev.addEventListener('click', function () { galGoTo(galPage() - 1); });
   shNext.addEventListener('click', function () { galGoTo(galPage() + 1); });
+
+  /* variant pill clicks */
+  if (shVars) {
+    shVars.addEventListener('click', function (e) {
+      var btn = e.target.closest('.witb-sheet__vpill');
+      if (!btn) return;
+      shVars.querySelectorAll('.witb-sheet__vpill').forEach(function (p) {
+        p.classList.remove('is-active');
+      });
+      btn.classList.add('is-active');
+      setVariant(btn.dataset.vid, btn.dataset.price, btn.dataset.available);
+    });
+  }
 
   /* add to cart */
   shAtc.addEventListener('click', function () {
