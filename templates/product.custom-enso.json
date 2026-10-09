@@ -172,6 +172,7 @@
         "gallery_layout": "thumbnails_bottom",
         "enable_sticky_info": false,
         "show_info_border": true,
+        "accordion_position": "below_media",
         "padding_top": 80,
         "padding_bottom": 40,
         "padding_top_mobile": 40,

@@ -14,7 +14,7 @@
 {{ 'main-product.css' | asset_url | stylesheet_tag }}
 
 <div
-  class="product-main {{ scheme_class }} product-main--width-{{ section.settings.width }} {% if section.settings.enable_sticky_info %}product-main--sticky{% endif %}"
+  class="product-main {{ scheme_class }} product-main--width-{{ section.settings.width }} {% if section.settings.enable_sticky_info %}product-main--sticky{% endif %}{% if section.settings.accordion_position == 'below_media' %} product-main--acc-below{% endif %}"
   style="
     --product-media-width: {{ section.settings.media_width }}%;
     --product-padding-top: {{ section.settings.padding_top_mobile }}px;
@@ -587,6 +587,14 @@
       gap: var(--space-4);
     }
   }
+
+  /* Accordions below media (product.custom-enso template) */
+  .product-main--acc-below .product-main__inner {
+    grid-template-areas:
+      "media content"
+      "accordions content";
+  }
+  .product-main--acc-below .product-main__media { grid-row: 1; }
 
   @media screen and (min-width: 990px) {
     .product-main--sticky .product-main__media {
@@ -1376,6 +1384,16 @@
       "id": "show_info_border",
       "label": "Show border around product info",
       "default": false
+    },
+    {
+      "type": "select",
+      "id": "accordion_position",
+      "label": "Accordion position",
+      "options": [
+        { "value": "right", "label": "Right column (below product info)" },
+        { "value": "below_media", "label": "Left column (below media gallery)" }
+      ],
+      "default": "right"
     },
     {
       "type": "header",
