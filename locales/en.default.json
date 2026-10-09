@@ -317,8 +317,11 @@
       "label": "Featured"
     },
     "accessories_shop": {
-      "device_nav": "Filter by device",
+      "device_nav": "Device",
       "tab_all": "All",
+      "device_all": "All accessories",
+      "device_diamond": "Fits Diamond",
+      "device_enso": "Fits ENSŌ 2026",
       "search_placeholder": "Search accessories",
       "filter": "Filter",
       "per_row": "Per row",

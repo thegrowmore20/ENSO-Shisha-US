@@ -12,6 +12,11 @@
         <button class="acc-seg__btn"            role="tab" aria-pressed="false" data-dev="enso"    type="button">ENSŌ</button>
         <button class="acc-seg__btn"            role="tab" aria-pressed="false" data-dev="diamond" type="button">Diamond</button>
       </div>
+      <div class="acc-bar__sum" id="AccBarSum" hidden>
+        <span class="acc-bar__count" id="AccBarCount"></span>
+        <b class="acc-bar__total" id="AccBarTotal"></b>
+        <a class="btn btn--primary acc-bar__go" href="{{ routes.cart_url }}">{{ 'sections.accessories_shop.go_to_cart' | t }}</a>
+      </div>
     </div>
   </div>
 
@@ -42,6 +47,7 @@
         <label class="acc-cols-ctrl__label" for="AccCols">{{ 'sections.accessories_shop.per_row' | t }}</label>
         <input class="acc-cols-ctrl__range" type="range" id="AccCols" min="3" max="6" step="1" value="{{ cols_default }}"
           aria-label="{{ 'sections.accessories_shop.per_row' | t }}">
+        <output class="acc-cols-ctrl__out" id="AccColsOut" for="AccCols">{{ cols_default }}</output>
       </div>
     </div>
   </div>
@@ -72,6 +78,14 @@
           <h3 class="acc-fp__group-label">{{ 'sections.accessories_shop.availability' | t }}</h3>
           <label class="acc-fp__opt"><input type="checkbox" name="acc-avail" value="in-stock">{{ 'sections.accessories_shop.in_stock' | t }}</label>
           <label class="acc-fp__opt"><input type="checkbox" name="acc-avail" value="out-of-stock">{{ 'sections.accessories_shop.out_of_stock' | t }}</label>
+        </div>
+
+        {%- comment -%} Device {%- endcomment -%}
+        <div class="acc-fp__group">
+          <h3 class="acc-fp__group-label">{{ 'sections.accessories_shop.device_nav' | t }}</h3>
+          <label class="acc-fp__opt"><input type="radio" name="acc-device" value="all" checked>{{ 'sections.accessories_shop.device_all' | t }}</label>
+          <label class="acc-fp__opt"><input type="radio" name="acc-device" value="enso">{{ 'sections.accessories_shop.device_enso' | t }}</label>
+          <label class="acc-fp__opt"><input type="radio" name="acc-device" value="diamond">{{ 'sections.accessories_shop.device_diamond' | t }}</label>
         </div>
       </div>
 
@@ -135,6 +149,7 @@
   height: 56px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 749px) {
@@ -173,6 +188,46 @@
 
 @media screen and (max-width: 749px) {
   .acc-seg__btn { padding: 6px 14px; font-size: 12px; }
+}
+
+/* Bar cart summary */
+.acc-bar__sum {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.acc-bar__count {
+  font-size: 13px;
+  color: var(--color-text-muted, #5a554b);
+  white-space: nowrap;
+}
+
+.acc-bar__total {
+  font-family: var(--font-accent, Inter, sans-serif);
+  font-size: 18px;
+  font-weight: var(--font-weight-heavy, 800);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.acc-bar__go {
+  height: 38px;
+  padding: 0 20px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.acc-cols-ctrl__out {
+  font-size: 14px;
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--color-text, #0a0a0a);
+  min-width: 1ch;
+}
+
+@media screen and (max-width: 749px) {
+  .acc-bar__sum { display: none; }
 }
 
 /* ══════════════════════════════════════════
@@ -622,29 +677,40 @@
       this._dev   = 'all';
       this._q     = '';
       this._sort  = 'featured';
-      this._avail = []; // [] = all, ['in-stock'], ['out-of-stock'], or both
+      this._avail = [];
 
-      this._grid   = this.querySelector('#AccGrid');
-      this._search = this.querySelector('#AccSearch');
-      this._fp     = this.querySelector('#AccFilterPanel');
-      this._fpBtn  = this.querySelector('#AccFilterBtn');
-      this._fpBadge = this.querySelector('#AccFilterBadge');
+      this._grid      = this.querySelector('#AccGrid');
+      this._search    = this.querySelector('#AccSearch');
+      this._fp        = this.querySelector('#AccFilterPanel');
+      this._fpBtn     = this.querySelector('#AccFilterBtn');
+      this._fpBadge   = this.querySelector('#AccFilterBadge');
       this._colsInput = this.querySelector('#AccCols');
+      this._colsOut   = this.querySelector('#AccColsOut');
       this._noResults = this.querySelector('#AccNoResults');
+      this._barSum    = this.querySelector('#AccBarSum');
+      this._barCount  = this.querySelector('#AccBarCount');
+      this._barTotal  = this.querySelector('#AccBarTotal');
 
-      // restore per-row from localStorage
+      // Restore per-row from localStorage
       var savedCols = parseInt(localStorage.getItem('ensoAccCols') || '', 10);
       if (!isNaN(savedCols) && savedCols >= 3 && savedCols <= 6) {
         if (this._colsInput) this._colsInput.value = savedCols;
         if (this._grid) this._grid.style.setProperty('--cols', savedCols);
       }
+      if (this._colsOut && this._colsInput) this._colsOut.value = this._colsInput.value;
 
       // URL hash device routing
       var hash = location.hash.replace('#', '').toLowerCase();
       if (hash === 'diamond' || hash === 'enso') {
         this._dev = hash;
         this._setActiveTab(hash);
+        this._syncDeviceFpRadio(hash);
       }
+
+      // Fetch initial cart state for bar summary
+      fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+        this._updateBar(cart);
+      }.bind(this)).catch(function () {});
 
       this._bindEvents();
       this._render();
@@ -662,6 +728,7 @@
           if (!btn) return;
           self._dev = btn.dataset.dev;
           self._setActiveTab(self._dev);
+          self._syncDeviceFpRadio(self._dev);
           self._render();
           history.replaceState(null, '', self._dev === 'all' ? location.pathname + location.search : '#' + self._dev);
         });
@@ -680,6 +747,7 @@
         this._colsInput.addEventListener('input', function () {
           var v = self._colsInput.value;
           if (self._grid) self._grid.style.setProperty('--cols', v);
+          if (self._colsOut) self._colsOut.value = v;
           try { localStorage.setItem('ensoAccCols', v); } catch(e) {}
         });
       }
@@ -830,6 +898,13 @@
         this._avail.push(el.value);
       }.bind(this));
 
+      var devEl = this._fp.querySelector('input[name="acc-device"]:checked');
+      if (devEl) {
+        this._dev = devEl.value;
+        this._setActiveTab(this._dev);
+        history.replaceState(null, '', this._dev === 'all' ? location.pathname + location.search : '#' + this._dev);
+      }
+
       this._updateBadge();
     }
 
@@ -839,16 +914,20 @@
         var featured = this._fp.querySelector('input[name="acc-sort"][value="featured"]');
         if (featured) featured.checked = true;
         this._fp.querySelectorAll('input[name="acc-avail"]').forEach(function (el) { el.checked = false; });
+        var devAll = this._fp.querySelector('input[name="acc-device"][value="all"]');
+        if (devAll) devAll.checked = true;
       }
       this._sort  = 'featured';
       this._avail = [];
+      this._dev   = 'all';
+      this._setActiveTab('all');
       this._updateBadge();
     }
 
     /* ── Update filter badge count ── */
     _updateBadge() {
       if (!this._fpBadge) return;
-      var count = (this._sort !== 'featured' ? 1 : 0) + this._avail.length;
+      var count = (this._sort !== 'featured' ? 1 : 0) + this._avail.length + (this._dev !== 'all' ? 1 : 0);
       this._fpBadge.textContent = count;
       this._fpBadge.hidden = count === 0;
     }
@@ -921,6 +1000,7 @@
           el.textContent = cart.item_count;
           el.hidden = cart.item_count === 0;
         });
+        self._updateBar(cart);
         return fetch('/?section_id=cart-drawer').then(function (r) { return r.text(); });
       })
       .then(function (html) {
@@ -960,6 +1040,31 @@
           variants:  []
         }
       }));
+    }
+
+    /* ── Update sticky bar cart summary from /cart.js payload ── */
+    _updateBar(cart) {
+      if (!this._barSum) return;
+      var count = cart.item_count || 0;
+      if (count === 0) { this._barSum.hidden = true; return; }
+      this._barSum.hidden = false;
+      if (this._barCount) {
+        this._barCount.textContent = count + (count === 1 ? ' item' : ' items');
+      }
+      if (this._barTotal) {
+        var total = ((cart.total_price || 0) / 100).toFixed(2);
+        var sym = '$';
+        if (cart.currency === 'EUR') sym = '€';
+        else if (cart.currency === 'GBP') sym = '£';
+        this._barTotal.textContent = sym + total;
+      }
+    }
+
+    /* ── Sync filter panel device radio to current _dev ── */
+    _syncDeviceFpRadio(dev) {
+      if (!this._fp) return;
+      var radio = this._fp.querySelector('input[name="acc-device"][value="' + dev + '"]');
+      if (radio) radio.checked = true;
     }
   }
 

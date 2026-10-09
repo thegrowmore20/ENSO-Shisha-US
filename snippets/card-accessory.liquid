@@ -130,7 +130,7 @@
       {%- endfor -%}
     </div>
   {%- endif -%}
-  <p class="acc-card__desc">{{ product.description | strip_html | strip | truncate: 140 }}</p>
+  <p class="acc-card__desc">{{ product.metafields.custom.headline | default: '' | strip_html | strip | truncate: 140 }}</p>
   {%- if show_details -%}
     <span class="acc-card__details" role="button" tabindex="0" aria-label="{{ 'accessibility.open_details' | t: title: product.title }}">{{ 'products.product.details' | t | default: 'Details' }}</span>
   {%- endif -%}
