@@ -1,11 +1,40 @@
 {%- assign st = section.settings -%}
+{%- assign sid = section.id -%}
 {%- assign callouts = section.blocks | where: 'type', 'callout' -%}
-{%- assign tiles = section.blocks | where: 'type', 'tile' -%}
-{%- assign items = section.blocks | where: 'type', 'list_item' -%}
+{%- assign tiles    = section.blocks | where: 'type', 'tile' -%}
+{%- assign items    = section.blocks | where: 'type', 'list_item' -%}
+
+<!-- Pre-rendered product data: one <template> per block that has a product -->
+{%- for block in section.blocks -%}
+  {%- if block.type == 'callout' or block.type == 'tile' -%}
+    {%- assign b = block.settings -%}
+    {%- if b.product != blank -%}
+      {%- assign prod = b.product -%}
+      {%- assign av_variant = prod.first_available_variant | default: prod.variants.first -%}
+      <template
+        id="witb-tpl-{{ block.id }}"
+        data-title="{{ prod.title | escape }}"
+        data-lead="{{ prod.metafields.custom.lead | default: '' | escape }}"
+        data-fits="{{ b.fits_label | default: st.default_fits_label | escape }}"
+        data-what="{{ prod.metafields.custom.what_it_is | default: prod.description | strip_html | truncatewords: 60 | escape }}"
+        data-why="{{ prod.metafields.custom.why | default: '' | escape }}"
+        data-how="{{ prod.metafields.custom.how_to_use | default: '' | escape }}"
+        data-price="{{ av_variant.price | money }}"
+        data-available="{{ prod.available }}"
+        data-vid="{{ av_variant.id | default: prod.variants.first.id }}"
+        data-url="{{ prod.url }}"
+      >
+        {%- for img in prod.images limit: 3 -%}
+          <img src="{{ img | image_url: width: 900 }}" alt="{{ img.alt | default: prod.title | escape }}">
+        {%- endfor -%}
+      </template>
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
 
 <section
   class="enso-witb"
-  id="shopify-section-{{ section.id }}"
+  id="shopify-section-{{ sid }}"
   style="
     --witb-pt: {{ st.padding_top }}px;
     --witb-pb: {{ st.padding_bottom }}px;
@@ -16,50 +45,51 @@
   <div class="page-width">
 
     {%- if st.eyebrow != blank or st.heading != blank -%}
-      <div class="enso-witb__head">
-        {%- if st.eyebrow != blank -%}
-          <p class="eyebrow">{{ st.eyebrow }}</p>
-        {%- endif -%}
-        {%- if st.heading != blank -%}
-          <h2 class="h2">{{ st.heading }}</h2>
-        {%- endif -%}
+      <div class="witb__head">
+        {%- if st.eyebrow != blank -%}<p class="eyebrow">{{ st.eyebrow }}</p>{%- endif -%}
+        {%- if st.heading != blank -%}<h2 class="witb__h2">{{ st.heading }}</h2>{%- endif -%}
       </div>
     {%- endif -%}
 
-    <div class="enso-witb__grid">
+    <div class="witb__grid">
 
-      <!-- Device callout image + hotspots -->
-      <div class="enso-witb__dev">
+      <!-- Device image + hotspot callouts -->
+      <div class="witb__dev">
         {%- if st.device_image != blank -%}
           {{
             st.device_image
             | image_url: width: 900
             | image_tag:
-              widths: '450, 600, 900',
-              sizes: '(min-width: 992px) 55vw, 100vw',
-              alt: st.device_image.alt | default: 'ENSŌ 2026 Edition with parts labelled',
+              widths: '450,600,900',
+              sizes: '(min-width:992px) 55vw, 100vw',
+              alt: st.device_image.alt | default: 'ENSO 2026 Edition with its parts labelled',
               loading: 'lazy'
           }}
         {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'enso-witb__dev-placeholder' }}
+          {{ 'product-1' | placeholder_svg_tag: 'witb__dev-ph' }}
         {%- endif -%}
 
         {%- for block in callouts -%}
           {%- assign b = block.settings -%}
+          {%- if b.align_left -%}
+            {%- assign co_x = 100 | minus: b.pos_x -%}
+            {%- assign co_style = 'right:' | append: co_x | append: '%;top:' | append: b.pos_y | append: '%' -%}
+          {%- else -%}
+            {%- assign co_style = 'left:' | append: b.pos_x | append: '%;top:' | append: b.pos_y | append: '%' -%}
+          {%- endif -%}
           <button
             type="button"
-            class="enso-witb__co{% if b.align_left %} enso-witb__co--left{% endif %}"
-            style="left:{{ b.pos_x }}%;top:{{ b.pos_y }}%;"
-            data-popup-title="{{ b.popup_title | escape }}"
-            data-popup-body="{{ b.popup_body | escape }}"
+            class="witb__co{% if b.align_left %} witb__co--left{% endif %}"
+            style="{{ co_style }}"
+            data-witb-id="{{ block.id }}"
             aria-label="{{ b.label | escape }}"
             {{ block.shopify_attributes }}
           >
-            <span class="enso-witb__co-dot" aria-hidden="true"></span>
-            <span class="enso-witb__co-line" aria-hidden="true"></span>
-            <span class="enso-witb__co-lbl" aria-hidden="true">
-              <i class="enso-witb__co-l">{{ b.label }}</i>
-              <i class="enso-witb__co-s">{{ b.label_short | default: b.label }}</i>
+            <span class="witb__co-dot" aria-hidden="true"></span>
+            <span class="witb__co-line" aria-hidden="true"></span>
+            <span class="witb__co-lbl" aria-hidden="true">
+              <i class="witb__co-l">{{ b.label }}</i>
+              <i class="witb__co-s">{{ b.label_short | default: b.label }}</i>
             </span>
           </button>
         {%- endfor -%}
@@ -67,46 +97,59 @@
 
       <!-- Accessory tiles -->
       {%- if tiles.size > 0 -%}
-        <div class="enso-witb__tiles">
+        <div class="witb__tiles">
           {%- for block in tiles -%}
             {%- assign b = block.settings -%}
-            <div class="enso-witb__tile" {{ block.shopify_attributes }}>
-              <div class="enso-witb__tile-img">
-                {%- if b.image != blank -%}
+            <button
+              type="button"
+              class="witb__tile{% if b.product != blank %} witb__tile--link{% endif %}"
+              data-witb-id="{{ block.id }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="witb__tile-img">
+                {%- if b.product != blank and b.product.featured_image != blank -%}
+                  {{
+                    b.product.featured_image
+                    | image_url: width: 300
+                    | image_tag:
+                      widths: '150,200,300',
+                      sizes: '(min-width:992px) 15vw, 25vw',
+                      alt: b.product.featured_image.alt | default: b.product.title,
+                      loading: 'lazy'
+                  }}
+                {%- elsif b.image != blank -%}
                   {{
                     b.image
                     | image_url: width: 300
                     | image_tag:
-                      widths: '150, 200, 300',
-                      sizes: '(min-width: 992px) 15vw, 30vw',
-                      alt: b.alt | default: b.name,
+                      widths: '150,200,300',
+                      sizes: '(min-width:992px) 15vw, 25vw',
+                      alt: b.image.alt | default: b.name,
                       loading: 'lazy'
                   }}
                 {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'enso-witb__tile-placeholder' }}
+                  {{ 'product-1' | placeholder_svg_tag: 'witb__tile-ph' }}
                 {%- endif -%}
-              </div>
-              <div class="enso-witb__tile-cap">
-                <b>{{ b.name }}</b>
-                {%- if b.quantity != blank -%}
-                  <i>{{ b.quantity }}</i>
-                {%- endif -%}
-              </div>
-            </div>
+              </span>
+              <span class="witb__tile-cap">
+                <b>{{ b.name | default: b.product.title }}</b>
+                {%- if b.quantity != blank -%}<i>{{ b.quantity }}</i>{%- endif -%}
+              </span>
+            </button>
           {%- endfor -%}
         </div>
       {%- endif -%}
 
       <!-- Items list -->
       {%- if items.size > 0 -%}
-        <ul class="enso-witb__list">
+        <ul class="witb__list">
           {%- for block in items -%}
             {%- assign b = block.settings -%}
             <li {{ block.shopify_attributes }}>
               <em>{{ b.quantity }}</em>
               <span>
                 <b>{{ b.name }}</b>
-                {%- if b.note != blank -%} · {{ b.note }}{%- endif -%}
+                {%- if b.note != blank %} · {{ b.note }}{%- endif -%}
               </span>
             </li>
           {%- endfor -%}
@@ -116,481 +159,523 @@
     </div>
 
     {%- if st.hint_text != blank -%}
-      <p class="enso-witb__hint">{{ st.hint_text }}</p>
+      <p class="witb__hint">{{ st.hint_text }}</p>
     {%- endif -%}
 
   </div>
-
-  <!-- Part detail popup -->
-  <div class="enso-witb-pop" id="EnsoWitbPop-{{ section.id }}" hidden role="dialog" aria-modal="true" aria-labelledby="EnsoWitbPopT-{{ section.id }}">
-    <div class="enso-witb-pop__box">
-      <button type="button" class="enso-witb-pop__x" aria-label="{{ 'accessibility.close' | t }}">&#215;</button>
-      <h3 class="enso-witb-pop__title" id="EnsoWitbPopT-{{ section.id }}"></h3>
-      <p class="enso-witb-pop__body"></p>
-    </div>
-  </div>
-
 </section>
 
+<!-- Product sheet overlay -->
+<div
+  class="witb-sheet"
+  id="WitbSheet-{{ sid }}"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="WitbSheetTitle-{{ sid }}"
+  hidden
+>
+  <div class="witb-sheet__box">
+    <div class="witb-sheet__grab" aria-hidden="true"></div>
+    <button class="witb-sheet__x" id="WitbSheetX-{{ sid }}" aria-label="{{ 'accessibility.close' | t }}">&#215;</button>
+    <div class="witb-sheet__in">
+      <div class="witb-sheet__media" id="WitbSheetMedia-{{ sid }}" data-n="0">
+        <div class="witb-sheet__gal" id="WitbSheetGal-{{ sid }}"></div>
+        <button class="witb-sheet__arr witb-sheet__arr--l" id="WitbSheetPrev-{{ sid }}" type="button" aria-label="Previous photo">&#8249;</button>
+        <button class="witb-sheet__arr witb-sheet__arr--r" id="WitbSheetNext-{{ sid }}" type="button" aria-label="Next photo">&#8250;</button>
+        <div class="witb-sheet__dots" id="WitbSheetDots-{{ sid }}"></div>
+      </div>
+      <div class="witb-sheet__body" id="WitbSheetBody-{{ sid }}">
+        <span class="witb-sheet__fits" id="WitbSheetFits-{{ sid }}"></span>
+        <h2 class="witb-sheet__title" id="WitbSheetTitle-{{ sid }}"></h2>
+        <p class="witb-sheet__lead" id="WitbSheetLead-{{ sid }}"></p>
+        <h3 class="witb-sheet__h3">{{ 'witb.what_it_is' | t | default: 'What it is' }}</h3>
+        <p id="WitbSheetWhat-{{ sid }}"></p>
+        <h3 class="witb-sheet__h3 witb-sheet__h3--why">{{ 'witb.why' | t | default: 'Why' }}</h3>
+        <p id="WitbSheetWhy-{{ sid }}"></p>
+        <h3 class="witb-sheet__h3 witb-sheet__h3--how">{{ 'witb.how' | t | default: 'How to use it' }}</h3>
+        <p id="WitbSheetHow-{{ sid }}"></p>
+        <div class="witb-sheet__buy">
+          <span class="witb-sheet__price" id="WitbSheetPrice-{{ sid }}"></span>
+          <button class="witb-sheet__atc btn btn--primary" id="WitbSheetAtc-{{ sid }}" type="button" data-vid="">
+            {{- 'products.product.add_to_cart' | t -}}
+          </button>
+        </div>
+        <a class="witb-sheet__full" id="WitbSheetUrl-{{ sid }}" href="#">View full details ›</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% style %}
+.enso-witb {
+  padding-top: var(--witb-pt-m, 40px);
+  padding-bottom: var(--witb-pb-m, 24px);
+}
+@media screen and (min-width: 750px) {
   .enso-witb {
-    padding-top: var(--witb-pt-m, 40px);
-    padding-bottom: var(--witb-pb-m, 24px);
+    padding-top: var(--witb-pt, 80px);
+    padding-bottom: var(--witb-pb, 40px);
   }
-  @media screen and (min-width: 750px) {
-    .enso-witb {
-      padding-top: var(--witb-pt, 80px);
-      padding-bottom: var(--witb-pb, 40px);
-    }
-  }
+}
+.witb__head { text-align: center; margin: 0 auto 40px; }
+.witb__h2 {
+  margin: 8px 0 0;
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -0.025em;
+}
+.witb__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: start;
+}
+@media screen and (max-width: 991px) {
+  .witb__grid { grid-template-columns: minmax(0, 1fr); }
+}
+.witb__dev {
+  position: relative;
+  border: 1px solid rgb(0 0 0 / .1);
+  border-radius: 24px;
+  background: #fff;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+.witb__dev img, .witb__dev-ph {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.witb__co {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none; border: 0; padding: 0;
+  cursor: pointer; font: inherit; color: #000;
+}
+.witb__co-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #111;
+  box-shadow: 0 0 0 3px rgb(255 255 255 / .85);
+  flex: none;
+}
+.witb__co-line { height: 1.5px; background: #111; width: 30px; flex: none; }
+.witb__co-lbl {
+  font: 600 12.5px/1 var(--font-heading);
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 999px;
+  padding: 8px 13px;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgb(0 0 0 / .06);
+  transition: background .2s, color .2s;
+}
+.witb__co:hover .witb__co-lbl,
+.witb__co:focus-visible .witb__co-lbl { background: #111; color: #fff; border-color: #111; }
+.witb__co--left { flex-direction: row-reverse; }
+.witb__co-l { font-style: normal; }
+.witb__co-s { font-style: normal; display: none; }
+@media screen and (max-width: 991px) {
+  .witb__co-lbl  { font-size: 10.5px; padding: 6px 9px; }
+  .witb__co-line { width: 14px; }
+  .witb__co-dot  { width: 10px; height: 10px; border-width: 2.5px; }
+  .witb__co-l    { display: none; }
+  .witb__co-s    { display: inline; }
+}
+.witb__tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+@media screen and (max-width: 991px) {
+  .witb__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media screen and (max-width: 479px) {
+  .witb__tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.witb__tile {
+  border: 1px solid rgb(0 0 0 / .1);
+  border-radius: 16px;
+  background: #fff;
+  display: flex; flex-direction: column;
+  padding: 0; text-align: left; font: inherit; color: #000; overflow: hidden;
+}
+.witb__tile--link { cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.witb__tile--link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgb(0 0 0 / .08); }
+.witb__tile-img {
+  display: grid; place-items: center;
+  aspect-ratio: 1; background: #fff; padding: 12px;
+}
+.witb__tile-img img, .witb__tile-ph {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+}
+.witb__tile-cap {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 8px 10px 9px; border-top: 1px solid #eee;
+}
+.witb__tile-cap b { font: 700 11.5px/1.3 var(--font-heading); color: #000 !important; }
+.witb__tile-cap i { font: 600 11.5px var(--font-heading); font-style: normal; color: #8a8a8a; white-space: nowrap; }
+@media screen and (max-width: 991px) {
+  .witb__tile-cap { padding: 8px 9px; }
+  .witb__tile-cap b { font-size: 11px; }
+}
+.witb__list {
+  grid-column: 1 / -1;
+  list-style: none; margin: 18px 0 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 28px;
+}
+.witb__list li {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 10px; padding: 11px 0;
+  border-top: 1px solid rgb(0 0 0 / .1);
+  font-size: 15px; line-height: 22px; color: rgb(0 0 0 / .7);
+}
+.witb__list em { font-style: normal; font-weight: 700; color: #96671f; }
+.witb__list b  { color: #000; font-weight: 600; }
+@media screen and (max-width: 767px) {
+  .witb__list { grid-template-columns: minmax(0, 1fr); }
+}
+.witb__hint { text-align: center; color: #8a8a8a; font-size: 13px; margin: 14px 0 0; }
 
-  /* Head */
-  .enso-witb__head {
-    text-align: center;
-    margin: 0 auto 40px;
-  }
-  .enso-witb__head .h2 {
-    margin: 8px 0 0;
-    font-family: var(--font-accent);
-    font-weight: var(--font-weight-heavy);
-    letter-spacing: -0.025em;
-  }
-
-  /* Main grid */
-  .enso-witb__grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 28px;
-    align-items: start;
-  }
-  @media screen and (max-width: 991px) {
-    .enso-witb__grid { grid-template-columns: 1fr; }
-  }
-
-  /* Device callout */
-  .enso-witb__dev {
-    position: relative;
-    border: 1px solid rgb(0 0 0 / .1);
-    border-radius: 24px;
-    background: #fff;
-    overflow: hidden;
-    aspect-ratio: 1;
-  }
-  .enso-witb__dev img,
-  .enso-witb__dev .enso-witb__dev-placeholder {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Hotspot callout buttons */
-  .enso-witb__co {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-    font: inherit;
-    color: #000;
-  }
-  .enso-witb__co-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: #fff;
-    border: 3px solid #111;
-    box-shadow: 0 0 0 3px rgb(255 255 255 / .85);
-    flex: none;
-  }
-  .enso-witb__co-line {
-    height: 1.5px;
-    background: #111;
-    width: 30px;
-    flex: none;
-  }
-  .enso-witb__co-lbl {
-    font: 600 12.5px/1 var(--font-heading);
-    background: #fff;
-    border: 1px solid #dcdcdc;
-    border-radius: 999px;
-    padding: 8px 13px;
-    white-space: nowrap;
-    box-shadow: 0 1px 4px rgb(0 0 0 / .06);
-    transition: background .2s, color .2s;
-  }
-  .enso-witb__co:hover .enso-witb__co-lbl,
-  .enso-witb__co:focus-visible .enso-witb__co-lbl {
-    background: #111;
-    color: #fff;
-    border-color: #111;
-  }
-  .enso-witb__co--left { flex-direction: row-reverse; }
-  .enso-witb__co-l { font-style: normal; }
-  .enso-witb__co-s { font-style: normal; display: none; }
-
-  @media screen and (max-width: 991px) {
-    .enso-witb__co-lbl  { font-size: 10.5px; padding: 6px 9px; }
-    .enso-witb__co-line { width: 14px; }
-    .enso-witb__co-dot  { width: 10px; height: 10px; border-width: 2.5px; }
-    .enso-witb__co-l    { display: none; }
-    .enso-witb__co-s    { display: inline; }
-  }
-
-  /* Tiles grid */
-  .enso-witb__tiles {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-  @media screen and (min-width: 750px) {
-    .enso-witb__tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  }
-  @media screen and (max-width: 991px) {
-    .enso-witb__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  }
-
-  .enso-witb__tile {
-    border: 1px solid rgb(0 0 0 / .1);
-    border-radius: 16px;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: transform .2s, box-shadow .2s;
-  }
-  .enso-witb__tile:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgb(0 0 0 / .08);
-  }
-  .enso-witb__tile-img {
-    display: grid;
-    place-items: center;
-    aspect-ratio: 1;
-    background: #fff;
-    padding: 12px;
-  }
-  .enso-witb__tile-img img,
-  .enso-witb__tile-placeholder {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-  .enso-witb__tile-cap {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    padding: 8px 10px 9px;
-    border-top: 1px solid #eee;
-  }
-  .enso-witb__tile-cap b {
-    font: 700 11.5px/1.3 var(--font-heading);
-  }
-  .enso-witb__tile-cap i {
-    font: 600 11.5px var(--font-heading);
-    font-style: normal;
-    color: #8a8a8a;
-    white-space: nowrap;
-  }
-
-  /* Items list */
-  .enso-witb__list {
-    grid-column: 1 / -1;
-    list-style: none;
-    margin: 18px 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0 28px;
-  }
-  .enso-witb__list li {
-    display: grid;
-    grid-template-columns: 46px minmax(0, 1fr);
-    gap: 10px;
-    padding: 11px 0;
-    border-top: 1px solid rgb(0 0 0 / .1);
-    font-size: 15px;
-    line-height: 22px;
-    color: rgb(0 0 0 / .7);
-  }
-  .enso-witb__list em {
-    font-style: normal;
-    font-weight: 700;
-    color: var(--palette-bronze, #96671f);
-  }
-  .enso-witb__list b { color: #000; font-weight: 600; }
-  @media screen and (max-width: 749px) {
-    .enso-witb__list { grid-template-columns: 1fr; }
-  }
-
-  /* Hint */
-  .enso-witb__hint {
-    text-align: center;
-    color: #8a8a8a;
-    font-size: 13px;
-    margin: 14px 0 0;
-  }
-
-  /* Popup */
-  .enso-witb-pop {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: rgb(0 0 0 / .45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-  }
-  .enso-witb-pop[hidden] { display: none !important; }
-  .enso-witb-pop__box {
-    background: #fff;
-    border-radius: 24px;
-    max-width: 420px;
-    width: 100%;
-    padding: 28px;
-    position: relative;
-  }
-  .enso-witb-pop__title {
-    font-family: var(--font-accent);
-    font-weight: var(--font-weight-heavy);
-    font-size: 24px;
-    letter-spacing: -.02em;
-    margin: 0 0 8px;
-  }
-  .enso-witb-pop__body {
-    margin: 0;
-    color: rgb(0 0 0 / .72);
-    font-size: 15px;
-    line-height: 24px;
-  }
-  .enso-witb-pop__x {
-    position: absolute;
-    right: 14px; top: 14px;
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    border: 1px solid rgb(0 0 0 / .12);
-    background: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+/* Sheet */
+.witb-sheet {
+  position: fixed; inset: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgb(0 0 0 / .4);
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.witb-sheet[hidden]  { display: none !important; }
+.witb-sheet.is-on    { opacity: 1; pointer-events: auto; }
+.witb-sheet__box {
+  background: #fff;
+  border-radius: 28px;
+  width: min(960px, 100%);
+  max-height: 88vh; overflow: auto;
+  transform: translateY(24px);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  position: relative;
+}
+.witb-sheet.is-on .witb-sheet__box { transform: none; }
+.witb-sheet__grab {
+  width: 44px; height: 5px; border-radius: 999px;
+  background: rgb(0 0 0 / .15); margin: 12px auto 0;
+}
+.witb-sheet__x {
+  position: absolute; right: 20px; top: 20px; z-index: 2;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 0; background: rgb(0 0 0 / .06); font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.witb-sheet__in {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 36px; padding: 28px 40px 40px; align-items: start;
+}
+@media screen and (max-width: 680px) {
+  .witb-sheet__in { grid-template-columns: 1fr; padding: 20px 20px 32px; gap: 20px; }
+}
+.witb-sheet__media {
+  aspect-ratio: 1; background: #fff;
+  border: 1px solid rgb(0 0 0 / .1); border-radius: 22px;
+  overflow: hidden; position: relative;
+}
+.witb-sheet__gal {
+  display: flex; height: 100%;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+}
+.witb-sheet__gal::-webkit-scrollbar { display: none; }
+.witb-sheet__gal img {
+  flex: 0 0 100%; width: 100%; height: 100%;
+  object-fit: contain; padding: 10%; box-sizing: border-box;
+  scroll-snap-align: start;
+}
+.witb-sheet__dots {
+  position: absolute; left: 0; right: 0; bottom: 12px;
+  display: flex; justify-content: center; gap: 6px;
+}
+.witb-sheet__dots i { width: 7px; height: 7px; border-radius: 50%; background: rgb(0 0 0 / .2); }
+.witb-sheet__dots i.is-on { background: #000; }
+.witb-sheet__arr {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; border-radius: 50%; border: 0;
+  background: rgb(255 255 255 / .9); box-shadow: 0 2px 10px rgb(0 0 0 / .15);
+  cursor: pointer; font: 400 20px/1 sans-serif;
+  display: flex; align-items: center; justify-content: center;
+}
+.witb-sheet__arr--l { left: 10px; }
+.witb-sheet__arr--r { right: 10px; }
+.witb-sheet__media[data-n="0"] .witb-sheet__arr,
+.witb-sheet__media[data-n="1"] .witb-sheet__arr,
+.witb-sheet__media[data-n="0"] .witb-sheet__dots,
+.witb-sheet__media[data-n="1"] .witb-sheet__dots { display: none; }
+.witb-sheet__fits {
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  font-weight: 700; color: #666; display: block; margin-bottom: 2px;
+}
+.witb-sheet__title {
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  font-size: 32px; line-height: 38px; letter-spacing: -.02em;
+  margin: 6px 0;
+}
+.witb-sheet__lead { margin: 0 0 18px; color: rgb(0 0 0 / .78); font-size: 17px; }
+.witb-sheet__h3 { font: 800 15px/22px var(--font-accent); margin: 16px 0 2px; }
+.witb-sheet__body p { margin: 0 0 8px; color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
+.witb-sheet__h3--why,
+.witb-sheet__h3--how { display: none; }
+.witb-sheet__body.has-why .witb-sheet__h3--why { display: block; }
+.witb-sheet__body.has-how .witb-sheet__h3--how { display: block; }
+.witb-sheet__buy {
+  display: flex; align-items: center; gap: 18px;
+  margin-top: 22px; padding-top: 22px;
+  border-top: 1px solid rgb(0 0 0 / .1);
+}
+.witb-sheet__price { font: 800 26px/30px var(--font-accent); }
+.witb-sheet__atc {
+  padding: 14px 24px !important; font-size: 13px !important; height: auto !important; flex: 1;
+}
+.witb-sheet__atc:disabled { opacity: .5; cursor: default; }
+.witb-sheet__full {
+  display: inline-block; margin-top: 18px;
+  font-weight: 600; font-size: 14px; color: #000;
+  text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 2px;
+}
+.witb-sheet__full:hover { opacity: .7; }
 {% endstyle %}
 
 {% javascript %}
-  (function () {
-    var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
-    if (!sectionEl) return;
+(function () {
+  var sid = '{{ sid }}';
+  var sectionEl = document.getElementById('shopify-section-' + sid);
+  if (!sectionEl) return;
 
-    var pop   = document.getElementById('EnsoWitbPop-{{ section.id }}');
-    var popT  = document.getElementById('EnsoWitbPopT-{{ section.id }}');
-    var popB  = pop ? pop.querySelector('.enso-witb-pop__body') : null;
-    var popX  = pop ? pop.querySelector('.enso-witb-pop__x') : null;
+  var sheet   = document.getElementById('WitbSheet-' + sid);
+  var shX     = document.getElementById('WitbSheetX-' + sid);
+  var shGal   = document.getElementById('WitbSheetGal-' + sid);
+  var shDots  = document.getElementById('WitbSheetDots-' + sid);
+  var shMedia = document.getElementById('WitbSheetMedia-' + sid);
+  var shPrev  = document.getElementById('WitbSheetPrev-' + sid);
+  var shNext  = document.getElementById('WitbSheetNext-' + sid);
+  var shFits  = document.getElementById('WitbSheetFits-' + sid);
+  var shTitle = document.getElementById('WitbSheetTitle-' + sid);
+  var shLead  = document.getElementById('WitbSheetLead-' + sid);
+  var shWhat  = document.getElementById('WitbSheetWhat-' + sid);
+  var shWhy   = document.getElementById('WitbSheetWhy-' + sid);
+  var shHow   = document.getElementById('WitbSheetHow-' + sid);
+  var shBody  = document.getElementById('WitbSheetBody-' + sid);
+  var shPrice = document.getElementById('WitbSheetPrice-' + sid);
+  var shAtc   = document.getElementById('WitbSheetAtc-' + sid);
+  var shUrl   = document.getElementById('WitbSheetUrl-' + sid);
 
-    function closePop() { if (pop) pop.hidden = true; }
-    function openPop(title, body) {
-      if (!pop || !popT || !popB) return;
-      popT.textContent = title;
-      popB.textContent = body;
-      pop.hidden = false;
-      popX.focus();
+  var lastFocus = null;
+  var addLabel  = shAtc ? shAtc.textContent.trim() : 'Add to cart';
+  var oosLabel  = 'Out of stock';
+
+  function closeSheet() {
+    if (!sheet) return;
+    sheet.classList.remove('is-on');
+    setTimeout(function () { sheet.hidden = true; }, 280);
+    if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+  }
+
+  function openSheet(tpl) {
+    if (!sheet || !tpl) return;
+    var d = tpl.dataset;
+
+    /* images */
+    shGal.innerHTML = '';
+    var imgs = tpl.querySelectorAll('img');
+    imgs.forEach(function (img) {
+      var el = document.createElement('img');
+      el.src = img.src; el.alt = img.alt;
+      shGal.appendChild(el);
+    });
+    shGal.scrollLeft = 0;
+    var n = imgs.length;
+    shMedia.dataset.n = n;
+
+    /* dots */
+    shDots.innerHTML = '';
+    for (var k = 0; k < n; k++) {
+      var dot = document.createElement('i');
+      if (k === 0) dot.classList.add('is-on');
+      shDots.appendChild(dot);
     }
 
-    if (popX) popX.addEventListener('click', closePop);
-    if (pop) {
-      pop.addEventListener('click', function (e) { if (e.target === pop) closePop(); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) closePop(); });
+    /* text */
+    shFits.textContent  = d.fits  || '';
+    shTitle.textContent = d.title || '';
+    shLead.textContent  = d.lead  || '';
+    shWhat.textContent  = d.what  || '';
+    shWhy.textContent   = d.why   || '';
+    shHow.textContent   = d.how   || '';
+
+    if (shBody) {
+      shBody.classList.toggle('has-why', !!d.why);
+      shBody.classList.toggle('has-how', !!d.how);
     }
 
-    sectionEl.querySelectorAll('.enso-witb__co').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var title = btn.dataset.popupTitle;
-        var body  = btn.dataset.popupBody;
-        if (title && body) openPop(title, body);
+    shPrice.textContent = d.price || '';
+    shUrl.href = d.url || '#';
+
+    var available = d.available !== 'false';
+    shAtc.disabled = !available;
+    shAtc.textContent = available ? addLabel : oosLabel;
+    shAtc.dataset.vid = d.vid || '';
+
+    lastFocus = document.activeElement;
+    sheet.hidden = false;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        sheet.classList.add('is-on');
+        shX.focus();
       });
     });
-  })();
+  }
+
+  /* gallery navigation */
+  function galPage() {
+    var w = shGal.clientWidth;
+    return w > 0 ? Math.round(shGal.scrollLeft / w) : 0;
+  }
+  function galGoTo(i) {
+    var n = parseInt(shMedia.dataset.n, 10) || 0;
+    i = Math.max(0, Math.min(n - 1, i));
+    shGal.scrollLeft = i * shGal.clientWidth;
+  }
+  shGal.addEventListener('scroll', function () {
+    var i = galPage();
+    shDots.querySelectorAll('i').forEach(function (d, k) {
+      d.classList.toggle('is-on', k === i);
+    });
+  }, { passive: true });
+  shPrev.addEventListener('click', function () { galGoTo(galPage() - 1); });
+  shNext.addEventListener('click', function () { galGoTo(galPage() + 1); });
+
+  /* add to cart */
+  shAtc.addEventListener('click', function () {
+    var vid = shAtc.dataset.vid;
+    if (!vid || shAtc.disabled) return;
+    shAtc.disabled = true;
+    shAtc.textContent = 'Adding…';
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ id: vid, quantity: 1 })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function () {
+      shAtc.textContent = 'Added ✓';
+      document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true }));
+      document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
+      setTimeout(function () {
+        shAtc.disabled = false;
+        shAtc.textContent = addLabel;
+      }, 1800);
+    })
+    .catch(function () {
+      shAtc.disabled = false;
+      shAtc.textContent = addLabel;
+    });
+  });
+
+  /* close */
+  shX.addEventListener('click', closeSheet);
+  sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !sheet.hidden) closeSheet();
+  });
+
+  /* open on click */
+  sectionEl.querySelectorAll('[data-witb-id]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tpl = document.getElementById('witb-tpl-' + btn.dataset.witbId);
+      if (tpl) openSheet(tpl);
+    });
+  });
+})();
 {% endjavascript %}
 
 {% schema %}
 {
-  "name": "ENSŌ in the box",
+  "name": "ENSO in the box",
   "tag": "section",
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "What is in the box"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Everything to start a session"
-    },
-    {
-      "type": "image_picker",
-      "id": "device_image",
-      "label": "Device callout image"
-    },
-    {
-      "type": "text",
-      "id": "hint_text",
-      "label": "Hint text",
-      "default": "Tap a part to see what it is and where to get a spare. The wall adapter is not included."
-    },
-    {
-      "type": "header",
-      "content": "Section spacing"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding top — desktop",
-      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom — desktop",
-      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_top_mobile",
-      "label": "Padding top — mobile",
-      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom_mobile",
-      "label": "Padding bottom — mobile",
-      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24
-    }
+    { "type": "text",         "id": "eyebrow",           "label": "Eyebrow",                    "default": "What is in the box" },
+    { "type": "text",         "id": "heading",           "label": "Heading",                    "default": "Everything to start a session" },
+    { "type": "image_picker", "id": "device_image",      "label": "Device callout image" },
+    { "type": "text",         "id": "hint_text",         "label": "Hint text",                  "default": "Tap a part to see what it is and where to get a spare. The wall adapter is not included." },
+    { "type": "text",         "id": "default_fits_label","label": "Default Fits label",          "default": "Fits ENSO 2026 Edition" },
+    { "type": "header",       "content": "Section spacing" },
+    { "type": "range", "id": "padding_top",           "label": "Padding top — desktop",  "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom",        "label": "Padding bottom — desktop","min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile",    "label": "Padding top — mobile",   "min": 0, "max": 80,  "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile","min": 0, "max": 80,  "step": 4, "unit": "px", "default": 24 }
   ],
   "blocks": [
     {
       "type": "callout",
       "name": "Hotspot",
       "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label (desktop)"
-        },
-        {
-          "type": "text",
-          "id": "label_short",
-          "label": "Label (mobile, short)"
-        },
-        {
-          "type": "range",
-          "id": "pos_x",
-          "label": "Horizontal position",
-          "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50
-        },
-        {
-          "type": "range",
-          "id": "pos_y",
-          "label": "Vertical position",
-          "min": 0, "max": 100, "step": 1, "unit": "%", "default": 10
-        },
-        {
-          "type": "checkbox",
-          "id": "align_left",
-          "label": "Label on left side",
-          "default": false
-        },
-        {
-          "type": "text",
-          "id": "popup_title",
-          "label": "Popup title"
-        },
-        {
-          "type": "textarea",
-          "id": "popup_body",
-          "label": "Popup description"
-        }
+        { "type": "text",         "id": "label",       "label": "Label (desktop)" },
+        { "type": "text",         "id": "label_short", "label": "Label (mobile)" },
+        { "type": "range",        "id": "pos_x",       "label": "Horizontal position (dot from left)", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+        { "type": "range",        "id": "pos_y",       "label": "Vertical position (dot from top)",    "min": 0, "max": 100, "step": 1, "unit": "%", "default": 10 },
+        { "type": "checkbox",     "id": "align_left",  "label": "Label on left side",                  "default": false },
+        { "type": "product",      "id": "product",     "label": "Product (opens sheet on click)" },
+        { "type": "text",         "id": "fits_label",  "label": "Override Fits label" }
       ]
     },
     {
       "type": "tile",
       "name": "Accessory tile",
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "alt",
-          "label": "Image alt text"
-        },
-        {
-          "type": "text",
-          "id": "name",
-          "label": "Name"
-        },
-        {
-          "type": "text",
-          "id": "quantity",
-          "label": "Quantity (e.g. 1×)"
-        }
+        { "type": "product",      "id": "product",     "label": "Product (opens sheet on click)" },
+        { "type": "image_picker", "id": "image",       "label": "Override image" },
+        { "type": "text",         "id": "name",        "label": "Override name" },
+        { "type": "text",         "id": "quantity",    "label": "Quantity (e.g. 1×)" },
+        { "type": "text",         "id": "fits_label",  "label": "Override Fits label" }
       ]
     },
     {
       "type": "list_item",
       "name": "List item",
       "settings": [
-        {
-          "type": "text",
-          "id": "quantity",
-          "label": "Quantity",
-          "default": "1×"
-        },
-        {
-          "type": "text",
-          "id": "name",
-          "label": "Item name"
-        },
-        {
-          "type": "text",
-          "id": "note",
-          "label": "Note (optional)"
-        }
+        { "type": "text", "id": "quantity", "label": "Quantity", "default": "1×" },
+        { "type": "text", "id": "name",     "label": "Item name" },
+        { "type": "text", "id": "note",     "label": "Note (optional)" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "ENSŌ in the box",
+      "name": "ENSO in the box",
       "blocks": [
-        { "type": "callout", "settings": { "label": "Glass ThermoCap", "label_short": "ThermoCap", "pos_x": 50, "pos_y": 10, "align_left": false } },
-        { "type": "callout", "settings": { "label": "Brown leather strap", "label_short": "Strap", "pos_x": 41, "pos_y": 19, "align_left": true } },
-        { "type": "callout", "settings": { "label": "Mouthpiece · 15 cm", "label_short": "Mouthpiece", "pos_x": 63, "pos_y": 30, "align_left": false } },
-        { "type": "callout", "settings": { "label": "Blow-out valve", "label_short": "Valve", "pos_x": 34, "pos_y": 47, "align_left": true } },
-        { "type": "callout", "settings": { "label": "Hose · 1.5 m", "label_short": "Hose", "pos_x": 70, "pos_y": 62, "align_left": false } },
-        { "type": "callout", "settings": { "label": "Glass water tank", "label_short": "Tank", "pos_x": 41, "pos_y": 87, "align_left": true } },
-        { "type": "callout", "settings": { "label": "Dip tube", "label_short": "Dip tube", "pos_x": 50, "pos_y": 84, "align_left": false } },
-        { "type": "tile", "settings": { "name": "Battery", "quantity": "1×" } },
-        { "type": "tile", "settings": { "name": "Ceramic cups", "quantity": "2×" } },
-        { "type": "tile", "settings": { "name": "Disposable capsules", "quantity": "10×" } },
-        { "type": "tile", "settings": { "name": "3-in-1 multi-tool + glove", "quantity": "1×" } },
-        { "type": "tile", "settings": { "name": "Mesh screens", "quantity": "2×" } },
-        { "type": "list_item", "settings": { "quantity": "1×", "name": "USB-C cable", "note": "wall adapter not included" } },
-        { "type": "list_item", "settings": { "quantity": "5×", "name": "Silicone mouth tips" } },
-        { "type": "list_item", "settings": { "quantity": "1 set", "name": "Cleaning brushes", "note": "for the shaft" } },
-        { "type": "list_item", "settings": { "quantity": "5×", "name": "Glass balls", "note": "for the blow-out valve" } },
-        { "type": "list_item", "settings": { "quantity": "1×", "name": "ENSŌ screen wipe" } },
-        { "type": "list_item", "settings": { "quantity": "1×", "name": "Warranty card" } },
-        { "type": "list_item", "settings": { "quantity": "1×", "name": "User manual" } }
+        { "type": "callout",   "settings": { "label": "Glass ThermoCap",           "label_short": "ThermoCap",  "pos_x": 50, "pos_y": 10, "align_left": false } },
+        { "type": "callout",   "settings": { "label": "Brown leather strap",       "label_short": "Strap",      "pos_x": 41, "pos_y": 19, "align_left": true  } },
+        { "type": "callout",   "settings": { "label": "Mouthpiece · 15 cm",  "label_short": "Mouthpiece", "pos_x": 63, "pos_y": 30, "align_left": false } },
+        { "type": "callout",   "settings": { "label": "Blow-out valve",            "label_short": "Valve",      "pos_x": 34, "pos_y": 47, "align_left": true  } },
+        { "type": "callout",   "settings": { "label": "Hose · 1.5 m",        "label_short": "Hose",       "pos_x": 70, "pos_y": 62, "align_left": false } },
+        { "type": "callout",   "settings": { "label": "Glass water tank",          "label_short": "Tank",       "pos_x": 41, "pos_y": 87, "align_left": true  } },
+        { "type": "callout",   "settings": { "label": "Dip tube",                  "label_short": "Dip tube",   "pos_x": 50, "pos_y": 84, "align_left": false } },
+        { "type": "tile",      "settings": { "name": "Battery",                    "quantity": "1×" } },
+        { "type": "tile",      "settings": { "name": "Ceramic cups",               "quantity": "2×" } },
+        { "type": "tile",      "settings": { "name": "Disposable capsules",        "quantity": "10×" } },
+        { "type": "tile",      "settings": { "name": "3-in-1 multi-tool + glove",  "quantity": "1×" } },
+        { "type": "tile",      "settings": { "name": "Mesh screens",               "quantity": "2×" } },
+        { "type": "list_item", "settings": { "quantity": "1×",  "name": "USB-C cable",        "note": "wall adapter not included" } },
+        { "type": "list_item", "settings": { "quantity": "5×",  "name": "Silicone mouth tips" } },
+        { "type": "list_item", "settings": { "quantity": "1 set", "name": "Cleaning brushes",   "note": "for the shaft" } },
+        { "type": "list_item", "settings": { "quantity": "5×",  "name": "Glass balls",        "note": "for the blow-out valve" } },
+        { "type": "list_item", "settings": { "quantity": "1×",  "name": "ENSO screen wipe" } },
+        { "type": "list_item", "settings": { "quantity": "1×",  "name": "Warranty card" } },
+        { "type": "list_item", "settings": { "quantity": "1×",  "name": "User manual" } }
       ]
     }
   ]
