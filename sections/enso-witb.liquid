@@ -218,6 +218,12 @@
   }
 }
 .witb__head { text-align: center; margin: 0 auto 40px; }
+.witb__head .eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted, #6b6b6b);
+}
 .witb__h2 {
   margin: 8px 0 0;
   font-family: var(--font-accent);
@@ -290,9 +296,6 @@
 }
 @media screen and (max-width: 991px) {
   .witb__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media screen and (max-width: 479px) {
-  .witb__tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .witb__tile {
   border: 1px solid rgb(0 0 0 / .1);
