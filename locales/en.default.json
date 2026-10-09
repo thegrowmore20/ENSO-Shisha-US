@@ -313,5 +313,10 @@
     "video_hero_slider": {
       "label": "Featured"
     }
+  },
+  "witb": {
+    "what_it_is": "What it is",
+    "why": "Why",
+    "how": "How to use it"
   }
 }

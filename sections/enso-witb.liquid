@@ -16,9 +16,6 @@
         data-title="{{ prod.title | escape }}"
         data-lead="{{ prod.metafields.custom.lead | default: '' | escape }}"
         data-fits="{{ b.fits_label | default: st.default_fits_label | escape }}"
-        data-what="{{ prod.metafields.custom.what_it_is | default: prod.description | strip_html | truncatewords: 60 | escape }}"
-        data-why="{{ prod.metafields.custom.why | default: '' | escape }}"
-        data-how="{{ prod.metafields.custom.how_to_use | default: '' | escape }}"
         data-price="{{ av_variant.price | money }}"
         data-available="{{ prod.available }}"
         data-vid="{{ av_variant.id | default: prod.variants.first.id }}"
@@ -27,6 +24,15 @@
         {%- for img in prod.images limit: 3 -%}
           <img src="{{ img | image_url: width: 900 }}" alt="{{ img.alt | default: prod.title | escape }}">
         {%- endfor -%}
+        <div class="witb-d-what">
+          {%- if prod.metafields.custom.what_it_is != blank -%}
+            {{ prod.metafields.custom.what_it_is | metafield_tag }}
+          {%- else -%}
+            <p>{{ prod.description | strip_html | truncatewords: 60 }}</p>
+          {%- endif -%}
+        </div>
+        <div class="witb-d-why">{{ prod.metafields.custom.why | metafield_tag }}</div>
+        <div class="witb-d-how">{{ prod.metafields.custom.how_to_use | metafield_tag }}</div>
       </template>
     {%- endif -%}
   {%- endif -%}
@@ -517,13 +523,20 @@
     shFits.textContent  = d.fits  || '';
     shTitle.textContent = d.title || '';
     shLead.textContent  = d.lead  || '';
-    shWhat.textContent  = d.what  || '';
-    shWhy.textContent   = d.why   || '';
-    shHow.textContent   = d.how   || '';
+
+    var whatEl = tpl.content.querySelector('.witb-d-what');
+    var whyEl  = tpl.content.querySelector('.witb-d-why');
+    var howEl  = tpl.content.querySelector('.witb-d-how');
+    shWhat.innerHTML = whatEl ? whatEl.innerHTML : '';
+    shWhy.innerHTML  = whyEl  ? whyEl.innerHTML  : '';
+    shHow.innerHTML  = howEl  ? howEl.innerHTML  : '';
+
+    var hasWhy = whyEl ? whyEl.textContent.trim() !== '' : false;
+    var hasHow = howEl ? howEl.textContent.trim() !== '' : false;
 
     if (shBody) {
-      shBody.classList.toggle('has-why', !!d.why);
-      shBody.classList.toggle('has-how', !!d.how);
+      shBody.classList.toggle('has-why', hasWhy);
+      shBody.classList.toggle('has-how', hasHow);
     }
 
     shPrice.textContent = d.price || '';
