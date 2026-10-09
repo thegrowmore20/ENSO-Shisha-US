@@ -824,22 +824,24 @@
       var backdrop = this._fp && this._fp.querySelector('.acc-fp__backdrop');
       if (backdrop) backdrop.addEventListener('click', function () { self._closeFP(); });
 
-      // Apply filter → server fetch
+      // Apply filter → instant client filter + server fetch for sort/search
       var applyBtn = this._fp && this._fp.querySelector('#AccFilterApply');
       if (applyBtn) {
         applyBtn.addEventListener('click', function () {
           self._readFilterPanel();
           self._closeFP();
-          self._applyFilters();
+          self._renderDeviceFilter(); // instant: device + availability
+          self._applyFilters();       // server: sort + search
         });
       }
 
-      // Clear filter → server fetch
+      // Clear filter → instant client reset + server fetch
       var clearBtn = this._fp && this._fp.querySelector('#AccFilterClear');
       if (clearBtn) {
         clearBtn.addEventListener('click', function () {
           self._clearFilters();
           self._closeFP();
+          self._renderDeviceFilter();
           self._applyFilters();
         });
       }
@@ -933,7 +935,7 @@
       });
     }
 
-    /* ── Client-side device filter (runs after every grid update) ── */
+    /* ── Client-side device + availability filter (runs after every grid update) ── */
     _renderDeviceFilter() {
       var grid = this.querySelector('#AccGrid');
       if (!grid) return;
@@ -942,9 +944,14 @@
       for (var i = 0; i < cards.length; i++) {
         var card = cards[i];
         var devOk = this._dev === 'all' || card.dataset.dev === 'both' || card.dataset.dev === this._dev;
-        card.hidden = !devOk;
-        card.style.display = devOk ? '' : 'none';
-        if (devOk) visible++;
+        var avail = card.dataset.available === 'true';
+        var availOk = this._avail.length === 0
+          || (this._avail.indexOf('in-stock') !== -1 && avail)
+          || (this._avail.indexOf('out-of-stock') !== -1 && !avail);
+        var show = devOk && availOk;
+        card.hidden = !show;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
       }
       if (this._noResults) this._noResults.hidden = visible > 0 || cards.length === 0;
     }
@@ -955,9 +962,6 @@
       var params = [];
       var sortVal = SORT_MAP[this._sort] || 'manual';
       if (sortVal !== 'manual') params.push('sort_by=' + encodeURIComponent(sortVal));
-      if (this._avail.length === 1) {
-        params.push('filter.p.availability=' + (this._avail[0] === 'in-stock' ? '1' : '0'));
-      }
       if (this._q.trim()) params.push('q=' + encodeURIComponent(this._q.trim()));
       var colUrl = this._colUrl + (params.length ? '?' + params.join('&') : '');
       this._fetchGrid(colUrl, false);
