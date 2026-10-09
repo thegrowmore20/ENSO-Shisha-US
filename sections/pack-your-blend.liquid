@@ -140,38 +140,39 @@
 
   .pack-blend__heading {
     margin: 0 0 12px;
-    font-size: 40px;
+    font-size: 36px;
     line-height: 1.1;
     color: #fff;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-heavy);
   }
 
   /* Body text: visible on desktop */
   .pack-blend__text {
     display: block;
-    font-size: 15.5px;
-    line-height: 23px;
+    font-size: 16px;
+    line-height: 28px;
     margin: 0 0 20px;
-    color: rgb(255 255 255 / .88);
+    color: rgb(255 255 255 / .85);
   }
 
-  /* Pill button */
+  /* Pill button — solid white, black text (matches handoff .pill--light) */
   .pack-blend__pill {
-    display: inline-block;
-    border: 1px solid rgb(255 255 255 / .6);
-    color: rgb(255 255 255 / .9);
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    color: #000;
+    border: 0;
     border-radius: 999px;
-    padding: 8px 18px;
+    padding: 16px 36px;
     font-size: 13px;
-    line-height: 1.4;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     white-space: nowrap;
-    transition: border-color 0.2s, color 0.2s;
+    transition: opacity 0.2s;
   }
 
-  .pack-blend__card:hover .pack-blend__pill {
-    border-color: #fff;
-    color: #fff;
-  }
+  .pack-blend__card:hover .pack-blend__pill { opacity: 0.88; }
 
   /* ── Mobile ── */
   @media screen and (max-width: 749px) {
@@ -194,12 +195,16 @@
       font-size: 28px;
     }
 
+    .pack-blend__pill {
+      padding: 14px 28px;
+    }
+
     .pack-blend__text {
       display: block;
-      font-size: 15.5px;
-      line-height: 23px;
+      font-size: 15px;
+      line-height: 25px;
       margin: 0 0 18px;
-      color: rgb(255 255 255 / .88);
+      color: rgb(255 255 255 / .85);
     }
   }
 {% endstylesheet %}
