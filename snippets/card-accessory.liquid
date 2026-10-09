@@ -117,6 +117,19 @@
   </a>
 
   <h3 class="acc-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+  {%- if product.variants.size > 1 and product.options[0] != 'Title' -%}
+    <div class="acc-card__opts" role="group" aria-label="{{ product.options[0] | escape }}">
+      {%- for v in product.variants -%}
+        <button class="acc-card__opt{% if forloop.first %} is-active{% endif %}"
+                type="button"
+                aria-pressed="{{ forloop.first }}"
+                data-vid="{{ v.id }}"
+                data-price="{{ v.price }}"
+                data-money="{{ v.price | money }}"
+                data-available="{{ v.available }}">{{ v.title }}</button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
   <p class="acc-card__desc">{{ product.description | strip_html | strip | truncate: 140 }}</p>
   {%- if show_details -%}
     <span class="acc-card__details" role="button" tabindex="0" aria-label="{{ 'accessibility.open_details' | t: title: product.title }}">{{ 'products.product.details' | t | default: 'Details' }}</span>

@@ -548,6 +548,45 @@
 }
 
 /* ══════════════════════════════════════════
+   VARIANT PILLS
+   ══════════════════════════════════════════ */
+.acc-card__opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 18px 4px;
+}
+
+.acc-card__opt {
+  padding: 5px 14px;
+  border-radius: var(--radius-pill, 999px);
+  border: 1px solid var(--color-border, #e3ddcc);
+  background: transparent;
+  color: var(--color-text, #0a0a0a);
+  font-family: var(--font-body, Montserrat, sans-serif);
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold, 600);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.acc-card__opt.is-active {
+  background: var(--color-text, #0a0a0a);
+  color: var(--color-background, #faf6ec);
+  border-color: var(--color-text, #0a0a0a);
+}
+
+.acc-card__opt:hover:not(.is-active) {
+  border-color: var(--color-text, #0a0a0a);
+}
+
+@media screen and (max-width: 749px) {
+  .acc-card__opts { display: none; }
+}
+
+/* ══════════════════════════════════════════
    MOBILE BOTTOM BAR
    ══════════════════════════════════════════ */
 .acc-mbar {
@@ -712,6 +751,39 @@
           if (!detailSpan) return;
           var card = detailSpan.closest('.acc-card[data-popup-title]');
           if (card) { e.preventDefault(); self._openPopup(card); }
+        });
+      }
+
+      // Variant pill clicks — update price, form id, popup data
+      if (this._grid) {
+        this._grid.addEventListener('click', function (e) {
+          var pill = e.target.closest('.acc-card__opt');
+          if (!pill) return;
+          var card = pill.closest('.acc-card');
+          if (!card) return;
+
+          // Active state
+          card.querySelectorAll('.acc-card__opt').forEach(function (p) {
+            p.classList.toggle('is-active', p === pill);
+            p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
+          });
+
+          // Price display
+          var priceEl = card.querySelector('.acc-card__price b');
+          if (priceEl && pill.dataset.money) priceEl.textContent = pill.dataset.money;
+
+          // Form variant id
+          var vidInput = card.querySelector('input[name="id"]');
+          if (vidInput && pill.dataset.vid) vidInput.value = pill.dataset.vid;
+
+          // Card data attrs (for sort + popup)
+          if (pill.dataset.price) card.dataset.price = pill.dataset.price;
+          if (pill.dataset.vid)   card.dataset.popupVariant = pill.dataset.vid;
+          if (pill.dataset.money) card.dataset.popupPrice   = pill.dataset.money;
+
+          // ATC button state
+          var atcBtn = card.querySelector('.acc-card__btn[type="submit"]');
+          if (atcBtn) atcBtn.disabled = pill.dataset.available === 'false';
         });
       }
     }
