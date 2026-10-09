@@ -101,7 +101,8 @@ a{color:inherit}
 .sp-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);font-weight:700;margin:28px 0 -12px}
 .faq{max-width:860px}.faq details{border-top:1px solid var(--line)}.faq details:last-child{border-bottom:1px solid var(--line)}
 .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;padding:18px 0;font-weight:700;font-size:16px}
-.faq summary::-webkit-details-marker{display:none}.faq summary::after{content:"+";font:800 22px Inter}.faq details[open] summary::after{content:"−";color:var(--grey)}
+.faq summary::-webkit-details-marker{display:none}.faq summary::after{content:"+";font:800 22px/1 Inter}.faq details[open] summary::after{content:"−";font:800 22px/1 Inter}
+.faq__wrap{overflow:hidden;transition:height .28s ease}
 .faq p{margin:0 0 18px;color:rgb(0 0 0 / .78);font-size:15px;line-height:24px;max-width:70ch}
 .more a{font-weight:700;color:#000}.more{margin:20px 0 0}
 .nores{display:none;padding:40px 0 80px;color:var(--grey)}

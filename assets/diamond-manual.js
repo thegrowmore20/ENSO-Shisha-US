@@ -271,3 +271,30 @@
     [].forEach.call(document.querySelectorAll('.tsdots'),function(d){[].forEach.call(d.children,function(x,i){x.classList.toggle('on',i===0)})})}
   reset();addEventListener('pageshow',reset);addEventListener('load',function(){setTimeout(reset,0)});
 })();
+/* Smooth FAQ accordion */
+(function(){
+  [].forEach.call(document.querySelectorAll('.faq details'),function(d){
+    var s=d.querySelector('summary');
+    if(!s)return;
+    /* wrap all non-summary children for height animation */
+    var wrap=document.createElement('div');
+    wrap.className='faq__wrap';
+    [].slice.call(d.children).forEach(function(c){if(c!==s)wrap.appendChild(c);});
+    d.appendChild(wrap);
+    s.addEventListener('click',function(e){
+      e.preventDefault();
+      if(d.open){
+        wrap.style.height=wrap.scrollHeight+'px';
+        requestAnimationFrame(function(){wrap.style.height='0';});
+        wrap.addEventListener('transitionend',function(){d.removeAttribute('open');wrap.style.height='';},{once:true});
+      }else{
+        d.setAttribute('open','');
+        wrap.style.height='0';
+        requestAnimationFrame(function(){requestAnimationFrame(function(){
+          wrap.style.height=wrap.scrollHeight+'px';
+          wrap.addEventListener('transitionend',function(){wrap.style.height='';},{once:true});
+        });});
+      }
+    });
+  });
+})();
