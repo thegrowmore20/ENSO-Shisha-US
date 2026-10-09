@@ -131,7 +131,7 @@
               <div class="grid grid--3 collection__grid" id="ProductGrid-{{ section.id }}">
                 {%- for product in collection.products -%}
                   {% unless product.title contains 'Shipping Protection' %}
-                    {%- render 'card-product', product: product, section: section -%}
+                    {%- render 'card-accessory', product: product, show_fits: true, show_details: true -%}
                   {% endunless %}
                 {%- endfor -%}
               </div>
