@@ -560,7 +560,98 @@
       grid-template-columns: repeat(1, 1fr) !important;
     }
   }
+
+  /* ── acc-card inside collection grid: left-align + padding overrides ── */
+  .collection__grid .acc-card {
+    flex: none;
+    width: auto;
+    text-align: left;
+    border-radius: 22px;
+    overflow: hidden;
+    gap: 0;
+    padding: 0;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+
+  .collection__grid .acc-card:hover {
+    box-shadow: 0 12px 40px rgb(0 0 0 / .08);
+    transform: translateY(-3px);
+  }
+
+  .collection__grid .acc-card__img {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid var(--color-border, #e3ddcc);
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .collection__grid .acc-card__img img { padding: 6%; }
+
+  .collection__grid .acc-card__title { padding: 16px 18px 4px; text-align: left; }
+  .collection__grid .acc-card__desc  { padding: 0 18px; text-align: left; }
+  .collection__grid .acc-card__details { padding: 0 18px; }
+  .collection__grid .acc-card__foot { padding: 12px 18px 18px; }
+
+  @media screen and (max-width: 749px) {
+    .collection__grid .acc-card__img img { padding: 18% 8% 8%; }
+    .collection__grid .acc-card__desc { display: none; }
+    .collection__grid .acc-card__details { display: none; }
+  }
 {% endstylesheet %}
+
+{% javascript %}
+(function () {
+  function openAccCardPopup(card) {
+    var d = card.dataset;
+    var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
+      return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
+    });
+    document.dispatchEvent(new CustomEvent('product:popup', {
+      bubbles: true,
+      detail: {
+        title:     d.popupTitle     || '',
+        fits:      d.popupCompat    || '',
+        price:     d.popupPrice     || '',
+        available: d.popupAvailable !== 'false',
+        vid:       d.popupVariant   || '',
+        url:       d.popupUrl       || '',
+        images:    images,
+        headline:  decodeURIComponent(d.popupHeadline  || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
+        shortdesc: decodeURIComponent(d.popupShortdesc || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
+        variants:  []
+      }
+    }));
+  }
+
+  document.addEventListener('click', function (e) {
+    var grid = e.target.closest('.collection__grid');
+    if (!grid) return;
+
+    var imgLink    = e.target.closest('.acc-card__img');
+    var titleLink  = e.target.closest('.acc-card__title a');
+    var detailSpan = e.target.closest('.acc-card__details');
+    if (!imgLink && !titleLink && !detailSpan) return;
+
+    var card = e.target.closest('.acc-card[data-popup-title]');
+    if (!card) return;
+    if (e.target.closest('.acc-card__form')) return;
+
+    e.preventDefault();
+    openAccCardPopup(card);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var grid = e.target.closest('.collection__grid');
+    if (!grid) return;
+    var detailSpan = e.target.closest('.acc-card__details');
+    if (!detailSpan) return;
+    var card = detailSpan.closest('.acc-card[data-popup-title]');
+    if (card) { e.preventDefault(); openAccCardPopup(card); }
+  });
+})();
+{% endjavascript %}
 
 {% schema %}
 {
