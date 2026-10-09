@@ -588,21 +588,21 @@
     }
   }
 
-  /* Accordions below media (product.custom-enso template) */
+  /* Accordions below media (product.custom-enso template).
+     Row 2 right cell is empty (.) so content only occupies row 1.
+     This prevents row-height recalculation when accordions open. */
   .product-main--acc-below .product-main__inner {
     grid-template-areas:
       "media content"
-      "accordions content";
+      "accordions .";
     row-gap: var(--space-5);
   }
   .product-main--acc-below .product-main__media {
-    grid-row: 1;
     align-self: start;
     overflow: hidden;
   }
   .product-main--acc-below .product-main__accordions {
     align-self: start;
-    padding-top: var(--space-2);
   }
 
   @media screen and (min-width: 990px) {
