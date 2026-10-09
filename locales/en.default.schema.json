@@ -1185,6 +1185,15 @@
         "name": "Signature models"
       }
     },
+    "accessories_shop": {
+      "name": "Accessories shop",
+      "settings": {
+        "cols_default": { "label": "Columns per row (default)" }
+      },
+      "presets": {
+        "default": { "name": "Accessories shop" }
+      }
+    },
     "accessories_carousel": {
       "name": "Accessories carousel",
       "settings": {

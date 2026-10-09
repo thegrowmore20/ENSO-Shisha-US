@@ -64,7 +64,8 @@
     "new_tab": "(opens in a new tab)",
     "slide_position": "Slide {{ index }} of {{ total }}",
     "slide": "Slide",
-    "carousel": "Carousel"
+    "carousel": "Carousel",
+    "open_details": "Open details for {{ title }}"
   },
   "header": {
     "menu": "Menu",
@@ -97,7 +98,9 @@
       "shop_now": "Shop now",
       "pre_order": "Pre-order",
       "view_full_details": "View full details",
-      "quick_view": "Quick view"
+      "quick_view": "Quick view",
+      "details": "Details",
+      "notify_me": "Notify me"
     }
   },
   "newsletter": {
@@ -312,6 +315,26 @@
     },
     "video_hero_slider": {
       "label": "Featured"
+    },
+    "accessories_shop": {
+      "device_nav": "Filter by device",
+      "tab_all": "All",
+      "search_placeholder": "Search accessories",
+      "filter": "Filter",
+      "per_row": "Per row",
+      "sort_by": "Sort by",
+      "sort_featured": "Featured",
+      "sort_price_asc": "Price: Low to High",
+      "sort_price_desc": "Price: High to Low",
+      "sort_az": "Alphabetically A–Z",
+      "availability": "Availability",
+      "in_stock": "In stock",
+      "out_of_stock": "Out of stock",
+      "show_results": "Show results",
+      "clear_all": "Clear all",
+      "no_products": "No accessories found.",
+      "no_results": "No results for your search.",
+      "go_to_cart": "Go to cart"
     }
   },
   "witb": {

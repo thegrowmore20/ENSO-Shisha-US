@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "acc_hero": {
+      "type": "hero-banner",
+      "settings": {
+        "image": "",
+        "image_mobile": "",
+        "heading": "Accessories",
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 36,
+        "heading_color": "#ffffff",
+        "subheading": "",
+        "button": "",
+        "button_url": "",
+        "width": "full",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "height_desktop": "custom",
+        "height_desktop_custom": 460,
+        "height_tablet": "custom",
+        "height_tablet_custom": 360,
+        "height_mobile": "custom",
+        "height_mobile_custom": 260,
+        "content_alignment": "left",
+        "content_vertical_alignment": "bottom",
+        "content_width_desktop": 600,
+        "content_width_tablet": 500,
+        "content_width_mobile": 0,
+        "overlay_color": "#000000",
+        "overlay_opacity": 40,
+        "use_gradient": true,
+        "gradient_direction": 180
+      }
+    },
+    "acc_shop": {
+      "type": "accessories-shop",
+      "settings": {
+        "cols_default": 4
+      }
+    }
+  },
+  "order": [
+    "acc_hero",
+    "acc_shop"
+  ]
+}

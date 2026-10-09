@@ -1,0 +1,919 @@
+{%- liquid
+  assign cols_default = section.settings.cols_default | default: 4
+-%}
+
+<accessories-shop class="acc-shop" data-cols="{{ cols_default }}">
+
+  {%- comment -%} ── Sticky device tabs bar ── {%- endcomment -%}
+  <div class="acc-bar" role="navigation" aria-label="{{ 'sections.accessories_shop.device_nav' | t }}">
+    <div class="acc-bar__inner">
+      <div class="acc-seg" role="tablist" aria-label="{{ 'sections.accessories_shop.device_nav' | t }}">
+        <button class="acc-seg__btn is-active" role="tab" aria-pressed="true"  data-dev="all"     type="button">{{ 'sections.accessories_shop.tab_all' | t }}</button>
+        <button class="acc-seg__btn"            role="tab" aria-pressed="false" data-dev="enso"    type="button">ENSŌ</button>
+        <button class="acc-seg__btn"            role="tab" aria-pressed="false" data-dev="diamond" type="button">Diamond</button>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── Toolbar: search · filter · per-row ── {%- endcomment -%}
+  <div class="acc-tools">
+    <div class="acc-tools__inner">
+      <label class="acc-search" for="AccSearch">
+        <svg class="acc-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false" width="18" height="18">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+        </svg>
+        <input class="acc-search__input" type="search" id="AccSearch"
+          placeholder="{{ 'sections.accessories_shop.search_placeholder' | t }}"
+          aria-label="{{ 'sections.accessories_shop.search_placeholder' | t }}"
+          autocomplete="off">
+      </label>
+
+      <button class="acc-filter-btn" type="button" id="AccFilterBtn"
+        aria-expanded="false" aria-controls="AccFilterPanel"
+        aria-label="{{ 'sections.accessories_shop.filter' | t }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true" focusable="false">
+          <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+        </svg>
+        {{ 'sections.accessories_shop.filter' | t }}
+        <span class="acc-filter-btn__badge" id="AccFilterBadge" hidden>0</span>
+      </button>
+
+      <div class="acc-cols-ctrl">
+        <label class="acc-cols-ctrl__label" for="AccCols">{{ 'sections.accessories_shop.per_row' | t }}</label>
+        <input class="acc-cols-ctrl__range" type="range" id="AccCols" min="3" max="6" step="1" value="{{ cols_default }}"
+          aria-label="{{ 'sections.accessories_shop.per_row' | t }}">
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── Filter panel (right-side drawer) ── {%- endcomment -%}
+  <div class="acc-fp" id="AccFilterPanel" role="dialog" aria-modal="true"
+    aria-label="{{ 'sections.accessories_shop.filter' | t }}" hidden>
+    <div class="acc-fp__backdrop"></div>
+    <div class="acc-fp__box">
+      <div class="acc-fp__head">
+        <span class="acc-fp__head-title">{{ 'sections.accessories_shop.filter' | t }}</span>
+        <button class="acc-fp__close" type="button" id="AccFilterClose"
+          aria-label="{{ 'accessibility.close' | t }}">&#215;</button>
+      </div>
+
+      <div class="acc-fp__body">
+        {%- comment -%} Sort {%- endcomment -%}
+        <div class="acc-fp__group">
+          <h3 class="acc-fp__group-label">{{ 'sections.accessories_shop.sort_by' | t }}</h3>
+          <label class="acc-fp__opt"><input type="radio" name="acc-sort" value="featured" checked>{{ 'sections.accessories_shop.sort_featured' | t }}</label>
+          <label class="acc-fp__opt"><input type="radio" name="acc-sort" value="price-asc">{{ 'sections.accessories_shop.sort_price_asc' | t }}</label>
+          <label class="acc-fp__opt"><input type="radio" name="acc-sort" value="price-desc">{{ 'sections.accessories_shop.sort_price_desc' | t }}</label>
+          <label class="acc-fp__opt"><input type="radio" name="acc-sort" value="a-z">{{ 'sections.accessories_shop.sort_az' | t }}</label>
+        </div>
+
+        {%- comment -%} Availability {%- endcomment -%}
+        <div class="acc-fp__group">
+          <h3 class="acc-fp__group-label">{{ 'sections.accessories_shop.availability' | t }}</h3>
+          <label class="acc-fp__opt"><input type="checkbox" name="acc-avail" value="in-stock">{{ 'sections.accessories_shop.in_stock' | t }}</label>
+          <label class="acc-fp__opt"><input type="checkbox" name="acc-avail" value="out-of-stock">{{ 'sections.accessories_shop.out_of_stock' | t }}</label>
+        </div>
+      </div>
+
+      <div class="acc-fp__foot">
+        <button class="btn btn--primary acc-fp__apply" type="button" id="AccFilterApply">
+          {{ 'sections.accessories_shop.show_results' | t }}
+        </button>
+        <button class="acc-fp__clear" type="button" id="AccFilterClear">
+          {{ 'sections.accessories_shop.clear_all' | t }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── Product grid ── {%- endcomment -%}
+  <div class="acc-grid-wrap">
+    <div class="acc-grid" id="AccGrid" style="--cols: {{ cols_default }}">
+      {%- for product in collection.products -%}
+        {%- unless product.title contains 'Shipping Protection' -%}
+          {%- render 'card-accessory', product: product, show_fits: true, show_details: true -%}
+        {%- endunless -%}
+      {%- else -%}
+        <p class="acc-empty">{{ 'sections.accessories_shop.no_products' | t }}</p>
+      {%- endfor -%}
+    </div>
+    <p class="acc-noresults" id="AccNoResults" hidden>{{ 'sections.accessories_shop.no_results' | t }}</p>
+  </div>
+
+  {%- comment -%} ── Mobile bottom bar ── {%- endcomment -%}
+  <div class="acc-mbar">
+    <a class="acc-mbar__cart btn btn--primary" href="{{ routes.cart_url }}">
+      {{ 'sections.accessories_shop.go_to_cart' | t }}
+    </a>
+  </div>
+
+</accessories-shop>
+
+{% stylesheet %}
+
+/* ── Wrapper ── */
+.acc-shop {
+  display: block;
+  background: var(--color-background, #faf6ec);
+}
+
+/* ══════════════════════════════════════════
+   STICKY DEVICE TABS BAR
+   ══════════════════════════════════════════ */
+.acc-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-background, #faf6ec);
+  border-bottom: 1px solid var(--color-border, #e3ddcc);
+}
+
+.acc-bar__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--page-margin, 80px);
+  height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 749px) {
+  .acc-bar__inner { padding: 0 20px; height: 48px; }
+}
+
+/* Segmented pill control */
+.acc-seg {
+  display: flex;
+  gap: 4px;
+  background: var(--color-background-raised, #f2ede3);
+  border-radius: var(--radius-pill, 999px);
+  padding: 4px;
+}
+
+.acc-seg__btn {
+  padding: 7px 20px;
+  border-radius: var(--radius-pill, 999px);
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted, #5a554b);
+  font-family: var(--font-body, Montserrat, sans-serif);
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold, 600);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  white-space: nowrap;
+}
+
+.acc-seg__btn.is-active,
+.acc-seg__btn[aria-pressed="true"] {
+  background: var(--color-text, #0a0a0a);
+  color: var(--color-background, #faf6ec);
+}
+
+@media screen and (max-width: 749px) {
+  .acc-seg__btn { padding: 6px 14px; font-size: 12px; }
+}
+
+/* ══════════════════════════════════════════
+   TOOLBAR
+   ══════════════════════════════════════════ */
+.acc-tools {
+  padding: 20px 0 0;
+}
+
+.acc-tools__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--page-margin, 80px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 749px) {
+  .acc-tools__inner { padding: 0 20px; gap: 10px; }
+}
+
+/* Search */
+.acc-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-background-raised, #f2ede3);
+  border: 1px solid var(--color-border, #e3ddcc);
+  border-radius: var(--radius-pill, 999px);
+  padding: 10px 18px;
+  min-width: 180px;
+  max-width: 440px;
+}
+
+@media screen and (max-width: 749px) {
+  .acc-search { max-width: none; order: -1; width: 100%; }
+}
+
+.acc-search__icon { flex-shrink: 0; color: var(--color-text-muted, #5a554b); }
+
+.acc-search__input {
+  border: 0;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--color-text, #0a0a0a);
+  width: 100%;
+  min-width: 0;
+}
+
+.acc-search__input::placeholder { color: var(--color-text-muted, #5a554b); }
+
+/* Filter button */
+.acc-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill, 999px);
+  border: 1px solid var(--color-border, #e3ddcc);
+  background: var(--color-background-raised, #f2ede3);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold, 600);
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--color-text, #0a0a0a);
+  transition: border-color 0.18s;
+}
+
+.acc-filter-btn:hover { border-color: var(--color-text, #0a0a0a); }
+.acc-filter-btn[aria-expanded="true"] { border-color: var(--color-text, #0a0a0a); background: var(--color-text, #0a0a0a); color: var(--color-background, #faf6ec); }
+
+.acc-filter-btn__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent, #c8943a);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  line-height: 1;
+}
+
+/* Per-row slider — desktop only */
+.acc-cols-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.acc-cols-ctrl__label {
+  font-size: 13px;
+  color: var(--color-text-muted, #5a554b);
+  white-space: nowrap;
+}
+
+.acc-cols-ctrl__range {
+  width: 100px;
+  accent-color: var(--color-text, #0a0a0a);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 991px) {
+  .acc-cols-ctrl { display: none; }
+}
+
+/* ══════════════════════════════════════════
+   FILTER PANEL
+   ══════════════════════════════════════════ */
+.acc-fp {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.acc-fp:not([hidden]) { pointer-events: auto; }
+.acc-fp[hidden] { display: block !important; visibility: hidden; }
+
+.acc-fp__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / .4);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.acc-fp.is-on .acc-fp__backdrop { opacity: 1; }
+
+.acc-fp__box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 88vw);
+  background: var(--color-background, #faf6ec);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+}
+
+.acc-fp.is-on .acc-fp__box { transform: none; }
+
+.acc-fp__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border, #e3ddcc);
+  flex-shrink: 0;
+}
+
+.acc-fp__head-title {
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.acc-fp__close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--color-background-raised, #f2ede3);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acc-fp__body {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow-y: auto;
+}
+
+.acc-fp__group-label {
+  font-size: 13px;
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #5a554b);
+  margin: 0 0 12px;
+}
+
+.acc-fp__opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.acc-fp__opt input { accent-color: var(--color-text, #0a0a0a); width: 16px; height: 16px; }
+
+.acc-fp__foot {
+  padding: 20px 24px;
+  border-top: 1px solid var(--color-border, #e3ddcc);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.acc-fp__apply { width: 100%; justify-content: center; }
+
+.acc-fp__clear {
+  background: none;
+  border: 0;
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold, 600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--color-text-muted, #5a554b);
+  padding: 4px;
+}
+
+.acc-fp__clear:hover { color: var(--color-text, #0a0a0a); }
+
+/* Mobile: bottom sheet */
+@media screen and (max-width: 749px) {
+  .acc-fp__box {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 86vh;
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%);
+  }
+  .acc-fp.is-on .acc-fp__box { transform: none; }
+}
+
+/* ══════════════════════════════════════════
+   PRODUCT GRID
+   ══════════════════════════════════════════ */
+.acc-grid-wrap {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--page-margin, 80px);
+}
+
+@media screen and (max-width: 749px) {
+  .acc-grid-wrap { padding: 0 20px; }
+}
+
+.acc-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  gap: 20px;
+  padding: 32px 0 96px;
+}
+
+@media screen and (max-width: 991px) {
+  .acc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 24px 0 120px;
+  }
+}
+
+.acc-empty,
+.acc-noresults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--color-text-muted, #5a554b);
+  font-size: 15px;
+}
+
+/* ══════════════════════════════════════════
+   CARD OVERRIDES FOR GRID (no flex-shrink from carousel)
+   ══════════════════════════════════════════ */
+.acc-grid .acc-card {
+  flex: none;
+  width: auto;
+  border-radius: 22px;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.acc-grid .acc-card:hover {
+  box-shadow: 0 12px 40px rgb(0 0 0 / .08);
+  transform: translateY(-3px);
+}
+
+.acc-grid .acc-card__img {
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-border, #e3ddcc);
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* Fits badge */
+.acc-card__fits {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--color-background-raised, #f2ede3);
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold, 600);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #5a554b);
+  pointer-events: none;
+}
+
+.acc-grid .acc-card__img img { padding: 6%; }
+
+.acc-grid .acc-card__title { padding: 16px 18px 4px; }
+.acc-grid .acc-card__desc  { padding: 0 18px; }
+
+/* Details link */
+.acc-card__details {
+  display: block;
+  padding: 0 18px;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--color-text-muted, #5a554b);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.acc-card__details:hover { color: var(--color-text, #0a0a0a); }
+
+.acc-grid .acc-card__foot { padding: 12px 18px 18px; }
+
+/* Mobile ATC icon mode */
+@media screen and (max-width: 749px) {
+  .acc-grid .acc-card__img img { padding: 18% 8% 8%; }
+  .acc-grid .acc-card__desc { display: none; }
+  .acc-grid .acc-card__details { display: none; }
+
+  .acc-card__btn-label { display: none; }
+
+  .acc-card__btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .acc-card__btn-icon { display: block !important; }
+}
+
+@media screen and (min-width: 750px) {
+  .acc-card__btn-icon { display: none; }
+}
+
+/* ══════════════════════════════════════════
+   MOBILE BOTTOM BAR
+   ══════════════════════════════════════════ */
+.acc-mbar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  background: var(--color-background, #faf6ec);
+  border-top: 1px solid var(--color-border, #e3ddcc);
+}
+
+@media screen and (max-width: 749px) {
+  .acc-mbar { display: flex; }
+}
+
+.acc-mbar__cart {
+  width: 100%;
+  justify-content: center;
+  text-decoration: none;
+}
+
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  if (customElements.get('accessories-shop')) return;
+
+  class AccessoriesShop extends HTMLElement {
+    connectedCallback() {
+      this._dev   = 'all';
+      this._q     = '';
+      this._sort  = 'featured';
+      this._avail = []; // [] = all, ['in-stock'], ['out-of-stock'], or both
+
+      this._grid   = this.querySelector('#AccGrid');
+      this._search = this.querySelector('#AccSearch');
+      this._fp     = this.querySelector('#AccFilterPanel');
+      this._fpBtn  = this.querySelector('#AccFilterBtn');
+      this._fpBadge = this.querySelector('#AccFilterBadge');
+      this._colsInput = this.querySelector('#AccCols');
+      this._noResults = this.querySelector('#AccNoResults');
+
+      // restore per-row from localStorage
+      var savedCols = parseInt(localStorage.getItem('ensoAccCols') || '', 10);
+      if (!isNaN(savedCols) && savedCols >= 3 && savedCols <= 6) {
+        if (this._colsInput) this._colsInput.value = savedCols;
+        if (this._grid) this._grid.style.setProperty('--cols', savedCols);
+      }
+
+      // URL hash device routing
+      var hash = location.hash.replace('#', '').toLowerCase();
+      if (hash === 'diamond' || hash === 'enso') {
+        this._dev = hash;
+        this._setActiveTab(hash);
+      }
+
+      this._bindEvents();
+      this._render();
+    }
+
+    /* ── Bind all event listeners ── */
+    _bindEvents() {
+      var self = this;
+
+      // Device tabs
+      var tabList = this.querySelector('.acc-seg');
+      if (tabList) {
+        tabList.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-dev]');
+          if (!btn) return;
+          self._dev = btn.dataset.dev;
+          self._setActiveTab(self._dev);
+          self._render();
+          history.replaceState(null, '', self._dev === 'all' ? location.pathname + location.search : '#' + self._dev);
+        });
+      }
+
+      // Search
+      if (this._search) {
+        this._search.addEventListener('input', function () {
+          self._q = self._search.value;
+          self._render();
+        });
+      }
+
+      // Per-row slider
+      if (this._colsInput) {
+        this._colsInput.addEventListener('input', function () {
+          var v = self._colsInput.value;
+          if (self._grid) self._grid.style.setProperty('--cols', v);
+          try { localStorage.setItem('ensoAccCols', v); } catch(e) {}
+        });
+      }
+
+      // Filter button open
+      if (this._fpBtn) {
+        this._fpBtn.addEventListener('click', function () { self._openFP(); });
+      }
+
+      // Filter panel close / backdrop
+      var closeBtn = this._fp && this._fp.querySelector('#AccFilterClose');
+      if (closeBtn) closeBtn.addEventListener('click', function () { self._closeFP(); });
+      var backdrop = this._fp && this._fp.querySelector('.acc-fp__backdrop');
+      if (backdrop) backdrop.addEventListener('click', function () { self._closeFP(); });
+
+      // Apply filter
+      var applyBtn = this._fp && this._fp.querySelector('#AccFilterApply');
+      if (applyBtn) {
+        applyBtn.addEventListener('click', function () {
+          self._readFilterPanel();
+          self._closeFP();
+          self._render();
+        });
+      }
+
+      // Clear filter
+      var clearBtn = this._fp && this._fp.querySelector('#AccFilterClear');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          self._clearFilters();
+          self._render();
+        });
+      }
+
+      // Keyboard: Escape closes filter panel
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && self._fp && !self._fp.hidden && self._fp.classList.contains('is-on')) {
+          self._closeFP();
+        }
+      });
+
+      // Grid: card ATC form submit → AJAX
+      if (this._grid) {
+        this._grid.addEventListener('submit', function (e) {
+          var form = e.target.closest('.acc-card__form');
+          if (!form) return;
+          e.preventDefault();
+          var card = form.closest('.acc-card');
+          self._handleAtc(form, card ? (card.dataset.popupTitle || '') : '');
+        });
+
+        // Grid: open popup on image, title link, or Details span click
+        this._grid.addEventListener('click', function (e) {
+          var imgLink    = e.target.closest('.acc-card__img');
+          var titleLink  = e.target.closest('.acc-card__title a');
+          var detailSpan = e.target.closest('.acc-card__details');
+
+          if (!imgLink && !titleLink && !detailSpan) return;
+          var card = e.target.closest('.acc-card[data-popup-title]');
+          if (!card) return;
+          e.preventDefault();
+          self._openPopup(card);
+        });
+
+        // Keyboard: Enter on Details span
+        this._grid.addEventListener('keydown', function (e) {
+          if (e.key !== 'Enter') return;
+          var detailSpan = e.target.closest('.acc-card__details');
+          if (!detailSpan) return;
+          var card = detailSpan.closest('.acc-card[data-popup-title]');
+          if (card) { e.preventDefault(); self._openPopup(card); }
+        });
+      }
+    }
+
+    /* ── Tab helpers ── */
+    _setActiveTab(dev) {
+      this.querySelectorAll('.acc-seg__btn').forEach(function (btn) {
+        var active = btn.dataset.dev === dev;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+
+    /* ── Filter panel open/close ── */
+    _openFP() {
+      if (!this._fp) return;
+      this._fp.hidden = false;
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          this._fp.classList.add('is-on');
+          if (this._fpBtn) this._fpBtn.setAttribute('aria-expanded', 'true');
+          var closeBtn = this._fp.querySelector('#AccFilterClose');
+          if (closeBtn) closeBtn.focus();
+        }.bind(this));
+      }.bind(this));
+    }
+
+    _closeFP() {
+      if (!this._fp) return;
+      this._fp.classList.remove('is-on');
+      if (this._fpBtn) this._fpBtn.setAttribute('aria-expanded', 'false');
+      setTimeout(function () { this._fp.hidden = true; }.bind(this), 300);
+      if (this._fpBtn) this._fpBtn.focus();
+    }
+
+    /* ── Read filter panel state → update internal state ── */
+    _readFilterPanel() {
+      if (!this._fp) return;
+      var sortEl = this._fp.querySelector('input[name="acc-sort"]:checked');
+      this._sort = sortEl ? sortEl.value : 'featured';
+
+      this._avail = [];
+      this._fp.querySelectorAll('input[name="acc-avail"]:checked').forEach(function (el) {
+        this._avail.push(el.value);
+      }.bind(this));
+
+      this._updateBadge();
+    }
+
+    /* ── Reset filter panel ── */
+    _clearFilters() {
+      if (this._fp) {
+        var featured = this._fp.querySelector('input[name="acc-sort"][value="featured"]');
+        if (featured) featured.checked = true;
+        this._fp.querySelectorAll('input[name="acc-avail"]').forEach(function (el) { el.checked = false; });
+      }
+      this._sort  = 'featured';
+      this._avail = [];
+      this._updateBadge();
+    }
+
+    /* ── Update filter badge count ── */
+    _updateBadge() {
+      if (!this._fpBadge) return;
+      var count = (this._sort !== 'featured' ? 1 : 0) + this._avail.length;
+      this._fpBadge.textContent = count;
+      this._fpBadge.hidden = count === 0;
+    }
+
+    /* ── Main render: filter + sort cards ── */
+    _render() {
+      if (!this._grid) return;
+      var cards = Array.from(this._grid.querySelectorAll('.acc-card'));
+      var qWords = this._q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      var visible = [];
+
+      cards.forEach(function (card) {
+        var devOk = this._dev === 'all' || card.dataset.dev === 'both' || card.dataset.dev === this._dev;
+
+        var avail = card.dataset.available === 'true';
+        var availOk = this._avail.length === 0
+          || (this._avail.includes('in-stock') && avail)
+          || (this._avail.includes('out-of-stock') && !avail);
+
+        var title = (card.dataset.title || '').toLowerCase();
+        var searchOk = qWords.length === 0 || qWords.every(function (w) { return title.includes(w); });
+
+        var show = devOk && availOk && searchOk;
+        card.hidden = !show;
+        if (show) visible.push(card);
+      }.bind(this));
+
+      // Sort visible cards
+      if (this._sort !== 'featured') {
+        visible.forEach(function (c) { this._grid.removeChild(c); }.bind(this));
+        if (this._sort === 'price-asc') {
+          visible.sort(function (a, b) { return parseInt(a.dataset.price || 0) - parseInt(b.dataset.price || 0); });
+        } else if (this._sort === 'price-desc') {
+          visible.sort(function (a, b) { return parseInt(b.dataset.price || 0) - parseInt(a.dataset.price || 0); });
+        } else if (this._sort === 'a-z') {
+          visible.sort(function (a, b) { return (a.dataset.title || '').localeCompare(b.dataset.title || ''); });
+        }
+        visible.forEach(function (c) { c.hidden = false; this._grid.appendChild(c); }.bind(this));
+      }
+
+      if (this._noResults) this._noResults.hidden = visible.length > 0;
+    }
+
+    /* ── AJAX Add to Cart (card form submit) ── */
+    _handleAtc(form, title) {
+      var btn = form.querySelector('[type="submit"]');
+      var vid = form.querySelector('input[name="id"]');
+      if (!vid) return;
+      var originalHTML = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.style.minWidth = btn.offsetWidth + 'px';
+        btn.innerHTML = '<span class="acc-btn-spinner"></span>';
+        btn.disabled = true;
+      }
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: JSON.stringify({ id: parseInt(vid.value, 10), quantity: 1 })
+      })
+      .then(function (r) {
+        if (!r.ok) return r.json().then(function (e) { throw new Error(e.description || 'Error'); });
+        return r.json();
+      })
+      .then(function (item) {
+        if (window.__showProductToast) window.__showProductToast(item.product_title || title);
+        return fetch('/cart.js').then(function (r) { return r.json(); });
+      })
+      .then(function (cart) {
+        document.querySelectorAll('.cart-count').forEach(function (el) {
+          el.textContent = cart.item_count;
+          el.hidden = cart.item_count === 0;
+        });
+        return fetch('/?section_id=cart-drawer').then(function (r) { return r.text(); });
+      })
+      .then(function (html) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var newD = tmp.querySelector('.cart-drawer');
+        var oldD = document.querySelector('.cart-drawer');
+        if (newD && oldD) oldD.innerHTML = newD.innerHTML;
+        if (oldD) oldD.classList.add('cart-drawer--active');
+        document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true }));
+        document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
+      })
+      .catch(function () {})
+      .finally(function () {
+        if (btn) { btn.style.minWidth = ''; btn.innerHTML = originalHTML; btn.disabled = false; }
+      });
+    }
+
+    /* ── Open global product popup from card data attrs ── */
+    _openPopup(card) {
+      var d = card.dataset;
+      var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
+        return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
+      });
+      document.dispatchEvent(new CustomEvent('product:popup', {
+        bubbles: true,
+        detail: {
+          title:     d.popupTitle     || '',
+          fits:      d.popupCompat    || '',
+          price:     d.popupPrice     || '',
+          available: d.popupAvailable !== 'false',
+          vid:       d.popupVariant   || '',
+          url:       d.popupUrl       || '',
+          images:    images,
+          headline:  decodeURIComponent(d.popupHeadline  || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
+          shortdesc: decodeURIComponent(d.popupShortdesc || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
+          variants:  []
+        }
+      }));
+    }
+  }
+
+  customElements.define('accessories-shop', AccessoriesShop);
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.accessories_shop.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "cols_default",
+      "label": "t:sections.accessories_shop.settings.cols_default.label",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.accessories_shop.presets.default.name"
+    }
+  ]
+}
+{% endschema %}

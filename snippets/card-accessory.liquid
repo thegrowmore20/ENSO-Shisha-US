@@ -1,14 +1,62 @@
 {%- doc -%}
   Accessory product card — handoff `.acc article` design.
   Parameters:
-    product  {object}  Shopify product object (required)
+    product       {object}  Shopify product object (required)
+    show_fits     {bool}    Show the "Fits Diamond / ENSŌ 2026 / Universal" badge (default: false)
+    show_details  {bool}    Show the "Details" popup-trigger link (default: false)
 {%- enddoc -%}
 
 {%- liquid
+  assign show_fits    = show_fits    | default: false
+  assign show_details = show_details | default: false
   assign variant = product.selected_or_first_available_variant
   assign img     = product.featured_image
   assign img2    = product.images[1]
-  assign popup_compat = product.metafields.custom.compatiblity_with
+
+  comment
+    Compatibility metafield drives the popup badge.
+    Falls back to tag-derived label when the metafield is blank.
+  endcomment
+  assign popup_compat = product.metafields.custom.compatiblity_with | default: ''
+
+  comment
+    data-dev: used by accessories-shop section JS for device-tab filtering.
+    diamond-only → "diamond" | enso-2026-only → "enso" | both or universal → "both"
+  endcomment
+  assign _has_diamond = false
+  assign _has_enso    = false
+  if product.tags contains 'diamond'
+    assign _has_diamond = true
+  endif
+  if product.tags contains 'enso-2026'
+    assign _has_enso = true
+  endif
+  if _has_diamond and _has_enso
+    assign _dev_val = 'both'
+  elsif _has_diamond
+    assign _dev_val = 'diamond'
+  elsif _has_enso
+    assign _dev_val = 'enso'
+  else
+    assign _dev_val = 'both'
+  endif
+
+  comment
+    Fits label (used for badge when show_fits is true and popup_compat is blank).
+  endcomment
+  if popup_compat != blank
+    assign _fits_label = popup_compat
+  elsif _has_diamond and _has_enso
+    assign _fits_label = 'Diamond & ENSŌ 2026'
+  elsif _has_diamond
+    assign _fits_label = 'Diamond'
+  elsif _has_enso
+    assign _fits_label = 'ENSŌ 2026'
+  elsif product.tags contains 'universal'
+    assign _fits_label = 'Universal'
+  else
+    assign _fits_label = ''
+  endif
 -%}
 
 {%- capture img_url_list -%}
@@ -22,18 +70,25 @@
 {%- capture popup_shortdesc -%}{{ product.metafields.custom.short_description | metafield_tag }}{%- endcapture -%}
 
 <article class="acc-card"
+  data-dev="{{ _dev_val }}"
+  data-price="{{ variant.price }}"
+  data-available="{{ product.available }}"
+  data-title="{{ product.title | downcase | escape }}"
   data-popup-title="{{ product.title | escape }}"
   data-popup-images="{{ img_url_list | strip }}"
   data-popup-img-alt="{{ img.alt | default: product.title | escape }}"
-  data-popup-price="{{ product.price | money }}"
+  data-popup-price="{{ variant.price | money }}"
   data-popup-variant="{{ variant.id }}"
   data-popup-url="{{ product.url }}"
   data-popup-available="{{ product.available }}"
-  data-popup-compat="{{ popup_compat | escape }}"
+  data-popup-compat="{{ _fits_label | escape }}"
   data-popup-headline="{{ popup_headline | escape }}"
   data-popup-shortdesc="{{ popup_shortdesc | escape }}"
 >
   <a class="acc-card__img" href="{{ product.url }}" tabindex="-1">
+    {%- if show_fits and _fits_label != blank -%}
+      <span class="acc-card__fits">{{ _fits_label }}</span>
+    {%- endif -%}
     {%- if img != blank -%}
       <img
         src="{{ img | image_url: width: 600 }}"
@@ -63,26 +118,32 @@
 
   <h3 class="acc-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
   <p class="acc-card__desc">{{ product.description | strip_html | strip | truncate: 140 }}</p>
+  {%- if show_details -%}
+    <span class="acc-card__details" role="button" tabindex="0" aria-label="{{ 'accessibility.open_details' | t: title: product.title }}">{{ 'products.product.details' | t | default: 'Details' }}</span>
+  {%- endif -%}
 
   <div class="acc-card__foot">
     <div class="acc-card__price">
-      <b>{{ product.price | money }}</b>
+      <b>{{ variant.price | money }}</b>
       {%- unless product.available -%}
         <small class="acc-card__oos">{{ 'products.product.sold_out' | t }}</small>
       {%- endunless -%}
     </div>
 
     {%- if product.available -%}
-      <form action="/cart/add" method="post" class="acc-card__form">
+      <form action="{{ routes.cart_add_url }}" method="post" class="acc-card__form">
         <input type="hidden" name="id" value="{{ variant.id }}">
         <input type="hidden" name="quantity" value="1">
         <button type="submit" class="acc-card__btn">
-          {{ 'products.product.add_to_cart' | t }}
+          <span class="acc-card__btn-label">{{ 'products.product.add_to_cart' | t }}</span>
+          <svg class="acc-card__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false" width="18" height="18">
+            <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
         </button>
       </form>
     {%- else -%}
       <a class="acc-card__btn acc-card__btn--remind" href="{{ product.url }}">
-        Remind me
+        {{ 'products.product.notify_me' | t | default: 'Notify me' }}
       </a>
     {%- endif -%}
   </div>
