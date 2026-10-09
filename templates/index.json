@@ -642,14 +642,61 @@
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 40
       }
+    },
+    "enso_witb": {
+      "type": "enso-witb",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "eyebrow": "What is in the box",
+        "heading": "Everything to start a session",
+        "hint_text": "Tap a part to see what it is and where to get a spare. The wall adapter is not included.",
+        "default_fits_label": "Fits ENSŌ 2026 Edition",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "accessories_carousel": {
+      "type": "accessories-carousel",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Accessories for ENSŌ",
+        "collection": "",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "pack_your_blend": {
+      "type": "pack-your-blend",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading": "Pack your blend",
+        "body_text": "Blonde or dark leaf, one flavour or your own mix — the cup shapes the session. A few tips on how to pack it.",
+        "pill_label": "How to pack the cup",
+        "card_height": "medium",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
     }
   },
   "order": [
     "hero",
     "models",
     "usps",
-    "enso_system_video",
     "enso_phil",
+    "enso_system_video",
+    "enso_witb",
+    "accessories_carousel",
+    "pack_your_blend",
     "enso_safety",
     "enso_diamond_row",
     "enso_awards",
