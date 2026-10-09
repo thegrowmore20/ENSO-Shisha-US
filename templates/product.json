@@ -19,13 +19,8 @@
       "type": "main-product",
       "blocks": {
         "compat_text": {
-          "type": "text",
-          "settings": {
-            "content": "{{ product.metafields.custom.compatiblity_with | metafield_tag }}",
-            "alignment": "left",
-            "text_size": "small",
-            "show_icon": false
-          }
+          "type": "compat_badge",
+          "settings": {}
         },
         "title_BMUCcV": {
           "type": "title",

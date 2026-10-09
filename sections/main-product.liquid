@@ -145,6 +145,14 @@
                 {%- endfor -%}
               </template>
 
+            {%- when 'compat_badge' -%}
+              {%- assign _compat = product.metafields.custom.compatiblity_with | metafield_tag | strip_html | strip -%}
+              {%- if _compat != blank -%}
+                <div class="product-chips product-block" {{ block.shopify_attributes }}>
+                  <span class="product-chip product-chip--compat">{{ _compat }}</span>
+                </div>
+              {%- endif -%}
+
             {%- when 'tags' -%}
               {%- if product.tags.size > 0 -%}
                 <div class="product-chips product-block" {{ block.shopify_attributes }}>
@@ -864,9 +872,9 @@
 
   .product-gallery__thumb {
     position: relative;
-    flex: 0 0 64px;
-    width: 64px;
-    height: 64px;
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
     border-radius: var(--radius-md);
     overflow: hidden;
     border: 2px solid transparent;
@@ -1528,6 +1536,7 @@
         { "type": "text", "id": "out_of_stock_text", "label": "Out of stock text", "default": "Out of stock" }
       ]
     },
+    { "type": "compat_badge", "name": "Compat badge", "limit": 1 },
     { "type": "tags", "name": "Product tags", "limit": 1 },
     {
       "type": "variant_picker",
