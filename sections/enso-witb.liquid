@@ -207,7 +207,7 @@
             {{- 'products.product.add_to_cart' | t -}}
           </button>
         </div>
-        <a class="witb-sheet__remind" id="WitbSheetRemind-{{ sid }}" href="#" hidden>Remind me when in stock</a>
+        <a class="witb-sheet__remind" id="WitbSheetRemind-{{ sid }}" href="#">Remind me when in stock</a>
         <a class="witb-sheet__full" id="WitbSheetUrl-{{ sid }}" href="#">View full details ›</a>
       </div>
     </div>
@@ -456,10 +456,11 @@
   color: #fff !important; opacity: 1; cursor: default;
 }
 .witb-sheet__remind {
-  display: block; margin-top: 12px;
+  display: none; margin-top: 12px;
   font-size: 14px; font-weight: 600; color: #000;
   text-decoration: underline; text-underline-offset: 3px;
 }
+.witb-sheet__remind.is-visible { display: block; }
 .witb-sheet__remind:hover { opacity: .7; }
 .witb-sheet__full {
   display: inline-block; margin-top: 14px;
@@ -560,7 +561,7 @@
     shAtc.textContent = available ? addLabel : oosLabel;
     shAtc.dataset.vid = d.vid || '';
     /* remind me link — shown only when out of stock */
-    if (shRemind) shRemind.hidden = available;
+    if (shRemind) shRemind.classList.toggle('is-visible', !available);
 
     lastFocus = document.activeElement;
     sheet.hidden = false;
