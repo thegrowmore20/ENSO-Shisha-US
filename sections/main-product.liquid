@@ -593,8 +593,17 @@
     grid-template-areas:
       "media content"
       "accordions content";
+    row-gap: var(--space-5);
   }
-  .product-main--acc-below .product-main__media { grid-row: 1; }
+  .product-main--acc-below .product-main__media {
+    grid-row: 1;
+    align-self: start;
+    overflow: hidden;
+  }
+  .product-main--acc-below .product-main__accordions {
+    align-self: start;
+    padding-top: var(--space-2);
+  }
 
   @media screen and (min-width: 990px) {
     .product-main--sticky .product-main__media {
