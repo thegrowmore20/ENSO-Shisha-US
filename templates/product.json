@@ -66,6 +66,10 @@
             "show_dynamic_checkout": true
           }
         },
+        "trust_badges_1": {
+          "type": "trust_badges",
+          "settings": {}
+        },
         "accordion_wUV8pN": {
           "type": "accordion",
           "settings": {
@@ -124,6 +128,7 @@
         "variant_picker_bbi9yP",
         "quantity_qDQky3",
         "buy_buttons_9DLDVw",
+        "trust_badges_1",
         "accordion_wUV8pN",
         "accordion_p4QqYU",
         "accordion_NcpqMr",
