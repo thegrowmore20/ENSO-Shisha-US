@@ -2,7 +2,10 @@
   assign cols_default = section.settings.cols_default | default: 4
 -%}
 
-<accessories-shop class="acc-shop" data-cols="{{ cols_default }}">
+<accessories-shop class="acc-shop"
+  data-cols="{{ cols_default }}"
+  data-collection-url="{{ collection.url }}"
+  data-section-id="{{ section.id }}">
 
   {%- comment -%} ── Sticky device tabs bar ── {%- endcomment -%}
   <div class="acc-bar" role="navigation" aria-label="{{ 'sections.accessories_shop.device_nav' | t }}">
@@ -100,17 +103,28 @@
     </div>
   </div>
 
-  {%- comment -%} ── Product grid ── {%- endcomment -%}
-  <div class="acc-grid-wrap">
+  {%- comment -%} ── Product grid (paginated) ── {%- endcomment -%}
+  <div class="acc-grid-wrap" id="AccGridWrap">
     <div class="acc-grid" id="AccGrid" style="--cols: {{ cols_default }}">
-      {%- for product in collection.products -%}
-        {%- unless product.title contains 'Shipping Protection' -%}
-          {%- render 'card-accessory', product: product, show_fits: true, show_details: true -%}
-        {%- endunless -%}
-      {%- else -%}
-        <p class="acc-empty">{{ 'sections.accessories_shop.no_products' | t }}</p>
-      {%- endfor -%}
+      {%- paginate collection.products by 40 -%}
+        {%- for product in collection.products -%}
+          {%- unless product.title contains 'Shipping Protection' -%}
+            {%- render 'card-accessory', product: product, show_fits: true, show_details: true -%}
+          {%- endunless -%}
+        {%- else -%}
+          <p class="acc-empty">{{ 'sections.accessories_shop.no_products' | t }}</p>
+        {%- endfor -%}
+      {%- endpaginate -%}
     </div>
+
+    {%- paginate collection.products by 40 -%}
+      {%- if paginate.next -%}
+        <div class="acc-load-more" id="AccLoadMore" data-next-url="{{ paginate.next.url | escape }}">
+          <button class="btn btn--outline acc-load-more__btn" type="button">{{ 'collections.general.load_more' | t }}</button>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+
     <p class="acc-noresults" id="AccNoResults" hidden>{{ 'sections.accessories_shop.no_results' | t }}</p>
   </div>
 
@@ -331,7 +345,7 @@
   margin-left: auto;
 }
 
-/* Explicitly hide filtered-out cards (some browsers need this reinforced) */
+/* Explicitly hide filtered-out cards */
 .acc-card[hidden] { display: none !important; }
 
 .acc-cols-ctrl__label {
@@ -493,6 +507,12 @@
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 var(--page-margin, 80px);
+  transition: opacity 0.2s;
+}
+
+.acc-grid-wrap.is-loading {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 749px) {
@@ -503,14 +523,14 @@
   display: grid;
   grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
   gap: 20px;
-  padding: 32px 0 96px;
+  padding: 32px 0 40px;
 }
 
 @media screen and (max-width: 991px) {
   .acc-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
-    padding: 24px 0 120px;
+    padding: 24px 0 32px;
   }
 }
 
@@ -521,6 +541,23 @@
   padding: 48px 20px;
   color: var(--color-text-muted, #5a554b);
   font-size: 15px;
+}
+
+/* ══════════════════════════════════════════
+   LOAD MORE
+   ══════════════════════════════════════════ */
+.acc-load-more {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 80px;
+}
+
+@media screen and (max-width: 749px) {
+  .acc-load-more { padding: 8px 0 120px; }
+}
+
+.acc-load-more__btn {
+  min-width: 160px;
 }
 
 /* ══════════════════════════════════════════
@@ -683,14 +720,24 @@
 (function () {
   if (customElements.get('accessories-shop')) return;
 
+  var SORT_MAP = {
+    'featured':   'manual',
+    'price-asc':  'price-ascending',
+    'price-desc': 'price-descending',
+    'a-z':        'title-ascending'
+  };
+
   class AccessoriesShop extends HTMLElement {
     connectedCallback() {
-      this._dev   = 'all';
-      this._q     = '';
-      this._sort  = 'featured';
-      this._avail = [];
+      this._dev      = 'all';
+      this._q        = '';
+      this._sort     = 'featured';
+      this._avail    = [];
+      this._debTimer = null;
 
-      this._grid      = this.querySelector('#AccGrid');
+      this._colUrl    = this.dataset.collectionUrl || '';
+      this._sectionId = this.dataset.sectionId     || '';
+
       this._search    = this.querySelector('#AccSearch');
       this._fp        = this.querySelector('#AccFilterPanel');
       this._fpBtn     = this.querySelector('#AccFilterBtn');
@@ -706,7 +753,7 @@
       var savedCols = parseInt(localStorage.getItem('ensoAccCols') || '', 10);
       if (!isNaN(savedCols) && savedCols >= 3 && savedCols <= 6) {
         if (this._colsInput) this._colsInput.value = savedCols;
-        if (this._grid) this._grid.style.setProperty('--cols', savedCols);
+        this._setColsStyle(savedCols);
       }
       if (this._colsOut && this._colsInput) this._colsOut.value = this._colsInput.value;
 
@@ -724,14 +771,14 @@
       }.bind(this)).catch(function () {});
 
       this._bindEvents();
-      this._render();
+      this._renderDeviceFilter();
     }
 
-    /* ── Bind all event listeners ── */
+    /* ── Bind all event listeners (delegated to `this` so they survive grid replacement) ── */
     _bindEvents() {
       var self = this;
 
-      // Device tabs
+      // Device tabs — client-side only, no server fetch needed
       var tabList = this.querySelector('.acc-seg');
       if (tabList) {
         tabList.addEventListener('click', function (e) {
@@ -740,16 +787,19 @@
           self._dev = btn.dataset.dev;
           self._setActiveTab(self._dev);
           self._syncDeviceFpRadio(self._dev);
-          self._render();
+          self._renderDeviceFilter();
           history.replaceState(null, '', self._dev === 'all' ? location.pathname + location.search : '#' + self._dev);
         });
       }
 
-      // Search
+      // Search — debounced 400ms → server fetch
       if (this._search) {
         this._search.addEventListener('input', function () {
           self._q = self._search.value;
-          self._render();
+          clearTimeout(self._debTimer);
+          self._debTimer = setTimeout(function () {
+            self._applyFilters();
+          }, 400);
         });
       }
 
@@ -757,7 +807,7 @@
       if (this._colsInput) {
         this._colsInput.addEventListener('input', function () {
           var v = self._colsInput.value;
-          if (self._grid) self._grid.style.setProperty('--cols', v);
+          self._setColsStyle(v);
           if (self._colsOut) self._colsOut.value = v;
           try { localStorage.setItem('ensoAccCols', v); } catch(e) {}
         });
@@ -774,22 +824,23 @@
       var backdrop = this._fp && this._fp.querySelector('.acc-fp__backdrop');
       if (backdrop) backdrop.addEventListener('click', function () { self._closeFP(); });
 
-      // Apply filter
+      // Apply filter → server fetch
       var applyBtn = this._fp && this._fp.querySelector('#AccFilterApply');
       if (applyBtn) {
         applyBtn.addEventListener('click', function () {
           self._readFilterPanel();
           self._closeFP();
-          self._render();
+          self._applyFilters();
         });
       }
 
-      // Clear filter
+      // Clear filter → server fetch
       var clearBtn = this._fp && this._fp.querySelector('#AccFilterClear');
       if (clearBtn) {
         clearBtn.addEventListener('click', function () {
           self._clearFilters();
-          self._render();
+          self._closeFP();
+          self._applyFilters();
         });
       }
 
@@ -800,71 +851,77 @@
         }
       });
 
-      // Grid: card ATC form submit → AJAX
-      if (this._grid) {
-        this._grid.addEventListener('submit', function (e) {
-          var form = e.target.closest('.acc-card__form');
-          if (!form) return;
-          e.preventDefault();
-          var card = form.closest('.acc-card');
-          self._handleAtc(form, card ? (card.dataset.popupTitle || '') : '');
+      // Load more — delegated to this (survives grid replacement)
+      this.addEventListener('click', function (e) {
+        var lmBtn = e.target.closest('.acc-load-more__btn');
+        if (!lmBtn) return;
+        var lmWrap = lmBtn.closest('#AccLoadMore');
+        if (lmWrap) self._loadMore(lmWrap);
+      });
+
+      // ATC form submit — delegated to this
+      this.addEventListener('submit', function (e) {
+        var form = e.target.closest('.acc-card__form');
+        if (!form) return;
+        e.preventDefault();
+        var card = form.closest('.acc-card');
+        self._handleAtc(form, card ? (card.dataset.popupTitle || '') : '');
+      });
+
+      // Popup open — delegated to this
+      this.addEventListener('click', function (e) {
+        var imgLink    = e.target.closest('.acc-card__img');
+        var titleLink  = e.target.closest('.acc-card__title a');
+        var detailSpan = e.target.closest('.acc-card__details');
+        if (!imgLink && !titleLink && !detailSpan) return;
+        var card = e.target.closest('.acc-card[data-popup-title]');
+        if (!card) return;
+        // Don't intercept ATC form submit
+        if (e.target.closest('.acc-card__form')) return;
+        e.preventDefault();
+        self._openPopup(card);
+      });
+
+      // Keyboard: Enter on Details span
+      this.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter') return;
+        var detailSpan = e.target.closest('.acc-card__details');
+        if (!detailSpan) return;
+        var card = detailSpan.closest('.acc-card[data-popup-title]');
+        if (card) { e.preventDefault(); self._openPopup(card); }
+      });
+
+      // Variant pill clicks
+      this.addEventListener('click', function (e) {
+        var pill = e.target.closest('.acc-card__opt');
+        if (!pill) return;
+        var card = pill.closest('.acc-card');
+        if (!card) return;
+
+        card.querySelectorAll('.acc-card__opt').forEach(function (p) {
+          p.classList.toggle('is-active', p === pill);
+          p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
         });
 
-        // Grid: open popup on image, title link, or Details span click
-        this._grid.addEventListener('click', function (e) {
-          var imgLink    = e.target.closest('.acc-card__img');
-          var titleLink  = e.target.closest('.acc-card__title a');
-          var detailSpan = e.target.closest('.acc-card__details');
+        var priceEl = card.querySelector('.acc-card__price b');
+        if (priceEl && pill.dataset.money) priceEl.textContent = pill.dataset.money;
 
-          if (!imgLink && !titleLink && !detailSpan) return;
-          var card = e.target.closest('.acc-card[data-popup-title]');
-          if (!card) return;
-          e.preventDefault();
-          self._openPopup(card);
-        });
+        var vidInput = card.querySelector('input[name="id"]');
+        if (vidInput && pill.dataset.vid) vidInput.value = pill.dataset.vid;
 
-        // Keyboard: Enter on Details span
-        this._grid.addEventListener('keydown', function (e) {
-          if (e.key !== 'Enter') return;
-          var detailSpan = e.target.closest('.acc-card__details');
-          if (!detailSpan) return;
-          var card = detailSpan.closest('.acc-card[data-popup-title]');
-          if (card) { e.preventDefault(); self._openPopup(card); }
-        });
-      }
+        if (pill.dataset.price) card.dataset.price = pill.dataset.price;
+        if (pill.dataset.vid)   card.dataset.popupVariant = pill.dataset.vid;
+        if (pill.dataset.money) card.dataset.popupPrice   = pill.dataset.money;
 
-      // Variant pill clicks — update price, form id, popup data
-      if (this._grid) {
-        this._grid.addEventListener('click', function (e) {
-          var pill = e.target.closest('.acc-card__opt');
-          if (!pill) return;
-          var card = pill.closest('.acc-card');
-          if (!card) return;
+        var atcBtn = card.querySelector('.acc-card__btn[type="submit"]');
+        if (atcBtn) atcBtn.disabled = pill.dataset.available === 'false';
+      });
+    }
 
-          // Active state
-          card.querySelectorAll('.acc-card__opt').forEach(function (p) {
-            p.classList.toggle('is-active', p === pill);
-            p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
-          });
-
-          // Price display
-          var priceEl = card.querySelector('.acc-card__price b');
-          if (priceEl && pill.dataset.money) priceEl.textContent = pill.dataset.money;
-
-          // Form variant id
-          var vidInput = card.querySelector('input[name="id"]');
-          if (vidInput && pill.dataset.vid) vidInput.value = pill.dataset.vid;
-
-          // Card data attrs (for sort + popup)
-          if (pill.dataset.price) card.dataset.price = pill.dataset.price;
-          if (pill.dataset.vid)   card.dataset.popupVariant = pill.dataset.vid;
-          if (pill.dataset.money) card.dataset.popupPrice   = pill.dataset.money;
-
-          // ATC button state
-          var atcBtn = card.querySelector('.acc-card__btn[type="submit"]');
-          if (atcBtn) atcBtn.disabled = pill.dataset.available === 'false';
-        });
-      }
+    /* ── Set --cols CSS var on the grid ── */
+    _setColsStyle(v) {
+      var grid = this.querySelector('#AccGrid');
+      if (grid) grid.style.setProperty('--cols', v);
     }
 
     /* ── Tab helpers ── */
@@ -874,6 +931,101 @@
         btn.classList.toggle('is-active', active);
         btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
+    }
+
+    /* ── Client-side device filter (runs after every grid update) ── */
+    _renderDeviceFilter() {
+      var grid = this.querySelector('#AccGrid');
+      if (!grid) return;
+      var cards = grid.querySelectorAll('.acc-card');
+      var visible = 0;
+      for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        var devOk = this._dev === 'all' || card.dataset.dev === 'both' || card.dataset.dev === this._dev;
+        card.hidden = !devOk;
+        card.style.display = devOk ? '' : 'none';
+        if (devOk) visible++;
+      }
+      if (this._noResults) this._noResults.hidden = visible > 0 || cards.length === 0;
+    }
+
+    /* ── Build URL and fetch grid from Shopify Section Rendering API ── */
+    _applyFilters() {
+      if (!this._colUrl || !this._sectionId) return;
+      var params = [];
+      var sortVal = SORT_MAP[this._sort] || 'manual';
+      if (sortVal !== 'manual') params.push('sort_by=' + encodeURIComponent(sortVal));
+      if (this._avail.length === 1) {
+        params.push('filter.p.availability=' + (this._avail[0] === 'in-stock' ? '1' : '0'));
+      }
+      if (this._q.trim()) params.push('q=' + encodeURIComponent(this._q.trim()));
+      var colUrl = this._colUrl + (params.length ? '?' + params.join('&') : '');
+      this._fetchGrid(colUrl, false);
+    }
+
+    /* ── Fetch section HTML and replace (or append) grid contents ── */
+    _fetchGrid(colUrl, append) {
+      var self = this;
+      var wrap = this.querySelector('#AccGridWrap');
+      if (!wrap) return;
+      if (!append) wrap.classList.add('is-loading');
+
+      var sep = colUrl.includes('?') ? '&' : '?';
+      var sectionUrl = colUrl + sep + 'section_id=' + encodeURIComponent(self._sectionId);
+
+      fetch(sectionUrl, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(function (r) { return r.text(); })
+        .then(function (html) {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = html;
+
+          var newGrid     = tmp.querySelector('#AccGrid');
+          var newLoadMore = tmp.querySelector('#AccLoadMore');
+
+          var curGrid     = self.querySelector('#AccGrid');
+          var curLoadMore = self.querySelector('#AccLoadMore');
+
+          if (newGrid && curGrid) {
+            if (append) {
+              var frag = document.createDocumentFragment();
+              Array.from(newGrid.children).forEach(function (c) { frag.appendChild(c.cloneNode(true)); });
+              curGrid.appendChild(frag);
+            } else {
+              curGrid.innerHTML = newGrid.innerHTML;
+            }
+          }
+
+          // Update load-more button
+          if (curLoadMore) curLoadMore.remove();
+          if (newLoadMore) {
+            var newLm = newLoadMore.cloneNode(true);
+            var insertRef = self.querySelector('#AccNoResults');
+            if (insertRef) {
+              wrap.insertBefore(newLm, insertRef);
+            } else {
+              wrap.appendChild(newLm);
+            }
+          }
+
+          // Re-apply per-row style (new grid loses the inline var)
+          if (self._colsInput) self._setColsStyle(self._colsInput.value);
+
+          // Client-side device filter on new cards
+          self._renderDeviceFilter();
+        })
+        .catch(function () {})
+        .finally(function () {
+          wrap.classList.remove('is-loading');
+        });
+    }
+
+    /* ── Load more: append next page ── */
+    _loadMore(lmWrap) {
+      var nextUrl = lmWrap.dataset.nextUrl;
+      if (!nextUrl) return;
+      var btn = lmWrap.querySelector('.acc-load-more__btn');
+      if (btn) { btn.disabled = true; btn.classList.add('is-loading'); }
+      this._fetchGrid(nextUrl, true);
     }
 
     /* ── Filter panel open/close ── */
@@ -905,9 +1057,10 @@
       this._sort = sortEl ? sortEl.value : 'featured';
 
       this._avail = [];
+      var self = this;
       this._fp.querySelectorAll('input[name="acc-avail"]:checked').forEach(function (el) {
-        this._avail.push(el.value);
-      }.bind(this));
+        self._avail.push(el.value);
+      });
 
       var devEl = this._fp.querySelector('input[name="acc-device"]:checked');
       if (devEl) {
@@ -919,7 +1072,7 @@
       this._updateBadge();
     }
 
-    /* ── Reset filter panel ── */
+    /* ── Reset all filters ── */
     _clearFilters() {
       if (this._fp) {
         var featured = this._fp.querySelector('input[name="acc-sort"][value="featured"]');
@@ -931,11 +1084,14 @@
       this._sort  = 'featured';
       this._avail = [];
       this._dev   = 'all';
+      this._q     = '';
+      if (this._search) this._search.value = '';
       this._setActiveTab('all');
+      history.replaceState(null, '', location.pathname + location.search);
       this._updateBadge();
     }
 
-    /* ── Update filter badge count ── */
+    /* ── Filter badge count ── */
     _updateBadge() {
       if (!this._fpBadge) return;
       var count = (this._sort !== 'featured' ? 1 : 0) + this._avail.length + (this._dev !== 'all' ? 1 : 0);
@@ -943,47 +1099,7 @@
       this._fpBadge.hidden = count === 0;
     }
 
-    /* ── Main render: filter + sort cards ── */
-    _render() {
-      if (!this._grid) return;
-      var cards = Array.from(this._grid.querySelectorAll('.acc-card'));
-      var qWords = this._q.trim().toLowerCase().split(/\s+/).filter(Boolean);
-      var visible = [];
-
-      cards.forEach(function (card) {
-        var devOk = this._dev === 'all' || card.dataset.dev === 'both' || card.dataset.dev === this._dev;
-
-        var avail = card.dataset.available === 'true';
-        var availOk = this._avail.length === 0
-          || (this._avail.includes('in-stock') && avail)
-          || (this._avail.includes('out-of-stock') && !avail);
-
-        var title = (card.dataset.title || '').toLowerCase();
-        var searchOk = qWords.length === 0 || qWords.every(function (w) { return title.includes(w); });
-
-        var show = devOk && availOk && searchOk;
-        card.hidden = !show;
-        card.style.display = show ? '' : 'none';
-        if (show) visible.push(card);
-      }.bind(this));
-
-      // Sort visible cards
-      if (this._sort !== 'featured') {
-        visible.forEach(function (c) { this._grid.removeChild(c); }.bind(this));
-        if (this._sort === 'price-asc') {
-          visible.sort(function (a, b) { return parseInt(a.dataset.price || 0) - parseInt(b.dataset.price || 0); });
-        } else if (this._sort === 'price-desc') {
-          visible.sort(function (a, b) { return parseInt(b.dataset.price || 0) - parseInt(a.dataset.price || 0); });
-        } else if (this._sort === 'a-z') {
-          visible.sort(function (a, b) { return (a.dataset.title || '').localeCompare(b.dataset.title || ''); });
-        }
-        visible.forEach(function (c) { c.hidden = false; c.style.display = ''; this._grid.appendChild(c); }.bind(this));
-      }
-
-      if (this._noResults) this._noResults.hidden = visible.length > 0;
-    }
-
-    /* ── AJAX Add to Cart (card form submit) ── */
+    /* ── AJAX Add to Cart ── */
     _handleAtc(form, title) {
       var self = this;
       var btn = form.querySelector('[type="submit"]');
@@ -1055,7 +1171,7 @@
       }));
     }
 
-    /* ── Update sticky bar cart summary from /cart.js payload ── */
+    /* ── Update sticky bar cart summary ── */
     _updateBar(cart) {
       if (!this._barSum) return;
       var count = cart.item_count || 0;
@@ -1073,7 +1189,7 @@
       }
     }
 
-    /* ── Sync filter panel device radio to current _dev ── */
+    /* ── Sync filter panel device radio ── */
     _syncDeviceFpRadio(dev) {
       if (!this._fp) return;
       var radio = this._fp.querySelector('input[name="acc-device"][value="' + dev + '"]');
