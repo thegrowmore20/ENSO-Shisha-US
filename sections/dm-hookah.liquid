@@ -1,0 +1,35 @@
+<div class="wrap">
+  <section class="ch" id="on-your-hookah"><p class="ch__num">06 · Start</p><h2>On your hookah</h2><p class="ch__lead">Diamond sits where the bowl sits. Your stem, base and hose stay as they are.</p><div class="slider tslider" style="--n:3"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Adapter on, half-way</b><p>Push one of the two adapters onto your hookah stem, only half-way. Do not push it all the way down.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.hookah_adapter != blank -%}{{- section.settings.hookah_adapter | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.hookah_adapter.alt | default: '', width: section.settings.hookah_adapter.width, height: section.settings.hookah_adapter.height -}}{%- else -%}<img src="{{ 'dm-s-hookah-adapter-two-hands.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Diamond on top, then press</b><p>Set Diamond on the adapter and press down with both hands: they slide down the stem together for the firmest grip.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.hookah_mount != blank -%}{{- section.settings.hookah_mount | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.hookah_mount.alt | default: '', width: section.settings.hookah_mount.width, height: section.settings.hookah_mount.height -}}{%- else -%}<img src="{{ 'dm-s-hookah-mount-two-hands.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Ready</b><p>Your hookah, hose and base stay the same. Only the bowl and the coals are gone.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.on_hookah != blank -%}{{- section.settings.on_hookah | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.on_hookah.alt | default: '', width: section.settings.on_hookah.width, height: section.settings.on_hookah.height -}}{%- else -%}<img src="{{ 'dm-s-on-hookah-front.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: On Your Hookah",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hookah mounting steps"
+    },
+    {
+      "type": "image_picker",
+      "id": "hookah_adapter",
+      "label": "Adapter on stem"
+    },
+    {
+      "type": "image_picker",
+      "id": "hookah_mount",
+      "label": "Diamond mounted"
+    },
+    {
+      "type": "image_picker",
+      "id": "on_hookah",
+      "label": "Diamond on hookah ready"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: On Your Hookah"
+    }
+  ]
+}
+{% endschema %}

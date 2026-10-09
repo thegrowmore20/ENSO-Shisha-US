@@ -1,16 +1,81 @@
 {
   "sections": {
-    "diamond_manual": {
-      "type": "diamond-manual",
+    "dm_intro": {
+      "type": "dm-intro",
       "settings": {
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       }
+    },
+    "dm_outofbox": {
+      "type": "dm-outofbox",
+      "settings": {}
+    },
+    "dm_charging": {
+      "type": "dm-charging",
+      "settings": {}
+    },
+    "dm_battery": {
+      "type": "dm-battery",
+      "settings": {}
+    },
+    "dm_dial": {
+      "type": "dm-dial",
+      "settings": {}
+    },
+    "dm_pack": {
+      "type": "dm-pack",
+      "settings": {}
+    },
+    "dm_hookah": {
+      "type": "dm-hookah",
+      "settings": {}
+    },
+    "dm_preheat": {
+      "type": "dm-preheat",
+      "settings": {}
+    },
+    "dm_profiles": {
+      "type": "dm-profiles",
+      "settings": {}
+    },
+    "dm_menu": {
+      "type": "dm-menu",
+      "settings": {}
+    },
+    "dm_software": {
+      "type": "dm-software",
+      "settings": {}
+    },
+    "dm_cap": {
+      "type": "dm-cap",
+      "settings": {}
+    },
+    "dm_cleaning": {
+      "type": "dm-cleaning",
+      "settings": {}
+    },
+    "dm_care": {
+      "type": "dm-care",
+      "settings": {}
     }
   },
   "order": [
-    "diamond_manual"
+    "dm_intro",
+    "dm_outofbox",
+    "dm_charging",
+    "dm_battery",
+    "dm_dial",
+    "dm_pack",
+    "dm_hookah",
+    "dm_preheat",
+    "dm_profiles",
+    "dm_menu",
+    "dm_software",
+    "dm_cap",
+    "dm_cleaning",
+    "dm_care"
   ]
 }

@@ -1,0 +1,118 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'dm-closed-start.jpg' | file_url
+  endif
+-%}
+{%- liquid
+  if section.settings.ui_q_menu != blank
+    assign ui_q_menu_src = section.settings.ui_q_menu | image_url: width: 600
+  else
+    assign ui_q_menu_src = 'dm-ui-q-menu.png' | file_url
+  endif
+  if section.settings.ui_p_profiles != blank
+    assign ui_p_profiles_src = section.settings.ui_p_profiles | image_url: width: 600
+  else
+    assign ui_p_profiles_src = 'dm-ui-p-profiles.png' | file_url
+  endif
+  if section.settings.ui_p_theme != blank
+    assign ui_p_theme_src = section.settings.ui_p_theme | image_url: width: 600
+  else
+    assign ui_p_theme_src = 'dm-ui-p-theme.png' | file_url
+  endif
+  if section.settings.ui_p_volume != blank
+    assign ui_p_volume_src = section.settings.ui_p_volume | image_url: width: 600
+  else
+    assign ui_p_volume_src = 'dm-ui-p-volume.png' | file_url
+  endif
+  if section.settings.ui_p_haptic != blank
+    assign ui_p_haptic_src = section.settings.ui_p_haptic | image_url: width: 600
+  else
+    assign ui_p_haptic_src = 'dm-ui-p-haptic.png' | file_url
+  endif
+  if section.settings.ui_p_brightness != blank
+    assign ui_p_brightness_src = section.settings.ui_p_brightness | image_url: width: 600
+  else
+    assign ui_p_brightness_src = 'dm-ui-p-brightness.png' | file_url
+  endif
+  if section.settings.ui_p_screen != blank
+    assign ui_p_screen_src = section.settings.ui_p_screen | image_url: width: 600
+  else
+    assign ui_p_screen_src = 'dm-ui-p-screen.png' | file_url
+  endif
+  if section.settings.ui_p_stats != blank
+    assign ui_p_stats_src = section.settings.ui_p_stats | image_url: width: 600
+  else
+    assign ui_p_stats_src = 'dm-ui-p-stats.png' | file_url
+  endif
+-%}
+<div class="wrap">
+  <section class="ch" id="menu"><p class="ch__num">09 · Every session</p><h2>Menu and settings</h2><p class="ch__lead">Open Menu from the start list, or with one click during a session. Turn to an item, click to open, turn to change, click to confirm. Nothing here stops a running session.</p><div class="slider tslider" style="--n:8"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Menu</b><p>Turn to Menu in the start list and click, or click once during a session.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_q_menu_src }}" alt="Menu: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Profiles</b><p>Default, Phoenix, Wraith or Oracle. The tick marks the one in use.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_profiles_src }}" alt="Profiles: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Theme Color</b><p>Six colours: Ember, Amber, Copper, Moss, Plum and Ash. Kept with the profile.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_theme_src }}" alt="Theme Color: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Sound Volume</b><p>From silent to full. Two sounds only: pre-heat done, and battery low.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_volume_src }}" alt="Sound Volume: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">5</span><b>Haptic Feedback</b><p>The small click under your finger as you turn. Five strengths, or off.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_haptic_src }}" alt="Haptic Feedback: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">6</span><b>Brightness</b><p>How bright the screen is. Lower it for a dark room.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_brightness_src }}" alt="Brightness: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">7</span><b>Session Screen</b><p>Temperature and time, or a calm animation. Switch any time.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_screen_src }}" alt="Session Screen: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">8</span><b>Session Stats</b><p>How many sessions this Diamond has run. One counts after five minutes past pre-heat.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_stats_src }}" alt="Session Stats: the Diamond screen"></div></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Menu",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Menu screen UI images"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_q_menu",
+      "label": "Menu screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_profiles",
+      "label": "Profiles screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_theme",
+      "label": "Theme Color screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_volume",
+      "label": "Sound Volume screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_haptic",
+      "label": "Haptic Feedback screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_brightness",
+      "label": "Brightness screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_screen",
+      "label": "Session Screen setting"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_stats",
+      "label": "Session Stats screen"
+    },
+    {
+      "type": "header",
+      "content": "Device frame"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Diamond device frame image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Menu"
+    }
+  ]
+}
+{% endschema %}

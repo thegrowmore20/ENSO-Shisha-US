@@ -1,0 +1,32 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'dm-closed-start.jpg' | file_url
+  endif
+-%}
+<div class="wrap">
+  <section class="ch" id="the-dial"><p class="ch__num">04 · Start</p><h2>The dial and the screen</h2><p class="ch__lead">One dial does everything: turn to move and to change the temperature, click to choose. No touch screen, no app.</p><div class="slider tslider" style="--n:7"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Hold 3 seconds</b><p>Switches Diamond on, or off.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="hold" role="img" aria-label="Hold 3 seconds: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Turn slowly</b><p>One degree at a time, for a fine adjustment.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="slow" role="img" aria-label="Turn slowly: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Turn fast</b><p>Jumps in fives, to get there quickly.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="fast" role="img" aria-label="Turn fast: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Click</b><p>Chooses. During a session it opens the menu.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="click" role="img" aria-label="Click: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">5</span><b>Click twice</b><p>Cancel: turn to Yes and click to stop the session.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="click2" role="img" aria-label="Click twice: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">6</span><b>Click four times</b><p>Locks the dial. Four clicks again unlock it.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="click4" role="img" aria-label="Click four times: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">7</span><b>One click when off</b><p>Shows the battery level.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="level" role="img" aria-label="One click when off: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: The Dial",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Device frame"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Diamond device frame image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: The Dial"
+    }
+  ]
+}
+{% endschema %}

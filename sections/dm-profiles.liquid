@@ -1,0 +1,98 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'dm-closed-start.jpg' | file_url
+  endif
+-%}
+{%- liquid
+  if section.settings.ui_m_profiles != blank
+    assign ui_m_profiles_src = section.settings.ui_m_profiles | image_url: width: 600
+  else
+    assign ui_m_profiles_src = 'dm-ui-m-profiles.png' | file_url
+  endif
+  if section.settings.ui_p_profiles != blank
+    assign ui_p_profiles_src = section.settings.ui_p_profiles | image_url: width: 600
+  else
+    assign ui_p_profiles_src = 'dm-ui-p-profiles.png' | file_url
+  endif
+  if section.settings.ui_profile_default != blank
+    assign ui_profile_default_src = section.settings.ui_profile_default | image_url: width: 600
+  else
+    assign ui_profile_default_src = 'dm-ui-profile_default.png' | file_url
+  endif
+  if section.settings.ui_profile_phoenix != blank
+    assign ui_profile_phoenix_src = section.settings.ui_profile_phoenix | image_url: width: 600
+  else
+    assign ui_profile_phoenix_src = 'dm-ui-profile_phoenix.png' | file_url
+  endif
+  if section.settings.ui_profile_wraith != blank
+    assign ui_profile_wraith_src = section.settings.ui_profile_wraith | image_url: width: 600
+  else
+    assign ui_profile_wraith_src = 'dm-ui-profile_wraith.png' | file_url
+  endif
+  if section.settings.ui_profile_oracle != blank
+    assign ui_profile_oracle_src = section.settings.ui_profile_oracle | image_url: width: 600
+  else
+    assign ui_profile_oracle_src = 'dm-ui-profile_oracle.png' | file_url
+  endif
+-%}
+<div class="wrap">
+  <section class="ch" id="profiles"><p class="ch__num">08 · Every session</p><h2>Profiles</h2><p class="ch__lead">Four profiles, each with its own colour. Default always starts the same; the other three keep what you set last. The one you pick stays selected until you pick another.</p><div class="slider tslider" style="--n:6"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Menu › Profiles</b><p>Open Menu, turn to Profiles and click.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_m_profiles_src }}" alt="Menu › Profiles: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Pick one</b><p>Turn through the four, click to choose. A tick marks the one in use.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_p_profiles_src }}" alt="Pick one: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Default: room to play</b><p>Always starts at 7 minutes and 275 °C, the middle of the dial, so you can turn up or down for your blend. Nothing is saved.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_profile_default_src }}" alt="Default: room to play: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Phoenix: Virginia</b><p>For blonde leaf: a slightly longer pre-heat at a gentler heat, 8 minutes at 265 °C. Keeps what you set last.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_profile_phoenix_src }}" alt="Phoenix: Virginia: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">5</span><b>Wraith: dark, balanced</b><p>A rounded, balanced flavour for dark blends, 9 minutes at 275 °C. Keeps what you set last.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_profile_wraith_src }}" alt="Wraith: dark, balanced: the Diamond screen"></div></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">6</span><b>Oracle: the smokiest</b><p>For the densest, smokiest session, 8 minutes at 290 °C. Keeps what you set last.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_profile_oracle_src }}" alt="Oracle: the smokiest: the Diamond screen"></div></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><div class="note note--tip"><b>What is kept after a session</b><ul><li>Default: nothing. It starts at 7 minutes and 275 °C every time.</li><li>Phoenix, Wraith and Oracle: the pre-heat time and the pre-heat temperature you set last.</li><li>Turning the temperature during a session changes that session only, on every profile.</li><li>The theme colour you choose is kept with the profile.</li></ul></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Profiles",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Profile screen UI images"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_m_profiles",
+      "label": "Menu › Profiles screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_p_profiles",
+      "label": "Profiles list screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_profile_default",
+      "label": "Default profile screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_profile_phoenix",
+      "label": "Phoenix profile screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_profile_wraith",
+      "label": "Wraith profile screen"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_profile_oracle",
+      "label": "Oracle profile screen"
+    },
+    {
+      "type": "header",
+      "content": "Device frame"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Diamond device frame image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Profiles"
+    }
+  ]
+}
+{% endschema %}

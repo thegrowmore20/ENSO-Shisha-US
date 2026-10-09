@@ -1,0 +1,45 @@
+<div class="wrap">
+  <section class="ch" id="the-cap"><p class="ch__num">11 · Every session</p><h2>The cap and the draw</h2><p class="ch__lead">The thermo cap holds the heat over the cup. The plate on top sets how much air reaches the blend.</p><div class="slider tslider" style="--n:5"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Three parts</b><p>The shell that holds the heat, the plate that sets the draw, and the insert that holds them.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cap_parts_white != blank -%}{{- section.settings.cap_parts_white | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_parts_white.alt | default: '', width: section.settings.cap_parts_white.width, height: section.settings.cap_parts_white.height, style: 'object-fit:contain!important;background:#fff' -}}{%- else -%}<img src="{{ 'dm-s-cap-parts-white.jpg' | file_url }}" alt="" loading="lazy" style="object-fit:contain!important;background:#fff">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Five positions</b><p>Four open settings and fully closed. Closed there is no draw. Turn it with the cup tool, even during a session.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.plate_fork_macro != blank -%}{{- section.settings.plate_fork_macro | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.plate_fork_macro.alt | default: '', width: section.settings.plate_fork_macro.width, height: section.settings.plate_fork_macro.height -}}{%- else -%}<img src="{{ 'dm-s-plate-fork-macro.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Where to start</b><p>Fully open, all four holes free. Start there and close it a step only if you want a denser draw.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cap_holes != blank -%}{{- section.settings.cap_holes | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_holes.alt | default: '', width: section.settings.cap_holes.width, height: section.settings.cap_holes.height -}}{%- else -%}<img src="{{ 'dm-s-cap-holes.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Lift by the pads</b><p>Hold the cap only by its rubber side pads and lift it straight up. It is hot during a session.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cap_off != blank -%}{{- section.settings.cap_off | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_off.alt | default: '', width: section.settings.cap_off.width, height: section.settings.cap_off.height -}}{%- else -%}<img src="{{ 'dm-s-cap-off.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">5</span><b>Cap on</b><p>Set it back flush and press on the rubber pad, never on the hot top.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cap_on_press != blank -%}{{- section.settings.cap_on_press | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_on_press.alt | default: '', width: section.settings.cap_on_press.width, height: section.settings.cap_on_press.height -}}{%- else -%}<img src="{{ 'dm-s-cap-on-press-pad.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: The Cap",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cap steps"
+    },
+    {
+      "type": "image_picker",
+      "id": "cap_parts_white",
+      "label": "Cap three parts"
+    },
+    {
+      "type": "image_picker",
+      "id": "plate_fork_macro",
+      "label": "Plate positions macro"
+    },
+    {
+      "type": "image_picker",
+      "id": "cap_holes",
+      "label": "Cap holes open"
+    },
+    {
+      "type": "image_picker",
+      "id": "cap_off",
+      "label": "Cap lifted off"
+    },
+    {
+      "type": "image_picker",
+      "id": "cap_on_press",
+      "label": "Cap on, press pad"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: The Cap"
+    }
+  ]
+}
+{% endschema %}

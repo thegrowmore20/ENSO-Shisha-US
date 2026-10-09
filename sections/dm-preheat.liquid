@@ -1,0 +1,51 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'dm-closed-start.jpg' | file_url
+  endif
+-%}
+<div class="wrap">
+  <section class="ch" id="switch-on"><p class="ch__num">07 · Every session</p><h2>Pre-heat and temperature</h2><p class="ch__lead">You choose how long Diamond warms the cup and how hot you smoke. The two belong together.</p><span id="temperature" class="anchor"></span><div class="feat feat--mac"><div class="mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="timer" role="img" aria-label="Setting the pre-heat time, minute by minute"></div></div><span class="finger" aria-hidden="true"></span></div><div><h3>Pre-heat time</h3><p>Diamond warms the tobacco before the first draw, so the cup is ready when you are. 7 minutes at 275 °C is the standard; set it in whole minutes, up to 15. 5 minutes at a higher heat gives an intense start, but the flavour fades sooner.</p></div></div><h3>Find your heat</h3><div class="hf2"><div class="mac"><div class="dev"><img src="{{ df_src }}" alt="ENSŌ Diamond, front"><div class="lv" role="img" aria-label="The dial set to your heat"></div></div></div><div class="hf__q"><div class="hf__g"><b>Your tobacco</b><div class="hf__opts"><button type="button" data-hf="leaf" data-v="virginia" aria-pressed="true">Virginia<small>Blonde leaf</small></button><button type="button" data-hf="leaf" data-v="dark" aria-pressed="false">Burley<small>Dark leaf, heavier</small></button><button type="button" data-hf="leaf" data-v="mix" aria-pressed="false">A mix<small>Virginia and dark</small></button></div></div><div class="hf__g"><b>How you like it</b><div class="hf__opts"><button type="button" data-hf="str" data-v="soft" aria-pressed="true">Lighter<small>Smooth and long</small></button><button type="button" data-hf="str" data-v="strong" aria-pressed="false">Stronger<small>More body</small></button></div></div><dl class="hf2__out" aria-live="polite"><div><dt>Pre-heat</dt><dd class="hf2__pre"></dd></div><div><dt>Session heat</dt><dd class="hf2__t"></dd></div><div><dt>Profile to try</dt><dd class="hf2__prof"></dd></div></dl><p class="hf2__note">A starting point. Turn the dial by taste: the harder you draw, the more heat you need.</p></div></div><h3>On the dial</h3><div class="slider tslider" style="--n:5"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Set the time</b><p>Pre-heat Timer → click, turn to set up to 15 minutes, click to save.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="timer" role="img" aria-label="Set the time: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Start</b><p>Start Pre-heat → click. The screen counts down.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="start" role="img" aria-label="Start: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Set the temperature</b><p>While it counts down, turn the dial: 180–320 °C. A sound tells you the session has started.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="temp" role="img" aria-label="Set the temperature: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Adjust in the session</b><p>Turn the dial any time to go warmer or cooler. Turn fast and it jumps in fives.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="session" role="img" aria-label="Adjust in the session: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">5</span><b>Stop</b><p>Click twice, turn to Yes, click. Works during pre-heat and during the session.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="stop" role="img" aria-label="Stop: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><p class="more"><a href="#profiles">Profiles: a starting heat for each kind of blend ›</a></p><div class="note note--tip"><b>What Diamond remembers</b><ul><li>The pre-heat time and the pre-heat temperature are saved to the profile you are on.</li><li>Turning the temperature during the session changes this session only.</li></ul></div><div class="note note--tip"><b>No auto-off</b><ul><li>The session runs until you switch off, or until the battery runs low.</li></ul></div><h3 id="break">Pause the session</h3><div class="feat feat--mac"><div class="mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="brk" role="img" aria-label="Turning the dial down to 180 °C"></div></div><span class="finger" aria-hidden="true"></span></div><div><p>Turn the dial down to 180 °C. Diamond keeps the cup warm without burning the tobacco, so you can step away for up to 15 minutes. Back again? Turn up to your heat.</p></div></div><h3 id="burnt">If it starts to taste burnt</h3><div class="slider tslider" style="--n:4"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Turn the dial down</b><p>Ten or twenty degrees is enough.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="down" role="img" aria-label="Turn the dial down: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Cap off, let it breathe</b><p>Lift the cap by its pads. Blow gently over the tobacco, or simply let it breathe for a moment.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cap_off != blank -%}{{- section.settings.cap_off | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_off.alt | default: '', width: section.settings.cap_off.width, height: section.settings.cap_off.height -}}{%- else -%}<img src="{{ 'dm-s-cap-off.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Or lift the cup</b><p>You can also lift the cup out with the tool for a moment and let it breathe.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cup_tool_lower != blank -%}{{- section.settings.cup_tool_lower | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cup_tool_lower.alt | default: '', width: section.settings.cup_tool_lower.width, height: section.settings.cup_tool_lower.height -}}{%- else -%}<img src="{{ 'dm-s-cup-tool-lower.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Back in, cap on</b><p>The flavour comes back: on Diamond it is hard to really burn a cup.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cap_on_press != blank -%}{{- section.settings.cap_on_press | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_on_press.alt | default: '', width: section.settings.cap_on_press.width, height: section.settings.cap_on_press.height -}}{%- else -%}<img src="{{ 'dm-s-cap-on-press-pad.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Pre-heat",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Burnt taste steps"
+    },
+    {
+      "type": "image_picker",
+      "id": "cap_off",
+      "label": "Cap off, let breathe"
+    },
+    {
+      "type": "image_picker",
+      "id": "cup_tool_lower",
+      "label": "Lift cup with tool"
+    },
+    {
+      "type": "image_picker",
+      "id": "cap_on_press",
+      "label": "Cap back on"
+    },
+    {
+      "type": "header",
+      "content": "Device frame"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Diamond device frame image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Pre-heat"
+    }
+  ]
+}
+{% endschema %}

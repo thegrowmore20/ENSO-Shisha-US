@@ -1,0 +1,41 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'dm-closed-start.jpg' | file_url
+  endif
+-%}
+<div class="wrap">
+  <section class="ch" id="software"><p class="ch__num">10 · Every session</p><h2>Software updates</h2><p class="ch__lead">Diamond updates over USB-C from your browser. No app to install, no account. Every Diamond leaves us with the latest software.</p><div class="slider tslider" style="--n:4"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Plug into your computer</b><p>Take the battery out and plug the cable into the USB-C port at the top of the bay. The other end goes into your computer.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cable_alone != blank -%}{{- section.settings.cable_alone | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cable_alone.alt | default: '', width: section.settings.cable_alone.width, height: section.settings.cable_alone.height -}}{%- else -%}<img src="{{ 'dm-s-cable-alone.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Open the firmware page</b><p>Open the firmware page on ensoshisha.eu in your browser. It sees Diamond on the cable. Press Update.</p></figcaption><div class="ts__pic ts__pic--mock"><svg class="fwm" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Montserrat,sans-serif"><rect x="20" y="70" width="360" height="300" rx="16" fill="#fff" stroke="#d9d6d0" stroke-width="2"/><path d="M20 86a16 16 0 0 1 16-16h328a16 16 0 0 1 16 16v26H20z" fill="#F3F1ED"/><circle cx="42" cy="91" r="5" fill="#e2614c"/><circle cx="58" cy="91" r="5" fill="#e7a35a"/><circle cx="74" cy="91" r="5" fill="#7eae82"/><rect x="100" y="82" width="230" height="18" rx="9" fill="#fff"/><text x="215" y="95" text-anchor="middle" font-size="10" fill="#8E8A85">ensoshisha.eu/firmware</text><text x="200" y="160" text-anchor="middle" font-size="19" font-weight="700" fill="#1A1A1A">ENSŌ Diamond software</text><rect x="96" y="186" width="208" height="40" rx="20" fill="#eef5ef"/><circle cx="122" cy="206" r="8" fill="#2e7d4f"/><path d="M118 206l3 3 5-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><text x="212" y="211" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1A1A">Diamond connected</text><rect x="120" y="262" width="160" height="46" rx="23" fill="#000"/><text x="200" y="290" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="1.5" fill="#fff">UPDATE</text><rect x="115" y="257" width="170" height="56" rx="28" fill="none" stroke="#c8943a" stroke-width="3"/><path d="M0 380h400l-24 26H24z" fill="#d9d6d0"/></svg></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Wait until it is done</b><p>Keep the cable in until the page says it is done. Then unplug and put the battery back.</p></figcaption><div class="ts__pic ts__pic--mock"><svg class="fwm" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Montserrat,sans-serif"><rect x="20" y="70" width="360" height="300" rx="16" fill="#fff" stroke="#d9d6d0" stroke-width="2"/><path d="M20 86a16 16 0 0 1 16-16h328a16 16 0 0 1 16 16v26H20z" fill="#F3F1ED"/><circle cx="42" cy="91" r="5" fill="#e2614c"/><circle cx="58" cy="91" r="5" fill="#e7a35a"/><circle cx="74" cy="91" r="5" fill="#7eae82"/><rect x="100" y="82" width="230" height="18" rx="9" fill="#fff"/><text x="215" y="95" text-anchor="middle" font-size="10" fill="#8E8A85">ensoshisha.eu/firmware</text><text x="200" y="170" text-anchor="middle" font-size="19" font-weight="700" fill="#1A1A1A">Updating…</text><rect x="80" y="200" width="240" height="12" rx="6" fill="#E6E3DE"/><rect x="80" y="200" width="156" height="12" rx="6" fill="#c8943a"/><text x="200" y="246" text-anchor="middle" font-size="13" fill="#666">Keep the cable in until it says done</text><rect x="128" y="276" width="144" height="40" rx="20" fill="#eef5ef"/><text x="200" y="301" text-anchor="middle" font-size="13" font-weight="700" fill="#2e7d4f">Done ✓</text><path d="M0 380h400l-24 26H24z" fill="#d9d6d0"/></svg></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Check the version</b><p>Switch Diamond off and click the dial <b>five times</b>: the version shows on the screen.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="ver" role="img" aria-label="Check the version: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><div class="note note--tip"><b>Hear about the next release</b><ul><li>Turn on update alerts in the ENSŌ app and you get one short message when new software is out. <a href="app.html#diamond-updates">Update alerts ›</a></li></ul></div><p class="tsmore"><a class="tsmore__b" href="app.html#diamond-updates">Open Software updates</a><span>The latest release, how to update and alerts</span></p></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Software",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Update steps"
+    },
+    {
+      "type": "image_picker",
+      "id": "cable_alone",
+      "label": "Cable plugged in alone"
+    },
+    {
+      "type": "header",
+      "content": "Device frame"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Diamond device frame image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Software"
+    }
+  ]
+}
+{% endschema %}

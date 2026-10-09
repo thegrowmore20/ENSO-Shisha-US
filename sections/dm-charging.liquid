@@ -1,0 +1,56 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'dm-closed-start.jpg' | file_url
+  endif
+-%}
+<div class="wrap">
+  <section class="ch" id="charging"><p class="ch__num">02 · Start</p><h2>Charge it first</h2><p class="ch__lead">Give the battery a full charge before the first session. Two ways, both over USB-C. Each of the four dots is a quarter of the charge: all four lit means full, about 1.5 hours from empty.</p><div class="slider tslider" style="--n:4"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Battery on its own</b><p>Pull the battery out and plug the cable straight into it. Handy with a spare: one in Diamond, one charging.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.before_charge != blank -%}{{- section.settings.before_charge | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.before_charge.alt | default: '', width: section.settings.before_charge.width, height: section.settings.before_charge.height -}}{%- else -%}<img src="{{ 'dm-s-before-charge.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>About 1.5 h · 30 W</b><p>Full in about 1.5 hours with a 30 W USB-C charger. The four dots show the charge in quarters.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.charge_dots != blank -%}{{- section.settings.charge_dots | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.charge_dots.alt | default: '', width: section.settings.charge_dots.width, height: section.settings.charge_dots.height -}}{%- else -%}<img src="{{ 'dm-s-charge-dots.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Or inside Diamond</b><p>Leave the battery in and plug the cable into the port on the back, under the four dots.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.charge_in != blank -%}{{- section.settings.charge_in | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.charge_in.alt | default: '', width: section.settings.charge_in.width, height: section.settings.charge_in.height -}}{%- else -%}<img src="{{ 'dm-s-charge-in.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Check the level</b><p>Diamond switched off? One click on the dial shows the charge on the screen.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="level" role="img" aria-label="Check the level: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><h3 id="charger">Which charger</h3><p class="h3lead">There is no wall charger in the box. Use the USB-C cable from the box with any USB-C wall charger rated 30 W or more, such as a phone fast charger or a laptop charger.</p><div class="cws"><div class="cws__c cws__c--on"><b>30 W or more</b><span>A full charge in about 1.5 hours.</span></div><div class="cws__c"><b>15–29 W</b><span>It charges, just more slowly.</span></div></div><h3>Reading the four dots</h3><div class="dotsanim"><span class="d"><i></i><i></i><i></i><i></i></span><div><b>Charging</b><small>The dots fill one by one, a quarter each. All four lit: full.</small></div></div><ul class="dots4"><li><span class="d"><i class="lit"></i><i class=""></i><i class=""></i><i class=""></i></span><b>25 %</b><small>A quarter</small></li><li><span class="d"><i class="lit"></i><i class="lit"></i><i class=""></i><i class=""></i></span><b>50 %</b><small>Half</small></li><li><span class="d"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class=""></i></span><b>75 %</b><small>Three quarters</small></li><li><span class="d"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit"></i></span><b>100 %</b><small>Full, about 1.5 h from empty</small></li></ul><h3 id="charge-while-smoking">Charge while you smoke</h3><div class="cwsx">{%- if section.settings.charge_while_smoking != blank -%}{{- section.settings.charge_while_smoking | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.charge_while_smoking.alt | default: 'Diamond on a hookah from the back, a USB-C cable plugged in under the four lit dots', width: section.settings.charge_while_smoking.width, height: section.settings.charge_while_smoking.height -}}{%- else -%}<img src="{{ 'dm-s-charge-while-smoking.jpg' | file_url }}" alt="Diamond on a hookah from the back, a USB-C cable plugged in under the four lit dots" loading="lazy">{%- endif -%}<div><p class="h3lead">Keep a 30 W USB-C supply plugged into the back and the session runs on. Whether the battery also charges depends on the heat.</p><div class="cws"><div class="cws__c cws__c--on"><b>255 °C or lower</b><span>The battery charges while you smoke.</span></div><div class="cws__c"><b>Above 255 °C</b><span>The cable keeps the session going, but the battery does not charge.</span></div></div><p class="h3lead"><b>After about three hours on the cable,</b> give the battery a rest: take it out for about 20 minutes to cool, then charge it on its own.</p></div></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Charging",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Charging steps"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_charge",
+      "label": "Battery on its own"
+    },
+    {
+      "type": "image_picker",
+      "id": "charge_dots",
+      "label": "Four charge dots"
+    },
+    {
+      "type": "image_picker",
+      "id": "charge_in",
+      "label": "Charging inside Diamond"
+    },
+    {
+      "type": "image_picker",
+      "id": "charge_while_smoking",
+      "label": "Charge while smoking"
+    },
+    {
+      "type": "header",
+      "content": "Device frame"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Diamond device frame image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Charging"
+    }
+  ]
+}
+{% endschema %}

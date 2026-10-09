@@ -1,0 +1,137 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<link rel="stylesheet" href="{{ 'diamond-manual.css' | asset_url }}">
+
+<nav class="xnav" aria-label="ENSŌ Diamond guides"><a class="xnav__back" href="/pages/enso-experience#diamond">‹ ENSŌ Experience <span aria-hidden="true">/</span> <b>ENSŌ Diamond</b></a></nav>
+<div class="wrap">
+  <div class="finder"><nav class="chips" aria-label="Chapters"><span class="chips__h">Chapters</span><a class="chip" href="#out-of-the-box" data-id="out-of-the-box">Out of the box</a><a class="chip" href="#charging" data-id="charging">Charging</a><a class="chip" href="#battery" data-id="battery">Battery</a><a class="chip" href="#the-dial" data-id="the-dial">The dial</a><a class="chip" href="#pack" data-id="pack">Packing</a><a class="chip" href="#on-your-hookah" data-id="on-your-hookah">On your hookah</a><a class="chip" href="#switch-on" data-id="switch-on">Pre-heat and heat</a><a class="chip" href="#profiles" data-id="profiles">Profiles</a><a class="chip" href="#menu" data-id="menu">Menu</a><a class="chip" href="#software" data-id="software">Software updates</a><a class="chip" href="#the-cap" data-id="the-cap">The cap</a><a class="chip" href="#cleaning" data-id="cleaning">Cleaning</a><a class="chip" href="#travel" data-id="travel">Travel</a><a class="chip" href="#donts" data-id="donts">Keep it safe</a><a class="chip" href="#troubleshooting" data-id="troubleshooting">Troubleshooting</a><a class="chip" href="#warranty" data-id="warranty">Warranty</a></nav></div>
+  <section class="mn-hero">
+    <div>
+      <p class="eyebrow">ENSŌ Experience · Diamond</p>
+      <h1>Diamond manual</h1>
+      <p>From the box to your first cup, and everything after. Read it in order the first time, then search or jump to what you need.</p>
+    </div>
+    {%- if section.settings.hero_image != blank -%}
+      {{- section.settings.hero_image | image_url: width: 800 | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: section.settings.hero_image.alt | default: 'Diamond, the screen reading Start Pre-heat',
+          width: section.settings.hero_image.width,
+          height: section.settings.hero_image.height
+      -}}
+    {%- endif -%}
+  </section>
+  <label class="search search--top"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="mn-q" type="search" placeholder="Search the manual: battery, plate, clean…" aria-label="Search the manual"><small id="mn-n"></small></label>
+  <section class="bs" id="safety" aria-labelledby="bs-h"><h2 id="bs-h">Before you start</h2><div class="slider tslider slider--care" style="--n:3"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Keep the contacts dry</b><p>The contacts sit at the bottom of the battery bay and on the end of the battery. They never get wet.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.safety_contacts != blank -%}{{- section.settings.safety_contacts | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.safety_contacts.alt | default: '', width: section.settings.safety_contacts.width, height: section.settings.safety_contacts.height -}}{%- else -%}<img src="{{ 'dm-s-before-contacts.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}<span class="mk mk--info mk--c" style="left:32.7%;top:22%"><i></i><span>USB-C port</span></span><span class="mk mk--warn mk--c" style="left:50.0%;top:79%"><i></i><span>Contacts: keep dry</span></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Keep the battery dry</b><p>The battery never goes under water. Everything else rinses from the top, with the battery fitted.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.safety_battery_dry != blank -%}{{- section.settings.safety_battery_dry | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.safety_battery_dry.alt | default: '', width: section.settings.safety_battery_dry.width, height: section.settings.safety_battery_dry.height -}}{%- else -%}<img src="{{ 'dm-s-battery-dry.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Let the battery cool before charging</b><p>After a session the battery is warm. Give it time to cool, then plug it in.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.safety_before_charge != blank -%}{{- section.settings.safety_before_charge | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.safety_before_charge.alt | default: '', width: section.settings.safety_before_charge.width, height: section.settings.safety_before_charge.height -}}{%- else -%}<img src="{{ 'dm-s-before-charge.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+  <a class="packban" href="#pack"><picture><source media="(max-width:991px)" srcset="{%- if section.settings.packban_mobile != blank -%}{{ section.settings.packban_mobile | image_url: width: 800 }}{%- else -%}{{ 'dm-pdp-bowl-darkwood-m.jpg' | file_url }}{%- endif -%}">{%- if section.settings.packban_desktop != blank -%}{{- section.settings.packban_desktop | image_url: width: 1200 | image_tag: loading: 'lazy', alt: 'Tobacco tipped from a tin into the ceramic cup and its basket', width: section.settings.packban_desktop.width, height: section.settings.packban_desktop.height -}}{%- else -%}<img src="{{ 'dm-pdp-bowl-darkwood.jpg' | file_url }}" alt="Tobacco tipped from a tin into the ceramic cup and its basket">{%- endif -%}</picture><div><b>Charged? Pack your first cup</b><span>10–15 g in two light layers. Pick your mesh and the steps open right there.</span></div><em>How to pack</em></a>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Intro",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "header",
+      "content": "Safety cards"
+    },
+    {
+      "type": "image_picker",
+      "id": "safety_contacts",
+      "label": "Keep contacts dry"
+    },
+    {
+      "type": "image_picker",
+      "id": "safety_battery_dry",
+      "label": "Keep battery dry"
+    },
+    {
+      "type": "image_picker",
+      "id": "safety_before_charge",
+      "label": "Let battery cool before charging"
+    },
+    {
+      "type": "header",
+      "content": "Pack banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "packban_desktop",
+      "label": "Pack banner desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "packban_mobile",
+      "label": "Pack banner mobile"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Intro"
+    }
+  ]
+}
+{% endschema %}

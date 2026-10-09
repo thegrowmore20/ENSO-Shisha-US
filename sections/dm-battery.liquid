@@ -1,0 +1,67 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'dm-closed-start.jpg' | file_url
+  endif
+-%}
+{%- liquid
+  if section.settings.ui_continue != blank
+    assign ui_continue_src = section.settings.ui_continue | image_url: width: 600
+  else
+    assign ui_continue_src = 'dm-ui-continue.png' | file_url
+  endif
+-%}
+<div class="wrap">
+  <section class="ch" id="battery"><p class="ch__num">03 · Start</p><h2>Battery</h2><p class="ch__lead">One removable battery runs Diamond. A spare keeps a long evening going: one in Diamond, one charging.</p><div class="temps"><div><b>About 90 min</b><span>Per charge, pre-heat not included</span></div><div><b>About 1.5 h</b><span>From empty to full with a 30 W USB-C charger</span></div></div><h3>When it runs low</h3><div class="temps"><div class=""><b>10 %</b><span>First sound: time to plan</span></div><div class=""><b>4–6 %</b><span>Second sound, and heating stops</span></div><div class="red"><b>2–3 %</b><span>Diamond switches off</span></div></div><h3>Swap it mid-session</h3><div class="slider tslider" style="--n:4"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Switch off</b><p>Hold the dial for 3 seconds.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.switch_off != blank -%}{{- section.settings.switch_off | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.switch_off.alt | default: '', width: section.settings.switch_off.width, height: section.settings.switch_off.height -}}{%- else -%}<img src="{{ 'dm-s-switch-off-thumb.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Battery out</b><p>Open the latch and lift the battery out.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.battery_out != blank -%}{{- section.settings.battery_out | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.battery_out.alt | default: '', width: section.settings.battery_out.width, height: section.settings.battery_out.height -}}{%- else -%}<img src="{{ 'dm-s-battery-out.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Charged one in</b><p>Set a charged battery in, contacts down, and close the latch.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.latch_close != blank -%}{{- section.settings.latch_close | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.latch_close.alt | default: '', width: section.settings.latch_close.width, height: section.settings.latch_close.height -}}{%- else -%}<img src="{{ 'dm-s-battery-latch-close.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Continue Session?</b><p>Switch on. With the chamber still hot, turn to Yes and click: no new pre-heat.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ ui_continue_src }}" alt="Continue Session?: the Diamond screen"></div></div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Battery",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Battery swap steps"
+    },
+    {
+      "type": "image_picker",
+      "id": "switch_off",
+      "label": "Switch off (hold dial)"
+    },
+    {
+      "type": "image_picker",
+      "id": "battery_out",
+      "label": "Battery out"
+    },
+    {
+      "type": "image_picker",
+      "id": "latch_close",
+      "label": "Battery in, latch closing"
+    },
+    {
+      "type": "header",
+      "content": "Screen UI images"
+    },
+    {
+      "type": "image_picker",
+      "id": "ui_continue",
+      "label": "Continue Session? screen"
+    },
+    {
+      "type": "header",
+      "content": "Device frame"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Diamond device frame image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Battery"
+    }
+  ]
+}
+{% endschema %}
