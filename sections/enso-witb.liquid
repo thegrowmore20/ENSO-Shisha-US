@@ -420,16 +420,19 @@
 .witb-sheet__media[data-n="1"] .witb-sheet__arr,
 .witb-sheet__media[data-n="0"] .witb-sheet__dots,
 .witb-sheet__media[data-n="1"] .witb-sheet__dots { display: none; }
+.witb-sheet__body {
+  display: flex; flex-direction: column; gap: 12px;
+}
 .witb-sheet__fits {
   font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-  font-weight: 700; color: #666; display: block; margin-bottom: 2px;
+  font-weight: 700; color: #666; display: block;
 }
 .witb-sheet__fits:empty { display: none; }
 .witb-sheet__title {
   font-family: var(--font-accent);
   font-weight: 700;
   font-size: 26px; line-height: 1.15; letter-spacing: -.01em;
-  margin: 6px 0 0;
+  margin: 0;
   color: #000;
 }
 .witb-sheet__lead {
@@ -447,7 +450,6 @@
 .witb-sheet__what h3 { font-size: 15px; font-weight: 700; margin: 16px 0 2px; }
 .witb-sheet__buy {
   display: flex; align-items: center; gap: 16px;
-  margin-top: 6px;
 }
 .witb-sheet__price { font-family: var(--font-accent); font-size: 22px; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; flex-shrink: 0; }
 .witb-sheet__atc {
@@ -460,7 +462,7 @@
   color: #fff !important; opacity: 1; cursor: default;
 }
 .witb-sheet__remind {
-  display: none; margin-top: 12px;
+  display: none;
   font-size: 14px; font-weight: 600; color: #000;
   text-decoration: underline; text-underline-offset: 3px;
 }
@@ -468,9 +470,9 @@
 .witb-sheet__remind:hover { opacity: .7; }
 .witb-sheet__vars {
   display: flex; flex-wrap: wrap; gap: 8px;
-  margin: 16px 0 0;
+  margin: 0;
 }
-.witb-sheet__vars:empty { margin: 0; }
+.witb-sheet__vars:empty { display: none; }
 .witb-sheet__vpill {
   padding: 7px 16px; border-radius: 50px;
   border: 1.5px solid rgb(0 0 0 / .2); background: #fff;
@@ -482,7 +484,7 @@
 .witb-sheet__vpill.is-active { background: #000; color: #fff; border-color: #000; }
 .witb-sheet__vpill.is-oos { opacity: .4; }
 .witb-sheet__full {
-  display: inline-block; margin-top: 14px;
+  display: inline-block;
   font-weight: 600; font-size: 14px; color: #000;
   text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 2px;
 }
