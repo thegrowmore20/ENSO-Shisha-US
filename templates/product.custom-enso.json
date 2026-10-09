@@ -269,6 +269,7 @@
           "type": "tile",
           "settings": {
             "product": "enso-replacement-battery-plus",
+            "image": "shopify://shop_images/witb-battery.webp",
             "name": "Battery",
             "quantity": "1×",
             "fits_label": ""
@@ -278,6 +279,7 @@
           "type": "tile",
           "settings": {
             "product": "replacement-ceramic-cup",
+            "image": "shopify://shop_images/witb-cups.webp",
             "name": "Ceramic cups",
             "quantity": "2×",
             "fits_label": ""
@@ -287,6 +289,7 @@
           "type": "tile",
           "settings": {
             "product": "disposable-cups-10-pack",
+            "image": "shopify://shop_images/witb-capsules.webp",
             "name": "Disposable capsules",
             "quantity": "10×",
             "fits_label": ""
@@ -295,7 +298,8 @@
         "tile_tool": {
           "type": "tile",
           "settings": {
-            "product": "",
+            "product": "enso-4-in-1-multi-tool",
+            "image": "shopify://shop_images/witb-multitool.webp",
             "name": "3-in-1 multi-tool + glove",
             "quantity": "1×",
             "fits_label": ""
@@ -304,7 +308,8 @@
         "tile_screen": {
           "type": "tile",
           "settings": {
-            "product": "",
+            "product": "5-mesh-screens-2-wax-pad-inserts-for-enso",
+            "image": "shopify://shop_images/mesh-screen-kit-1.webp",
             "name": "Mesh screens",
             "quantity": "2×",
             "fits_label": ""

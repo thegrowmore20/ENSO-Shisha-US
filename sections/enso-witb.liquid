@@ -114,17 +114,7 @@
               {{ block.shopify_attributes }}
             >
               <span class="witb__tile-img">
-                {%- if b.product != blank and b.product.featured_image != blank -%}
-                  {{
-                    b.product.featured_image
-                    | image_url: width: 300
-                    | image_tag:
-                      widths: '150,200,300',
-                      sizes: '(min-width:992px) 15vw, 25vw',
-                      alt: b.product.featured_image.alt | default: b.product.title,
-                      loading: 'lazy'
-                  }}
-                {%- elsif b.image != blank -%}
+                {%- if b.image != blank -%}
                   {{
                     b.image
                     | image_url: width: 300
@@ -132,6 +122,16 @@
                       widths: '150,200,300',
                       sizes: '(min-width:992px) 15vw, 25vw',
                       alt: b.image.alt | default: b.name,
+                      loading: 'lazy'
+                  }}
+                {%- elsif b.product != blank and b.product.featured_image != blank -%}
+                  {{
+                    b.product.featured_image
+                    | image_url: width: 300
+                    | image_tag:
+                      widths: '150,200,300',
+                      sizes: '(min-width:992px) 15vw, 25vw',
+                      alt: b.product.featured_image.alt | default: b.product.title,
                       loading: 'lazy'
                   }}
                 {%- else -%}
