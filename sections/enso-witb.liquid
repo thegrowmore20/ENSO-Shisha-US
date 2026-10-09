@@ -668,7 +668,7 @@
     var vid = shAtc.dataset.vid;
     if (!vid || shAtc.disabled) return;
     shAtc.disabled = true;
-    shAtc.textContent = 'Adding…';
+    shAtc.classList.add('is-loading');
 
     fetch('/cart/add.js', {
       method: 'POST',
@@ -701,15 +701,15 @@
       });
     })
     .then(function () {
-      shAtc.textContent = 'Added ✓';
+      shAtc.classList.remove('is-loading');
+      /* brief "Added" confirmation before restoring */
       setTimeout(function () {
         shAtc.disabled = false;
-        shAtc.textContent = addLabel;
-      }, 1800);
+      }, 400);
     })
     .catch(function () {
+      shAtc.classList.remove('is-loading');
       shAtc.disabled = false;
-      shAtc.textContent = addLabel;
     });
   });
 
