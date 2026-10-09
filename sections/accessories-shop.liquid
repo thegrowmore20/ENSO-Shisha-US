@@ -319,13 +319,17 @@
   line-height: 1;
 }
 
-/* Per-row slider — desktop only */
+/* Per-row slider — desktop only; pushed to the right */
 .acc-cols-ctrl {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  margin-left: auto;
 }
+
+/* Explicitly hide filtered-out cards (some browsers need this reinforced) */
+.acc-card[hidden] { display: none !important; }
 
 .acc-cols-ctrl__label {
   font-size: 13px;
@@ -952,6 +956,7 @@
 
         var show = devOk && availOk && searchOk;
         card.hidden = !show;
+        card.style.display = show ? '' : 'none';
         if (show) visible.push(card);
       }.bind(this));
 
@@ -965,7 +970,7 @@
         } else if (this._sort === 'a-z') {
           visible.sort(function (a, b) { return (a.dataset.title || '').localeCompare(b.dataset.title || ''); });
         }
-        visible.forEach(function (c) { c.hidden = false; this._grid.appendChild(c); }.bind(this));
+        visible.forEach(function (c) { c.hidden = false; c.style.display = ''; this._grid.appendChild(c); }.bind(this));
       }
 
       if (this._noResults) this._noResults.hidden = visible.length > 0;
@@ -973,6 +978,7 @@
 
     /* ── AJAX Add to Cart (card form submit) ── */
     _handleAtc(form, title) {
+      var self = this;
       var btn = form.querySelector('[type="submit"]');
       var vid = form.querySelector('input[name="id"]');
       if (!vid) return;
