@@ -1,0 +1,39 @@
+<div class="breadcrumb-section {% if section.settings.width == 'page' %}container{% endif %}">
+  {%- render 'breadcrumbs' -%}
+</div>
+
+{% stylesheet %}
+  .breadcrumb-section {
+    padding-top: 16px;
+    padding-bottom: 0;
+  }
+  @media screen and (min-width: 990px) {
+    .breadcrumb-section {
+      padding-top: 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Breadcrumb",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "page"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Breadcrumb"
+    }
+  ]
+}
+{% endschema %}

@@ -9,34 +9,28 @@
  */
 {
   "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "width": "page"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
+        "compat_text": {
+          "type": "text",
+          "settings": {
+            "content": "{{ product.metafields.custom.compatiblity_with | metafield_tag }}",
+            "alignment": "left",
+            "text_size": "small",
+            "show_icon": false
+          }
+        },
         "title_BMUCcV": {
           "type": "title",
           "settings": {
             "heading_size": 32
-          }
-        },
-        "loox_reviews_loox_rating_nBtcin": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "contentSize": 16,
-            "pattern": "[rating] ([count])",
-            "hideText": false,
-            "alignment": "",
-            "layout": "",
-            "textColor": "",
-            "starColor": "",
-            "showAllReviews": false,
-            "looxOpenFloatingWidget": false,
-            "emptyRatingWidget": true
-          }
-        },
-        "price_KNKNd3": {
-          "type": "price",
-          "settings": {
-            "show_unit_price": false
           }
         },
         "text_3gth8b": {
@@ -46,6 +40,12 @@
             "alignment": "left",
             "text_size": "medium",
             "show_icon": false
+          }
+        },
+        "price_KNKNd3": {
+          "type": "price",
+          "settings": {
+            "show_unit_price": false
           }
         },
         "text_x7rGgf": {
@@ -95,15 +95,6 @@
             "default_open": false
           }
         },
-        "accordion_gxeq9J": {
-          "type": "accordion",
-          "disabled": true,
-          "settings": {
-            "heading": "Parts & Accessories",
-            "content": "{{ product.metafields.custom.parts_accessories | metafield_tag }}",
-            "default_open": false
-          }
-        },
         "accordion_4VLPaF": {
           "type": "accordion",
           "settings": {
@@ -130,10 +121,10 @@
         }
       },
       "block_order": [
+        "compat_text",
         "title_BMUCcV",
-        "loox_reviews_loox_rating_nBtcin",
-        "price_KNKNd3",
         "text_3gth8b",
+        "price_KNKNd3",
         "text_x7rGgf",
         "variant_picker_bbi9yP",
         "quantity_qDQky3",
@@ -141,7 +132,6 @@
         "accordion_wUV8pN",
         "accordion_p4QqYU",
         "accordion_NcpqMr",
-        "accordion_gxeq9J",
         "accordion_4VLPaF",
         "accordion_Pk44qQ",
         "accordion_bidD6a"
@@ -149,7 +139,7 @@
       "settings": {
         "width": "page",
         "media_width": 55,
-        "gallery_layout": "thumbnails_left",
+        "gallery_layout": "thumbnails_bottom",
         "enable_sticky_info": true,
         "padding_top": 64,
         "padding_bottom": 32,
@@ -157,86 +147,75 @@
         "padding_bottom_mobile": 16
       }
     },
-    "custom_section_K6xprp": {
-      "type": "custom-section",
+    "why_cards": {
+      "type": "multicolumn-cards",
       "blocks": {
-        "loox_reviews_loox_dynamic_section_FLebBd": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+        "card_system": {
+          "type": "card",
           "settings": {
-            "reviews_to_display": "",
-            "default_tab": "automatic",
-            "only_photos": false,
-            "aggregated": false,
-            "limit": 5,
-            "hide_thumbnails": false,
-            "maxwidth": 1200,
-            "is_sample": true
+            "heading": "Made as one system",
+            "text": "<p>Every part is designed together with the device, so it fits the first time and works the way the device expects.</p>"
           }
         },
-        "header": {
-          "type": "heading",
-          "static": true,
+        "card_original": {
+          "type": "card",
           "settings": {
-            "heading": "Why People Love Enso?",
-            "heading_size_desktop": 36,
-            "heading_size_mobile": 24,
-            "subheading": "",
-            "subheading_link": "",
-            "subheading_icon_start": "",
-            "subheading_icon_end": "",
-            "alignment": "vertical",
-            "header_spacing_bottom": 32
-          },
-          "blocks": {}
+            "heading": "Original parts",
+            "text": "<p>The same materials and tolerances as the parts in the box. Nothing to adapt, nothing to file down.</p>"
+          }
+        },
+        "card_support": {
+          "type": "card",
+          "settings": {
+            "heading": "Support that answers",
+            "text": "<p>Not sure which part you need? Write to <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a> with a photo, and a person replies.</p>"
+          }
         }
       },
       "block_order": [
-        "loox_reviews_loox_dynamic_section_FLebBd"
+        "card_system",
+        "card_original",
+        "card_support"
       ],
-      "name": "Custom Section",
       "settings": {
         "width": "page",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       }
     },
-    "product_recommendations_ADkJeU": {
-      "type": "product-recommendations",
-      "name": "Product recommendations",
-      "settings": {
-        "collection": "",
-        "eyebrow": "",
-        "heading": "Signature Models",
-        "layout": "carousel",
-        "columns": "4",
-        "columns_mobile": "1",
-        "card_gap": 24,
-        "products_limit": 4,
-        "enable_quickadd": true,
-        "quickadd_design": "secondary",
-        "padding_top": 32,
-        "padding_bottom": 64,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 32,
-        "cta_label": "",
-        "cta_link": ""
-      }
-    },
-    "product_faqs_fJ8ifN": {
+    "product_faqs_acc": {
       "type": "product-faqs",
-      "name": "Product FAQs",
       "settings": {
         "eyebrow": "",
-        "heading": "FAQs"
+        "heading": "Questions about this part",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "more_accessories": {
+      "type": "accessories-carousel",
+      "settings": {
+        "collection": "accesories",
+        "heading": "More for Diamond",
+        "products_limit": 8,
+        "cta_label": "View all accessories",
+        "cta_link": "/collections/accesories",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 40
       }
     }
   },
   "order": [
+    "breadcrumb",
     "main",
-    "custom_section_K6xprp",
-    "product_recommendations_ADkJeU",
-    "product_faqs_fJ8ifN"
+    "why_cards",
+    "product_faqs_acc",
+    "more_accessories"
   ]
 }

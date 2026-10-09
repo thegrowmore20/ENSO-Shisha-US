@@ -1,0 +1,214 @@
+{%- liquid
+  assign col_count = section.blocks.size | default: 3
+-%}
+
+<div
+  class="mcc-wrap {% if section.settings.width == 'page' %}container{% endif %}"
+  style="
+    --mcc-padding-top: {{ section.settings.padding_top_mobile }}px;
+    --mcc-padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    --mcc-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --mcc-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+    --mcc-columns: {{ col_count }};
+  "
+  id="Mcc-{{ section.id }}"
+>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="mcc-wrap__heading">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  <div class="mcc-grid">
+    {%- for block in section.blocks -%}
+      <article class="mcc-card" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          {%- assign img_alt = block.settings.image.alt | default: block.settings.heading | escape -%}
+          <div class="mcc-card__img">
+            {{- block.settings.image | image_url: width: 600 | image_tag: widths: '300, 600', sizes: '(max-width: 749px) 80vw, 25vw', alt: img_alt, loading: 'lazy' -}}
+          </div>
+        {%- endif -%}
+        {%- if block.settings.heading != blank -%}
+          <h3 class="mcc-card__heading">{{ block.settings.heading | escape }}</h3>
+        {%- endif -%}
+        {%- if block.settings.text != blank -%}
+          <div class="mcc-card__body body-text">{{ block.settings.text }}</div>
+        {%- endif -%}
+      </article>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .mcc-wrap {
+    padding-top: var(--mcc-padding-top);
+    padding-bottom: var(--mcc-padding-bottom);
+  }
+  @media screen and (min-width: 990px) {
+    .mcc-wrap {
+      padding-top: var(--mcc-padding-top-desktop);
+      padding-bottom: var(--mcc-padding-bottom-desktop);
+    }
+  }
+
+  .mcc-wrap__heading {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    margin: 0 0 var(--space-5);
+    text-align: center;
+  }
+
+  .mcc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media screen and (min-width: 750px) {
+    .mcc-grid {
+      grid-template-columns: repeat(var(--mcc-columns, 3), minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+
+  .mcc-card {
+    border-radius: 24px;
+    background: var(--palette-mist, #f5f5f4);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .mcc-card__img {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: var(--space-2);
+  }
+  .mcc-card__img img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .mcc-card__heading {
+    font-size: 19px;
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .mcc-card__body {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  .mcc-card__body p { margin: 0; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Multicolumn cards",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Card heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add a short supporting description here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multicolumn cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Made as one system",
+            "text": "<p>Every part is designed together with the device, so it fits the first time and works the way the device expects.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Original parts",
+            "text": "<p>The same materials and tolerances as the parts in the box. Nothing to adapt, nothing to file down.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Support that answers",
+            "text": "<p>Not sure which part you need? Write to support@ensoshisha.eu with a photo, and a person replies.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
