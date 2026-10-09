@@ -567,14 +567,14 @@
     grid-template-columns: var(--product-media-width, 50%) 1fr;
     grid-template-areas:
       "media content"
-      "accordions content";
+      "media accordions";
     column-gap: var(--space-8);
-    row-gap: var(--space-5);
+    row-gap: 0;
     align-items: start;
   }
 
-  .product-main__media     { grid-area: media; min-width: 0; }
-  .product-main__content   { grid-area: content; }
+  .product-main__media      { grid-area: media; min-width: 0; }
+  .product-main__content    { grid-area: content; }
   .product-main__accordions { grid-area: accordions; min-width: 0; }
 
   @media screen and (max-width: 989px) {
