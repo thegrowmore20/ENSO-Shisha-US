@@ -20,16 +20,25 @@
   assign popup_compat = product.metafields.custom.compatiblity_with | default: ''
 
   comment
-    data-dev: used by accessories-shop section JS for device-tab filtering.
-    diamond-only → "diamond" | enso-2026-only → "enso" | both or universal → "both"
+    data-dev: used by accessories-shop JS for device-tab filtering.
+    Tags: "diamond", "enso", "universal", "both"
+    diamond only → "diamond" | enso only → "enso" | universal/both/mixed → "both"
   endcomment
   assign _has_diamond = false
   assign _has_enso    = false
   if product.tags contains 'diamond'
     assign _has_diamond = true
   endif
-  if product.tags contains 'enso-2026'
+  if product.tags contains 'enso'
     assign _has_enso = true
+  endif
+  if product.tags contains 'universal'
+    assign _has_diamond = true
+    assign _has_enso    = true
+  endif
+  if product.tags contains 'both'
+    assign _has_diamond = true
+    assign _has_enso    = true
   endif
   if _has_diamond and _has_enso
     assign _dev_val = 'both'
@@ -52,8 +61,6 @@
     assign _fits_label = 'Diamond'
   elsif _has_enso
     assign _fits_label = 'ENSŌ 2026'
-  elsif product.tags contains 'universal'
-    assign _fits_label = 'Universal'
   else
     assign _fits_label = ''
   endif
