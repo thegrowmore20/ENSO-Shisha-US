@@ -347,6 +347,22 @@
                 </div>
               {%- endform -%}
 
+            {%- when 'trust_badges' -%}
+              <ul class="pp__trust product-block" {{ block.shopify_attributes }}>
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.5"/><circle cx="17" cy="17.5" r="1.5"/></svg>
+                  {{ block.settings.item_1 | default: 'Ships from our EU warehouse, tracking by email' }}
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>
+                  {{ block.settings.item_2 | default: '14 days to return an unopened item' }}
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg>
+                  {{ block.settings.item_3 | default: 'Questions? support@ensoshisha.eu, a person answers' }}
+                </li>
+              </ul>
+
             {%- when 'description' -%}
               {%- if product.description != blank -%}
                 <div class="product-main__description body-text text-muted product-block" {{ block.shopify_attributes }}>
@@ -730,6 +746,7 @@
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
     /* Let the page scroll vertically as usual; the gallery's own JS
        (pointer events) handles horizontal swipe/drag itself. */
     touch-action: pan-y;
@@ -1219,6 +1236,33 @@
     font-weight: var(--font-weight-bold);
   }
 
+  /* ---------- Trust badges ---------- */
+  .pp__trust {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 8px;
+    display: grid;
+    gap: 10px;
+    font-size: 14px;
+    color: rgb(0 0 0 / .75);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .pp__trust li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .pp__trust svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7px;
+    flex: none;
+  }
+
   /* ---------- Card variant picker ---------- */
   .variant-card-picker { margin-top: var(--space-5); }
   .variant-card-picker__group { display: flex; flex-direction: column; gap: 8px; }
@@ -1579,6 +1623,16 @@
         { "type": "text", "id": "item_2_body",    "label": "Item 2 body",    "default": "Email support, in English" },
         { "type": "text", "id": "item_3_heading", "label": "Item 3 heading", "default": "EU prices include VAT" },
         { "type": "text", "id": "item_3_body",    "label": "Item 3 body",    "default": "US prices before sales tax" }
+      ]
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust badges",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "item_1", "label": "Line 1", "default": "Ships from our EU warehouse, tracking by email" },
+        { "type": "text", "id": "item_2", "label": "Line 2", "default": "14 days to return an unopened item" },
+        { "type": "text", "id": "item_3", "label": "Line 3", "default": "Questions? support@ensoshisha.eu, a person answers" }
       ]
     },
     {
