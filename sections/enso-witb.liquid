@@ -207,6 +207,7 @@
             {{- 'products.product.add_to_cart' | t -}}
           </button>
         </div>
+        <a class="witb-sheet__remind" id="WitbSheetRemind-{{ sid }}" href="#" hidden>Remind me when in stock</a>
         <a class="witb-sheet__full" id="WitbSheetUrl-{{ sid }}" href="#">View full details ›</a>
       </div>
     </div>
@@ -442,17 +443,26 @@
 .witb-sheet__body.has-why .witb-sheet__h3--why { display: block; }
 .witb-sheet__body.has-how .witb-sheet__h3--how { display: block; }
 .witb-sheet__buy {
-  display: flex; align-items: center; gap: 18px;
-  margin-top: 22px; padding-top: 22px;
-  border-top: 1px solid rgb(0 0 0 / .1);
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 22px; padding: 14px 18px;
+  border: 1px solid rgb(0 0 0 / .12); border-radius: 8px;
 }
-.witb-sheet__price { font: 800 26px/30px var(--font-accent); }
+.witb-sheet__price { font: 800 26px/30px var(--font-accent); flex-shrink: 0; }
 .witb-sheet__atc {
-  padding: 14px 24px !important; font-size: 13px !important; height: auto !important; flex: 1;
+  padding: 14px 20px !important; font-size: 13px !important; height: auto !important; flex: 1;
 }
-.witb-sheet__atc:disabled { opacity: .5; cursor: default; }
+.witb-sheet__atc:disabled {
+  background: #888 !important; border-color: #888 !important;
+  color: #fff !important; opacity: 1; cursor: default;
+}
+.witb-sheet__remind {
+  display: block; margin-top: 12px;
+  font-size: 14px; font-weight: 600; color: #000;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.witb-sheet__remind:hover { opacity: .7; }
 .witb-sheet__full {
-  display: inline-block; margin-top: 18px;
+  display: inline-block; margin-top: 14px;
   font-weight: 600; font-size: 14px; color: #000;
   text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 2px;
 }
@@ -479,10 +489,11 @@
   var shWhat  = document.getElementById('WitbSheetWhat-' + sid);
   var shWhy   = document.getElementById('WitbSheetWhy-' + sid);
   var shHow   = document.getElementById('WitbSheetHow-' + sid);
-  var shBody  = document.getElementById('WitbSheetBody-' + sid);
-  var shPrice = document.getElementById('WitbSheetPrice-' + sid);
-  var shAtc   = document.getElementById('WitbSheetAtc-' + sid);
-  var shUrl   = document.getElementById('WitbSheetUrl-' + sid);
+  var shBody   = document.getElementById('WitbSheetBody-' + sid);
+  var shPrice  = document.getElementById('WitbSheetPrice-' + sid);
+  var shAtc    = document.getElementById('WitbSheetAtc-' + sid);
+  var shRemind = document.getElementById('WitbSheetRemind-' + sid);
+  var shUrl    = document.getElementById('WitbSheetUrl-' + sid);
 
   var lastFocus = null;
   var addLabel  = shAtc ? shAtc.textContent.trim() : 'Add to cart';
@@ -539,6 +550,8 @@
       shBody.classList.toggle('has-how', hasHow);
     }
 
+    /* lead — hide element when empty to collapse its space */
+    shLead.hidden = !d.lead;
     shPrice.textContent = d.price || '';
     shUrl.href = d.url || '#';
 
@@ -546,6 +559,8 @@
     shAtc.disabled = !available;
     shAtc.textContent = available ? addLabel : oosLabel;
     shAtc.dataset.vid = d.vid || '';
+    /* remind me link — shown only when out of stock */
+    if (shRemind) shRemind.hidden = available;
 
     lastFocus = document.activeElement;
     sheet.hidden = false;

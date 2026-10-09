@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "diamond_manual": {
+      "type": "diamond-manual",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "diamond_manual"
+  ]
+}
