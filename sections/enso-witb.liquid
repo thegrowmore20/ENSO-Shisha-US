@@ -228,10 +228,8 @@
 }
 .witb__head { text-align: center; margin: 0 auto 40px; }
 .witb__head .eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  color: var(--color-text-muted, #6b6b6b);
+  font-size: 15px;
+  color: var(--color-text-muted, #666);
 }
 .witb__h2 {
   margin: 8px 0 0;
@@ -429,22 +427,29 @@
 .witb-sheet__fits:empty { display: none; }
 .witb-sheet__title {
   font-family: var(--font-accent);
-  font-weight: var(--font-weight-heavy);
-  font-size: 32px; line-height: 38px; letter-spacing: -.02em;
-  margin: 6px 0;
+  font-weight: 700;
+  font-size: 26px; line-height: 1.15; letter-spacing: -.01em;
+  margin: 6px 0 0;
+  color: #000;
 }
 .witb-sheet__lead {
-  margin: 0 0 18px; font-size: 17px; line-height: 26px;
-  color: rgb(0 0 0 / .78);
+  margin: 0; font-size: 15px; line-height: 1.65;
+  color: #000;
 }
-.witb-sheet__what { color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
-.witb-sheet__what p { margin: 0 0 8px; color: rgb(0 0 0 / .78); font-size: 15px; line-height: 24px; }
+.witb-sheet__lead * { font-size: 15px; color: inherit; }
+.witb-sheet__lead a { color: #000; text-decoration: none; }
+.witb-sheet__lead p { margin: 0 0 8px; }
+.witb-sheet__lead p:last-child { margin-bottom: 0; }
+.witb-sheet__what { color: #000; font-size: 15px; line-height: 1.55; margin: 0; }
+.witb-sheet__what * { font-size: 15px; color: inherit; }
+.witb-sheet__what a { color: #000; text-decoration: none; }
+.witb-sheet__what p { margin: 0; }
+.witb-sheet__what h3 { font-size: 15px; font-weight: 700; margin: 16px 0 2px; }
 .witb-sheet__buy {
-  display: flex; align-items: center; gap: 18px;
-  margin-top: 22px; padding-top: 22px;
-  border-top: 1px solid rgb(0 0 0 / .1);
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 6px;
 }
-.witb-sheet__price { font: 800 26px/30px var(--font-accent); flex-shrink: 0; }
+.witb-sheet__price { font-family: var(--font-accent); font-size: 22px; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; flex-shrink: 0; }
 .witb-sheet__atc {
   padding: 14px 24px !important; font-size: 13px !important;
   height: auto !important; flex: 1;
