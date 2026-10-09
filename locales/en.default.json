@@ -317,6 +317,8 @@
   "witb": {
     "what_it_is": "What it is",
     "why": "Why",
-    "how": "How to use it"
+    "how": "How to use it",
+    "remind_me": "Remind me when in stock",
+    "view_full_details": "View full details ›"
   }
 }
