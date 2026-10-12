@@ -85,7 +85,11 @@
           <div class="enso-exp__chips">
             {%- for block in section.blocks -%}
               {%- if block.type == 'chip' and block.settings.label != blank -%}
-                <span class="enso-exp__chip" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+                {%- if block.settings.url != blank -%}
+                  <a class="enso-exp__chip" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+                {%- else -%}
+                  <span class="enso-exp__chip" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+                {%- endif -%}
               {%- endif -%}
             {%- endfor -%}
           </div>
@@ -381,6 +385,11 @@
           "id": "label",
           "label": "Label",
           "default": "Quick start"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link (optional)"
         }
       ]
     }
