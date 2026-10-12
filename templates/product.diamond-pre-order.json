@@ -115,10 +115,10 @@
         "cta1_link": "/pages/diamond-packing-guide",
         "cta2_label": "Shop",
         "cta2_link": "#buy",
-        "padding_top": 0,
-        "padding_bottom": 40,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 24
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_dial_main": {
@@ -353,9 +353,9 @@
         "heading_size_desktop": 40,
         "heading_size_mobile": 28,
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_faqs_main": {
@@ -386,9 +386,9 @@
         "full_faq_label": "Full FAQ",
         "full_faq_link": "/pages/faq",
         "padding_top": 80,
-        "padding_bottom": 40,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 24
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_also_like": {
@@ -399,9 +399,9 @@
         "products_limit": 8,
         "cta_label": "View all accessories",
         "cta_link": "/collections/accesories",
-        "padding_top": 40,
+        "padding_top": 80,
         "padding_bottom": 80,
-        "padding_top_mobile": 24,
+        "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
     },
