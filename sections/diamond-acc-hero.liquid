@@ -68,14 +68,10 @@
   background: #1a1a1a;
 }
 
-/* ── Copy column — max-width on the content, not the card ── */
+/* ── Copy column ── */
 .d-acc-hero__copy {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-width: 700px;
+  inset: 0;
   display: flex;
   flex-direction: column;
   padding: 56px;
@@ -160,6 +156,7 @@
 -%}
 
 <section class="d-acc-hero" id="DiamondAcc-{{ section.id }}">
+  <div class="container">
 
     {%- if has_link -%}
       <a class="d-acc-hero__card" href="{{ section.settings.link }}">
@@ -224,7 +221,7 @@
       </div>
     {%- endif -%}
 
-
+  </div>
 </section>
 
 {% schema %}
