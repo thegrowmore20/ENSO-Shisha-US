@@ -9,88 +9,6 @@
 
 {% stylesheet %}
 
-/* ── Sticky bar ── */
-.d-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  background: rgba(255,255,255,.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
-  transform: translateY(-100%);
-  transition: transform .25s ease;
-}
-.d-bar.is-on {
-  transform: translateY(0);
-}
-.d-bar__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
-.d-bar__name {
-  font-family: var(--font-accent);
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -.025em;
-  white-space: nowrap;
-}
-.d-bar__cta {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-shrink: 0;
-}
-.d-bar__price {
-  font-family: var(--font-accent);
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -.025em;
-}
-.d-bar__price s {
-  font-weight: 400;
-  opacity: .45;
-  margin-left: 4px;
-}
-.d-bar__pill {
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 10px 24px;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity .2s;
-}
-.d-bar__pill:hover { opacity: .82; }
-
-/* Mobile: bar sticks to bottom */
-@media screen and (max-width: 989px) {
-  .d-bar {
-    top: auto;
-    bottom: 0;
-    transform: translateY(100%);
-    border-bottom: none;
-    border-top: 1px solid var(--color-border);
-  }
-  .d-bar.is-on {
-    transform: translateY(0);
-  }
-  .d-bar__price s {
-    display: none;
-  }
-}
-
 /* ── Section wrapper ── */
 .d-buy {
   padding-top: 48px;
@@ -597,19 +515,13 @@
 
 {% endstylesheet %}
 
-{%- comment -%} Sticky bar {%- endcomment -%}
-<div class="d-bar" id="DBar-{{ section.id }}" aria-hidden="true">
-  <div class="container d-bar__inner">
-    <b class="d-bar__name">ENSŌ Diamond · Pre-order</b>
-    <div class="d-bar__cta">
-      <span class="d-bar__price">
-        {{ current_variant.price | money }}
-        {%- if has_compare -%}<s>{{ current_variant.compare_at_price | money }}</s>{%- endif -%}
-      </span>
-      <button type="button" class="d-bar__pill" data-d-bar-atc>{{ section.settings.cta_label | default: 'Pre-order' }}</button>
-    </div>
-  </div>
-</div>
+{%- assign sticky_watch_id = 'DBuyCard-' | append: section.id -%}
+{%- render 'sticky-add-to-cart',
+  product: product,
+  section: section,
+  watch_target_id: sticky_watch_id,
+  cta_label: section.settings.cta_label
+-%}
 
 <diamond-buy
   class="d-buy"
@@ -848,36 +760,18 @@
 
   class DiamondBuy extends HTMLElement {
     connectedCallback() {
-      const sectionId = this.dataset.sectionId;
-      const bar       = document.getElementById('DBar-' + sectionId);
-      const card      = document.getElementById('DBuyCard-' + sectionId);
-      const form      = document.getElementById('DiamondForm-' + sectionId);
-      const btn       = document.getElementById('DiamondBtn-' + sectionId);
-      const barBtn    = bar && bar.querySelector('[data-d-bar-atc]');
+      const sectionId  = this.dataset.sectionId;
+      const form       = document.getElementById('DiamondForm-' + sectionId);
+      const btn        = document.getElementById('DiamondBtn-' + sectionId);
+      const stickyForm = document.getElementById('StickyProductForm-' + sectionId);
+      const stickyBtn  = stickyForm && stickyForm.querySelector('[data-add-to-cart]');
 
-      /* ── Sticky bar ── */
-      if (bar && card) {
-        const hdrH = () => {
-          const h = document.querySelector('.site-header, header');
-          return h ? h.getBoundingClientRect().height : 72;
-        };
-        const isMobile = () => window.innerWidth <= 989;
-        const check = () => {
-          const r = card.getBoundingClientRect();
-          const on = isMobile()
-            ? r.bottom < window.innerHeight - 80  /* mobile: card bottom near/past viewport */
-            : r.bottom < hdrH();                  /* desktop: card above header */
-          bar.classList.toggle('is-on', on);
-          bar.setAttribute('aria-hidden', String(!on));
-        };
-        addEventListener('scroll', check, { passive: true });
-        addEventListener('resize', check);
-        check();
-      }
-
-      /* ── Bar CTA → submit main form ── */
-      if (barBtn && form) {
-        barBtn.addEventListener('click', () => form.requestSubmit());
+      /* ── Sticky form → route through main AJAX handler ── */
+      if (stickyForm && form) {
+        stickyForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          form.requestSubmit();
+        });
       }
 
       /* ── AJAX ATC ── */
@@ -888,7 +782,7 @@
         if (btn.disabled || btn.classList.contains('is-loading')) return;
 
         btn.classList.add('is-loading');
-        if (barBtn) barBtn.disabled = true;
+        if (stickyBtn) stickyBtn.disabled = true;
 
         try {
           const res = await fetch('/cart/add.js', {
@@ -915,7 +809,7 @@
           console.error('[diamond-buy] ATC error:', err);
         } finally {
           btn.classList.remove('is-loading');
-          if (barBtn) barBtn.disabled = false;
+          if (stickyBtn) stickyBtn.disabled = false;
         }
       });
     }

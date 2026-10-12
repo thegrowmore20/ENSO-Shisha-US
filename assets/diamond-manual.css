@@ -576,7 +576,7 @@ button.mpick__c.on .mpick__open::after{transform:rotate(-135deg);margin-top:4px}
 body.bar-on .boxgrid--stack .box__img{top:70px}
 .boxgrid--stack .box__img{transition:top .3s ease}
 /* chapters read as separate blocks: every other one on a warm band */
-.ch:nth-of-type(even){background:#faf8f4;box-shadow:0 0 0 100vmax #faf8f4;clip-path:inset(0 -100vmax)}
+.ch:nth-of-type(even),.ch--alt{background:#faf8f4;box-shadow:0 0 0 100vmax #faf8f4;clip-path:inset(0 -100vmax)}
 .ch::before{content:none}
 .ch{padding:72px 0 64px}
 .ch__num{font-size:14px;letter-spacing:.12em}

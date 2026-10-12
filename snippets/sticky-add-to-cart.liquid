@@ -13,6 +13,12 @@
 
       <span class="sticky-atc__price" data-sticky-price>{{ current_variant.price | money }}</span>
 
+      {%- liquid
+        assign available_label = cta_label | default: ''
+        if available_label == blank
+          assign available_label = 'products.product.add_to_cart' | t
+        endif
+      -%}
       <button
         type="submit"
         name="add"
@@ -22,11 +28,11 @@
       >
         <span
           data-add-to-cart-text
-          data-label-available="{{ 'products.product.add_to_cart' | t }}"
+          data-label-available="{{ available_label }}"
           data-label-sold-out="{{ 'products.product.join_waitlist' | t }}"
         >
           {%- if current_variant.available -%}
-            {{ 'products.product.add_to_cart' | t }}
+            {{ available_label }}
           {%- else -%}
             {{ 'products.product.join_waitlist' | t }}
           {%- endif -%}
