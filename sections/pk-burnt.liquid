@@ -1,3 +1,15 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
 {%- liquid
   if section.settings.device_frame != blank
     assign df_src = section.settings.device_frame | image_url: width: 600
@@ -65,7 +77,7 @@
 {% stylesheet %}
 .pk-back {
   max-width: 1200px;
-  margin: 40px auto 64px;
+  margin: 24px auto 0;
   padding: 0 40px;
   display: flex;
   flex-wrap: wrap;
@@ -88,23 +100,16 @@
 {% schema %}
 {
   "name": "PK: If it tastes burnt",
+  "presets": [{ "name": "PK: If it tastes burnt" }],
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "cap_off",
-      "label": "Cap off photo"
-    },
-    {
-      "type": "image_picker",
-      "id": "cap_on_press",
-      "label": "Cap on photo"
-    },
-    {
-      "type": "image_picker",
-      "id": "device_frame",
-      "label": "Device frame image"
-    }
-  ],
-  "presets": [{ "name": "PK: If it tastes burnt" }]
+    { "type": "image_picker", "id": "cap_off", "label": "Cap off photo" },
+    { "type": "image_picker", "id": "cap_on_press", "label": "Cap on photo" },
+    { "type": "image_picker", "id": "device_frame", "label": "Device frame image" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 80 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Bottom padding (mobile)", "default": 40 }
+  ]
 }
 {% endschema %}

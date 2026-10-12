@@ -1,3 +1,15 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
 <div class="pk-sec">
   <h2>Pack it</h2>
   <div class="slider tslider slider--grid" style="--n:3">
@@ -54,23 +66,17 @@
 {% schema %}
 {
   "name": "PK: Pack it",
+  "presets": [{ "name": "PK: Pack it" }],
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "pack_layer1",
-      "label": "Step 1 photo (mix tobacco)"
-    },
-    {
-      "type": "image_picker",
-      "id": "pack_press",
-      "label": "Step 2 photo (first layer)"
-    },
-    {
-      "type": "image_picker",
-      "id": "cup_filled",
-      "label": "Step 3 photo (second layer)"
-    }
-  ],
-  "presets": [{ "name": "PK: Pack it" }]
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "pack_layer1", "label": "Step 1 photo (mix tobacco)" },
+    { "type": "image_picker", "id": "pack_press", "label": "Step 2 photo (first layer)" },
+    { "type": "image_picker", "id": "cup_filled", "label": "Step 3 photo (second layer)" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Bottom padding (mobile)", "default": 40 }
+  ]
 }
 {% endschema %}

@@ -1,3 +1,15 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
 <div class="pk-sec">
   <h2>Touching or not: two meshes</h2>
   <p class="pk-lead">It is the same craft as packing a bowl for coal. The difference is whether the tobacco touches the hot cup.</p>
@@ -40,7 +52,12 @@
 {% schema %}
 {
   "name": "PK: Two meshes",
+  "presets": [{ "name": "PK: Two meshes" }],
   "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
     {
       "type": "image_picker",
       "id": "flat_screen",
@@ -50,8 +67,39 @@
       "type": "image_picker",
       "id": "basket_empty",
       "label": "Basket empty photo"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "label": "Top padding (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "label": "Bottom padding (mobile)",
+      "default": 40
     }
-  ],
-  "presets": [{ "name": "PK: Two meshes" }]
+  ]
 }
 {% endschema %}
