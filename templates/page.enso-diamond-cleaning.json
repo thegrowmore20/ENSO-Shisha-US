@@ -12,23 +12,41 @@
     },
     "cl_cup": {
       "type": "cl-cup",
-      "settings": {}
+      "settings": {
+        "img_step1": "shopify://shop_images/clean-01-lift-cup-out.webp",
+        "img_step2": "shopify://shop_images/clean-00b-loosen-edge.webp",
+        "img_step3": "shopify://shop_images/clean-02-push-mesh-out.webp",
+        "img_step4": "shopify://shop_images/clean-03-out-in-one-piece.webp"
+      }
     },
     "cl_wash": {
       "type": "cl-wash",
-      "settings": {}
+      "settings": {
+        "img_step1": "shopify://shop_images/clean-04-rinse.webp",
+        "img_step2": "shopify://shop_images/clean-05-scrubber.webp",
+        "img_step3": "shopify://shop_images/clean-06-soak.webp",
+        "img_glove": "shopify://shop_images/cleaning-glove-1.webp"
+      }
     },
     "cl_cap": {
       "type": "cl-cap",
-      "settings": {}
+      "settings": {
+        "img_step1": "shopify://shop_images/cap-parts-rinse.webp"
+      }
     },
     "cl_shaft": {
       "type": "cl-shaft",
-      "settings": {}
+      "settings": {
+        "img_step2": "shopify://shop_images/clean-shaft-brush.webp",
+        "img_step3": "shopify://shop_images/ok-rinse-shaft.webp"
+      }
     },
     "cl_never": {
       "type": "cl-never",
-      "settings": {}
+      "settings": {
+        "img_step1": "shopify://shop_images/dont-water-bay.webp",
+        "img_step2": "shopify://shop_images/dont-water-battery.webp"
+      }
     }
   },
   "order": [

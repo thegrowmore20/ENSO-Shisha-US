@@ -30,7 +30,8 @@
   padding: 0 40px;
 }
 .cl-hero {
-  max-width: 760px;
+  max-width: 720px;
+  padding-bottom: 8px;
 }
 .cl-hero h1 {
   font-size: 48px;
@@ -61,13 +62,12 @@
   margin-top: 18px;
 }
 .cl-facts span {
-  background: transparent;
-  border: 1px solid var(--color-border);
+  background: #f5f5f4;
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 8px 14px;
   font-size: 14px;
-  font-weight: var(--font-weight-regular);
-  line-height: 1.4;
+  font-weight: var(--font-weight-semibold);
+  line-height: 18px;
 }
 .cl-sec h2 {
   font-size: 36px;
@@ -83,6 +83,13 @@
   color: rgb(0 0 0 / .74);
   max-width: 68ch;
   margin: 0 0 20px;
+}
+.cl-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
 }
 @media screen and (max-width: 990px) {
   .cl-hero h1 { font-size: 36px; line-height: 40px; }
