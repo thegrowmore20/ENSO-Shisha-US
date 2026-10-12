@@ -4,7 +4,12 @@
     top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px));
     z-index: 40;
     padding: 10px 0 12px;
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+    transition: background 0.2s ease, box-shadow 0.2s ease, top 0.2s ease;
+  }
+  /* When header slides away, snap to top of viewport — mirrors sticky-add-to-cart */
+  body:has(.site-header--hidden) #shopify-section-{{ section.id }},
+  body:not(:has(.site-header)) #shopify-section-{{ section.id }} {
+    top: 0;
   }
   #shopify-section-{{ section.id }}.is-stuck {
     background: rgb(255 255 255 / .96);
