@@ -107,6 +107,8 @@
     "diamond_bowl_main": {
       "type": "diamond-bowl",
       "settings": {
+        "image": "shopify://shop_images/bowl-darkwood.webp",
+        "image_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
         "heading": "Design your perfect bowl",
         "text": "How to pack for the flavour you want: grams, mesh, temperature and time, one blend at a time.",
         "cta1_label": "Open the guide",
