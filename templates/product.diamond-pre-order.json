@@ -332,6 +332,32 @@
         "cta_label": "Shop accessories"
       }
     },
+    "diamond_experience": {
+      "type": "enso-experience",
+      "blocks": {
+        "chip_qs": { "type": "chip", "settings": { "label": "Quick start" } },
+        "chip_manual": { "type": "chip", "settings": { "label": "Full manual" } },
+        "chip_warranty": { "type": "chip", "settings": { "label": "Warranty" } },
+        "chip_fw": { "type": "chip", "settings": { "label": "Firmware" } }
+      },
+      "block_order": ["chip_qs", "chip_manual", "chip_warranty", "chip_fw"],
+      "settings": {
+        "image": "shopify://shop_images/enso-exp-tea.webp",
+        "eyebrow": "ENSŌ Experience",
+        "heading": "More questions? The answers are in ENSŌ Experience",
+        "text": "Step-by-step guides for every owner: the first session, packing the cup, the right temperature for each blend, cleaning and care, and firmware updates. Made for the phone.",
+        "cta_label": "Open ENSŌ Experience",
+        "cta_link": "/pages/enso-experience",
+        "height_desktop": "large",
+        "content_max_width": 540,
+        "heading_size_desktop": 40,
+        "heading_size_mobile": 28,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
     "diamond_also_like": {
       "type": "accessories-carousel",
       "settings": {
@@ -515,6 +541,7 @@
     "diamond_fits_main",
     "diamond_acc_main",
     "diamond_witb_main",
+    "diamond_experience",
     "diamond_also_like",
     "diamond_bowl_main"
   ]
