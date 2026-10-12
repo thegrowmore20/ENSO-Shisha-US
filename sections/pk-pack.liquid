@@ -1,0 +1,76 @@
+<div class="pk-sec">
+  <h2>Pack it</h2>
+  <div class="slider tslider slider--grid" style="--n:3">
+    <div class="slides">
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">1</span>
+          <b>Mix the tobacco</b>
+          <p>Stir it in the tin first: the juice settles at the bottom.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.pack_layer1 != blank -%}
+            {{- section.settings.pack_layer1 | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.pack_layer1.alt | default: '', width: section.settings.pack_layer1.width, height: section.settings.pack_layer1.height -}}
+          {%- else -%}
+            <img src="{{ 'dm-s-pack-layer1.jpg' | file_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">2</span>
+          <b>First layer, pressed a little</b>
+          <p>Lay in about half of the 10–15 g and press it lightly.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.pack_press != blank -%}
+            {{- section.settings.pack_press | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.pack_press.alt | default: '', width: section.settings.pack_press.width, height: section.settings.pack_press.height -}}
+          {%- else -%}
+            <img src="{{ 'dm-s-pack-press.jpg' | file_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">3</span>
+          <b>Second layer to the edge</b>
+          <p>The rest on top, pressed lightly again. To the edge of the basket, or to the small tab of the cup with the flat screen.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.cup_filled != blank -%}
+            {{- section.settings.cup_filled | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cup_filled.alt | default: '', width: section.settings.cup_filled.width, height: section.settings.cup_filled.height -}}
+          {%- else -%}
+            <img src="{{ 'dm-s-cup-filled.jpg' | file_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      </figure>
+    </div>
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+  </div>
+  <p class="pk-note"><b>One flavour?</b> One layer, semi-dense, to the tab or to the edge of the basket.</p>
+</div>
+
+{% schema %}
+{
+  "name": "PK: Pack it",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "pack_layer1",
+      "label": "Step 1 photo (mix tobacco)"
+    },
+    {
+      "type": "image_picker",
+      "id": "pack_press",
+      "label": "Step 2 photo (first layer)"
+    },
+    {
+      "type": "image_picker",
+      "id": "cup_filled",
+      "label": "Step 3 photo (second layer)"
+    }
+  ],
+  "presets": [{ "name": "PK: Pack it" }]
+}
+{% endschema %}

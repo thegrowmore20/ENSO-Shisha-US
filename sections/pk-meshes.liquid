@@ -1,0 +1,57 @@
+<div class="pk-sec">
+  <h2>Touching or not: two meshes</h2>
+  <p class="pk-lead">It is the same craft as packing a bowl for coal. The difference is whether the tobacco touches the hot cup.</p>
+  <div class="slider tslider slider--grid" style="--n:2">
+    <div class="slides">
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">1</span>
+          <b>Flat screen: in contact</b>
+          <p>The tobacco sits against the cup, like a bowl packed in contact under the coals: a deeper roast, a fuller, denser smoke, and it needs less heat. Fine, dry cuts open up best here, Tangiers for example. A little more work to clean.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.flat_screen != blank -%}
+            {{- section.settings.flat_screen | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.flat_screen.alt | default: '', width: section.settings.flat_screen.width, height: section.settings.flat_screen.height -}}
+          {%- else -%}
+            <img src="{{ 'dm-s-flat-screen.jpg' | file_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">2</span>
+          <b>Basket mesh: off the walls</b>
+          <p>The basket holds the tobacco away from the cup: an airy, fluffy pack, a lighter smoke, and it needs more heat. Moist and strong blends feel much smoother. Lifts out in one piece to clean.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.basket_empty != blank -%}
+            {{- section.settings.basket_empty | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.basket_empty.alt | default: '', width: section.settings.basket_empty.width, height: section.settings.basket_empty.height -}}
+          {%- else -%}
+            <img src="{{ 'dm-s-basket-empty.jpg' | file_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      </figure>
+    </div>
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PK: Two meshes",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "flat_screen",
+      "label": "Flat screen photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "basket_empty",
+      "label": "Basket empty photo"
+    }
+  ],
+  "presets": [{ "name": "PK: Two meshes" }]
+}
+{% endschema %}

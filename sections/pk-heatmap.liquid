@@ -1,0 +1,66 @@
+<div class="pk-sec">
+  <h2>Mix in layers</h2>
+  <div class="pk-heatmap">
+    <svg viewBox="0 0 360 310" role="img" aria-label="The ENSŌ Diamond cup in section: heat comes from the sides and from below, strongest at the bottom">
+      <defs>
+        <linearGradient id="hg" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#e2614c"/>
+          <stop offset=".55" stop-color="#e7a35a"/>
+          <stop offset="1" stop-color="#f3dfb8"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 52Q24 66 40 68Q78 74 84 96L84 214Q84 248 118 248L160 248L160 272L200 272L200 248L242 248Q276 248 276 214L276 96Q282 74 320 68Q336 66 336 52Z" fill="#1d1b19"/>
+      <path d="M44 56Q86 60 98 86L98 210Q98 234 122 234L238 234Q262 234 262 210L262 86Q274 60 316 56Z" fill="url(#hg)" opacity=".94"/>
+      <rect x="172" y="234" width="16" height="30" fill="#1d1b19"/>
+      <line x1="100" y1="146" x2="260" y2="146" stroke="#1d1b19" stroke-width="2" stroke-dasharray="6 6"/>
+      <text x="180" y="116" text-anchor="middle" font-family="Inter" font-weight="800" font-size="17" fill="#3a2a10">Accent</text>
+      <text x="180" y="196" text-anchor="middle" font-family="Inter" font-weight="800" font-size="17" fill="#fff">Main flavour</text>
+      <g stroke="#e2614c" stroke-width="3.5" fill="none" stroke-linecap="round">
+        <path class="hu" d="M120 306v-18m0 0-6 7m6-7 6 7"/>
+        <path class="hu" d="M240 306v-18m0 0-6 7m6-7 6 7"/>
+        <path class="hl" d="M30 130h22m0 0-7-6m7 6-7 6"/>
+        <path class="hl" d="M30 196h22m0 0-7-6m7 6-7 6"/>
+        <path class="hr" d="M330 130h-22m0 0 7-6m-7 6 7 6"/>
+        <path class="hr" d="M330 196h-22m0 0 7-6m-7 6 7 6"/>
+      </g>
+    </svg>
+    <div>
+      <p class="pk-lead" style="margin:0">Diamond heats the cup from the sides and from below at the same time; the tobacco at the bottom gets it most. So the bottom layer is your main flavour and opens first, and the top layer is the accent that comes through as the cup warms. Two flavours are plenty.</p>
+    </div>
+  </div>
+  <p class="pk-note">Most people smoke one flavour, and that is fine. With two, keep the stronger one below as the main flavour.</p>
+</div>
+
+{% stylesheet %}
+.pk-heatmap {
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+  margin: 0 0 20px;
+}
+.pk-heatmap svg { width: 100%; height: auto; }
+.pk-heatmap .hu { animation: pk-hu 1.6s ease-in-out infinite; }
+.pk-heatmap .hl { animation: pk-hl 1.6s ease-in-out infinite; }
+.pk-heatmap .hr { animation: pk-hr 1.6s ease-in-out infinite; }
+.pk-heatmap .hu:nth-child(2) { animation-delay: .25s; }
+.pk-heatmap .hu:nth-child(3) { animation-delay: .5s; }
+@keyframes pk-hu { 0% { transform: translateY(8px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(-24px); opacity: 0; } }
+@keyframes pk-hl { 0% { transform: translateX(-8px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateX(14px); opacity: 0; } }
+@keyframes pk-hr { 0% { transform: translateX(8px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateX(-14px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .pk-heatmap .hu, .pk-heatmap .hl, .pk-heatmap .hr { animation: none; }
+}
+@media screen and (max-width: 767px) {
+  .pk-heatmap { grid-template-columns: 1fr; }
+  .pk-heatmap svg { max-width: 400px; margin: 0 auto; display: block; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PK: Mix in layers",
+  "settings": [],
+  "presets": [{ "name": "PK: Mix in layers" }]
+}
+{% endschema %}

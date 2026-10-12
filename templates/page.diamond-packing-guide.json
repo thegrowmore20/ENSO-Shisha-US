@@ -1,0 +1,73 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "pk_hero": {
+      "type": "pk-hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/g-bowl.webp"
+      }
+    },
+    "pk_meshes": {
+      "type": "pk-meshes",
+      "settings": {
+        "flat_screen": "shopify://shop_images/flat-screen.webp",
+        "basket_empty": "shopify://shop_images/basket-empty.webp"
+      }
+    },
+    "pk_pack": {
+      "type": "pk-pack",
+      "settings": {
+        "pack_layer1": "shopify://shop_images/pack-layer1.webp",
+        "pack_press": "shopify://shop_images/pack-press.webp",
+        "cup_filled": "shopify://shop_images/cup-filled.webp"
+      }
+    },
+    "pk_heatmap": {
+      "type": "pk-heatmap",
+      "settings": {}
+    },
+    "pk_finder": {
+      "type": "pk-finder",
+      "settings": {
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
+    },
+    "pk_tobacco": {
+      "type": "pk-tobacco",
+      "settings": {
+        "img_virginia": "shopify://shop_images/cup-filled.webp",
+        "img_dark": "shopify://shop_images/dark-leaf-packed.webp"
+      }
+    },
+    "pk_preheat": {
+      "type": "pk-preheat",
+      "settings": {}
+    },
+    "pk_burnt": {
+      "type": "pk-burnt",
+      "settings": {
+        "cap_off": "shopify://shop_images/cap-off.webp",
+        "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp",
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
+    }
+  },
+  "order": [
+    "pk_hero",
+    "pk_meshes",
+    "pk_pack",
+    "pk_heatmap",
+    "pk_finder",
+    "pk_tobacco",
+    "pk_preheat",
+    "pk_burnt"
+  ]
+}

@@ -1,0 +1,81 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'closed-start.jpg' | file_url
+  endif
+-%}
+<section class="pk-heat" id="heat">
+  <h2>Find your heat</h2>
+  <p class="pk-heat__lead">Three taps and the dial turns to where your tobacco smokes best.</p>
+  <div class="hf2">
+    <div class="mac">
+      <div class="dev">
+        <img src="{{ df_src }}" alt="ENSŌ Diamond, front" loading="lazy">
+        <div class="lv" role="img" aria-label="The dial set to your heat"></div>
+      </div>
+    </div>
+    <div class="hf__q">
+      <div class="hf__g">
+        <b>Your tobacco</b>
+        <div class="hf__opts">
+          <button type="button" data-hf="leaf" data-v="virginia" aria-pressed="true">Virginia<small>Blonde leaf</small></button>
+          <button type="button" data-hf="leaf" data-v="dark" aria-pressed="false">Burley<small>Dark leaf, heavier</small></button>
+          <button type="button" data-hf="leaf" data-v="mix" aria-pressed="false">A mix<small>Virginia and dark</small></button>
+        </div>
+      </div>
+      <div class="hf__g">
+        <b>How you like it</b>
+        <div class="hf__opts">
+          <button type="button" data-hf="str" data-v="soft" aria-pressed="true">Lighter<small>Smooth and long</small></button>
+          <button type="button" data-hf="str" data-v="strong" aria-pressed="false">Stronger<small>More body</small></button>
+        </div>
+      </div>
+      <dl class="hf2__out" aria-live="polite">
+        <div><dt>Pre-heat</dt><dd class="hf2__pre"></dd></div>
+        <div><dt>Session heat</dt><dd class="hf2__t"></dd></div>
+        <div><dt>Profile to try</dt><dd class="hf2__prof"></dd></div>
+      </dl>
+      <p class="hf2__note">A starting point. Turn the dial by taste: the harder you draw, the more heat you need.</p>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.pk-heat {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 72px 40px;
+}
+.pk-heat h2 {
+  font-size: 40px;
+  line-height: 46px;
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+.pk-heat__lead {
+  margin: 0 0 28px;
+  font-size: 17px;
+  color: rgb(0 0 0 / .72);
+}
+@media screen and (max-width: 767px) {
+  .pk-heat { padding: 48px 16px; }
+  .pk-heat h2 { font-size: 30px; line-height: 36px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PK: Find your heat",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Device frame image"
+    }
+  ],
+  "presets": [{ "name": "PK: Find your heat" }]
+}
+{% endschema %}

@@ -1,0 +1,110 @@
+{%- liquid
+  if section.settings.device_frame != blank
+    assign df_src = section.settings.device_frame | image_url: width: 600
+  else
+    assign df_src = 'closed-start.jpg' | file_url
+  endif
+-%}
+<div class="pk-sec">
+  <h2>If it tastes burnt</h2>
+  <div class="slider tslider slider--grid" style="--n:3">
+    <div class="slides">
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">1</span>
+          <b>Turn the dial down</b>
+          <p>Ten or twenty degrees is enough.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--mac">
+          <div class="dev">
+            <img src="{{ df_src }}" alt="" loading="lazy">
+            <div class="lv" data-scene="down" role="img" aria-label="Turn the dial down: the Diamond screen, animated"></div>
+          </div>
+          <span class="finger" aria-hidden="true"></span>
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">2</span>
+          <b>Cap off, let it breathe</b>
+          <p>Lift the cap by its pads. Blow gently over the tobacco, or simply let it breathe for a moment.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.cap_off != blank -%}
+            {{- section.settings.cap_off | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_off.alt | default: '', width: section.settings.cap_off.width, height: section.settings.cap_off.height -}}
+          {%- else -%}
+            <img src="{{ 'dm-s-cap-off.jpg' | file_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">3</span>
+          <b>Cap back on</b>
+          <p>The flavour comes back: on Diamond it is hard to really burn a cup.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.cap_on_press != blank -%}
+            {{- section.settings.cap_on_press | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_on_press.alt | default: '', width: section.settings.cap_on_press.width, height: section.settings.cap_on_press.height -}}
+          {%- else -%}
+            <img src="{{ 'dm-s-cap-on-press-pad.jpg' | file_url }}" alt="" loading="lazy">
+          {%- endif -%}
+        </div>
+      </figure>
+    </div>
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+  </div>
+</div>
+
+<div class="pk-back">
+  <a href="/pages/enso-diamond-manual">‹ Back to the full manual</a>
+  <a href="/pages/enso-experience#diamond">‹ Back to ENSŌ Experience</a>
+</div>
+
+{% stylesheet %}
+.pk-back {
+  max-width: 1200px;
+  margin: 40px auto 64px;
+  padding: 0 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+.pk-back a {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 2px solid #c8943a;
+  padding-bottom: 2px;
+}
+@media screen and (max-width: 767px) {
+  .pk-back { padding: 0 16px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PK: If it tastes burnt",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "cap_off",
+      "label": "Cap off photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "cap_on_press",
+      "label": "Cap on photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "device_frame",
+      "label": "Device frame image"
+    }
+  ],
+  "presets": [{ "name": "PK: If it tastes burnt" }]
+}
+{% endschema %}
