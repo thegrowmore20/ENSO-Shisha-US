@@ -354,6 +354,11 @@
       "open_guide": "Open the guide",
       "shop": "Shop"
     },
+    "diamond_faqs": {
+      "show_more": "Show more",
+      "show_less": "Show less",
+      "full_faq": "Full FAQ"
+    },
     "diamond_witb": {
       "sheet": {
         "what":         "What it is",

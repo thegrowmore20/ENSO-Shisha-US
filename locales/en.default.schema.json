@@ -2360,6 +2360,32 @@
       },
       "presets": { "name": "Diamond Bowl Guide" }
     },
+    "diamond_faqs": {
+      "name": "Diamond FAQs",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "visible_count": {
+          "label": "FAQs visible by default",
+          "info": "Remaining items are hidden behind the Show more button"
+        },
+        "show_more_header": { "content": "Show more / Show less" },
+        "show_more_label": { "label": "Show more label" },
+        "show_less_label": { "label": "Show less label" },
+        "full_faq_header": { "content": "Full FAQ button" },
+        "full_faq_label": { "label": "Button label" },
+        "full_faq_link": { "label": "Link" }
+      },
+      "blocks": {
+        "faq_item": {
+          "name": "FAQ item",
+          "settings": {
+            "question": { "label": "Question" },
+            "answer": { "label": "Answer" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond FAQs" }
+    },
     "diamond_witb": {
       "name": "Diamond What Is In the Box",
       "settings": {

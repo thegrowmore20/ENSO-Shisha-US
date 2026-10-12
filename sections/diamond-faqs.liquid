@@ -1,0 +1,338 @@
+{%- liquid
+  assign visible_count = section.settings.visible_count | default: 6
+  assign pt_desktop = section.settings.padding_top | default: 80
+  assign pb_desktop = section.settings.padding_bottom | default: 80
+  assign pt_mobile  = section.settings.padding_top_mobile | default: 40
+  assign pb_mobile  = section.settings.padding_bottom_mobile | default: 40
+  assign has_more   = false
+  if section.blocks.size > visible_count
+    assign has_more = true
+  endif
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} .d-faqs {
+    padding-top: {{ pt_mobile }}px;
+    padding-bottom: {{ pb_mobile }}px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .d-faqs {
+      padding-top: {{ pt_desktop }}px;
+      padding-bottom: {{ pb_desktop }}px;
+    }
+  }
+</style>
+
+<diamond-faqs>
+  <section class="d-faqs" id="faq" aria-labelledby="DFaqsHead-{{ section.id }}">
+    <div class="container">
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="d-faqs__heading" id="DFaqsHead-{{ section.id }}">
+          {{- section.settings.heading | escape -}}
+        </h2>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.settings.question == blank -%}{%- continue -%}{%- endif -%}
+        {%- if forloop.index0 == visible_count and has_more -%}
+          <div class="d-faqs__more" id="DFaqsMore-{{ section.id }}" hidden>
+        {%- endif -%}
+
+        <details class="d-faqs__item" {{ block.shopify_attributes }}>
+          <summary class="d-faqs__summary">
+            <span class="d-faqs__question">{{ block.settings.question | escape }}</span>
+            <span class="d-faqs__icon" aria-hidden="true"></span>
+          </summary>
+          {%- if block.settings.answer != blank -%}
+            <div class="d-faqs__answer">
+              <p>{{ block.settings.answer | escape }}</p>
+            </div>
+          {%- endif -%}
+        </details>
+
+        {%- if forloop.last and has_more -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_more or section.settings.full_faq_link != blank -%}
+        <div class="d-faqs__btns">
+          {%- if has_more -%}
+            <button
+              class="d-faqs__btn d-faqs__toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="DFaqsMore-{{ section.id }}"
+              data-label-more="{{ section.settings.show_more_label | default: 'Show more' | escape }}"
+              data-label-less="{{ section.settings.show_less_label | default: 'Show less' | escape }}"
+            >
+              {{- section.settings.show_more_label | default: 'Show more' | escape -}}
+            </button>
+          {%- endif -%}
+          {%- if section.settings.full_faq_link != blank and section.settings.full_faq_label != blank -%}
+            <a class="d-faqs__btn" href="{{ section.settings.full_faq_link }}">
+              {{- section.settings.full_faq_label | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </section>
+</diamond-faqs>
+
+{% stylesheet %}
+
+.d-faqs__heading {
+  font-size: 28px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  margin: 0 0 24px;
+}
+
+.d-faqs__item {
+  border-top: 1px solid var(--color-border);
+}
+
+.d-faqs__item:last-of-type,
+.d-faqs__more .d-faqs__item:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.d-faqs__summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 26px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.d-faqs__summary::-webkit-details-marker { display: none; }
+
+.d-faqs__question {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+  flex: 1;
+  color: var(--color-text);
+}
+
+.d-faqs__icon::after {
+  content: "+";
+  font: 400 26px/1 Inter, sans-serif;
+  color: var(--color-text);
+}
+
+details[open] .d-faqs__icon::after { content: "−"; }
+
+.d-faqs__answer {
+  padding: 0 0 28px;
+  max-width: 80ch;
+  color: var(--color-text-muted);
+  font-size: .9375rem;
+  line-height: 1.7;
+}
+
+.d-faqs__answer p { margin: 0 0 12px; }
+.d-faqs__answer p:last-child { margin-bottom: 0; }
+
+/* Buttons row */
+.d-faqs__btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.d-faqs__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: 14px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid rgb(0 0 0 / .25);
+  transition: border-color .2s;
+}
+
+.d-faqs__btn:hover { border-color: var(--color-text); }
+
+@media screen and (min-width: 990px) {
+  .d-faqs__heading {
+    font-size: 36px;
+    margin-bottom: 32px;
+  }
+}
+
+{% endstylesheet %}
+
+{% javascript %}
+class DiamondFaqs extends HTMLElement {
+  connectedCallback() {
+    this.toggleBtn = this.querySelector('.d-faqs__toggle');
+    this.morePanel = this.querySelector('.d-faqs__more');
+    if (!this.toggleBtn || !this.morePanel) return;
+    this.showMoreLabel = this.toggleBtn.dataset.labelMore;
+    this.showLessLabel = this.toggleBtn.dataset.labelLess;
+    this.toggleBtn.addEventListener('click', () => this.#toggle());
+  }
+
+  #toggle() {
+    const isHidden = this.morePanel.hidden;
+    this.morePanel.hidden = !isHidden;
+    this.toggleBtn.textContent = isHidden ? this.showLessLabel : this.showMoreLabel;
+    this.toggleBtn.setAttribute('aria-expanded', String(isHidden));
+    if (!isHidden) this.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+if (!customElements.get('diamond-faqs')) customElements.define('diamond-faqs', DiamondFaqs);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.diamond_faqs.name",
+  "tag": "div",
+  "enabled_on": { "templates": ["product", "page"] },
+  "max_blocks": 30,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.diamond_faqs.settings.heading.label",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "range",
+      "id": "visible_count",
+      "label": "t:sections.diamond_faqs.settings.visible_count.label",
+      "info": "t:sections.diamond_faqs.settings.visible_count.info",
+      "min": 1, "max": 20, "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_faqs.settings.show_more_header.content"
+    },
+    {
+      "type": "text",
+      "id": "show_more_label",
+      "label": "t:sections.diamond_faqs.settings.show_more_label.label",
+      "default": "Show more"
+    },
+    {
+      "type": "text",
+      "id": "show_less_label",
+      "label": "t:sections.diamond_faqs.settings.show_less_label.label",
+      "default": "Show less"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_faqs.settings.full_faq_header.content"
+    },
+    {
+      "type": "text",
+      "id": "full_faq_label",
+      "label": "t:sections.diamond_faqs.settings.full_faq_label.label",
+      "default": "Full FAQ"
+    },
+    {
+      "type": "url",
+      "id": "full_faq_link",
+      "label": "t:sections.diamond_faqs.settings.full_faq_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_header"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "t:sections.diamond_faqs.blocks.faq_item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.diamond_faqs.blocks.faq_item.settings.question.label"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "t:sections.diamond_faqs.blocks.faq_item.settings.answer.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.diamond_faqs.presets.name",
+      "settings": {
+        "heading": "Frequently asked questions",
+        "visible_count": 6,
+        "show_more_label": "Show more",
+        "show_less_label": "Show less",
+        "full_faq_label": "Full FAQ"
+      },
+      "blocks": [
+        { "type": "faq_item", "settings": { "question": "What is Diamond?", "answer": "An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, no lighting, no waiting." } },
+        { "type": "faq_item", "settings": { "question": "Will it fit my hookah?", "answer": "It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to support@ensoshisha.eu." } },
+        { "type": "faq_item", "settings": { "question": "Does the tobacco taste different?", "answer": "Cleaner. The blend is warmed to a set temperature instead of being scorched from above, so you taste the leaf and the molasses, not the coal." } },
+        { "type": "faq_item", "settings": { "question": "What temperature should I use?", "answer": "Most blends sit well at 250–270 °C. For a dark blend, start at 290 °C for the first minutes, then come down to 270 and 250 °C. Every tobacco is made for coal and behaves a little differently, so note what works and save it as a profile." } },
+        { "type": "faq_item", "settings": { "question": "How long does the battery last?", "answer": "About 90 minutes, pre-heat not included. Charge over USB-C while you smoke, or switch Diamond off, change to a second Diamond Battery and switch it back on." } },
+        { "type": "faq_item", "settings": { "question": "How do I clean it?", "answer": "After every session, lift the cup out with the removal tool, empty it and brush the chamber. Once a week, soak the basket and the screens, rinse the cap and wipe the body with a cloth." } },
+        { "type": "faq_item", "settings": { "question": "How much tobacco does it take?", "answer": "10–15 g. Use the basket mesh for a loose, airy pack, or a flat screen for a denser pack. The packing guide has a starting point for each." } },
+        { "type": "faq_item", "settings": { "question": "How does pre-heat work?", "answer": "You set both the time, 0–15 minutes, and the temperature it warms to. Default is 7 minutes at 275 °C. Diamond tells you when it is ready." } },
+        { "type": "faq_item", "settings": { "question": "What are profiles?", "answer": "Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own colour. Open Menu, Profiles, and turn to choose." } },
+        { "type": "faq_item", "settings": { "question": "How do I charge it?", "answer": "Over USB-C, about 1.5 hours with a 30 W supply. The battery also charges on its own, outside Diamond. There is no charger in the box." } },
+        { "type": "faq_item", "settings": { "question": "Do I need an app, Wi-Fi or an account?", "answer": "No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.eu, coming with the first update." } },
+        { "type": "faq_item", "settings": { "question": "Can I touch it during a session?", "answer": "Yes, by the band and the lower body. The cup and the cap are hot, the way a bowl and its foil would be. Let it cool 10 minutes before you open it." } },
+        { "type": "faq_item", "settings": { "question": "Can I take it on a plane?", "answer": "Yes, in hand luggage, like any device with a lithium battery. Take the pack out and carry it with you; never check it in." } },
+        { "type": "faq_item", "settings": { "question": "What wears out, and can I buy spares?", "answer": "The cups, screens, mesh and adapters wear like any bowl and grommet. Every one of them, plus the cap, battery and cable, is sold separately." } },
+        { "type": "faq_item", "settings": { "question": "Warranty and returns?", "answer": "Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to support first." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

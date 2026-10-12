@@ -358,6 +358,39 @@
         "padding_bottom_mobile": 24
       }
     },
+    "diamond_faqs_main": {
+      "type": "diamond-faqs",
+      "blocks": {
+        "faq_1":  { "type": "faq_item", "settings": { "question": "What is Diamond?", "answer": "An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, no lighting, no waiting." } },
+        "faq_2":  { "type": "faq_item", "settings": { "question": "Will it fit my hookah?", "answer": "It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to support@ensoshisha.eu." } },
+        "faq_3":  { "type": "faq_item", "settings": { "question": "Does the tobacco taste different?", "answer": "Cleaner. The blend is warmed to a set temperature instead of being scorched from above, so you taste the leaf and the molasses, not the coal." } },
+        "faq_4":  { "type": "faq_item", "settings": { "question": "What temperature should I use?", "answer": "Most blends sit well at 250–270 °C. For a dark blend, start at 290 °C for the first minutes, then come down to 270 and 250 °C. Every tobacco is made for coal and behaves a little differently, so note what works and save it as a profile." } },
+        "faq_5":  { "type": "faq_item", "settings": { "question": "How long does the battery last?", "answer": "About 90 minutes, pre-heat not included. Charge over USB-C while you smoke, or switch Diamond off, change to a second Diamond Battery and switch it back on." } },
+        "faq_6":  { "type": "faq_item", "settings": { "question": "How do I clean it?", "answer": "After every session, lift the cup out with the removal tool, empty it and brush the chamber. Once a week, soak the basket and the screens, rinse the cap and wipe the body with a cloth." } },
+        "faq_7":  { "type": "faq_item", "settings": { "question": "How much tobacco does it take?", "answer": "10–15 g. Use the basket mesh for a loose, airy pack, or a flat screen for a denser pack. The packing guide has a starting point for each." } },
+        "faq_8":  { "type": "faq_item", "settings": { "question": "How does pre-heat work?", "answer": "You set both the time, 0–15 minutes, and the temperature it warms to. Default is 7 minutes at 275 °C. Diamond tells you when it is ready." } },
+        "faq_9":  { "type": "faq_item", "settings": { "question": "What are profiles?", "answer": "Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own colour. Open Menu, Profiles, and turn to choose." } },
+        "faq_10": { "type": "faq_item", "settings": { "question": "How do I charge it?", "answer": "Over USB-C, about 1.5 hours with a 30 W supply. The battery also charges on its own, outside Diamond. There is no charger in the box." } },
+        "faq_11": { "type": "faq_item", "settings": { "question": "Do I need an app, Wi-Fi or an account?", "answer": "No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.eu, coming with the first update." } },
+        "faq_12": { "type": "faq_item", "settings": { "question": "Can I touch it during a session?", "answer": "Yes, by the band and the lower body. The cup and the cap are hot, the way a bowl and its foil would be. Let it cool 10 minutes before you open it." } },
+        "faq_13": { "type": "faq_item", "settings": { "question": "Can I take it on a plane?", "answer": "Yes, in hand luggage, like any device with a lithium battery. Take the pack out and carry it with you; never check it in." } },
+        "faq_14": { "type": "faq_item", "settings": { "question": "What wears out, and can I buy spares?", "answer": "The cups, screens, mesh and adapters wear like any bowl and grommet. Every one of them, plus the cap, battery and cable, is sold separately." } },
+        "faq_15": { "type": "faq_item", "settings": { "question": "Warranty and returns?", "answer": "Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to support first." } }
+      },
+      "block_order": ["faq_1","faq_2","faq_3","faq_4","faq_5","faq_6","faq_7","faq_8","faq_9","faq_10","faq_11","faq_12","faq_13","faq_14","faq_15"],
+      "settings": {
+        "heading": "Frequently asked questions",
+        "visible_count": 6,
+        "show_more_label": "Show more",
+        "show_less_label": "Show less",
+        "full_faq_label": "Full FAQ",
+        "full_faq_link": "/pages/faq",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 24
+      }
+    },
     "diamond_also_like": {
       "type": "accessories-carousel",
       "settings": {
@@ -543,6 +576,7 @@
     "diamond_witb_main",
     "diamond_experience",
     "diamond_also_like",
-    "diamond_bowl_main"
+    "diamond_bowl_main",
+    "diamond_faqs_main"
   ]
 }
