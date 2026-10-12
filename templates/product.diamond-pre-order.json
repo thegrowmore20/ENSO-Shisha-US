@@ -47,6 +47,7 @@
       },
       "block_order": ["fact_1", "fact_2", "fact_3"],
       "settings": {
+        "image": "shopify://shop_images/heater-dial.webp",
         "eyebrow": "What it is",
         "heading": "An electric heater for the hookah you already own",
         "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, no lighting, no waiting."
