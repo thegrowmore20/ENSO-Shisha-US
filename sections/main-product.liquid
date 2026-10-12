@@ -680,6 +680,19 @@
       top: var(--space-6);
       align-self: start;
     }
+    /* In below_media layout the media is in a flex column above the accordions.
+       Keep it in normal flow so the sticky gallery cannot float over the accordions. */
+    .product-main--acc-below .product-main__media {
+      position: relative;
+      top: auto;
+      align-self: auto;
+    }
+    /* Instead, make the product info column sticky on the right */
+    .product-main--acc-below.product-main--sticky .product-main__content {
+      position: sticky;
+      top: var(--space-6);
+      align-self: start;
+    }
   }
 
   .product-main__content {
