@@ -1,5 +1,3 @@
-{{ 'diamond-manual.css' | asset_url | stylesheet_tag }}
-
 {% stylesheet %}
 
 /* ── Section ── */
@@ -15,9 +13,19 @@
   align-items: center;
 }
 
-/* ── Tile extras not in diamond-manual.css ── */
+/* ── Mosaic (matches diamond-manual.css .box__img / .bx) ── */
+.box__img { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: 14px 10px; padding: 24px; border-radius: 28px; background: #f5f5f4; align-items: center; }
+.bx { position: relative; margin: 0; aspect-ratio: 1; }
+.bx--hero { grid-column: 1 / span 3; grid-row: 1 / span 3; aspect-ratio: auto; align-self: stretch; }
 .bx--l { grid-column: span 2; grid-row: span 2; }
+.bx img { width: 100%; height: 100%; object-fit: contain; }
+.bx--s img { padding: 12%; }
 .bx--xs img { padding: 20%; }
+.bx__n { position: absolute; left: 4px; top: 4px; background: #000; color: #fff; font: 700 12px/1 Inter,sans-serif; font-style: normal; padding: 6px 8px; border-radius: 999px; pointer-events: none; z-index: 1; }
+.bx__t { position: absolute; left: 50%; transform: translateX(-50%); bottom: 4px; white-space: nowrap; background: rgb(255 255 255 / .95); border-radius: 999px; padding: 5px 10px; font: 600 12px/16px Montserrat,sans-serif; color: #000; opacity: 0; transition: opacity .2s; pointer-events: none; box-shadow: 0 2px 8px rgb(0 0 0 / .12); z-index: 2; }
+.bx:hover .bx__t { opacity: 1; }
+
+/* Tile button resets + hover scale */
 .d-witb .bx { border: 0; background: none; padding: 0; cursor: pointer; display: block; }
 .d-witb .bx img { transition: transform .45s cubic-bezier(.2,.8,.2,1); }
 .d-witb .bx:hover img,
@@ -171,9 +179,9 @@
 /* Two-column body: list left, device image right */
 .d-witb-modal__in {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  gap: 28px;
-  padding: 20px 28px 28px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 42%);
+  gap: 0;
+  padding: 0;
   align-items: start;
 }
 .d-witb-modal__sub {
@@ -196,16 +204,20 @@
   color: var(--color-text-muted);
   margin: 16px 0 0;
 }
+.d-witb-modal__left {
+  padding: 20px 28px 28px;
+}
+.d-witb-modal__right {
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
 .d-witb-modal__right img {
   width: 100%;
-  border-radius: 18px;
+  height: 100%;
   object-fit: contain;
-  background: #f5f5f4;
-  padding: 12px;
-  box-sizing: border-box;
   display: block;
-  position: sticky;
-  top: 16px;
+  border-radius: 0 24px 24px 0;
 }
 
 .d-witb-modal__list {
@@ -515,9 +527,12 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 
   /* Device tile → BOXALL modal */
-  document.querySelectorAll('.d-witb__tile[data-opens-modal]').forEach(function (btn) {
-    btn.addEventListener('click', openModal);
-  });
+  var mosaic = document.getElementById(sid + '-Mosaic');
+  if (mosaic) {
+    mosaic.querySelectorAll('[data-opens-modal]').forEach(function (btn) {
+      btn.addEventListener('click', openModal);
+    });
+  }
 
   /* Shared product popup dispatch */
   function dispatchPopup(handle, srcEl) {
@@ -552,9 +567,11 @@
   }
 
   /* Acc tiles → shared product popup */
-  document.querySelectorAll('.d-witb__tile[data-handle]').forEach(function (btn) {
-    btn.addEventListener('click', function () { dispatchPopup(btn.dataset.handle, btn); });
-  });
+  if (mosaic) {
+    mosaic.querySelectorAll('[data-handle]').forEach(function (btn) {
+      btn.addEventListener('click', function () { dispatchPopup(btn.dataset.handle, btn); });
+    });
+  }
 
   /* Modal list items → shared product popup */
   modal.querySelectorAll('.d-witb-modal__list li[data-handle]').forEach(function (li) {
