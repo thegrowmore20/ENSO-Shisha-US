@@ -1,3 +1,15 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
 <div class="wrap">
   <section class="ch" id="pack"><p class="ch__num">05 · Start</p><h2>Pack the cup</h2><p class="ch__lead">Two light layers of your usual tobacco. First choose the mesh: it changes the smoke, the pack and the heat.</p><div class="grams"><b>10–15 g</b><span>of your usual tobacco. <b>Mix it first:</b> the juice settles at the bottom of the tin.</span></div><h3>Touching or not: two meshes</h3><p class="h3lead">It is the same craft as packing a bowl for coal. The difference is whether the tobacco touches the hot cup.</p><div class="slider tslider slider--grid" style="--n:2"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Flat screen: in contact</b><p>The tobacco sits against the cup, like a bowl packed in contact under the coals: a deeper roast, a fuller, denser smoke, and it needs less heat. Fine, dry cuts open up best here, Tangiers for example. A little more work to clean.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.flat_screen != blank -%}{{- section.settings.flat_screen | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.flat_screen.alt | default: '', width: section.settings.flat_screen.width, height: section.settings.flat_screen.height -}}{%- else -%}<img src="{{ 'dm-s-flat-screen.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Basket mesh: off the walls</b><p>The basket holds the tobacco away from the cup: an airy, fluffy pack, a lighter smoke, and it needs more heat. Moist and strong blends feel much smoother. Lifts out in one piece to clean.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.basket_empty != blank -%}{{- section.settings.basket_empty | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.basket_empty.alt | default: '', width: section.settings.basket_empty.width, height: section.settings.basket_empty.height -}}{%- else -%}<img src="{{ 'dm-s-basket-empty.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><h3>Pick your mesh, then pack</h3><div class="mpick"><button type="button" class="mpick__c on" data-mesh="basket" aria-expanded="true" aria-controls="pack-basket">{%- if section.settings.img_basket != blank -%}{{- section.settings.img_basket | image_url: width: 300 | image_tag: loading: 'lazy', alt: section.settings.img_basket.alt | default: '', width: section.settings.img_basket.width, height: section.settings.img_basket.height -}}{%- else -%}<img src="{{ 'dm-cut2-d-basket.webp' | file_url }}" alt="">{%- endif -%}<b>Basket mesh</b><dl><div><dt>Smoke</dt><dd>Lighter and airy</dd></div><div><dt>Pack</dt><dd>Loose and fluffy, pressed just a little</dd></div><div><dt>Heat</dt><dd>Needs more: set the dial higher</dd></div><div><dt>Cleaning</dt><dd>Easy: lifts out in one piece</dd></div></dl><span class="mpick__open">How to pack it</span></button><div class="mpane on" id="pack-basket"><div class="slider tslider" style="--n:5"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Basket in the cup</b><p>Set the basket mesh in the cup.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.basket_empty != blank -%}{{- section.settings.basket_empty | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.basket_empty.alt | default: '', width: section.settings.basket_empty.width, height: section.settings.basket_empty.height -}}{%- else -%}<img src="{{ 'dm-s-basket-empty.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>First layer</b><p>Lay in about half of the 10–15 g, loosely.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.pack_layer1 != blank -%}{{- section.settings.pack_layer1 | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.pack_layer1.alt | default: '', width: section.settings.pack_layer1.width, height: section.settings.pack_layer1.height -}}{%- else -%}<img src="{{ 'dm-s-pack-layer1.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Press just a little</b><p>Press it down gently with a pick. Keep it airy.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.pack_press != blank -%}{{- section.settings.pack_press | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.pack_press.alt | default: '', width: section.settings.pack_press.width, height: section.settings.pack_press.height -}}{%- else -%}<img src="{{ 'dm-s-pack-press.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Second layer</b><p>The rest on top, the same blend or another flavour, pressed just a little again.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.pack_layer2 != blank -%}{{- section.settings.pack_layer2 | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.pack_layer2.alt | default: '', width: section.settings.pack_layer2.width, height: section.settings.pack_layer2.height -}}{%- else -%}<img src="{{ 'dm-s-pack-layer2.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">5</span><b>To the edge</b><p>Stop at the edge of the mesh. Then set the dial a little higher.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cup_filled != blank -%}{{- section.settings.cup_filled | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cup_filled.alt | default: '', width: section.settings.cup_filled.width, height: section.settings.cup_filled.height -}}{%- else -%}<img src="{{ 'dm-s-cup-filled.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></div><button type="button" class="mpick__c" data-mesh="flat" aria-expanded="false" aria-controls="pack-flat">{%- if section.settings.img_screens != blank -%}{{- section.settings.img_screens | image_url: width: 300 | image_tag: loading: 'lazy', alt: section.settings.img_screens.alt | default: '', width: section.settings.img_screens.width, height: section.settings.img_screens.height -}}{%- else -%}<img src="{{ 'dm-cut2-d-screens-2.webp' | file_url }}" alt="">{%- endif -%}<b>Flat screen</b><dl><div><dt>Smoke</dt><dd>Fuller and denser</dd></div><div><dt>Pack</dt><dd>Even layers, pressed lightly</dd></div><div><dt>Heat</dt><dd>Needs less: more contact with the cup</dd></div><div><dt>Cleaning</dt><dd>More work: brush the screen and the cup</dd></div></dl><span class="mpick__open">How to pack it</span></button><div class="mpane" id="pack-flat"><div class="slider tslider" style="--n:4"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Screen on the bottom</b><p>Lay the flat screen on the bottom of the cup.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.flat_screen != blank -%}{{- section.settings.flat_screen | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.flat_screen.alt | default: '', width: section.settings.flat_screen.width, height: section.settings.flat_screen.height -}}{%- else -%}<img src="{{ 'dm-s-flat-screen.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>First layer</b><p>Lay in about half of the 10–15 g, evenly, and press lightly.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.flat_layer1 != blank -%}{{- section.settings.flat_layer1 | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.flat_layer1.alt | default: '', width: section.settings.flat_layer1.width, height: section.settings.flat_layer1.height -}}{%- else -%}<img src="{{ 'dm-s-flat-layer1.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Second layer</b><p>The rest on top, pressed lightly.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.flat_layer2 != blank -%}{{- section.settings.flat_layer2 | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.flat_layer2.alt | default: '', width: section.settings.flat_layer2.width, height: section.settings.flat_layer2.height -}}{%- else -%}<img src="{{ 'dm-s-flat-layer2.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>To the brim</b><p>Stop at the small tab of the cup. Then set the dial a little lower.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.flat_packed != blank -%}{{- section.settings.flat_packed | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.flat_packed.alt | default: '', width: section.settings.flat_packed.width, height: section.settings.flat_packed.height -}}{%- else -%}<img src="{{ 'dm-s-flat-packed.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></div></div><h3>Mix in layers</h3><div class="pk-heatmap">
       <svg viewBox="0 0 360 310" role="img" aria-label="The ENSŌ Diamond cup in section: heat comes from the sides and from below, strongest at the bottom">
@@ -142,6 +154,50 @@
       "type": "image_picker",
       "id": "cup_seated_tool_off",
       "label": "Next cup seated"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 0
     }
   ],
   "presets": [
