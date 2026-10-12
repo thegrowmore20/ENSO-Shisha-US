@@ -130,6 +130,13 @@
 {% endstylesheet %}
 
 <div class="enso-hero">
+    {%- liquid
+      assign poster_img = section.settings.poster
+      if poster_img == blank and section.settings.video != blank
+        assign poster_img = section.settings.video.preview_image
+      endif
+      assign poster_url = poster_img | image_url: width: 1600
+    -%}
     {%- if section.settings.video != blank -%}
       <video
         class="enso-hero__video"
@@ -138,6 +145,7 @@
         loop
         playsinline
         preload="none"
+        {%- if poster_url != blank %} poster="{{ poster_url }}"{% endif %}
       >
         {%- for source in section.settings.video.sources -%}
           {%- if source.format == 'mp4' -%}
@@ -179,6 +187,11 @@
       "type": "video",
       "id": "video",
       "label": "t:sections.enso_hero_video.settings.video.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "t:sections.enso_hero_video.settings.poster.label"
     },
     {
       "type": "text",

@@ -1091,6 +1091,9 @@
         "video": {
           "label": "Video"
         },
+        "poster": {
+          "label": "Poster image"
+        },
         "heading": {
           "label": "Heading"
         },
