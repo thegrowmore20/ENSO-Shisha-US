@@ -9,6 +9,16 @@
  */
 {
   "sections": {
+    "diamond_hero_main": {
+      "type": "diamond-hero",
+      "settings": {
+        "video_url": "",
+        "heading": "The electric heater for your hookah",
+        "subtext": "No coals, no lighting, no waiting",
+        "button_label": "Learn more",
+        "button_link": "#buy"
+      }
+    },
     "diamond_buy_main": {
       "type": "diamond-buy",
       "settings": {
@@ -22,6 +32,7 @@
     }
   },
   "order": [
+    "diamond_hero_main",
     "diamond_buy_main"
   ]
 }

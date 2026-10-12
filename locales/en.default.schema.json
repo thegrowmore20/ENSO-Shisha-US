@@ -2352,6 +2352,21 @@
         "contact_email": { "label": "Contact email" }
       },
       "presets": { "name": "Diamond Buy" }
+    },
+    "diamond_hero": {
+      "name": "Diamond Hero",
+      "settings": {
+        "video_url": {
+          "label": "Video URL",
+          "info": "Paste the full URL of an MP4 file (Shopify Files or CDN)"
+        },
+        "poster": { "label": "Poster / fallback image" },
+        "heading": { "label": "Heading" },
+        "subtext": { "label": "Subtext" },
+        "button_label": { "label": "Button label" },
+        "button_link": { "label": "Button link" }
+      },
+      "presets": { "name": "Diamond Hero" }
     }
   }
 }
