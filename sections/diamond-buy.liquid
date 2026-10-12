@@ -134,8 +134,18 @@
   min-width: 0;
 }
 
-/* ── Gallery styles ── */
+/* ── Gallery — identical to main-product.liquid so the custom element works ── */
 .product-gallery { display: block; }
+
+.media-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  background: rgba(0,0,0,.05);
+  border-radius: var(--radius-xl);
+}
+.media-placeholder__mark { width: 30%; height: auto; opacity: .4; }
 
 .product-gallery__image,
 .product-gallery__video,
@@ -143,78 +153,56 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
-  object-fit: contain;
-  background: #fff;
+  object-fit: cover;
 }
+
+.product-gallery--thumbnails_bottom .product-gallery__thumbs {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  overflow-x: auto;
+}
+
+.product-gallery--thumbnails_left {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: var(--space-4);
+}
+.product-gallery--thumbnails_left .product-gallery__main { flex: 1; min-width: 0; }
 
 .product-gallery__main {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
-  background: #fff;
   margin-bottom: 16px;
   touch-action: pan-y;
 }
 
 .product-gallery__track {
   display: flex;
-  transition: transform 0.35s var(--ease-out, ease);
+  transition: transform 0.35s var(--ease-out);
 }
 .product-gallery__track.is-dragging { transition: none; }
 
-.product-gallery__item {
-  flex: 0 0 100%;
-  min-width: 0;
-}
+.product-gallery__item { flex: 0 0 100%; min-width: 0; }
 
-/* Thumbnails below */
-.product-gallery--thumbnails_bottom .product-gallery__thumbs {
-  display: flex;
-  gap: var(--space-3, 12px);
-  margin-top: var(--space-4, 16px);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.product-gallery--thumbnails_bottom .product-gallery__thumbs::-webkit-scrollbar { display: none; }
-
-/* Thumbnails left */
-.product-gallery--thumbnails_left {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: var(--space-4, 16px);
-}
-.product-gallery--thumbnails_left .product-gallery__main { flex: 1; min-width: 0; }
 .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2, 8px);
+  gap: var(--space-2);
   max-height: 600px;
 }
 .product-gallery--thumbnails_left .product-gallery__thumbs {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3, 12px);
+  gap: var(--space-3);
   overflow-y: auto;
   min-height: 0;
   scrollbar-width: none;
 }
 .product-gallery--thumbnails_left .product-gallery__thumbs::-webkit-scrollbar { display: none; }
-
-@media screen and (max-width: 749px) {
-  .product-gallery--thumbnails_left { flex-direction: column; }
-  .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
-    flex-direction: row;
-    max-height: none;
-    width: 100%;
-  }
-  .product-gallery--thumbnails_left .product-gallery__thumbs {
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: visible;
-  }
-}
 
 .product-gallery__thumbs-arrow {
   display: flex;
@@ -225,42 +213,67 @@
   height: 32px;
   padding: 0;
   border-radius: 50%;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,.12);
+  background: rgb(255,255,255);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,.5);
   color: var(--color-text);
   opacity: .8;
-  transition: opacity .2s;
+  transition: opacity .2s ease, background-color .2s ease;
 }
-.product-gallery__thumbs-arrow:hover { opacity: 1; }
-.product-gallery__thumbs-arrow[hidden] { display: none; }
+.product-gallery__thumbs-arrow:hover { opacity: 1; background: rgba(255,255,255,.5); }
+.product-gallery__thumbs-arrow .icon-chevron { width: 14px; height: 14px; }
 .product-gallery__thumbs-arrow--prev .icon-chevron { transform: rotate(180deg); }
+.product-gallery__thumbs-arrow[hidden] { display: none; }
 
-/* Thumbnail buttons */
+@media screen and (max-width: 749px) {
+  .product-gallery--thumbnails_left { flex-direction: column; }
+  .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
+    flex-direction: row;
+    gap: 0;
+    max-height: none;
+    min-width: 0;
+    width: 100%;
+    position: relative;
+  }
+  .product-gallery--thumbnails_left .product-gallery__thumbs {
+    flex-direction: row;
+    gap: var(--space-1);
+    overflow-x: auto;
+    overflow-y: visible;
+    flex: 1;
+    min-width: 0;
+  }
+  .product-gallery--thumbnails_left .product-gallery__thumbs-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+  .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--prev { left: 0; }
+  .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--next { right: 0; }
+  .product-gallery__thumbs-arrow--prev .icon-chevron { transform: rotate(90deg); }
+  .product-gallery__thumbs-arrow--next .icon-chevron { transform: rotate(-90deg); }
+}
+
 .product-gallery__thumb {
   position: relative;
-  flex: 0 0 76px;
-  width: 76px;
-  height: 76px;
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid var(--color-border);
-  opacity: .7;
+  border: 2px solid transparent;
+  opacity: .6;
   padding: 0;
-  background: #fff;
-  transition: opacity .2s, border-color .2s;
+  transition: opacity .2s ease, border-color .2s ease;
 }
 .product-gallery__thumb.is-active,
 .product-gallery__thumb:hover {
   opacity: 1;
-  border-color: #000;
-  border-width: 2px;
+  border-color: var(--color-accent);
 }
-.product-gallery__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: #fff;
-}
+.product-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
 .product-gallery__thumb-icon {
   position: absolute;
   inset: 0;
@@ -269,6 +282,10 @@
   justify-content: center;
   background: rgba(0,0,0,.35);
   color: #fff;
+}
+.product-gallery__scroller .carousel__track > * { flex: 0 0 90%; }
+@media screen and (min-width: 750px) {
+  .product-gallery__scroller .carousel__track > * { flex: 0 0 100%; }
 }
 
 /* ── Specs area ── */
