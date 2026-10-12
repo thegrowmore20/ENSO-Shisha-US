@@ -185,17 +185,10 @@
   align-items: start;
 }
 .d-witb-modal__sub {
-  color: var(--palette-sand, #c8943a);
+  color: var(--color-text);
   font-size: 15px;
   line-height: 23px;
   margin: 0;
-}
-.d-witb-modal__small {
-  display: block;
-  margin-top: 12px;
-  color: var(--color-text-muted);
-  font-size: 13px;
-  line-height: 20px;
 }
 .d-witb-modal__also {
   font-size: 16px;
@@ -457,9 +450,6 @@
           -%}
           {%- if device_desc != blank -%}
             <p class="d-witb-modal__sub">{{ device_desc | escape }}</p>
-          {%- endif -%}
-          {%- if device_block.settings.how != blank -%}
-            <small class="d-witb-modal__small">{{ device_block.settings.how | escape }}</small>
           {%- endif -%}
         {%- endif -%}
         <h4 class="d-witb-modal__also">Also in the box</h4>
