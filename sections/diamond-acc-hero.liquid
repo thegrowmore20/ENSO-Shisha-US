@@ -7,18 +7,6 @@
   .d-acc-hero { padding: 40px 0; }
 }
 
-/* matches handoff .wrap: max-width 1600px, 40px side padding */
-.d-acc-hero__wrap {
-  max-width: 1600px;
-  margin-inline: auto;
-  padding-inline: 40px;
-}
-@media screen and (max-width: 989px) {
-  .d-acc-hero__wrap {
-    padding-inline: 20px;
-  }
-}
-
 /* ── Card ── */
 .d-acc-hero__card {
   display: block;
@@ -80,10 +68,14 @@
   background: #1a1a1a;
 }
 
-/* ── Copy column ── */
+/* ── Copy column — max-width on the content, not the card ── */
 .d-acc-hero__copy {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   padding: 56px;
@@ -168,7 +160,6 @@
 -%}
 
 <section class="d-acc-hero" id="DiamondAcc-{{ section.id }}">
-  <div class="d-acc-hero__wrap">
 
     {%- if has_link -%}
       <a class="d-acc-hero__card" href="{{ section.settings.link }}">
@@ -233,7 +224,7 @@
       </div>
     {%- endif -%}
 
-  </div>{%- comment -%}/.d-acc-hero__wrap{%- endcomment -%}
+
 </section>
 
 {% schema %}
