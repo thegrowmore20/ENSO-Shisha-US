@@ -63,11 +63,164 @@
         "inbox_text": "Diamond with thermo cap and battery, two ceramic cups, basket mesh, three flat screens, two silicone adapters, cup tool, brush, USB-C cable.",
         "contact_email": "support@ensoshisha.eu"
       }
+    },
+    "diamond_features_main": {
+      "type": "diamond-features",
+      "blocks": {
+        "feat_blend": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-blend-open.webp",
+            "alt": "A hand lifting the thermo cap off Diamond, the cup packed with tobacco",
+            "title": "Any blend you like",
+            "sub": "Blonde, dark or your own mix, 10–15 g in the cup",
+            "text": "Pack the cup the way you pack a bowl. Light blonde leaf, heavy dark leaf, creamy or minty, one flavour or your own mix: Diamond takes the tobacco you already buy, with no pods and no cartridges.",
+            "small": "No pods, no cartridges",
+            "more1_h": "Blonde and dark",
+            "more1_p": "Blonde leaf likes a gentler start; dark leaf takes more heat and a longer pre-heat. Both hold for the whole session because the controller keeps the temperature to the degree.",
+            "more2_h": "Your own mix",
+            "more2_p": "Layer two flavours or split the cup half and half. Keep the load at 10–15 g and leave the centre loose so the air moves.",
+            "more3_h": "Basket or screen",
+            "more3_p": "Wet, heavy blends breathe in the steel basket; dry, fine cuts sit under the flat screen. Both are in the box."
+          }
+        },
+        "feat_swap": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-cup-swap.webp",
+            "alt": "The cup removal tool lifting the packed ceramic cup out of Diamond",
+            "title": "Change the cup mid-session",
+            "sub": "Lift the cup out, drop the next one in",
+            "text": "The cup lifts out of the chamber with the tool, even hot. Pack the second cup while the first one runs, then swap and carry on with a new flavour without waiting for the device to cool.",
+            "small": "Always lift a hot cup with the tool",
+            "more1_h": "Two cups in the box",
+            "more1_p": "One in the chamber, one on the table ready to go. More cups are sold separately.",
+            "more2_h": "The tool",
+            "more2_p": "The steel hook with the black handle catches the rim of the cup, so your fingers never touch the hot ceramic.",
+            "more3_h": "Clean in a minute",
+            "more3_p": "Empty the used cup once it has cooled, rinse it, and it is ready for the next evening."
+          }
+        },
+        "feat_heat": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-heat-sketch.webp",
+            "alt": "Cross-section sketch showing the heating element around the cup wall and the plate in the cap above",
+            "title": "Heat from every side",
+            "sub": "The element wraps the cup, the plate closes it from the top",
+            "text": "The heating element sits under the cup and around its wall, so the tobacco warms from below and from the sides at once. The plate in the cap closes the chamber from above and keeps the heat on the load, the way a lid keeps it in a classic bowl.",
+            "small": "Cross-section, not to scale",
+            "more1_h": "Even from edge to centre",
+            "more1_p": "Heat reaches the whole load at once instead of burning the top layer, so the first draw and the last taste the same.",
+            "more2_h": "The plate on top",
+            "more2_p": "The cap plate sits over the cup and holds the heat in. Its openings also set how freely the air moves.",
+            "more3_h": "Held to the degree",
+            "more3_p": "The controller reads the temperature and holds the number you set, from 180 to 320 °C, for the whole session."
+          }
+        },
+        "feat_clean": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-clean-cup.webp",
+            "alt": "Warm water poured through the steel basket into the black ceramic cup held in a hand",
+            "title": "Only the cup to clean",
+            "sub": "The heating element stays clean",
+            "text": "The tobacco never touches the heating element, so there is nothing to scrape. After a session you rinse the cup and the mesh under warm water, and that is it.",
+            "small": "Rinse the cup and the mesh, and you are done",
+            "more1_h": "After every session",
+            "more1_p": "Lift the cup out, push the mesh and the tobacco out in one piece, rinse both.",
+            "more2_h": "Now and then",
+            "more2_p": "Brush the shaft and rinse the cap under the tap.",
+            "more3_h": "Never",
+            "more3_p": "The battery and its contacts never get wet."
+          }
+        },
+        "feat_ceramic": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-ceramic-heater.webp",
+            "alt": "Macro of the empty chamber showing the glossy black ceramic heating sleeve",
+            "title": "Ceramic heat, clean taste",
+            "sub": "Ceramic cup, stainless steel air path, no flame",
+            "text": "A ceramic element warms a ceramic cup, and the air runs through stainless steel. No coal, no foil, no flame: what you taste is the tobacco, from the first draw to the last.",
+            "small": "Two-year warranty on the device",
+            "more1_h": "Ceramic on ceramic",
+            "more1_p": "Ceramic holds heat evenly and carries no taste of its own, so the flavour stays true through a long session.",
+            "more2_h": "Stainless steel inside",
+            "more2_p": "The air path is stainless steel. Nothing in it keeps the smell of the last session.",
+            "more3_h": "Built to last",
+            "more3_p": "A zinc-alloy body, a two-year warranty on the device and one year on the battery."
+          }
+        },
+        "feat_battery": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-battery-wide.webp",
+            "alt": "A hand pulling the battery pack out of the back of Diamond",
+            "title": "Removable battery",
+            "sub": "About 90 minutes per pack, pre-heat not included",
+            "text": "The back of the device is the pack. Switch Diamond off, open the latch, set a charged one in and close it: about 90 minutes each, pre-heat not included.",
+            "small": "Switch Diamond off before you change the pack",
+            "more1_h": "Two packs, one evening",
+            "more1_p": "A second Diamond Battery covers about three hours. Charge the spare on its own while the first one runs.",
+            "more2_h": "What the dots mean",
+            "more2_p": "Four dots on the pack show the charge in quarters. The screen warns at 10 percent, with time left to finish the cup.",
+            "more3_h": "Care",
+            "more3_p": "Switch Diamond off before you change the pack. It goes in one way only: contacts down, then close the latch."
+          }
+        },
+        "feat_charge": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-charge-back.webp",
+            "alt": "Diamond on a hookah in a tea room, seen from the back, a USB-C cable plugged in under the four lit dots",
+            "title": "Charge while you smoke",
+            "sub": "USB-C in the back, the session keeps going",
+            "text": "Plug a 30 W USB-C charger into the back of Diamond and carry on. At 255 °C or lower the battery charges while you smoke; above that, the cable keeps the session going.",
+            "small": "At 255 °C or lower the battery charges while you smoke",
+            "more1_h": "Any 30 W USB-C charger",
+            "more1_p": "The cable is in the box. A laptop or phone fast charger does the job.",
+            "more2_h": "Or charge the pack alone",
+            "more2_p": "Lift the pack out and charge it on its own while a second one runs.",
+            "more3_h": "Care",
+            "more3_p": "Never charge a hot battery: let a pack that just came out of Diamond cool first."
+          }
+        },
+        "feat_update": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-update-off.webp",
+            "alt": "Diamond on a desk, screen dark, a USB-C cable connected to a laptop",
+            "title": "Update over USB-C",
+            "sub": "New firmware from your computer",
+            "text": "Connect Diamond to your computer with the USB-C cable and install new firmware from a page on ensoshisha.eu. No app to install, no account.",
+            "small": "New firmware from a page on ensoshisha.eu",
+            "more1_h": "Three steps",
+            "more1_p": "Take the battery out, plug the cable into the port in the bay, open the update page and press Update.",
+            "more2_h": "Your settings stay",
+            "more2_p": "Your profiles stay as you set them.",
+            "more3_h": "It improves after you buy it",
+            "more3_p": "What the first owners ask for shapes what the next update brings."
+          }
+        }
+      },
+      "block_order": [
+        "feat_blend", "feat_swap", "feat_heat", "feat_clean",
+        "feat_ceramic", "feat_battery", "feat_charge", "feat_update"
+      ],
+      "settings": {
+        "section_id": "tech",
+        "heading": "Explore the features",
+        "subline": "What changes when the charcoal goes",
+        "layout": "full",
+        "color_background": "#f5f5f4"
+      }
     }
   },
   "order": [
     "diamond_hero_main",
     "diamond_buy_main",
-    "diamond_heater_main"
+    "diamond_heater_main",
+    "diamond_features_main"
   ]
 }

@@ -1,0 +1,1027 @@
+{%- liquid
+  assign sec_id   = section.settings.section_id | default: 'tech'
+  assign lay_full = true
+  if section.settings.layout == 'contained'
+    assign lay_full = false
+  endif
+  assign bg_color = section.settings.color_background
+-%}
+
+{% stylesheet %}
+
+/* ─────────────────────────────────────────────
+   Section wrapper
+───────────────────────────────────────────── */
+.d-feat {
+  padding: 88px 0 80px;
+  background-color: var(--d-feat-bg, var(--palette-mist, #f5f5f4));
+  scroll-margin-top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px) + 20px);
+}
+@media screen and (max-width: 989px) {
+  .d-feat { padding: 56px 0 64px; }
+}
+
+/* ─────────────────────────────────────────────
+   Heading block
+───────────────────────────────────────────── */
+.d-feat__head {
+  margin-bottom: 28px;
+}
+.d-feat__heading {
+  font-size: 36px;
+  line-height: 42px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -.02em;
+  margin: 0;
+}
+@media screen and (max-width: 989px) {
+  .d-feat__heading { font-size: 28px; line-height: 34px; }
+}
+.d-feat__sub {
+  margin: 10px 0 0;
+  color: rgb(0 0 0 / .66);
+  font-size: 15px;
+  line-height: 24px;
+}
+
+/* ─────────────────────────────────────────────
+   Carousel shell
+───────────────────────────────────────────── */
+.d-feat__hl {
+  position: relative;
+  overflow: hidden;
+  outline: 0;
+  padding-top: 24px;
+  touch-action: pan-y;
+}
+.d-feat__hl--contained {
+  max-width: var(--page-width, 1440px);
+  margin: 0 auto;
+}
+.d-feat__hl:focus-visible .d-feat__slide.is-on {
+  outline: 2px solid var(--color-focus, #000);
+  outline-offset: 4px;
+}
+
+/* ─────────────────────────────────────────────
+   Track + slides
+───────────────────────────────────────────── */
+.d-feat__track {
+  display: flex;
+  gap: 20px;
+  will-change: transform;
+  transition: transform .8s cubic-bezier(.2,.8,.2,1);
+}
+@media screen and (max-width: 989px) {
+  .d-feat__track { gap: 12px; }
+}
+
+.d-feat__slide {
+  flex: 0 0 min(900px, 76vw);
+  border-radius: 28px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--color-border, rgb(0 0 0 / .1));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  cursor: pointer;
+  opacity: .45;
+  transition: opacity .6s, transform .6s;
+}
+.d-feat__slide:not(.is-on):hover { opacity: .7; }
+.d-feat__slide.is-on { opacity: 1; cursor: pointer; }
+@media screen and (max-width: 989px) {
+  .d-feat__slide { flex-basis: 88vw; }
+}
+
+/* ─────────────────────────────────────────────
+   Media
+───────────────────────────────────────────── */
+.d-feat__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #000;
+  pointer-events: none;
+}
+@media screen and (max-width: 989px) {
+  .d-feat__media { aspect-ratio: 4 / 5; }
+}
+.d-feat__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 60%;
+  transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
+}
+.d-feat__slide.is-on:hover .d-feat__media img {
+  transform: scale(1.03);
+}
+.d-feat__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #f0ede8;
+}
+.d-feat__placeholder svg {
+  width: 60%;
+  height: 60%;
+}
+
+/* ─────────────────────────────────────────────
+   Caption
+───────────────────────────────────────────── */
+.d-feat__cap {
+  padding: 24px 32px 28px;
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@media screen and (max-width: 989px) {
+  .d-feat__cap { padding: 18px 20px 22px; }
+}
+.d-feat__slide h3 {
+  font-size: 28px;
+  line-height: 34px;
+  margin: 0;
+  color: #000;
+  flex: 0 0 auto;
+}
+@media screen and (max-width: 989px) {
+  .d-feat__slide h3 { font-size: 22px; line-height: 28px; }
+}
+.d-feat__slide p {
+  margin: 0;
+  color: rgb(0 0 0 / .6);
+  font-size: 17px;
+  line-height: 26px;
+  max-width: 48ch;
+  flex: 1 1 320px;
+}
+@media screen and (max-width: 989px) {
+  .d-feat__slide p { font-size: 15px; line-height: 23px; }
+}
+
+/* ─────────────────────────────────────────────
+   "Read more" badge
+───────────────────────────────────────────── */
+.d-feat__open {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  z-index: 2;
+  background: rgb(255 255 255 / .92);
+  color: #000;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-bold);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+}
+.d-feat__slide.is-on:hover .d-feat__open { opacity: 1; }
+
+/* ─────────────────────────────────────────────
+   Prev / next arrows
+───────────────────────────────────────────── */
+.d-feat__arr {
+  position: absolute;
+  top: calc(24px + min(900px, 76vw) * 3 / 4 / 2);
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 0;
+  background: rgb(255 255 255 / .92);
+  box-shadow: 0 2px 12px rgb(0 0 0 / .18);
+  color: #000;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  transition: transform .2s;
+}
+.d-feat__arr:hover { transform: translateY(-50%) scale(1.06); }
+.d-feat__arr--l { left: calc(50% - min(900px,76vw)/2 - 8px); }
+.d-feat__arr--r { right: calc(50% - min(900px,76vw)/2 - 8px); }
+@media screen and (max-width: 989px) {
+  .d-feat__arr { display: none; }
+}
+
+/* ─────────────────────────────────────────────
+   Controls bar (dots + pause)
+───────────────────────────────────────────── */
+.d-feat__ctl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+/* Dots — mist background: dark style */
+.d-feat__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / .06);
+}
+.d-feat__dots button {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 0;
+  padding: 0;
+  background: rgb(0 0 0 / .25);
+  cursor: pointer;
+  transition: width .35s;
+  position: relative;
+  overflow: hidden;
+}
+.d-feat__dots button[aria-current="true"] {
+  width: 44px;
+  background: rgb(0 0 0 / .15);
+}
+.d-feat__dots button[aria-current="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: calc(var(--p, 0) * 100%);
+  background: #000;
+  border-radius: 999px;
+}
+
+/* Pause / play button */
+.d-feat__pause {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 0;
+  background: rgb(0 0 0 / .06);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.d-feat__ic-pause {
+  width: 10px;
+  height: 12px;
+  border-left: 3px solid #000;
+  border-right: 3px solid #000;
+  display: block;
+}
+.d-feat__ic-play {
+  display: none;
+  width: 0;
+  height: 0;
+  border-left: 11px solid #000;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  margin-left: 3px;
+}
+.d-feat__hl.is-paused .d-feat__ic-pause { display: none; }
+.d-feat__hl.is-paused .d-feat__ic-play  { display: block; }
+
+/* ─────────────────────────────────────────────
+   Detail modal
+───────────────────────────────────────────── */
+.d-feat__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(0 0 0 / .6);
+  backdrop-filter: blur(4px);
+}
+.d-feat__modal[hidden] { display: none; }
+
+.d-feat__mbox {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  width: min(1320px, 100%);
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 80px rgb(0 0 0 / .3);
+}
+
+.d-feat__mhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px 16px;
+  border-bottom: 1px solid var(--color-border, rgb(0 0 0 / .1));
+  flex-shrink: 0;
+}
+.d-feat__mhead h3 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+.d-feat__mclose {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border, rgb(0 0 0 / .1));
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.d-feat__mclose:hover { background: rgb(0 0 0 / .05); }
+
+.d-feat__mmain {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+@media screen and (max-width: 767px) {
+  .d-feat__mmain { grid-template-columns: 1fr; overflow-y: auto; }
+}
+
+.d-feat__mmedia {
+  background: #000;
+  overflow: hidden;
+  position: relative;
+}
+.d-feat__mmedia img,
+.d-feat__mmedia video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-height: 72vh;
+  display: block;
+}
+.d-feat__mmedia[hidden] { display: none; }
+@media screen and (max-width: 767px) {
+  .d-feat__mmedia { max-height: 52vw; }
+  .d-feat__mmedia img,
+  .d-feat__mmedia video { max-height: 52vw; }
+}
+
+.d-feat__mbody {
+  padding: 28px 32px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+@media screen and (max-width: 767px) {
+  .d-feat__mbody { padding: 20px 20px 24px; }
+}
+.d-feat__mtext p {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgb(0 0 0 / .8);
+}
+.d-feat__mtext h4 {
+  font-size: 15px;
+  font-weight: var(--font-weight-semibold);
+  margin: 16px 0 4px;
+}
+.d-feat__msmall {
+  display: block;
+  font-size: 12px;
+  color: rgb(0 0 0 / .5);
+  margin-top: 12px;
+}
+.d-feat__msmall[hidden] { display: none; }
+
+.d-feat__mnav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 24px 16px;
+  border-top: 1px solid var(--color-border, rgb(0 0 0 / .08));
+  flex-shrink: 0;
+}
+.d-feat__mprev,
+.d-feat__mnext {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border, rgb(0 0 0 / .1));
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.d-feat__mprev:hover,
+.d-feat__mnext:hover { background: rgb(0 0 0 / .05); }
+
+.d-feat__mdots {
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / .05);
+}
+.d-feat__mdots i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(0 0 0 / .2);
+  font-style: normal;
+}
+.d-feat__mdots i.is-on {
+  background: #000;
+}
+
+{% endstylesheet %}
+
+{%- comment -%} Serialize block data for JS {%- endcomment -%}
+<script type="application/json" id="d-feat-data-{{ section.id }}">
+[
+  {%- for block in section.blocks -%}
+  {
+    "title": {{ block.settings.title | json }},
+    "sub":   {{ block.settings.sub   | json }},
+    "text":  {{ block.settings.text  | json }},
+    "small": {{ block.settings.small | json }},
+    "alt":   {{ block.settings.alt | default: block.settings.title | json }},
+    "img":   {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1200 | json }}{% else %}null{% endif %},
+    "more": [
+      {%- if block.settings.more1_h != blank or block.settings.more1_p != blank -%}
+        {"h": {{ block.settings.more1_h | json }}, "p": {{ block.settings.more1_p | json }}}{% if block.settings.more2_h != blank or block.settings.more2_p != blank %},{% endif %}
+      {%- endif -%}
+      {%- if block.settings.more2_h != blank or block.settings.more2_p != blank -%}
+        {"h": {{ block.settings.more2_h | json }}, "p": {{ block.settings.more2_p | json }}}{% if block.settings.more3_h != blank or block.settings.more3_p != blank %},{% endif %}
+      {%- endif -%}
+      {%- if block.settings.more3_h != blank or block.settings.more3_p != blank -%}
+        {"h": {{ block.settings.more3_h | json }}, "p": {{ block.settings.more3_p | json }}}
+      {%- endif -%}
+    ]
+  }{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+]
+</script>
+
+<section
+  class="d-feat"
+  id="{{ sec_id }}"
+  {%- if bg_color != blank %}
+    style="--d-feat-bg: {{ bg_color }};"
+  {%- endif %}
+>
+  <div class="container">
+    <div class="d-feat__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="d-feat__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subline != blank -%}
+        <p class="d-feat__sub">{{ section.settings.subline }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div
+      class="d-feat__hl{% if lay_full == false %} d-feat__hl--contained{% endif %}"
+      data-section="{{ section.id }}"
+      tabindex="0"
+      aria-roledescription="carousel"
+      aria-label="{{ section.settings.heading | escape }}"
+    >
+      <button class="d-feat__arr d-feat__arr--l" aria-label="{{ 'sections.diamond_features.prev' | t }}">‹</button>
+      <button class="d-feat__arr d-feat__arr--r" aria-label="{{ 'sections.diamond_features.next' | t }}">›</button>
+
+      <div class="d-feat__track">
+        {%- for block in section.blocks -%}
+          <article class="d-feat__slide" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            <div class="d-feat__media">
+              {%- if block.settings.image != blank -%}
+                {{- block.settings.image | image_url: width: 1200
+                  | image_tag:
+                    alt: block.settings.alt | default: block.settings.title,
+                    loading: 'lazy',
+                    widths: '600,900,1200',
+                    sizes: '(max-width:989px) 88vw, min(900px, 76vw)'
+                -}}
+              {%- else -%}
+                <div class="d-feat__placeholder" aria-hidden="true">
+                  <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <rect width="200" height="150" fill="#f0ede8"/>
+                    <rect x="60" y="40" width="80" height="70" rx="4" stroke="#c8b89a" stroke-width="2"/>
+                    <circle cx="100" cy="75" r="22" stroke="#c8b89a" stroke-width="2"/>
+                    <circle cx="100" cy="75" r="10" fill="#c8b89a" opacity=".4"/>
+                  </svg>
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="d-feat__cap">
+              {%- if block.settings.title != blank -%}
+                <h3>{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.sub != blank -%}
+                <p>{{ block.settings.sub }}</p>
+              {%- endif -%}
+            </div>
+            <span class="d-feat__open" aria-hidden="true">{{ 'sections.diamond_features.read_more' | t }}</span>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      <div class="d-feat__ctl">
+        <div class="d-feat__dots" role="tablist">
+          {%- for block in section.blocks -%}
+            <button
+              role="tab"
+              data-i="{{ forloop.index0 }}"
+              aria-label="{{ block.settings.title | escape }}"
+              {% if forloop.first %}aria-current="true"{% endif %}
+            ></button>
+          {%- endfor -%}
+        </div>
+        <button class="d-feat__pause" aria-label="{{ 'sections.diamond_features.pause' | t }}">
+          <span class="d-feat__ic-pause"></span>
+          <span class="d-feat__ic-play"></span>
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{%- comment -%} Detail modal (rendered once per section instance) {%- endcomment -%}
+<div
+  class="d-feat__modal"
+  id="d-feat-modal-{{ section.id }}"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="d-feat-modal-title-{{ section.id }}"
+  hidden
+>
+  <div class="d-feat__mbox">
+    <div class="d-feat__mhead">
+      <h3 id="d-feat-modal-title-{{ section.id }}"></h3>
+      <button class="d-feat__mclose" aria-label="{{ 'sections.diamond_features.close' | t }}">×</button>
+    </div>
+    <div class="d-feat__mmain">
+      <div class="d-feat__mmedia"></div>
+      <div class="d-feat__mbody">
+        <div class="d-feat__mtext"></div>
+        <small class="d-feat__msmall" hidden></small>
+      </div>
+    </div>
+    <div class="d-feat__mnav">
+      <button class="d-feat__mprev" aria-label="Previous">‹</button>
+      <div class="d-feat__mdots"></div>
+      <button class="d-feat__mnext" aria-label="Next">›</button>
+    </div>
+  </div>
+</div>
+
+{% javascript %}
+(function () {
+  'use strict';
+  const DUR = 5000;
+
+  function init(hlEl) {
+    const sid     = hlEl.dataset.section;
+    const dataEl  = document.getElementById('d-feat-data-' + sid);
+    if (!dataEl) return;
+
+    const cards   = JSON.parse(dataEl.textContent);
+    const track   = hlEl.querySelector('.d-feat__track');
+    const dotsEl  = hlEl.querySelector('.d-feat__dots');
+    const pauseBtn= hlEl.querySelector('.d-feat__pause');
+    const prevBtn = hlEl.querySelector('.d-feat__arr--l');
+    const nextBtn = hlEl.querySelector('.d-feat__arr--r');
+    const slides  = [...track.children];
+    const dots    = [...dotsEl.children];
+    const modal   = document.getElementById('d-feat-modal-' + sid);
+
+    let idx = 0, t0 = performance.now(), elapsed = 0;
+    let playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let visible = false, lastFocus = null;
+
+    /* ── Go to slide n ── */
+    function go(n, restart) {
+      if (restart === undefined) restart = true;
+      idx = (n + slides.length) % slides.length;
+      const sl = slides[idx];
+      const x = sl.offsetLeft - (hlEl.clientWidth - sl.offsetWidth) / 2;
+      track.style.transform = 'translateX(' + (-x) + 'px)';
+      slides.forEach(function (el, k) { el.classList.toggle('is-on', k === idx); });
+      dots.forEach(function (d, k) { d.setAttribute('aria-current', String(k === idx)); });
+      if (restart) { t0 = performance.now(); elapsed = 0; dotsEl.style.setProperty('--p', 0); }
+    }
+
+    /* ── Playing state ── */
+    function setPlaying(on) {
+      if (on === playing) return;
+      if (on) { t0 = performance.now(); } else { elapsed += performance.now() - t0; }
+      playing = on;
+      hlEl.classList.toggle('is-paused', !on);
+      pauseBtn.setAttribute('aria-label', on ? 'Pause' : 'Play');
+    }
+
+    /* ── RAF tick ── */
+    function tick(now) {
+      if (playing && visible) {
+        const p = Math.min(1, (elapsed + now - t0) / DUR);
+        dotsEl.style.setProperty('--p', p);
+        if (p >= 1) go(idx + 1);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* ── Controls ── */
+    pauseBtn.addEventListener('click', function () { setPlaying(!playing); });
+    prevBtn.addEventListener('click',  function () { go(idx - 1); });
+    nextBtn.addEventListener('click',  function () { go(idx + 1); });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { go(+d.dataset.i); });
+    });
+
+    /* ── Slide click: inactive → go to, active → open modal ── */
+    slides.forEach(function (el, k) {
+      el.addEventListener('click', function () {
+        if (k !== idx) { go(k); return; }
+        lastFocus = el;
+        openModal(k);
+      });
+    });
+
+    /* ── Keyboard ── */
+    hlEl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') go(idx + 1);
+      if (e.key === 'ArrowLeft')  go(idx - 1);
+      if (e.key === ' ') { e.preventDefault(); setPlaying(!playing); }
+    });
+
+    /* ── Touch swipe ── */
+    var touchX = null;
+    hlEl.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, {passive: true});
+    hlEl.addEventListener('touchend',   function (e) {
+      if (touchX === null) return;
+      const d = e.changedTouches[0].clientX - touchX; touchX = null;
+      if (Math.abs(d) > 40) go(idx + (d < 0 ? 1 : -1));
+    }, {passive: true});
+
+    /* ── Pointer drag (mouse) ── */
+    var pointerX = null;
+    hlEl.addEventListener('pointerdown',  function (e) { if (e.pointerType === 'touch') return; pointerX = e.clientX; });
+    hlEl.addEventListener('pointerup',    function (e) {
+      if (pointerX === null) return;
+      const d = e.clientX - pointerX; pointerX = null;
+      if (Math.abs(d) > 40) go(idx + (d < 0 ? 1 : -1));
+    });
+    hlEl.addEventListener('pointercancel', function () { pointerX = null; });
+
+    /* ── Visibility pause ── */
+    new IntersectionObserver(function (entries) {
+      visible = entries[0].isIntersecting;
+      if (visible) { t0 = performance.now(); } else { elapsed += performance.now() - t0; }
+    }, {threshold: .35}).observe(hlEl);
+
+    window.addEventListener('resize', function () { go(idx, false); });
+
+    go(0);
+    requestAnimationFrame(tick);
+
+    /* ── Modal ── */
+    if (!modal) return;
+
+    var curModal  = 0;
+    const mtitle  = modal.querySelector('[id^="d-feat-modal-title"]');
+    const mclose  = modal.querySelector('.d-feat__mclose');
+    const mmedia  = modal.querySelector('.d-feat__mmedia');
+    const mtext   = modal.querySelector('.d-feat__mtext');
+    const msmall  = modal.querySelector('.d-feat__msmall');
+    const mprev   = modal.querySelector('.d-feat__mprev');
+    const mnext   = modal.querySelector('.d-feat__mnext');
+    const mdots   = modal.querySelector('.d-feat__mdots');
+
+    function renderModal() {
+      const f = cards[curModal];
+      mtitle.textContent = f.title || '';
+      mtext.innerHTML = '<p>' + (f.text || '') + '</p>' +
+        (f.more || []).map(function (x) {
+          return x.h ? '<h4>' + x.h + '</h4><p>' + (x.p || '') + '</p>' : '';
+        }).join('');
+      if (f.small) { msmall.textContent = f.small; msmall.hidden = false; }
+      else { msmall.hidden = true; }
+      if (f.img) {
+        mmedia.innerHTML = '<img src="' + f.img + '" alt="' + (f.alt || '') + '">';
+        mmedia.hidden = false;
+      } else {
+        mmedia.innerHTML = '';
+        mmedia.hidden = true;
+      }
+      mdots.innerHTML = cards.map(function (_, i) {
+        return '<i class="' + (i === curModal ? 'is-on' : '') + '"></i>';
+      }).join('');
+    }
+
+    function openModal(i) {
+      curModal = i;
+      renderModal();
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      mclose.focus();
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    }
+
+    mclose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    mprev.addEventListener('click', function () { curModal = (curModal - 1 + cards.length) % cards.length; renderModal(); });
+    mnext.addEventListener('click', function () { curModal = (curModal + 1) % cards.length; renderModal(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (modal.hidden) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') { curModal = (curModal + 1) % cards.length; renderModal(); }
+      if (e.key === 'ArrowLeft')  { curModal = (curModal - 1 + cards.length) % cards.length; renderModal(); }
+    });
+  }
+
+  /* ── Boot all carousel instances on the page ── */
+  document.querySelectorAll('.d-feat__hl[data-section]').forEach(init);
+}());
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.diamond_features.name",
+  "tag": "div",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.diamond_features.settings.section_id.label",
+      "default": "tech",
+      "info": "t:sections.diamond_features.settings.section_id.info"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.diamond_features.settings.heading.label",
+      "default": "Explore the features"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "t:sections.diamond_features.settings.subline.label",
+      "default": "What changes when the charcoal goes"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_features.settings.layout_header"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.diamond_features.settings.layout.label",
+      "options": [
+        { "value": "full",      "label": "t:sections.diamond_features.settings.layout.options.full.label" },
+        { "value": "contained", "label": "t:sections.diamond_features.settings.layout.options.contained.label" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.diamond_features.settings.color_background.label",
+      "default": "#f5f5f4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "t:sections.diamond_features.blocks.card.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.diamond_features.blocks.card.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "t:sections.diamond_features.blocks.card.settings.alt.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.diamond_features.blocks.card.settings.title.label"
+        },
+        {
+          "type": "text",
+          "id": "sub",
+          "label": "t:sections.diamond_features.blocks.card.settings.sub.label"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.diamond_features.blocks.card.settings.text.label"
+        },
+        {
+          "type": "text",
+          "id": "small",
+          "label": "t:sections.diamond_features.blocks.card.settings.small.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.diamond_features.blocks.card.settings.more_header"
+        },
+        {
+          "type": "text",
+          "id": "more1_h",
+          "label": "t:sections.diamond_features.blocks.card.settings.more1_h.label"
+        },
+        {
+          "type": "text",
+          "id": "more1_p",
+          "label": "t:sections.diamond_features.blocks.card.settings.more1_p.label"
+        },
+        {
+          "type": "text",
+          "id": "more2_h",
+          "label": "t:sections.diamond_features.blocks.card.settings.more2_h.label"
+        },
+        {
+          "type": "text",
+          "id": "more2_p",
+          "label": "t:sections.diamond_features.blocks.card.settings.more2_p.label"
+        },
+        {
+          "type": "text",
+          "id": "more3_h",
+          "label": "t:sections.diamond_features.blocks.card.settings.more3_h.label"
+        },
+        {
+          "type": "text",
+          "id": "more3_p",
+          "label": "t:sections.diamond_features.blocks.card.settings.more3_p.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.diamond_features.presets.name",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Any blend you like",
+            "sub": "Blonde, dark or your own mix, 10–15 g in the cup",
+            "alt": "A hand lifting the thermo cap off Diamond, the cup packed with tobacco",
+            "text": "Pack the cup the way you pack a bowl. Light blonde leaf, heavy dark leaf, creamy or minty, one flavour or your own mix: Diamond takes the tobacco you already buy, with no pods and no cartridges.",
+            "small": "No pods, no cartridges",
+            "more1_h": "Blonde and dark",
+            "more1_p": "Blonde leaf likes a gentler start; dark leaf takes more heat and a longer pre-heat. Both hold for the whole session because the controller keeps the temperature to the degree.",
+            "more2_h": "Your own mix",
+            "more2_p": "Layer two flavours or split the cup half and half. Keep the load at 10–15 g and leave the centre loose so the air moves.",
+            "more3_h": "Basket or screen",
+            "more3_p": "Wet, heavy blends breathe in the steel basket; dry, fine cuts sit under the flat screen. Both are in the box."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Change the cup mid-session",
+            "sub": "Lift the cup out, drop the next one in",
+            "alt": "The cup removal tool lifting the packed ceramic cup out of Diamond",
+            "text": "The cup lifts out of the chamber with the tool, even hot. Pack the second cup while the first one runs, then swap and carry on with a new flavour without waiting for the device to cool.",
+            "small": "Always lift a hot cup with the tool",
+            "more1_h": "Two cups in the box",
+            "more1_p": "One in the chamber, one on the table ready to go. More cups are sold separately.",
+            "more2_h": "The tool",
+            "more2_p": "The steel hook with the black handle catches the rim of the cup, so your fingers never touch the hot ceramic.",
+            "more3_h": "Clean in a minute",
+            "more3_p": "Empty the used cup once it has cooled, rinse it, and it is ready for the next evening."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Heat from every side",
+            "sub": "The element wraps the cup, the plate closes it from the top",
+            "alt": "Cross-section sketch showing the heating element around the cup wall and the plate in the cap above",
+            "text": "The heating element sits under the cup and around its wall, so the tobacco warms from below and from the sides at once. The plate in the cap closes the chamber from above and keeps the heat on the load, the way a lid keeps it in a classic bowl.",
+            "small": "Cross-section, not to scale",
+            "more1_h": "Even from edge to centre",
+            "more1_p": "Heat reaches the whole load at once instead of burning the top layer, so the first draw and the last taste the same.",
+            "more2_h": "The plate on top",
+            "more2_p": "The cap plate sits over the cup and holds the heat in. Its openings also set how freely the air moves.",
+            "more3_h": "Held to the degree",
+            "more3_p": "The controller reads the temperature and holds the number you set, from 180 to 320 °C, for the whole session."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Only the cup to clean",
+            "sub": "The heating element stays clean",
+            "alt": "Warm water poured through the steel basket into the black ceramic cup held in a hand",
+            "text": "The tobacco never touches the heating element, so there is nothing to scrape. After a session you rinse the cup and the mesh under warm water, and that is it.",
+            "small": "Rinse the cup and the mesh, and you are done",
+            "more1_h": "After every session",
+            "more1_p": "Lift the cup out, push the mesh and the tobacco out in one piece, rinse both.",
+            "more2_h": "Now and then",
+            "more2_p": "Brush the shaft and rinse the cap under the tap.",
+            "more3_h": "Never",
+            "more3_p": "The battery and its contacts never get wet."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Ceramic heat, clean taste",
+            "sub": "Ceramic cup, stainless steel air path, no flame",
+            "alt": "Macro of the empty chamber showing the glossy black ceramic heating sleeve",
+            "text": "A ceramic element warms a ceramic cup, and the air runs through stainless steel. No coal, no foil, no flame: what you taste is the tobacco, from the first draw to the last.",
+            "small": "Two-year warranty on the device",
+            "more1_h": "Ceramic on ceramic",
+            "more1_p": "Ceramic holds heat evenly and carries no taste of its own, so the flavour stays true through a long session.",
+            "more2_h": "Stainless steel inside",
+            "more2_p": "The air path is stainless steel. Nothing in it keeps the smell of the last session.",
+            "more3_h": "Built to last",
+            "more3_p": "A zinc-alloy body, a two-year warranty on the device and one year on the battery."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Removable battery",
+            "sub": "About 90 minutes per pack, pre-heat not included",
+            "alt": "A hand pulling the battery pack out of the back of Diamond",
+            "text": "The back of the device is the pack. Switch Diamond off, open the latch, set a charged one in and close it: about 90 minutes each, pre-heat not included.",
+            "small": "Switch Diamond off before you change the pack",
+            "more1_h": "Two packs, one evening",
+            "more1_p": "A second Diamond Battery covers about three hours. Charge the spare on its own while the first one runs.",
+            "more2_h": "What the dots mean",
+            "more2_p": "Four dots on the pack show the charge in quarters. The screen warns at 10 percent, with time left to finish the cup.",
+            "more3_h": "Care",
+            "more3_p": "Switch Diamond off before you change the pack. It goes in one way only: contacts down, then close the latch."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Charge while you smoke",
+            "sub": "USB-C in the back, the session keeps going",
+            "alt": "Diamond on a hookah in a tea room, seen from the back, a USB-C cable plugged in under the four lit dots",
+            "text": "Plug a 30 W USB-C charger into the back of Diamond and carry on. At 255 °C or lower the battery charges while you smoke; above that, the cable keeps the session going.",
+            "small": "At 255 °C or lower the battery charges while you smoke",
+            "more1_h": "Any 30 W USB-C charger",
+            "more1_p": "The cable is in the box. A laptop or phone fast charger does the job.",
+            "more2_h": "Or charge the pack alone",
+            "more2_p": "Lift the pack out and charge it on its own while a second one runs.",
+            "more3_h": "Care",
+            "more3_p": "Never charge a hot battery: let a pack that just came out of Diamond cool first."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Update over USB-C",
+            "sub": "New firmware from your computer",
+            "alt": "Diamond on a desk, screen dark, a USB-C cable connected to a laptop",
+            "text": "Connect Diamond to your computer with the USB-C cable and install new firmware from a page on ensoshisha.eu. No app to install, no account.",
+            "small": "New firmware from a page on ensoshisha.eu",
+            "more1_h": "Three steps",
+            "more1_p": "Take the battery out, plug the cable into the port in the bay, open the update page and press Update.",
+            "more2_h": "Your settings stay",
+            "more2_p": "Your profiles stay as you set them.",
+            "more3_h": "It improves after you buy it",
+            "more3_p": "What the first owners ask for shapes what the next update brings."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

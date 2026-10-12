@@ -2375,5 +2375,43 @@
       },
       "presets": { "name": "Diamond Buy" }
     },
+    "diamond_features": {
+      "name": "Diamond Features",
+      "settings": {
+        "section_id": { "label": "Section anchor ID", "info": "Used by the hero CTA link (#tech)" },
+        "heading": { "label": "Heading" },
+        "subline": { "label": "Subline" },
+        "layout_header": "Layout",
+        "layout": {
+          "label": "Carousel width",
+          "options": {
+            "full": { "label": "Full width (default)" },
+            "contained": { "label": "Contained" }
+          }
+        },
+        "color_background": { "label": "Background color" }
+      },
+      "blocks": {
+        "card": {
+          "name": "Feature card",
+          "settings": {
+            "image": { "label": "Image" },
+            "alt": { "label": "Image alt text" },
+            "title": { "label": "Title" },
+            "sub": { "label": "Subline" },
+            "text": { "label": "Detail text" },
+            "small": { "label": "Caption" },
+            "more_header": "More items",
+            "more1_h": { "label": "Item 1 heading" },
+            "more1_p": { "label": "Item 1 text" },
+            "more2_h": { "label": "Item 2 heading" },
+            "more2_p": { "label": "Item 2 text" },
+            "more3_h": { "label": "Item 3 heading" },
+            "more3_p": { "label": "Item 3 text" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond Features" }
+    }
   }
 }

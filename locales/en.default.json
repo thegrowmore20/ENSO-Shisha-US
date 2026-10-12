@@ -338,6 +338,14 @@
       "no_products": "No accessories found.",
       "no_results": "No results for your search.",
       "go_to_cart": "Go to cart"
+    },
+    "diamond_features": {
+      "prev": "Previous feature",
+      "next": "Next feature",
+      "pause": "Pause",
+      "play": "Play",
+      "read_more": "Read more",
+      "close": "Close"
     }
   },
   "witb": {
