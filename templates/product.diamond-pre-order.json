@@ -64,6 +64,39 @@
         "contact_email": "support@ensoshisha.eu"
       }
     },
+    "diamond_dial_main": {
+      "type": "diamond-dial",
+      "blocks": {
+        "feat_temp": {
+          "type": "feature",
+          "settings": {
+            "title": "Precise temperature control",
+            "body": "Heat and pre-heat set to your taste: 180 to 320 °C to the degree, and zero to fifteen minutes of warm-up before the first draw"
+          }
+        },
+        "feat_prof": {
+          "type": "feature",
+          "settings": {
+            "title": "Profiles that remember",
+            "body": "Default, Phoenix, Wraith, Oracle. Each keeps its own temperature and pre-heat, so a favourite blend is one click away"
+          }
+        },
+        "feat_hap": {
+          "type": "feature",
+          "settings": {
+            "title": "Haptic feedback",
+            "body": "Every step of the dial answers with a small click under the finger, every confirmation with a short pulse. You feel the setting change without looking"
+          }
+        }
+      },
+      "block_order": ["feat_temp", "feat_prof", "feat_hap"],
+      "settings": {
+        "section_id": "dial",
+        "heading": "One dial, every setting",
+        "subline": "Pre-heat time to the minute, temperature to the degree, four profiles that remember both",
+        "hint_text": "Tap a line to see that screen on the dial. Tap the picture to play the loop again"
+      }
+    },
     "diamond_features_main": {
       "type": "diamond-features",
       "blocks": {
@@ -221,6 +254,7 @@
     "diamond_hero_main",
     "diamond_buy_main",
     "diamond_heater_main",
+    "diamond_dial_main",
     "diamond_features_main"
   ]
 }

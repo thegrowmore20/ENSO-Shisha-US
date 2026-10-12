@@ -346,6 +346,9 @@
       "play": "Play",
       "read_more": "Read more",
       "close": "Close"
+    },
+    "diamond_dial": {
+      "play_loop": "Play the loop"
     }
   },
   "witb": {

@@ -2412,6 +2412,33 @@
         }
       },
       "presets": { "name": "Diamond Features" }
+    },
+    "diamond_dial": {
+      "name": "Diamond Dial",
+      "settings": {
+        "section_id": {
+          "label": "Section ID",
+          "info": "Used as the anchor link for this section, e.g. #dial"
+        },
+        "heading": { "label": "Heading" },
+        "subline": { "label": "Subline" },
+        "video_header": { "content": "Video" },
+        "video": { "label": "Loop video" },
+        "poster": { "label": "Poster image" },
+        "content_header": { "content": "Content" },
+        "hint_text": { "label": "Hint text" }
+      },
+      "blocks": {
+        "feature": {
+          "name": "Feature",
+          "settings": {
+            "title": { "label": "Title" },
+            "body": { "label": "Body text" },
+            "screen_image": { "label": "Dial screen image" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond Dial" }
     }
   }
 }

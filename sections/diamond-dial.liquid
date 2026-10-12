@@ -1,0 +1,431 @@
+{% stylesheet %}
+/* ─────────────────────────────────────────────
+   B05 Diamond Dial — One dial, every setting
+   ───────────────────────────────────────────── */
+.d-dial {
+  padding: 80px 0;
+}
+@media screen and (max-width: 749px) {
+  .d-dial { padding: 48px 0 56px; }
+}
+
+.d-dial__head {
+  text-align: center;
+  margin-bottom: 48px;
+}
+@media screen and (max-width: 749px) {
+  .d-dial__head { margin-bottom: 32px; }
+}
+.d-dial__h {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+.d-dial__sub {
+  font-size: 16px;
+  color: rgb(0 0 0 / .6);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ─── Grid ─────────────────────────────────── */
+.d-dial__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 460px);
+  gap: 48px;
+  align-items: center;
+}
+@media screen and (max-width: 989px) {
+  .d-dial__grid { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ─── Left: video container ─────────────────── */
+.d-dial__vid {
+  border-radius: 22px;
+  overflow: hidden;
+  background: #111;
+  border: 1px solid var(--color-border, rgb(0 0 0 / .1));
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  max-height: 66vh;
+  position: relative;
+  cursor: pointer;
+}
+.d-dial__vid video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 49.3%;
+  display: block;
+}
+
+/* Placeholder when no video is set */
+.d-dial__vid-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: #f0ede8;
+}
+.d-dial__vid-placeholder svg {
+  width: 56px;
+  height: 56px;
+}
+
+/* ─── Circular dial screen overlay ─────────── */
+.d-dial__screen {
+  position: absolute;
+  left: 50%;
+  top: 48.6%;
+  width: 44%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  background: #08080a;
+  box-shadow: 0 0 60px 20px rgb(226 97 76 / .18);
+  pointer-events: none;
+}
+.d-dial__screen[hidden] { display: none; }
+.d-dial__screen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.d-dial__glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 24%, rgb(255 255 255 / .13) 0%, rgb(255 255 255 / .04) 28%, rgb(0 0 0 / 0) 50%),
+    radial-gradient(circle at 50% 50%, rgb(0 0 0 / 0) 62%, rgb(0 0 0 / .45) 100%);
+}
+
+/* ─── "Play the loop" button ────────────────── */
+.d-dial__resume {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / .9);
+  padding: 10px 18px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+.d-dial__resume[hidden] { display: none; }
+.d-dial__resume:hover { background: #fff; }
+
+/* ─── Right: feature list ───────────────────── */
+.d-dial__pts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--color-border, rgb(0 0 0 / .1));
+}
+.d-dial__pts li {
+  border-bottom: 1px solid var(--color-border, rgb(0 0 0 / .1));
+}
+.d-dial__pts button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 18px 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: rgb(0 0 0 / .72);
+  font-size: 15px;
+  line-height: 1.53;
+}
+.d-dial__pts button b {
+  display: block;
+  color: #000;
+  font-size: 18px;
+  line-height: 1.33;
+  margin-bottom: 4px;
+  font-weight: var(--font-weight-semibold);
+}
+.d-dial__pts button[aria-current="true"] b::after {
+  content: " ●";
+  color: #e2614c;
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.d-dial__hint {
+  margin: 12px 0 0;
+  color: rgb(0 0 0 / .45);
+  font-size: 13px;
+  line-height: 1.54;
+}
+@media screen and (max-width: 989px) {
+  .d-dial__hint { display: none; }
+}
+{% endstylesheet %}
+
+<section
+  class="d-dial"
+  id="{{ section.settings.section_id | default: 'dial' | escape }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="container">
+
+    {%- if section.settings.heading != blank or section.settings.subline != blank -%}
+      <div class="d-dial__head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="d-dial__h">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subline != blank -%}
+          <p class="d-dial__sub">{{ section.settings.subline | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="d-dial__grid">
+
+      {%- comment -%} Left: video ─────────────────────────── {%- endcomment -%}
+      <div class="d-dial__vid">
+
+        {%- if section.settings.video != blank -%}
+          {%- liquid
+            assign poster_img = section.settings.poster
+            if poster_img == blank and section.settings.video != blank
+              assign poster_img = section.settings.video.preview_image
+            endif
+          -%}
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            {%- if poster_img != blank -%}
+              poster="{{ poster_img | image_url: width: 1200 }}"
+            {%- endif -%}
+          >
+            {%- for source in section.settings.video.sources -%}
+              {%- if source.format == 'mp4' -%}
+                <source src="{{ source.url }}" type="video/mp4">
+              {%- endif -%}
+            {%- endfor -%}
+          </video>
+        {%- else -%}
+          <div class="d-dial__vid-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="28" cy="28" r="23" stroke="#c8b89a" stroke-width="1.5"/>
+              <polygon points="23,19 39,28 23,37" fill="#c8b89a"/>
+            </svg>
+          </div>
+        {%- endif -%}
+
+        <div class="d-dial__screen" hidden>
+          <img src="" alt="" loading="lazy">
+          <div class="d-dial__glass"></div>
+        </div>
+
+        <button class="d-dial__resume" hidden>
+          {{- 'sections.diamond_dial.play_loop' | t -}}
+        </button>
+
+      </div>
+
+      {%- comment -%} Right: feature list ──────────────────── {%- endcomment -%}
+      <div class="d-dial__side">
+        {%- if section.blocks.size > 0 -%}
+          <ul class="d-dial__pts">
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}>
+                <button data-index="{{ forloop.index0 }}" aria-current="false">
+                  <b>{{ block.settings.title | escape }}</b>
+                  {{- block.settings.body | escape -}}
+                </button>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {%- if section.settings.hint_text != blank -%}
+          <p class="d-dial__hint">{{ section.settings.hint_text | escape }}</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Screen image URLs per block — read by JS {%- endcomment -%}
+<script type="application/json" id="d-dial-data-{{ section.id }}">
+[{%- for block in section.blocks -%}
+  {%- if block.settings.screen_image != blank -%}
+    {{ block.settings.screen_image | image_url: width: 800 | json }}
+  {%- else -%}
+    null
+  {%- endif -%}
+  {%- unless forloop.last -%},{%- endunless -%}
+{%- endfor -%}]
+</script>
+
+{% javascript %}
+(function () {
+  document.querySelectorAll('.d-dial').forEach(function (sec) {
+    var secId   = sec.dataset.sectionId;
+    var vidWrap = sec.querySelector('.d-dial__vid');
+    var video   = sec.querySelector('video');
+    var screen  = sec.querySelector('.d-dial__screen');
+    var scrImg  = screen ? screen.querySelector('img') : null;
+    var resume  = sec.querySelector('.d-dial__resume');
+    var buttons = Array.from(sec.querySelectorAll('.d-dial__pts button'));
+    var dataEl  = document.getElementById('d-dial-data-' + secId);
+
+    if (!video || !dataEl) return;
+
+    var urls = JSON.parse(dataEl.textContent);
+
+    function show(btn) {
+      var idx = parseInt(btn.dataset.index, 10);
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-current', String(b === btn));
+      });
+      if (urls[idx] && scrImg) {
+        scrImg.src = urls[idx];
+        screen.hidden = false;
+      } else {
+        screen.hidden = true;
+      }
+      if (resume) resume.hidden = false;
+      video.pause();
+    }
+
+    function play() {
+      buttons.forEach(function (b) { b.setAttribute('aria-current', 'false'); });
+      if (screen) screen.hidden = true;
+      if (resume) resume.hidden = true;
+      video.play().catch(function () {});
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () { show(btn); });
+    });
+
+    if (vidWrap) {
+      vidWrap.addEventListener('click', function (e) {
+        if ((screen && !screen.hidden) || e.target === resume) play();
+      });
+    }
+  });
+}());
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.diamond_dial.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.diamond_dial.settings.section_id.label",
+      "info": "t:sections.diamond_dial.settings.section_id.info",
+      "default": "dial"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.diamond_dial.settings.heading.label",
+      "default": "One dial, every setting"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "t:sections.diamond_dial.settings.subline.label",
+      "default": "Pre-heat time to the minute, temperature to the degree, four profiles that remember both"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_dial.settings.video_header.content"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.diamond_dial.settings.video.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "t:sections.diamond_dial.settings.poster.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_dial.settings.content_header.content"
+    },
+    {
+      "type": "text",
+      "id": "hint_text",
+      "label": "t:sections.diamond_dial.settings.hint_text.label",
+      "default": "Tap a line to see that screen on the dial. Tap the picture to play the loop again"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "t:sections.diamond_dial.blocks.feature.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.diamond_dial.blocks.feature.settings.title.label",
+          "default": "Feature title"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "t:sections.diamond_dial.blocks.feature.settings.body.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "screen_image",
+          "label": "t:sections.diamond_dial.blocks.feature.settings.screen_image.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.diamond_dial.presets.name",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Precise temperature control",
+            "body": "Heat and pre-heat set to your taste: 180 to 320 °C to the degree, and zero to fifteen minutes of warm-up before the first draw"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Profiles that remember",
+            "body": "Default, Phoenix, Wraith, Oracle. Each keeps its own temperature and pre-heat, so a favourite blend is one click away"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Haptic feedback",
+            "body": "Every step of the dial answers with a small click under the finger, every confirmation with a short pulse. You feel the setting change without looking"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
