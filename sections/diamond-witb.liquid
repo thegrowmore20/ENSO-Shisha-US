@@ -196,6 +196,12 @@
   font-size: 15px;
   line-height: 1.6;
 }
+.d-witb-modal__small {
+  margin: 4px 0 0;
+  color: rgb(0 0 0 / .5);
+  font-size: 13px;
+  line-height: 20px;
+}
 .d-witb-modal__also {
   font-size: 12px;
   letter-spacing: .07em;
@@ -206,17 +212,23 @@
 }
 .d-witb-modal__left {
   padding: 20px 28px 28px;
-  border-right: 1px solid var(--color-border);
 }
 .d-witb-modal__right {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 28px;
+  min-height: 360px;
+  align-self: stretch;
 }
 .d-witb-modal__right img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 300px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
   display: block;
 }
 
@@ -233,7 +245,6 @@
   align-items: center;
   padding: 10px 4px;
   border-bottom: 1px solid var(--color-border);
-  border-radius: 8px;
   transition: background .15s;
 }
 .d-witb-modal__list li[data-handle] { cursor: pointer; }
@@ -243,13 +254,13 @@
   width: 64px;
   height: 64px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 0;
+  border: 0;
   display: block;
 }
 .d-witb-modal__thumb-ph {
   width: 64px;
   height: 64px;
-  border-radius: 8px;
   background: #f0ede8;
   display: flex;
   align-items: center;
@@ -440,8 +451,11 @@
         {%- if device_block != nil and device_block.settings.sub != blank -%}
           <p class="d-witb-modal__sub">{{ device_block.settings.sub | escape }}</p>
         {%- endif -%}
-        {%- if section.settings.modal_body != blank -%}
-          <p class="d-witb-modal__desc">{{ section.settings.modal_body | escape }}</p>
+        {%- if device_block != nil and device_block.settings.what != blank -%}
+          <p class="d-witb-modal__desc">{{ device_block.settings.what | escape }}</p>
+        {%- endif -%}
+        {%- if device_block != nil and device_block.settings.how != blank -%}
+          <p class="d-witb-modal__small">{{ device_block.settings.how | escape }}</p>
         {%- endif -%}
         <p class="d-witb-modal__also">Also in the box</p>
         <ul class="d-witb-modal__list">
