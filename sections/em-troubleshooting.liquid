@@ -1,0 +1,387 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{{ 'em-manual.css' | asset_url | stylesheet_tag }}
+<div class="em-wrap">
+  <section class="em-ch em-ch-section" id="troubleshooting" style="scroll-margin-top:180px">
+    <p class="em-ch__num">07 · Help</p>
+    <h2>Troubleshooting</h2>
+    <p class="em-ch__lead">Find what is happening and follow the steps. If it needs us, each answer says what to send.</p>
+    <div class="em-faq">
+      <details id="q-weak-smoke">
+        <summary>Not enough smoke / weak vapor</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Check the water level — fill to the indicator.</li>
+            <li>Increase temperature 15–30° (clockwise), wait 30–60 seconds.</li>
+            <li>Loosen the tobacco with the poking tool — a blocked airpath kills vapor.</li>
+            <li>Clean the vaporshaft and chamber.</li>
+            <li>Check the hose connection is airtight.</li>
+            <li>Try G-Mode (3 presses) for more intense vapor.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-wont-turn-on">
+        <summary>Device won't turn on</summary>
+        <div class="em-faq__a">
+          <div class="em-figs">
+            <img src="{{ 'battery-remove-ink.webp' | file_url }}" alt="" loading="lazy">
+          </div>
+          <ol>
+            <li>New device? Take the battery out and pull the protective sheet out of the battery compartment.</li>
+            <li>Check battery charge — battery LEDs show level (4th = full).</li>
+            <li>Reseat the battery — lever up, in, lock.</li>
+            <li>Press and hold the Thermodial a full 3 seconds.</li>
+            <li>Charge 30 minutes with a different cable + 30W+ brick.</li>
+            <li>LED still dark? Contact support.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-ot-red-flashes">
+        <summary>Red flashes: 3, 7 or 10 times</summary>
+        <div class="em-faq__a">
+          <div class="em-figs">
+            <img src="{{ 'step-charge-ink.webp' | file_url }}" alt="" loading="lazy">
+            <img src="{{ 'battery-remove-ink.webp' | file_url }}" alt="" loading="lazy">
+          </div>
+          <span class="sub">10 flashes: low battery</span>
+          <ol>
+            <li>Charge until all four LEDs are lit: about 3 hours for the standard battery, 1 h 45 min for Battery Plus, with a 30 W PD charger or stronger.</li>
+            <li>Switch on again.</li>
+            <li>Still ten flashes on a full battery? What to send: a short video of the flashes with the battery fully charged.</li>
+          </ol>
+          <span class="sub">7 flashes: overheating protection</span>
+          <ol>
+            <li>Using it on the cable? Charge the battery above 50 % first, then try again.</li>
+            <li>Still there? Take the battery out and let the device rest for about 30 minutes.</li>
+            <li>Still there after the rest, with the battery above 50 %? What to send: a short video of the seven flashes after the rest.</li>
+          </ol>
+          <span class="sub">3 flashes: a fault for our team</span>
+          <ol>
+            <li>Three red flashes after switching on, or after the pre-heat, is a fault our team handles. What to send: a short video where the three flashes are clearly visible.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-not-charging">
+        <summary>Battery not charging</summary>
+        <div class="em-faq__a">
+          <div class="em-figs">
+            <img src="{{ 'step-charge-ink.webp' | file_url }}" alt="" loading="lazy">
+          </div>
+          <ol>
+            <li>Check the protective sheet is out of the battery compartment.</li>
+            <li>Check USB-C is fully inserted — back of unit, or directly into battery (faster).</li>
+            <li>Use a 30W+ charging brick.</li>
+            <li>Watch the battery LEDs — they light progressively.</li>
+            <li>Deeply drained? Leave connected 30 minutes.</li>
+            <li>Avoid direct sunlight — heat damages the battery.</li>
+            <li>Try a different USB-C cable. If another cable works, the first one was faulty.</li>
+            <li>Port looks damaged? Take a clear photo of it for support.</li>
+            <li>Still nothing? Contact support.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-burnt">
+        <summary>Harsh or burnt taste</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Lower the temperature one or two steps.</li>
+            <li>Check the water level — never run dry.</li>
+            <li>Mix tobacco before packing — dry top layers burn first.</li>
+            <li>Clean the chamber and cup.</li>
+            <li>Dark leaf: smaller leaves, lower temps, more heat-up time.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-leaking">
+        <summary>Leaking water</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Twist the glass tank fully into place.</li>
+            <li>Don't overfill past the level indicator.</li>
+            <li>Reseat the dip tube and watershield firmly.</li>
+            <li>Keep the device level during sessions.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-ot-no-heat">
+        <summary>It switches on but does not heat</summary>
+        <div class="em-faq__a">
+          <div class="em-figs">
+            <img src="{{ 'led-temp-ink.webp' | file_url }}" alt="" loading="lazy">
+          </div>
+          <ol>
+            <li>Give it the full 5-minute pre-heat with the thermocap on.</li>
+            <li>Turn the thermodial: the LED strips should move closer to the middle as the setting rises.</li>
+            <li>Still no heat at all? What to send: a short video of the device switched on, producing no heat during a session.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-ot-chamber-moves">
+        <summary>The heating chamber moves</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Touch the ceramic chamber gently. Never test it with force.</li>
+            <li>A slight left-right wobble is normal: it is within the design tolerance and not a fault.</li>
+            <li>If the chamber sinks, or spins freely, stop using the device. What to send: a short video of the chamber moving.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-ot-cup-fit">
+        <summary>The ceramic cup does not fit the chamber</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Check it is an ENSŌ 2026 ceramic cup and that the chamber is empty and clean.</li>
+            <li>Lower the cup straight in. Do not press it.</li>
+            <li>Still not sitting properly? What to send: a short video of the cup not fitting. This usually starts with a set of replacement cups.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-ot-condensation">
+        <summary>Droplets inside the body: condensation or a leak?</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Small droplets inside during or after a session are condensation: warm vapour meets cooler surfaces. That is normal and not a fault.</li>
+            <li>Keep the water at the level indicator, never above.</li>
+            <li>Water running out of the body during normal use is not normal. Stop the session. What to send: a short video of the leak.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-ot-air-escapes">
+        <summary>Smoke or air escapes from the body</summary>
+        <div class="em-faq__a">
+          <div class="em-figs">
+            <img src="{{ 'tank-seat-ink.webp' | file_url }}" alt="" loading="lazy">
+          </div>
+          <ol>
+            <li>Look for a gap between the glass water tank and the device.</li>
+            <li>Reseat the tank firmly so it sits flush, then try again.</li>
+            <li>Still escaping? What to send: a short video with the water at the right level, showing whether it bubbles when you draw.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-ot-damaged-arrival">
+        <summary>Something arrived damaged: box, glass tank or mouthpiece</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>See damage after unpacking? Do not use the device yet.</li>
+            <li>Take clear photos, and a short video if you can. Say whether you noticed it before or after the first use.</li>
+            <li>Send them to support with your order number. A cracked glass tank or a rusty or broken mouthpiece is replaced; marks on the device are looked at case by case.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-draw-tight">
+        <summary>Draw is too tight</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Loosen tobacco around the cup edges with the poking tool.</li>
+            <li>Reduce load — 8–15g with clear airpath.</li>
+            <li>Clean the airpath tubes with the short brush.</li>
+            <li>Remove and rinse the blowout valve.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-led-meaning">
+        <summary>What do the LED colors mean?</summary>
+        <div class="em-faq__a">
+          <div class="em-figs">
+            <img src="{{ 'dial-turn-ink.webp' | file_url }}" alt="" loading="lazy">
+            <img src="{{ 'led-temp-ink.webp' | file_url }}" alt="" loading="lazy">
+          </div>
+          <ol>
+            <li>Orange — regular mode, on and heating.</li>
+            <li>Green — G-Mode active (3 presses).</li>
+            <li>Blue — temperature locked (5 presses).</li>
+            <li>Red — low battery, charge soon.</li>
+            <li>LED strips closer to middle = hotter setting.</li>
+            <li>3, 7 or 10 red flashes when it switches on each mean something: see "Red flashes: 3, 7 or 10 times".</li>
+            <li>Colours that mix only while switching off, often on a low battery, and look normal after a restart, are normal.</li>
+            <li>The LED does not move when you turn the dial, or the colours change on their own on a charged battery? What to send: a short video of it.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-double-hose">
+        <summary>Two hoses / sharing sessions</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Remove the blowout valve and replace it with a second vaporhose.</li>
+            <li>Airflow drops with two active hoses — sharing one sequentially performs best.</li>
+            <li>Rinse the blowout valve every 1–2 uses.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-wont-turn-on">
+        <summary>It will not turn on, or flashes red and shuts off</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Charge until all four LEDs are lit (about 3 hours for the standard battery, 1 h 45 min for Battery Plus), with the original cable. Red at startup almost always means low battery.</li>
+            <li>Press and hold the dial firmly for 2–3 seconds.</li>
+            <li>Check the protective sheet has been removed from the battery.</li>
+            <li>Take the battery out and note the hardware number printed inside the compartment.</li>
+            <li>Send support a short video plus that number, and register your warranty.</li>
+            <li>If it still fails, engineering approves a replacement from the video — you do not need to ship it first.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-chamber-crack">
+        <summary>Cracked heating chamber, ceramic or glass base</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Stop using it.</li>
+            <li>Photograph the crack and note the hardware number from inside the battery compartment.</li>
+            <li>Send both to support with a word about any drops and your cleaning routine, and register the warranty.</li>
+            <li>Engineering reviews it, and a defect is replaced.</li>
+            <li>To avoid it next time: let the device cool 30–45 minutes and air-dry before reuse, and keep pressure off the chamber when cleaning — the multi-tool and glove are there for that.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-sound">
+        <summary>No sound, or what is that little switch?</summary>
+        <div class="em-faq__a">
+          <p>The small switch next to the USB-C port is the mute toggle. Red means muted, black means alerts are on — that is the low-battery beep you are missing. Check it first. If sound is genuinely gone, charge fully, then send support a video showing the issue and the position of that switch, plus the hardware number.</p>
+        </div>
+      </details>
+      <details id="q-cs-thermodial">
+        <summary>The thermodial is not responding</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Charge until all four white LEDs are lit.</li>
+            <li>Confirm the protective sheet is off the battery.</li>
+            <li>Press the power button first — the dial does nothing until the unit is on.</li>
+            <li>Still nothing? Send a video to support; an unresponsive dial is replaced under warranty.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-weak-vapor-cs">
+        <summary>Weak flavour or vapour</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>On a 2026 edition, raise the dial 10–15°C — it runs cooler than earlier models at the same number.</li>
+            <li>Use 8–12 g of regular tobacco. Not steam stones, not gel.</li>
+            <li>Poke holes through the tobacco with the poking tool.</li>
+            <li>Give each temperature change 30–60 seconds before judging it.</li>
+            <li>If tuning does not fix it, support escalates to engineering and a confirmed fault is replaced with a prepaid label.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-battery-dead">
+        <summary>Battery is dead, weak, or only works on the charger</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Film the battery on the charger so the LEDs are visible, then film a session before and after.</li>
+            <li>Send both clips to support for engineering.</li>
+            <li>A confirmed fault is replaced under warranty. If your exact battery is out of stock you get the current version instead, with the differences explained.</li>
+            <li>Charging with the battery inside the device is fine — that is not the cause.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-battery-plus-charger">
+        <summary>New unit drains fast, or never finishes charging</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>The Battery Plus needs a USB-C Power Delivery charger of 30 W or more — none is included.</li>
+            <li>A normal phone charger will show it charging but never complete a cycle, which looks exactly like a battery that drains fast.</li>
+            <li>A full charge takes about 1 hour 45 minutes. The fourth LED can light around 15 minutes before it is truly full.</li>
+            <li>On a brand-new unit, check every protective label has been removed.</li>
+            <li>If the charging block itself fails, support rules out the adapter first and replaces the block under warranty.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-battery-specs">
+        <summary>Is it normal for the battery to get warm?</summary>
+        <div class="em-faq__a">
+          <p>Warm while charging is normal. Hot to the touch is not — stop and contact support. Do not leave it charging beyond about four hours. The cell is a Samsung INR21700-50E, and support can send the safety data sheet if you need it for shipping.</p>
+        </div>
+      </details>
+      <details id="q-cs-oring">
+        <summary>There is a loose rubber O-ring inside the pipe</summary>
+        <div class="em-faq__a">
+          <p>On first-batch units a small O-ring sat in the air duct purely as a used-indicator — it changes colour after use. It does nothing for performance, it was dropped from later production, and you can throw it away. Nothing needs reinstalling.</p>
+        </div>
+      </details>
+      <details id="q-cs-spare-parts">
+        <summary>Can I buy spare parts?</summary>
+        <div class="em-faq__a">
+          <p>Most small parts can be sourced — a blowout valve cap, a thermal cap, a strap, a hose — and support sends a checkout link, with shipping around $5.99 on small items. A few parts are not sold separately yet, so ask and they will check stock.</p>
+        </div>
+      </details>
+    </div>
+    <div class="em-tsmore">
+      <a href="/pages/enso-diamond-app#diamond-fix">Open the full troubleshooter</a>
+      <span>Step by step, for every problem</span>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "EM: Troubleshooting",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Troubleshooting"
+    }
+  ]
+}
+{% endschema %}

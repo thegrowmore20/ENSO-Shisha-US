@@ -1,0 +1,113 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{{ 'em-manual.css' | asset_url | stylesheet_tag }}
+<div class="em-wrap">
+  <section class="em-ch em-ch-section" id="parts" style="scroll-margin-top:180px">
+    <p class="em-ch__num">02 · Start</p>
+    <h2>Know your ENSŌ</h2>
+    <p class="em-ch__lead">The front, lettered A to K in the drawing, and what sits on the back.</p>
+    <div class="em-parts">
+      {%- if section.settings.parts_diagram != blank -%}
+        {{- section.settings.parts_diagram | image_url: width: 1000 | image_tag:
+            loading: 'lazy',
+            alt: 'The ENSŌ 2026 Edition with its parts lettered A to K',
+            widths: '500, 800, 1000',
+            sizes: '(max-width: 760px) 100vw, 50vw' -}}
+      {%- else -%}
+        <img src="{{ 'parts-diagram-ink.webp' | file_url }}" alt="The ENSŌ 2026 Edition with its parts lettered A to K" loading="lazy">
+      {%- endif -%}
+      <div>
+        <p class="em-sp">On the back, not in the drawing</p>
+        <ul class="em-plist">
+          <li><em>L</em><span>Battery slot</span></li>
+          <li><em>M</em><span>Battery handle</span></li>
+          <li><em>N</em><span>Blowout valve</span></li>
+          <li><em>O</em><span>ENSŌ battery</span></li>
+          <li><em>P</em><span>Speaker</span></li>
+          <li><em>Q</em><span>USB-C slot</span></li>
+          <li><em>R</em><span>Mute/unmute button</span></li>
+          <li><em>S</em><span>Water level indicator</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "EM: Know Your ENSŌ",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "parts_diagram",
+      "label": "Parts diagram"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#faf8f4"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Know Your ENSŌ"
+    }
+  ]
+}
+{% endschema %}

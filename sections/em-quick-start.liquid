@@ -1,0 +1,170 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{{ 'em-manual.css' | asset_url | stylesheet_tag }}
+<div class="em-wrap">
+  <section class="em-ch em-ch-section" id="quick-start" style="scroll-margin-top:180px">
+    <p class="em-ch__num">01 · Start</p>
+    <h2>Quick start</h2>
+    <p class="em-ch__lead">Five steps to the first session.</p>
+    <div class="em-qs">
+      <article class="em-qs__s">
+        {%- if section.settings.img_charge != blank -%}
+          {{- section.settings.img_charge | image_url: width: 400 | image_tag: loading: 'lazy', alt: '', class: '' -}}
+        {%- else -%}
+          <img src="{{ 'step-charge-ink.webp' | file_url }}" alt="" loading="lazy">
+        {%- endif -%}
+        <span class="em-qs__n" aria-hidden="true">1</span>
+        <h3>Charge</h3>
+        <p>Charge the battery fully before you begin: about 3 hours for the standard battery, 1 h 45 min for Battery Plus, over USB-C with a 30 W PD charger or stronger. The four LEDs climb to full.</p>
+        <small>Leave it on the charger for the full time, even once the LEDs read full.</small>
+      </article>
+      <article class="em-qs__s">
+        {%- if section.settings.img_fill != blank -%}
+          {{- section.settings.img_fill | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' -}}
+        {%- else -%}
+          <img src="{{ 'step-fill-ink.webp' | file_url }}" alt="" loading="lazy">
+        {%- endif -%}
+        <span class="em-qs__n" aria-hidden="true">2</span>
+        <h3>Fill</h3>
+        <p>Twist off the glass water tank and fill it with cold water up to the level indicator. Cold water cools the vapour for a smoother draw.</p>
+        <small>Ice cubes make it cooler still. They raise the water level, so fill a little below the line.</small>
+      </article>
+      <article class="em-qs__s">
+        {%- if section.settings.img_pack != blank -%}
+          {{- section.settings.img_pack | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' -}}
+        {%- else -%}
+          <img src="{{ 'step-pack-ink.webp' | file_url }}" alt="" loading="lazy">
+        {%- endif -%}
+        <span class="em-qs__n" aria-hidden="true">3</span>
+        <h3>Pack</h3>
+        <p>Pack the cup lightly with your tobacco, 8–15 g, then open an airpath straight down the middle with the poking tool.</p>
+        <small>A mesh screen at the bottom of the cup keeps the flavour in longer. Mid-session, loosen the edges with the poking tool.</small>
+      </article>
+      <article class="em-qs__s">
+        {%- if section.settings.img_tune != blank -%}
+          {{- section.settings.img_tune | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' -}}
+        {%- else -%}
+          <img src="{{ 'step-tune-ink.webp' | file_url }}" alt="" loading="lazy">
+        {%- endif -%}
+        <span class="em-qs__n" aria-hidden="true">4</span>
+        <h3>Tune</h3>
+        <p>Set the thermodial to 180°, then hold it in for 2–3 seconds until the light turns orange. The 5-minute pre-heat starts; the light in the middle climbs as it warms.</p>
+        <small>Vapour light at the start? Go up 15–30° at a time and give each change 30–60 seconds.</small>
+      </article>
+      <article class="em-qs__s">
+        {%- if section.settings.img_enjoy != blank -%}
+          {{- section.settings.img_enjoy | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' -}}
+        {%- else -%}
+          <img src="{{ 'step-enjoy-ink.webp' | file_url }}" alt="" loading="lazy">
+        {%- endif -%}
+        <span class="em-qs__n" aria-hidden="true">5</span>
+        <h3>Enjoy</h3>
+        <p>Draw slowly and steadily. Electric heat: no charcoal, no ash, no open flame.</p>
+        <small>Every tobacco likes its own heat. See Temperature and the three modes below.</small>
+      </article>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "EM: Quick Start",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Step images"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_charge",
+      "label": "Step 1: Charge"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_fill",
+      "label": "Step 2: Fill"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_pack",
+      "label": "Step 3: Pack"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_tune",
+      "label": "Step 4: Tune"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_enjoy",
+      "label": "Step 5: Enjoy"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Quick Start"
+    }
+  ]
+}
+{% endschema %}

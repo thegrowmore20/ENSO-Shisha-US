@@ -1,0 +1,184 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{{ 'em-manual.css' | asset_url | stylesheet_tag }}
+<div class="em-wrap">
+  <div class="em-note em-note--dont">
+    <b>Before you start: keep your warranty intact</b>
+    <ul>
+      <li><b>Let the chamber cool before water comes near it.</b> Ceramic reacts badly to sudden temperature changes, and cold water poured into a hot chamber can crack it. Let the unit cool to room temperature first. Cracks caused by thermal shock are not covered.</li>
+      <li><b>Keep the battery compartment and contacts dry.</b> Moisture on the battery pins or inside the compartment can cause a short circuit and permanently damage the device. We recommend cleaning with the battery in place, so no water can get into the compartment, and making sure everything is completely dry before the battery goes back in. Liquid damage is not covered.</li>
+    </ul>
+  </div>
+
+  <div class="em-finder" id="em-finder" aria-label="Chapter navigation">
+    <label class="em-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      <input id="em-search-input" type="search" placeholder="Search: battery, flashes, clean, mode…" aria-label="Search the manual">
+      <small id="em-search-count"></small>
+    </label>
+    <nav class="em-chips" aria-label="Chapters">
+      <a class="em-chip" href="#quick-start" data-id="quick-start">Quick start</a>
+      <a class="em-chip" href="#parts" data-id="parts">Know your ENSŌ</a>
+      <a class="em-chip" href="#in-the-box" data-id="in-the-box">In the box</a>
+      <a class="em-chip" href="#temperature" data-id="temperature">Temperature and modes</a>
+      <a class="em-chip" href="#using" data-id="using">Using ENSŌ</a>
+      <a class="em-chip" href="#care" data-id="care">Cleaning, care and travel</a>
+      <a class="em-chip" href="#troubleshooting" data-id="troubleshooting">Troubleshooting</a>
+      <a class="em-chip" href="#warranty" data-id="warranty">Warranty</a>
+    </nav>
+  </div>
+
+  <p id="em-none" style="display:none;padding:16px 0;color:#666">Nothing found. Try another word, or write to us.</p>
+</div>
+
+{% javascript %}
+(function () {
+  const q = document.getElementById('em-search-input');
+  const cnt = document.getElementById('em-search-count');
+  const none = document.getElementById('em-none');
+  const secs = Array.from(document.querySelectorAll('.em-ch-section'));
+  const chips = Array.from(document.querySelectorAll('.em-chip'));
+
+  function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  secs.forEach(function (s) { s._t = norm(s.textContent); });
+
+  if (q) {
+    q.addEventListener('input', function () {
+      const words = norm(q.value).split(/\s+/).filter(Boolean);
+      let hit = 0;
+      secs.forEach(function (s) {
+        const ok = !words.length || words.every(function (x) { return s._t.indexOf(x) > -1; });
+        s.hidden = !ok;
+        if (ok) hit++;
+      });
+      chips.forEach(function (c) {
+        const s = document.getElementById(c.dataset.id);
+        c.hidden = !!(words.length && s && s.hidden);
+      });
+      if (cnt) cnt.textContent = words.length ? hit + (hit === 1 ? ' chapter' : ' chapters') : '';
+      if (none) none.style.display = words.length && !hit ? 'block' : 'none';
+    });
+  }
+
+  chips.forEach(function (c) {
+    c.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (q && q.value) { q.value = ''; q.dispatchEvent(new Event('input')); }
+      const s = document.getElementById(c.dataset.id);
+      if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#' + c.dataset.id);
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const bar = document.querySelector('.em-chips');
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          chips.forEach(function (c) {
+            const on = c.dataset.id === e.target.id;
+            c.classList.toggle('on', on);
+            if (on && bar) bar.scrollTo({ left: c.offsetLeft - bar.clientWidth / 2 + c.offsetWidth / 2, behavior: 'smooth' });
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    secs.forEach(function (s) { io.observe(s); });
+  }
+
+  const finder = document.getElementById('em-finder');
+  if (finder) {
+    let lastY = window.scrollY, upDist = 0, ticking = false;
+    function applyScroll() {
+      const y = window.scrollY, d = y - lastY;
+      if (d > 4) { upDist = 0; if (y > 400) finder.classList.add('away'); }
+      else if (d < -4) { upDist -= d; if (upDist > 140) finder.classList.remove('away'); }
+      lastY = y; ticking = false;
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(applyScroll); } }, { passive: true });
+  }
+
+  if (window.location.hash) {
+    const id = window.location.hash.slice(1);
+    const target = document.getElementById(id);
+    if (target) {
+      setTimeout(function () { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 200);
+      chips.forEach(function (c) { c.classList.toggle('on', c.dataset.id === id); });
+    }
+  }
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "EM: Finder",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Finder"
+    }
+  ]
+}
+{% endschema %}

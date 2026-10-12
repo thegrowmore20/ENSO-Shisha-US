@@ -1,0 +1,127 @@
+{
+  "sections": {
+    "em_hero": {
+      "type": "em-hero",
+      "settings": {
+        "color_background": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "em_finder": {
+      "type": "em-finder",
+      "settings": {
+        "color_background": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "em_quick_start": {
+      "type": "em-quick-start",
+      "settings": {
+        "color_background": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_parts": {
+      "type": "em-parts",
+      "settings": {
+        "color_background": "#faf8f4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_in_the_box": {
+      "type": "em-in-the-box",
+      "settings": {
+        "color_background": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_temperature": {
+      "type": "em-temperature",
+      "settings": {
+        "color_background": "#faf8f4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_using": {
+      "type": "em-using",
+      "settings": {
+        "color_background": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_care": {
+      "type": "em-care",
+      "settings": {
+        "color_background": "#faf8f4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_troubleshooting": {
+      "type": "em-troubleshooting",
+      "settings": {
+        "color_background": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_warranty": {
+      "type": "em-warranty",
+      "settings": {
+        "color_background": "#faf8f4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "em_support": {
+      "type": "em-support",
+      "settings": {
+        "color_background": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "em_hero",
+    "em_finder",
+    "em_quick_start",
+    "em_parts",
+    "em_in_the_box",
+    "em_temperature",
+    "em_using",
+    "em_care",
+    "em_troubleshooting",
+    "em_warranty",
+    "em_support"
+  ]
+}

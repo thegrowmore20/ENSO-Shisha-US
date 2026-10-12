@@ -1,0 +1,179 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{{ 'em-manual.css' | asset_url | stylesheet_tag }}
+<div class="em-wrap">
+  <section class="em-ch em-ch-section" id="warranty" style="scroll-margin-top:180px">
+    <p class="em-ch__num">08 · Help</p>
+    <h2>Warranty</h2>
+    <p class="em-ch__lead">Two years on the device, one year on the battery. Registering takes two minutes in the ENSŌ app.</p>
+    <div class="em-cta-row">
+      <a class="em-pill" href="{{ section.settings.register_url | default: '/pages/enso-diamond-app#register' }}">Register your warranty</a>
+      <a class="em-lnk" href="{{ section.settings.terms_url | default: '/policies/terms-of-service' }}">Warranty terms ›</a>
+    </div>
+    <div class="em-faq">
+      <details id="q-cs-warranty-terms">
+        <summary>What the warranty covers</summary>
+        <div class="em-faq__a">
+          <p>Two years on the device, one year on the battery. Full terms live on the webshop's terms and policies page.</p>
+        </div>
+      </details>
+      <details id="q-cs-warranty-proof">
+        <summary>Registering, and what if I cannot find the receipt?</summary>
+        <div class="em-faq__a">
+          <p>Registration needs proof of purchase so the purchase date can be verified. No receipt? Check your email and spam for an electronic one, or ask the shop for a duplicate. If the form goes blank after you submit, it almost always went through anyway — confirmation can lag over a weekend.</p>
+        </div>
+      </details>
+      <details id="q-cs-warranty-name">
+        <summary>The receipt is in someone else's name</summary>
+        <div class="em-faq__a">
+          <p>Not a problem. Confirm you are the owner, or have the original buyer email support, and the registration is accepted. A device bought by a company for private use is covered too — resale is the line, not the name.</p>
+        </div>
+      </details>
+      <details id="q-cs-return-body">
+        <summary>What exactly do I send back for a replacement?</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li>Support emails a prepaid return label.</li>
+            <li>Return the ENSŌ body only. Take off the strap, thermal cap, mouthpiece, hose, valve and battery and keep them.</li>
+            <li>Keep and use the original box — a missing box slows the replacement down.</li>
+            <li>Support often ships your replacement as soon as the return shows as in transit.</li>
+            <li>If something slips into the box by accident — a dip tube, a glass base, a choke valve — it is found and sent back.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-cs-replacement-new">
+        <summary>Is the replacement new or refurbished?</summary>
+        <div class="em-faq__a">
+          <p>Always brand new. Units are not repaired or resold. If a replacement also turns out faulty, the next one is individually tested and filmed before it ships.</p>
+        </div>
+      </details>
+      <details id="q-cs-replacement-model">
+        <summary>Which model will I get as a replacement?</summary>
+        <div class="em-faq__a">
+          <p>The current one — the 2026 ENSŌ — at no extra cost, and your existing accessories carry over to it.</p>
+        </div>
+      </details>
+      <details id="q-cs-replacement-cost">
+        <summary>Does a warranty replacement cost anything?</summary>
+        <div class="em-faq__a">
+          <p>The replacement is free. Shipping is not covered by the warranty, so you usually pay only that — around €10 in the EU, about $25 elsewhere — through a checkout link support sends. They do occasionally waive it.</p>
+        </div>
+      </details>
+      <details id="q-cs-refund">
+        <summary>Refunds and returns, as opposed to a replacement</summary>
+        <div class="em-faq__a">
+          <p>A refund return has to include the original box and every accessory — unlike a replacement, which is the body only. Unused units in original condition are accepted within 15 days of delivery. A unit confirmed faulty on inspection is not treated as a change-of-mind return.</p>
+        </div>
+      </details>
+      <details id="q-cs-reseller">
+        <summary>I bought from a reseller or distributor</summary>
+        <div class="em-faq__a">
+          <p>Support verifies the purchase — a bank receipt is usually enough — and coordinates the warranty through that distributor, who often handles the exchange in your region. Replacements are normally body-only.</p>
+        </div>
+      </details>
+      <details id="q-cs-transfer">
+        <summary>Is the warranty transferable if I sell it?</summary>
+        <div class="em-faq__a">
+          <p>No. The warranty is non-transferable — a resold device cannot be registered or claimed by its new owner, even with the original invoice. Any claim would have to go through the original purchaser.</p>
+        </div>
+      </details>
+      <details id="q-cs-repair">
+        <summary>Is there a repair service? Can I send it in?</summary>
+        <div class="em-faq__a">
+          <p>Yes — you can send a faulty unit in. Inside the EU, during the two-year legal guarantee you can ask for it to be repaired or replaced, and either way it costs you nothing, return shipping included.</p>
+          <p>In practice most faults are solved faster with a brand-new replacement, so support will tell you which route is quicker for your specific issue — the choice stays yours.</p>
+          <ol>
+            <li>Email support with your serial number, your order or proof of purchase, and a short description plus a photo or video of the fault.</li>
+            <li>Support confirms whether it is a repair or a replacement, and sends you the return instructions.</li>
+            <li>Send the unit in — body only unless support asks for more.</li>
+            <li>You get the repaired or replaced unit back, and the warranty continues on it.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "EM: Warranty",
+  "settings": [
+    {
+      "type": "url",
+      "id": "register_url",
+      "label": "Register warranty URL"
+    },
+    {
+      "type": "url",
+      "id": "terms_url",
+      "label": "Warranty terms URL"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#faf8f4"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Warranty"
+    }
+  ]
+}
+{% endschema %}

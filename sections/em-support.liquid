@@ -1,0 +1,108 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{{ 'em-manual.css' | asset_url | stylesheet_tag }}
+<div class="em-wrap">
+  <div class="em-support-section">
+    <h2>Still need a hand</h2>
+    <p class="em-ch__lead">Write with your order number and a photo or a short video. A person answers.</p>
+    {%- if section.settings.email_us != blank -%}
+      <p>US: <a href="mailto:{{ section.settings.email_us }}">{{ section.settings.email_us }}</a></p>
+    {%- else -%}
+      <p>US: <a href="mailto:support@ensoshisha.com">support@ensoshisha.com</a></p>
+    {%- endif -%}
+    {%- if section.settings.email_eu != blank -%}
+      <p>Europe: <a href="mailto:{{ section.settings.email_eu }}">{{ section.settings.email_eu }}</a></p>
+    {%- else -%}
+      <p>Europe: <a href="mailto:support@ensoshisha.eu">support@ensoshisha.eu</a></p>
+    {%- endif -%}
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px 32px;margin:0 0 80px">
+    <a href="/pages/enso-experience" style="font:700 16px/22px var(--font-body,Montserrat,sans-serif);color:#000;text-decoration:none;border-bottom:2px solid #c8943a;padding-bottom:2px">‹ Back to ENSŌ Experience</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "EM: Support",
+  "settings": [
+    {
+      "type": "text",
+      "id": "email_us",
+      "label": "US support email",
+      "default": "support@ensoshisha.com"
+    },
+    {
+      "type": "text",
+      "id": "email_eu",
+      "label": "Europe support email",
+      "default": "support@ensoshisha.eu"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Support"
+    }
+  ]
+}
+{% endschema %}

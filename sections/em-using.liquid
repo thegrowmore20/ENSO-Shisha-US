@@ -1,0 +1,182 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{{ 'em-manual.css' | asset_url | stylesheet_tag }}
+<div class="em-wrap">
+  <section class="em-ch em-ch-section" id="using" style="scroll-margin-top:180px">
+    <p class="em-ch__num">05 · Use</p>
+    <h2>Using ENSŌ</h2>
+    <p class="em-ch__lead">Power, battery, water, hose, packing and the draw.</p>
+    <div class="em-faq">
+      <details id="q-turn-on">
+        <summary>Turn on / turn off</summary>
+        <div class="em-faq__a">
+          <p>To power on, press and hold the Thermodial for a couple of seconds. Once powered on, the LED indicator turns orange.</p>
+          <p>To power off, press and hold the Thermodial again.</p>
+        </div>
+      </details>
+      <details id="q-battery">
+        <summary>Battery and charging</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li><b>Remove.</b> Pull the oval-shaped lever upwards and the battery releases.</li>
+            <li><b>Charge.</b> USB-C directly into the battery is fastest: about 3 hours for the standard battery, 1 h 45 min for Battery Plus, with a 30 W PD charger or stronger. Battery LEDs show charge — 4th LED = full.</li>
+            <li><b>Insert.</b> Slide back in and lock the lever. Pass-through use works while charging (slower charge).</li>
+          </ol>
+          <p>At 180–210° expect up to 2 hours of use. Higher heat = shorter life. Keep out of direct sunlight.</p>
+        </div>
+      </details>
+      <details id="q-cs-charging-use">
+        <summary>Can I use it while it is charging?</summary>
+        <div class="em-faq__a">
+          <p>Yes. The charger puts in less power than the device draws in use, so the battery still drains slowly — running it plugged in extends a session rather than charging it. Useful after the low-battery warning. A second battery is not required, it just means you never stop.</p>
+        </div>
+      </details>
+      <details id="q-cs-break">
+        <summary>Should I leave it on during a break?</summary>
+        <div class="em-faq__a">
+          <p>No. Even at the lowest temperature it keeps working through your tobacco — about half a session's worth over a 30 to 45 minute break. Switch it off, and when you come back use Green Mode so the already-started tobacco does not scorch. It reheats in a few minutes.</p>
+        </div>
+      </details>
+      <details id="q-water">
+        <summary>Fill the water tank</summary>
+        <div class="em-faq__a">
+          <p>Twist to remove the glass tank, fill with cold water up to the level indicator. Don't overfill.</p>
+          <p>Change the water after every session for the best flavor.</p>
+        </div>
+      </details>
+      <details id="q-hose">
+        <summary>Connect the vaporhose</summary>
+        <div class="em-faq__a">
+          <p>Insert one end of the hose into the vaporhose-stem. The magnetic mouthpiece snaps onto the other end.</p>
+        </div>
+      </details>
+      <details id="q-packing">
+        <summary>Pack the perfect bowl</summary>
+        <div class="em-faq__a">
+          <ol>
+            <li><b>Mix.</b> Mix your tobacco well — juices settle at the bottom. Mixing gives even flavor.</li>
+            <li><b>Pack.</b> Pack the cup lightly (8–15g) with your preferred tobacco.</li>
+            <li><b>Poke.</b> Create an airpath in the middle with the poking tool — this keeps the draw open and the vapor flowing.</li>
+            <li><b>Open.</b> Remove the Thermocap to expose the heating chamber.</li>
+            <li><b>Insert.</b> Insert the packed cup into the chamber.</li>
+            <li><b>Close.</b> Thermocap back on. You're ready.</li>
+          </ol>
+        </div>
+      </details>
+      <details id="q-draw">
+        <summary>Adjust draw resistance</summary>
+        <div class="em-faq__a">
+          <p>If the draw feels heavy, use the poking tool to lightly loosen the tobacco around the edges of the cup.</p>
+          <p>Keep loads at 8–15g with a clear central airway.</p>
+        </div>
+      </details>
+      <details id="q-cs-bubbling">
+        <summary>I want stronger bubbling and more draw resistance</summary>
+        <div class="em-faq__a">
+          <p>Close the small hole on the dip tube. That adds resistance and brings the bubbling much closer to a traditional hookah — the usual fix if you have come from a big water tank.</p>
+        </div>
+      </details>
+      <details id="q-cs-two-hoses">
+        <summary>Two hoses, a longer hose, or a longer mouthpiece</summary>
+        <div class="em-faq__a">
+          <span class="sub">Two hoses at once</span>
+          <ol>
+            <li>Two hoses work at once — one on each side of the ENSŌ.</li>
+            <li>Both sides need a mouthpiece extension. That is the part with the valve, and the valve is what lets two people draw at the same time.</li>
+            <li>Never blow back into the device. One-way only, in both senses.</li>
+          </ol>
+          <span class="sub">A longer hose</span>
+          <p>A longer hose exists, and it goes in and out of stock. Ask support what is available right now.</p>
+          <span class="sub">A longer mouthpiece</span>
+          <p>On the 2026 model the mouthpiece is already the long one, so an extension there is about the valve, not the length.</p>
+        </div>
+      </details>
+      <details id="q-cs-stones">
+        <summary>Steam stones or gel instead of tobacco?</summary>
+        <div class="em-faq__a">
+          <p>Not recommended. The ceramic cup has holes in the bottom, so the soaking liquid drains straight through — weak flavour, weak vapour. Gel only works thoroughly mixed into regular tobacco, and even then results vary. Stick to 8–12 g of regular shisha tobacco.</p>
+        </div>
+      </details>
+      <details id="q-cs-temp-2026">
+        <summary>Setting the temperature on a 2026 edition</summary>
+        <div class="em-faq__a">
+          <p>The 2026 edition reads about 10–15°C cooler than earlier models at the same displayed number — the temperature sensing was made more conservative. If 255°C used to be your setting, try 265–270°C, and move in small steps from there.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "EM: Using ENSŌ",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Using ENSŌ"
+    }
+  ]
+}
+{% endschema %}
