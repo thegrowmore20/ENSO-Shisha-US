@@ -10,7 +10,7 @@
     }
   }
 {% endstyle %}
-<section class="cl-sec">
+<section class="cl-sec cl-cap">
   <h2>The cap</h2>
   <p class="cl-lead">No electronics in the cap: all three parts go under the tap.</p>
   <div class="slider tslider slider--grid" style="--n:1">
@@ -34,6 +34,20 @@
     <button class="nav next" aria-label="Next">›</button>
   </div>
 </section>
+
+{% stylesheet %}
+.cl-cap .ts__tx {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  min-height: 0;
+}
+.cl-cap .st__n {
+  display: none;
+}
+{% endstylesheet %}
 
 {% schema %}
 {
