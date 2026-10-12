@@ -1,8 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "dm_intro": {
       "type": "dm-intro",
       "settings": {
+        "hero_image": "shopify://shop_images/hero-front-start.webp",
+        "safety_contacts": "shopify://shop_images/before-contacts.webp",
+        "safety_battery_dry": "shopify://shop_images/battery-dry.webp",
+        "safety_before_charge": "shopify://shop_images/before-charge.webp",
+        "packban_desktop": "shopify://shop_images/bowl-darkwood.webp",
+        "packban_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
         "padding_top": 0,
         "padding_bottom": 0,
         "padding_top_mobile": 0,
@@ -11,55 +26,162 @@
     },
     "dm_outofbox": {
       "type": "dm-outofbox",
-      "settings": {}
+      "settings": {
+        "img_device_top": "shopify://shop_images/device-top.webp",
+        "img_cup": "shopify://shop_images/d-cup.webp",
+        "img_basket": "shopify://shop_images/d-basket.webp",
+        "img_screens": "shopify://shop_images/d-screens-2.webp",
+        "img_adapter_tall": "shopify://shop_images/d-adapter-tall.webp",
+        "img_adapter_short": "shopify://shop_images/d-adapter-short.webp",
+        "img_tool": "shopify://shop_images/d-tool.webp",
+        "img_brush": "shopify://shop_images/d-brush.webp",
+        "img_cable": "shopify://shop_images/d-cable.webp",
+        "latch_closed": "shopify://shop_images/battery-latch-closed.webp",
+        "latch_open": "shopify://shop_images/battery-latch-open.webp",
+        "battery_out": "shopify://shop_images/battery-out.webp",
+        "pack_contacts": "shopify://shop_images/pack-contacts.webp",
+        "latch_close": "shopify://shop_images/battery-latch-close.webp"
+      }
     },
     "dm_charging": {
       "type": "dm-charging",
-      "settings": {}
+      "settings": {
+        "before_charge": "shopify://shop_images/before-charge.webp",
+        "charge_dots": "shopify://shop_images/charge-dots.webp",
+        "charge_in": "shopify://shop_images/charge-in.webp",
+        "charge_while_smoking": "shopify://shop_images/charge-while-smoking.webp",
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
     },
     "dm_battery": {
       "type": "dm-battery",
-      "settings": {}
+      "settings": {
+        "switch_off": "shopify://shop_images/switch-off-thumb.webp",
+        "battery_out": "shopify://shop_images/battery-out.webp",
+        "latch_close": "shopify://shop_images/battery-latch-close.webp",
+        "ui_continue": "shopify://shop_images/continue.webp",
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
     },
     "dm_dial": {
       "type": "dm-dial",
-      "settings": {}
+      "settings": {
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
     },
     "dm_pack": {
       "type": "dm-pack",
-      "settings": {}
+      "settings": {
+        "flat_screen": "shopify://shop_images/flat-screen.webp",
+        "basket_empty": "shopify://shop_images/basket-empty.webp",
+        "img_basket": "shopify://shop_images/d-basket.webp",
+        "img_screens": "shopify://shop_images/d-screens-2.webp",
+        "pack_layer1": "shopify://shop_images/pack-layer1.webp",
+        "pack_press": "shopify://shop_images/pack-press.webp",
+        "pack_layer2": "shopify://shop_images/pack-layer2.webp",
+        "cup_filled": "shopify://shop_images/cup-filled.webp",
+        "flat_layer1": "shopify://shop_images/flat-layer1.webp",
+        "flat_layer2": "shopify://shop_images/flat-layer2.webp",
+        "flat_packed": "shopify://shop_images/flat-packed.webp",
+        "dark_leaf_packed": "shopify://shop_images/dark-leaf-packed.webp",
+        "chamber_empty": "shopify://shop_images/chamber-empty.webp",
+        "cup_in_by_hand": "shopify://shop_images/cup-in-by-hand.webp",
+        "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp",
+        "cup_tool_seated": "shopify://shop_images/cup-tool-seated.webp",
+        "cup_tool_lower": "shopify://shop_images/cup-tool-lower.webp",
+        "cup_seated_tool_off": "shopify://shop_images/cup-seated-tool-off.webp"
+      }
     },
     "dm_hookah": {
       "type": "dm-hookah",
-      "settings": {}
+      "settings": {
+        "hookah_adapter": "shopify://shop_images/hookah-adapter-two-hands.webp",
+        "hookah_mount": "shopify://shop_images/hookah-mount-two-hands.webp",
+        "on_hookah": "shopify://shop_images/on-hookah-front.webp"
+      }
     },
     "dm_preheat": {
       "type": "dm-preheat",
-      "settings": {}
+      "settings": {
+        "cap_off": "shopify://shop_images/cap-off.webp",
+        "cup_tool_lower": "shopify://shop_images/cup-tool-lower.webp",
+        "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp",
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
     },
     "dm_profiles": {
       "type": "dm-profiles",
-      "settings": {}
+      "settings": {
+        "ui_m_profiles": "shopify://shop_images/m-profiles.webp",
+        "ui_p_profiles": "shopify://shop_images/p-profiles.webp",
+        "ui_profile_default": "shopify://shop_images/profile_default.webp",
+        "ui_profile_phoenix": "shopify://shop_images/profile_phoenix.webp",
+        "ui_profile_wraith": "shopify://shop_images/profile_wraith.webp",
+        "ui_profile_oracle": "shopify://shop_images/profile_oracle.webp",
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
     },
     "dm_menu": {
       "type": "dm-menu",
-      "settings": {}
+      "settings": {
+        "ui_q_menu": "shopify://shop_images/q-menu.webp",
+        "ui_p_profiles": "shopify://shop_images/p-profiles.webp",
+        "ui_p_theme": "shopify://shop_images/p-theme.webp",
+        "ui_p_volume": "shopify://shop_images/p-volume.webp",
+        "ui_p_haptic": "shopify://shop_images/p-haptic.webp",
+        "ui_p_brightness": "shopify://shop_images/p-brightness.webp",
+        "ui_p_screen": "shopify://shop_images/p-screen.webp",
+        "ui_p_stats": "shopify://shop_images/p-stats.webp",
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
     },
     "dm_software": {
       "type": "dm-software",
-      "settings": {}
+      "settings": {
+        "cable_alone": "shopify://shop_images/cable-alone.webp",
+        "device_frame": "shopify://shop_images/closed-start.webp"
+      }
     },
     "dm_cap": {
       "type": "dm-cap",
-      "settings": {}
+      "settings": {
+        "cap_parts_white": "shopify://shop_images/cap-parts-white.webp",
+        "plate_fork_macro": "shopify://shop_images/plate-fork-macro.webp",
+        "cap_holes": "shopify://shop_images/cap-holes.webp",
+        "cap_off": "shopify://shop_images/cap-off.webp",
+        "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp"
+      }
     },
     "dm_cleaning": {
       "type": "dm-cleaning",
-      "settings": {}
+      "settings": {
+        "clean_lift_out": "shopify://shop_images/clean-01-lift-cup-out.webp",
+        "clean_loosen": "shopify://shop_images/clean-00b-loosen-edge.webp",
+        "clean_push_out": "shopify://shop_images/clean-02-push-mesh-out.webp",
+        "clean_one_piece": "shopify://shop_images/clean-03-out-in-one-piece.webp",
+        "clean_rinse": "shopify://shop_images/clean-04-rinse.webp",
+        "clean_scrubber": "shopify://shop_images/clean-05-scrubber.webp",
+        "clean_soak": "shopify://shop_images/clean-06-soak.webp",
+        "acc_glove": "shopify://shop_images/cleaning-glove-1.webp",
+        "cap_parts_rinse": "shopify://shop_images/cap-parts-rinse.webp",
+        "clean_capoff_back": "shopify://shop_images/clean-capoff-back-brush.webp",
+        "clean_shaft_brush": "shopify://shop_images/clean-shaft-brush.webp",
+        "rinse_shaft": "shopify://shop_images/ok-rinse-shaft.webp",
+        "dont_water_bay": "shopify://shop_images/dont-water-bay.webp",
+        "dont_water_battery": "shopify://shop_images/dont-water-battery.webp",
+        "acc_multi_tool": "shopify://shop_images/multi-tool-1.webp"
+      }
     },
     "dm_care": {
       "type": "dm-care",
-      "settings": {}
+      "settings": {
+        "dont_water_bay": "shopify://shop_images/dont-water-bay.webp",
+        "rinse_shaft": "shopify://shop_images/ok-rinse-shaft.webp",
+        "dont_water_battery": "shopify://shop_images/dont-water-battery.webp",
+        "before_charge": "shopify://shop_images/before-charge.webp",
+        "dont_covered_soft": "shopify://shop_images/dont-covered-soft.webp",
+        "on_hookah": "shopify://shop_images/on-hookah-front.webp"
+      }
     }
   },
   "order": [
