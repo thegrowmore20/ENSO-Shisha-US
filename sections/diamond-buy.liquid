@@ -324,10 +324,22 @@
   content: '+';
   font: 400 22px/1 var(--font-body, sans-serif);
   flex-shrink: 0;
+  transition: transform .25s ease;
 }
 .d-spec[open] > summary::after { content: '−'; }
 
+/* Smooth open/close via grid-template-rows */
 .d-spec__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .3s ease;
+  overflow: hidden;
+}
+.d-spec[open] .d-spec__body {
+  grid-template-rows: 1fr;
+}
+.d-spec__body__inner {
+  overflow: hidden;
   padding-bottom: 20px;
 }
 .d-spec__body p {
@@ -637,7 +649,7 @@
 
         <details class="d-spec">
           <summary>Product dimensions</summary>
-          <div class="d-spec__body">
+          <div class="d-spec__body"><div class="d-spec__body__inner">
             <div class="d-spec__dim-grid">
               <dl class="d-spec__dl">
                 <dt>Height</dt><dd>18 cm with the cap on</dd>
@@ -649,61 +661,61 @@
                 <img src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/dim-silhouette.webp?v=1791784230" alt="ENSŌ Diamond silhouette dimensions" loading="lazy" width="120">
               </div>
             </div>
-          </div>
+          </div></div>
         </details>
 
         <details class="d-spec">
           <summary>Heating</summary>
-          <div class="d-spec__body">
+          <div class="d-spec__body"><div class="d-spec__body__inner">
             <dl class="d-spec__dl">
               <dt>Session temperature</dt><dd>180–320 °C, one-degree steps</dd>
               <dt>Pre-heat</dt><dd>0–15 minutes, default 7 minutes at 275 °C</dd>
               <dt>Element</dt><dd>Below and around the ceramic cup</dd>
               <dt>Profiles</dt><dd>Default, Phoenix, Wraith, Oracle</dd>
             </dl>
-          </div>
+          </div></div>
         </details>
 
         <details class="d-spec">
           <summary>Battery and charging</summary>
-          <div class="d-spec__body">
+          <div class="d-spec__body"><div class="d-spec__body__inner">
             <dl class="d-spec__dl">
               <dt>Runtime</dt><dd>About 90 minutes, pre-heat not included</dd>
               <dt>Charging</dt><dd>USB-C, about 1.5 hours with a 30 W supply</dd>
               <dt>Charge while in use</dt><dd>Yes, over USB-C</dd>
               <dt>Firmware</dt><dd>Updates over USB-C</dd>
             </dl>
-          </div>
+          </div></div>
         </details>
 
         <details class="d-spec">
           <summary>Controls</summary>
-          <div class="d-spec__body">
+          <div class="d-spec__body"><div class="d-spec__body__inner">
             <dl class="d-spec__dl">
               <dt>Dial</dt><dd>Turn to move, click to choose</dd>
               <dt>Screen</dt><dd>Round display, colour themes, brightness</dd>
               <dt>Feedback</dt><dd>Sound and haptics, adjustable or off</dd>
               <dt>App</dt><dd>None needed — no account, no phone</dd>
             </dl>
-          </div>
+          </div></div>
         </details>
 
         <details class="d-spec">
           <summary>Materials</summary>
-          <div class="d-spec__body">
+          <div class="d-spec__body"><div class="d-spec__body__inner">
             <dl class="d-spec__dl">
               <dt>Body</dt><dd>Soft-touch graphite, copper stripe, vegan leather band</dd>
               <dt>Cup and chamber</dt><dd>Glazed ceramic cup, stainless steel mesh and air path</dd>
               <dt>Cap</dt><dd>Heat-holding shell, air plate, silicone insert</dd>
             </dl>
-          </div>
+          </div></div>
         </details>
 
         <details class="d-spec">
           <summary>Compatibility</summary>
-          <div class="d-spec__body">
+          <div class="d-spec__body"><div class="d-spec__body__inner">
             <p>Most traditional stems, with one of the two silicone adapters in the box. Not sure about yours? Send us a photo of the stem top.</p>
-          </div>
+          </div></div>
         </details>
 
       </div>{%- comment -%} /d-buy__specs {%- endcomment -%}
@@ -829,6 +841,34 @@
         addEventListener('scroll', check, { passive: true });
         addEventListener('resize', check);
         check();
+      }
+
+      /* ── Smooth spec accordions ── */
+      for (const details of this.querySelectorAll('.d-spec')) {
+        const summary = details.querySelector('summary');
+        const body    = details.querySelector('.d-spec__body');
+        if (!summary || !body) continue;
+
+        summary.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (details.open) {
+            /* Closing: collapse then remove open */
+            body.style.gridTemplateRows = '0fr';
+            body.addEventListener('transitionend', () => {
+              details.removeAttribute('open');
+              body.style.gridTemplateRows = '';
+            }, { once: true });
+          } else {
+            /* Opening: add open then expand */
+            details.setAttribute('open', '');
+            requestAnimationFrame(() => {
+              body.style.gridTemplateRows = '1fr';
+              body.addEventListener('transitionend', () => {
+                body.style.gridTemplateRows = '';
+              }, { once: true });
+            });
+          }
+        });
       }
 
       /* ── Bar CTA → submit main form ── */
