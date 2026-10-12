@@ -133,6 +133,13 @@
   grid-area: gallery;
   min-width: 0;
 }
+@media screen and (min-width: 990px) {
+  .d-buy__gallery {
+    position: sticky;
+    top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px) + 24px);
+    align-self: start;
+  }
+}
 
 /* ── Gallery — identical to main-product.liquid so the custom element works ── */
 .product-gallery { display: block; }

@@ -170,7 +170,7 @@
         "width": "page",
         "media_width": 50,
         "gallery_layout": "thumbnails_bottom",
-        "enable_sticky_info": false,
+        "enable_sticky_info": true,
         "show_info_border": true,
         "accordion_position": "below_media",
         "padding_top": 80,
