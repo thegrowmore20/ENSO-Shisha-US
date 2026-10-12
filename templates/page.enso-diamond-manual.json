@@ -220,8 +220,17 @@
         "padding_bottom_mobile": 0
       }
     },
-    "dm_care": {
-      "type": "dm-care",
+    "dm_travel": {
+      "type": "dm-travel",
+      "settings": {
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dm_donts": {
+      "type": "dm-donts",
       "settings": {
         "dont_water_bay": "shopify://shop_images/dont-water-bay.webp",
         "rinse_shaft": "shopify://shop_images/ok-rinse-shaft.webp",
@@ -229,6 +238,24 @@
         "before_charge": "shopify://shop_images/before-charge.webp",
         "dont_covered_soft": "shopify://shop_images/dont-covered-soft.webp",
         "on_hookah": "shopify://shop_images/on-hookah-front.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dm_troubleshooting": {
+      "type": "dm-troubleshooting",
+      "settings": {
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dm_warranty": {
+      "type": "dm-warranty",
+      "settings": {
         "padding_top": 40,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -250,6 +277,9 @@
     "dm_software",
     "dm_cap",
     "dm_cleaning",
-    "dm_care"
+    "dm_travel",
+    "dm_donts",
+    "dm_troubleshooting",
+    "dm_warranty"
   ]
 }

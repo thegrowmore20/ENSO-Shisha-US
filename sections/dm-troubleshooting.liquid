@@ -1,0 +1,72 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+<div class="wrap">
+  <section class="ch" id="troubleshooting"><p class="ch__num">15 · Help</p><h2>Troubleshooting</h2><p class="ch__lead">Most things are one step away.</p><h3>Power and battery</h3><div class="faq"><details><summary>Diamond does not switch on</summary><p>Check that the paper tab is off the battery contacts, that the battery sits in with the latch closed and that it is charged. Then hold the dial for 3 seconds.</p></details><details><summary>Heating stopped mid-session</summary><p>The battery reached about 2–3 %. Plug in USB-C, or switch off and fit a charged battery. <b>Continue Session?</b> picks up where you were.</p></details><details><summary>Continue Session? did not appear</summary><p>It only shows while the chamber is still hot. If it has cooled, start a new pre-heat.</p></details><details><summary>The battery does not charge</summary><p>Let it cool first. Use a 30 W USB-C supply, try another cable, or charge the battery on its own.</p></details></div><h3>Flavour and smoke</h3><div class="faq"><details><summary>Weak flavour, little smoke</summary><p>Go up 10 °C, open the plate a step, pack a little denser or pre-heat a minute longer.</p></details><details><summary>Harsh or burnt taste</summary><p>Turn the dial down, lift the cap off, blow gently over the tobacco and let it cool for a moment, then cap back on. Next time pack looser, or try the basket mesh.</p></details><details><summary>A smell from the last session</summary><p>Rinse the chamber from the top and brush the shaft, then let it dry fully.</p></details></div><h3>Fit and draw</h3><div class="faq"><details><summary>No draw at all</summary><p>The plate is fully closed: turn it open a step. Also check the adapter and the hookah seals.</p></details><details><summary>Diamond wobbles on the stem</summary><p>Take it off, set the adapter only half-way onto the stem, put Diamond on top and press: they slide down together and sit firm. Still loose? Try the other adapter.</p></details><details><summary>The cup will not come out</summary><p>Let Diamond cool. Twist the cup gently, carefully so it does not crack. Still stuck? Press lightly around the rim to rock it loose, then lift it out with the tool.</p></details></div><h3>Screen and settings</h3><div class="faq"><details><summary>The dial turns but nothing changes</summary><p>It is locked: a lock shows on the screen. Click four times.</p></details><details><summary>The screen is too dark or too bright</summary><p>Menu › Brightness.</p></details><details><summary>No sound when pre-heat finishes</summary><p>Menu › Sound Volume: it may be at zero.</p></details><details><summary>My settings look different</summary><p>Check which profile is on: the colour and the dots at the bottom tell you. Menu › Profiles to switch back.</p></details><details><summary>Which firmware do I have?</summary><p>With Diamond switched off, click the dial <b>five times</b>. The version shows on the screen.</p></details><details><summary>Back to factory settings</summary><p>With Diamond switched off, click <b>seven times and hold</b>. Profiles and settings return to how they left the factory.</p></details></div><p class="tsmore"><a class="tsmore__b" href="/pages/enso-diamond-app#diamond-fix">Open the full troubleshooter</a><span>Step by step, for every problem</span></p></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Troubleshooting",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Troubleshooting"
+    }
+  ]
+}
+{% endschema %}

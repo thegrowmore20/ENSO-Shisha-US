@@ -1,0 +1,106 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+<div class="wrap">
+  <section class="ch ch--alt" id="donts"><p class="ch__num">14 · Care</p><h2>Keep it safe</h2><p class="ch__lead">Diamond is easy to live with. Water on the battery or its contacts is the one thing it really does not like.</p><div class="safe"><div class="safe__row"><h3>Water and the contacts</h3><div class="safe__pair"><figure class="safe__no">{%- if section.settings.dont_water_bay != blank -%}{{- section.settings.dont_water_bay | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.dont_water_bay.alt | default: '', width: section.settings.dont_water_bay.width, height: section.settings.dont_water_bay.height -}}{%- else -%}<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>{%- endif -%}<figcaption><i>✕</i><b>Don't</b><span>Water into the battery bay</span></figcaption></figure><figure class="safe__ok">{%- if section.settings.rinse_shaft != blank -%}{{- section.settings.rinse_shaft | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.rinse_shaft.alt | default: '', width: section.settings.rinse_shaft.width, height: section.settings.rinse_shaft.height -}}{%- else -%}<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>{%- endif -%}<figcaption><i>✓</i><b>Do</b><span>Rinse the chamber from the top, battery fitted</span></figcaption></figure></div></div><div class="safe__row"><h3>The battery</h3><div class="safe__pair"><figure class="safe__no">{%- if section.settings.dont_water_battery != blank -%}{{- section.settings.dont_water_battery | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.dont_water_battery.alt | default: '', width: section.settings.dont_water_battery.width, height: section.settings.dont_water_battery.height -}}{%- else -%}<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>{%- endif -%}<figcaption><i>✕</i><b>Don't</b><span>Water over the battery</span></figcaption></figure><figure class="safe__ok">{%- if section.settings.before_charge != blank -%}{{- section.settings.before_charge | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.before_charge.alt | default: '', width: section.settings.before_charge.width, height: section.settings.before_charge.height -}}{%- else -%}<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>{%- endif -%}<figcaption><i>✓</i><b>Do</b><span>Dry, and charged once it has cooled</span></figcaption></figure></div></div><div class="safe__row"><h3>Cooling down</h3><div class="safe__pair"><figure class="safe__no">{%- if section.settings.dont_covered_soft != blank -%}{{- section.settings.dont_covered_soft | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.dont_covered_soft.alt | default: '', width: section.settings.dont_covered_soft.width, height: section.settings.dont_covered_soft.height -}}{%- else -%}<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>{%- endif -%}<figcaption><i>✕</i><b>Don't</b><span>Covered up on a sofa</span></figcaption></figure><figure class="safe__ok">{%- if section.settings.on_hookah != blank -%}{{- section.settings.on_hookah | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.on_hookah.alt | default: '', width: section.settings.on_hookah.width, height: section.settings.on_hookah.height -}}{%- else -%}<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>{%- endif -%}<figcaption><i>✓</i><b>Do</b><span>In the open, on a hard surface</span></figcaption></figure></div></div></div><div class="note note--dont"><b>If water gets in</b><ul><li>Do not switch Diamond on. Let it cool down and dry out completely.</li><li>Water on the contacts or inside the body is not covered by the warranty.</li></ul></div></section>
+</div>
+
+{% schema %}
+{
+  "name": "DM: Keep it Safe",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Keep it safe images"
+    },
+    {
+      "type": "image_picker",
+      "id": "dont_water_bay",
+      "label": "No water in battery bay"
+    },
+    {
+      "type": "image_picker",
+      "id": "rinse_shaft",
+      "label": "Rinse shaft from top"
+    },
+    {
+      "type": "image_picker",
+      "id": "dont_water_battery",
+      "label": "No water on battery"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_charge",
+      "label": "Battery dry before charging"
+    },
+    {
+      "type": "image_picker",
+      "id": "dont_covered_soft",
+      "label": "Do not cover on sofa"
+    },
+    {
+      "type": "image_picker",
+      "id": "on_hookah",
+      "label": "Diamond on hookah (cool safely)"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "DM: Keep it Safe"
+    }
+  ]
+}
+{% endschema %}
