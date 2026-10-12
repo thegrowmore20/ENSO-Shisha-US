@@ -169,7 +169,7 @@
         "rinse_shaft": "shopify://shop_images/ok-rinse-shaft.webp",
         "dont_water_bay": "shopify://shop_images/dont-water-bay.webp",
         "dont_water_battery": "shopify://shop_images/dont-water-battery.webp",
-        "acc_multi_tool": "shopify://shop_images/multi-tool-1.webp"
+        "multitool_product": ""
       }
     },
     "dm_care": {
@@ -182,9 +182,9 @@
         "dont_covered_soft": "shopify://shop_images/dont-covered-soft.webp",
         "on_hookah": "shopify://shop_images/on-hookah-front.webp",
         "padding_top": 0,
-        "padding_bottom": 80,
+        "padding_bottom": 0,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 0
       }
     }
   },
