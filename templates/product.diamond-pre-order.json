@@ -20,6 +20,38 @@
         "cta_link": "#buy"
       }
     },
+    "diamond_heater_main": {
+      "type": "diamond-heater",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "title": "Default mode",
+            "text": "Diamond sets the heat for you: 275 °C after a seven-minute pre-heat, held to the end."
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "title": "Custom temperature",
+            "text": "Anywhere from 180 to 320 °C, to the degree. Lower for blonde leaf, higher for dark."
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "title": "Custom pre-heat",
+            "text": "0 to 15 minutes before the first draw. Save it with the heat as a profile."
+          }
+        }
+      },
+      "block_order": ["fact_1", "fact_2", "fact_3"],
+      "settings": {
+        "eyebrow": "What it is",
+        "heading": "An electric heater for the hookah you already own",
+        "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, no lighting, no waiting."
+      }
+    },
     "diamond_buy_main": {
       "type": "diamond-buy",
       "settings": {
@@ -34,6 +66,7 @@
   },
   "order": [
     "diamond_hero_main",
-    "diamond_buy_main"
+    "diamond_buy_main",
+    "diamond_heater_main"
   ]
 }

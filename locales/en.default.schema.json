@@ -2344,6 +2344,25 @@
         "name": "ENSŌ App (full)"
       }
     },
+    "diamond_heater": {
+      "name": "Diamond Heater",
+      "settings": {
+        "image": { "label": "Image" },
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "body": { "label": "Body text" }
+      },
+      "blocks": {
+        "fact": {
+          "name": "Fact",
+          "settings": {
+            "title": { "label": "Title" },
+            "text": { "label": "Text" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond Heater" }
+    },
     "diamond_buy": {
       "name": "Diamond Buy",
       "settings": {
