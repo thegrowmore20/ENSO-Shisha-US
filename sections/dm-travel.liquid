@@ -2,6 +2,7 @@
   #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
   }
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} {
@@ -18,6 +19,12 @@
 {
   "name": "DM: Travel",
   "settings": [
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
     {
       "type": "header",
       "content": "Section padding"

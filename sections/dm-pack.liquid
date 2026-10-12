@@ -2,6 +2,7 @@
   #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.color_background }};
   }
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} {
@@ -154,6 +155,12 @@
       "type": "image_picker",
       "id": "cup_seated_tool_off",
       "label": "Next cup seated"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
     },
     {
       "type": "header",
