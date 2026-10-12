@@ -9,8 +9,20 @@
  */
 {
   "sections": {
+    "diamond_buy_main": {
+      "type": "diamond-buy",
+      "settings": {
+        "gallery_layout": "thumbnails_bottom",
+        "subline": "Electric heat for the hookah you already own",
+        "price_note": "Last pre-order price. Final price after launch is €349.",
+        "cta_label": "Pre-order",
+        "inbox_text": "Diamond with thermo cap and battery, two ceramic cups, basket mesh, three flat screens, two silicone adapters, cup tool, brush, USB-C cable.",
+        "contact_email": "support@ensoshisha.eu"
+      }
+    },
     "main": {
       "type": "main-product",
+      "disabled": true,
       "blocks": {
         "text_dkCX6G": {
           "type": "text",
@@ -584,7 +596,7 @@
     }
   },
   "order": [
-    "main",
+    "diamond_buy_main",
     "custom_section_zR78LD",
     "feature_videos_diamond",
     "video_hero_reserve",

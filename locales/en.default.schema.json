@@ -2340,6 +2340,18 @@
       "presets": {
         "name": "ENSŌ App (full)"
       }
+    },
+    "diamond_buy": {
+      "name": "Diamond Buy",
+      "settings": {
+        "gallery_layout": { "label": "Gallery layout" },
+        "subline": { "label": "Subline" },
+        "price_note": { "label": "Price note" },
+        "cta_label": { "label": "CTA label" },
+        "inbox_text": { "label": "In the box text" },
+        "contact_email": { "label": "Contact email" }
+      },
+      "presets": { "name": "Diamond Buy" }
     }
   }
 }
