@@ -10,13 +10,12 @@
 {
   "sections": {
     "diamond_hero_main": {
-      "type": "diamond-hero",
+      "type": "enso-hero-video",
       "settings": {
-        "video_url": "",
         "heading": "The electric heater for your hookah",
-        "subtext": "No coals, no lighting, no waiting",
-        "button_label": "Learn more",
-        "button_link": "#buy"
+        "subline": "No coals, no lighting, no waiting",
+        "cta_label": "Learn more",
+        "cta_link": "#buy"
       }
     },
     "diamond_buy_main": {
