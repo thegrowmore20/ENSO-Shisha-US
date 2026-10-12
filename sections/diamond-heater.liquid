@@ -43,12 +43,44 @@
   .d-heater__image--right { order: unset; }
 }
 
-/* Image fit: contain (for tall product shots on white) */
-.d-heater__image--contain {
-  background: #fff;
-}
+/* Image fit: contain (generic) */
 .d-heater__image--contain img {
   object-fit: contain;
+}
+
+/* ── Tall product shot layout (fits-hookah style) ── */
+/* Grid: copy capped at 600px, huge gap, image floats to natural size */
+.d-heater__grid--photo {
+  grid-template-columns: minmax(0, 600px) auto;
+  gap: var(--d-heater-gap, 220px);
+  justify-content: center;
+}
+/* Image: auto aspect, natural width, height capped */
+.d-heater__grid--photo .d-heater__image {
+  aspect-ratio: auto;
+  width: auto;
+  background: #fff;
+  border-radius: 0;
+  overflow: visible;
+  justify-self: start;
+}
+.d-heater__grid--photo .d-heater__image img {
+  width: auto;
+  height: min(620px, 72vh);
+  object-fit: contain;
+}
+@media screen and (max-width: 989px) {
+  .d-heater__grid--photo {
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: unset;
+    gap: 24px;
+  }
+  .d-heater__grid--photo .d-heater__image {
+    justify-self: center;
+  }
+  .d-heater__grid--photo .d-heater__image img {
+    height: min(460px, 56vh);
+  }
 }
 
 /* ── Copy ── */
@@ -110,18 +142,22 @@
 
 {%- liquid
   assign img_class = 'd-heater__image'
+  assign grid_class = 'd-heater__grid'
   if section.settings.image_position == 'right'
     assign img_class = img_class | append: ' d-heater__image--right'
   endif
   if section.settings.image_fit == 'contain'
     assign img_class = img_class | append: ' d-heater__image--contain'
   endif
+  if section.settings.image_position == 'right' and section.settings.image_fit == 'contain'
+    assign grid_class = grid_class | append: ' d-heater__grid--photo'
+  endif
   assign gap_px = section.settings.column_gap | default: 56
 -%}
 
 <section class="d-heater" id="DiamondHeater-{{ section.id }}" style="--d-heater-gap: {{ gap_px }}px">
   <div class="container">
-    <div class="d-heater__grid">
+    <div class="{{ grid_class }}">
 
       {%- comment -%} ── IMAGE ── {%- endcomment -%}
       <div class="{{ img_class }}">
@@ -212,7 +248,7 @@
       "id": "column_gap",
       "label": "t:sections.diamond_heater.settings.column_gap.label",
       "min": 24,
-      "max": 80,
+      "max": 240,
       "step": 4,
       "unit": "px",
       "default": 56
