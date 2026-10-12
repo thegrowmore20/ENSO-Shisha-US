@@ -6,7 +6,7 @@
     assign mt_url = mt_product.url
     assign mt_title = mt_product.title
     assign mt_img = mt_product.featured_image
-    assign mt_subtitle = mt_product.metafields.custom.headline.value
+    assign mt_subtitle = mt_product.metafields.custom.headline | metafield_tag | strip_html | strip
   -%}
   <p class="sp-label">MAKES IT QUICKER</p>
   <div class="spares">
