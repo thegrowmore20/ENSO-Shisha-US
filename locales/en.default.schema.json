@@ -2344,6 +2344,53 @@
         "name": "ENSŌ App (full)"
       }
     },
+    "diamond_witb": {
+      "name": "Diamond What Is In the Box",
+      "settings": {
+        "heading":    { "label": "Heading" },
+        "body":       { "label": "Body text" },
+        "modal_body": { "label": "Overview modal body" }
+      },
+      "blocks": {
+        "tile": {
+          "name": "Mosaic tile",
+          "settings": {
+            "image":          { "label": "Image" },
+            "size":           {
+              "label": "Grid size",
+              "options": {
+                "default": "Default (1×1)",
+                "hero":    "Hero (3×3)",
+                "l":       "Large (2×2)",
+                "s":       "Small — padded image",
+                "xs":      "Extra small — more padding"
+              }
+            },
+            "title":          { "label": "Tile title (tooltip)" },
+            "qty_badge":      { "label": "Quantity badge (e.g. 2)" },
+            "opens_modal":    { "label": "Opens overview modal", "info": "Enable for the device tile. Overrides product handle." },
+            "product_handle": { "label": "Product handle" },
+            "list_header":    { "content": "Included items list" },
+            "list_item":      { "label": "Item name in list" },
+            "list_qty":       { "label": "Quantity in list" },
+            "sheet_header":   { "content": "Quick-view sheet copy" },
+            "sub":            { "label": "Subtitle (lead line)" },
+            "what":           { "label": "What it is" },
+            "why":            { "label": "Why" },
+            "how":            { "label": "How to use it" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond What Is In the Box" },
+      "sheet": {
+        "what":        "What it is",
+        "why":         "Why",
+        "how":         "How to use it",
+        "choose_size": "Choose size",
+        "add_to_cart": "Add to cart",
+        "view_details": "View full details"
+      }
+    },
     "diamond_acc_hero": {
       "name": "Diamond Accessories Hero",
       "settings": {

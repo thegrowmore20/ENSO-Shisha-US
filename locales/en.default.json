@@ -349,6 +349,16 @@
     },
     "diamond_dial": {
       "play_loop": "Play the loop"
+    },
+    "diamond_witb": {
+      "sheet": {
+        "what":         "What it is",
+        "why":          "Why",
+        "how":          "How to use it",
+        "choose_size":  "Choose size",
+        "add_to_cart":  "Add to cart",
+        "view_details": "View full details"
+      }
     }
   },
   "witb": {

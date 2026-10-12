@@ -314,6 +314,165 @@
         "body": "A second battery, spare cups and screens, the cap that changes the draw. Everything fits the Diamond you already have.",
         "cta_label": "Shop accessories"
       }
+    },
+    "diamond_witb_main": {
+      "type": "diamond-witb",
+      "blocks": {
+        "witb_device": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/device-top.webp",
+            "title": "Diamond with thermo cap",
+            "size": "hero",
+            "opens_modal": true,
+            "list_item": "Diamond with thermo cap and battery",
+            "list_qty": "1",
+            "sub": "The heater itself, cap on, battery in",
+            "what": "Out of the box it is set to the Default profile: 275 °C, seven minutes of pre-heat.",
+            "why": "Electric heat replaces the charcoal: no coals, no lighting, no waiting.",
+            "how": "Charge it fully before the first session."
+          }
+        },
+        "witb_cup": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/witb-cup.webp",
+            "title": "Ceramic cups",
+            "size": "default",
+            "qty_badge": "2",
+            "product_handle": "replacement-ceramic-cup",
+            "list_item": "Ceramic cup",
+            "list_qty": "2",
+            "sub": "One in, one clean",
+            "what": "A glazed ceramic cup the size of a small bowl. Two ship in the box.",
+            "why": "A spare means you can pack the next cup while the first one is still hot in the chamber.",
+            "how": "Ten to fifteen grams of blend, basket or flat screen on top, lower it into the chamber with the tool."
+          }
+        },
+        "witb_basket": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/d-basket.webp",
+            "title": "Basket mesh",
+            "size": "default",
+            "qty_badge": "1",
+            "product_handle": "5-mesh-screens-2-wax-pad-inserts-for-enso",
+            "list_item": "Basket mesh",
+            "list_qty": "1",
+            "sub": "For the loose, airy pack",
+            "what": "A steel mesh basket that sits inside the cup and holds the blend.",
+            "why": "Wet, heavy blends breathe better in the basket, and the cup empties in one move.",
+            "how": "Fill the basket loosely, seat it in the cup, close the cap."
+          }
+        },
+        "witb_screens": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/d-screens-2.webp",
+            "title": "Flat mesh screens",
+            "size": "default",
+            "qty_badge": "3",
+            "product_handle": "5-mesh-screens-2-wax-pad-inserts-for-enso",
+            "list_item": "Flat mesh screen",
+            "list_qty": "3",
+            "sub": "For the dense, even pack",
+            "what": "Three flat steel screens that lie on top of the blend instead of the basket.",
+            "why": "Dry, fine cuts pack denser under a flat screen and taste more even.",
+            "how": "Pack the cup to the rim, lay the screen on top, close the cap."
+          }
+        },
+        "witb_adapter_long": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/d-adapter-tall.webp",
+            "title": "Long adapter",
+            "size": "s",
+            "qty_badge": "1",
+            "product_handle": "updated-vapor-hose-adapter-2-pack",
+            "list_item": "Silicone adapters, long and short",
+            "list_qty": "2",
+            "sub": "For taller stems",
+            "what": "A silicone sleeve on a steel core. It takes the place of the bowl grommet on top of the stem.",
+            "why": "One of the two fits most traditional and modern stems.",
+            "how": "Push it onto the stem, seat Diamond on it."
+          }
+        },
+        "witb_adapter_short": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/d-adapter-short.webp",
+            "title": "Short adapter",
+            "size": "s",
+            "qty_badge": "1",
+            "product_handle": "updated-vapor-hose-adapter-2-pack",
+            "sub": "For shorter stems",
+            "what": "A silicone sleeve on a steel core. It takes the place of the bowl grommet on top of the stem.",
+            "why": "One of the two fits most traditional and modern stems.",
+            "how": "Push it onto the stem, seat Diamond on it."
+          }
+        },
+        "witb_tool": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/d-tool.webp",
+            "title": "Cup removal tool",
+            "size": "default",
+            "product_handle": "cleaning-glove",
+            "list_item": "Cup removal tool",
+            "list_qty": "1",
+            "sub": "Lifts the hot cup out",
+            "what": "A steel fork with a rubber grip that hooks under the rim of the cup.",
+            "why": "The cup is hot after a session. The tool lifts it out without touching it.",
+            "how": "Slide the fork under the rim, lift straight up."
+          }
+        },
+        "witb_brush": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/d-brush.webp",
+            "title": "Cleaning brush",
+            "size": "s",
+            "product_handle": "enso-replacement-battery-plus",
+            "list_item": "Cleaning brush",
+            "list_qty": "1",
+            "sub": "For the chamber and the cup",
+            "what": "A long thin brush for the chamber walls and the underside of the cap.",
+            "why": "A dry brush after a session is all the chamber needs.",
+            "how": "Brush the chamber when it is cold. Never wet the chamber."
+          }
+        },
+        "witb_cable": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/d-cable.webp",
+            "title": "USB-C cable",
+            "size": "default",
+            "product_handle": "enso-replacement-battery-plus",
+            "list_item": "USB-C cable",
+            "list_qty": "1",
+            "sub": "Braided, 1.5 m",
+            "what": "A braided USB-C to USB-C cable.",
+            "why": "Any 30 W USB-C supply charges Diamond in about 1.5 hours, also mid-session.",
+            "how": "Plug into the port on the battery door. The supply is not included."
+          }
+        }
+      },
+      "block_order": [
+        "witb_device",
+        "witb_cup",
+        "witb_basket",
+        "witb_screens",
+        "witb_adapter_long",
+        "witb_adapter_short",
+        "witb_tool",
+        "witb_brush",
+        "witb_cable"
+      ],
+      "settings": {
+        "heading": "What is in the box",
+        "body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. The battery ships fitted.",
+        "modal_body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. Tap an item to see what it is for."
+      }
     }
   },
   "order": [
@@ -323,6 +482,7 @@
     "diamond_features_main",
     "diamond_dial_main",
     "diamond_fits_main",
-    "diamond_acc_main"
+    "diamond_acc_main",
+    "diamond_witb_main"
   ]
 }
