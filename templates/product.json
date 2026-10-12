@@ -54,7 +54,9 @@
         },
         "variant_picker_bbi9yP": {
           "type": "variant_picker",
-          "settings": {}
+          "settings": {
+            "style": "pill"
+          }
         },
         "quantity_qDQky3": {
           "type": "quantity",
@@ -63,12 +65,17 @@
         "buy_buttons_9DLDVw": {
           "type": "buy_buttons",
           "settings": {
+            "show_quantity": true,
             "show_dynamic_checkout": true
           }
         },
         "trust_badges_1": {
           "type": "trust_badges",
-          "settings": {}
+          "settings": {
+            "item_1": "Ships from our EU warehouse, tracking by email",
+            "item_2": "14 days to return an unopened item",
+            "item_3": "Questions? support@ensoshisha.eu, a person answers"
+          }
         },
         "accordion_wUV8pN": {
           "type": "accordion",
@@ -137,14 +144,18 @@
         "accordion_bidD6a"
       ],
       "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
         "width": "page",
         "media_width": 55,
         "gallery_layout": "thumbnails_bottom",
         "enable_sticky_info": true,
-        "padding_top": 64,
-        "padding_bottom": 32,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 16
+        "show_info_border": false,
+        "accordion_position": "below_media",
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 24
       }
     },
     "why_cards": {
@@ -178,32 +189,31 @@
         "card_support"
       ],
       "settings": {
+        "heading": "",
         "width": "page",
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
-      }
-    },
-    "product_faqs_acc": {
-      "type": "product-faqs",
-      "settings": {
-        "eyebrow": "",
-        "heading": "Questions about this part",
         "padding_top": 40,
         "padding_bottom": 40,
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 24
       }
     },
+    "product_faqs_acc": {
+      "type": "product-faqs",
+      "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "eyebrow": "",
+        "heading": "Questions about this part"
+      }
+    },
     "more_accessories": {
       "type": "accessories-carousel",
       "settings": {
         "collection": "accesories",
-        "heading": "More for Diamond",
+        "heading": "More Accessories",
         "products_limit": 8,
         "cta_label": "View all accessories",
-        "cta_link": "/collections/accesories",
+        "cta_link": "shopify://collections/accesories",
         "padding_top": 40,
         "padding_bottom": 80,
         "padding_top_mobile": 24,
