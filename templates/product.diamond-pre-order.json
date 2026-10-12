@@ -75,21 +75,24 @@
           "type": "feature",
           "settings": {
             "title": "Precise temperature control",
-            "body": "Heat and pre-heat set to your taste: 180 to 320 °C to the degree, and zero to fifteen minutes of warm-up before the first draw"
+            "body": "Heat and pre-heat set to your taste: 180 to 320 °C to the degree, and zero to fifteen minutes of warm-up before the first draw",
+            "screen_image": "shopify://shop_images/session.svg"
           }
         },
         "feat_prof": {
           "type": "feature",
           "settings": {
             "title": "Profiles that remember",
-            "body": "Default, Phoenix, Wraith, Oracle. Each keeps its own temperature and pre-heat, so a favourite blend is one click away"
+            "body": "Default, Phoenix, Wraith, Oracle. Each keeps its own temperature and pre-heat, so a favourite blend is one click away",
+            "screen_image": "shopify://shop_images/profile_default.svg"
           }
         },
         "feat_hap": {
           "type": "feature",
           "settings": {
             "title": "Haptic feedback",
-            "body": "Every step of the dial answers with a small click under the finger, every confirmation with a short pulse. You feel the setting change without looking"
+            "body": "Every step of the dial answers with a small click under the finger, every confirmation with a short pulse. You feel the setting change without looking",
+            "screen_image": "shopify://shop_images/start.svg"
           }
         }
       },
