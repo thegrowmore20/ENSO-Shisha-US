@@ -380,6 +380,33 @@
   .d-feat__mmedia video { max-height: 52vw; }
 }
 
+/* Image-overlay arrows inside modal media */
+.d-feat__marr {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 0;
+  background: rgb(255 255 255 / .92);
+  box-shadow: 0 4px 16px rgb(0 0 0 / .18);
+  font: 400 30px/1 var(--font-body);
+  cursor: pointer;
+  z-index: 2;
+  color: #000;
+  line-height: 1;
+  transition: transform .2s;
+}
+.d-feat__marr:hover { transform: translateY(-50%) scale(1.06); }
+.d-feat__marr--l { left: 16px; }
+.d-feat__marr--r { right: 12px; }
+@media screen and (max-width: 767px) {
+  .d-feat__marr { display: none; }
+}
+
 .d-feat__mbody {
   padding: 28px 32px;
   overflow-y: auto;
@@ -581,7 +608,10 @@
       <button class="d-feat__mclose" aria-label="{{ 'sections.diamond_features.close' | t }}">×</button>
     </div>
     <div class="d-feat__mmain">
-      <div class="d-feat__mmedia"></div>
+      <div class="d-feat__mmedia">
+        <button class="d-feat__marr d-feat__marr--l" aria-label="Previous">‹</button>
+        <button class="d-feat__marr d-feat__marr--r" aria-label="Next">›</button>
+      </div>
       <div class="d-feat__mbody">
         <div class="d-feat__mtext"></div>
         <small class="d-feat__msmall" hidden></small>
@@ -716,6 +746,8 @@
     const mprev   = modal.querySelector('.d-feat__mprev');
     const mnext   = modal.querySelector('.d-feat__mnext');
     const mdots   = modal.querySelector('.d-feat__mdots');
+    const marrL   = modal.querySelector('.d-feat__marr--l');
+    const marrR   = modal.querySelector('.d-feat__marr--r');
 
     function renderModal() {
       const f = cards[curModal];
@@ -726,11 +758,15 @@
         }).join('');
       if (f.small) { msmall.textContent = f.small; msmall.hidden = false; }
       else { msmall.hidden = true; }
+      /* update image without removing the arrow buttons */
+      var existImg = mmedia.querySelector('img, video');
+      if (existImg) existImg.remove();
       if (f.img) {
-        mmedia.innerHTML = '<img src="' + f.img + '" alt="' + (f.alt || '') + '">';
+        var img = document.createElement('img');
+        img.src = f.img; img.alt = f.alt || '';
+        mmedia.insertBefore(img, marrL);
         mmedia.hidden = false;
       } else {
-        mmedia.innerHTML = '';
         mmedia.hidden = true;
       }
       mdots.innerHTML = cards.map(function (_, i) {
@@ -756,6 +792,8 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     mprev.addEventListener('click', function () { curModal = (curModal - 1 + cards.length) % cards.length; renderModal(); });
     mnext.addEventListener('click', function () { curModal = (curModal + 1) % cards.length; renderModal(); });
+    if (marrL) marrL.addEventListener('click', function () { curModal = (curModal - 1 + cards.length) % cards.length; renderModal(); });
+    if (marrR) marrR.addEventListener('click', function () { curModal = (curModal + 1) % cards.length; renderModal(); });
 
     document.addEventListener('keydown', function (e) {
       if (modal.hidden) return;
