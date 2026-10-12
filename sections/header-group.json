@@ -45,7 +45,9 @@
       ],
       "settings": {
         "sticky": "scroll_up",
-        "menu": "header-menu-products"
+        "menu": "header-menu-products",
+        "experience_link": "/pages/enso-experience",
+        "experience_label": "ENSŌ Experience"
       }
     }
   },
