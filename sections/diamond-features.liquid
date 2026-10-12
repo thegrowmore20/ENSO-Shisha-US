@@ -361,9 +361,9 @@
 }
 
 .d-feat__mmedia {
-  background: #000;
   overflow: hidden;
   position: relative;
+  padding: 24px 0 24px 28px;
 }
 .d-feat__mmedia img,
 .d-feat__mmedia video {
@@ -371,13 +371,14 @@
   height: 100%;
   object-fit: cover;
   max-height: 72vh;
+  border-radius: 18px;
   display: block;
 }
 .d-feat__mmedia[hidden] { display: none; }
 @media screen and (max-width: 767px) {
-  .d-feat__mmedia { max-height: 52vw; }
+  .d-feat__mmedia { padding: 16px 16px 0; max-height: none; }
   .d-feat__mmedia img,
-  .d-feat__mmedia video { max-height: 52vw; }
+  .d-feat__mmedia video { max-height: 52vw; border-radius: 12px; }
 }
 
 /* Image-overlay arrows inside modal media */
@@ -443,7 +444,6 @@
   justify-content: center;
   gap: 12px;
   padding: 12px 24px 16px;
-  border-top: 1px solid var(--color-border, rgb(0 0 0 / .08));
   flex-shrink: 0;
 }
 .d-feat__mprev,
