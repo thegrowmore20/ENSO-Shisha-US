@@ -15,8 +15,10 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 200;
-  background: #fff;
+  z-index: 99;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-border);
   transform: translateY(-100%);
   transition: transform .25s ease;
@@ -33,8 +35,10 @@
   padding-bottom: 12px;
 }
 .d-bar__name {
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -.025em;
   white-space: nowrap;
 }
 .d-bar__cta {
@@ -44,12 +48,14 @@
   flex-shrink: 0;
 }
 .d-bar__price {
-  font-size: 15px;
-  font-weight: 700;
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -.025em;
 }
 .d-bar__price s {
   font-weight: 400;
-  opacity: .55;
+  opacity: .45;
   margin-left: 4px;
 }
 .d-bar__pill {
@@ -68,44 +74,68 @@
 }
 .d-bar__pill:hover { opacity: .82; }
 
+/* Mobile: bar sticks to bottom */
+@media screen and (max-width: 989px) {
+  .d-bar {
+    top: auto;
+    bottom: 0;
+    transform: translateY(100%);
+    border-bottom: none;
+    border-top: 1px solid var(--color-border);
+  }
+  .d-bar.is-on {
+    transform: translateY(0);
+  }
+  .d-bar__price s {
+    display: none;
+  }
+}
+
 /* ── Section wrapper ── */
 .d-buy {
-  padding-top: 64px;
-  padding-bottom: 40px;
+  padding-top: 48px;
+  padding-bottom: 56px;
 }
 @media screen and (max-width: 989px) {
-  .d-buy { padding-top: 32px; padding-bottom: 24px; }
+  .d-buy { padding-top: 24px; padding-bottom: 40px; }
 }
 
 /* ── Two-column grid ── */
 .d-buy__cols {
   display: grid;
-  grid-template-columns: 1fr 440px;
-  gap: 56px;
+  grid-template-columns: 1fr minmax(380px, 520px);
+  grid-template-areas:
+    "gallery card"
+    "specs   card";
+  gap: 48px;
   align-items: start;
 }
 @media screen and (max-width: 1199px) {
-  .d-buy__cols { grid-template-columns: 1fr 380px; gap: 40px; }
+  .d-buy__cols {
+    grid-template-columns: 1fr minmax(340px, 400px);
+    gap: 40px;
+  }
 }
+/* Mobile: single column — gallery, card, specs */
 @media screen and (max-width: 989px) {
-  .d-buy__cols { grid-template-columns: 1fr; gap: 0; }
+  .d-buy__cols {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "gallery"
+      "card"
+      "specs";
+    gap: 0;
+  }
 }
 
-/* ── Left column ── */
-.d-buy__left { min-width: 0; }
+/* ── Gallery area ── */
+.d-buy__gallery {
+  grid-area: gallery;
+  min-width: 0;
+}
 
-/* ── Gallery ── */
+/* ── Gallery styles ── */
 .product-gallery { display: block; }
-
-.media-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 1 / 1;
-  background: rgba(0,0,0,.05);
-  border-radius: var(--radius-xl);
-}
-.media-placeholder__mark { width: 30%; height: auto; opacity: .4; }
 
 .product-gallery__image,
 .product-gallery__video,
@@ -113,7 +143,8 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
 }
 
 .product-gallery__main {
@@ -121,13 +152,14 @@
   overflow: hidden;
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
+  background: #fff;
   margin-bottom: 16px;
   touch-action: pan-y;
 }
 
 .product-gallery__track {
   display: flex;
-  transition: transform 0.35s var(--ease-out);
+  transition: transform 0.35s var(--ease-out, ease);
 }
 .product-gallery__track.is-dragging { transition: none; }
 
@@ -136,32 +168,34 @@
   min-width: 0;
 }
 
+/* Thumbnails below */
 .product-gallery--thumbnails_bottom .product-gallery__thumbs {
   display: flex;
-  gap: var(--space-3);
-  margin-top: var(--space-4);
+  gap: var(--space-3, 12px);
+  margin-top: var(--space-4, 16px);
   overflow-x: auto;
   scrollbar-width: none;
 }
 .product-gallery--thumbnails_bottom .product-gallery__thumbs::-webkit-scrollbar { display: none; }
 
+/* Thumbnails left */
 .product-gallery--thumbnails_left {
   display: flex;
   flex-direction: row-reverse;
-  gap: var(--space-4);
+  gap: var(--space-4, 16px);
 }
 .product-gallery--thumbnails_left .product-gallery__main { flex: 1; min-width: 0; }
 .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-2, 8px);
   max-height: 600px;
 }
 .product-gallery--thumbnails_left .product-gallery__thumbs {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-3, 12px);
   overflow-y: auto;
   min-height: 0;
   scrollbar-width: none;
@@ -172,18 +206,13 @@
   .product-gallery--thumbnails_left { flex-direction: column; }
   .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
     flex-direction: row;
-    gap: 0;
     max-height: none;
-    min-width: 0;
     width: 100%;
   }
   .product-gallery--thumbnails_left .product-gallery__thumbs {
     flex-direction: row;
-    gap: var(--space-1);
     overflow-x: auto;
     overflow-y: visible;
-    flex: 1;
-    min-width: 0;
   }
 }
 
@@ -197,7 +226,7 @@
   padding: 0;
   border-radius: 50%;
   background: #fff;
-  border: 1px solid rgba(255,255,255,.5);
+  border: 1px solid rgba(0,0,0,.12);
   color: var(--color-text);
   opacity: .8;
   transition: opacity .2s;
@@ -206,34 +235,32 @@
 .product-gallery__thumbs-arrow[hidden] { display: none; }
 .product-gallery__thumbs-arrow--prev .icon-chevron { transform: rotate(180deg); }
 
-@media screen and (max-width: 749px) {
-  .product-gallery--thumbnails_left .product-gallery__thumbs-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
-  }
-  .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--prev { left: 0; }
-  .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--next { right: 0; }
-  .product-gallery__thumbs-arrow--prev .icon-chevron { transform: rotate(90deg); }
-  .product-gallery__thumbs-arrow--next .icon-chevron { transform: rotate(-90deg); }
-}
-
+/* Thumbnail buttons */
 .product-gallery__thumb {
   position: relative;
-  flex: 0 0 72px;
-  width: 72px;
-  height: 72px;
+  flex: 0 0 76px;
+  width: 76px;
+  height: 76px;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 2px solid transparent;
-  opacity: .6;
+  border: 1px solid var(--color-border);
+  opacity: .7;
   padding: 0;
+  background: #fff;
   transition: opacity .2s, border-color .2s;
 }
 .product-gallery__thumb.is-active,
 .product-gallery__thumb:hover {
   opacity: 1;
-  border-color: var(--color-accent);
+  border-color: #000;
+  border-width: 2px;
 }
-.product-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.product-gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+}
 .product-gallery__thumb-icon {
   position: absolute;
   inset: 0;
@@ -244,10 +271,20 @@
   color: #fff;
 }
 
-/* ── Spec accordions ── */
-.d-specs {
-  margin-top: var(--space-5);
+/* ── Specs area ── */
+.d-buy__specs {
+  grid-area: specs;
+  min-width: 0;
 }
+@media screen and (max-width: 989px) {
+  .d-buy__specs {
+    border-top: 1px solid var(--color-border);
+    padding-top: 8px;
+    margin-top: 8px;
+  }
+}
+
+/* ── Spec accordions ── */
 .d-spec {
   border-top: 1px solid var(--color-border);
 }
@@ -261,14 +298,14 @@
   padding: 18px 0;
   cursor: pointer;
   list-style: none;
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 700;
+  font-size: 16px;
   user-select: none;
 }
 .d-spec > summary::-webkit-details-marker { display: none; }
 .d-spec > summary::after {
   content: '+';
-  font: 400 22px/1 Inter, sans-serif;
+  font: 400 22px/1 var(--font-body, sans-serif);
   flex-shrink: 0;
 }
 .d-spec[open] > summary::after { content: '−'; }
@@ -276,12 +313,19 @@
 .d-spec__body {
   padding-bottom: 20px;
 }
+.d-spec__body p {
+  font-size: 15px;
+  color: rgb(0 0 0 / .65);
+  margin: 0;
+  line-height: 1.6;
+}
 .d-spec__dl {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 6px 16px;
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.47;
 }
 .d-spec__dl dt {
   font-weight: 600;
@@ -293,76 +337,77 @@
   color: rgb(0 0 0 / .65);
 }
 
-.d-spec__dims {
-  position: relative;
-  margin-top: 16px;
-  max-width: 200px;
+/* Dimensions: dl + image side by side */
+.d-spec__dim-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
 }
 .d-spec__dims img {
-  width: 100%;
+  width: 120px;
   height: auto;
   display: block;
-}
-.d-spec__dim-label {
-  position: absolute;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text);
 }
 
 /* ── Buy card ── */
 .d-buy__card {
+  grid-area: card;
   position: sticky;
-  top: calc(var(--announcement-bar-height, 0px) + 88px);
+  top: calc(var(--announcement-bar-height, 0px) + 80px);
   align-self: start;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+}
+@media screen and (max-width: 1199px) {
+  .d-buy__card { padding: 20px 20px 18px; }
 }
 @media screen and (max-width: 989px) {
   .d-buy__card {
     position: static;
-    margin-top: 32px;
-    border-top: 1px solid var(--color-border);
-    padding-top: 24px;
+    margin-top: 0;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 8px;
   }
 }
 
+/* Eyebrow */
 .d-buy__eyebrow {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-subheading);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(0 0 0 / .75);
+  margin-bottom: 8px;
 }
 .d-buy__eyebrow i {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: currentColor;
+  background: #16a34a;
   flex-shrink: 0;
   font-style: normal;
   display: block;
 }
 
+/* Title */
 .d-buy__title {
   font-family: var(--font-heading);
   font-weight: var(--font-weight-bold);
-  font-size: 36px;
-  line-height: 1.1;
+  font-size: 28px;
+  line-height: 34px;
   letter-spacing: -.02em;
-  margin: 0 0 8px;
-}
-@media screen and (max-width: 749px) {
-  .d-buy__title { font-size: 28px; }
+  margin: 0 0 6px;
 }
 
+/* Sub */
 .d-buy__sub {
   color: rgb(0 0 0 / .6);
   font-size: 15px;
-  margin: 0 0 20px;
+  margin: 6px 0 18px;
 }
 
 /* Price */
@@ -371,31 +416,35 @@
   align-items: baseline;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 4px;
+  margin-bottom: 18px;
 }
 .d-buy__price strong {
   font-family: var(--font-accent);
-  font-weight: var(--font-weight-bold);
+  font-weight: 800;
   font-size: 32px;
   line-height: 1;
+  letter-spacing: -.025em;
 }
 .d-buy__was {
-  font-size: 18px;
-  color: rgb(0 0 0 / .45);
-  font-weight: 400;
+  font-family: var(--font-accent);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: rgb(0 0 0 / .35);
   text-decoration: line-through;
 }
 .d-buy__price-note {
   display: block;
   width: 100%;
   font-size: 13px;
-  color: rgb(0 0 0 / .55);
-  margin-bottom: 20px;
+  color: rgb(0 0 0 / .5);
   line-height: 1.5;
+  margin-top: -10px;
+  margin-bottom: 6px;
 }
 
 /* CTA pill */
-.d-buy__form { margin: 20px 0; }
+.d-buy__form { margin-bottom: 18px; }
 .d-buy__pill {
   display: block;
   width: 100%;
@@ -427,9 +476,9 @@
   border: 2px solid rgba(255,255,255,.4);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: btn-spin .7s linear infinite;
+  animation: d-btn-spin .7s linear infinite;
 }
-@keyframes btn-spin { to { transform: rotate(360deg); } }
+@keyframes d-btn-spin { to { transform: rotate(360deg); } }
 
 /* Trust */
 .d-trust {
@@ -439,18 +488,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  padding: 16px 0;
-  margin-bottom: 20px;
 }
 .d-trust li {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.46;
   color: rgb(0 0 0 / .65);
 }
 .d-trust li b {
@@ -472,8 +517,9 @@
 /* Facts */
 .d-facts {
   list-style: none;
-  margin: 0 0 20px;
-  padding: 0;
+  margin: 22px 0 0;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--color-border);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px 16px;
@@ -482,14 +528,18 @@
   font-size: 14px;
   line-height: 1.5;
   color: rgb(0 0 0 / .72);
-  padding-left: 14px;
+  padding-left: 16px;
   position: relative;
 }
 .d-facts li::before {
-  content: '•';
+  content: '';
   position: absolute;
-  left: 0;
-  color: var(--color-text);
+  left: 2px;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #000;
 }
 @media screen and (max-width: 479px) {
   .d-facts { grid-template-columns: 1fr; }
@@ -497,13 +547,12 @@
 
 /* In the box */
 .d-inbox {
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
-  padding: 14px 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
   font-size: 14px;
   line-height: 1.6;
   color: rgb(0 0 0 / .72);
-  margin-bottom: 16px;
 }
 .d-inbox b {
   display: block;
@@ -522,8 +571,8 @@
 /* Contact */
 .d-contact {
   font-size: 13px;
-  color: rgb(0 0 0 / .55);
-  margin: 0;
+  color: rgb(0 0 0 / .5);
+  margin: 12px 0 0;
 }
 .d-contact a {
   color: var(--color-text);
@@ -556,94 +605,91 @@
   <div class="container">
     <div class="d-buy__cols">
 
-      {%- comment -%} ── LEFT: gallery + specs ── {%- endcomment -%}
-      <div class="d-buy__left">
+      {%- comment -%} ── GALLERY ── {%- endcomment -%}
+      <div class="d-buy__gallery">
+        {%- render 'product-media-gallery', product: product, section: section -%}
+      </div>
 
-        {%- comment -%} Gallery via shared snippet {%- endcomment -%}
-        <div class="d-buy__gallery">
-          {%- render 'product-media-gallery', product: product, section: section -%}
-        </div>
+      {%- comment -%} ── SPECS (below gallery on desktop, below card on mobile) ── {%- endcomment -%}
+      <div class="d-buy__specs">
 
-        {%- comment -%} Spec accordions {%- endcomment -%}
-        <div class="d-specs">
-
-          <details class="d-spec">
-            <summary>Product dimensions</summary>
-            <div class="d-spec__body">
+        <details class="d-spec">
+          <summary>Product dimensions</summary>
+          <div class="d-spec__body">
+            <div class="d-spec__dim-grid">
               <dl class="d-spec__dl">
                 <dt>Height</dt><dd>18 cm with the cap on</dd>
                 <dt>Width</dt><dd>10 cm at the band</dd>
                 <dt>Weight</dt><dd>About 1 kg with the battery</dd>
-                <dt>Fits</dt><dd>Stem tops that take a standard bowl, with one of the two adapters</dd>
+                <dt>Fits</dt><dd>Stem tops that take a standard bowl</dd>
               </dl>
               <div class="d-spec__dims">
-                <img src="{{ 'diamond-dim-silhouette.webp' | file_url }}" alt="ENSŌ Diamond silhouette showing 18 cm height and 10 cm width" loading="lazy" width="200">
+                <img src="{{ 'diamond-dim-silhouette.webp' | file_url }}" alt="ENSŌ Diamond silhouette dimensions" loading="lazy" width="120">
               </div>
             </div>
-          </details>
+          </div>
+        </details>
 
-          <details class="d-spec">
-            <summary>Heating</summary>
-            <div class="d-spec__body d-spec__body--text">
-              <dl class="d-spec__dl">
-                <dt>Session temperature</dt><dd>180–320 °C, one-degree steps</dd>
-                <dt>Pre-heat</dt><dd>0–15 minutes, default 7 minutes at 275 °C</dd>
-                <dt>Element</dt><dd>Below and around the ceramic cup</dd>
-                <dt>Profiles</dt><dd>Default, Phoenix, Wraith, Oracle</dd>
-              </dl>
-            </div>
-          </details>
+        <details class="d-spec">
+          <summary>Heating</summary>
+          <div class="d-spec__body">
+            <dl class="d-spec__dl">
+              <dt>Session temperature</dt><dd>180–320 °C, one-degree steps</dd>
+              <dt>Pre-heat</dt><dd>0–15 minutes, default 7 minutes at 275 °C</dd>
+              <dt>Element</dt><dd>Below and around the ceramic cup</dd>
+              <dt>Profiles</dt><dd>Default, Phoenix, Wraith, Oracle</dd>
+            </dl>
+          </div>
+        </details>
 
-          <details class="d-spec">
-            <summary>Battery and charging</summary>
-            <div class="d-spec__body">
-              <dl class="d-spec__dl">
-                <dt>Runtime</dt><dd>About 90 minutes, pre-heat not included</dd>
-                <dt>Charging</dt><dd>USB-C, about 1.5 hours with a 30 W supply, inside Diamond or on its own</dd>
-                <dt>Charge while in use</dt><dd>Yes, over USB-C: plug in and keep smoking</dd>
-                <dt>Firmware</dt><dd>Updates over USB-C from a page on ensoshisha.eu (coming)</dd>
-              </dl>
-            </div>
-          </details>
+        <details class="d-spec">
+          <summary>Battery and charging</summary>
+          <div class="d-spec__body">
+            <dl class="d-spec__dl">
+              <dt>Runtime</dt><dd>About 90 minutes, pre-heat not included</dd>
+              <dt>Charging</dt><dd>USB-C, about 1.5 hours with a 30 W supply</dd>
+              <dt>Charge while in use</dt><dd>Yes, over USB-C</dd>
+              <dt>Firmware</dt><dd>Updates over USB-C</dd>
+            </dl>
+          </div>
+        </details>
 
-          <details class="d-spec">
-            <summary>Controls</summary>
-            <div class="d-spec__body">
-              <dl class="d-spec__dl">
-                <dt>Dial</dt><dd>Turn to move, click to choose. Hold three seconds to switch on</dd>
-                <dt>Screen</dt><dd>Round display, colour themes, brightness</dd>
-                <dt>Feedback</dt><dd>Sound and haptics, adjustable or off</dd>
-                <dt>App</dt><dd>None needed. No account, no phone</dd>
-              </dl>
-            </div>
-          </details>
+        <details class="d-spec">
+          <summary>Controls</summary>
+          <div class="d-spec__body">
+            <dl class="d-spec__dl">
+              <dt>Dial</dt><dd>Turn to move, click to choose</dd>
+              <dt>Screen</dt><dd>Round display, colour themes, brightness</dd>
+              <dt>Feedback</dt><dd>Sound and haptics, adjustable or off</dd>
+              <dt>App</dt><dd>None needed — no account, no phone</dd>
+            </dl>
+          </div>
+        </details>
 
-          <details class="d-spec">
-            <summary>Materials</summary>
-            <div class="d-spec__body">
-              <dl class="d-spec__dl">
-                <dt>Body</dt><dd>Soft-touch graphite body, copper stripe, vegan leather band</dd>
-                <dt>Band</dt><dd>Vegan leather with the ENSŌ mark</dd>
-                <dt>Cup and chamber</dt><dd>Glazed ceramic cup, stainless steel mesh and air path</dd>
-                <dt>Cap</dt><dd>Three parts: the heat-holding shell, the air plate you turn to set the draw, and the silicone insert that holds them. No electronics</dd>
-              </dl>
-            </div>
-          </details>
+        <details class="d-spec">
+          <summary>Materials</summary>
+          <div class="d-spec__body">
+            <dl class="d-spec__dl">
+              <dt>Body</dt><dd>Soft-touch graphite, copper stripe, vegan leather band</dd>
+              <dt>Cup and chamber</dt><dd>Glazed ceramic cup, stainless steel mesh and air path</dd>
+              <dt>Cap</dt><dd>Heat-holding shell, air plate, silicone insert</dd>
+            </dl>
+          </div>
+        </details>
 
-          <details class="d-spec">
-            <summary>Compatibility</summary>
-            <div class="d-spec__body">
-              <p style="font-size:14px;color:rgb(0 0 0/.65);margin:0;line-height:1.6;">Most traditional stems, with one of the two silicone adapters in the box. Your stem, base and hose stay as they are. Not sure about yours? Send us a photo of the stem top.</p>
-            </div>
-          </details>
+        <details class="d-spec">
+          <summary>Compatibility</summary>
+          <div class="d-spec__body">
+            <p>Most traditional stems, with one of the two silicone adapters in the box. Not sure about yours? Send us a photo of the stem top.</p>
+          </div>
+        </details>
 
-        </div>{%- comment -%} /d-specs {%- endcomment -%}
-      </div>{%- comment -%} /d-buy__left {%- endcomment -%}
+      </div>{%- comment -%} /d-buy__specs {%- endcomment -%}
 
-      {%- comment -%} ── RIGHT: buy card ── {%- endcomment -%}
+      {%- comment -%} ── BUY CARD ── {%- endcomment -%}
       <aside class="d-buy__card" id="DBuyCard-{{ section.id }}">
 
-        <div class="d-buy__eyebrow"><i aria-hidden="true"></i>Pre-order</div>
+        <div class="d-buy__eyebrow"><i aria-hidden="true"></i>Pre-order open</div>
 
         <h1 class="d-buy__title">{{ product.title }}</h1>
 
@@ -654,7 +700,7 @@
         <div class="d-buy__price">
           <strong>{{ current_variant.price | money }}</strong>
           {%- if has_compare -%}
-            <s class="d-buy__was">{{ current_variant.compare_at_price | money }}</s>
+            <span class="d-buy__was">{{ current_variant.compare_at_price | money }}</span>
           {%- endif -%}
           {%- if section.settings.price_note != blank -%}
             <span class="d-buy__price-note">{{ section.settings.price_note }}</span>
@@ -743,15 +789,18 @@
       const btn       = document.getElementById('DiamondBtn-' + sectionId);
       const barBtn    = bar && bar.querySelector('[data-d-bar-atc]');
 
-      /* ── Sticky bar: show when buy card scrolls above header ── */
+      /* ── Sticky bar ── */
       if (bar && card) {
         const hdrH = () => {
           const h = document.querySelector('.site-header, header');
           return h ? h.getBoundingClientRect().height : 72;
         };
+        const isMobile = () => window.innerWidth <= 989;
         const check = () => {
           const r = card.getBoundingClientRect();
-          const on = r.bottom < hdrH();
+          const on = isMobile()
+            ? r.bottom < window.innerHeight - 80  /* mobile: card bottom near/past viewport */
+            : r.bottom < hdrH();                  /* desktop: card above header */
           bar.classList.toggle('is-on', on);
           bar.setAttribute('aria-hidden', String(!on));
         };
@@ -760,7 +809,7 @@
         check();
       }
 
-      /* ── Bar button → submit main form ── */
+      /* ── Bar CTA → submit main form ── */
       if (barBtn && form) {
         barBtn.addEventListener('click', () => form.requestSubmit());
       }
@@ -786,13 +835,11 @@
           });
 
           if (!res.ok) throw new Error('cart/add failed');
-
           const item = await res.json();
 
           document.dispatchEvent(new CustomEvent('cart:add', { detail: { item } }));
           document.dispatchEvent(new CustomEvent('cart:updated'));
 
-          /* Open cart drawer if present */
           const drawer = document.querySelector('cart-drawer');
           if (drawer && typeof drawer.open === 'function') {
             drawer.open(btn);
