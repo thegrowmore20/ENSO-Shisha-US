@@ -350,6 +350,10 @@
     "diamond_dial": {
       "play_loop": "Play the loop"
     },
+    "diamond_bowl": {
+      "open_guide": "Open the guide",
+      "shop": "Shop"
+    },
     "diamond_witb": {
       "sheet": {
         "what":         "What it is",

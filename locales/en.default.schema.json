@@ -2344,6 +2344,22 @@
         "name": "ENSŌ App (full)"
       }
     },
+    "diamond_bowl": {
+      "name": "Diamond Bowl Guide",
+      "settings": {
+        "image": { "label": "Desktop image" },
+        "image_mobile": { "label": "Mobile image" },
+        "heading": { "label": "Heading" },
+        "text": { "label": "Body text" },
+        "cta1_header": { "content": "Primary button" },
+        "cta1_label": { "label": "Label" },
+        "cta1_link": { "label": "Link" },
+        "cta2_header": { "content": "Secondary button" },
+        "cta2_label": { "label": "Label" },
+        "cta2_link": { "label": "Link" }
+      },
+      "presets": { "name": "Diamond Bowl Guide" }
+    },
     "diamond_witb": {
       "name": "Diamond What Is In the Box",
       "settings": {

@@ -104,6 +104,21 @@
         "body": "Two adapters in the box, long and short, seat Diamond on the top of the stem you already have. Your stem, base and hose stay exactly as they are."
       }
     },
+    "diamond_bowl_main": {
+      "type": "diamond-bowl",
+      "settings": {
+        "heading": "Design your perfect bowl",
+        "text": "How to pack for the flavour you want: grams, mesh, temperature and time, one blend at a time.",
+        "cta1_label": "Open the guide",
+        "cta1_link": "/pages/diamond-packing-guide",
+        "cta2_label": "Shop",
+        "cta2_link": "#diamond_buy_main",
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 24
+      }
+    },
     "diamond_dial_main": {
       "type": "diamond-dial",
       "blocks": {
@@ -494,6 +509,7 @@
     "diamond_buy_main",
     "diamond_heater_main",
     "diamond_features_main",
+    "diamond_bowl_main",
     "diamond_dial_main",
     "diamond_fits_main",
     "diamond_acc_main",
