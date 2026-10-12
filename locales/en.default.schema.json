@@ -2344,6 +2344,19 @@
         "name": "ENSŌ App (full)"
       }
     },
+    "diamond_acc_hero": {
+      "name": "Diamond Accessories Hero",
+      "settings": {
+        "image": { "label": "Desktop image" },
+        "image_mobile": { "label": "Mobile image" },
+        "link": { "label": "Card link URL" },
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "body": { "label": "Body text" },
+        "cta_label": { "label": "CTA label" }
+      },
+      "presets": { "name": "Diamond Accessories Hero" }
+    },
     "diamond_heater": {
       "name": "Diamond Heater",
       "settings": {

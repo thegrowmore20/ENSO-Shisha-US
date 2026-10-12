@@ -304,12 +304,24 @@
       }
     }
   },
+    "diamond_acc_main": {
+      "type": "diamond-acc-hero",
+      "settings": {
+        "link": "/collections/accessories",
+        "eyebrow": "Accessories",
+        "heading": "Extras for your Diamond",
+        "body": "A second battery, spare cups and screens, so Diamond keeps going as long as you do.",
+        "cta_label": "Shop accessories"
+      }
+    }
+  },
   "order": [
     "diamond_hero_main",
     "diamond_buy_main",
     "diamond_heater_main",
     "diamond_features_main",
     "diamond_dial_main",
-    "diamond_fits_main"
+    "diamond_fits_main",
+    "diamond_acc_main"
   ]
 }
