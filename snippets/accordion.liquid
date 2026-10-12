@@ -1,0 +1,23 @@
+{%- doc -%}
+  Renders a single smooth-animated accordion item.
+  Requires accordion.js to be loaded (layout/theme.liquid).
+
+  Parameters:
+    heading  — summary text (required)
+    content  — panel HTML (required)
+    class    — outer class on <details> (default: 'accordion-item')
+    id       — optional id attribute
+    open     — boolean, starts open (default: false)
+{%- enddoc -%}
+{%- liquid
+  assign a_class = class | default: 'accordion-item'
+  assign a_open  = open  | default: false
+-%}
+<details class="{{ a_class }}" data-accordion{% if a_open %} open{% endif %}{% if id %} id="{{ id }}"{% endif %}>
+  <summary>{{ heading }}</summary>
+  <div class="accordion__panel">
+    <div class="accordion__inner">
+      {{ content }}
+    </div>
+  </div>
+</details>
