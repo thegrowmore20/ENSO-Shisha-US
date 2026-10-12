@@ -39,7 +39,7 @@
           <div class="d-faqs__more" id="DFaqsMore-{{ section.id }}" hidden>
         {%- endif -%}
 
-        <details class="d-faqs__item" {{ block.shopify_attributes }}>
+        <details class="d-faqs__item" data-accordion {{ block.shopify_attributes }}>
           <summary class="d-faqs__summary">
             <span class="d-faqs__question">{{ block.settings.question | escape }}</span>
             <span class="d-faqs__icon" aria-hidden="true"></span>
