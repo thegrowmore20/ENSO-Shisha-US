@@ -1,3 +1,5 @@
+{{ 'diamond-manual.css' | asset_url | stylesheet_tag }}
+
 {% stylesheet %}
 
 /* ── Section ── */
@@ -13,100 +15,15 @@
   align-items: center;
 }
 
-/* ── Mosaic ── */
-.d-witb__mosaic {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: minmax(0, 1fr);
-  gap: 14px 10px;
-  padding: 24px;
-  border-radius: 28px;
-  background: #f5f5f4;
-  align-items: center;
-}
-
-/* ── Tile ── */
-.d-witb__tile {
-  position: relative;
-  border: 0;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-  display: block;
-  aspect-ratio: 1;
-  border-radius: 12px;
-}
-.d-witb__tile--hero {
-  grid-column: 1 / span 3;
-  grid-row: 1 / span 3;
-  aspect-ratio: auto;
-  align-self: stretch;
-  border-radius: 16px;
-}
-.d-witb__tile--l {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-/* Inner wrapper clips image scale without clipping tooltip */
-.d-witb__tile-img {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-radius: inherit;
-  display: block;
-}
-.d-witb__tile-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform .45s cubic-bezier(.2,.8,.2,1);
-  display: block;
-}
-.d-witb__tile--s .d-witb__tile-img img { padding: 12%; }
-.d-witb__tile--xs .d-witb__tile-img img { padding: 20%; }
-.d-witb__tile:hover .d-witb__tile-img img,
-.d-witb__tile:focus-visible .d-witb__tile-img img { transform: scale(1.08); }
-.d-witb__tile:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
-
-/* Tile quantity badge */
-.d-witb__badge {
-  position: absolute;
-  left: 4px;
-  top: 4px;
-  background: #000;
-  color: #fff;
-  font-family: var(--font-accent);
-  font-weight: var(--font-weight-bold);
-  font-size: 12px;
-  line-height: 1;
-  padding: 6px 8px;
-  border-radius: 999px;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Tile hover tooltip */
-.d-witb__tooltip {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 4px;
-  white-space: nowrap;
-  background: rgb(255 255 255 / .95);
-  border-radius: 999px;
-  padding: 5px 10px;
-  font-family: var(--font-subheading);
-  font-weight: var(--font-weight-semibold);
-  font-size: 12px;
-  line-height: 16px;
-  color: #000;
-  opacity: 0;
-  transition: opacity .2s;
-  pointer-events: none;
-  box-shadow: 0 2px 8px rgb(0 0 0 / .12);
-}
-.d-witb__tile:hover .d-witb__tooltip,
-.d-witb__tile:focus-visible .d-witb__tooltip { opacity: 1; }
+/* ── Tile extras not in diamond-manual.css ── */
+.bx--l { grid-column: span 2; grid-row: span 2; }
+.bx--xs img { padding: 20%; }
+.d-witb .bx { border: 0; background: none; padding: 0; cursor: pointer; display: block; }
+.d-witb .bx img { transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+.d-witb .bx:hover img,
+.d-witb .bx:focus-visible img { transform: scale(1.08); }
+.d-witb .bx:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.d-witb .bx:focus-visible .bx__t { opacity: 1; }
 
 /* Tile placeholder */
 .d-witb__tile-placeholder {
@@ -357,19 +274,19 @@
   .d-witb__info { display: contents; }
   .d-witb__heading { order: 1; align-self: flex-start; font-size: 30px; line-height: 36px; margin-bottom: 8px; }
   .d-witb__body { order: 2; }
-  .d-witb__mosaic { order: 3; margin-top: 20px; width: 100%; }
+  .d-witb .box__img { order: 3; margin-top: 20px; width: 100%; }
   .d-witb__list { order: 4; align-self: stretch; }
 
-  .d-witb__mosaic {
+  .d-witb .box__img {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px 8px;
     padding: 14px;
   }
-  .d-witb__tile--hero {
+  .d-witb .bx--hero {
     grid-column: 1 / span 2;
     grid-row: 1 / span 2;
   }
-  .d-witb__tile--l {
+  .bx--l {
     grid-column: span 1;
     grid-row: span 1;
   }
@@ -401,19 +318,19 @@
     <div class="d-witb__grid">
 
       {%- comment -%} ── LEFT: MOSAIC ── {%- endcomment -%}
-      <div class="d-witb__mosaic" id="{{ section_id }}-Mosaic">
+      <div class="box__img" id="{{ section_id }}-Mosaic">
         {%- for block in section.blocks -%}
           {%- liquid
-            assign tile_class = 'd-witb__tile'
+            assign tile_class = 'bx'
             case block.settings.size
               when 'hero'
-                assign tile_class = tile_class | append: ' d-witb__tile--hero'
+                assign tile_class = tile_class | append: ' bx--hero'
               when 'l'
-                assign tile_class = tile_class | append: ' d-witb__tile--l'
+                assign tile_class = tile_class | append: ' bx--l'
               when 's'
-                assign tile_class = tile_class | append: ' d-witb__tile--s'
+                assign tile_class = tile_class | append: ' bx--s'
               when 'xs'
-                assign tile_class = tile_class | append: ' d-witb__tile--xs'
+                assign tile_class = tile_class | append: ' bx--xs'
             endcase
             assign tile_alt = block.settings.image.alt | default: block.settings.title
           -%}
@@ -432,26 +349,24 @@
             {%- endif %}
             {{ block.shopify_attributes }}
           >
-            <span class="d-witb__tile-img">
-              {%- if block.settings.image != blank -%}
-                {{- block.settings.image | image_url: width: 400 | image_tag:
-                  alt: tile_alt,
-                  loading: 'lazy',
-                  widths: '200,300,400',
-                  sizes: '(max-width: 989px) 25vw, 16vw'
-                -}}
-              {%- else -%}
-                <span class="d-witb__tile-placeholder" aria-hidden="true">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 10 L20 16 L16 22 M16 10 L12 16 L16 22" stroke="#c8b89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              {%- endif -%}
-            </span>
-            {%- if block.settings.qty_badge != blank -%}
-              <i class="d-witb__badge" aria-hidden="true">×{{ block.settings.qty_badge }}</i>
+            {%- if block.settings.image != blank -%}
+              {{- block.settings.image | image_url: width: 400 | image_tag:
+                alt: tile_alt,
+                loading: 'lazy',
+                widths: '200,300,400',
+                sizes: '(max-width: 989px) 25vw, 16vw'
+              -}}
+            {%- else -%}
+              <span class="d-witb__tile-placeholder" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 10 L20 16 L16 22 M16 10 L12 16 L16 22" stroke="#c8b89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
             {%- endif -%}
-            <span class="d-witb__tooltip" aria-hidden="true">{{ block.settings.title | escape }}</span>
+            {%- if block.settings.qty_badge != blank -%}
+              <i class="bx__n" aria-hidden="true">×{{ block.settings.qty_badge }}</i>
+            {%- endif -%}
+            <span class="bx__t" aria-hidden="true">{{ block.settings.title | escape }}</span>
           </button>
         {%- endfor -%}
       </div>
