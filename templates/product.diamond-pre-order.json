@@ -12,6 +12,8 @@
     "diamond_hero_main": {
       "type": "enso-hero-video",
       "settings": {
+        "video": "shopify://files/videos/teaser.mp4",
+        "poster": "shopify://shop_images/teaser-poster.webp",
         "heading": "The electric heater for your hookah",
         "subline": "A Modern Twist on a Classic Ritual. No coals, no lighting, no waiting.",
         "cta_label": "Learn more",
