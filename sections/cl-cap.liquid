@@ -1,0 +1,50 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+<section class="cl-sec">
+  <h2>The cap</h2>
+  <p class="cl-lead">No electronics in the cap: all three parts go under the tap.</p>
+  <div class="slider tslider slider--grid" style="--n:1">
+    <div class="slides">
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">1</span>
+          <b>Rinse all three parts</b>
+          <p>The shell, the plate and the insert. Let them dry fully before the next session.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step1 != blank -%}
+            {{- section.settings.img_step1 | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.img_step1.alt | default: 'Rinse all three cap parts', width: section.settings.img_step1.width, height: section.settings.img_step1.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+    </div>
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CL: The cap",
+  "presets": [{ "name": "CL: The cap" }],
+  "settings": [
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "img_step1", "label": "Step 1 — rinse cap parts" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Bottom padding (mobile)", "default": 40 }
+  ]
+}
+{% endschema %}

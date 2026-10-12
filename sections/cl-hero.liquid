@@ -1,0 +1,108 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+<link rel="stylesheet" href="{{ 'diamond-manual.css' | asset_url }}">
+<script src="{{ 'diamond-manual.js' | asset_url }}" defer></script>
+<section class="cl-sec cl-hero">
+  <p class="cl-eyebrow">ENSŌ Experience · Diamond</p>
+  <h1>Cleaning</h1>
+  <p>Only the cup, the mesh, the cap and the shaft ever need it. The heating element stays clean.</p>
+  <div class="cl-facts">
+    <span>Cup and mesh: every session</span>
+    <span>Shaft: every few sessions</span>
+    <span>Battery: never wet</span>
+  </div>
+</section>
+
+{% stylesheet %}
+.cl-sec {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.cl-hero {
+  max-width: 760px;
+}
+.cl-hero h1 {
+  font-size: 48px;
+  line-height: 52px;
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+.cl-hero > p {
+  font-size: 17px;
+  line-height: 27px;
+  color: rgb(0 0 0 / .72);
+  margin: 0;
+}
+.cl-eyebrow {
+  color: #c8943a;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 12px;
+}
+.cl-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.cl-facts span {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.4;
+}
+.cl-sec h2 {
+  font-size: 36px;
+  line-height: 42px;
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+.cl-lead {
+  font-size: 16px;
+  line-height: 26px;
+  color: rgb(0 0 0 / .74);
+  max-width: 68ch;
+  margin: 0 0 20px;
+}
+@media screen and (max-width: 990px) {
+  .cl-hero h1 { font-size: 36px; line-height: 40px; }
+}
+@media screen and (max-width: 767px) {
+  .cl-sec { padding: 0 16px; }
+  .cl-sec h2 { font-size: 28px; line-height: 34px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "CL: Hero",
+  "presets": [{ "name": "CL: Hero" }],
+  "settings": [
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Bottom padding (mobile)", "default": 40 }
+  ]
+}
+{% endschema %}

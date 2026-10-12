@@ -1,0 +1,43 @@
+{
+  "sections": {
+    "cl_nav": {
+      "type": "experience-nav",
+      "settings": {
+        "active_tab": "cleaning"
+      }
+    },
+    "cl_hero": {
+      "type": "cl-hero",
+      "settings": {}
+    },
+    "cl_cup": {
+      "type": "cl-cup",
+      "settings": {}
+    },
+    "cl_wash": {
+      "type": "cl-wash",
+      "settings": {}
+    },
+    "cl_cap": {
+      "type": "cl-cap",
+      "settings": {}
+    },
+    "cl_shaft": {
+      "type": "cl-shaft",
+      "settings": {}
+    },
+    "cl_never": {
+      "type": "cl-never",
+      "settings": {}
+    }
+  },
+  "order": [
+    "cl_nav",
+    "cl_hero",
+    "cl_cup",
+    "cl_wash",
+    "cl_cap",
+    "cl_shaft",
+    "cl_never"
+  ]
+}

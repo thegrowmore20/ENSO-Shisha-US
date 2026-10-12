@@ -1,0 +1,68 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+<section class="cl-sec">
+  <h2>Never</h2>
+  <p class="cl-lead">The battery and the contacts never get wet.</p>
+  <div class="slider tslider slider--grid slider--never" style="--n:2">
+    <div class="slides">
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">1</span>
+          <b>No water in the battery bay</b>
+          <p>The battery bay is sealed but never submerge or fill it with water.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step1 != blank -%}
+            {{- section.settings.img_step1 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step1.alt | default: 'No water in battery bay', width: section.settings.img_step1.width, height: section.settings.img_step1.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">2</span>
+          <b>Keep the battery dry</b>
+          <p>Never clean the battery or its contacts with water or wet cloths.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step2 != blank -%}
+            {{- section.settings.img_step2 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step2.alt | default: 'Keep the battery dry', width: section.settings.img_step2.width, height: section.settings.img_step2.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+    </div>
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+  </div>
+</section>
+
+<div class="pk-back">
+  <a href="/pages/enso-diamond-manual">‹ Back to the full manual</a>
+  <a href="/pages/enso-experience#diamond">‹ Back to ENSŌ Experience</a>
+</div>
+
+{% schema %}
+{
+  "name": "CL: Never",
+  "presets": [{ "name": "CL: Never" }],
+  "settings": [
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "img_step1", "label": "Step 1 — no water in battery bay" },
+    { "type": "image_picker", "id": "img_step2", "label": "Step 2 — keep battery dry" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 80 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Bottom padding (mobile)", "default": 40 }
+  ]
+}
+{% endschema %}

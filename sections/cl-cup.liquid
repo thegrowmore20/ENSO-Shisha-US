@@ -1,0 +1,89 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+<section class="cl-sec">
+  <h2>After every session: the cup</h2>
+  <p class="cl-lead">Only the cup and the mesh need it every time. Give Diamond 20–30 minutes to cool first.</p>
+  <div class="slider tslider" style="--n:4">
+    <div class="slides">
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">1</span>
+          <b>Let it cool, then lift it out</b>
+          <p>Wait 20–30 minutes. Lift the cup out by its rim.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step1 != blank -%}
+            {{- section.settings.img_step1 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step1.alt | default: 'Lift the cup out', width: section.settings.img_step1.width, height: section.settings.img_step1.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">2</span>
+          <b>Loosen around the edge</b>
+          <p>Run a finger around the inside of the cup to loosen the tobacco.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step2 != blank -%}
+            {{- section.settings.img_step2 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step2.alt | default: 'Loosen around the edge', width: section.settings.img_step2.width, height: section.settings.img_step2.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">3</span>
+          <b>Push it out from below</b>
+          <p>Push the mesh gently through the bottom of the cup.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step3 != blank -%}
+            {{- section.settings.img_step3 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step3.alt | default: 'Push it out from below', width: section.settings.img_step3.width, height: section.settings.img_step3.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">4</span>
+          <b>Out in one piece</b>
+          <p>The used tobacco comes out cleanly with the mesh.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step4 != blank -%}
+            {{- section.settings.img_step4 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step4.alt | default: 'Out in one piece', width: section.settings.img_step4.width, height: section.settings.img_step4.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+    </div>
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CL: Cup removal",
+  "presets": [{ "name": "CL: Cup removal" }],
+  "settings": [
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "img_step1", "label": "Step 1 — lift cup out" },
+    { "type": "image_picker", "id": "img_step2", "label": "Step 2 — loosen edge" },
+    { "type": "image_picker", "id": "img_step3", "label": "Step 3 — push out" },
+    { "type": "image_picker", "id": "img_step4", "label": "Step 4 — out in one piece" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Bottom padding (mobile)", "default": 40 }
+  ]
+}
+{% endschema %}

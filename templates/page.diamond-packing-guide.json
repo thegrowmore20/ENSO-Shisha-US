@@ -10,8 +10,10 @@
 {
   "sections": {
     "pk_nav": {
-      "type": "pk-nav",
-      "settings": {}
+      "type": "experience-nav",
+      "settings": {
+        "active_tab": "packing"
+      }
     },
     "pk_hero": {
       "type": "pk-hero",

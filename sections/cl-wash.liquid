@@ -1,0 +1,135 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+<section class="cl-sec">
+  <h2>Wash the cup and the mesh</h2>
+  <p class="cl-lead">Warm water and a normal sponge. The same for the cup, the basket and the flat screens.</p>
+  <div class="slider tslider slider--grid" style="--n:3">
+    <div class="slides">
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">1</span>
+          <b>Rinse</b>
+          <p>Hold the cup under warm running water to loosen what is left.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step1 != blank -%}
+            {{- section.settings.img_step1 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step1.alt | default: 'Rinse the cup', width: section.settings.img_step1.width, height: section.settings.img_step1.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">2</span>
+          <b>Sponge or steel scrubber</b>
+          <p>A normal sponge for the cup. A steel-mesh scrubber for the basket mesh and flat screens.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step2 != blank -%}
+            {{- section.settings.img_step2 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step2.alt | default: 'Scrub with a sponge', width: section.settings.img_step2.width, height: section.settings.img_step2.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">3</span>
+          <b>Stuck? Soak it</b>
+          <p>Leave the cup and mesh in warm water for a few minutes, then scrub again.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          {%- if section.settings.img_step3 != blank -%}
+            {{- section.settings.img_step3 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_step3.alt | default: 'Soak the cup', width: section.settings.img_step3.width, height: section.settings.img_step3.height -}}
+          {%- endif -%}
+        </div>
+      </figure>
+    </div>
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+  </div>
+  {%- if section.settings.glove_url != blank or section.settings.img_glove != blank -%}
+  <a class="cl-glove" href="{{ section.settings.glove_url | default: '#' }}">
+    {%- if section.settings.img_glove != blank -%}
+      {{- section.settings.img_glove | image_url: width: 240 | image_tag: loading: 'lazy', alt: section.settings.img_glove.alt | default: 'ENSŌ Cleaning Glove', width: 120, height: 120 -}}
+    {%- endif -%}
+    <div>
+      <b>Quicker with the ENSŌ Cleaning Glove</b>
+      <p>Its steel mesh palm cleans the cup, the basket and the screens in a few strokes.</p>
+      <span>See the Cleaning Glove ›</span>
+    </div>
+  </a>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+.cl-glove {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  background: #f6ecd9;
+  border-radius: 20px;
+  padding: 14px;
+  margin-top: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+.cl-glove img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+}
+.cl-glove b {
+  display: block;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 4px;
+}
+.cl-glove p {
+  font-size: 14px;
+  line-height: 21px;
+  color: rgb(0 0 0 / .72);
+  margin: 0 0 8px;
+}
+.cl-glove span {
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  color: #c8943a;
+}
+@media screen and (max-width: 767px) {
+  .cl-glove { grid-template-columns: 88px minmax(0, 1fr); }
+  .cl-glove img { width: 88px; height: 88px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "CL: Wash cup and mesh",
+  "presets": [{ "name": "CL: Wash cup and mesh" }],
+  "settings": [
+    { "type": "header", "content": "Slider images" },
+    { "type": "image_picker", "id": "img_step1", "label": "Step 1 — rinse" },
+    { "type": "image_picker", "id": "img_step2", "label": "Step 2 — scrubber" },
+    { "type": "image_picker", "id": "img_step3", "label": "Step 3 — soak" },
+    { "type": "header", "content": "Cleaning Glove card" },
+    { "type": "image_picker", "id": "img_glove", "label": "Glove product image" },
+    { "type": "url", "id": "glove_url", "label": "Glove product link" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Bottom padding (mobile)", "default": 40 }
+  ]
+}
+{% endschema %}
