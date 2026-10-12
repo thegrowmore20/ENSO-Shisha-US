@@ -37,6 +37,7 @@
     "cl_shaft": {
       "type": "cl-shaft",
       "settings": {
+        "img_step1": "shopify://shop_images/clean-capoff-back-brush.webp",
         "img_step2": "shopify://shop_images/clean-shaft-brush.webp",
         "img_step3": "shopify://shop_images/ok-rinse-shaft.webp"
       }
