@@ -103,34 +103,34 @@
 /* ── Two-column grid ── */
 .d-buy__cols {
   display: grid;
-  grid-template-columns: 1fr minmax(380px, 520px);
-  grid-template-areas:
-    "gallery card"
-    "specs   card";
+  grid-template-columns: minmax(0, 680px) minmax(380px, 520px);
+  justify-content: center;
   gap: 48px;
   align-items: start;
 }
 @media screen and (max-width: 1199px) {
   .d-buy__cols {
-    grid-template-columns: 1fr minmax(340px, 400px);
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 400px);
     gap: 40px;
   }
 }
-/* Mobile: single column — gallery, card, specs */
 @media screen and (max-width: 989px) {
   .d-buy__cols {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "gallery"
-      "card"
-      "specs";
-    gap: 0;
+    gap: 24px;
   }
+}
+
+/* ── Left column: gallery + specs stacked ── */
+.d-buy__left {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
 }
 
 /* ── Gallery area ── */
 .d-buy__gallery {
-  grid-area: gallery;
   min-width: 0;
 }
 
@@ -290,15 +290,7 @@
 
 /* ── Specs area ── */
 .d-buy__specs {
-  grid-area: specs;
   min-width: 0;
-}
-@media screen and (max-width: 989px) {
-  .d-buy__specs {
-    border-top: 1px solid var(--color-border);
-    padding-top: 8px;
-    margin-top: 8px;
-  }
 }
 
 /* ── Spec accordions ── */
@@ -378,9 +370,8 @@
 
 /* ── Buy card ── */
 .d-buy__card {
-  grid-area: card;
   position: sticky;
-  top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px) + 24px);
+  top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px) + 20px);
   align-self: start;
   border: 1px solid var(--color-border);
   border-radius: 12px;
@@ -407,7 +398,7 @@
   font-size: 14px;
   font-weight: 400;
   color: rgb(0 0 0 / .75);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .d-buy__eyebrow i {
   width: 7px;
@@ -460,13 +451,11 @@
   text-decoration: line-through;
 }
 .d-buy__price-note {
-  display: block;
-  width: 100%;
+  flex-basis: 100%;
   font-size: 13px;
   color: rgb(0 0 0 / .5);
   line-height: 1.5;
-  margin-top: -10px;
-  margin-bottom: 6px;
+  margin-top: 2px;
 }
 
 /* CTA pill */
@@ -631,12 +620,14 @@
   <div class="container">
     <div class="d-buy__cols">
 
-      {%- comment -%} ── GALLERY ── {%- endcomment -%}
+      {%- comment -%} ── LEFT COLUMN: gallery + specs ── {%- endcomment -%}
+      <div class="d-buy__left">
+
       <div class="d-buy__gallery">
         {%- render 'product-media-gallery', product: product, section: section -%}
       </div>
 
-      {%- comment -%} ── SPECS (below gallery on desktop, below card on mobile) ── {%- endcomment -%}
+      {%- comment -%} ── SPECS ── {%- endcomment -%}
       <div class="d-buy__specs">
 
         {%- liquid
@@ -756,6 +747,8 @@
         </details>
 
       </div>{%- comment -%} /d-buy__specs {%- endcomment -%}
+
+      </div>{%- comment -%} /d-buy__left {%- endcomment -%}
 
       {%- comment -%} ── BUY CARD ── {%- endcomment -%}
       <aside class="d-buy__card" id="DBuyCard-{{ section.id }}">
