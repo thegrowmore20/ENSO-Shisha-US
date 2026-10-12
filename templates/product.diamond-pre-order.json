@@ -65,7 +65,11 @@
         "image": "shopify://shop_images/heater-dial.webp",
         "eyebrow": "What it is",
         "heading": "An electric heater for the hookah you already own",
-        "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, no lighting, no waiting."
+        "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, no lighting, no waiting.",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_fits_main": {
@@ -159,7 +163,11 @@
         "heading": "One dial, every setting",
         "subline": "Pre-heat time to the minute, temperature to the degree, four profiles that remember both",
         "video": "shopify://files/videos/dial-loop.mp4",
-        "hint_text": "Tap a line to see that screen on the dial. Tap the picture to play the loop again"
+        "hint_text": "Tap a line to see that screen on the dial. Tap the picture to play the loop again",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_features_main": {
@@ -317,7 +325,11 @@
         "heading": "Explore the features",
         "subline": "What changes when the charcoal goes",
         "layout": "full",
-        "color_background": "#f5f5f4"
+        "color_background": "#f5f5f4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_acc_main": {
@@ -329,7 +341,11 @@
         "eyebrow": "Accessories",
         "heading": "Extras for your Diamond",
         "body": "A second battery, spare cups and screens, the cap that changes the draw. Everything fits the Diamond you already have.",
-        "cta_label": "Shop accessories"
+        "cta_label": "Shop accessories",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_experience": {
@@ -561,7 +577,11 @@
       "settings": {
         "heading": "What is in the box",
         "body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. The battery ships fitted.",
-        "modal_body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. Tap an item to see what it is for."
+        "modal_body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. Tap an item to see what it is for.",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "diamond_help": {
