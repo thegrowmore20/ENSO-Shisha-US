@@ -3,11 +3,14 @@
     position: sticky;
     top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px));
     z-index: 40;
+    padding: 10px 0 12px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  #shopify-section-{{ section.id }}.is-stuck {
     background: rgb(255 255 255 / .96);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 0 rgb(0 0 0 / .08), 0 2px 12px rgb(0 0 0 / .06);
-    padding: 10px 0 12px;
   }
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} {
@@ -47,6 +50,16 @@
 
   function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
   secs.forEach(function (s) { s._t = norm(s.textContent); });
+
+  /* Apply visual treatment only when the bar is stuck */
+  const finderSection = document.querySelector('.em-finder__inner') &&
+    document.querySelector('.em-finder__inner').closest('[id^="shopify-section-"]');
+  const sentinel = document.getElementById('em-finder-sentinel');
+  if (finderSection && sentinel && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      finderSection.classList.toggle('is-stuck', !entries[0].isIntersecting);
+    }, { threshold: 0, rootMargin: '-1px 0px 0px 0px' }).observe(sentinel);
+  }
 
   if (q) {
     q.addEventListener('input', function () {
