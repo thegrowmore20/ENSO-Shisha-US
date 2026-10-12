@@ -66,6 +66,49 @@
 }
 {% endstylesheet %}
 
+{% javascript %}
+(function(){
+  var BASE={virginia:252,dark:270,mix:262},PROF={virginia:'Phoenix',dark:'Wraith',mix:'Default'};
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function calc(st){
+    var t=BASE[st.leaf]+(st.str==='strong'?5:-5),pre='7 minutes at 275 °C (Default)',prof=PROF[st.leaf];
+    if(st.leaf==='dark'&&st.str==='strong'){pre='7 minutes at 290 °C';prof='Oracle'}
+    else if(st.leaf==='dark'){pre='7 minutes at 280 °C'}
+    return{t:Math.round(t/5)*5,pre:pre,prof:prof};
+  }
+  function initHf(f){
+    if(f.dataset.hfReady)return;
+    f.dataset.hfReady='1';
+    var lv=f.querySelector('.lv');
+    if(lv&&!lv.querySelector('.lv__s')){
+      lv.innerHTML='<div class="lv__s on"><div class="lv__bat"><svg viewBox="0 0 10 14"><path d="M6 0 0 8h4l-1 6 7-9H6l1-5z"/></svg>100%</div><div class="t-huge" data-k="t">275<sup>°</sup></div><div class="t-cap">Session heat</div></div>';
+    }
+    var tEl=lv?lv.querySelector('[data-k="t"]'):null,st={leaf:'virginia',str:'soft',fl:'fruit'},cur=275,anim;
+    function go(){
+      var r=calc(st);
+      var tOut=f.querySelector('.hf2__t'),pOut=f.querySelector('.hf2__pre'),prOut=f.querySelector('.hf2__prof');
+      if(tOut)tOut.textContent=r.t+' °C';
+      if(pOut)pOut.textContent=r.pre;
+      if(prOut)prOut.textContent=r.prof;
+      if(!tEl)return;
+      clearInterval(anim);if(lv)lv.classList.add('press');setTimeout(function(){if(lv)lv.classList.remove('press')},250);
+      if(reduce){cur=r.t;tEl.innerHTML=cur+'<sup>°</sup>';return}
+      anim=setInterval(function(){cur+=cur<r.t?1:-1;tEl.innerHTML=cur+'<sup>°</sup>';if(cur===r.t)clearInterval(anim)},20);
+    }
+    [].forEach.call(f.querySelectorAll('[data-hf]'),function(b){
+      b.addEventListener('click',function(){
+        st[b.dataset.hf]=b.dataset.v;
+        [].forEach.call(f.querySelectorAll('[data-hf="'+b.dataset.hf+'"]'),function(x){x.setAttribute('aria-pressed',x===b)});
+        go();
+      });
+    });
+    go();
+  }
+  function init(){[].forEach.call(document.querySelectorAll('.hf2'),initHf)}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
+})();
+{% endjavascript %}
+
 {% schema %}
 {
   "name": "PK: Find your heat",

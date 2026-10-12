@@ -6,7 +6,7 @@
       {{- section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_image.alt | default: 'How to pack the cup', width: section.settings.hero_image.width, height: section.settings.hero_image.height, style: 'object-position:100% 50%' -}}
     {%- endif -%}
     <div>
-      <p class="eyebrow">ENSŌ Experience · Guide</p>
+      <p class="eyebrow pk-eyebrow">ENSŌ Experience · Guide</p>
       <h1>How to pack the cup</h1>
       <p>The same craft as a bowl on coal: choose the mesh, pack in light layers, find your heat. Diamond warms the cup from the sides and from below, so the pack shapes the flavour.</p>
       <div class="pk-facts">
@@ -87,6 +87,14 @@
   border-left: 3px solid #c8943a;
 }
 .pk-note b { font-weight: 700; }
+.pk-eyebrow {
+  color: #c8943a;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
 @media screen and (max-width: 990px) {
   .pk-hero {
     grid-template-columns: 1fr;

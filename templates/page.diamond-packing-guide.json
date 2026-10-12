@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "pk_nav": {
+      "type": "pk-nav",
+      "settings": {}
+    },
     "pk_hero": {
       "type": "pk-hero",
       "settings": {
@@ -61,6 +65,7 @@
     }
   },
   "order": [
+    "pk_nav",
     "pk_hero",
     "pk_meshes",
     "pk_pack",
