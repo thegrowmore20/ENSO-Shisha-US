@@ -356,7 +356,7 @@
   flex: 1 1 auto;
   min-height: 0;
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 749px) {
   .d-feat__mmain { grid-template-columns: 1fr; overflow-y: auto; }
 }
 
@@ -375,7 +375,7 @@
   display: block;
 }
 .d-feat__mmedia[hidden] { display: none; }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 749px) {
   .d-feat__mmedia { padding: 16px 16px 0; max-height: none; }
   .d-feat__mmedia img,
   .d-feat__mmedia video { max-height: 52vw; border-radius: 12px; }
@@ -404,7 +404,7 @@
 .d-feat__marr:hover { transform: translateY(-50%) scale(1.06); }
 .d-feat__marr--l { left: 40px; }
 .d-feat__marr--r { right: 12px; }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 749px) {
   .d-feat__marr { display: none; }
 }
 
@@ -416,7 +416,7 @@
   gap: 4px;
   align-self: center;
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 749px) {
   .d-feat__mbody { padding: 24px 20px 28px; align-self: auto; }
 }
 .d-feat__mtext p {
@@ -508,6 +508,19 @@
   {%- endfor -%}
 ]
 </script>
+
+{% style %}
+  #shopify-section-{{ section.id }} .d-feat {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .d-feat {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
 
 <section
   class="d-feat"
@@ -853,6 +866,50 @@
       "id": "color_background",
       "label": "t:sections.diamond_features.settings.color_background.label",
       "default": "#f5f5f4"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
     }
   ],
   "blocks": [
