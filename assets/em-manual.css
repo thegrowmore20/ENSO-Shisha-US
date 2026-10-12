@@ -51,23 +51,10 @@
 .em-note li { font-size: 15px; line-height: 23px; }
 @media (min-width: 992px) { .em-note { font-size: 16.5px; line-height: 26px; padding: 22px 26px 22px 64px; } .em-note::before { left: 24px; top: 24px; } }
 
-/* ── Finder (fixed chapter bar) ── */
-.em-finder {
-  position: fixed;
-  top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px));
-  left: 0; right: 0;
-  z-index: 40;
-  background: rgb(255 255 255 / .96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgb(0 0 0 / .08), 0 4px 16px rgb(0 0 0 / .06);
-  pointer-events: auto;
-}
+/* ── Finder (sticky chapter bar — section wrapper is sticky via {% style %}) ── */
 .em-finder__inner {
-  max-width: 1200px; margin: 0 auto; padding: 10px 40px 12px;
+  max-width: 1200px; margin: 0 auto; padding: 0 40px;
 }
-/* Spacer reserves height equal to the fixed bar so content isn't hidden behind it */
-.em-finder-spacer { height: 90px; }
 .em-chips {
   display: flex; align-items: center; gap: 4px;
   overflow-x: auto; scrollbar-width: none;
@@ -88,8 +75,7 @@
 .em-search svg { width: 18px; height: 18px; fill: none; stroke: #666; stroke-width: 2; stroke-linecap: round; flex: none; }
 .em-search small { color: #666; font-size: 13px; white-space: nowrap; }
 @media (max-width: 767px) {
-  .em-finder__inner { padding: 8px 16px 10px; }
-  .em-finder-spacer { height: 80px; }
+  .em-finder__inner { padding: 0 16px; }
 }
 
 /* ── Quick start ── */
