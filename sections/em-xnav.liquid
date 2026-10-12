@@ -1,0 +1,145 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: {{ section.settings.color_background | default: '#ffffff' }};
+  }
+  #shopify-section-{{ section.id }} .xnav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 40px 0;
+  }
+  #shopify-section-{{ section.id }} .xnav__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: rgb(0 0 0 / .62);
+    text-decoration: none;
+    line-height: 1.4;
+  }
+  #shopify-section-{{ section.id }} .xnav__back:hover { color: #000; }
+  #shopify-section-{{ section.id }} .xnav__back b { color: #000; font-weight: 700; }
+  #shopify-section-{{ section.id }} .xnav__row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  #shopify-section-{{ section.id }} .xnav__row::-webkit-scrollbar { display: none; }
+  #shopify-section-{{ section.id }} .xnav__row a {
+    flex: none;
+    border: 1px solid rgb(0 0 0 / .12);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: var(--font-body, Montserrat, sans-serif);
+  }
+  #shopify-section-{{ section.id }} .xnav__row a:hover { border-color: #000; }
+  #shopify-section-{{ section.id }} .xnav__row a[aria-current="page"] {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+  @media (max-width: 991px) {
+    #shopify-section-{{ section.id }} .xnav { padding: 14px 16px 0; }
+  }
+{% endstyle %}
+
+<nav class="xnav" aria-label="{{ section.settings.nav_aria_label | default: 'ENSŌ Experience' }}">
+  {%- assign back_parent = section.settings.back_parent_label | default: 'ENSŌ Experience' -%}
+  {%- assign back_current = section.settings.back_current_label | default: 'ENSŌ 2026 Edition' -%}
+  {%- assign back_url = section.settings.back_url | default: '/pages/enso-experience' -%}
+  <a class="xnav__back" href="{{ back_url }}">
+    ‹ {{ back_parent }} <span aria-hidden="true">/</span> <b>{{ back_current }}</b>
+  </a>
+  <div class="xnav__row">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'pill' -%}
+        <a
+          href="{{ block.settings.url }}"
+          {%- if block.settings.is_current %} aria-current="page"{% endif %}
+          {{ block.shopify_attributes }}
+        >{{ block.settings.label }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "EM: Cross-nav",
+  "settings": [
+    {
+      "type": "text",
+      "id": "back_parent_label",
+      "label": "Breadcrumb parent label",
+      "default": "ENSŌ Experience"
+    },
+    {
+      "type": "url",
+      "id": "back_url",
+      "label": "Breadcrumb parent URL"
+    },
+    {
+      "type": "text",
+      "id": "back_current_label",
+      "label": "Breadcrumb current page",
+      "default": "ENSŌ 2026 Edition"
+    },
+    {
+      "type": "text",
+      "id": "nav_aria_label",
+      "label": "Nav aria-label",
+      "default": "ENSŌ Experience guides"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Nav pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Quick start"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_current",
+          "label": "Mark as current page",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EM: Cross-nav",
+      "blocks": [
+        { "type": "pill", "settings": { "label": "Quick start", "url": "/pages/enso-2026-manual#quick-start" } },
+        { "type": "pill", "settings": { "label": "Full manual", "url": "/pages/enso-2026-manual", "is_current": true } },
+        { "type": "pill", "settings": { "label": "Troubleshooting", "url": "/pages/enso-2026-manual#troubleshooting" } },
+        { "type": "pill", "settings": { "label": "Flavour guide", "url": "/blogs/journal/flavour-guide" } },
+        { "type": "pill", "settings": { "label": "Accessories", "url": "/collections/accessories" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

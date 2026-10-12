@@ -1,5 +1,64 @@
 {
   "sections": {
+    "em_xnav": {
+      "type": "em-xnav",
+      "blocks": {
+        "pill_quick": {
+          "type": "pill",
+          "settings": {
+            "label": "Quick start",
+            "url": "/pages/enso-2026-manual#quick-start",
+            "is_current": false
+          }
+        },
+        "pill_manual": {
+          "type": "pill",
+          "settings": {
+            "label": "Full manual",
+            "url": "/pages/enso-2026-manual",
+            "is_current": true
+          }
+        },
+        "pill_troubleshooting": {
+          "type": "pill",
+          "settings": {
+            "label": "Troubleshooting",
+            "url": "/pages/enso-2026-manual#troubleshooting",
+            "is_current": false
+          }
+        },
+        "pill_flavour": {
+          "type": "pill",
+          "settings": {
+            "label": "Flavour guide",
+            "url": "/blogs/journal",
+            "is_current": false
+          }
+        },
+        "pill_accessories": {
+          "type": "pill",
+          "settings": {
+            "label": "Accessories",
+            "url": "/collections/accessories",
+            "is_current": false
+          }
+        }
+      },
+      "block_order": [
+        "pill_quick",
+        "pill_manual",
+        "pill_troubleshooting",
+        "pill_flavour",
+        "pill_accessories"
+      ],
+      "settings": {
+        "back_parent_label": "ENSŌ Experience",
+        "back_url": "/pages/enso-experience",
+        "back_current_label": "ENSŌ 2026 Edition",
+        "nav_aria_label": "ENSŌ 2026 Edition guides",
+        "color_background": "#ffffff"
+      }
+    },
     "em_hero": {
       "type": "em-hero",
       "settings": {
@@ -112,6 +171,7 @@
     }
   },
   "order": [
+    "em_xnav",
     "em_hero",
     "em_finder",
     "em_quick_start",
