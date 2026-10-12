@@ -18,9 +18,9 @@
         "safety_before_charge": "shopify://shop_images/before-charge.webp",
         "packban_desktop": "shopify://shop_images/bowl-darkwood.webp",
         "packban_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
-        "padding_top": 80,
+        "padding_top": 20,
         "padding_bottom": 0,
-        "padding_top_mobile": 40,
+        "padding_top_mobile": 20,
         "padding_bottom_mobile": 0
       }
     },
