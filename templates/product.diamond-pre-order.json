@@ -150,6 +150,7 @@
         "feat_blend": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/s-feat-blend-open.webp",
             "alt": "A hand lifting the thermo cap off Diamond, the cup packed with tobacco",
             "title": "Any blend you like",
             "sub": "Blonde, dark or your own mix, 10–15 g in the cup",
