@@ -302,8 +302,7 @@
         "layout": "full",
         "color_background": "#f5f5f4"
       }
-    }
-  },
+    },
     "diamond_acc_main": {
       "type": "diamond-acc-hero",
       "settings": {

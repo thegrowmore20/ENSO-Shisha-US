@@ -166,9 +166,10 @@
 
       {%- comment -%} ── IMAGES ── {%- endcomment -%}
       {%- if section.settings.image_mobile != blank -%}
+        {%- assign mobile_alt = section.settings.image_mobile.alt | default: section.settings.heading -%}
         {{- section.settings.image_mobile | image_url: width: 800 | image_tag:
           class: 'd-acc-hero__img d-acc-hero__img--mobile',
-          alt: section.settings.image_mobile.alt | default: section.settings.heading | escape,
+          alt: mobile_alt,
           loading: 'lazy',
           widths: '600,800',
           sizes: '100vw'
@@ -176,9 +177,10 @@
       {%- endif -%}
 
       {%- if section.settings.image != blank -%}
+        {%- assign desktop_alt = section.settings.image.alt | default: section.settings.heading -%}
         {{- section.settings.image | image_url: width: 2000 | image_tag:
           class: 'd-acc-hero__img d-acc-hero__img--desktop',
-          alt: section.settings.image.alt | default: section.settings.heading | escape,
+          alt: desktop_alt,
           loading: 'lazy',
           widths: '1200,1600,2000',
           sizes: '(max-width: 1440px) 100vw, 1440px'
