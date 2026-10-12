@@ -122,6 +122,11 @@
         <button class="help-modal__close" data-help-close aria-label="Close">&#215;</button>
       </div>
       <div class="help-modal__body"></div>
+      <div class="help-modal__nav">
+        <button class="help-modal__prev" aria-label="Previous">&#8249;</button>
+        <div class="help-modal__dots"></div>
+        <button class="help-modal__next" aria-label="Next">&#8250;</button>
+      </div>
     </div>
   </div>
 </section>
@@ -324,6 +329,59 @@
     border-bottom-color: #000;
   }
 
+  /* ── Modal nav (prev / dots / next) ── */
+  .help-modal__nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 0 24px 24px;
+  }
+
+  .help-modal__prev,
+  .help-modal__next {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    color: var(--color-text);
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .help-modal__prev:hover,
+  .help-modal__next:hover {
+    border-color: rgba(0, 0, 0, 0.45);
+  }
+
+  .help-modal__dots {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #f5f5f4;
+  }
+
+  .help-modal__dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    display: block;
+    font-style: normal;
+    transition: background 0.2s;
+  }
+
+  .help-modal__dots i.is-on {
+    background: #000;
+  }
+
   /* Mobile */
   @media screen and (max-width: 749px) {
     .help-cards__container {
@@ -376,23 +434,48 @@
     const modal = section.querySelector('.help-modal');
     if (!modal) return;
 
-    const titleEl = modal.querySelector('.help-modal__title');
-    const bodyEl = modal.querySelector('.help-modal__body');
+    const titleEl  = modal.querySelector('.help-modal__title');
+    const bodyEl   = modal.querySelector('.help-modal__body');
+    const dotsEl   = modal.querySelector('.help-modal__dots');
+    const prevBtn  = modal.querySelector('.help-modal__prev');
+    const nextBtn  = modal.querySelector('.help-modal__next');
+    const navEl    = modal.querySelector('.help-modal__nav');
+
+    /* Build ordered list of popup-enabled cards */
+    const cards = [];
+    for (const card of section.querySelectorAll('[data-popup-id]')) {
+      const tpl = document.getElementById('help-content-' + card.dataset.popupId);
+      if (tpl) cards.push({ card, title: card.dataset.popupTitle || '', tpl });
+    }
+    if (!cards.length) return;
+
+    /* Hide nav when only one card */
+    if (navEl && cards.length < 2) navEl.hidden = true;
+
+    let current = 0;
     let lastCard = null;
 
-    function openModal(card) {
-      const id = card.dataset.popupId;
-      const title = card.dataset.popupTitle || '';
-      const tpl = document.getElementById('help-content-' + id);
-      if (!tpl) return;
+    /* Build dots once */
+    const dots = cards.map(function (_, i) {
+      const dot = document.createElement('i');
+      dotsEl.appendChild(dot);
+      return dot;
+    });
 
+    function show(idx) {
+      current = (idx + cards.length) % cards.length;
+      const { title, tpl } = cards[current];
       titleEl.textContent = title;
       bodyEl.innerHTML = '';
       bodyEl.appendChild(tpl.content.cloneNode(true));
+      dots.forEach(function (d, i) { d.classList.toggle('is-on', i === current); });
+    }
+
+    function openModal(idx) {
+      show(idx);
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
       modal.querySelector('[data-help-close]').focus();
-      lastCard = card;
     }
 
     function closeModal() {
@@ -401,17 +484,24 @@
       if (lastCard) lastCard.focus();
     }
 
-    for (const card of section.querySelectorAll('[data-popup-id]')) {
-      card.addEventListener('click', function () { openModal(card); });
+    cards.forEach(function ({ card }, i) {
+      card.addEventListener('click', function () { lastCard = card; openModal(i); });
       card.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lastCard = card; openModal(i); }
       });
-    }
+    });
+
+    prevBtn.addEventListener('click', function () { show(current - 1); });
+    nextBtn.addEventListener('click', function () { show(current + 1); });
 
     modal.querySelector('[data-help-close]').addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !modal.hidden) closeModal();
+      if (modal.hidden) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); show(current - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
     });
   });
 {% endjavascript %}
