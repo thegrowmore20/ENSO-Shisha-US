@@ -20,6 +20,17 @@
         "cta_link": "#buy"
       }
     },
+    "diamond_buy_main": {
+      "type": "diamond-buy",
+      "settings": {
+        "gallery_layout": "thumbnails_bottom",
+        "subline": "Electric heat for the hookah you already own",
+        "price_note": "Last pre-order price. The final price after launch is €349.",
+        "cta_label": "Pre-order",
+        "inbox_text": "Diamond with thermo cap and battery, two ceramic cups, basket mesh, three flat screens, two silicone adapters, cup tool, brush, USB-C cable.",
+        "contact_email": "support@ensoshisha.eu"
+      }
+    },
     "diamond_heater_main": {
       "type": "diamond-heater",
       "blocks": {
@@ -45,23 +56,16 @@
           }
         }
       },
-      "block_order": ["fact_1", "fact_2", "fact_3"],
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3"
+      ],
       "settings": {
         "image": "shopify://shop_images/heater-dial.webp",
         "eyebrow": "What it is",
         "heading": "An electric heater for the hookah you already own",
         "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, no lighting, no waiting."
-      }
-    },
-    "diamond_buy_main": {
-      "type": "diamond-buy",
-      "settings": {
-        "gallery_layout": "thumbnails_bottom",
-        "subline": "Electric heat for the hookah you already own",
-        "price_note": "Last pre-order price. The final price after launch is €349.",
-        "cta_label": "Pre-order",
-        "inbox_text": "Diamond with thermo cap and battery, two ceramic cups, basket mesh, three flat screens, two silicone adapters, cup tool, brush, USB-C cable.",
-        "contact_email": "support@ensoshisha.eu"
       }
     },
     "diamond_dial_main": {
@@ -89,11 +93,16 @@
           }
         }
       },
-      "block_order": ["feat_temp", "feat_prof", "feat_hap"],
+      "block_order": [
+        "feat_temp",
+        "feat_prof",
+        "feat_hap"
+      ],
       "settings": {
         "section_id": "dial",
         "heading": "One dial, every setting",
         "subline": "Pre-heat time to the minute, temperature to the degree, four profiles that remember both",
+        "video": "shopify://files/videos/dial-loop.mp4",
         "hint_text": "Tap a line to see that screen on the dial. Tap the picture to play the loop again"
       }
     },
@@ -103,7 +112,6 @@
         "feat_blend": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/s-feat-blend-open.webmp",
             "alt": "A hand lifting the thermo cap off Diamond, the cup packed with tobacco",
             "title": "Any blend you like",
             "sub": "Blonde, dark or your own mix, 10–15 g in the cup",
@@ -238,8 +246,14 @@
         }
       },
       "block_order": [
-        "feat_blend", "feat_swap", "feat_heat", "feat_clean",
-        "feat_ceramic", "feat_battery", "feat_charge", "feat_update"
+        "feat_blend",
+        "feat_swap",
+        "feat_heat",
+        "feat_clean",
+        "feat_ceramic",
+        "feat_battery",
+        "feat_charge",
+        "feat_update"
       ],
       "settings": {
         "section_id": "tech",
