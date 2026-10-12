@@ -95,6 +95,7 @@
       },
       "block_order": ["fits_fact_1", "fits_fact_2", "fits_fact_3"],
       "settings": {
+        "image": "shopify://shop_images/fits-hookah-real.webp",
         "image_position": "right",
         "image_fit": "contain",
         "column_gap": 56,
