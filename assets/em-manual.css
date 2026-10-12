@@ -51,30 +51,46 @@
 .em-note li { font-size: 15px; line-height: 23px; }
 @media (min-width: 992px) { .em-note { font-size: 16.5px; line-height: 26px; padding: 22px 26px 22px 64px; } .em-note::before { left: 24px; top: 24px; } }
 
-/* ── Finder (sticky chapter bar) ── */
-.em-finder { position: sticky; top: 8px; z-index: 20; margin: 14px 0 4px; transition: transform .3s ease, opacity .3s ease; pointer-events: none; }
-.em-finder.away { transform: translateY(-140%); opacity: 0; pointer-events: none; }
-.em-finder .em-chips {
-  pointer-events: auto; display: flex; align-items: center; gap: 4px;
-  overflow-x: auto; scrollbar-width: none;
-  padding: 6px; background: rgb(255 255 255 / .92); backdrop-filter: blur(10px);
-  border-radius: 999px; box-shadow: 0 6px 24px rgb(0 0 0 / .12), 0 0 0 1px rgb(0 0 0 / .06);
-  width: max-content; max-width: 100%;
+/* ── Finder (fixed chapter bar) ── */
+.em-finder {
+  position: fixed;
+  top: calc(var(--announcement-bar-height, 0px) + var(--site-header-height, 72px));
+  left: 0; right: 0;
+  z-index: 40;
+  background: rgb(255 255 255 / .96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgb(0 0 0 / .08), 0 4px 16px rgb(0 0 0 / .06);
+  pointer-events: auto;
 }
-.em-finder .em-chips::-webkit-scrollbar { display: none; }
+.em-finder__inner {
+  max-width: 1200px; margin: 0 auto; padding: 10px 40px 12px;
+}
+/* Spacer reserves height equal to the fixed bar so content isn't hidden behind it */
+.em-finder-spacer { height: 90px; }
+.em-chips {
+  display: flex; align-items: center; gap: 4px;
+  overflow-x: auto; scrollbar-width: none;
+  padding: 2px 0 4px;
+}
+.em-chips::-webkit-scrollbar { display: none; }
 .em-chip { border: 0; background: none; padding: 7px 13px; font-size: 13.5px; line-height: 18px; font-weight: 600; white-space: nowrap; color: #000; text-decoration: none; border-radius: 999px; cursor: pointer; font-family: inherit; }
-.em-chip:hover { background: #f5f5f4; }
+.em-chip:hover { background: rgb(0 0 0 / .06); }
 .em-chip.on { background: #000; color: #fff; }
 .em-search {
   display: flex; align-items: center; gap: 12px;
-  border: 1.5px solid rgb(0 0 0 / .1); border-radius: 999px; padding: 13px 20px;
-  max-width: 640px; margin: 8px 0 22px; background: #fff;
+  border: 1.5px solid rgb(0 0 0 / .12); border-radius: 999px; padding: 10px 18px;
+  max-width: 640px; margin: 0 0 8px; background: rgb(0 0 0 / .03);
+  cursor: text;
 }
-.em-search:focus-within { border-color: #000; }
-.em-search input { border: 0; outline: 0; font-size: 16px; line-height: 22px; font-weight: 500; flex: 1; background: transparent; min-width: 0; font-family: inherit; }
-.em-search svg { width: 20px; height: 20px; fill: none; stroke: #000; stroke-width: 2; stroke-linecap: round; flex: none; }
+.em-search:focus-within { border-color: #000; background: #fff; }
+.em-search input { border: 0; outline: 0; font-size: 15px; line-height: 22px; font-weight: 500; flex: 1; background: transparent; min-width: 0; font-family: inherit; cursor: text; }
+.em-search svg { width: 18px; height: 18px; fill: none; stroke: #666; stroke-width: 2; stroke-linecap: round; flex: none; }
 .em-search small { color: #666; font-size: 13px; white-space: nowrap; }
-@media (max-width: 767px) { .em-finder { top: 8px; margin: 12px 0 4px; } .em-search { margin: 4px 0 20px; } }
+@media (max-width: 767px) {
+  .em-finder__inner { padding: 8px 16px 10px; }
+  .em-finder-spacer { height: 80px; }
+}
 
 /* ── Quick start ── */
 .em-qs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
