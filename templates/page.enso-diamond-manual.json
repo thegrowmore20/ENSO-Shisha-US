@@ -18,9 +18,9 @@
         "safety_before_charge": "shopify://shop_images/before-charge.webp",
         "packban_desktop": "shopify://shop_images/bowl-darkwood.webp",
         "packban_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
-        "padding_top": 20,
+        "padding_top": 80,
         "padding_bottom": 0,
-        "padding_top_mobile": 20,
+        "padding_top_mobile": 40,
         "padding_bottom_mobile": 0
       }
     },
@@ -40,7 +40,11 @@
         "latch_open": "shopify://shop_images/battery-latch-open.webp",
         "battery_out": "shopify://shop_images/battery-out.webp",
         "pack_contacts": "shopify://shop_images/pack-contacts.webp",
-        "latch_close": "shopify://shop_images/battery-latch-close.webp"
+        "latch_close": "shopify://shop_images/battery-latch-close.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_charging": {
@@ -50,7 +54,11 @@
         "charge_dots": "shopify://shop_images/charge-dots.webp",
         "charge_in": "shopify://shop_images/charge-in.webp",
         "charge_while_smoking": "shopify://shop_images/charge-while-smoking.webp",
-        "device_frame": "shopify://shop_images/closed-start.webp"
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_battery": {
@@ -60,13 +68,21 @@
         "battery_out": "shopify://shop_images/battery-out.webp",
         "latch_close": "shopify://shop_images/battery-latch-close.webp",
         "ui_continue": "shopify://shop_images/continue.webp",
-        "device_frame": "shopify://shop_images/closed-start.webp"
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_dial": {
       "type": "dm-dial",
       "settings": {
-        "device_frame": "shopify://shop_images/closed-start.webp"
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_pack": {
@@ -89,7 +105,11 @@
         "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp",
         "cup_tool_seated": "shopify://shop_images/cup-tool-seated.webp",
         "cup_tool_lower": "shopify://shop_images/cup-tool-lower.webp",
-        "cup_seated_tool_off": "shopify://shop_images/cup-seated-tool-off.webp"
+        "cup_seated_tool_off": "shopify://shop_images/cup-seated-tool-off.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_hookah": {
@@ -97,7 +117,11 @@
       "settings": {
         "hookah_adapter": "shopify://shop_images/hookah-adapter-two-hands.webp",
         "hookah_mount": "shopify://shop_images/hookah-mount-two-hands.webp",
-        "on_hookah": "shopify://shop_images/on-hookah-front.webp"
+        "on_hookah": "shopify://shop_images/on-hookah-front.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_preheat": {
@@ -106,7 +130,11 @@
         "cap_off": "shopify://shop_images/cap-off.webp",
         "cup_tool_lower": "shopify://shop_images/cup-tool-lower.webp",
         "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp",
-        "device_frame": "shopify://shop_images/closed-start.webp"
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_profiles": {
@@ -118,7 +146,11 @@
         "ui_profile_phoenix": "shopify://shop_images/profile_phoenix.webp",
         "ui_profile_wraith": "shopify://shop_images/profile_wraith.webp",
         "ui_profile_oracle": "shopify://shop_images/profile_oracle.webp",
-        "device_frame": "shopify://shop_images/closed-start.webp"
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_menu": {
@@ -132,14 +164,22 @@
         "ui_p_brightness": "shopify://shop_images/p-brightness.webp",
         "ui_p_screen": "shopify://shop_images/p-screen.webp",
         "ui_p_stats": "shopify://shop_images/p-stats.webp",
-        "device_frame": "shopify://shop_images/closed-start.webp"
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_software": {
       "type": "dm-software",
       "settings": {
         "cable_alone": "shopify://shop_images/cable-alone.webp",
-        "device_frame": "shopify://shop_images/closed-start.webp"
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_cap": {
@@ -149,7 +189,11 @@
         "plate_fork_macro": "shopify://shop_images/plate-fork-macro.webp",
         "cap_holes": "shopify://shop_images/cap-holes.webp",
         "cap_off": "shopify://shop_images/cap-off.webp",
-        "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp"
+        "cap_on_press": "shopify://shop_images/cap-on-press-pad.webp",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_cleaning": {
@@ -169,7 +213,11 @@
         "rinse_shaft": "shopify://shop_images/ok-rinse-shaft.webp",
         "dont_water_bay": "shopify://shop_images/dont-water-bay.webp",
         "dont_water_battery": "shopify://shop_images/dont-water-battery.webp",
-        "multitool_product": "enso-4-in-1-multi-tool"
+        "multitool_product": "enso-4-in-1-multi-tool",
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "dm_care": {
@@ -181,10 +229,10 @@
         "before_charge": "shopify://shop_images/before-charge.webp",
         "dont_covered_soft": "shopify://shop_images/dont-covered-soft.webp",
         "on_hookah": "shopify://shop_images/on-hookah-front.webp",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     }
   },

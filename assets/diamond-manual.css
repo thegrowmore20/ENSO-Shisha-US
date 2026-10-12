@@ -25,7 +25,7 @@ a{color:inherit}
 .packban div{max-width:420px}
 .packban b{display:block;font:800 34px/40px Inter,sans-serif;letter-spacing:-.02em;text-wrap:balance}.packban span{display:block;color:rgb(255 255 255 / .8);font-size:16px;line-height:25px;margin-top:10px;text-wrap:pretty}
 .packban em{font-style:normal;background:#fff;color:#000;border-radius:999px;padding:14px 24px;font:700 12px Montserrat;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
-.ch{padding:52px 0;border-top:1px solid var(--line);scroll-margin-top:150px}
+.ch{border-top:1px solid var(--line);scroll-margin-top:150px}
 .ch__num{font:800 13px Inter;letter-spacing:.08em;color:var(--sand);text-transform:uppercase;margin-bottom:8px}
 .ch h2{font-size:34px;line-height:40px;margin-bottom:10px}.ch h3{font-size:20px;line-height:26px;margin:32px 0 14px}
 .ch__lead{color:rgb(0 0 0 / .72);margin:0 0 22px;max-width:70ch}
