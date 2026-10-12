@@ -179,39 +179,32 @@
 /* Two-column body: list left, device image right */
 .d-witb-modal__in {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 42%);
-  gap: 0;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
   padding: 0;
   align-items: start;
 }
 .d-witb-modal__sub {
   color: var(--palette-sand, #c8943a);
   font-size: 15px;
-  line-height: 1.6;
-  margin: 0 0 8px;
-}
-.d-witb-modal__desc {
-  margin: 0 0 4px;
-  color: rgb(0 0 0 / .72);
-  font-size: 15px;
-  line-height: 1.6;
+  line-height: 23px;
+  margin: 0;
 }
 .d-witb-modal__small {
-  margin: 4px 0 0;
-  color: rgb(0 0 0 / .5);
+  display: block;
+  margin-top: 12px;
+  color: var(--color-text-muted);
   font-size: 13px;
   line-height: 20px;
 }
 .d-witb-modal__also {
-  font-size: 12px;
-  letter-spacing: .07em;
-  text-transform: uppercase;
+  font-size: 16px;
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-muted);
-  margin: 16px 0 0;
+  margin: 18px 0 4px;
+  color: #000;
 }
 .d-witb-modal__left {
-  padding: 20px 28px 28px;
+  padding: 28px 32px 32px;
 }
 .d-witb-modal__right {
   display: flex;
@@ -448,16 +441,28 @@
     </div>
     <div class="d-witb-modal__in">
       <div class="d-witb-modal__left">
-        {%- if device_block != nil and device_block.settings.sub != blank -%}
-          <p class="d-witb-modal__sub">{{ device_block.settings.sub | escape }}</p>
+        {%- if device_block != nil -%}
+          {%- liquid
+            assign device_desc = ''
+            if device_block.settings.sub != blank
+              assign device_desc = device_block.settings.sub
+            endif
+            if device_block.settings.what != blank
+              if device_desc != blank
+                assign device_desc = device_desc | append: '. ' | append: device_block.settings.what
+              else
+                assign device_desc = device_block.settings.what
+              endif
+            endif
+          -%}
+          {%- if device_desc != blank -%}
+            <p class="d-witb-modal__sub">{{ device_desc | escape }}</p>
+          {%- endif -%}
+          {%- if device_block.settings.how != blank -%}
+            <small class="d-witb-modal__small">{{ device_block.settings.how | escape }}</small>
+          {%- endif -%}
         {%- endif -%}
-        {%- if device_block != nil and device_block.settings.what != blank -%}
-          <p class="d-witb-modal__desc">{{ device_block.settings.what | escape }}</p>
-        {%- endif -%}
-        {%- if device_block != nil and device_block.settings.how != blank -%}
-          <p class="d-witb-modal__small">{{ device_block.settings.how | escape }}</p>
-        {%- endif -%}
-        <p class="d-witb-modal__also">Also in the box</p>
+        <h4 class="d-witb-modal__also">Also in the box</h4>
         <ul class="d-witb-modal__list">
           {%- for block in section.blocks -%}
             {%- unless block.settings.size == 'hero' -%}
