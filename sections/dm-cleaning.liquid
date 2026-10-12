@@ -6,6 +6,7 @@
     assign mt_url = mt_product.url
     assign mt_title = mt_product.title
     assign mt_img = mt_product.featured_image
+    assign mt_subtitle = mt_product.metafields.custom.headline.value
   -%}
   <p class="sp-label">MAKES IT QUICKER</p>
   <div class="spares">
@@ -17,7 +18,7 @@
       {%- else -%}
         <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:80px;height:80px"><rect width="80" height="80" rx="12" fill="#f0ede8"/><path d="M28 40a12 12 0 1 1 24 0 12 12 0 0 1-24 0zm-6 16 10-12 8 8 8-10 14 14H22z" fill="#c8b89a"/></svg>
       {%- endif -%}
-      <span><b>{{ mt_title }}</b><small>{{ mt_product.description | strip_html | truncate: 60 }}</small></span>
+      <span><b>{{ mt_title }}</b><small>{{ mt_subtitle }}</small></span>
       <em>{{ mt_price }}</em>
     </a>
   </div>
