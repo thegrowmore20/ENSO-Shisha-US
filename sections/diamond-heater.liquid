@@ -12,7 +12,7 @@
 .d-heater__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 56px;
+  gap: var(--d-heater-gap, 56px);
   align-items: center;
 }
 @media screen and (max-width: 989px) {
@@ -33,6 +33,22 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Image position right */
+.d-heater__image--right {
+  order: 2;
+}
+@media screen and (max-width: 989px) {
+  .d-heater__image--right { order: unset; }
+}
+
+/* Image fit: contain (for tall product shots on white) */
+.d-heater__image--contain {
+  background: #fff;
+}
+.d-heater__image--contain img {
+  object-fit: contain;
 }
 
 /* ── Copy ── */
@@ -92,12 +108,23 @@
 
 {% endstylesheet %}
 
-<section class="d-heater" id="DiamondHeater-{{ section.id }}">
+{%- liquid
+  assign img_class = 'd-heater__image'
+  if section.settings.image_position == 'right'
+    assign img_class = img_class | append: ' d-heater__image--right'
+  endif
+  if section.settings.image_fit == 'contain'
+    assign img_class = img_class | append: ' d-heater__image--contain'
+  endif
+  assign gap_px = section.settings.column_gap | default: 56
+-%}
+
+<section class="d-heater" id="DiamondHeater-{{ section.id }}" style="--d-heater-gap: {{ gap_px }}px">
   <div class="container">
     <div class="d-heater__grid">
 
       {%- comment -%} ── IMAGE ── {%- endcomment -%}
-      <div class="d-heater__image">
+      <div class="{{ img_class }}">
         {%- if section.settings.image != blank -%}
           {{- section.settings.image | image_url: width: 900 | image_tag:
             alt: section.settings.image.alt | default: section.settings.heading,
@@ -106,7 +133,10 @@
             sizes: '(max-width:989px) 100vw, 50vw'
           -}}
         {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          <svg viewBox="0 0 4 3" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;display:block">
+            <rect width="4" height="3" fill="#f0ede8"/>
+            <path d="M1.6 1.5 L2 0.9 L2.4 1.5 M1.75 1.5 L2.25 1.5 M2 1.5 L2 2.1" stroke="#c8b89a" stroke-width="0.08" stroke-linecap="round"/>
+          </svg>
         {%- endif -%}
       </div>
 
@@ -158,6 +188,36 @@
       "label": "t:sections.diamond_heater.settings.image.label"
     },
     {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:sections.diamond_heater.settings.image_position.label",
+      "options": [
+        { "value": "left",  "label": "t:sections.diamond_heater.settings.image_position.options.left" },
+        { "value": "right", "label": "t:sections.diamond_heater.settings.image_position.options.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "t:sections.diamond_heater.settings.image_fit.label",
+      "options": [
+        { "value": "cover",   "label": "t:sections.diamond_heater.settings.image_fit.options.cover" },
+        { "value": "contain", "label": "t:sections.diamond_heater.settings.image_fit.options.contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:sections.diamond_heater.settings.column_gap.label",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
       "type": "text",
       "id": "eyebrow",
       "label": "t:sections.diamond_heater.settings.eyebrow.label",
@@ -170,7 +230,7 @@
       "default": "An electric heater for the hookah you already own"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "body",
       "label": "t:sections.diamond_heater.settings.body.label",
       "default": "Diamond sits where the bowl sits and replaces the charcoal. No coals, no lighting, no waiting."

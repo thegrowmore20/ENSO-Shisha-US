@@ -2348,6 +2348,21 @@
       "name": "Diamond Heater",
       "settings": {
         "image": { "label": "Image" },
+        "image_position": {
+          "label": "Image side",
+          "options": {
+            "left": "Left",
+            "right": "Right"
+          }
+        },
+        "image_fit": {
+          "label": "Image fit",
+          "options": {
+            "cover": "Cover (fill)",
+            "contain": "Contain (show full image)"
+          }
+        },
+        "column_gap": { "label": "Column gap" },
         "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "body": { "label": "Body text" }

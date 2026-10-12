@@ -68,6 +68,41 @@
         "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, no lighting, no waiting."
       }
     },
+    "diamond_fits_main": {
+      "type": "diamond-heater",
+      "blocks": {
+        "fits_fact_1": {
+          "type": "fact",
+          "settings": {
+            "title": "Long adapter",
+            "text": "For stems with a narrow, tall top fitting."
+          }
+        },
+        "fits_fact_2": {
+          "type": "fact",
+          "settings": {
+            "title": "Short adapter",
+            "text": "For stems with a broad top fitting. One of the two fits most traditional and modern stems."
+          }
+        },
+        "fits_fact_3": {
+          "type": "fact",
+          "settings": {
+            "title": "Nothing else changes",
+            "text": "Diamond replaces only the coals. The evening, the water and the hose are the ones you know."
+          }
+        }
+      },
+      "block_order": ["fits_fact_1", "fits_fact_2", "fits_fact_3"],
+      "settings": {
+        "image_position": "right",
+        "image_fit": "contain",
+        "column_gap": 56,
+        "eyebrow": "Fits any hookah",
+        "heading": "If a bowl fits, Diamond fits",
+        "body": "Two adapters in the box, long and short, seat Diamond on the top of the stem you already have. Your stem, base and hose stay exactly as they are."
+      }
+    },
     "diamond_dial_main": {
       "type": "diamond-dial",
       "blocks": {
@@ -271,6 +306,7 @@
     "diamond_hero_main",
     "diamond_buy_main",
     "diamond_heater_main",
+    "diamond_fits_main",
     "diamond_dial_main",
     "diamond_features_main"
   ]
