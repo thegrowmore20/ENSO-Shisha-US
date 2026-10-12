@@ -136,7 +136,7 @@ a{color:inherit}
 @media (max-width:991px){.wrap{padding:0 16px}.mn-hero{grid-template-columns:1fr;gap:18px;padding:24px 0 8px}.mn-hero h1{font-size:34px;line-height:38px}.mn-hero img{max-height:260px}
  .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap}
  .packban{margin:20px 0 4px;min-height:440px;justify-content:flex-end;padding:28px 22px;border-radius:22px}.packban img{object-position:74% 20%}.packban::before{background:linear-gradient(0deg,rgb(0 0 0 / .85) 0%,rgb(0 0 0 / .5) 45%,rgb(0 0 0 / 0) 70%)}.packban b{font-size:26px;line-height:32px}
- .ch{padding:36px 0}.slides{grid-auto-columns:82%;gap:14px;margin-right:-16px;padding-right:16px}.nav{display:none}
+ .slides{grid-auto-columns:82%;gap:14px;margin-right:-16px;padding-right:16px}.nav{display:none}
  .boxgrid,.temps{grid-template-columns:1fr}.menu{grid-template-columns:1fr}.map{font-size:13.5px}.map th:nth-child(3),.map td:nth-child(3){display:none}
  .sw{align-items:flex-end;padding:0}.sw__box{border-radius:24px 24px 0 0;max-height:92vh;padding:22px 16px}.sw__grid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:80%;overflow-x:auto;scroll-snap-type:x mandatory}.sw__card{scroll-snap-align:start}.sw__box h2{font-size:24px;line-height:30px}}
 /* 2 Oct 2026, Vadim: "make these steps gifs": the Diamond screen played live, drawn after the designed set (output/diamond-brief/UI) */
@@ -442,11 +442,11 @@ button.mpick__c span{color:var(--grey)}button.mpick__c.on span{color:var(--sand)
 .bswap{grid-template-columns:260px minmax(0,1fr)}.bswap__scr{width:260px}
 @media (max-width:767px){.bswap__scr{width:220px;justify-self:center}}
 /* 2 Oct, Vadim: chapters read as clear blocks */
-.ch{padding:64px 0 56px;border-top:0;position:relative}
+.ch{border-top:0;position:relative}
 .ch::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;border-radius:999px;background:var(--mist)}
 .ch__num{display:inline-flex;align-items:center;gap:10px;font-size:13px}
 .ch>h2{font-size:40px;line-height:46px}
-@media (max-width:767px){.ch{padding:44px 0 40px}.ch>h2{font-size:30px;line-height:36px}}
+@media (max-width:767px){.ch>h2{font-size:30px;line-height:36px}}
 /* 2 Oct: the dial gauge */
 .gauge{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center;margin:10px 0 6px}
 .gauge svg{width:100%;height:auto;font-family:Inter,sans-serif;overflow:visible}
@@ -578,7 +578,6 @@ body.bar-on .boxgrid--stack .box__img{top:70px}
 /* chapters read as separate blocks: every other one on a warm band */
 .ch:nth-of-type(even),.ch--alt{background:#faf8f4;box-shadow:0 0 0 100vmax #faf8f4;clip-path:inset(0 -100vmax)}
 .ch::before{content:none}
-.ch{padding:72px 0 64px}
 .ch__num{font-size:14px;letter-spacing:.12em}
 .finder{transition:transform .3s ease,opacity .3s ease,top .3s ease}
 .dlab .lv-hint{top:14px}.feat .lv-hint{top:14px}
@@ -672,7 +671,6 @@ html.hdr-show .finder{top:calc(var(--hdr-h,64px) + 8px)!important}
 .ts__pic .dev .lvimg,.mac .dev .lvimg{width:21.4%!important;height:auto!important;aspect-ratio:1;object-fit:contain!important}
 /* 4 Oct, Vadim: the phone is done; the desktop gets more room: bigger pictures, more air between texts */
 @media (min-width:992px){
- .ch{padding:112px 0 104px}
  .ch>h2{font-size:52px;line-height:58px;margin-bottom:14px}
  .ch__lead{font-size:19px;line-height:30px;max-width:62ch;margin-bottom:40px}
  .ch h3{font-size:26px;line-height:32px;margin:64px 0 22px}
