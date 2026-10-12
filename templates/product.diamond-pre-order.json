@@ -114,7 +114,7 @@
         "cta1_label": "Open the guide",
         "cta1_link": "/pages/diamond-packing-guide",
         "cta2_label": "Shop",
-        "cta2_link": "#diamond_buy_main",
+        "cta2_link": "#buy",
         "padding_top": 0,
         "padding_bottom": 40,
         "padding_top_mobile": 0,
@@ -511,11 +511,11 @@
     "diamond_buy_main",
     "diamond_heater_main",
     "diamond_features_main",
-    "diamond_bowl_main",
     "diamond_dial_main",
     "diamond_fits_main",
     "diamond_acc_main",
     "diamond_witb_main",
-    "diamond_also_like"
+    "diamond_also_like",
+    "diamond_bowl_main"
   ]
 }
