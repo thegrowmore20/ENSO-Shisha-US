@@ -306,10 +306,12 @@
     "diamond_acc_main": {
       "type": "diamond-acc-hero",
       "settings": {
+        "image": "shopify://shop_images/acc-hero.webp",
+        "image_mobile": "shopify://shop_images/acc-hero-mobile.webp",
         "link": "/collections/accessories",
         "eyebrow": "Accessories",
         "heading": "Extras for your Diamond",
-        "body": "A second battery, spare cups and screens, so Diamond keeps going as long as you do.",
+        "body": "A second battery, spare cups and screens, the cap that changes the draw. Everything fits the Diamond you already have.",
         "cta_label": "Shop accessories"
       }
     }
