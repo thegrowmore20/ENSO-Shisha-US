@@ -336,7 +336,7 @@
         "witb_cup": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/witb-cup.webp",
+            "image": "shopify://shop_images/d-cup.webp",
             "title": "Ceramic cups",
             "size": "default",
             "qty_badge": "2",

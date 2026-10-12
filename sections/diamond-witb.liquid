@@ -35,7 +35,6 @@
   display: block;
   aspect-ratio: 1;
   border-radius: 12px;
-  overflow: hidden;
 }
 .d-witb__tile--hero {
   grid-column: 1 / span 3;
@@ -48,17 +47,25 @@
   grid-column: span 2;
   grid-row: span 2;
 }
-.d-witb__tile img {
+/* Inner wrapper clips image scale without clipping tooltip */
+.d-witb__tile-img {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  display: block;
+}
+.d-witb__tile-img img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   transition: transform .45s cubic-bezier(.2,.8,.2,1);
   display: block;
 }
-.d-witb__tile--s img { padding: 12%; }
-.d-witb__tile--xs img { padding: 20%; }
-.d-witb__tile:hover img,
-.d-witb__tile:focus-visible img { transform: scale(1.08); }
+.d-witb__tile--s .d-witb__tile-img img { padding: 12%; }
+.d-witb__tile--xs .d-witb__tile-img img { padding: 20%; }
+.d-witb__tile:hover .d-witb__tile-img img,
+.d-witb__tile:focus-visible .d-witb__tile-img img { transform: scale(1.08); }
 .d-witb__tile:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 
 /* Tile quantity badge */
@@ -202,7 +209,7 @@
 .d-witb-modal__box {
   background: #fff;
   border-radius: 24px;
-  width: min(680px, 100%);
+  width: min(880px, 100%);
   max-height: 88vh;
   overflow: auto;
   display: flex;
@@ -244,14 +251,44 @@
 }
 .d-witb-modal__close:hover { background: rgb(0 0 0 / .12); }
 
-.d-witb-modal__body {
-  padding: 16px 24px 24px;
+/* Two-column body: list left, device image right */
+.d-witb-modal__in {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 28px;
+  padding: 20px 28px 28px;
+  align-items: start;
 }
-.d-witb-modal__body > p {
-  margin: 0 0 16px;
+.d-witb-modal__sub {
+  color: var(--palette-sand, #c8943a);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+.d-witb-modal__desc {
+  margin: 0 0 4px;
   color: rgb(0 0 0 / .72);
   font-size: 15px;
   line-height: 1.6;
+}
+.d-witb-modal__also {
+  font-size: 12px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  margin: 16px 0 0;
+}
+.d-witb-modal__right img {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: contain;
+  background: #f5f5f4;
+  padding: 12px;
+  box-sizing: border-box;
+  display: block;
+  position: sticky;
+  top: 16px;
 }
 
 .d-witb-modal__list {
@@ -270,9 +307,7 @@
   border-radius: 8px;
   transition: background .15s;
 }
-.d-witb-modal__list li[data-handle] {
-  cursor: pointer;
-}
+.d-witb-modal__list li[data-handle] { cursor: pointer; }
 .d-witb-modal__list li[data-handle]:hover { background: #f8f8f7; }
 
 .d-witb-modal__thumb {
@@ -310,225 +345,6 @@
   color: var(--color-text-muted);
 }
 
-/* ── Acc sheet overlay ── */
-.d-witb-sheet {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgb(0 0 0 / .4);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s;
-}
-.d-witb-sheet.is-on {
-  opacity: 1;
-  pointer-events: auto;
-}
-.d-witb-sheet__box {
-  position: relative;
-  background: #fff;
-  border-radius: 28px;
-  width: min(960px, 100%);
-  max-height: 88vh;
-  overflow: auto;
-  transform: translateY(24px);
-  transition: transform .35s cubic-bezier(.2,.8,.2,1);
-}
-.d-witb-sheet.is-on .d-witb-sheet__box { transform: none; }
-
-.d-witb-sheet__grab {
-  width: 44px;
-  height: 5px;
-  border-radius: 999px;
-  background: rgb(0 0 0 / .15);
-  margin: 12px auto 0;
-}
-.d-witb-sheet__close {
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  z-index: 2;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 0;
-  background: rgb(0 0 0 / .06);
-  font-size: 22px;
-  cursor: pointer;
-  line-height: 1;
-  display: grid;
-  place-items: center;
-}
-.d-witb-sheet__close:hover { background: rgb(0 0 0 / .12); }
-
-.d-witb-sheet__in {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 36px;
-  padding: 28px 40px 40px;
-  align-items: start;
-}
-
-/* Sheet media gallery */
-.d-witb-sheet__media {
-  aspect-ratio: 1;
-  background: #fff;
-  border: 1px solid rgb(0 0 0 / .1);
-  border-radius: 22px;
-  overflow: hidden;
-  position: relative;
-}
-.d-witb-sheet__gal {
-  display: flex;
-  height: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-.d-witb-sheet__gal::-webkit-scrollbar { display: none; }
-.d-witb-sheet__gal img {
-  flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 10%;
-  box-sizing: border-box;
-  scroll-snap-align: start;
-}
-.d-witb-sheet__dots {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12px;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-}
-.d-witb-sheet__dots i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgb(0 0 0 / .2);
-}
-.d-witb-sheet__dots i.is-on { background: #000; }
-.d-witb-sheet__arr {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 0;
-  background: rgb(255 255 255 / .9);
-  box-shadow: 0 2px 10px rgb(0 0 0 / .15);
-  cursor: pointer;
-  font-size: 20px;
-  line-height: 1;
-  display: grid;
-  place-items: center;
-}
-.d-witb-sheet__arr--l { left: 10px; }
-.d-witb-sheet__arr--r { right: 10px; }
-.d-witb-sheet__media[data-n="1"] .d-witb-sheet__arr,
-.d-witb-sheet__media[data-n="1"] .d-witb-sheet__dots { display: none; }
-
-/* Sheet info panel */
-.d-witb-sheet__fits {
-  display: block;
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-muted);
-  margin-bottom: 4px;
-}
-.d-witb-sheet__box h2 {
-  font-size: 32px;
-  line-height: 38px;
-  font-weight: var(--font-weight-heavy);
-  letter-spacing: -.02em;
-  margin: 0 0 6px;
-}
-.d-witb-sheet__lead {
-  margin: 0 0 18px;
-  color: rgb(0 0 0 / .78);
-  font-size: 17px;
-  line-height: 1.5;
-}
-.d-witb-sheet__info h3 {
-  font-family: var(--font-accent);
-  font-weight: var(--font-weight-heavy);
-  font-size: 15px;
-  line-height: 22px;
-  margin: 16px 0 2px;
-}
-.d-witb-sheet__info p {
-  margin: 0 0 6px;
-  color: rgb(0 0 0 / .78);
-  font-size: 15px;
-  line-height: 24px;
-}
-
-/* Variant option pills */
-.d-witb-sheet__opts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
-}
-.d-witb-sheet__opt {
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: 1px solid rgb(0 0 0 / .2);
-  background: #fff;
-  font-family: var(--font-subheading);
-  font-size: 13px;
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer;
-  transition: border-color .15s, background .15s, color .15s;
-}
-.d-witb-sheet__opt.is-on {
-  border-color: #000;
-  background: #000;
-  color: #fff;
-}
-
-/* Buy box */
-.d-witb-sheet__buy {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-top: 22px;
-  padding-top: 22px;
-  border-top: 1px solid rgb(0 0 0 / .1);
-}
-.d-witb-sheet__price {
-  font-family: var(--font-accent);
-  font-weight: var(--font-weight-heavy);
-  font-size: 26px;
-  line-height: 30px;
-  letter-spacing: -.01em;
-}
-.d-witb-sheet__atc {
-  padding: 14px 24px;
-  font-size: 13px;
-}
-.d-witb-sheet__full {
-  display: inline-block;
-  margin-top: 18px;
-  font-weight: var(--font-weight-semibold);
-  font-size: 14px;
-  color: #000;
-  text-decoration: none;
-  border-bottom: 1px solid #000;
-  padding-bottom: 2px;
-}
-.d-witb-sheet__full:hover { opacity: .7; }
-
 /* ── Mobile ── */
 @media screen and (max-width: 989px) {
   .d-witb__grid {
@@ -558,24 +374,7 @@
     grid-row: span 1;
   }
 
-  /* Sheet: bottom-anchored on mobile */
-  .d-witb-sheet {
-    align-items: flex-end;
-    padding: 0;
-  }
-  .d-witb-sheet__box {
-    border-radius: 28px 28px 0 0;
-    width: 100%;
-    max-height: 90vh;
-  }
-  .d-witb-sheet__in {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-    padding: 20px 20px calc(32px + env(safe-area-inset-bottom, 0px));
-  }
-  .d-witb-sheet__media { aspect-ratio: 4 / 3; }
-
-  /* Modal: bottom-anchored on mobile */
+  /* Modal: bottom-anchored on mobile, single column */
   .d-witb-modal {
     align-items: flex-end;
     padding: 0;
@@ -585,6 +384,10 @@
     width: 100%;
     max-height: 90vh;
   }
+  .d-witb-modal__in {
+    grid-template-columns: 1fr;
+  }
+  .d-witb-modal__right { display: none; }
 }
 
 {% endstylesheet %}
@@ -629,21 +432,22 @@
             {%- endif %}
             {{ block.shopify_attributes }}
           >
-            {%- if block.settings.image != blank -%}
-              {%- assign img_src = block.settings.image | image_url: width: 400 -%}
-              {{- block.settings.image | image_url: width: 400 | image_tag:
-                alt: tile_alt,
-                loading: 'lazy',
-                widths: '200,300,400',
-                sizes: '(max-width: 989px) 25vw, 16vw'
-              -}}
-            {%- else -%}
-              <span class="d-witb__tile-placeholder" aria-hidden="true">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16 10 L20 16 L16 22 M16 10 L12 16 L16 22" stroke="#c8b89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            {%- endif -%}
+            <span class="d-witb__tile-img">
+              {%- if block.settings.image != blank -%}
+                {{- block.settings.image | image_url: width: 400 | image_tag:
+                  alt: tile_alt,
+                  loading: 'lazy',
+                  widths: '200,300,400',
+                  sizes: '(max-width: 989px) 25vw, 16vw'
+                -}}
+              {%- else -%}
+                <span class="d-witb__tile-placeholder" aria-hidden="true">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 10 L20 16 L16 22 M16 10 L12 16 L16 22" stroke="#c8b89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+            </span>
             {%- if block.settings.qty_badge != blank -%}
               <i class="d-witb__badge" aria-hidden="true">×{{ block.settings.qty_badge }}</i>
             {%- endif -%}
@@ -683,6 +487,14 @@
 </section>
 
 {%- comment -%} ── BOXALL OVERVIEW MODAL ── {%- endcomment -%}
+{%- liquid
+  assign device_block = nil
+  for block in section.blocks
+    if block.settings.size == 'hero'
+      assign device_block = block
+    endif
+  endfor
+-%}
 <div
   class="d-witb-modal"
   id="{{ section_id }}-Modal"
@@ -696,113 +508,79 @@
       <h3 id="{{ section_id }}-ModalTitle">{{ section.settings.heading | escape }}</h3>
       <button type="button" class="d-witb-modal__close" aria-label="{{ 'accessibility.close' | t }}">×</button>
     </div>
-    <div class="d-witb-modal__body">
-      {%- if section.settings.modal_body != blank -%}
-        <p>{{ section.settings.modal_body | escape }}</p>
-      {%- endif -%}
-      <ul class="d-witb-modal__list">
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign modal_alt = block.settings.image.alt | default: block.settings.list_item
-          -%}
-          <li
-            {%- if block.settings.product_handle != blank %} data-handle="{{ block.settings.product_handle | escape }}" title="{{ block.settings.title | escape }}"{% endif %}
-          >
-            {%- if block.settings.image != blank -%}
-              {{- block.settings.image | image_url: width: 128 | image_tag:
-                class: 'd-witb-modal__thumb',
-                alt: modal_alt,
-                loading: 'lazy',
-                widths: '64,128',
-                sizes: '64px'
-              -}}
-            {%- else -%}
-              <span class="d-witb-modal__thumb-ph" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 7 L15 12 L12 17 M12 7 L9 12 L12 17" stroke="#c8b89a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            {%- endif -%}
-            <span>
-              <b>{{ block.settings.list_item | default: block.settings.title | escape }}</b>
-              {%- if block.settings.sub != blank -%}
-                <small>{{ block.settings.sub | escape }}</small>
-              {%- endif -%}
-            </span>
-            <em>×{{ block.settings.list_qty | default: '1' }}</em>
-          </li>
-        {%- endfor -%}
-      </ul>
-    </div>
-  </div>
-</div>
-
-{%- comment -%} ── ACC SHEET (product quick-view) ── {%- endcomment -%}
-<div
-  class="d-witb-sheet"
-  id="{{ section_id }}-Sheet"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="{{ section_id }}-SheetTitle"
-  hidden
->
-  <div class="d-witb-sheet__box">
-    <div class="d-witb-sheet__grab" aria-hidden="true"></div>
-    <button type="button" class="d-witb-sheet__close" id="{{ section_id }}-SheetClose" aria-label="{{ 'accessibility.close' | t }}">×</button>
-    <div class="d-witb-sheet__in">
-
-      <div class="d-witb-sheet__media" id="{{ section_id }}-SheetMedia" data-n="1">
-        <div class="d-witb-sheet__gal" id="{{ section_id }}-SheetGal"></div>
-        <button type="button" class="d-witb-sheet__arr d-witb-sheet__arr--l" aria-label="{{ 'accessibility.previous_slide' | t }}">‹</button>
-        <button type="button" class="d-witb-sheet__arr d-witb-sheet__arr--r" aria-label="{{ 'accessibility.next_slide' | t }}">›</button>
-        <div class="d-witb-sheet__dots" id="{{ section_id }}-SheetDots"></div>
+    <div class="d-witb-modal__in">
+      <div class="d-witb-modal__left">
+        {%- if device_block != nil and device_block.settings.sub != blank -%}
+          <p class="d-witb-modal__sub">{{ device_block.settings.sub | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.modal_body != blank -%}
+          <p class="d-witb-modal__desc">{{ section.settings.modal_body | escape }}</p>
+        {%- endif -%}
+        <p class="d-witb-modal__also">Also in the box</p>
+        <ul class="d-witb-modal__list">
+          {%- for block in section.blocks -%}
+            {%- unless block.settings.size == 'hero' -%}
+              {%- liquid
+                assign modal_alt = block.settings.image.alt | default: block.settings.list_item
+              -%}
+              <li
+                {%- if block.settings.product_handle != blank %} data-handle="{{ block.settings.product_handle | escape }}" data-sub="{{ block.settings.sub | escape }}" data-what="{{ block.settings.what | escape }}" data-why="{{ block.settings.why | escape }}" data-how="{{ block.settings.how | escape }}" title="{{ block.settings.title | escape }}"{% endif %}
+              >
+                {%- if block.settings.image != blank -%}
+                  {{- block.settings.image | image_url: width: 128 | image_tag:
+                    class: 'd-witb-modal__thumb',
+                    alt: modal_alt,
+                    loading: 'lazy',
+                    widths: '64,128',
+                    sizes: '64px'
+                  -}}
+                {%- else -%}
+                  <span class="d-witb-modal__thumb-ph" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 7 L15 12 L12 17 M12 7 L9 12 L12 17" stroke="#c8b89a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                {%- endif -%}
+                <span>
+                  <b>{{ block.settings.list_item | default: block.settings.title | escape }}</b>
+                  {%- if block.settings.sub != blank -%}
+                    <small>{{ block.settings.sub | escape }}</small>
+                  {%- endif -%}
+                </span>
+                <em>×{{ block.settings.list_qty | default: '1' }}</em>
+              </li>
+            {%- endunless -%}
+          {%- endfor -%}
+        </ul>
       </div>
-
-      <div class="d-witb-sheet__info" id="{{ section_id }}-SheetInfo">
-        <span class="d-witb-sheet__fits" id="{{ section_id }}-SheetFits"></span>
-        <h2 id="{{ section_id }}-SheetTitle"></h2>
-        <p class="d-witb-sheet__lead" id="{{ section_id }}-SheetLead"></p>
-        <h3>{{ 'sections.diamond_witb.sheet.what' | t }}</h3>
-        <p id="{{ section_id }}-SheetWhat"></p>
-        <h3>{{ 'sections.diamond_witb.sheet.why' | t }}</h3>
-        <p id="{{ section_id }}-SheetWhy"></p>
-        <h3>{{ 'sections.diamond_witb.sheet.how' | t }}</h3>
-        <p id="{{ section_id }}-SheetHow"></p>
-        <div class="d-witb-sheet__opts" id="{{ section_id }}-SheetOpts" role="group" aria-label="{{ 'sections.diamond_witb.sheet.choose_size' | t }}"></div>
-        <div class="d-witb-sheet__buy">
-          <span class="d-witb-sheet__price" id="{{ section_id }}-SheetPrice"></span>
-          <button type="button" class="btn btn--accent d-witb-sheet__atc" id="{{ section_id }}-SheetAtc">
-            {{ 'sections.diamond_witb.sheet.add_to_cart' | t }}
-          </button>
+      {%- if device_block != nil and device_block.settings.image != blank -%}
+        <div class="d-witb-modal__right">
+          {{- device_block.settings.image | image_url: width: 600 | image_tag:
+            alt: device_block.settings.title,
+            loading: 'lazy',
+            widths: '300,400,600'
+          -}}
         </div>
-        <a class="d-witb-sheet__full" id="{{ section_id }}-SheetFull" href="#">
-          {{ 'sections.diamond_witb.sheet.view_details' | t }} ›
-        </a>
-      </div>
-
+      {%- endif -%}
     </div>
   </div>
 </div>
 
-<script>
-  window.__witbSectionId = {{ section_id | json }};
-</script>
-<script defer src="{{ 'acc-sheet.js' | asset_url }}"></script>
+<script>window.__witbSectionId = {{ section_id | json }};</script>
 
 {% javascript %}
 (function () {
-  /* ── resolve IDs from the globally set section ID ── */
-  const sid = window.__witbSectionId;
+  var sid = window.__witbSectionId;
   if (!sid) return;
 
-  const modal      = document.getElementById(sid + '-Modal');
-  const openBoxBtn = document.getElementById(sid + '-OpenBox');
+  var modal      = document.getElementById(sid + '-Modal');
+  var openBoxBtn = document.getElementById(sid + '-OpenBox');
   if (!modal) return;
 
-  let lastModalFocus = null;
+  var lastModalFocus = null;
 
   function openModal() {
     lastModalFocus = document.activeElement;
     modal.hidden = false;
-    requestAnimationFrame(() => modal.classList.add('is-on'));
+    requestAnimationFrame(function () { modal.classList.add('is-on'); });
     document.body.style.overflow = 'hidden';
     modal.querySelector('.d-witb-modal__close').focus();
     if (openBoxBtn) openBoxBtn.setAttribute('aria-expanded', 'true');
@@ -810,9 +588,7 @@
 
   function closeModal() {
     modal.classList.remove('is-on');
-    modal.addEventListener('transitionend', () => {
-      modal.hidden = true;
-    }, { once: true });
+    modal.addEventListener('transitionend', function () { modal.hidden = true; }, { once: true });
     document.body.style.overflow = '';
     if (openBoxBtn) openBoxBtn.setAttribute('aria-expanded', 'false');
     if (lastModalFocus && lastModalFocus.focus) lastModalFocus.focus();
@@ -820,33 +596,58 @@
 
   if (openBoxBtn) openBoxBtn.addEventListener('click', openModal);
   modal.querySelector('.d-witb-modal__close').addEventListener('click', closeModal);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 
-  /* Clicking an acc item in the modal list opens the acc sheet */
-  modal.querySelectorAll('.d-witb-modal__list li[data-handle]').forEach(li => {
-    li.addEventListener('click', () => {
-      const handle = li.dataset.handle;
-      if (!handle) return;
-      closeModal();
-      if (typeof window.openAccSheet === 'function') window.openAccSheet(handle, li);
-    });
-  });
-
-  /* Device tile → open BOXALL modal */
-  document.querySelectorAll('.d-witb__tile[data-opens-modal]').forEach(btn => {
+  /* Device tile → BOXALL modal */
+  document.querySelectorAll('.d-witb__tile[data-opens-modal]').forEach(function (btn) {
     btn.addEventListener('click', openModal);
   });
 
-  /* Acc tiles → open acc sheet */
-  document.querySelectorAll('.d-witb__tile[data-handle]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (typeof window.openAccSheet === 'function') window.openAccSheet(btn.dataset.handle, btn);
-    });
+  /* Shared product popup dispatch */
+  function dispatchPopup(handle, srcEl) {
+    fetch('/products/' + encodeURIComponent(handle) + '.js')
+      .then(function (r) { return r.json(); })
+      .then(function (p) {
+        var v0 = (p.variants || [])[0] || {};
+        var fmt = function (c) { var d = c / 100; return '$' + (d % 1 === 0 ? d : d.toFixed(2)); };
+        var parts = [];
+        if (srcEl && srcEl.dataset.what) parts.push('<h3>What it is</h3><p>' + srcEl.dataset.what + '</p>');
+        if (srcEl && srcEl.dataset.why)  parts.push('<h3>Why</h3><p>'        + srcEl.dataset.why  + '</p>');
+        if (srcEl && srcEl.dataset.how)  parts.push('<h3>How to use it</h3><p>' + srcEl.dataset.how + '</p>');
+        var vars = (p.variants || []).length > 1
+          ? (p.variants || []).map(function (v) {
+              return { vid: String(v.id), price: fmt(v.price), available: v.available, title: v.title === 'Default Title' ? (v.option1 || v.title) : v.title };
+            })
+          : [];
+        document.dispatchEvent(new CustomEvent('product:popup', { detail: {
+          title:     p.title,
+          fits:      'Fits Diamond',
+          price:     fmt(v0.price || 0),
+          available: v0.available !== false,
+          vid:       String(v0.id || ''),
+          url:       '/products/' + encodeURIComponent(handle),
+          images:    (p.images || []).slice(0, 5).map(function (src) { return { src: src, alt: p.title }; }),
+          headline:  srcEl && srcEl.dataset.sub ? '<p>' + srcEl.dataset.sub + '</p>' : '',
+          shortdesc: parts.join(''),
+          variants:  vars
+        }}));
+      })
+      .catch(function () {});
+  }
+
+  /* Acc tiles → shared product popup */
+  document.querySelectorAll('.d-witb__tile[data-handle]').forEach(function (btn) {
+    btn.addEventListener('click', function () { dispatchPopup(btn.dataset.handle, btn); });
   });
 
-  /* Escape key closes modal */
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !modal.hidden) closeModal();
+  /* Modal list items → shared product popup */
+  modal.querySelectorAll('.d-witb-modal__list li[data-handle]').forEach(function (li) {
+    li.addEventListener('click', function () {
+      if (!li.dataset.handle) return;
+      closeModal();
+      dispatchPopup(li.dataset.handle, li);
+    });
   });
 })();
 {% endjavascript %}
