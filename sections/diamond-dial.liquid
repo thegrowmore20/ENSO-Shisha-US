@@ -231,13 +231,25 @@
         {%- endif -%}
 
         <div class="d-dial__screen" hidden>
-          <img src="" alt="" loading="lazy">
+          <img class="d-dial__scr" src="" alt="">
           <div class="d-dial__glass"></div>
         </div>
 
         <button class="d-dial__resume" hidden>
           {{- 'sections.diamond_dial.play_loop' | t -}}
         </button>
+
+        {%- comment -%} Preloaded screen images — hidden, swapped in by JS {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.screen_image != blank -%}
+            <img
+              hidden
+              data-dial-preload="{{ forloop.index0 }}"
+              src="{{ block.settings.screen_image | image_url: width: 800 }}"
+              alt=""
+            >
+          {%- endif -%}
+        {%- endfor -%}
 
       </div>
 
@@ -247,7 +259,7 @@
           <ul class="d-dial__pts">
             {%- for block in section.blocks -%}
               <li {{ block.shopify_attributes }}>
-                <button data-index="{{ forloop.index0 }}" aria-current="false">
+                <button data-index="{{ forloop.index0 }}">
                   <b>{{ block.settings.title | escape }}</b>
                   {{- block.settings.body | escape -}}
                 </button>
@@ -264,43 +276,28 @@
   </div>
 </section>
 
-{%- comment -%} Screen image URLs per block — read by JS {%- endcomment -%}
-<script type="application/json" id="d-dial-data-{{ section.id }}">
-[{%- for block in section.blocks -%}
-  {%- if block.settings.screen_image != blank -%}
-    {{ block.settings.screen_image | image_url: width: 800 | json }}
-  {%- else -%}
-    null
-  {%- endif -%}
-  {%- unless forloop.last -%},{%- endunless -%}
-{%- endfor -%}]
-</script>
-
 {% javascript %}
 (function () {
   document.querySelectorAll('.d-dial').forEach(function (sec) {
-    var secId   = sec.dataset.sectionId;
     var vidWrap = sec.querySelector('.d-dial__vid');
     var video   = sec.querySelector('video');
     var screen  = sec.querySelector('.d-dial__screen');
-    var scrImg  = screen ? screen.querySelector('img') : null;
+    var scrImg  = screen ? screen.querySelector('.d-dial__scr') : null;
     var resume  = sec.querySelector('.d-dial__resume');
     var buttons = Array.from(sec.querySelectorAll('.d-dial__pts button'));
-    var dataEl  = document.getElementById('d-dial-data-' + secId);
 
-    if (!video || !dataEl) return;
-
-    var urls = JSON.parse(dataEl.textContent);
+    if (!video) return;
 
     function show(btn) {
-      var idx = parseInt(btn.dataset.index, 10);
+      var idx = btn.dataset.index;
       buttons.forEach(function (b) {
         b.setAttribute('aria-current', String(b === btn));
       });
-      if (urls[idx] && scrImg) {
-        scrImg.src = urls[idx];
+      var pre = sec.querySelector('[data-dial-preload="' + idx + '"]');
+      if (pre && scrImg) {
+        scrImg.src = pre.src;
         screen.hidden = false;
-      } else {
+      } else if (screen) {
         screen.hidden = true;
       }
       if (resume) resume.hidden = false;
@@ -308,7 +305,7 @@
     }
 
     function play() {
-      buttons.forEach(function (b) { b.setAttribute('aria-current', 'false'); });
+      buttons.forEach(function (b) { b.removeAttribute('aria-current'); });
       if (screen) screen.hidden = true;
       if (resume) resume.hidden = true;
       video.play().catch(function () {});
