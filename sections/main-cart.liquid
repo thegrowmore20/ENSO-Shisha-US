@@ -587,9 +587,9 @@
 /* ── Toast ───────────────────────────────────────────────────────── */
 .cp-toast {
   position: fixed;
+  top: 50%;
   left: 50%;
-  bottom: 80px;
-  transform: translate(-50%, 16px);
+  transform: translate(-50%, -50%) scale(.92);
   background: var(--color-text);
   color: var(--color-background);
   border-radius: var(--radius-pill);
@@ -597,7 +597,7 @@
   font-size: 13px;
   font-weight: var(--font-weight-semibold);
   opacity: 0;
-  transition: opacity .25s, transform .25s;
+  transition: opacity .2s, transform .2s;
   z-index: 9001;
   pointer-events: none;
   white-space: nowrap;
@@ -606,7 +606,7 @@
 .cp-toast.is-on {
   display: block;
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* ── Empty state ─────────────────────────────────────────────────── */
@@ -1313,7 +1313,8 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
   border-radius: 50%;
   animation: cp-spin .7s linear infinite;
 }
-@keyframes cp-spin { to { transform: rotate(360deg); } }
+@keyframes cp-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes cp-spin-c { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
 
 /* ── Button loading state ────────────────────────────────────────── */
 .cp-addon__atc.is-loading {
@@ -1326,13 +1327,12 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
   width: 13px;
   height: 13px;
   border: 2px solid rgba(255,255,255,.35);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: cp-spin .6s linear infinite;
+  animation: cp-spin-c .6s linear infinite;
 }
 .cp-dev__x.is-loading,
 .cp-dev__remove.is-loading { pointer-events: none; opacity: .45; }
@@ -1356,16 +1356,14 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
   width: 28px;
   height: 28px;
   border: 2px solid var(--color-border);
   border-top-color: var(--color-text);
   border-radius: 50%;
-  animation: cp-spin .7s linear infinite;
+  animation: cp-spin-c .7s linear infinite;
   z-index: 11;
 }
-@keyframes cp-spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
 .cp-addon__qty[hidden],
 .cp-fav__add.is-loading { opacity: .6; pointer-events: none; color: transparent; }
 .cp-addon__qty[hidden] { display: none; }
