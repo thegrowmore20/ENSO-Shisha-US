@@ -13,9 +13,23 @@
 
 {%- liquid
   assign max_products = block.settings.max_products | default: 4
+
+  assign products_source = nil
+  if block.settings.products != blank
+    assign products_source = block.settings.products
+  elsif block.settings.products_collection != blank
+    assign products_source = block.settings.products_collection.products
+  endif
+
   assign product_links = link.links | where: 'type', 'product_link'
 
-  assign products_to_show = product_links.size | at_most: max_products
+  assign products_to_show = max_products
+  if products_source != blank
+    assign products_to_show = products_source.size | at_most: max_products
+  else
+    assign products_to_show = product_links.size | at_most: max_products
+  endif
+
   assign show_view_all = false
   if block.settings.view_all_text != blank
     assign show_view_all = true
@@ -67,7 +81,7 @@
       </div>
     {%- endif -%}
 
-    {%- if block.settings.show_products and product_links.size > 0 -%}
+    {%- if block.settings.show_products and (products_source != blank or product_links.size > 0) -%}
       <div class="site-header__mega-products-wrap">
         <div class="site-header__mega-products" style="--mega-product-count: {{ mega_products_columns }};">
           {%- if show_view_all -%}
@@ -75,14 +89,24 @@
               {{ block.settings.view_all_text }}
             </a>
           {%- endif -%}
-          {%- for product_link in product_links limit: max_products -%}
-            {%- assign product = product_link.object -%}
-            {%- if product and product.available -%}
-              {% unless product.title contains 'Shipping Protection' %}
-                {%- render 'card-product', product: product, section: section -%}
-              {% endunless %}
-            {%- endif -%}
-          {%- endfor -%}
+          {%- if products_source != blank -%}
+            {%- for product in products_source limit: max_products -%}
+              {%- if product and product.available -%}
+                {%- unless product.title contains 'Shipping Protection' -%}
+                  {%- render 'card-product', product: product, section: section -%}
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for product_link in product_links limit: max_products -%}
+              {%- assign product = product_link.object -%}
+              {%- if product and product.available -%}
+                {%- unless product.title contains 'Shipping Protection' -%}
+                  {%- render 'card-product', product: product, section: section -%}
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
         </div>
       </div>
     {%- endif -%}

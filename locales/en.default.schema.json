@@ -719,6 +719,14 @@
               "label": "Show products",
               "info": "Child links that point at a product are shown as product cards instead of text links."
             },
+            "products": {
+              "label": "Product list",
+              "info": "Takes priority over the collection below and nav link children. Leave empty to fall back."
+            },
+            "products_collection": {
+              "label": "Products collection",
+              "info": "Used when no product list is set above. Falls back to nav link children if empty."
+            },
             "max_products": {
               "label": "Products to show"
             },
