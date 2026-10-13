@@ -1,9 +1,7 @@
 {% stylesheet %}
 
 .dg-nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 18px 40px 0;
+  padding-top: 18px;
   font-family: var(--font-body);
 }
 
@@ -58,31 +56,33 @@
 
 @media screen and (max-width: 989px) {
   .dg-nav {
-    padding: 14px 16px 0;
+    padding-top: 14px;
   }
 }
 
 {% endstylesheet %}
 
 <div class="dg-nav" id="DgNav-{{ section.id }}">
-  <a class="dg-nav__back" href="{{ section.settings.back_url | default: '/' }}">
-    ‹ {{ section.settings.back_label | default: 'ENSŌ Experience' | escape }}
-    <span aria-hidden="true">/</span>
-    <b>{{ section.settings.current_label | default: 'ENSŌ Diamond' | escape }}</b>
-  </a>
-  {%- if section.blocks.size > 0 -%}
-    <div class="dg-nav__row" role="list">
-      {%- for block in section.blocks -%}
-        <a
-          class="dg-nav__chip{% if block.settings.is_current %} is-current{% endif %}"
-          href="{{ block.settings.url | default: '#' }}"
-          role="listitem"
-          {% if block.settings.is_current %}aria-current="page"{% endif %}
-          {{ block.shopify_attributes }}
-        >{{ block.settings.label | escape }}</a>
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
+  <div class="container">
+    <a class="dg-nav__back" href="{{ section.settings.back_url | default: '/' }}">
+      ‹ {{ section.settings.back_label | default: 'ENSŌ Experience' | escape }}
+      <span aria-hidden="true">/</span>
+      <b>{{ section.settings.current_label | default: 'ENSŌ Diamond' | escape }}</b>
+    </a>
+    {%- if section.blocks.size > 0 -%}
+      <div class="dg-nav__row" role="list">
+        {%- for block in section.blocks -%}
+          <a
+            class="dg-nav__chip{% if block.settings.is_current %} is-current{% endif %}"
+            href="{{ block.settings.url | default: '#' }}"
+            role="listitem"
+            {% if block.settings.is_current %}aria-current="page"{% endif %}
+            {{ block.shopify_attributes }}
+          >{{ block.settings.label | escape }}</a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
 </div>
 
 {% schema %}

@@ -1,9 +1,10 @@
 {% stylesheet %}
 
 .dg-hero {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 56px 40px 48px;
+  /* padding-top / padding-bottom set by {% style %} */
+}
+
+.dg-hero__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
@@ -93,9 +94,8 @@
 }
 
 @media screen and (max-width: 989px) {
-  .dg-hero {
+  .dg-hero__grid {
     grid-template-columns: 1fr;
-    padding: 32px 20px 24px;
   }
   .dg-hero__copy { order: 2; }
   .dg-hero__stage { order: 1; }
@@ -121,6 +121,8 @@
 {% endstyle %}
 
 <div class="dg-hero" id="DgHero-{{ section.id }}">
+  <div class="container">
+  <div class="dg-hero__grid">
   <div class="dg-hero__copy">
     {%- if section.settings.eyebrow != blank -%}
       <p class="dg-hero__eyebrow eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -164,6 +166,8 @@
         </svg>
       </div>
     {%- endif -%}
+  </div>
+  </div>
   </div>
 </div>
 
