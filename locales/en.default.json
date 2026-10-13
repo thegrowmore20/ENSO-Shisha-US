@@ -184,20 +184,20 @@
       "decrease": "Decrease quantity"
     },
     "device": {
-      "show_addons": "Choose set & add-ons",
+      "show_addons": "Change set & add-ons",
       "hide_addons": "Hide set & add-ons",
       "remove": "Remove {{ title }}",
       "remove_link": "Remove {{ title }} from cart"
     },
     "sets": {
       "heading": "Pick a set",
-      "sub_diamond": "Choose the bundle that suits your setup",
-      "sub_enso": "Choose the bundle that suits your setup"
+      "sub_diamond": "Every set is the same Diamond. The difference is how much of the evening you want covered before the first charge and the first wash.",
+      "sub_enso": "Every set is the same 2026 Edition with the glass tank, hose and mouthpiece. Pick the battery here: the standard one, both batteries for long evenings, or Battery Plus."
     },
     "addons": {
       "heading": "Add accessories",
-      "sub_diamond": "Everything that works with your Diamond",
-      "sub_enso": "Everything that works with your ENSŌ 2026",
+      "sub_diamond": "Spares and extras that fit Diamond",
+      "sub_enso": "Spares and extras that fit the 2026 Edition",
       "essentials": "Essentials",
       "spares": "Spares",
       "show_more": "Show {{ count }} more",
