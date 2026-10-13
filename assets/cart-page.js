@@ -1,6 +1,8 @@
 if (!customElements.get('cart-page')) {
   class CartPage extends HTMLElement {
-    connectedCallback() {
+    connectedCallback() { this.#reinit(); }
+
+    #reinit() {
       this.moneyFmt   = this.dataset.moneyFormat || '{{ amount }}';
       this.devicePids = new Set(
         (this.dataset.devicePids || '').split(',').map(s => s.trim()).filter(Boolean)
@@ -105,7 +107,13 @@ if (!customElements.get('cart-page')) {
 
         const curCartPage = document.querySelector('cart-page');
         if (nextCartPage && curCartPage) {
-          curCartPage.replaceWith(nextCartPage);
+          // Update innerHTML in-place so the element stays in the live DOM.
+          // replaceWith() depends on the browser calling connectedCallback on
+          // the DOMParser-sourced element after insertion, which is unreliable.
+          // Updating innerHTML and calling #reinit() explicitly is always safe.
+          curCartPage.innerHTML = nextCartPage.innerHTML;
+          Array.from(nextCartPage.attributes).forEach(a => curCartPage.setAttribute(a.name, a.value));
+          curCartPage.#reinit();
         } else {
           window.location.reload();
         }
@@ -136,6 +144,7 @@ if (!customElements.get('cart-page')) {
             await this.#reRenderSection();
           } catch (err) {
             console.error('Set switch failed', err);
+            this.#toast(err.message || 'Could not change selection');
             radio.disabled = false;
             this.#hidePageSpinner();
           }
@@ -159,22 +168,16 @@ if (!customElements.get('cart-page')) {
             // ADDED → remove
             await this.#removeAddon(card);
           } else {
-            // not added → add
+            // not added → add, then full re-render for correct button state + acc section
             const vid = parseInt(card.dataset.vid, 10);
             atcBtn.classList.add('is-loading');
             atcBtn.disabled = true;
             try {
-              const data = await this.#cartFetch('/cart/add.js', { id: vid, quantity: 1 });
-              card.dataset.key = data.key;
-              card.classList.add('is-added');
-              atcBtn.classList.add('is-on');
-              atcBtn.classList.remove('is-loading');
-              atcBtn.disabled = false;
-              this.#renderAddonQtyVisible(card, data.key, 1);
+              await this.#cartFetch('/cart/add.js', { id: vid, quantity: 1 });
               const addedName = card.querySelector('.cp-addon__name')?.textContent?.trim() || '';
               if (addedName) this.#toast(`${addedName} added to cart`);
               else this.#toast('Added to cart');
-              await this.#refreshSidebar();
+              await this.#reRenderSection();
             } catch (err) {
               console.error('Addon add failed', err);
               atcBtn.classList.remove('is-loading');
@@ -189,25 +192,6 @@ if (!customElements.get('cart-page')) {
       }
     }
 
-    #renderAddonQtyVisible(card, key, qty) {
-      let qtyWrap = card.querySelector('.cp-addon__qty');
-      if (!qtyWrap) {
-        qtyWrap = document.createElement('div');
-        qtyWrap.className = 'cp-addon__qty';
-        qtyWrap.innerHTML = `
-          <button type="button" class="cp-addon__qty-btn" data-d="-1" aria-label="Decrease quantity">−</button>
-          <span class="cp-addon__qty-num">${qty}</span>
-          <button type="button" class="cp-addon__qty-btn" data-d="1" aria-label="Increase quantity">+</button>`;
-        card.querySelector('.cp-addon__row')?.appendChild(qtyWrap);
-        this.#bindAddonQty(card, qtyWrap);
-      } else {
-        const num = qtyWrap.querySelector('.cp-addon__qty-num');
-        if (num) num.textContent = qty;
-      }
-      qtyWrap.dataset.key = key;
-      qtyWrap.style.display = '';
-    }
-
     async #removeAddon(card) {
       const key = card.dataset.key;
       if (!key) return;
@@ -216,18 +200,9 @@ if (!customElements.get('cart-page')) {
       if (atcBtn) { atcBtn.classList.add('is-loading'); atcBtn.disabled = true; }
       try {
         await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
-        delete card.dataset.key;
-        card.classList.remove('is-added');
-        if (atcBtn) {
-          atcBtn.classList.remove('is-on', 'is-loading');
-          atcBtn.disabled = false;
-          atcBtn.textContent = card.dataset.addLabel || 'Add to cart';
-        }
-        const qtyWrap = card.querySelector('.cp-addon__qty');
-        if (qtyWrap) qtyWrap.style.display = 'none';
         if (name) this.#toast(`${name} removed from cart`);
         else this.#toast('Removed from cart');
-        await this.#refreshSidebar();
+        await this.#reRenderSection();
       } catch (err) {
         console.error('Addon remove failed', err);
         if (atcBtn) { atcBtn.classList.remove('is-loading'); atcBtn.disabled = false; }
@@ -327,9 +302,14 @@ if (!customElements.get('cart-page')) {
         btn.addEventListener('click', async () => {
           const card    = btn.closest('.cp-fav');
           const vid     = parseInt(card?.dataset.vid || '0', 10);
-          if (!vid) return;
+          if (!vid) {
+            this.#toast('Product not available');
+            return;
+          }
           const favName = card.querySelector('.cp-fav__name')?.textContent?.trim() || '';
           btn.disabled = true;
+          btn.classList.add('is-loading');
+          this.#showPageSpinner();
           try {
             await this.#cartFetch('/cart/add.js', { id: vid, quantity: 1 });
             if (favName) this.#toast(`${favName} added to cart`);
@@ -337,7 +317,10 @@ if (!customElements.get('cart-page')) {
             await this.#reRenderSection();
           } catch (err) {
             console.error('Fav add failed', err);
+            this.#toast(err.message || 'Could not add to cart');
             btn.disabled = false;
+            btn.classList.remove('is-loading');
+            this.#hidePageSpinner();
           }
         });
       });
