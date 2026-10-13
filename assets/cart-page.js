@@ -228,7 +228,8 @@ if (!customElements.get('cart-page')) {
             await this.#removeAddon(card);
             return;
           }
-          card.classList.add('cp-addon--qty-loading');
+          const main = this.querySelector('.cp-main');
+          if (main) main.classList.add('is-loading');
           try {
             await this.#cartFetch('/cart/change.js', { id: key, quantity: next });
             if (num) num.textContent = next;
@@ -236,7 +237,7 @@ if (!customElements.get('cart-page')) {
           } catch (err) {
             console.error('Addon qty change failed', err);
           } finally {
-            card.classList.remove('cp-addon--qty-loading');
+            if (main) main.classList.remove('is-loading');
           }
         });
       });
@@ -255,8 +256,9 @@ if (!customElements.get('cart-page')) {
       if (removeBtn) {
         removeBtn.addEventListener('click', async () => {
           const name = row.querySelector('.cp-acc-row__name')?.textContent?.trim() || '';
+          const main = this.querySelector('.cp-main');
           removeBtn.disabled = true;
-          row.classList.add('is-loading');
+          if (main) main.classList.add('is-loading');
           try {
             await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
             row.remove();
@@ -267,7 +269,8 @@ if (!customElements.get('cart-page')) {
           } catch (err) {
             console.error('Acc remove failed', err);
             removeBtn.disabled = false;
-            row.classList.remove('is-loading');
+          } finally {
+            if (main) main.classList.remove('is-loading');
           }
         });
       }
@@ -282,7 +285,8 @@ if (!customElements.get('cart-page')) {
             removeBtn?.click();
             return;
           }
-          row.classList.add('is-loading');
+          const main = this.querySelector('.cp-main');
+          if (main) main.classList.add('is-loading');
           try {
             const data = await this.#cartFetch('/cart/change.js', { id: key, quantity: next });
             if (num) num.textContent = next;
@@ -293,7 +297,7 @@ if (!customElements.get('cart-page')) {
           } catch (err) {
             console.error('Acc qty change failed', err);
           } finally {
-            row.classList.remove('is-loading');
+            if (main) main.classList.remove('is-loading');
           }
         });
       });
