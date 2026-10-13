@@ -91,8 +91,8 @@ if (!customElements.get('cart-page')) {
 
     // ── Section re-render (replaces full page reload) ──────────────────────
 
-    async #reRenderSection() {
-      this.#showPageSpinner();
+    async #reRenderSection(silent = false) {
+      if (!silent) this.#showPageSpinner();
       try {
         // Section Rendering API (fast path — works when Shopify returns section HTML)
         let nextCartPage = null;
@@ -129,7 +129,7 @@ if (!customElements.get('cart-page')) {
         console.error('Section re-render failed', err);
         window.location.reload();
       } finally {
-        this.#hidePageSpinner();
+        if (!silent) this.#hidePageSpinner();
       }
     }
 
@@ -179,7 +179,7 @@ if (!customElements.get('cart-page')) {
             // ADDED → remove
             await this.#removeAddon(card);
           } else {
-            // not added → add, then full re-render for correct button state + acc section
+            // not added → add, then silent re-render (button spinner only, no page overlay)
             const vid = parseInt(card.dataset.vid, 10);
             atcBtn.classList.add('is-loading');
             atcBtn.disabled = true;
@@ -188,7 +188,7 @@ if (!customElements.get('cart-page')) {
               const addedName = card.querySelector('.cp-addon__name')?.textContent?.trim() || '';
               if (addedName) this.#toast(`${addedName} added to cart`);
               else this.#toast('Added to cart');
-              await this.#reRenderSection();
+              await this.#reRenderSection(true);
             } catch (err) {
               console.error('Addon add failed', err);
               atcBtn.classList.remove('is-loading');
@@ -213,7 +213,7 @@ if (!customElements.get('cart-page')) {
         await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
         if (name) this.#toast(`${name} removed from cart`);
         else this.#toast('Removed from cart');
-        await this.#reRenderSection();
+        await this.#reRenderSection(true);
       } catch (err) {
         console.error('Addon remove failed', err);
         if (atcBtn) { atcBtn.classList.remove('is-loading'); atcBtn.disabled = false; }
@@ -320,18 +320,16 @@ if (!customElements.get('cart-page')) {
           const favName = card.querySelector('.cp-fav__name')?.textContent?.trim() || '';
           btn.disabled = true;
           btn.classList.add('is-loading');
-          this.#showPageSpinner();
           try {
             await this.#cartFetch('/cart/add.js', { id: vid, quantity: 1 });
             if (favName) this.#toast(`${favName} added to cart`);
             else this.#toast('Added to cart');
-            await this.#reRenderSection();
+            await this.#reRenderSection(true);
           } catch (err) {
             console.error('Fav add failed', err);
             this.#toast(err.message || 'Could not add to cart');
             btn.disabled = false;
             btn.classList.remove('is-loading');
-            this.#hidePageSpinner();
           }
         });
       });
