@@ -12,7 +12,27 @@
     "main": {
       "type": "main-cart",
       "settings": {
-        "color_background": "{{ settings.color_palette.paper }}"
+        "color_background": "{{ settings.color_palette.paper }}",
+        "color_text": "{{ settings.color_palette.ink }}",
+        "empty_diamond_image": "shopify://shop_images/g-3q-right.webp",
+        "empty_diamond_title": "ENSŌ Diamond",
+        "empty_diamond_subtitle": "The electric heater for the hookah you already own",
+        "empty_diamond_cta": "SHOP DIAMOND",
+        "diamond_url": "",
+        "empty_enso_image": "shopify://shop_images/25429a46-Product_1_1.png",
+        "empty_enso_title": "ENSŌ 2026 Edition",
+        "empty_enso_subtitle": "The all-in-one electric hookah",
+        "empty_enso_cta": "SEE THE 2026 EDITION",
+        "enso_url": "",
+        "empty_acc_image": "shopify://shop_images/sku-battery.webp",
+        "empty_acc_title": "Accessories",
+        "empty_acc_subtitle": "Batteries, cups, screens, tools and the backpack",
+        "empty_acc_cta": "SHOP ACCESSORIES",
+        "empty_acc_url": "",
+        "cta_label": "Checkout",
+        "usp_1": "14 days unopened, 30 days opened, from delivery",
+        "usp_2": "Two years on the device, one year on the battery",
+        "usp_3": "Ships from our EU and US warehouses"
       }
     }
   },

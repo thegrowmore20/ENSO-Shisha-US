@@ -70,12 +70,12 @@
 -%}
 
 {% style %}
-  #shopify-section-{{ section.id }} .cart-page {
+  #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top_mobile | default: 32 }}px;
     padding-bottom: {{ section.settings.padding_bottom_mobile | default: 80 }}px;
   }
   @media screen and (min-width: 991px) {
-    #shopify-section-{{ section.id }} .cart-page {
+    #shopify-section-{{ section.id }} {
       padding-top: {{ section.settings.padding_top | default: 56 }}px;
       padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
     }
@@ -532,6 +532,7 @@
 {% stylesheet %}
 /* ── Layout ─────────────────────────────────────────────────────── */
 .cart-page {
+  display: block;
   background: var(--color-background);
 }
 
