@@ -449,7 +449,7 @@
             assign fav_has   = false
             if fav_source != blank
               for fp in fav_source
-                if fav_count >= 4
+                if fav_count >= 3
                   break
                 endif
                 assign fp_in = false
@@ -477,7 +477,7 @@
               <div class="cp-favs__grid" id="cp-favs-grid">
                 {%- assign fav_count = 0 -%}
                 {%- for fp in fav_source -%}
-                  {%- if fav_count >= 4 -%}{%- break -%}{%- endif -%}
+                  {%- if fav_count >= 3 -%}{%- break -%}{%- endif -%}
                   {%- assign fp_in = false -%}
                   {%- for ci in cart.items -%}
                     {%- if ci.product.id == fp.id -%}{%- assign fp_in = true -%}{%- break -%}{%- endif -%}
