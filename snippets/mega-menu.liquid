@@ -81,7 +81,13 @@
       </div>
     {%- endif -%}
 
-    {%- if block.settings.show_products and (products_source != blank or product_links.size > 0) -%}
+    {%- assign has_products = false -%}
+    {%- if products_source != blank -%}
+      {%- assign has_products = true -%}
+    {%- elsif product_links.size > 0 -%}
+      {%- assign has_products = true -%}
+    {%- endif -%}
+    {%- if block.settings.show_products and has_products -%}
       <div class="site-header__mega-products-wrap">
         <div class="site-header__mega-products" style="--mega-product-count: {{ mega_products_columns }};">
           {%- if show_view_all -%}
