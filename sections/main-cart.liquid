@@ -202,6 +202,9 @@
                 assign spare_hidden_count = 0
                 if spr_accs != blank
                   for sa in spr_accs
+                    unless sa.available
+                      continue
+                    endunless
                     if forloop.index <= 2
                       continue
                     endif
@@ -317,6 +320,7 @@
                         <div class="cp-addons__grid">
                           {%- for acc in ess_accs -%}
                             {%- if acc.id == item.product.id -%}{%- continue -%}{%- endif -%}
+                            {%- unless acc.available -%}{%- continue -%}{%- endunless -%}
                             {%- render 'cart-addon-card', product: acc -%}
                           {%- endfor -%}
                         </div>
@@ -328,6 +332,7 @@
                              data-spares-for="{{ item.key }}">
                           {%- for acc in spr_accs -%}
                             {%- if acc.id == item.product.id -%}{%- continue -%}{%- endif -%}
+                            {%- unless acc.available -%}{%- continue -%}{%- endunless -%}
                             {%- liquid
                               assign spc_in = false
                               for ci in cart.items
@@ -444,8 +449,10 @@
                   endif
                 endfor
                 unless fp_in
-                  assign fav_has   = true
-                  assign fav_count = fav_count | plus: 1
+                  if fp.available
+                    assign fav_has   = true
+                    assign fav_count = fav_count | plus: 1
+                  endif
                 endunless
               endfor
             endif
@@ -465,8 +472,10 @@
                     {%- if ci.product.id == fp.id -%}{%- assign fp_in = true -%}{%- break -%}{%- endif -%}
                   {%- endfor -%}
                   {%- unless fp_in -%}
-                    {%- render 'cart-fav-card', product: fp -%}
-                    {%- assign fav_count = fav_count | plus: 1 -%}
+                    {%- if fp.available -%}
+                      {%- render 'cart-fav-card', product: fp -%}
+                      {%- assign fav_count = fav_count | plus: 1 -%}
+                    {%- endif -%}
                   {%- endunless -%}
                 {%- endfor -%}
               </div>
