@@ -151,7 +151,7 @@
         "gallery_layout": "thumbnails_bottom",
         "enable_sticky_info": true,
         "show_info_border": false,
-        "accordion_position": "below_media",
+        "accordion_position": "right",
         "padding_top": 0,
         "padding_bottom": 40,
         "padding_top_mobile": 0,
