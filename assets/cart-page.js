@@ -86,11 +86,16 @@ if (!customElements.get('cart-page')) {
       try {
         const res  = await fetch('/cart?sections=main', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
         const data = await res.json();
-        const doc  = new DOMParser().parseFromString(data.main, 'text/html');
+        const html = data['main'];
+        if (!html) { window.location.reload(); return; }
+        const doc  = new DOMParser().parseFromString(html, 'text/html');
         const next = doc.getElementById('shopify-section-main');
-        if (next) {
+        const cur  = document.getElementById('shopify-section-main');
+        if (next && cur) {
           next.querySelectorAll('script[src]').forEach(s => s.remove());
-          document.getElementById('shopify-section-main')?.replaceWith(next);
+          cur.replaceWith(next);
+        } else {
+          window.location.reload();
         }
       } catch (err) {
         console.error('Section re-render failed', err);

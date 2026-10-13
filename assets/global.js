@@ -762,16 +762,19 @@ if (!customElements.get('product-recommendations')) {
     const form = e.target.closest('form[action="/cart/add"]');
     if (!form) return;
 
-    // If cart-drawer.js is loaded it has its own handler; skip ours to avoid
-    // double-adding. cart-drawer.js sets a flag on the form when it handles it.
-    if (form.dataset.drawerHandled) return;
-
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    const btn = form.querySelector('[type="submit"]');
+    // Use e.submitter (the exact button clicked) so only that button gets the
+    // spinner — never the sticky ATC button when the main form is submitted
+    // and vice versa.
+    const btn     = e.submitter || form.querySelector('[type="submit"]');
     const spinner = btn?.querySelector('[data-add-to-cart-spinner]');
-    if (btn) { btn.classList.add('is-loading'); btn.disabled = true; }
+
+    if (btn) {
+      btn.setAttribute('data-loading', '');
+      btn.disabled = true;
+    }
     if (spinner) spinner.removeAttribute('hidden');
 
     try {
@@ -790,17 +793,14 @@ if (!customElements.get('product-recommendations')) {
       const cartData = await cartRes.json();
       updateCount(cartData.item_count);
 
-      // Silently refresh the drawer if it exists so it's up to date
-      const drawer = document.querySelector('cart-drawer');
-      if (drawer && typeof drawer.renderContents === 'function') {
-        drawer.renderContents({ item_count: cartData.item_count });
-      }
-
       document.dispatchEvent(new CustomEvent('cart:add', { bubbles: true, detail: { item: item } }));
     } catch (err) {
       showToast(err.message || 'Could not add to cart');
     } finally {
-      if (btn) { btn.classList.remove('is-loading'); btn.disabled = false; }
+      if (btn) {
+        btn.removeAttribute('data-loading');
+        btn.disabled = false;
+      }
       if (spinner) spinner.setAttribute('hidden', '');
     }
   });

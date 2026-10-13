@@ -260,6 +260,9 @@ addCartDrawerListeners();
  * with no re-binding required anywhere else.
  */
 document.addEventListener("submit", async (e) => {
+  // global.js handles ATC everywhere via stopImmediatePropagation; this
+  // listener is a fallback for any form that slips through (e.g. if global.js
+  // hasn't loaded yet). Skip if already handled.
   const form = e.target.closest('form[action="/cart/add"]');
   if (!form) return;
 
