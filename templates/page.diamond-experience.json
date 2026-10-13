@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "dg_nav": {
@@ -137,10 +146,10 @@
         "heading": "Start here",
         "subheading": "Everything for your first session and the ones after it, in the order you will need it.",
         "image": "shopify://shop_images/hero-3q.webp",
-        "padding_top": 64,
-        "padding_bottom": 96,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 48
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 24
       }
     },
     "dg_charge_rail": {
@@ -165,15 +174,18 @@
           }
         }
       },
-      "block_order": ["card_charge", "card_contacts"],
+      "block_order": [
+        "card_charge",
+        "card_contacts"
+      ],
       "settings": {
         "section_id": "quick-start",
         "heading": "Charge the battery first",
         "subheading": "Two things before the first session.",
-        "padding_top": 96,
-        "padding_bottom": 80,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 48
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "dg_switch_on": {
@@ -220,19 +232,23 @@
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3", "step_4", "step_5"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "step_5"
+      ],
       "settings": {
         "product_image": "shopify://shop_images/diamond-front.webp",
         "scroll_height": 580,
         "screen_start": "shopify://shop_images/start.svg",
-        "screen_timer": "shopify://shop_images/preheat.svg",
-        "screen_preheat": "shopify://shop_images/preheat.svg",
         "screen_default": "shopify://shop_images/profile_default.svg",
         "screen_phoenix": "shopify://shop_images/profile_phoenix.svg",
         "screen_wraith": "shopify://shop_images/profile_wraith.svg",
         "screen_oracle": "shopify://shop_images/profile_oracle.svg",
         "padding_top": 40,
-        "padding_top_mobile": 0
+        "padding_top_mobile": 24
       }
     },
     "dg_hookah": {
@@ -267,18 +283,24 @@
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
       "settings": {
         "section_id": "hookah",
+        "image": "shopify://shop_images/on-hookah-front.webp",
+        "image_side": "left",
         "eyebrow": "On your hookah",
         "heading": "Fits the stem you already have",
         "body": "Two adapters come in the box, long and short. One of them fits most traditional and modern stems. Your base, your water and your hose stay exactly as they are.",
-        "image": "shopify://shop_images/on-hookah-front.webp",
-        "image_side": "left",
+        "note": "",
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "dg_cap_grid": {
@@ -309,16 +331,20 @@
           }
         }
       },
-      "block_order": ["fig_open", "fig_load", "fig_close"],
+      "block_order": [
+        "fig_open",
+        "fig_load",
+        "fig_close"
+      ],
       "settings": {
         "section_id": "cap",
         "eyebrow": "Cap and cup",
         "heading": "Open, load, close",
         "subheading": "Set the cup in before you switch on. The cap gets hot: hold it by its side pads. The tool lifts the cup out.",
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "dg_checklist": {
@@ -349,31 +375,35 @@
           }
         }
       },
-      "block_order": ["art_heat", "art_water", "art_power"],
+      "block_order": [
+        "art_heat",
+        "art_water",
+        "art_power"
+      ],
       "settings": {
         "section_id": "before",
         "heading": "Before the first session",
         "subheading": "Three things to know, and one to remember.",
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "dg_airflow": {
       "type": "diamond-guide-split",
       "settings": {
         "section_id": "air",
+        "image": "shopify://shop_images/plate-tool.webp",
+        "image_side": "left",
         "eyebrow": "Airflow",
         "heading": "The plate sets the draw",
         "body": "The plate on top of the cap controls how much air reaches the blend. Lift and turn it with the tool: open for a free, light draw, closed down for a denser flavour. Most of the time it stays fully open, all holes.",
         "note": "The plate is hot during a session. Use the tool, not your fingers.",
-        "image": "shopify://shop_images/plate-tool.webp",
-        "image_side": "left",
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "dg_manual_cta": {
@@ -386,9 +416,9 @@
         "cta_url": "/pages/enso-diamond-manual",
         "cta_label": "Read the full manual",
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "dg_firmware": {
@@ -405,7 +435,7 @@
         "link_2_label": "‹ Back to ENSŌ Experience",
         "link_2_url": "/pages/enso-experience#diamond",
         "padding_top": 80,
-        "padding_bottom": 64,
+        "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
