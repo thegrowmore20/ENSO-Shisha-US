@@ -67,7 +67,6 @@
 
 <a href="{{ card_product.url }}" class="product-card {% if card_product.media[1] != blank %}has-secondary-image{% endif %}">
   <div class="product-card__media">
-    {% render 'wishlist-button', card_product: card_product %}
     {%- unless card_product.available -%}
       <span class="badge product-card__badge">{{ 'products.product.sold_out' | t }}</span>
     {%- else -%}
@@ -213,13 +212,6 @@
     aspect-ratio: 1 / 1;
     border-radius: var(--radius-lg);
     overflow: hidden;
-  }
-
-  .product-card__media .custom-wishlist-button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 1;
   }
 
   .product-card__image {
