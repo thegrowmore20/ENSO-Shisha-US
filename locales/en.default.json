@@ -152,14 +152,14 @@
     },
     "heading": {
       "empty": "Your cart",
-      "choose_diamond": "Now choose your set",
-      "choose_enso": "Now choose your set",
+      "choose_diamond": "Choose your Diamond",
+      "choose_enso": "Choose your ENSŌ 2026",
       "accessories": "Your accessories",
       "mixed": "Your cart"
     },
     "lead": {
       "empty": "Nothing here yet. Start with a device, or add what your ENSŌ is missing.",
-      "device": "Pick the set that fits your setup, then add the extras you need.",
+      "device": "Pick a set, then add what the evening needs.",
       "accessories": "Add more from our collection, or head to checkout when you're ready.",
       "mixed": "Review your device and accessories below."
     },
@@ -187,7 +187,8 @@
       "show_addons": "Change set & add-ons",
       "hide_addons": "Hide set & add-ons",
       "remove": "Remove {{ title }}",
-      "remove_link": "Remove {{ title }} from cart"
+      "remove_link": "Remove {{ title }} from cart",
+      "remove_from_cart": "Remove {{ title }} from the cart"
     },
     "sets": {
       "heading": "Pick a set",

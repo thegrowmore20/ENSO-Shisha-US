@@ -184,8 +184,17 @@
               {%- unless item.product.tags contains 'device' -%}{%- continue -%}{%- endunless -%}
               {%- liquid
                 assign dv_family  = item.product.metafields.custom.device_family.value | default: ''
-                assign dv_col_h   = dv_family | append: '-sets'
-                assign dv_col     = collections[dv_col_h]
+                if dv_family == 'diamond'
+                  assign dv_col = section.settings.diamond_sets_collection
+                  if dv_col == blank
+                    assign dv_col = collections['diamond-sets']
+                  endif
+                else
+                  assign dv_col = section.settings.enso_sets_collection
+                  if dv_col == blank
+                    assign dv_col = collections['enso-sets']
+                  endif
+                endif
                 assign ess_accs   = item.product.metafields.custom.essential_accessories.value
                 assign spr_accs   = item.product.metafields.custom.spare_accessories.value
                 assign dev_subtitle = item.product.metafields.custom.headline | metafield_tag | strip_html | strip
@@ -345,6 +354,11 @@
                     </div>
                   {%- endif -%}
 
+                  <button type="button" class="cp-dev__remove" data-remove="{{ item.key }}"
+                          aria-label="{{ 'cart.device.remove_link' | t: title: item.product.title }}">
+                    {{ 'cart.device.remove_from_cart' | t: title: item.product.title }}
+                  </button>
+
                 </div>
               </details>
             {%- endfor -%}
@@ -430,7 +444,7 @@
             endif
           -%}
 
-          {%- if fav_has -%}
+          {%- if fav_has and cart_mode != 'device' -%}
             <div class="cp-favs" id="cp-favs">
               <div class="cp-favs__header">
                 <h2 class="cp-favs__h">{{ 'cart.favs.heading' | t }}</h2>
@@ -1229,6 +1243,21 @@ details.cp-dev[open] .cp-dev__tog-hide { display: inline; }
 .cp-dev__body .block { margin-bottom: 64px; }
 .cp-dev__body .block:last-child { margin-bottom: 0; }
 
+/* ── Remove device link ──────────────────────────────────────────── */
+.cp-dev__remove {
+  display: inline-block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+  margin-top: 16px;
+}
+.cp-dev__remove:hover { color: var(--color-text); }
+
 /* ── Mobile sticky checkout bar ──────────────────────────────────── */
 .cp-mbar {
   display: none;
@@ -1409,6 +1438,20 @@ details.cp-dev[open] .cp-dev__tog-hide { display: inline; }
       "id": "usp_3",
       "label": "t:sections.main_cart.settings.usp_3.label",
       "default": "Ships from our EU and US warehouses"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main_cart.settings.header_sets.content"
+    },
+    {
+      "type": "collection",
+      "id": "diamond_sets_collection",
+      "label": "t:sections.main_cart.settings.diamond_sets_collection.label"
+    },
+    {
+      "type": "collection",
+      "id": "enso_sets_collection",
+      "label": "t:sections.main_cart.settings.enso_sets_collection.label"
     },
     {
       "type": "header",

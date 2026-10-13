@@ -2757,7 +2757,10 @@
         "header_usps": { "content": "Trust signals" },
         "usp_1": { "label": "Trust signal 1" },
         "usp_2": { "label": "Trust signal 2" },
-        "usp_3": { "label": "Trust signal 3" }
+        "usp_3": { "label": "Trust signal 3" },
+        "header_sets": { "content": "Sets collections" },
+        "diamond_sets_collection": { "label": "Diamond sets" },
+        "enso_sets_collection": { "label": "ENSŌ 2026 sets" }
       }
     }
   }
