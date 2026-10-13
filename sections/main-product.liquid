@@ -1049,8 +1049,7 @@
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
-    column-gap: var(--space-3);
-    row-gap: var(--space-2);
+    gap: var(--space-3);
   }
   .product-form__cart-row .quantity {
     margin-top: 0;
@@ -1060,17 +1059,18 @@
     flex: 1;
   }
 
-  /* REZ "Remind Me" app button: always on its own row below the ATC button */
+  /* REZ "Notify Me" app button: always on its own row below the ATC button */
   .product-form__cart-row .rez-button-wrapper,
   .product-form__buy-buttons .rez-button-wrapper {
     flex: 0 0 100%;
     width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .product-form__cart-row .rez-button-wrapper button,
   .product-form__buy-buttons .rez-button-wrapper button {
     width: 100%;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin: 0 !important;
   }
 
   .product-form__cart-row .product-form__submit svg {
