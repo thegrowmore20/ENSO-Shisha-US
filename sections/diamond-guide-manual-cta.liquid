@@ -1,6 +1,6 @@
 {% stylesheet %}
 
-.dg-cta {
+.dg-cta__inner {
   padding: 96px 0;
   border-top: 1px solid var(--color-border);
 }
@@ -46,12 +46,12 @@
 {% endstylesheet %}
 
 {% style %}
-  #shopify-section-{{ section.id }} .dg-cta {
+  #shopify-section-{{ section.id }} .dg-cta__inner {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
   @media screen and (max-width: 989px) {
-    #shopify-section-{{ section.id }} .dg-cta {
+    #shopify-section-{{ section.id }} .dg-cta__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
@@ -60,6 +60,7 @@
 
 <section class="dg-cta" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
+    <div class="dg-cta__inner">
     <div class="dg-cta__head">
       {%- if section.settings.eyebrow != blank -%}
         <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -74,6 +75,7 @@
         {{ section.settings.cta_label | default: 'Read the full manual' | escape }}
       </a>
     {%- endif -%}
+    </div>
   </div>
 </section>
 

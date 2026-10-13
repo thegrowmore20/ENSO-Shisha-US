@@ -1,6 +1,6 @@
 {% stylesheet %}
 
-.dg-cap {
+.dg-cap__inner {
   padding: 96px 0;
   border-top: 1px solid var(--color-border);
 }
@@ -102,12 +102,12 @@
 {% endstylesheet %}
 
 {% style %}
-  #shopify-section-{{ section.id }} .dg-cap {
+  #shopify-section-{{ section.id }} .dg-cap__inner {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
   @media screen and (max-width: 989px) {
-    #shopify-section-{{ section.id }} .dg-cap {
+    #shopify-section-{{ section.id }} .dg-cap__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
@@ -116,6 +116,7 @@
 
 <section class="dg-cap" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
+    <div class="dg-cap__inner">
     <div class="dg-cap__head">
       {%- if section.settings.eyebrow != blank -%}
         <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -153,6 +154,7 @@
         {%- endfor -%}
       </div>
     {%- endif -%}
+    </div>
   </div>
 </section>
 

@@ -1,6 +1,6 @@
 {% stylesheet %}
 
-.dg-check {
+.dg-check__inner {
   padding: 96px 0 80px;
   border-top: 1px solid var(--color-border);
 }
@@ -97,12 +97,12 @@
 {% endstylesheet %}
 
 {% style %}
-  #shopify-section-{{ section.id }} .dg-check {
+  #shopify-section-{{ section.id }} .dg-check__inner {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
   @media screen and (max-width: 989px) {
-    #shopify-section-{{ section.id }} .dg-check {
+    #shopify-section-{{ section.id }} .dg-check__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
@@ -111,6 +111,7 @@
 
 <section class="dg-check" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
+    <div class="dg-check__inner">
     <div class="dg-check__head">
       <h2>{{ section.settings.heading | default: 'Before the first session' | escape }}</h2>
       {%- if section.settings.subheading != blank -%}
@@ -151,6 +152,7 @@
         {%- endfor -%}
       </div>
     {%- endif -%}
+    </div>
   </div>
 </section>
 

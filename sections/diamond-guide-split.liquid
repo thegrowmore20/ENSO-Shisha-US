@@ -1,6 +1,10 @@
 {% stylesheet %}
 
 .dg-split {
+  /* outer wrapper — no border or padding; both live on .dg-split__inner */
+}
+
+.dg-split__inner {
   padding: 96px 0;
   border-top: 1px solid var(--color-border);
 }
@@ -132,12 +136,12 @@
 {% endstylesheet %}
 
 {% style %}
-  #shopify-section-{{ section.id }} .dg-split {
+  #shopify-section-{{ section.id }} .dg-split__inner {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
   @media screen and (max-width: 989px) {
-    #shopify-section-{{ section.id }} .dg-split {
+    #shopify-section-{{ section.id }} .dg-split__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
@@ -153,6 +157,7 @@
 
 <section class="dg-split{% if img_right %} dg-split--img-right{% endif %}" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
+    <div class="dg-split__inner">
     <div class="dg-split__grid">
 
       <div class="dg-split__media">
@@ -198,6 +203,7 @@
         {%- endif -%}
       </div>
 
+    </div>
     </div>
   </div>
 </section>
