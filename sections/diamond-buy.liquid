@@ -7,16 +7,23 @@
   assign gallery_layout = section.settings.gallery_layout | default: 'thumbnails_bottom'
 -%}
 
+{% style %}
+.d-buy-padding-{{ section.id }} {
+  padding-top: {{ section.settings.padding_top_mobile }}px;
+  padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+}
+@media screen and (min-width: 990px) {
+  .d-buy-padding-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+}
+{% endstyle %}
+
 {% stylesheet %}
 
 /* ── Section wrapper ── */
-.d-buy {
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-@media screen and (max-width: 989px) {
-  .d-buy { padding-top: 24px; padding-bottom: 24px; }
-}
+.d-buy {}
 
 /* ── Two-column grid ── */
 .d-buy__cols {
@@ -523,10 +530,11 @@
 -%}
 
 <diamond-buy
-  class="d-buy"
+  class="d-buy d-buy-padding-{{ section.id }}"
   id="buy"
   data-section-id="{{ section.id }}"
   data-variant-id="{{ current_variant.id }}"
+  data-cart-type="{{ settings.cart_type }}"
 >
   <div class="container">
     <div class="d-buy__cols">
@@ -787,20 +795,37 @@
         try {
           const res = await fetch('/cart/add.js', {
             method: 'POST',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'Accept': 'application/javascript'
-            },
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/javascript' },
             body: new FormData(form)
           });
 
           if (!res.ok) throw new Error('cart/add failed');
           const item = await res.json();
 
+          // Show toast notification (exposed by product-popup.liquid)
+          if (typeof window.__showProductToast === 'function') {
+            window.__showProductToast(item.product_title || item.title || '');
+          }
+
+          // Update header cart count bubble
+          const cartRes = await fetch('/cart.js');
+          const cart = await cartRes.json();
+          if (typeof updateCartItemCounts === 'function') {
+            updateCartItemCounts(cart.item_count);
+          } else {
+            document.querySelectorAll('.cart-count').forEach(function (el) {
+              el.textContent = cart.item_count;
+              el.hidden = cart.item_count === 0;
+            });
+          }
+
           document.dispatchEvent(new CustomEvent('cart:add', { detail: { item } }));
 
-          if (typeof updateCartDrawer === 'function') await updateCartDrawer();
-          if (typeof openCartDrawer === 'function') openCartDrawer();
+          // Open cart drawer only when enabled in theme settings
+          if (this.dataset.cartType === 'drawer') {
+            if (typeof updateCartDrawer === 'function') await updateCartDrawer();
+            if (typeof openCartDrawer === 'function') openCartDrawer();
+          }
 
         } catch (err) {
           console.error('[diamond-buy] ATC error:', err);
@@ -861,6 +886,34 @@
       "id": "contact_email",
       "label": "t:sections.diamond_buy.settings.contact_email.label",
       "default": "support@ensoshisha.eu"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_buy.settings.padding_header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.diamond_buy.settings.padding_top.label",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.diamond_buy.settings.padding_bottom.label",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.diamond_buy.settings.padding_top_mobile.label",
+      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.diamond_buy.settings.padding_bottom_mobile.label",
+      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24
     }
   ],
   "presets": [

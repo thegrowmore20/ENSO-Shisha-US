@@ -2488,7 +2488,12 @@
         "price_note": { "label": "Price note" },
         "cta_label": { "label": "CTA label" },
         "inbox_text": { "label": "In the box text" },
-        "contact_email": { "label": "Contact email" }
+        "contact_email": { "label": "Contact email" },
+        "padding_header": { "content": "Section spacing" },
+        "padding_top": { "label": "Padding top — desktop" },
+        "padding_bottom": { "label": "Padding bottom — desktop" },
+        "padding_top_mobile": { "label": "Padding top — mobile" },
+        "padding_bottom_mobile": { "label": "Padding bottom — mobile" }
       },
       "presets": { "name": "Diamond Buy" }
     },

@@ -41,6 +41,38 @@
   </div>
 </div>
 
+{% javascript %}
+(function () {
+  document.addEventListener('click', function (e) {
+    var imgLink   = e.target.closest('.acc-card__img');
+    var titleLink = e.target.closest('.acc-card__title a');
+    if (!imgLink && !titleLink) return;
+    if (e.target.closest('.acc-card__form')) return;
+    var card = e.target.closest('.acc-card[data-popup-title]');
+    if (!card) return;
+    e.preventDefault();
+    var d = card.dataset;
+    var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
+      return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
+    });
+    document.dispatchEvent(new CustomEvent('product:popup', {
+      bubbles: true,
+      detail: {
+        title:     d.popupTitle     || '',
+        fits:      d.popupCompat    || '',
+        price:     d.popupPrice     || '',
+        available: d.popupAvailable !== 'false',
+        vid:       d.popupVariant   || '',
+        url:       d.popupUrl       || '',
+        images:    images,
+        headline:  d.popupHeadline  || '',
+        shortdesc: d.popupShortdesc || ''
+      }
+    }));
+  });
+})();
+{% endjavascript %}
+
 {% stylesheet %}
   .search-page__form {
     max-width: 480px;

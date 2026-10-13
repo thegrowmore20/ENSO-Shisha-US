@@ -155,11 +155,17 @@
     </div>
 
     {%- if product.available -%}
+      {%- liquid
+        assign _atc_label = 'products.product.add_to_cart' | t
+        if product.tags contains 'pre-order' or product.tags contains 'preorder'
+          assign _atc_label = 'products.product.pre_order' | t | default: 'Pre-order'
+        endif
+      -%}
       <form action="{{ routes.cart_add_url }}" method="post" class="acc-card__form">
         <input type="hidden" name="id" value="{{ variant.id }}">
         <input type="hidden" name="quantity" value="1">
         <button type="submit" class="acc-card__btn">
-          <span class="acc-card__btn-label">{{ 'products.product.add_to_cart' | t }}</span>
+          <span class="acc-card__btn-label">{{ _atc_label }}</span>
           <svg class="acc-card__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false" width="18" height="18">
             <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
           </svg>
