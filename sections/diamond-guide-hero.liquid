@@ -90,19 +90,21 @@
 }
 
 .dg-hero__stage {
-  line-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }
 
 .dg-hero__stage img {
-  width: 100%;
+  width: min(52vh, 520px);
   height: auto;
   display: block;
 }
 
 .dg-hero__placeholder {
-  width: 100%;
-  aspect-ratio: 7 / 8;
-  overflow: hidden;
+  width: min(52vh, 520px);
+  aspect-ratio: 1;
 }
 
 @media screen and (max-width: 989px) {
@@ -110,7 +112,16 @@
     grid-template-columns: 1fr;
   }
   .dg-hero__copy { order: 2; }
-  .dg-hero__stage { order: 1; }
+  .dg-hero__stage {
+    order: 1;
+    min-height: auto;
+  }
+  .dg-hero__stage img {
+    width: min(70vw, 360px);
+  }
+  .dg-hero__placeholder {
+    width: min(70vw, 360px);
+  }
   .dg-hero__brand {
     font-size: 19px;
     line-height: 24px;
@@ -168,11 +179,12 @@
 
   <div class="dg-hero__stage">
     {%- if section.settings.image != blank -%}
-      {{- section.settings.image | image_url: width: 900 | image_tag:
+      {{- section.settings.image | image_url: width: 560 | image_tag:
         alt: section.settings.image.alt | default: section.settings.heading,
-        loading: 'lazy',
-        widths: '600,900,1200',
-        sizes: '(max-width: 989px) 100vw, 50vw'
+        loading: 'eager',
+        fetchpriority: 'high',
+        widths: '360,560',
+        sizes: '(max-width: 989px) min(70vw, 360px), min(52vh, 520px)'
       -}}
     {%- else -%}
       <div class="dg-hero__placeholder">
