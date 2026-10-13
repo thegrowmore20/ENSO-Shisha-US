@@ -92,6 +92,11 @@ if (!customElements.get('cart-page')) {
     // ── Section re-render (replaces full page reload) ──────────────────────
 
     async #reRenderSection(silent = false) {
+      // Capture open device accordions before innerHTML is replaced
+      const openDevKeys = new Set(
+        Array.from(this.querySelectorAll('details.cp-dev[open]')).map(d => d.dataset.key)
+      );
+
       if (!silent) this.#showPageSpinner();
       try {
         // Section Rendering API (fast path — works when Shopify returns section HTML)
@@ -121,6 +126,12 @@ if (!customElements.get('cart-page')) {
           // Updating innerHTML and calling #reinit() explicitly is always safe.
           curCartPage.innerHTML = nextCartPage.innerHTML;
           Array.from(nextCartPage.attributes).forEach(a => curCartPage.setAttribute(a.name, a.value));
+          // Restore open state — Liquid only adds `open` in device-only mode
+          if (openDevKeys.size) {
+            curCartPage.querySelectorAll('details.cp-dev').forEach(d => {
+              if (openDevKeys.has(d.dataset.key)) d.open = true;
+            });
+          }
           curCartPage.#reinit();
         } else {
           window.location.reload();
