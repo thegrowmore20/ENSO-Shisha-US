@@ -44,33 +44,13 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0;
-}
-
-.dg-cap__grid figcaption {
-  margin-bottom: 14px;
-}
-
-.dg-cap__grid figcaption b {
-  display: block;
-  font-size: 18px;
-  font-weight: var(--font-weight-semibold);
-  line-height: 24px;
-  margin-bottom: 4px;
-}
-
-.dg-cap__grid figcaption span {
-  display: block;
-  font-size: 15px;
-  color: rgb(0 0 0 / .72);
-  line-height: 23px;
+  gap: 12px;
 }
 
 .dg-cap__grid figure img {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: top;
   border-radius: 22px;
   border: 1px solid var(--color-border);
   background: #f5f5f4;
@@ -84,6 +64,26 @@
   border-radius: 22px;
   border: 1px solid var(--color-border);
   background: #f5f5f4;
+}
+
+.dg-cap__grid figcaption {
+  display: grid;
+  gap: 4px;
+  order: -1;
+}
+
+.dg-cap__grid figcaption b {
+  display: block;
+  font-size: 18px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 24px;
+}
+
+.dg-cap__grid figcaption span {
+  display: block;
+  font-size: 15px;
+  color: rgb(0 0 0 / .72);
+  line-height: 23px;
 }
 
 @media screen and (max-width: 989px) {
@@ -136,12 +136,6 @@
       <div class="dg-cap__grid">
         {%- for block in section.blocks -%}
           <figure {{ block.shopify_attributes }}>
-            <figcaption>
-              <b>{{ block.settings.label | escape }}</b>
-              {%- if block.settings.caption != blank -%}
-                <span>{{ block.settings.caption | escape }}</span>
-              {%- endif -%}
-            </figcaption>
             {%- if block.settings.image != blank -%}
               {{- block.settings.image | image_url: width: 800 | image_tag:
                 alt: block.settings.image.alt | default: block.settings.label,
@@ -155,6 +149,12 @@
                 <path d="M1.6 2.5 L2 1.9 L2.4 2.5 M1.75 2.5 L2.25 2.5 M2 2.5 L2 3.1" stroke="#c8b89a" stroke-width="0.08" stroke-linecap="round"/>
               </svg>
             {%- endif -%}
+            <figcaption>
+              <b>{{ block.settings.label | escape }}</b>
+              {%- if block.settings.caption != blank -%}
+                <span>{{ block.settings.caption | escape }}</span>
+              {%- endif -%}
+            </figcaption>
           </figure>
         {%- endfor -%}
       </div>
