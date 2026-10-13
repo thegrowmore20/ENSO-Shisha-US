@@ -345,6 +345,9 @@
   margin: 0 0 6px;
 }
 
+/* Chips */
+.d-buy__chips { margin-bottom: 12px; }
+
 /* Sub */
 .d-buy__sub {
   color: rgb(0 0 0 / .6);
@@ -676,6 +679,22 @@
 
         <div class="d-buy__eyebrow"><i aria-hidden="true"></i>Pre-order open</div>
 
+        {%- liquid
+          assign _d_has_chips = false
+          if section.settings.chip_1 != blank or section.settings.chip_2 != blank or section.settings.chip_3 != blank or section.settings.chip_4 != blank or section.settings.chip_5 != blank
+            assign _d_has_chips = true
+          endif
+        -%}
+        {%- if _d_has_chips -%}
+          <div class="product-chips d-buy__chips">
+            {%- if section.settings.chip_1 != blank -%}<span class="product-chip">{{ section.settings.chip_1 }}</span>{%- endif -%}
+            {%- if section.settings.chip_2 != blank -%}<span class="product-chip">{{ section.settings.chip_2 }}</span>{%- endif -%}
+            {%- if section.settings.chip_3 != blank -%}<span class="product-chip">{{ section.settings.chip_3 }}</span>{%- endif -%}
+            {%- if section.settings.chip_4 != blank -%}<span class="product-chip">{{ section.settings.chip_4 }}</span>{%- endif -%}
+            {%- if section.settings.chip_5 != blank -%}<span class="product-chip">{{ section.settings.chip_5 }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+
         <h1 class="d-buy__title">{{ product.title }}</h1>
 
         {%- if section.settings.subline != blank -%}
@@ -891,6 +910,19 @@
       "label": "t:sections.diamond_buy.settings.contact_email.label",
       "default": "support@ensoshisha.eu"
     },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_buy.settings.chips_header.content"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.diamond_buy.settings.chips_info.content"
+    },
+    { "type": "text", "id": "chip_1", "label": "t:sections.diamond_buy.settings.chip_1.label" },
+    { "type": "text", "id": "chip_2", "label": "t:sections.diamond_buy.settings.chip_2.label" },
+    { "type": "text", "id": "chip_3", "label": "t:sections.diamond_buy.settings.chip_3.label" },
+    { "type": "text", "id": "chip_4", "label": "t:sections.diamond_buy.settings.chip_4.label" },
+    { "type": "text", "id": "chip_5", "label": "t:sections.diamond_buy.settings.chip_5.label" },
     {
       "type": "header",
       "content": "t:sections.diamond_buy.settings.padding_header.content"

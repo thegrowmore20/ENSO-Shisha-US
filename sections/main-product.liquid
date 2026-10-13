@@ -154,7 +154,21 @@
               {%- endif -%}
 
             {%- when 'tags' -%}
-              {%- if product.tags.size > 0 -%}
+              {%- liquid
+                assign _has_custom_chips = false
+                if block.settings.chip_1 != blank or block.settings.chip_2 != blank or block.settings.chip_3 != blank or block.settings.chip_4 != blank or block.settings.chip_5 != blank
+                  assign _has_custom_chips = true
+                endif
+              -%}
+              {%- if _has_custom_chips -%}
+                <div class="product-chips product-block" {{ block.shopify_attributes }}>
+                  {%- if block.settings.chip_1 != blank -%}<span class="product-chip">{{ block.settings.chip_1 }}</span>{%- endif -%}
+                  {%- if block.settings.chip_2 != blank -%}<span class="product-chip">{{ block.settings.chip_2 }}</span>{%- endif -%}
+                  {%- if block.settings.chip_3 != blank -%}<span class="product-chip">{{ block.settings.chip_3 }}</span>{%- endif -%}
+                  {%- if block.settings.chip_4 != blank -%}<span class="product-chip">{{ block.settings.chip_4 }}</span>{%- endif -%}
+                  {%- if block.settings.chip_5 != blank -%}<span class="product-chip">{{ block.settings.chip_5 }}</span>{%- endif -%}
+                </div>
+              {%- elsif product.tags.size > 0 -%}
                 <div class="product-chips product-block" {{ block.shopify_attributes }}>
                   {%- for tag in product.tags -%}
                     <span class="product-chip">{{ tag }}</span>
@@ -1611,7 +1625,20 @@
       ]
     },
     { "type": "compat_badge", "name": "Compat badge", "limit": 1 },
-    { "type": "tags", "name": "Product tags", "limit": 1 },
+    {
+      "type": "tags",
+      "name": "Product tags",
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Custom chips" },
+        { "type": "paragraph", "content": "Fill any of these to replace the auto product tags." },
+        { "type": "text", "id": "chip_1", "label": "Chip 1" },
+        { "type": "text", "id": "chip_2", "label": "Chip 2" },
+        { "type": "text", "id": "chip_3", "label": "Chip 3" },
+        { "type": "text", "id": "chip_4", "label": "Chip 4" },
+        { "type": "text", "id": "chip_5", "label": "Chip 5" }
+      ]
+    },
     {
       "type": "variant_picker",
       "name": "Variant picker",
