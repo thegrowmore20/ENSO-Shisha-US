@@ -38,13 +38,16 @@
 
       <div class="ugv-row__media">
         {%- if has_video_url -%}
+          {%- liquid
+            assign thumb_alt = section.settings.thumbnail.alt | default: section.settings.heading
+          -%}
           <div class="ugv-row__player" data-video-id="{{ section.settings.video_url.id }}" data-video-type="{{ section.settings.video_url.type }}">
             {%- if section.settings.thumbnail -%}
               {{- section.settings.thumbnail | image_url: width: 900 | image_tag:
-                  alt: section.settings.thumbnail.alt | default: section.settings.heading | escape,
+                  alt: thumb_alt,
                   class: 'ugv-row__thumbnail',
                   loading: 'lazy',
-                  widths: '400, 600, 900',
+                  widths: '400,600,900',
                   sizes: '(max-width: 749px) 100vw, 50vw' -}}
             {%- else -%}
               <svg class="ugv-row__thumbnail ugv-row__thumbnail--placeholder" viewBox="0 0 16 9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
