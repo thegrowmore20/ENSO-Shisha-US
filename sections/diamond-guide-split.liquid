@@ -1,0 +1,277 @@
+{% stylesheet %}
+
+.dg-split {
+  padding: 80px 0;
+}
+
+.dg-split__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.dg-split--img-right .dg-split__media {
+  order: 2;
+}
+.dg-split--img-right .dg-split__copy {
+  order: 1;
+}
+
+.dg-split__media {
+  border-radius: 20px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.dg-split__media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.dg-split__placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: block;
+  border-radius: 20px;
+}
+
+.dg-split__eyebrow {
+  margin-bottom: 10px;
+}
+
+.dg-split__h {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-heavy);
+  font-family: var(--font-heading);
+  margin: 0 0 14px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+.dg-split__body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgb(0 0 0 / .72);
+  margin: 0 0 20px;
+}
+
+.dg-split__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  counter-reset: steps;
+}
+
+.dg-split__steps li {
+  display: grid;
+  gap: 2px;
+  padding-left: 20px;
+  border-left: 2px solid var(--color-accent);
+  counter-increment: steps;
+}
+
+.dg-split__steps b {
+  display: block;
+  font-size: 15px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.dg-split__steps span {
+  font-size: 14px;
+  color: rgb(0 0 0 / .66);
+}
+
+.dg-split__note {
+  margin-top: 16px;
+  font-size: 14px;
+  color: rgb(0 0 0 / .55);
+  font-style: normal;
+}
+
+@media screen and (max-width: 989px) {
+  .dg-split { padding: 40px 0; }
+  .dg-split__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .dg-split__media { order: 1 !important; }
+  .dg-split__copy  { order: 2 !important; }
+}
+
+{% endstylesheet %}
+
+{% style %}
+  #shopify-section-{{ section.id }} .dg-split {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .dg-split {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+{%- liquid
+  assign img_right = false
+  if section.settings.image_side == 'right'
+    assign img_right = true
+  endif
+-%}
+
+<section class="dg-split{% if img_right %} dg-split--img-right{% endif %}" id="DgSplit-{{ section.id }}">
+  <div class="container">
+    <div class="dg-split__grid">
+
+      <div class="dg-split__media">
+        {%- if section.settings.image != blank -%}
+          {{- section.settings.image | image_url: width: 900 | image_tag:
+            alt: section.settings.image.alt | default: section.settings.heading,
+            loading: 'lazy',
+            widths: '600,900',
+            sizes: '(max-width: 989px) 100vw, 50vw'
+          -}}
+        {%- else -%}
+          <svg class="dg-split__placeholder" viewBox="0 0 4 3" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="4" height="3" fill="#f0ede8"/>
+            <path d="M1.6 1.5 L2 0.9 L2.4 1.5 M1.75 1.5 L2.25 1.5 M2 1.5 L2 2.1" stroke="#c8b89a" stroke-width="0.08" stroke-linecap="round"/>
+          </svg>
+        {%- endif -%}
+      </div>
+
+      <div class="dg-split__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow dg-split__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        <h2 class="dg-split__h">{{ section.settings.heading | escape }}</h2>
+
+        {%- if section.settings.body != blank -%}
+          <p class="dg-split__body">{{ section.settings.body | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ol class="dg-split__steps">
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}>
+                <b>{{ block.settings.label | escape }}</b>
+                <span>{{ block.settings.text | escape }}</span>
+              </li>
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+
+        {%- if section.settings.note != blank -%}
+          <p class="dg-split__note">{{ section.settings.note | escape }}</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.diamond_guide_split.name",
+  "tag": "div",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.diamond_guide_split.settings.image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_side",
+      "label": "t:sections.diamond_guide_split.settings.image_side.label",
+      "options": [
+        { "value": "left",  "label": "t:sections.diamond_guide_split.settings.image_side.options.left" },
+        { "value": "right", "label": "t:sections.diamond_guide_split.settings.image_side.options.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.diamond_guide_split.settings.eyebrow.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.diamond_guide_split.settings.heading.label",
+      "default": "Section heading"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "t:sections.diamond_guide_split.settings.body.label"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "t:sections.diamond_guide_split.settings.note.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "t:sections.diamond_guide_split.blocks.step.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.diamond_guide_split.blocks.step.settings.label.label",
+          "default": "Step label"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.diamond_guide_split.blocks.step.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.diamond_guide_split.presets.name"
+    }
+  ]
+}
+{% endschema %}

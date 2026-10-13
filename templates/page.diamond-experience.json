@@ -1,0 +1,396 @@
+{
+  "sections": {
+    "dg_nav": {
+      "type": "diamond-guide-nav",
+      "blocks": {
+        "chip_quick": {
+          "type": "chip",
+          "settings": {
+            "url": "/pages/enso-diamond-quick-start",
+            "label": "Quick start",
+            "is_current": true
+          }
+        },
+        "chip_manual": {
+          "type": "chip",
+          "settings": {
+            "url": "/pages/enso-diamond-manual",
+            "label": "Full manual",
+            "is_current": false
+          }
+        },
+        "chip_packing": {
+          "type": "chip",
+          "settings": {
+            "url": "/pages/diamond-packing-guide",
+            "label": "Pack the cup",
+            "is_current": false
+          }
+        },
+        "chip_cleaning": {
+          "type": "chip",
+          "settings": {
+            "url": "/pages/enso-diamond-cleaning",
+            "label": "Cleaning",
+            "is_current": false
+          }
+        },
+        "chip_trouble": {
+          "type": "chip",
+          "settings": {
+            "url": "/pages/enso-diamond-manual#troubleshooting",
+            "label": "Troubleshooting",
+            "is_current": false
+          }
+        },
+        "chip_firmware": {
+          "type": "chip",
+          "settings": {
+            "url": "/pages/enso-app#diamond-updates",
+            "label": "Software updates",
+            "is_current": false
+          }
+        }
+      },
+      "block_order": [
+        "chip_quick",
+        "chip_manual",
+        "chip_packing",
+        "chip_cleaning",
+        "chip_trouble",
+        "chip_firmware"
+      ],
+      "settings": {
+        "back_url": "/pages/enso-experience",
+        "back_label": "ENSŌ Experience",
+        "current_label": "ENSŌ Diamond"
+      }
+    },
+    "dg_hero": {
+      "type": "diamond-guide-hero",
+      "blocks": {
+        "entry_quick": {
+          "type": "entry",
+          "settings": {
+            "url": "#quick-start",
+            "label": "Quick start",
+            "sublabel": "Scroll, about two minutes",
+            "is_primary": true
+          }
+        },
+        "entry_manual": {
+          "type": "entry",
+          "settings": {
+            "url": "/pages/enso-diamond-manual",
+            "label": "Full manual",
+            "sublabel": "Every function, every screen",
+            "is_primary": false
+          }
+        },
+        "entry_faq": {
+          "type": "entry",
+          "settings": {
+            "url": "/pages/faq",
+            "label": "FAQ",
+            "sublabel": "The questions we hear most",
+            "is_primary": false
+          }
+        },
+        "entry_warranty": {
+          "type": "entry",
+          "settings": {
+            "url": "/pages/warranty",
+            "label": "Warranty",
+            "sublabel": "2 years on Diamond, 1 year on the battery",
+            "is_primary": false
+          }
+        },
+        "entry_support": {
+          "type": "entry",
+          "settings": {
+            "url": "/pages/support",
+            "label": "Support",
+            "sublabel": "One step away",
+            "is_primary": false
+          }
+        },
+        "entry_firmware": {
+          "type": "entry",
+          "settings": {
+            "url": "#app",
+            "label": "Firmware",
+            "sublabel": "Updates over USB-C from ensoshisha.com",
+            "is_primary": false
+          }
+        }
+      },
+      "block_order": [
+        "entry_quick",
+        "entry_manual",
+        "entry_faq",
+        "entry_warranty",
+        "entry_support",
+        "entry_firmware"
+      ],
+      "settings": {
+        "eyebrow": "ENSŌ Diamond",
+        "heading": "Start here",
+        "subheading": "Everything for your first session and the ones after it, in the order you will need it.",
+        "padding_top": 56,
+        "padding_bottom": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "dg_charge_rail": {
+      "type": "diamond-guide-charge-rail",
+      "blocks": {
+        "card_charge": {
+          "type": "card",
+          "settings": {
+            "heading": "Plug the cable into the pack",
+            "body": "Open the latch, take the pack out and charge it on its own, or leave it in and plug into the port at the back. Full in about 1.5 hours with a 30 W supply.",
+            "warning": ""
+          }
+        },
+        "card_contacts": {
+          "type": "card",
+          "settings": {
+            "heading": "Keep the contacts dry",
+            "body": "The pack and the bay never get rinsed. Water stays with the cup, the mesh and the cap.",
+            "warning": "Before the first use, pull the protective paper off the battery contacts."
+          }
+        }
+      },
+      "block_order": ["card_charge", "card_contacts"],
+      "settings": {
+        "section_id": "quick-start",
+        "heading": "Charge the battery first",
+        "subheading": "Two things before the first session.",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dg_switch_on": {
+      "type": "diamond-guide-switch-on",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "heading": "Hold to switch on",
+            "body": "Three seconds on the dial. The screen wakes with Start Pre-heat and the battery level.",
+            "note": ""
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "heading": "Click to start",
+            "body": "One click and pre-heat begins. Out of the box: 275 °C and seven minutes.",
+            "note": ""
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "heading": "Pre-heating",
+            "body": "The screen counts down. About seven minutes later, the first draw.",
+            "note": ""
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "heading": "Default runs AUTO",
+            "body": "The Default profile holds the temperature and eases it down as the leaf needs less. You do not touch the device.",
+            "note": ""
+          }
+        },
+        "step_5": {
+          "type": "step",
+          "settings": {
+            "heading": "Or pick a profile",
+            "body": "Phoenix, Wraith, Oracle. Each remembers its own pre-heat temperature and time. Turn to move, click to choose.",
+            "note": "Profiles return to their defaults when the battery is removed"
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4", "step_5"],
+      "settings": {
+        "scroll_height": 580,
+        "padding_top": 40,
+        "padding_top_mobile": 0
+      }
+    },
+    "dg_hookah": {
+      "type": "diamond-guide-split",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "label": "Pick the adapter",
+            "text": "Long for a narrow, tall stem top. Short for a broad one."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "label": "On the stem, half-way",
+            "text": "Push it on only half-way. Do not push it all the way down."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "label": "Diamond on top, then press",
+            "text": "Press down with both hands: Diamond and the adapter slide down together for the firmest grip."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "label": "Hold the dial to start",
+            "text": "Three seconds. The screen wakes with Start Pre-heat."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "settings": {
+        "eyebrow": "On your hookah",
+        "heading": "Fits the stem you already have",
+        "body": "Two adapters come in the box, long and short. One of them fits most traditional and modern stems. Your base, your water and your hose stay exactly as they are.",
+        "image_side": "left",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dg_cap_grid": {
+      "type": "diamond-guide-cap-grid",
+      "blocks": {
+        "fig_open": {
+          "type": "figure",
+          "settings": {
+            "label": "Open",
+            "caption": "Lift the cap off by its side pads. The cup sits in the chamber below."
+          }
+        },
+        "fig_load": {
+          "type": "figure",
+          "settings": {
+            "label": "Load",
+            "caption": "Pack the cup, 10–15 g, and set it into the chamber until it sits flat."
+          }
+        },
+        "fig_close": {
+          "type": "figure",
+          "settings": {
+            "label": "Close",
+            "caption": "Set the cap back flush above the band. Hold the dial to start."
+          }
+        }
+      },
+      "block_order": ["fig_open", "fig_load", "fig_close"],
+      "settings": {
+        "eyebrow": "Cap and cup",
+        "heading": "Open, load, close",
+        "subheading": "Set the cup in before you switch on. The cap gets hot: hold it by its side pads. The tool lifts the cup out.",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dg_checklist": {
+      "type": "diamond-guide-checklist",
+      "blocks": {
+        "art_heat": {
+          "type": "article",
+          "settings": {
+            "heading": "Heat",
+            "bullets": "Surface hot when in use. Lift the cap by its side pads.\nLift the cup with the removal tool, never by hand.\nA stable, level surface, cable clear of hot parts."
+          }
+        },
+        "art_water": {
+          "type": "article",
+          "settings": {
+            "heading": "Water",
+            "bullets": "Wash the cup, the mesh and the cap before you start. Let them dry fully.\nThe body and the battery never go under water.\nOnly the cup and the mesh get dirty. Soak the basket, brush the cap."
+          }
+        },
+        "art_power": {
+          "type": "article",
+          "settings": {
+            "heading": "Power",
+            "bullets": "About 90 minutes per battery, pre-heat not included.\nSwitch off before you change the battery. Profiles go back to their defaults.\nFirmware updates over USB-C from a page on ensoshisha.com, coming."
+          }
+        }
+      },
+      "block_order": ["art_heat", "art_water", "art_power"],
+      "settings": {
+        "heading": "Before the first session",
+        "subheading": "Three things to know, and one to remember.",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dg_airflow": {
+      "type": "diamond-guide-split",
+      "settings": {
+        "eyebrow": "Airflow",
+        "heading": "The plate sets the draw",
+        "body": "The plate on top of the cap controls how much air reaches the blend. Lift and turn it with the tool: open for a free, light draw, closed down for a denser flavour. Most of the time it stays fully open, all holes.",
+        "note": "The plate is hot during a session. Use the tool, not your fingers.",
+        "image_side": "left",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dg_manual_cta": {
+      "type": "diamond-guide-manual-cta",
+      "settings": {
+        "eyebrow": "Full manual",
+        "heading": "Every function, one chapter at a time",
+        "body": "The dial and the screen, pre-heat and profiles, battery, cup, cap, cleaning, safety and warranty.",
+        "cta_url": "/pages/enso-diamond-manual",
+        "cta_label": "Read the full manual",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "dg_firmware": {
+      "type": "diamond-guide-split",
+      "settings": {
+        "eyebrow": "Firmware",
+        "heading": "Updates over USB-C, from our website",
+        "body": "Plug Diamond into your computer, open the firmware page on ensoshisha.com, press Update. No app to install, no account, no phone. The page is coming; until then Diamond needs nothing.",
+        "image_side": "right",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "dg_nav",
+    "dg_hero",
+    "dg_charge_rail",
+    "dg_switch_on",
+    "dg_hookah",
+    "dg_cap_grid",
+    "dg_checklist",
+    "dg_airflow",
+    "dg_manual_cta",
+    "dg_firmware"
+  ]
+}

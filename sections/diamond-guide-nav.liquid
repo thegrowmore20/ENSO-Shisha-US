@@ -1,0 +1,144 @@
+{% stylesheet %}
+
+.dg-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 40px 0;
+  font-family: var(--font-body);
+}
+
+.dg-nav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: rgb(0 0 0 / .62);
+  text-decoration: none;
+}
+.dg-nav__back:hover {
+  color: var(--color-text);
+}
+.dg-nav__back b {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.dg-nav__row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.dg-nav__row::-webkit-scrollbar { display: none; }
+
+.dg-nav__chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(0 0 0 / .12);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  color: #000;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.dg-nav__chip:hover {
+  background: rgb(0 0 0 / .06);
+}
+.dg-nav__chip.is-current {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+@media screen and (max-width: 989px) {
+  .dg-nav {
+    padding: 14px 16px 0;
+  }
+}
+
+{% endstylesheet %}
+
+<div class="dg-nav" id="DgNav-{{ section.id }}">
+  <a class="dg-nav__back" href="{{ section.settings.back_url | default: '/' }}">
+    ‹ {{ section.settings.back_label | default: 'ENSŌ Experience' | escape }}
+    <span aria-hidden="true">/</span>
+    <b>{{ section.settings.current_label | default: 'ENSŌ Diamond' | escape }}</b>
+  </a>
+  {%- if section.blocks.size > 0 -%}
+    <div class="dg-nav__row" role="list">
+      {%- for block in section.blocks -%}
+        <a
+          class="dg-nav__chip{% if block.settings.is_current %} is-current{% endif %}"
+          href="{{ block.settings.url | default: '#' }}"
+          role="listitem"
+          {% if block.settings.is_current %}aria-current="page"{% endif %}
+          {{ block.shopify_attributes }}
+        >{{ block.settings.label | escape }}</a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.diamond_guide_nav.name",
+  "tag": "div",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "url",
+      "id": "back_url",
+      "label": "t:sections.diamond_guide_nav.settings.back_url.label"
+    },
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "t:sections.diamond_guide_nav.settings.back_label.label",
+      "default": "ENSŌ Experience"
+    },
+    {
+      "type": "text",
+      "id": "current_label",
+      "label": "t:sections.diamond_guide_nav.settings.current_label.label",
+      "default": "ENSŌ Diamond"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "t:sections.diamond_guide_nav.blocks.chip.name",
+      "settings": [
+        {
+          "type": "url",
+          "id": "url",
+          "label": "t:sections.diamond_guide_nav.blocks.chip.settings.url.label"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.diamond_guide_nav.blocks.chip.settings.label.label",
+          "default": "Guide"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_current",
+          "label": "t:sections.diamond_guide_nav.blocks.chip.settings.is_current.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.diamond_guide_nav.presets.name"
+    }
+  ]
+}
+{% endschema %}

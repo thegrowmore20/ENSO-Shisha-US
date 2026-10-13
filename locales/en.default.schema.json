@@ -2561,6 +2561,173 @@
         }
       },
       "presets": { "name": "Diamond Dial" }
+    },
+    "diamond_guide_nav": {
+      "name": "Diamond guide nav",
+      "settings": {
+        "back_url": { "label": "Back URL" },
+        "back_label": { "label": "Back label" },
+        "current_label": { "label": "Current guide name" }
+      },
+      "blocks": {
+        "chip": {
+          "name": "Guide chip",
+          "settings": {
+            "url": { "label": "URL" },
+            "label": { "label": "Label" },
+            "is_current": { "label": "Current page" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond guide nav" }
+    },
+    "diamond_guide_hero": {
+      "name": "Diamond guide hero",
+      "settings": {
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" },
+        "image": { "label": "Hero image" }
+      },
+      "blocks": {
+        "entry": {
+          "name": "Entry link",
+          "settings": {
+            "url": { "label": "URL" },
+            "label": { "label": "Label" },
+            "sublabel": { "label": "Sublabel" },
+            "is_primary": { "label": "Highlight with accent border" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond guide hero" }
+    },
+    "diamond_guide_charge_rail": {
+      "name": "Diamond guide rail",
+      "settings": {
+        "section_id": {
+          "label": "Section ID",
+          "info": "Used as the anchor for this section, e.g. quick-start"
+        },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" }
+      },
+      "blocks": {
+        "card": {
+          "name": "Card",
+          "settings": {
+            "image": { "label": "Image" },
+            "heading": { "label": "Heading" },
+            "body": { "label": "Body text" },
+            "warning": { "label": "Warning note" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond guide rail" }
+    },
+    "diamond_guide_switch_on": {
+      "name": "Diamond guide scroll anim",
+      "settings": {
+        "product_image": { "label": "Product image" },
+        "scroll_height": { "label": "Scroll height" },
+        "screens_header": { "content": "Dial screen images" },
+        "screen_start": { "label": "Start screen" },
+        "screen_timer": { "label": "Timer screen" },
+        "screen_preheat": { "label": "Pre-heat screen" },
+        "screen_default": { "label": "Default profile screen" },
+        "screen_phoenix": { "label": "Phoenix profile screen" },
+        "screen_wraith": { "label": "Wraith profile screen" },
+        "screen_oracle": { "label": "Oracle profile screen" }
+      },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "heading": { "label": "Heading" },
+            "body": { "label": "Body text" },
+            "note": { "label": "Note (small print)" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond guide scroll anim" }
+    },
+    "diamond_guide_split": {
+      "name": "Diamond guide split",
+      "settings": {
+        "image": { "label": "Image" },
+        "image_side": {
+          "label": "Image side",
+          "options": {
+            "left": "Left",
+            "right": "Right"
+          }
+        },
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "body": { "label": "Body text" },
+        "note": { "label": "Note" }
+      },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "label": { "label": "Label" },
+            "text": { "label": "Text" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond guide split" }
+    },
+    "diamond_guide_cap_grid": {
+      "name": "Diamond guide grid",
+      "settings": {
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" }
+      },
+      "blocks": {
+        "figure": {
+          "name": "Figure",
+          "settings": {
+            "image": { "label": "Image" },
+            "label": { "label": "Label" },
+            "caption": { "label": "Caption" }
+          }
+        }
+      },
+      "presets": { "name": "Diamond guide grid" }
+    },
+    "diamond_guide_checklist": {
+      "name": "Diamond guide checklist",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" }
+      },
+      "blocks": {
+        "article": {
+          "name": "Article",
+          "settings": {
+            "image": { "label": "Image" },
+            "heading": { "label": "Heading" },
+            "bullets": {
+              "label": "Bullet points",
+              "info": "One bullet per line"
+            }
+          }
+        }
+      },
+      "presets": { "name": "Diamond guide checklist" }
+    },
+    "diamond_guide_manual_cta": {
+      "name": "Diamond guide CTA",
+      "settings": {
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "body": { "label": "Body text" },
+        "cta_url": { "label": "Button URL" },
+        "cta_label": { "label": "Button label" }
+      },
+      "presets": { "name": "Diamond guide CTA" }
     }
   }
 }

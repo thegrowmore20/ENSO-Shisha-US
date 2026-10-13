@@ -1,0 +1,516 @@
+{% stylesheet %}
+
+/* ── Section shell ── */
+.dg-switch {
+  position: relative;
+}
+
+/* ── Sticky layer ── */
+.dg-switch__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ── Copy column ── */
+.dg-switch__copy {
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.dg-switch__stack {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+}
+
+.dg-switch__step {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity .4s;
+  width: 100%;
+}
+
+.dg-switch__step.is-on {
+  opacity: 1;
+}
+
+.dg-switch__step h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-heavy);
+  font-family: var(--font-heading);
+  margin: 0 0 12px;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.dg-switch__step p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgb(0 0 0 / .72);
+  margin: 0;
+  max-width: 46ch;
+}
+
+.dg-switch__step small {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgb(0 0 0 / .55);
+}
+
+/* ── Stage column ── */
+.dg-switch__stage {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.dg-switch__box {
+  position: relative;
+  overflow: hidden;
+}
+
+.dg-switch__canvas {
+  position: relative;
+  transform-origin: 0 0;
+  line-height: 0;
+}
+
+.dg-switch__canvas > img {
+  display: block;
+  width: 100%;
+}
+
+.dg-switch__glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(226 97 76 / .35) 0%, transparent 70%);
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.dg-switch__screen {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #08080a;
+  box-shadow: 0 0 60px 20px rgb(226 97 76 / .18);
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.dg-switch__glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 24%, rgb(255 255 255 / .13) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, transparent 62%, rgb(0 0 0 / .45) 100%);
+  pointer-events: none;
+}
+
+.dg-switch__scr {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity .2s;
+}
+
+@keyframes dg-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: .85; }
+}
+.dg-switch__glow.is-pulsing {
+  animation: dg-pulse 2.2s ease-in-out infinite;
+}
+
+/* ── Mobile ── */
+@media screen and (max-width: 989px) {
+  .dg-switch__sticky {
+    position: relative;
+    height: auto;
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+  .dg-switch__stage { order: 1; height: 50vmin; }
+  .dg-switch__copy { order: 2; padding: 24px 20px 32px; height: auto; }
+  .dg-switch__stack { min-height: 0; position: static; }
+  .dg-switch__step {
+    position: static;
+    transform: none;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity .3s;
+    pointer-events: none;
+  }
+  .dg-switch__step.is-on {
+    opacity: 1;
+    height: auto;
+    pointer-events: auto;
+  }
+}
+
+{% endstylesheet %}
+
+{% style %}
+  #shopify-section-{{ section.id }} .dg-switch {
+    padding-top: {{ section.settings.padding_top }}px;
+  }
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .dg-switch {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+{%- assign scroll_h = section.settings.scroll_height | default: 580 -%}
+
+<section
+  class="dg-switch"
+  data-dg-switch="{{ section.id }}"
+  style="height: {{ scroll_h }}vh"
+  aria-label="{{ 'sections.diamond_guide_switch_on.aria_label' | t }}"
+>
+  <div class="dg-switch__sticky">
+
+    {%- comment -%} ── Copy ── {%- endcomment -%}
+    <div class="dg-switch__copy">
+      <div class="dg-switch__stack">
+        {%- for block in section.blocks -%}
+          <div
+            class="dg-switch__step{% if forloop.first %} is-on{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <h2>{{ block.settings.heading | escape }}</h2>
+            {%- if block.settings.body != blank -%}
+              <p>{{ block.settings.body | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.note != blank -%}
+              <small>{{ block.settings.note | escape }}</small>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} ── Stage ── {%- endcomment -%}
+    <div class="dg-switch__stage" data-dg-stage>
+      <div class="dg-switch__box" data-dg-box>
+        <div
+          class="dg-switch__canvas"
+          data-dg-canvas
+          data-dial-x="546"
+          data-dial-y="1187"
+          data-dial-r="264"
+          data-dial-fw="1099"
+          data-dial-fh="1969"
+        >
+          {%- if section.settings.product_image != blank -%}
+            <img
+              src="{{ section.settings.product_image | image_url: width: 1200 }}"
+              alt="ENSŌ Diamond"
+              loading="lazy"
+              width="1099"
+              height="1969"
+            >
+          {%- endif -%}
+
+          <div class="dg-switch__glow" data-dg-glow></div>
+
+          <div class="dg-switch__screen" data-dg-screen>
+            {%- if section.settings.screen_start != blank -%}
+              <img src="{{ section.settings.screen_start | image_url: width: 600 }}" data-scr="start" alt="" loading="lazy" class="dg-switch__scr">
+            {%- endif -%}
+            {%- if section.settings.screen_timer != blank -%}
+              <img src="{{ section.settings.screen_timer | image_url: width: 600 }}" data-scr="timer" alt="" loading="lazy" class="dg-switch__scr" style="opacity:0">
+            {%- endif -%}
+            {%- if section.settings.screen_preheat != blank -%}
+              <img src="{{ section.settings.screen_preheat | image_url: width: 600 }}" data-scr="preheat" alt="" loading="lazy" class="dg-switch__scr" style="opacity:0">
+            {%- endif -%}
+            {%- if section.settings.screen_default != blank -%}
+              <img src="{{ section.settings.screen_default | image_url: width: 600 }}" data-scr="default" alt="" loading="lazy" class="dg-switch__scr" style="opacity:0">
+            {%- endif -%}
+            {%- if section.settings.screen_phoenix != blank -%}
+              <img src="{{ section.settings.screen_phoenix | image_url: width: 600 }}" data-scr="phoenix" alt="" loading="lazy" class="dg-switch__scr" style="opacity:0">
+            {%- endif -%}
+            {%- if section.settings.screen_wraith != blank -%}
+              <img src="{{ section.settings.screen_wraith | image_url: width: 600 }}" data-scr="wraith" alt="" loading="lazy" class="dg-switch__scr" style="opacity:0">
+            {%- endif -%}
+            {%- if section.settings.screen_oracle != blank -%}
+              <img src="{{ section.settings.screen_oracle | image_url: width: 600 }}" data-scr="oracle" alt="" loading="lazy" class="dg-switch__scr" style="opacity:0">
+            {%- endif -%}
+            <div class="dg-switch__glass"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% javascript %}
+(function() {
+  document.querySelectorAll('[data-dg-switch]').forEach(function(root) {
+    var canvas  = root.querySelector('[data-dg-canvas]');
+    var box     = root.querySelector('[data-dg-box]');
+    var glow    = root.querySelector('[data-dg-glow]');
+    var screen  = root.querySelector('[data-dg-screen]');
+    var steps   = Array.from(root.querySelectorAll('.dg-switch__step'));
+    if (!canvas) return;
+
+    var D = {
+      x:  parseFloat(canvas.dataset.dialX)  || 546,
+      y:  parseFloat(canvas.dataset.dialY)  || 1187,
+      r:  parseFloat(canvas.dataset.dialR)  || 264,
+      FW: parseFloat(canvas.dataset.dialFw) || 1099,
+      FH: parseFloat(canvas.dataset.dialFh) || 1969
+    };
+
+    var scrImgs = {};
+    if (screen) {
+      screen.querySelectorAll('.dg-switch__scr').forEach(function(img) {
+        scrImgs[img.dataset.scr] = img;
+      });
+    }
+
+    var GR = D.r * 2.2;
+    if (screen) {
+      screen.style.left   = (D.x - D.r) + 'px';
+      screen.style.top    = (D.y - D.r) + 'px';
+      screen.style.width  = (D.r * 2) + 'px';
+      screen.style.height = (D.r * 2) + 'px';
+    }
+    if (glow) {
+      glow.style.left   = (D.x - GR / 2) + 'px';
+      glow.style.top    = (D.y - GR / 2) + 'px';
+      glow.style.width  = GR + 'px';
+      glow.style.height = GR + 'px';
+    }
+
+    var bw = D.FW, bh = D.FH;
+    var camWide = {cx: D.FW / 2, cy: D.FH / 2, zoom: 1};
+    var camDial = {cx: D.x, cy: D.y, zoom: 1};
+
+    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+    function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+    function seg(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+    function mix(a, b, t) { return a + (b - a) * t; }
+
+    function fit() {
+      var stageEl = root.querySelector('.dg-switch__stage');
+      if (!stageEl) return;
+      var mobile = window.innerWidth < 990;
+      if (mobile) {
+        bh = window.innerHeight * 0.5;
+        bw = window.innerWidth - 32;
+      } else {
+        bh = window.innerHeight * 0.92;
+        bw = Math.max(200, stageEl.getBoundingClientRect().width);
+      }
+      if (box) { box.style.width = bw + 'px'; box.style.height = bh + 'px'; }
+      var scaleW = bw / D.FW;
+      var scaleH = bh / D.FH;
+      camWide = {cx: D.FW / 2, cy: D.FH / 2, zoom: Math.min(scaleW, scaleH)};
+      camDial = {cx: D.x, cy: D.y, zoom: Math.min(bw, bh) / (D.r * 2 * 1.35)};
+    }
+
+    function camera(c) {
+      var tx = bw / 2 - c.cx * c.zoom;
+      var ty = bh / 2 - c.cy * c.zoom;
+      canvas.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + c.zoom + ')';
+    }
+
+    var lastStep = -1;
+    function setStep(i) {
+      if (i === lastStep) return;
+      lastStep = i;
+      steps.forEach(function(s, k) {
+        s.classList.toggle('is-on', k === i);
+      });
+    }
+
+    function showScr(k) {
+      for (var n in scrImgs) {
+        scrImgs[n].style.opacity = n === k ? '1' : '0';
+      }
+    }
+
+    function render() {
+      var mobile = window.innerWidth < 990;
+      if (mobile) {
+        camera(camWide);
+        return;
+      }
+      var r = root.getBoundingClientRect();
+      var sectionH = root.offsetHeight;
+      var p = clamp(-r.top / (sectionH - window.innerHeight), 0, 1);
+
+      var z = ease(seg(p, .02, .16));
+      camera({
+        cx:   mix(camWide.cx, camDial.cx, z),
+        cy:   mix(camWide.cy, camDial.cy, z),
+        zoom: mix(camWide.zoom, camDial.zoom, z)
+      });
+
+      var on = seg(p, .10, .16);
+      if (screen) screen.style.opacity = String(on);
+
+      var k = 'start';
+      if (p >= .30 && p < .36)       k = 'timer';
+      else if (p >= .36 && p < .58)  k = 'preheat';
+      else if (p >= .58 && p < .76)  k = 'default';
+      else if (p >= .76) {
+        var profileNames = ['phoenix', 'wraith', 'oracle'];
+        k = profileNames[Math.min(2, Math.floor((p - .76) / .24 * 3))];
+      }
+      showScr(k);
+
+      var heating = p >= .36 && p < .58;
+      if (glow) {
+        glow.style.opacity = String(on * (heating ? .7 : .4));
+        glow.classList.toggle('is-pulsing', heating);
+      }
+
+      var stepIdx = 0;
+      if (p >= .26 && p < .36)       stepIdx = 1;
+      else if (p >= .36 && p < .58)  stepIdx = 2;
+      else if (p >= .58 && p < .76)  stepIdx = 3;
+      else if (p >= .76)             stepIdx = 4;
+      setStep(stepIdx);
+    }
+
+    fit();
+    render();
+
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(function() { render(); ticking = false; });
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', function() { fit(); render(); });
+  });
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.diamond_guide_switch_on.name",
+  "tag": "div",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "t:sections.diamond_guide_switch_on.settings.product_image.label"
+    },
+    {
+      "type": "range",
+      "id": "scroll_height",
+      "label": "t:sections.diamond_guide_switch_on.settings.scroll_height.label",
+      "min": 200, "max": 800, "step": 20, "unit": "vh", "default": 580
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_guide_switch_on.settings.screens_header.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_start",
+      "label": "t:sections.diamond_guide_switch_on.settings.screen_start.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_timer",
+      "label": "t:sections.diamond_guide_switch_on.settings.screen_timer.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_preheat",
+      "label": "t:sections.diamond_guide_switch_on.settings.screen_preheat.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_default",
+      "label": "t:sections.diamond_guide_switch_on.settings.screen_default.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_phoenix",
+      "label": "t:sections.diamond_guide_switch_on.settings.screen_phoenix.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_wraith",
+      "label": "t:sections.diamond_guide_switch_on.settings.screen_wraith.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_oracle",
+      "label": "t:sections.diamond_guide_switch_on.settings.screen_oracle.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "t:sections.diamond_guide_switch_on.blocks.step.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.diamond_guide_switch_on.blocks.step.settings.heading.label",
+          "default": "Step heading"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "t:sections.diamond_guide_switch_on.blocks.step.settings.body.label"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "t:sections.diamond_guide_switch_on.blocks.step.settings.note.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "t:sections.diamond_guide_switch_on.presets.name"
+    }
+  ]
+}
+{% endschema %}
