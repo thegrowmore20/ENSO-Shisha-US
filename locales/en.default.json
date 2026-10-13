@@ -435,6 +435,9 @@
     },
     "diamond_guide_switch_on": {
       "aria_label": "How to switch on and use ENSŌ Diamond"
+    },
+    "user_guide_video_row": {
+      "play_video": "Play video"
     }
   },
   "witb": {

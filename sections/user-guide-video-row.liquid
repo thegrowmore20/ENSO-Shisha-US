@@ -1,0 +1,415 @@
+{%- liquid
+  assign scheme_class = 'color-surface'
+  render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
+
+  assign has_video_url = false
+  if section.settings.video_url != blank and section.settings.video_url.id != blank
+    assign has_video_url = true
+  endif
+
+  assign has_upload = false
+  if section.settings.video != blank and section.settings.video.sources.size > 0
+    assign has_upload = true
+  endif
+
+  assign video_position = section.settings.video_position | default: 'right'
+  assign grid_modifier = ''
+  if video_position == 'left'
+    assign grid_modifier = ' ugv-row__grid--media-left'
+  endif
+-%}
+
+{% style %}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<section class="ugv-row {{ scheme_class }} section-{{ section.id }}"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | escape }}"{% endif %}>
+  <div class="container">
+    <div class="ugv-row__grid{{ grid_modifier }}">
+
+      <div class="ugv-row__media">
+        {%- if has_video_url -%}
+          <div class="ugv-row__player" data-video-id="{{ section.settings.video_url.id }}" data-video-type="{{ section.settings.video_url.type }}">
+            {%- if section.settings.thumbnail -%}
+              {{- section.settings.thumbnail | image_url: width: 900 | image_tag:
+                  alt: section.settings.thumbnail.alt | default: section.settings.heading | escape,
+                  class: 'ugv-row__thumbnail',
+                  loading: 'lazy',
+                  widths: '400, 600, 900',
+                  sizes: '(max-width: 749px) 100vw, 50vw' -}}
+            {%- else -%}
+              <svg class="ugv-row__thumbnail ugv-row__thumbnail--placeholder" viewBox="0 0 16 9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="16" height="9" fill="#f0ede8"/>
+                <circle cx="8" cy="4.5" r="1.8" fill="#c8b89a"/>
+                <polygon points="7.2,3.6 9.6,4.5 7.2,5.4" fill="#f0ede8"/>
+              </svg>
+            {%- endif -%}
+            <button class="ugv-row__play-btn" aria-label="{{ 'sections.user_guide_video_row.play_video' | t }}">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+        {%- elsif has_upload -%}
+          {%- render 'video-media',
+            video: section.settings.video,
+            thumbnail: section.settings.thumbnail,
+            alt: section.settings.heading,
+            class: 'ugv-row__upload-media'
+          -%}
+        {%- else -%}
+          <svg class="ugv-row__thumbnail ugv-row__thumbnail--placeholder" viewBox="0 0 16 9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="16" height="9" fill="#f0ede8"/>
+            <circle cx="8" cy="4.5" r="1.8" fill="#c8b89a"/>
+            <polygon points="7.2,3.6 9.6,4.5 7.2,5.4" fill="#f0ede8"/>
+          </svg>
+        {%- endif -%}
+      </div>
+
+      <div class="ugv-row__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h2 ugv-row__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="body-text ugv-row__text">{{ section.settings.text }}</div>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_url | default: '#' }}" class="btn btn--outline ugv-row__cta">
+            {{ section.settings.cta_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .ugv-row__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'content media';
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .ugv-row__grid--media-left {
+    grid-template-areas: 'media content';
+  }
+
+  .ugv-row__media {
+    grid-area: media;
+  }
+
+  .ugv-row__content {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Click-to-play YouTube/Vimeo player */
+  .ugv-row__player {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #0a0a0a;
+    cursor: pointer;
+    aspect-ratio: 16 / 9;
+  }
+
+  .ugv-row__player:focus-within .ugv-row__play-btn,
+  .ugv-row__player:hover .ugv-row__play-btn {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  .ugv-row__thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ugv-row__thumbnail--placeholder {
+    position: absolute;
+    inset: 0;
+  }
+
+  .ugv-row__player.is-playing .ugv-row__thumbnail,
+  .ugv-row__player.is-playing .ugv-row__play-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ugv-row__player iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .ugv-row__play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+    color: var(--color-text);
+    padding-left: 4px;
+  }
+
+  .ugv-row__play-btn:hover,
+  .ugv-row__play-btn:focus-visible {
+    background: #ffffff;
+    transform: translate(-50%, -50%) scale(1.08);
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Uploaded video uses video-media layout */
+  .ugv-row__upload-media {
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .ugv-row__heading {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .eyebrow + .ugv-row__heading {
+    margin-top: var(--space-2);
+  }
+
+  .ugv-row__text {
+    max-width: 48ch;
+    color: var(--color-text-muted);
+  }
+
+  .ugv-row__cta {
+    margin-top: var(--space-5);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ugv-row__grid,
+    .ugv-row__grid--media-left {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'media'
+        'content';
+      gap: var(--space-5);
+    }
+
+    .ugv-row__player {
+      border-radius: 12px;
+    }
+
+    .ugv-row__play-btn {
+      width: 52px;
+      height: 52px;
+    }
+
+    .ugv-row__text {
+      max-width: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('.ugv-row__player').forEach(player => {
+    const btn = player.querySelector('.ugv-row__play-btn');
+    if (!btn) return;
+
+    function activatePlayer() {
+      const videoId = player.dataset.videoId;
+      const videoType = player.dataset.videoType;
+      if (!videoId) return;
+
+      let src = '';
+      if (videoType === 'vimeo') {
+        src = `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0`;
+      } else {
+        src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+      }
+
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = player.closest('.ugv-row__media').nextElementSibling?.querySelector('h2')?.textContent?.trim() || 'Video';
+      player.appendChild(iframe);
+      player.classList.add('is-playing');
+    }
+
+    btn.addEventListener('click', activatePlayer);
+    player.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activatePlayer();
+      }
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.user_guide_video_row.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.all.background_color.label",
+      "default": "{{ settings.color_palette.background }}"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.all.text_color.label",
+      "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "t:sections.user_guide_video_row.settings.anchor_id.label",
+      "info": "t:sections.user_guide_video_row.settings.anchor_id.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.user_guide_video_row.settings.header_video.content"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.user_guide_video_row.settings.video.label"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "t:sections.user_guide_video_row.settings.video_url.label",
+      "accept": ["youtube", "vimeo"]
+    },
+    {
+      "type": "image_picker",
+      "id": "thumbnail",
+      "label": "t:sections.user_guide_video_row.settings.thumbnail.label",
+      "info": "t:sections.user_guide_video_row.settings.thumbnail.info"
+    },
+    {
+      "type": "select",
+      "id": "video_position",
+      "label": "t:sections.user_guide_video_row.settings.video_position.label",
+      "options": [
+        { "value": "left", "label": "t:sections.user_guide_video_row.settings.video_position.options.left" },
+        { "value": "right", "label": "t:sections.user_guide_video_row.settings.video_position.options.right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.user_guide_video_row.settings.header_content.content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.user_guide_video_row.settings.eyebrow.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.user_guide_video_row.settings.heading.label",
+      "default": "Video title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.user_guide_video_row.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:sections.user_guide_video_row.settings.cta_label.label"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "t:sections.user_guide_video_row.settings.cta_url.label"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.user_guide_video_row.presets.name"
+    }
+  ]
+}
+{% endschema %}

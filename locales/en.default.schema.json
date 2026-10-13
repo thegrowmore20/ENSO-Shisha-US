@@ -2779,6 +2779,56 @@
         "diamond_sets_collection": { "label": "Diamond sets" },
         "enso_sets_collection": { "label": "ENSŌ 2026 sets" }
       }
+    },
+    "user_guide_video_row": {
+      "name": "Video with text",
+      "settings": {
+        "anchor_id": {
+          "label": "Section anchor ID",
+          "info": "Add an id= value to scroll here from in-page links."
+        },
+        "header_video": {
+          "content": "Video"
+        },
+        "video": {
+          "label": "Uploaded video"
+        },
+        "video_url": {
+          "label": "YouTube or Vimeo URL"
+        },
+        "thumbnail": {
+          "label": "Thumbnail",
+          "info": "Shown before the video plays."
+        },
+        "video_position": {
+          "label": "Video side",
+          "options": {
+            "left": "Left",
+            "right": "Right"
+          }
+        },
+        "header_content": {
+          "content": "Content"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "cta_label": {
+          "label": "Button label"
+        },
+        "cta_url": {
+          "label": "Button link"
+        }
+      },
+      "presets": {
+        "name": "Video with text"
+      }
     }
   }
 }
