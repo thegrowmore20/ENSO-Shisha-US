@@ -147,6 +147,29 @@
             {%- endif -%}
           </a>
 
+          {%- liquid
+            assign dot_count = 1
+            if block.settings.hover_image != blank
+              assign dot_count = dot_count | plus: 1
+            endif
+            if block.settings.gallery_image_2 != blank
+              assign dot_count = dot_count | plus: 1
+            endif
+            if block.settings.gallery_image_3 != blank
+              assign dot_count = dot_count | plus: 1
+            endif
+            if block.settings.gallery_image_4 != blank
+              assign dot_count = dot_count | plus: 1
+            endif
+          -%}
+          {%- if dot_count > 1 -%}
+            <div class="enso-sigdots" aria-hidden="true">
+              {%- for i in (1..dot_count) -%}
+                <i{% if forloop.first %} class="is-on"{% endif %}></i>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
           <div class="signature-model__info">
             {%- if model_name != blank -%}
               <h3 class="h4 signature-model__title">
@@ -371,7 +394,65 @@
     height: 60px;
     opacity: 0.2;
   }
+
+  /* ── Swipe dots ── */
+  .enso-sigdots {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .enso-sigdots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 10px 0 4px;
+    }
+
+    .enso-sigdots i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgb(0 0 0 / 0.2);
+      display: block;
+      font-style: normal;
+      transition: width 0.2s, border-radius 0.2s, background 0.2s;
+    }
+
+    .enso-sigdots i.is-on {
+      background: #000;
+      width: 18px;
+      border-radius: 3px;
+    }
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    function initSigdots(section) {
+      for (const model of section.querySelectorAll('.signature-model')) {
+        const media = model.querySelector('.signature-model__media');
+        const dots = [...model.querySelectorAll('.enso-sigdots i')];
+        if (!media || !dots.length) continue;
+
+        let ticking = false;
+        media.addEventListener('scroll', function () {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function () {
+            const total = dots.length;
+            const idx = Math.min(total - 1, Math.round(media.scrollLeft / (media.scrollWidth / total)));
+            for (let i = 0; i < total; i++) {
+              dots[i].classList.toggle('is-on', i === idx);
+            }
+            ticking = false;
+          });
+        }, { passive: true });
+      }
+    }
+
+    document.querySelectorAll('.signature-models').forEach(initSigdots);
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
