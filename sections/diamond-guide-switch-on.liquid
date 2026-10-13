@@ -11,14 +11,17 @@
   top: 0;
   height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   align-items: center;
   overflow: hidden;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--page-margin);
+  gap: 24px;
 }
 
 /* ── Copy column ── */
 .dg-switch__copy {
-  padding: 0 48px;
   display: flex;
   align-items: center;
   height: 100%;
@@ -146,7 +149,7 @@
     overflow: visible;
   }
   .dg-switch__stage { order: 1; height: 50vmin; }
-  .dg-switch__copy { order: 2; padding: 24px 20px 32px; height: auto; }
+  .dg-switch__copy { order: 2; height: auto; padding-top: 24px; padding-bottom: 32px; }
   .dg-switch__stack { min-height: 0; position: static; }
   .dg-switch__step {
     position: static;
