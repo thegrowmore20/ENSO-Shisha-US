@@ -1049,7 +1049,8 @@
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    column-gap: var(--space-3);
+    row-gap: var(--space-2);
   }
   .product-form__cart-row .quantity {
     margin-top: 0;
@@ -1076,6 +1077,7 @@
   }
 
   .product-form__submit { position: relative; }
+  .product-form__submit:disabled { opacity: 0.5; cursor: default; }
   .product-form__submit[data-loading] span:first-child { visibility: hidden; }
   .btn__spinner {
     position: absolute;
