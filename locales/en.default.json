@@ -166,8 +166,9 @@
     "back": {
       "diamond": "← Back to ENSŌ Diamond",
       "enso": "← Back to ENSŌ 2026",
-      "accessories": "← Continue shopping",
-      "shopping": "← Continue shopping"
+      "keep": "← Keep shopping",
+      "accessories": "← Keep shopping",
+      "shopping": "← Keep shopping"
     },
     "section": {
       "in_your_cart": "In your cart",
@@ -200,6 +201,7 @@
       "essentials": "Essentials",
       "spares": "Spares",
       "show_more": "Show {{ count }} more",
+      "show_more_spares": "Show {{ count }} more spares",
       "show_fewer": "Show fewer"
     },
     "favs": {
@@ -429,6 +431,9 @@
         "add_to_cart":  "Add to cart",
         "view_details": "View full details"
       }
+    },
+    "diamond_guide_switch_on": {
+      "aria_label": "How to switch on and use ENSŌ Diamond"
     }
   },
   "witb": {
@@ -437,10 +442,5 @@
     "how": "How to use it",
     "remind_me": "Remind me when in stock",
     "view_full_details": "View full details ›"
-  },
-  "sections": {
-    "diamond_guide_switch_on": {
-      "aria_label": "How to switch on and use ENSŌ Diamond"
-    }
   }
 }

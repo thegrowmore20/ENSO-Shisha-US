@@ -53,13 +53,11 @@
     endif
   elsif cart_mode == 'accessories'
     assign back_url   = routes.collections_url | append: '/accessories'
-    assign back_label = 'cart.back.accessories' | t
+    assign back_label = 'cart.back.keep' | t
   else
     assign back_url   = '/'
-    assign back_label = 'cart.back.shopping' | t
+    assign back_label = 'cart.back.keep' | t
   endif
-
-  render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
 
   capture device_pid_list
     for item in cart.items
@@ -72,77 +70,85 @@
 -%}
 
 <cart-page
-  class="cart-page color-surface"
+  class="cart-page"
   data-mode="{{ cart_mode }}"
-  data-money-format="{{ shop.money_format | replace: "'", '\"' | escape }}"
+  data-money-format="{{ shop.money_format | replace: "'", '"' | escape }}"
   data-device-pids="{{ device_pid_list | strip }}">
+
+  {%- comment -%}——— TOAST ———{%- endcomment -%}
+  <div class="cp-toast" id="cp-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   {%- if cart_mode == 'empty' -%}
     <div class="container">
-      <h1 class="h2 cp-empty-title">{{ 'cart.heading.empty' | t }}</h1>
-      <p class="body-text text-muted cp-empty-lead">{{ 'cart.lead.empty' | t }}</p>
-      <div class="cp-empty">
+      <div class="cp-empty-wrap">
+        <h1 class="cp-empty-title">{{ 'cart.heading.empty' | t }}</h1>
+        <p class="cp-empty-lead">{{ 'cart.lead.empty' | t }}</p>
+        <div class="cp-empty">
 
-        {%- comment -%}Card 1 – Diamond{%- endcomment -%}
-        <a class="cp-empty-card" href="{{ section.settings.diamond_url | default: '/products/enso-diamond' }}">
-          <div class="cp-empty-card__img">
-            {%- if section.settings.empty_diamond_image != blank -%}
-              <img src="{{ section.settings.empty_diamond_image | image_url: width: 600 }}"
-                   srcset="{{ section.settings.empty_diamond_image | image_url: width: 400 }} 400w, {{ section.settings.empty_diamond_image | image_url: width: 600 }} 600w"
-                   sizes="(max-width: 749px) 90vw, 30vw"
-                   alt="{{ section.settings.empty_diamond_image.alt | default: section.settings.empty_diamond_title | escape }}"
-                   width="{{ section.settings.empty_diamond_image.width }}"
-                   height="{{ section.settings.empty_diamond_image.height }}"
-                   loading="eager">
-            {%- else -%}
-              <svg aria-hidden="true" width="400" height="400" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
-            {%- endif -%}
-          </div>
-          <h2 class="cp-empty-card__title">{{ section.settings.empty_diamond_title | default: 'ENSŌ Diamond' }}</h2>
-          <p class="cp-empty-card__sub body-text text-muted">{{ section.settings.empty_diamond_subtitle | default: 'The electric heater for the hookah you already own' }}</p>
-          <span class="btn btn--primary">{{ section.settings.empty_diamond_cta | default: 'SHOP DIAMOND' }}</span>
-        </a>
+          <a class="cp-ec" href="{{ section.settings.diamond_url | default: '/products/enso-diamond' }}">
+            <div class="cp-ec__img">
+              {%- if section.settings.empty_diamond_image != blank -%}
+                <img src="{{ section.settings.empty_diamond_image | image_url: width: 600 }}"
+                     srcset="{{ section.settings.empty_diamond_image | image_url: width: 400 }} 400w, {{ section.settings.empty_diamond_image | image_url: width: 600 }} 600w"
+                     sizes="(max-width: 749px) 90vw, 30vw"
+                     alt="{{ section.settings.empty_diamond_image.alt | default: section.settings.empty_diamond_title | escape }}"
+                     width="{{ section.settings.empty_diamond_image.width }}"
+                     height="{{ section.settings.empty_diamond_image.height }}"
+                     loading="eager">
+              {%- else -%}
+                <svg aria-hidden="true" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
+              {%- endif -%}
+            </div>
+            <div class="cp-ec__txt">
+              <b>{{ section.settings.empty_diamond_title | default: 'ENSŌ Diamond' }}</b>
+              <span>{{ section.settings.empty_diamond_subtitle | default: 'The electric heater for the hookah you already own' }}</span>
+            </div>
+            <span class="btn btn--primary">{{ section.settings.empty_diamond_cta | default: 'SHOP DIAMOND' }}</span>
+          </a>
 
-        {%- comment -%}Card 2 – ENSŌ 2026{%- endcomment -%}
-        <a class="cp-empty-card" href="{{ section.settings.enso_url | default: '/products/enso-2026' }}">
-          <div class="cp-empty-card__img">
-            {%- if section.settings.empty_enso_image != blank -%}
-              <img src="{{ section.settings.empty_enso_image | image_url: width: 600 }}"
-                   srcset="{{ section.settings.empty_enso_image | image_url: width: 400 }} 400w, {{ section.settings.empty_enso_image | image_url: width: 600 }} 600w"
-                   sizes="(max-width: 749px) 90vw, 30vw"
-                   alt="{{ section.settings.empty_enso_image.alt | default: section.settings.empty_enso_title | escape }}"
-                   width="{{ section.settings.empty_enso_image.width }}"
-                   height="{{ section.settings.empty_enso_image.height }}"
-                   loading="eager">
-            {%- else -%}
-              <svg aria-hidden="true" width="400" height="400" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
-            {%- endif -%}
-          </div>
-          <h2 class="cp-empty-card__title">{{ section.settings.empty_enso_title | default: 'ENSŌ 2026 Edition' }}</h2>
-          <p class="cp-empty-card__sub body-text text-muted">{{ section.settings.empty_enso_subtitle | default: 'The all-in-one electric hookah' }}</p>
-          <span class="btn btn--outline">{{ section.settings.empty_enso_cta | default: 'SEE THE 2026 EDITION' }}</span>
-        </a>
+          <a class="cp-ec" href="{{ section.settings.enso_url | default: '/products/enso-2026' }}">
+            <div class="cp-ec__img">
+              {%- if section.settings.empty_enso_image != blank -%}
+                <img src="{{ section.settings.empty_enso_image | image_url: width: 600 }}"
+                     srcset="{{ section.settings.empty_enso_image | image_url: width: 400 }} 400w, {{ section.settings.empty_enso_image | image_url: width: 600 }} 600w"
+                     sizes="(max-width: 749px) 90vw, 30vw"
+                     alt="{{ section.settings.empty_enso_image.alt | default: section.settings.empty_enso_title | escape }}"
+                     width="{{ section.settings.empty_enso_image.width }}"
+                     height="{{ section.settings.empty_enso_image.height }}"
+                     loading="eager">
+              {%- else -%}
+                <svg aria-hidden="true" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
+              {%- endif -%}
+            </div>
+            <div class="cp-ec__txt">
+              <b>{{ section.settings.empty_enso_title | default: 'ENSŌ 2026 Edition' }}</b>
+              <span>{{ section.settings.empty_enso_subtitle | default: 'The all-in-one electric hookah' }}</span>
+            </div>
+            <span class="btn btn--outline">{{ section.settings.empty_enso_cta | default: 'SEE THE 2026 EDITION' }}</span>
+          </a>
 
-        {%- comment -%}Card 3 – Accessories{%- endcomment -%}
-        <a class="cp-empty-card" href="{{ section.settings.empty_acc_url | default: '/collections/accessories' }}">
-          <div class="cp-empty-card__img">
-            {%- if section.settings.empty_acc_image != blank -%}
-              <img src="{{ section.settings.empty_acc_image | image_url: width: 600 }}"
-                   srcset="{{ section.settings.empty_acc_image | image_url: width: 400 }} 400w, {{ section.settings.empty_acc_image | image_url: width: 600 }} 600w"
-                   sizes="(max-width: 749px) 90vw, 30vw"
-                   alt="{{ section.settings.empty_acc_image.alt | default: section.settings.empty_acc_title | escape }}"
-                   width="{{ section.settings.empty_acc_image.width }}"
-                   height="{{ section.settings.empty_acc_image.height }}"
-                   loading="eager">
-            {%- else -%}
-              <svg aria-hidden="true" width="400" height="400" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
-            {%- endif -%}
-          </div>
-          <h2 class="cp-empty-card__title">{{ section.settings.empty_acc_title | default: 'Accessories' }}</h2>
-          <p class="cp-empty-card__sub body-text text-muted">{{ section.settings.empty_acc_subtitle | default: 'Batteries, cups, screens, tools and the backpack' }}</p>
-          <span class="btn btn--outline">{{ section.settings.empty_acc_cta | default: 'SHOP ACCESSORIES' }}</span>
-        </a>
+          <a class="cp-ec" href="{{ section.settings.empty_acc_url | default: routes.collections_url | append: '/accessories' }}">
+            <div class="cp-ec__img">
+              {%- if section.settings.empty_acc_image != blank -%}
+                <img src="{{ section.settings.empty_acc_image | image_url: width: 600 }}"
+                     srcset="{{ section.settings.empty_acc_image | image_url: width: 400 }} 400w, {{ section.settings.empty_acc_image | image_url: width: 600 }} 600w"
+                     sizes="(max-width: 749px) 90vw, 30vw"
+                     alt="{{ section.settings.empty_acc_image.alt | default: section.settings.empty_acc_title | escape }}"
+                     width="{{ section.settings.empty_acc_image.width }}"
+                     height="{{ section.settings.empty_acc_image.height }}"
+                     loading="eager">
+              {%- else -%}
+                <svg aria-hidden="true" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
+              {%- endif -%}
+            </div>
+            <div class="cp-ec__txt">
+              <b>{{ section.settings.empty_acc_title | default: 'Accessories' }}</b>
+              <span>{{ section.settings.empty_acc_subtitle | default: 'Batteries, cups, screens, tools and the backpack' }}</span>
+            </div>
+            <span class="btn btn--outline">{{ section.settings.empty_acc_cta | default: 'SHOP ACCESSORIES' }}</span>
+          </a>
 
+        </div>
       </div>
     </div>
 
@@ -152,8 +158,8 @@
 
         {%- comment -%}——— LEFT: MAIN CONTENT ———{%- endcomment -%}
         <div class="cp-main">
-          <h1 class="h2 cp-heading">{{ cart_heading }}</h1>
-          <p class="body-text text-muted cp-lead">{{ cart_lead }}</p>
+          <h1 class="cp-heading">{{ cart_heading }}</h1>
+          <p class="cp-lead">{{ cart_lead }}</p>
 
           {%- comment -%}DEVICES{%- endcomment -%}
           {%- if has_devices -%}
@@ -169,25 +175,26 @@
                 assign dv_col     = collections[dv_col_h]
                 assign ess_accs   = item.product.metafields.custom.essential_accessories.value
                 assign spr_accs   = item.product.metafields.custom.spare_accessories.value
+                assign dev_subtitle = item.product.metafields.custom.headline | metafield_tag | strip_html | strip
 
                 assign spare_hidden_count = 0
-                for sa in spr_accs
-                  if forloop.index <= 2
-                    continue
-                  endif
-                  assign spc_in = false
-                  for ci in cart.items
-                    if ci.product.id == sa.id
-                      assign spc_in = true
-                      break
+                if spr_accs != blank
+                  for sa in spr_accs
+                    if forloop.index <= 2
+                      continue
                     endif
+                    assign spc_in = false
+                    for ci in cart.items
+                      if ci.product.id == sa.id
+                        assign spc_in = true
+                        break
+                      endif
+                    endfor
+                    unless spc_in
+                      assign spare_hidden_count = spare_hidden_count | plus: 1
+                    endunless
                   endfor
-                  unless spc_in
-                    assign spare_hidden_count = spare_hidden_count | plus: 1
-                  endunless
-                endfor
-
-                assign dev_subtitle = item.product.metafields.custom.headline.value | default: ''
+                endif
               -%}
 
               <details class="cp-dev"
@@ -196,41 +203,37 @@
                        data-family="{{ dv_family }}"
                        {% if cart_mode == 'device' %}open{% endif %}>
                 <summary class="cp-dev__summary">
-                  <div class="cp-dev__thumb">
+                  <a class="cp-dev__thumb" href="{{ item.product.url }}" tabindex="-1" aria-hidden="true">
                     {%- if item.image -%}
-                      <img src="{{ item.image | image_url: width: 120 }}"
+                      <img src="{{ item.image | image_url: width: 144 }}"
                            alt="{{ item.image.alt | default: item.title | escape }}"
-                           width="56" height="56" loading="lazy">
+                           width="72" height="72" loading="lazy">
                     {%- endif -%}
-                  </div>
-                  <div class="cp-dev__meta">
-                    <b class="cp-dev__name">{{ item.product.title }}</b>
+                  </a>
+                  <div class="cp-dev__t">
+                    <a class="cp-dev__name" href="{{ item.product.url }}">{{ item.product.title }}</a>
                     {%- if dev_subtitle != blank -%}
-                      <small class="cp-dev__sub text-muted">{{ dev_subtitle }}</small>
+                      <small class="cp-dev__sub">{{ dev_subtitle }}</small>
                     {%- endif -%}
                   </div>
                   <em class="cp-dev__price">{{ item.final_price | money }}</em>
-                  <span class="cp-dev__tog" aria-hidden="true">
-                    <span class="cp-dev__tog-show">{{ 'cart.device.show_addons' | t }}</span>
-                    <span class="cp-dev__tog-hide">{{ 'cart.device.hide_addons' | t }}</span>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-                  </span>
                   <button type="button" class="cp-dev__x" data-remove="{{ item.key }}"
                           aria-label="{{ 'cart.device.remove' | t: title: item.product.title }}">×</button>
+                  <div class="cp-dev__tog">
+                    <span class="cp-dev__tog-show">{{ 'cart.device.show_addons' | t }}</span>
+                    <span class="cp-dev__tog-hide">{{ 'cart.device.hide_addons' | t }}</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
                 </summary>
 
                 <div class="cp-dev__body">
 
                   {%- comment -%}PICK A SET{%- endcomment -%}
                   {%- if dv_col != blank -%}
-                    <div class="cp-sets">
+                    <div class="cp-sets block">
                       <h2 class="cp-sets__h">{{ 'cart.sets.heading' | t }}</h2>
-                      <p class="cp-sets__sub body-text text-muted">
-                        {%- if dv_family == 'diamond' -%}
-                          {{ 'cart.sets.sub_diamond' | t }}
-                        {%- else -%}
-                          {{ 'cart.sets.sub_enso' | t }}
-                        {%- endif -%}
+                      <p class="cp-sets__sub">
+                        {%- if dv_family == 'diamond' -%}{{ 'cart.sets.sub_diamond' | t }}{%- else -%}{{ 'cart.sets.sub_enso' | t }}{%- endif -%}
                       </p>
                       <div class="cp-sets__grid">
                         {%- for sp in dv_col.products -%}
@@ -251,7 +254,7 @@
                                    data-new-vid="{{ sp_var.id }}"
                                    {% if sp_active %}checked{% endif %}>
                             {%- if sp_badge != blank -%}
-                              <span class="cp-set__badge{% if sp_badge contains 'MOST' or sp_badge contains 'Most' or sp_badge contains 'most' %} cp-set__badge--accent{% endif %}">{{ sp_badge }}</span>
+                              <span class="cp-set__badge{% if sp_badge contains 'MOST' or sp_badge contains 'Most' %} cp-set__badge--accent{% endif %}">{{ sp_badge }}</span>
                             {%- endif -%}
                             <div class="cp-set__img">
                               {%- if sp.featured_image -%}
@@ -259,19 +262,17 @@
                                      alt="{{ sp.featured_image.alt | default: sp.title | escape }}"
                                      width="200" height="200" loading="lazy">
                               {%- else -%}
-                                <svg aria-hidden="true" width="200" height="200" viewBox="0 0 200 200" fill="none"><rect width="200" height="200" fill="#f0ede8"/></svg>
+                                <svg aria-hidden="true" viewBox="0 0 200 200" fill="none"><rect width="200" height="200" fill="#f0ede8"/></svg>
                               {%- endif -%}
                             </div>
                             <div class="cp-set__info">
                               <b class="cp-set__name">{{ sp.title }}</b>
                               <span class="cp-set__price">
-                                {%- if sp_var.compare_at_price > sp_var.price -%}
-                                  <s>{{ sp_var.compare_at_price | money }}</s>
-                                {%- endif -%}
+                                {%- if sp_var.compare_at_price > sp_var.price -%}<s>{{ sp_var.compare_at_price | money }}</s>{%- endif -%}
                                 {{ sp_var.price | money }}
                               </span>
                               {%- if sp.description != blank -%}
-                                <div class="cp-set__desc body-text">{{ sp.description }}</div>
+                                <div class="cp-set__desc">{{ sp.description }}</div>
                               {%- endif -%}
                             </div>
                           </label>
@@ -282,14 +283,10 @@
 
                   {%- comment -%}ADD ACCESSORIES{%- endcomment -%}
                   {%- if ess_accs != blank or spr_accs != blank -%}
-                    <div class="cp-addons">
+                    <div class="cp-addons block">
                       <h2 class="cp-addons__h">{{ 'cart.addons.heading' | t }}</h2>
-                      <p class="cp-addons__sub body-text text-muted">
-                        {%- if dv_family == 'diamond' -%}
-                          {{ 'cart.addons.sub_diamond' | t }}
-                        {%- else -%}
-                          {{ 'cart.addons.sub_enso' | t }}
-                        {%- endif -%}
+                      <p class="cp-addons__sub">
+                        {%- if dv_family == 'diamond' -%}{{ 'cart.addons.sub_diamond' | t }}{%- else -%}{{ 'cart.addons.sub_enso' | t }}{%- endif -%}
                       </p>
 
                       {%- if ess_accs != blank -%}
@@ -325,16 +322,13 @@
                         </div>
                         {%- if spare_hidden_count > 0 -%}
                           <button type="button" class="cp-addons__more"
-                                  data-spares-toggle="{{ item.key }}">
-                            <span class="cp-addons__more-show">{{ 'cart.addons.show_more' | t: count: spare_hidden_count }}</span>
-                            <span class="cp-addons__more-hide" hidden>{{ 'cart.addons.show_fewer' | t }}</span>
+                                  data-spares-toggle="{{ item.key }}"
+                                  aria-expanded="false">
+                            {{ 'cart.addons.show_more_spares' | t: count: spare_hidden_count }}
                           </button>
                         {%- endif -%}
                       {%- endif -%}
 
-                      <a href="#" class="cp-addons__remove-link text-muted" data-remove="{{ item.key }}">
-                        {{ 'cart.device.remove_link' | t: title: item.product.title }}
-                      </a>
                     </div>
                   {%- endif -%}
 
@@ -349,22 +343,24 @@
               {%- if cart_mode == 'mixed' -%}
                 <h2 class="cp-section-h">{{ 'cart.section.accessories' | t }}</h2>
               {%- endif -%}
-              <ul class="cp-acc-list" role="list">
+              <ul class="cp-acc-list" id="cp-acc-list" role="list">
                 {%- for item in cart.items -%}
                   {%- if item.product.tags contains 'device' -%}{%- continue -%}{%- endif -%}
-                  {%- assign acc_sub = item.product.metafields.custom.headline.value | default: '' -%}
+                  {%- assign acc_sub = item.product.metafields.custom.headline | metafield_tag | strip_html | strip -%}
                   <li class="cp-acc-row" data-key="{{ item.key }}">
-                    <div class="cp-acc-row__img">
+                    <a class="cp-acc-row__img" href="{{ item.product.url }}" aria-label="{{ item.product.title | escape }}">
                       {%- if item.image -%}
-                        <img src="{{ item.image | image_url: width: 120 }}"
+                        <img src="{{ item.image | image_url: width: 128 }}"
                              alt="{{ item.image.alt | default: item.title | escape }}"
-                             width="56" height="56" loading="lazy">
+                             width="64" height="64" loading="lazy">
+                      {%- else -%}
+                        <svg aria-hidden="true" width="64" height="64" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="10" fill="#f0ede8"/></svg>
                       {%- endif -%}
-                    </div>
+                    </a>
                     <div class="cp-acc-row__info">
-                      <b class="cp-acc-row__name">{{ item.product.title }}</b>
+                      <a class="cp-acc-row__name" href="{{ item.product.url }}">{{ item.product.title }}</a>
                       {%- if acc_sub != blank -%}
-                        <small class="cp-acc-row__sub text-muted">{{ acc_sub }}</small>
+                        <small class="cp-acc-row__sub">{{ acc_sub }}</small>
                       {%- endif -%}
                     </div>
                     <div class="cp-acc-row__qty">
@@ -372,7 +368,7 @@
                       <span class="cp-acc-row__qty-num">{{ item.quantity }}</span>
                       <button type="button" class="cp-acc-row__qty-btn" data-d="1" aria-label="{{ 'cart.qty.increase' | t }}">+</button>
                     </div>
-                    <span class="cp-acc-row__price">{{ item.final_line_price | money }}</span>
+                    <em class="cp-acc-row__price">{{ item.final_line_price | money }}</em>
                     <button type="button" class="cp-acc-row__remove" data-remove="{{ item.key }}"
                             aria-label="{{ 'cart.general.remove' | t: title: item.product.title }}">×</button>
                   </li>
@@ -393,39 +389,43 @@
               endfor
             endif
             unless fav_source
-              assign fav_source = collections.accessories.products
+              assign fav_col = collections['accessories']
+              if fav_col != blank
+                assign fav_source = fav_col.products
+              endif
             endunless
 
             assign fav_count = 0
             assign fav_has   = false
-            for fp in fav_source
-              if fav_count >= 3
-                break
-              endif
-              assign fp_in = false
-              for ci in cart.items
-                if ci.product.id == fp.id
-                  assign fp_in = true
+            if fav_source != blank
+              for fp in fav_source
+                if fav_count >= 4
                   break
                 endif
+                assign fp_in = false
+                for ci in cart.items
+                  if ci.product.id == fp.id
+                    assign fp_in = true
+                    break
+                  endif
+                endfor
+                unless fp_in
+                  assign fav_has   = true
+                  assign fav_count = fav_count | plus: 1
+                endunless
               endfor
-              unless fp_in
-                assign fav_has  = true
-                assign fav_count = fav_count | plus: 1
-              endunless
-            endfor
+            endif
           -%}
 
           {%- if fav_has -%}
-            <div class="cp-favs">
+            <div class="cp-favs" id="cp-favs">
               <div class="cp-favs__header">
                 <h2 class="cp-favs__h">{{ 'cart.favs.heading' | t }}</h2>
-                <a href="{{ routes.collections_url }}/accessories" class="cp-favs__all caption">{{ 'cart.favs.all' | t }} ›</a>
               </div>
               <div class="cp-favs__grid" id="cp-favs-grid">
                 {%- assign fav_count = 0 -%}
                 {%- for fp in fav_source -%}
-                  {%- if fav_count >= 3 -%}{%- break -%}{%- endif -%}
+                  {%- if fav_count >= 4 -%}{%- break -%}{%- endif -%}
                   {%- assign fp_in = false -%}
                   {%- for ci in cart.items -%}
                     {%- if ci.product.id == fp.id -%}{%- assign fp_in = true -%}{%- break -%}{%- endif -%}
@@ -443,66 +443,57 @@
 
         {%- comment -%}——— RIGHT: SIDEBAR ———{%- endcomment -%}
         <aside class="cp-sidebar" id="cp-sidebar" aria-label="{{ 'cart.summary.heading' | t }}">
-          <div class="cp-sidebar__inner">
-            <h2 class="cp-sidebar__h">{{ 'cart.summary.heading' | t }}</h2>
+          <h2 class="cp-sidebar__h">{{ 'cart.summary.heading' | t }}</h2>
 
-            <ul class="cp-sidebar__items" id="cp-sidebar-items" role="list">
-              {%- for item in cart.items -%}
-                {%- assign item_sub = item.product.metafields.custom.headline.value | default: '' -%}
-                {%- if item.product.tags contains 'device' -%}
-                  <li class="cp-sidebar__row cp-sidebar__row--device">
-                    <div class="cp-sidebar__row-info">
-                      <span class="cp-sidebar__row-name">{{ item.product.title }}</span>
-                      {%- if item_sub != blank -%}
-                        <small class="cp-sidebar__row-sub text-muted">{{ item_sub }}</small>
-                      {%- endif -%}
-                    </div>
-                    <span class="cp-sidebar__row-price">{{ item.final_price | money }}</span>
-                  </li>
-                {%- else -%}
-                  <li class="cp-sidebar__row" data-line-key="{{ item.key }}">
-                    <span class="cp-sidebar__row-name">{{ item.product.title }}{% if item.quantity > 1 %} × {{ item.quantity }}{% endif %}</span>
-                    <span class="cp-sidebar__row-price">{{ item.final_line_price | money }}</span>
-                  </li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
+          <ul id="cp-sidebar-items" role="list">
+            {%- for item in cart.items -%}
+              {%- assign item_sub = item.product.metafields.custom.headline | metafield_tag | strip_html | strip -%}
+              <li data-line-key="{{ item.key }}">
+                <span>
+                  <span class="cp-sidebar__row-name">{{ item.product.title }}{% if item.quantity > 1 %} × {{ item.quantity }}{% endif %}</span>
+                  {%- if item_sub != blank -%}
+                    <small>{{ item_sub }}</small>
+                  {%- endif -%}
+                </span>
+                <span>{{ item.final_line_price | money }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
 
-            <div class="cp-sidebar__total" id="cp-sidebar-total">
-              <span class="cp-sidebar__total-label">{{ 'cart.general.total' | t }}</span>
-              <span class="cp-sidebar__total-price" id="cp-sidebar-total-price">{{ cart.total_price | money }}</span>
-            </div>
-            <p class="cp-sidebar__vat caption text-muted">{{ 'cart.summary.vat_note' | t }}</p>
-
-            <a href="/checkout" class="btn btn--primary btn--full cp-sidebar__cta">
-              {{- section.settings.cta_label | default: 'Checkout' | upcase -}}
-            </a>
-
-            {%- if section.settings.usp_1 != blank or section.settings.usp_2 != blank or section.settings.usp_3 != blank -%}
-              <ul class="cp-sidebar__usps caption text-muted" role="list">
-                {%- if section.settings.usp_1 != blank -%}
-                  <li>
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 1.5A7.5 7.5 0 1 0 9 16.5 7.5 7.5 0 0 0 9 1.5z"/><path d="M9 5v4l2 2"/></svg>
-                    {{ section.settings.usp_1 }}
-                  </li>
-                {%- endif -%}
-                {%- if section.settings.usp_2 != blank -%}
-                  <li>
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="9" r="7.5"/><path d="M9 5v4"/><circle cx="9" cy="13" r=".75" fill="currentColor"/></svg>
-                    {{ section.settings.usp_2 }}
-                  </li>
-                {%- endif -%}
-                {%- if section.settings.usp_3 != blank -%}
-                  <li>
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15.75 12H13.5L12 9H6L4.5 12H2.25"/><rect x="1.5" y="3" width="15" height="9" rx="1.5"/></svg>
-                    {{ section.settings.usp_3 }}
-                  </li>
-                {%- endif -%}
-              </ul>
-            {%- endif -%}
-
-            <a href="{{ back_url }}" class="cp-sidebar__back caption text-muted">{{ back_label }}</a>
+          <div class="cp-sidebar__total" id="cp-sidebar-total">
+            <span>{{ 'cart.general.total' | t }}</span>
+            <span id="cp-sidebar-total-price">{{ cart.total_price | money }}</span>
           </div>
+          <p class="cp-sidebar__vat">{{ 'cart.summary.vat_note' | t }}</p>
+
+          <a href="/checkout" class="btn btn--primary btn--full cp-sidebar__cta">
+            {{- section.settings.cta_label | default: 'Checkout' | upcase -}}
+          </a>
+
+          {%- if section.settings.usp_1 != blank or section.settings.usp_2 != blank or section.settings.usp_3 != blank -%}
+            <ul class="cp-sidebar__trust" role="list">
+              {%- if section.settings.usp_1 != blank -%}
+                <li>
+                  <svg viewBox="0 0 18 18" width="18" height="18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {{ section.settings.usp_1 }}
+                </li>
+              {%- endif -%}
+              {%- if section.settings.usp_2 != blank -%}
+                <li>
+                  <svg viewBox="0 0 18 18" width="18" height="18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {{ section.settings.usp_2 }}
+                </li>
+              {%- endif -%}
+              {%- if section.settings.usp_3 != blank -%}
+                <li>
+                  <svg viewBox="0 0 18 18" width="18" height="18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {{ section.settings.usp_3 }}
+                </li>
+              {%- endif -%}
+            </ul>
+          {%- endif -%}
+
+          <a href="{{ back_url }}" class="cp-sidebar__back">{{ back_label }}</a>
         </aside>
 
       </div>
@@ -514,26 +505,38 @@
 <script src="{{ 'cart-page.js' | asset_url }}" defer></script>
 
 {% stylesheet %}
-/* ── Layout ─────────────────────────────────────────────── */
+/* ── Layout ─────────────────────────────────────────────────────── */
 .cart-page {
-  padding-block: 80px;
+  padding: 56px 0 96px;
+  background: var(--color-background);
 }
 @media screen and (max-width: 749px) {
-  .cart-page { padding-block: 40px; }
+  .cart-page { padding: 32px 0 80px; }
 }
 
 .cp-layout {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: var(--space-8);
+  grid-template-columns: minmax(0,1fr) 420px;
+  gap: 60px;
   align-items: start;
 }
 @media screen and (max-width: 989px) {
-  .cp-layout { grid-template-columns: 1fr; }
+  .cp-layout { grid-template-columns: 1fr; gap: 32px; }
 }
 
-.cp-heading { margin-bottom: var(--space-2); }
-.cp-lead    { margin-bottom: var(--space-6); }
+.cp-heading {
+  font-family: var(--font-accent);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+.cp-lead {
+  margin-bottom: 28px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
 .cp-section-h {
   font-size: var(--font-size-h5);
   font-weight: var(--font-weight-bold);
@@ -544,576 +547,670 @@
 }
 .cp-section-h:first-child { margin-top: 0; }
 
-/* ── Empty state ─────────────────────────────────────────── */
-.cp-empty-title { margin-bottom: var(--space-2); }
-.cp-empty-lead  { margin-bottom: var(--space-6); }
+/* ── Toast ───────────────────────────────────────────────────────── */
+.cp-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 80px;
+  transform: translate(-50%, 16px);
+  background: var(--color-text);
+  color: var(--color-background);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+  opacity: 0;
+  transition: opacity .25s, transform .25s;
+  z-index: 9001;
+  pointer-events: none;
+  white-space: nowrap;
+  display: none;
+}
+.cp-toast.is-on {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ── Empty state ─────────────────────────────────────────────────── */
+.cp-empty-wrap { padding: 8px 0 88px; }
+.cp-empty-title { margin-bottom: 8px; }
+.cp-empty-lead  { margin-bottom: 28px; color: var(--color-text-muted); }
 .cp-empty {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 20px;
 }
 @media screen and (max-width: 749px) {
   .cp-empty { grid-template-columns: 1fr; }
 }
 
-.cp-empty-card {
+.cp-ec {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
-  text-decoration: none;
-  color: inherit;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  padding: var(--space-5);
-  transition: box-shadow .2s;
+  padding: 16px 16px 22px;
+  text-decoration: none;
+  color: inherit;
+  background: var(--color-background);
+  transition: transform .25s, box-shadow .25s;
 }
-.cp-empty-card:hover { box-shadow: var(--shadow-md); }
+.cp-ec:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 
-.cp-empty-card__img {
-  width: 100%;
+.cp-ec__img {
   aspect-ratio: 1;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--color-background-raised);
+  background: var(--color-background);
+  margin-bottom: 16px;
 }
-.cp-empty-card__img img,
-.cp-empty-card__img svg {
+.cp-ec__img img,
+.cp-ec__img svg {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
 }
-.cp-empty-card__title {
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-bold);
-  margin: 0;
-}
-.cp-empty-card__sub { margin: 0; }
 
-/* ── Device accordion ────────────────────────────────────── */
-.cp-dev {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  margin-bottom: var(--space-4);
+.cp-ec__txt { padding: 0 6px; flex: 1; margin-bottom: 18px; }
+.cp-ec__txt b {
+  display: block;
+  font-family: var(--font-accent);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -.02em;
+  margin-bottom: 6px;
+  line-height: 1.15;
 }
-.cp-dev + .cp-dev { margin-top: 0; }
+.cp-ec__txt span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.cp-ec .btn { align-self: flex-start; }
+
+/* ── Device accordion ────────────────────────────────────────────── */
+.cp-dev {
+  border: 1.5px solid var(--color-border);
+  border-radius: 22px;
+  background: var(--color-background);
+  margin-bottom: 16px;
+  overflow: hidden;
+  position: relative;
+}
 
 .cp-dev > summary { list-style: none; cursor: pointer; }
 .cp-dev > summary::-webkit-details-marker { display: none; }
 
 .cp-dev__summary {
-  display: flex;
+  display: grid;
+  grid-template-columns: 72px minmax(0,1fr) auto;
+  grid-template-rows: auto auto;
+  gap: 0 16px;
   align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4) var(--space-5);
+  padding: 18px 56px 14px 20px;
   background: var(--color-background);
-}
-.cp-dev[open] .cp-dev__summary {
-  border-bottom: 1px solid var(--color-border);
+  user-select: none;
 }
 
 .cp-dev__thumb {
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-md);
+  grid-row: 1 / span 2;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
   overflow: hidden;
   background: var(--color-background-raised);
+  border: 1px solid var(--color-border);
+  display: block;
+  text-decoration: none;
+  align-self: center;
 }
-.cp-dev__thumb img { width: 100%; height: 100%; object-fit: contain; }
+.cp-dev__thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-.cp-dev__meta { flex: 1; min-width: 0; }
-.cp-dev__name { display: block; font-size: 15px; font-weight: var(--font-weight-semibold); }
-.cp-dev__sub  { display: block; font-size: 13px; margin-top: 2px; }
+.cp-dev__t {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-top: 4px;
+}
+.cp-dev__name {
+  display: block;
+  font-family: var(--font-accent);
+  font-size: 17px;
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -.02em;
+  line-height: 22px;
+  color: inherit;
+  text-decoration: none;
+}
+.cp-dev__name:hover { text-decoration: underline; }
+.cp-dev__sub { font-size: 13px; color: var(--color-text-muted); margin-top: 2px; }
 
 .cp-dev__price {
   font-family: var(--font-accent);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-heavy);
+  font-size: 18px;
   font-style: normal;
   white-space: nowrap;
+  align-self: flex-start;
+  padding-top: 4px;
 }
 
-.cp-dev__tog {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: 13px;
-  white-space: nowrap;
-}
-.cp-dev__tog-hide { display: none; }
-details[open] .cp-dev__tog-show { display: none; }
-details[open] .cp-dev__tog-hide { display: inline; }
-details[open] .cp-dev__tog svg  { transform: rotate(180deg); }
-.cp-dev__tog svg { transition: transform .2s; }
-
+/* × button */
 .cp-dev__x {
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
+  font-size: 18px;
   line-height: 1;
-  color: var(--color-text-muted);
+  cursor: pointer;
+  color: var(--color-text);
+  display: grid;
+  place-items: center;
   padding: 0;
-  width: 28px;
-  height: 28px;
+  transition: border-color .15s, background .15s;
+  z-index: 1;
+}
+.cp-dev__x:hover { border-color: var(--color-text); }
+
+/* Toggle row — spans all columns */
+.cp-dev__tog {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background .15s;
+  gap: 6px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  padding-top: 10px;
+  margin-top: 2px;
+  border-top: 1px solid var(--color-border);
+  margin-left: -20px;
+  margin-right: -56px;
+  padding-left: 20px;
 }
-.cp-dev__x:hover { background: var(--color-background-raised); }
+.cp-dev__tog svg { transition: transform .2s; margin-left: 2px; }
+.cp-dev__tog-hide { display: none; }
+details.cp-dev[open] .cp-dev__tog svg { transform: rotate(180deg); }
+details.cp-dev[open] .cp-dev__tog-show { display: none; }
+details.cp-dev[open] .cp-dev__tog-hide { display: inline; }
 
-.cp-dev__body { padding: var(--space-6) var(--space-5); }
+details.cp-dev[open] .cp-dev__summary { border-bottom: 1px solid var(--color-border); }
+.cp-dev__body { padding: 20px 20px 24px; }
 
 @media screen and (max-width: 749px) {
-  .cp-dev__summary { flex-wrap: wrap; padding: var(--space-4); }
-  .cp-dev__tog { display: none; }
-  .cp-dev__body { padding: var(--space-5) var(--space-4); }
+  .cp-dev__summary {
+    grid-template-columns: 56px minmax(0,1fr) auto;
+    padding: 14px 52px 12px 16px;
+  }
+  .cp-dev__thumb { width: 56px; height: 56px; }
+  .cp-dev__tog { margin-left: -16px; margin-right: -52px; padding-left: 16px; }
+  .cp-dev__body { padding: 16px; }
+  .cp-dev__x { top: 10px; right: 10px; }
 }
 
-/* ── Pick a set ──────────────────────────────────────────── */
-.cp-sets { margin-bottom: var(--space-7); }
-.cp-sets__h   { font-size: var(--font-size-h4); font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); }
-.cp-sets__sub { margin-bottom: var(--space-5); }
+/* ── Pick a set ──────────────────────────────────────────────────── */
+.cp-sets { margin-bottom: 28px; }
+.cp-sets__h {
+  font-family: var(--font-accent);
+  font-size: 20px;
+  font-weight: var(--font-weight-heavy);
+  margin: 0 0 6px;
+  letter-spacing: -.01em;
+}
+.cp-sets__sub { color: var(--color-text-muted); margin-bottom: 16px; font-size: 14px; }
 
 .cp-sets__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 16px;
+}
+@media screen and (max-width: 749px) {
+  .cp-sets__grid { grid-template-columns: 1fr; }
 }
 
 .cp-set {
+  position: relative;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  padding: 18px;
   border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-4);
+  border-radius: 18px;
   cursor: pointer;
-  position: relative;
-  transition: border-color .15s;
+  background: var(--color-background);
+  transition: border-color .2s, box-shadow .2s;
 }
+.cp-set:hover { box-shadow: var(--shadow-sm); }
 .cp-set.is-active,
 .cp-set:has(input:checked) {
   border-color: var(--color-text);
   border-width: 2px;
+  padding: 17.5px;
 }
 
 .cp-set__badge {
   position: absolute;
-  top: var(--space-3);
-  left: var(--space-3);
+  top: 12px;
+  left: 12px;
   background: var(--color-text);
   color: var(--color-background);
   font-size: 10px;
   font-weight: var(--font-weight-bold);
-  letter-spacing: .04em;
-  padding: 3px 8px;
+  letter-spacing: .1em;
+  padding: 5px 9px;
   border-radius: var(--radius-pill);
   text-transform: uppercase;
 }
-.cp-set__badge--accent {
-  background: var(--palette-sand);
-  color: #fff;
-}
+.cp-set__badge--accent { background: var(--palette-sand, #c8943a); }
 
 .cp-set__img {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   overflow: hidden;
   background: var(--color-background-raised);
-  margin-bottom: var(--space-4);
 }
-.cp-set__img img,
-.cp-set__img svg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+.cp-set__img img, .cp-set__img svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.cp-set__name  { font-size: 14px; font-weight: var(--font-weight-semibold); }
+.cp-set__price {
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  font-size: 20px;
+  letter-spacing: -.02em;
 }
-
-.cp-set__name  { font-size: 14px; font-weight: var(--font-weight-semibold); margin-bottom: var(--space-1); display: block; }
-.cp-set__price { font-family: var(--font-accent); font-size: 15px; font-weight: var(--font-weight-semibold); display: block; margin-bottom: var(--space-3); }
-.cp-set__price s { font-weight: var(--font-weight-regular); color: var(--color-text-muted); margin-right: var(--space-1); }
-
-.cp-set__desc {
-  font-size: 13px;
+.cp-set__price s {
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
+  margin-left: 6px;
+  text-decoration: line-through;
 }
-.cp-set__desc ul,
-.cp-set__desc p { margin: 0; padding: 0; list-style: none; }
-.cp-set__desc li { padding-left: 1em; position: relative; }
-.cp-set__desc li::before { content: "·"; position: absolute; left: 0; }
+.cp-set__desc { font-size: 13px; color: var(--color-text-muted); line-height: 20px; }
 
-/* ── Add accessories ─────────────────────────────────────── */
-.cp-addons__h       { font-size: var(--font-size-h4); font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); }
-.cp-addons__sub     { margin-bottom: var(--space-5); }
-.cp-addons__group-h { font-size: var(--font-size-h6); font-weight: var(--font-weight-bold); margin-bottom: var(--space-4); margin-top: var(--space-5); }
-.cp-addons__group-h:first-of-type { margin-top: 0; }
+/* ── Add accessories ─────────────────────────────────────────────── */
+.cp-addons__h {
+  font-family: var(--font-accent);
+  font-size: 20px;
+  font-weight: var(--font-weight-heavy);
+  margin: 0 0 6px;
+  letter-spacing: -.01em;
+}
+.cp-addons__sub { color: var(--color-text-muted); margin-bottom: 16px; font-size: 14px; }
+.cp-addons__group-h {
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  margin: 20px 0 12px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: 12px;
+}
 
 .cp-addons__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
+  gap: 12px;
+  margin-bottom: 8px;
 }
 @media screen and (max-width: 599px) {
   .cp-addons__grid { grid-template-columns: 1fr; }
 }
 
-.cp-addon--hidden { display: none; }
+/* Addon card */
+.cp-addon--hidden { display: none !important; }
 
 .cp-addon {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  display: grid;
+  grid-template-columns: 72px minmax(0,1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
   border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: 16px;
+  background: var(--color-background);
   transition: border-color .15s;
 }
-.cp-addon.is-added { border-color: var(--color-text); }
+.cp-addon.is-added { border-color: var(--color-text); border-width: 2px; padding: 13.5px; }
 
 .cp-addon__img {
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-sm);
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
   overflow: hidden;
   background: var(--color-background-raised);
+  border: 1px solid var(--color-border);
+  display: block;
+  text-decoration: none;
 }
 .cp-addon__img img,
-.cp-addon__img svg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.cp-addon__img svg { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.cp-addon__body { display: flex; flex-direction: column; min-width: 0; padding-top: 2px; }
+.cp-addon__name {
   display: block;
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 19px;
+  color: inherit;
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+.cp-addon__name:hover { text-decoration: underline; }
+.cp-addon__sub {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  line-height: 17px;
+  margin-bottom: 10px;
 }
 
-.cp-addon__info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.cp-addon__name  { font-size: 13px; font-weight: var(--font-weight-semibold); }
-.cp-addon__sub   { font-size: 12px; color: var(--color-text-muted); }
-.cp-addon__price { font-family: var(--font-accent); font-size: 13px; font-weight: var(--font-weight-semibold); }
-
-.cp-addon__action {
-  flex-shrink: 0;
+.cp-addon__row {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 8px;
+  margin-top: auto;
+}
+.cp-addon__price {
+  font-family: var(--font-accent);
+  font-size: 15px;
+  font-weight: var(--font-weight-heavy);
+  font-style: normal;
+  margin-right: auto;
 }
 
 .cp-addon__atc {
-  white-space: nowrap;
-  font-size: 12px;
-  font-weight: var(--font-weight-bold);
-  letter-spacing: .04em;
-  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 14px;
   border-radius: var(--radius-pill);
-  border: 1.5px solid var(--color-text);
   background: var(--color-text);
   color: var(--color-background);
-  cursor: pointer;
-  transition: background .15s, border-color .15s;
-}
-.cp-addon__atc:hover {
-  background: var(--palette-sand, #c8943a);
-  border-color: var(--palette-sand, #c8943a);
-}
-
-.cp-addon__added {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: var(--font-weight-bold);
-  letter-spacing: .04em;
-  padding: 8px 14px;
-  border-radius: var(--radius-pill);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  white-space: nowrap;
   border: none;
-  background: var(--palette-sand, #c8943a);
-  color: #fff;
   cursor: pointer;
-  transition: opacity .15s;
+  transition: background .15s, opacity .15s;
+  position: relative;
 }
-.cp-addon__added:hover { opacity: .8; }
+.cp-addon__atc:hover:not(.is-on) { opacity: .75; }
+.cp-addon__atc.is-on { background: #96671f; color: #fff; }
+.cp-addon__atc.is-on:hover { opacity: .8; }
+.cp-addon__atc.is-loading { pointer-events: none; opacity: .5; }
 
 .cp-addon__qty {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
+  gap: 6px;
 }
 .cp-addon__qty-btn {
-  background: none;
-  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
   cursor: pointer;
-  width: 28px;
-  height: 28px;
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text);
-  transition: background .15s;
+  transition: border-color .15s;
+  padding: 0;
 }
-.cp-addon__qty-btn:hover { background: var(--color-background-raised); }
-.cp-addon__qty-num { font-size: 13px; min-width: 18px; text-align: center; }
+.cp-addon__qty-btn:hover { border-color: var(--color-text); }
+.cp-addon__qty-num { font-size: 13px; font-weight: var(--font-weight-bold); min-width: 14px; text-align: center; }
 
 .cp-addons__more {
-  margin-top: var(--space-4);
+  margin: 12px 0 4px;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 13px;
   font-weight: var(--font-weight-semibold);
   text-decoration: underline;
-  color: var(--color-text);
+  text-underline-offset: 3px;
+  color: var(--color-text-muted);
   padding: 0;
 }
+.cp-addons__more:hover { color: var(--color-text); }
 
-.cp-addons__remove-link {
-  display: block;
-  margin-top: var(--space-5);
-  font-size: 13px;
-  text-decoration: underline;
-  color: var(--color-text-muted);
-}
+/* ── Standalone accessories list ─────────────────────────────────── */
+.cp-acc-section { margin-top: 24px; }
 
-/* ── Standalone accessories list ─────────────────────────── */
-.cp-acc-section { margin-top: var(--space-6); }
 .cp-acc-list {
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
   border-top: 1px solid var(--color-border);
 }
 
 .cp-acc-row {
   display: grid;
-  grid-template-columns: 56px 1fr auto auto auto;
-  gap: var(--space-4);
+  grid-template-columns: 64px minmax(0,1fr) auto auto auto;
+  gap: 0 14px;
   align-items: center;
-  padding-block: var(--space-4);
+  padding: 16px 0;
   border-bottom: 1px solid var(--color-border);
-}
-@media screen and (max-width: 599px) {
-  .cp-acc-row {
-    grid-template-columns: 56px 1fr auto;
-    grid-template-rows: auto auto;
-  }
-  .cp-acc-row__price  { grid-column: 2; }
-  .cp-acc-row__remove { grid-row: 1; grid-column: 3; }
-  .cp-acc-row__qty    { grid-column: 2 / 4; }
 }
 
 .cp-acc-row__img {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-sm);
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
   overflow: hidden;
   background: var(--color-background-raised);
-}
-.cp-acc-row__img img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  border: 1px solid var(--color-border);
   display: block;
+  text-decoration: none;
 }
-.cp-acc-row__name { font-size: 14px; font-weight: var(--font-weight-semibold); display: block; }
-.cp-acc-row__sub  { font-size: 13px; display: block; }
+.cp-acc-row__img img, .cp-acc-row__img svg { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.cp-acc-row__name {
+  display: block;
+  font-size: 15px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 20px;
+  color: inherit;
+  text-decoration: none;
+}
+.cp-acc-row__name:hover { text-decoration: underline; }
+.cp-acc-row__sub { display: block; font-size: 13px; color: var(--color-text-muted); line-height: 18px; margin-top: 2px; }
 
 .cp-acc-row__qty {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
+  gap: 8px;
 }
 .cp-acc-row__qty-btn {
-  background: none;
-  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
   cursor: pointer;
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .15s;
+  transition: border-color .15s;
+  padding: 0;
 }
-.cp-acc-row__qty-btn:hover { background: var(--color-background-raised); }
-.cp-acc-row__qty-num { font-size: 14px; min-width: 22px; text-align: center; }
+.cp-acc-row__qty-btn:hover { border-color: var(--color-text); }
+.cp-acc-row__qty-num { font-size: 14px; font-weight: var(--font-weight-bold); min-width: 16px; text-align: center; }
 
 .cp-acc-row__price {
   font-family: var(--font-accent);
-  font-size: 14px;
-  font-weight: var(--font-weight-semibold);
+  font-size: 15px;
+  font-weight: var(--font-weight-heavy);
+  font-style: normal;
   white-space: nowrap;
+  min-width: 60px;
+  text-align: right;
 }
 
 .cp-acc-row__remove {
-  background: none;
+  background: #f5f5f4;
   border: none;
   cursor: pointer;
-  font-size: 18px;
-  color: var(--color-text-muted);
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  transition: background .15s;
+  font-size: 18px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-muted);
+  transition: background .15s, color .15s;
+  padding: 0;
 }
-.cp-acc-row__remove:hover { background: var(--color-background-raised); }
+.cp-acc-row__remove:hover { background: #e5e5e3; color: var(--color-text); }
 
-/* ── Did you forget anything? ────────────────────────────── */
-.cp-favs {
-  margin-top: var(--space-7);
-  padding-top: var(--space-7);
-  border-top: 1px solid var(--color-border);
+@media screen and (max-width: 749px) {
+  .cp-acc-row {
+    grid-template-columns: 56px minmax(0,1fr) auto;
+    grid-template-areas:
+      'img info rem'
+      'img qty  price';
+    row-gap: 8px;
+  }
+  .cp-acc-row__img    { grid-area: img; width: 56px; height: 56px; }
+  .cp-acc-row__info   { grid-area: info; }
+  .cp-acc-row__qty    { grid-area: qty; }
+  .cp-acc-row__price  { grid-area: price; text-align: right; }
+  .cp-acc-row__remove { grid-area: rem; justify-self: end; }
 }
+
+/* ── Did you forget anything? ────────────────────────────────────── */
+.cp-favs { margin-top: 44px; }
 .cp-favs__header {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: var(--space-5);
+  gap: 16px;
+  margin-bottom: 18px;
 }
-.cp-favs__h { font-size: var(--font-size-h4); font-weight: var(--font-weight-bold); margin: 0; }
-.cp-favs__all { color: var(--color-text-muted); text-decoration: underline; white-space: nowrap; }
+.cp-favs__h {
+  font-family: var(--font-accent);
+  font-size: 22px;
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -.02em;
+  margin: 0;
+}
 
 .cp-favs__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 12px;
 }
-@media screen and (max-width: 749px) {
-  .cp-favs__grid { grid-template-columns: 1fr 1fr; }
-}
-@media screen and (max-width: 479px) {
-  .cp-favs__grid { grid-template-columns: 1fr; }
+@media screen and (max-width: 989px) {
+  .cp-favs__grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 
-.cp-fav {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-4);
-}
-.cp-fav__img {
-  width: 100%;
-  aspect-ratio: 1;
-  background: var(--color-background-raised);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin-bottom: var(--space-2);
-}
-.cp-fav__img img,
-.cp-fav__img svg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-.cp-fav__name  { font-size: 14px; font-weight: var(--font-weight-semibold); margin: 0; }
-.cp-fav__sub   { font-size: 13px; color: var(--color-text-muted); }
-.cp-fav__price { font-family: var(--font-accent); font-size: 15px; font-weight: var(--font-weight-semibold); }
-.cp-fav__add   { width: 100%; margin-top: auto; }
-
-/* ── Sidebar ──────────────────────────────────────────────── */
+/* ── Sidebar ─────────────────────────────────────────────────────── */
 .cp-sidebar {
   position: sticky;
-  top: calc(var(--announcement-bar-height, 0px) + 80px + var(--space-5));
+  top: calc(var(--announcement-bar-height, 0px) + 72px);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  padding: 26px;
+  background: var(--color-background);
 }
 @media screen and (max-width: 989px) {
   .cp-sidebar { position: static; }
 }
 
-.cp-sidebar__inner {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
 .cp-sidebar__h {
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-bold);
-  margin: 0;
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-accent);
+  font-size: 20px;
+  font-weight: var(--font-weight-heavy);
+  margin: 0 0 16px;
+  letter-spacing: -.01em;
 }
 
-.cp-sidebar__items {
+#cp-sidebar-items {
   margin: 0;
   padding: 0;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  border-top: 1px solid var(--color-border);
 }
-
-.cp-sidebar__row {
+#cp-sidebar-items li {
   display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
   justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+  line-height: 20px;
 }
-.cp-sidebar__row-info  { flex: 1; min-width: 0; }
-.cp-sidebar__row-name  { font-size: 13px; font-weight: var(--font-weight-semibold); display: block; }
-.cp-sidebar__row-sub   { display: block; font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
-.cp-sidebar__row-price { font-size: 13px; font-weight: var(--font-weight-semibold); white-space: nowrap; }
+#cp-sidebar-items li > span:first-child { flex: 1; }
+#cp-sidebar-items li small { display: block; color: var(--color-text-muted); font-size: 12px; }
 
 .cp-sidebar__total {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--color-border);
+  align-items: baseline;
+  padding: 16px 0 6px;
+  font-family: var(--font-accent);
+  font-size: 24px;
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: -.02em;
 }
-.cp-sidebar__total-label { font-size: 18px; font-weight: var(--font-weight-bold); }
-.cp-sidebar__total-price { font-family: var(--font-accent); font-size: 22px; font-weight: var(--font-weight-semibold); }
 
-.cp-sidebar__vat { margin: 0; }
+.cp-sidebar__vat {
+  margin: 0 0 16px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 18px;
+}
 
-.cp-sidebar__usps {
-  margin: 0;
-  padding: 0;
+.cp-sidebar__cta { margin-bottom: 4px; }
+
+.cp-sidebar__trust {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding-top: var(--space-4);
+  margin: 16px 0 0;
+  padding: 14px 0 0;
   border-top: 1px solid var(--color-border);
+  display: grid;
+  gap: 8px;
 }
-.cp-sidebar__usps li {
+.cp-sidebar__trust li {
   display: flex;
+  gap: 10px;
   align-items: flex-start;
-  gap: var(--space-2);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-text-muted);
 }
-.cp-sidebar__usps svg { flex-shrink: 0; margin-top: 1px; }
+.cp-sidebar__trust svg { flex: none; margin-top: 0; }
 
 .cp-sidebar__back {
+  display: block;
+  margin-top: 16px;
   text-align: center;
-  text-decoration: underline;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  text-decoration: none;
 }
+.cp-sidebar__back:hover { text-decoration: underline; color: var(--color-text); }
+
+/* ── Block spacing ───────────────────────────────────────────────── */
+.cp-dev__body .block { margin-bottom: 32px; }
+.cp-dev__body .block:last-child { margin-bottom: 0; }
 {% endstylesheet %}
 
 {% schema %}
