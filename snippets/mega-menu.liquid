@@ -97,7 +97,7 @@
           {%- endif -%}
           {%- if products_source != blank -%}
             {%- for product in products_source limit: max_products -%}
-              {%- if product and product.available -%}
+              {%- if product -%}
                 {%- unless product.title contains 'Shipping Protection' -%}
                   {%- render 'card-product', product: product, section: section -%}
                 {%- endunless -%}
@@ -106,7 +106,7 @@
           {%- else -%}
             {%- for product_link in product_links limit: max_products -%}
               {%- assign product = product_link.object -%}
-              {%- if product and product.available -%}
+              {%- if product -%}
                 {%- unless product.title contains 'Shipping Protection' -%}
                   {%- render 'card-product', product: product, section: section -%}
                 {%- endunless -%}
