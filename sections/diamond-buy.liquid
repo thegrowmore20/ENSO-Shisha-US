@@ -8,16 +8,16 @@
 -%}
 
 {% style %}
-.d-buy-padding-{{ section.id }} {
-  padding-top: {{ section.settings.padding_top_mobile }}px;
-  padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-}
-@media screen and (min-width: 990px) {
-  .d-buy-padding-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
+  #section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
   }
-}
+  @media screen and (min-width: 990px) {
+    #section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
 {% endstyle %}
 
 {% stylesheet %}
@@ -521,6 +521,8 @@
 
 {% endstylesheet %}
 
+<div id="section-{{ section.id }}">
+
 {%- assign sticky_watch_id = 'DBuyCard-' | append: section.id -%}
 {%- render 'sticky-add-to-cart',
   product: product,
@@ -530,7 +532,7 @@
 -%}
 
 <diamond-buy
-  class="d-buy d-buy-padding-{{ section.id }}"
+  class="d-buy"
   id="buy"
   data-section-id="{{ section.id }}"
   data-variant-id="{{ current_variant.id }}"
@@ -758,6 +760,8 @@
     </div>
   </div>
 </diamond-buy>
+
+</div>
 
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
