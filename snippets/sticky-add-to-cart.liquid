@@ -29,12 +29,12 @@
         <span
           data-add-to-cart-text
           data-label-available="{{ available_label }}"
-          data-label-sold-out="{{ 'products.product.join_waitlist' | t }}"
+          data-label-sold-out="{{ 'products.product.sold_out' | t }}"
         >
           {%- if current_variant.available -%}
             {{ available_label }}
           {%- else -%}
-            {{ 'products.product.join_waitlist' | t }}
+            {{ 'products.product.sold_out' | t }}
           {%- endif -%}
         </span>
       </button>
