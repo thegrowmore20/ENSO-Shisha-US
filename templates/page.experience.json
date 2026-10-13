@@ -46,12 +46,12 @@
             "app_updates_url": "",
             "app_fix_url": "",
             "app_recipes_url": "/pages/enso-app#enso-recipes",
-            "url_1": "",
-            "url_2": "",
-            "url_3": "",
-            "url_4": "",
-            "url_5": "",
-            "url_6": ""
+            "url_1": "/pages/enso-2026-manual#quick-start",
+            "url_2": "shopify://pages/enso-2026-manual",
+            "url_3": "/pages/enso-2026-manual#troubleshooting",
+            "url_4": "/blogs/journal/flavour-guide",
+            "url_5": "https://ensoshisha.com/pages/user-guide",
+            "url_6": "/collections/accessories"
           }
         }
       },
