@@ -11,11 +11,11 @@
 
 /* ── Section wrapper ── */
 .d-buy {
-  padding-top: 48px;
-  padding-bottom: 56px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 @media screen and (max-width: 989px) {
-  .d-buy { padding-top: 24px; padding-bottom: 40px; }
+  .d-buy { padding-top: 24px; padding-bottom: 24px; }
 }
 
 /* ── Two-column grid ── */
@@ -397,15 +397,14 @@
 }
 .d-buy__pill:hover { opacity: .85; }
 .d-buy__pill:disabled { opacity: .45; cursor: not-allowed; }
-.d-buy__pill.is-loading { opacity: .7; pointer-events: none; position: relative; }
+.d-buy__pill.is-loading { opacity: .7; pointer-events: none; position: relative; color: transparent; }
 .d-buy__pill.is-loading::after {
   content: '';
   position: absolute;
-  right: 20px;
-  top: 50%;
-  margin-top: -8px;
-  width: 16px;
-  height: 16px;
+  inset: 0;
+  margin: auto;
+  width: 18px;
+  height: 18px;
   border: 2px solid rgba(255,255,255,.4);
   border-top-color: #fff;
   border-radius: 50%;
@@ -779,6 +778,7 @@
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (btn.disabled || btn.classList.contains('is-loading')) return;
 
         btn.classList.add('is-loading');
@@ -798,12 +798,9 @@
           const item = await res.json();
 
           document.dispatchEvent(new CustomEvent('cart:add', { detail: { item } }));
-          document.dispatchEvent(new CustomEvent('cart:updated'));
 
-          const drawer = document.querySelector('cart-drawer');
-          if (drawer && typeof drawer.open === 'function') {
-            drawer.open(btn);
-          }
+          if (typeof updateCartDrawer === 'function') await updateCartDrawer();
+          if (typeof openCartDrawer === 'function') openCartDrawer();
 
         } catch (err) {
           console.error('[diamond-buy] ATC error:', err);
