@@ -45,7 +45,7 @@
 
   if cart_mode == 'device'
     if solo_family == 'diamond'
-      assign back_url   = section.settings.diamond_url | default: '/products/enso-diamond'
+      assign back_url   = section.settings.diamond_url | default: '/products/enso-diamond-pre-order'
       assign back_label = 'cart.back.diamond' | t
     else
       assign back_url   = section.settings.enso_url | default: '/products/enso-2026'
@@ -98,7 +98,7 @@
         <p class="cp-empty-lead">{{ 'cart.lead.empty' | t }}</p>
         <div class="cp-empty">
 
-          <a class="cp-ec" href="{{ section.settings.diamond_url | default: '/products/enso-diamond' }}">
+          <a class="cp-ec" href="{{ section.settings.diamond_url | default: '/products/enso-diamond-pre-order' }}">
             <div class="cp-ec__img">
               {%- if section.settings.empty_diamond_image != blank -%}
                 <img src="{{ section.settings.empty_diamond_image | image_url: width: 600 }}"

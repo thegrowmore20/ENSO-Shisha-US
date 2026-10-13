@@ -90,7 +90,9 @@ if (!customElements.get('cart-page')) {
         if (!html) { window.location.reload(); return; }
         const doc  = new DOMParser().parseFromString(html, 'text/html');
         const next = doc.getElementById('shopify-section-main');
-        const cur  = document.getElementById('shopify-section-main');
+        const cur  = document.getElementById('shopify-section-main')
+                  || document.querySelector('cart-page')?.closest('[id^="shopify-section"]')
+                  || document.querySelector('cart-page')?.parentElement;
         if (next && cur) {
           next.querySelectorAll('script[src]').forEach(s => s.remove());
           cur.replaceWith(next);
@@ -260,13 +262,15 @@ if (!customElements.get('cart-page')) {
 
       if (removeBtn) {
         removeBtn.addEventListener('click', async () => {
-          const name = row.querySelector('.cp-acc-row__name')?.textContent?.trim() || '';
-          const main = this.querySelector('.cp-main');
+          const name      = row.querySelector('.cp-acc-row__name')?.textContent?.trim() || '';
+          const main      = this.querySelector('.cp-main');
+          const accSection = row.closest('.cp-acc-section');
           removeBtn.disabled = true;
           if (main) main.classList.add('is-loading');
           try {
             await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
             row.remove();
+            if (accSection && !accSection.querySelector('.cp-acc-row')) accSection.hidden = true;
             if (name) this.#toast(`${name} removed from cart`);
             else this.#toast('Removed from cart');
             await this.#refreshSidebar();
@@ -313,27 +317,22 @@ if (!customElements.get('cart-page')) {
     #bindFavCards() {
       this.querySelectorAll('.cp-fav__add').forEach(btn => {
         btn.addEventListener('click', async () => {
-          const card = btn.closest('.cp-fav');
-          const vid  = parseInt(card?.dataset.vid || '0', 10);
-          const pid  = card?.dataset.pid || '';
+          const card    = btn.closest('.cp-fav');
+          const vid     = parseInt(card?.dataset.vid || '0', 10);
           if (!vid) return;
-          btn.classList.add('is-loading');
+          const favName = card.querySelector('.cp-fav__name')?.textContent?.trim() || '';
+          const main    = this.querySelector('.cp-main');
+          if (main) main.classList.add('is-loading');
           btn.disabled = true;
           try {
-            const data = await this.#cartFetch('/cart/add.js', { id: vid, quantity: 1 });
-            const favName = card.querySelector('.cp-fav__name')?.textContent?.trim() || '';
-            // Insert row into acc list
-            this.#insertAccRow(data, card);
-            card.remove();
+            await this.#cartFetch('/cart/add.js', { id: vid, quantity: 1 });
             if (favName) this.#toast(`${favName} added to cart`);
             else this.#toast('Added to cart');
-            await this.#refreshSidebar();
-            if (!this.querySelector('.cp-fav')) {
-              this.querySelector('.cp-favs')?.remove();
-            }
+            // Re-render the whole section so acc list and fav list update correctly
+            await this.#reRenderSection();
           } catch (err) {
             console.error('Fav add failed', err);
-            btn.classList.remove('is-loading');
+            if (main) main.classList.remove('is-loading');
             btn.disabled = false;
           }
         });
