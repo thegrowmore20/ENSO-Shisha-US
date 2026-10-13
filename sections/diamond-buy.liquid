@@ -790,7 +790,7 @@
         if (btn.disabled || btn.classList.contains('is-loading')) return;
 
         btn.classList.add('is-loading');
-        if (stickyBtn) stickyBtn.disabled = true;
+        if (stickyBtn) { stickyBtn.disabled = true; stickyBtn.classList.add('is-loading'); }
 
         try {
           const res = await fetch('/cart/add.js', {
@@ -831,7 +831,7 @@
           console.error('[diamond-buy] ATC error:', err);
         } finally {
           btn.classList.remove('is-loading');
-          if (stickyBtn) stickyBtn.disabled = false;
+          if (stickyBtn) { stickyBtn.disabled = false; stickyBtn.classList.remove('is-loading'); }
         }
       });
     }
