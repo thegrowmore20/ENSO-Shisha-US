@@ -705,3 +705,103 @@ if (!customElements.get('product-recommendations')) {
 
   customElements.define('product-recommendations', ProductRecommendations);
 }
+
+/*
+  Global AJAX add-to-cart — intercepts every form[action="/cart/add"] submit
+  site-wide, regardless of cart_type setting. Shows a centred toast instead of
+  redirecting to /cart or opening the drawer.
+*/
+(() => {
+  // ── Toast ──────────────────────────────────────────────────────────────────
+  const TOAST_STYLE = `
+    #ajax-atc-toast{
+      position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);
+      background:#111;color:#fff;font-family:var(--font-body,sans-serif);
+      font-size:14px;line-height:1.4;padding:14px 24px;border-radius:100px;
+      white-space:nowrap;pointer-events:none;opacity:0;
+      transition:opacity .2s ease,transform .2s ease;z-index:9999;}
+    #ajax-atc-toast.is-visible{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  `;
+
+  function injectToastStyles() {
+    if (document.getElementById('ajax-atc-toast-style')) return;
+    const s = document.createElement('style');
+    s.id = 'ajax-atc-toast-style';
+    s.textContent = TOAST_STYLE;
+    document.head.appendChild(s);
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    injectToastStyles();
+    let el = document.getElementById('ajax-atc-toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'ajax-atc-toast';
+      el.setAttribute('role', 'status');
+      el.setAttribute('aria-live', 'polite');
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('is-visible'), 2800);
+  }
+
+  // ── Cart count badge ───────────────────────────────────────────────────────
+  function updateCount(count) {
+    document.querySelectorAll('.cart-count, .cart-count-bubble, [data-cart-count]').forEach(el => {
+      el.textContent = count;
+      if (count === 0) el.setAttribute('hidden', '');
+      else el.removeAttribute('hidden');
+    });
+  }
+
+  // ── Submit delegation ──────────────────────────────────────────────────────
+  document.addEventListener('submit', async (e) => {
+    const form = e.target.closest('form[action="/cart/add"]');
+    if (!form) return;
+
+    // If cart-drawer.js is loaded it has its own handler; skip ours to avoid
+    // double-adding. cart-drawer.js sets a flag on the form when it handles it.
+    if (form.dataset.drawerHandled) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    const btn = form.querySelector('[type="submit"]');
+    const spinner = btn?.querySelector('[data-add-to-cart-spinner]');
+    if (btn) { btn.classList.add('is-loading'); btn.disabled = true; }
+    if (spinner) spinner.removeAttribute('hidden');
+
+    try {
+      const res  = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const item = await res.json();
+      if (!res.ok) throw new Error(item.description || item.message || 'Could not add to cart');
+
+      const name = item.product_title || item.title || 'Item';
+      showToast(`${name} added to cart`);
+
+      const cartRes  = await fetch('/cart.js');
+      const cartData = await cartRes.json();
+      updateCount(cartData.item_count);
+
+      // Silently refresh the drawer if it exists so it's up to date
+      const drawer = document.querySelector('cart-drawer');
+      if (drawer && typeof drawer.renderContents === 'function') {
+        drawer.renderContents({ item_count: cartData.item_count });
+      }
+
+      document.dispatchEvent(new CustomEvent('cart:add', { bubbles: true, detail: { item: item } }));
+    } catch (err) {
+      showToast(err.message || 'Could not add to cart');
+    } finally {
+      if (btn) { btn.classList.remove('is-loading'); btn.disabled = false; }
+      if (spinner) spinner.setAttribute('hidden', '');
+    }
+  });
+})();
