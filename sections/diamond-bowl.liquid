@@ -99,7 +99,7 @@
 .d-bowl__btn--ghost:hover { background: rgb(255 255 255 / .1); }
 
 /* Mobile ≤ 989px */
-@media screen and (max-width: 989px) {
+@media screen and (max-width: 991px) {
   .d-bowl {
     padding: var(--d-bowl-padding-top-mobile, 24px) 0 var(--d-bowl-padding-bottom-mobile, 24px);
   }
@@ -157,7 +157,7 @@
     padding-top: {{ pt_mobile }}px;
     padding-bottom: {{ pb_mobile }}px;
   }
-  @media screen and (min-width: 990px) {
+  @media screen and (min-width: 992px) {
     #shopify-section-{{ section.id }} .d-bowl {
       padding-top: {{ pt_desktop }}px;
       padding-bottom: {{ pb_desktop }}px;
@@ -173,7 +173,7 @@
         {%- if section.settings.image_mobile != blank -%}
           <picture>
             <source
-              media="(max-width: 989px)"
+              media="(max-width: 991px)"
               srcset="{{ section.settings.image_mobile | image_url: width: 800 }} 800w,
                       {{ section.settings.image_mobile | image_url: width: 400 }} 400w"
               sizes="100vw"
@@ -183,7 +183,7 @@
               alt: section.settings.image.alt | default: section.settings.heading,
               loading: 'lazy',
               widths: '800,1200,1600',
-              sizes: '(max-width: 989px) 100vw, 90vw'
+              sizes: '(max-width: 991px) 100vw, 90vw'
             -}}
           </picture>
         {%- else -%}
@@ -192,7 +192,7 @@
             alt: section.settings.image.alt | default: section.settings.heading,
             loading: 'lazy',
             widths: '800,1200,1600',
-            sizes: '(max-width: 989px) 100vw, 90vw'
+            sizes: '(max-width: 991px) 100vw, 90vw'
           -}}
         {%- endif -%}
       {%- else -%}

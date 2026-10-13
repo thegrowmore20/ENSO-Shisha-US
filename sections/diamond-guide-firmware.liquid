@@ -117,7 +117,7 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  @media screen and (max-width: 989px) {
+  @media screen and (max-width: 991px) {
     #shopify-section-{{ section.id }} .dg-fw__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
@@ -144,7 +144,7 @@
         alt: section.settings.image.alt | default: section.settings.heading,
         loading: 'lazy',
         widths: '750,1100,1500,2000',
-        sizes: '(max-width: 989px) calc(100vw - 32px), calc(min(100vw, 1440px) - 160px)'
+        sizes: '(max-width: 991px) calc(100vw - 32px), calc(min(100vw, 1440px) - 160px)'
       -}}
     {%- else -%}
       <svg class="dg-fw__placeholder" viewBox="0 0 21 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

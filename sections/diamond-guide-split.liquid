@@ -119,7 +119,7 @@
   font-style: normal;
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (max-width: 991px) {
   .dg-split { padding: 64px 0; }
   .dg-split__grid {
     grid-template-columns: 1fr;
@@ -140,7 +140,7 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  @media screen and (max-width: 989px) {
+  @media screen and (max-width: 991px) {
     #shopify-section-{{ section.id }} .dg-split__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
@@ -166,7 +166,7 @@
             alt: section.settings.image.alt | default: section.settings.heading,
             loading: 'lazy',
             widths: '600,900',
-            sizes: '(max-width: 989px) 100vw, 50vw'
+            sizes: '(max-width: 991px) 100vw, 50vw'
           -}}
         {%- else -%}
           <svg class="dg-split__placeholder" viewBox="0 0 4 3" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

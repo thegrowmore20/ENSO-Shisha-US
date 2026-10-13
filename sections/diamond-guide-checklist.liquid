@@ -79,7 +79,7 @@
   line-height: 23px;
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (max-width: 991px) {
   .dg-check { padding: 64px 0; }
   .dg-check__head {
     grid-template-columns: 1fr;
@@ -101,7 +101,7 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  @media screen and (max-width: 989px) {
+  @media screen and (max-width: 991px) {
     #shopify-section-{{ section.id }} .dg-check__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
@@ -128,7 +128,7 @@
                 alt: block.settings.image.alt | default: block.settings.heading,
                 loading: 'lazy',
                 widths: '400,600,800',
-                sizes: '(max-width: 989px) 100vw, 33vw'
+                sizes: '(max-width: 991px) 100vw, 33vw'
               -}}
             {%- else -%}
               <svg class="dg-check__placeholder" viewBox="0 0 4 3" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

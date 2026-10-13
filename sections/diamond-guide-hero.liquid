@@ -107,7 +107,7 @@
   aspect-ratio: 1;
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (max-width: 991px) {
   .dg-hero__grid {
     grid-template-columns: 1fr;
   }
@@ -139,7 +139,7 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  @media screen and (max-width: 989px) {
+  @media screen and (max-width: 991px) {
     #shopify-section-{{ section.id }} .dg-hero {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
@@ -184,7 +184,7 @@
         loading: 'eager',
         fetchpriority: 'high',
         widths: '360,560',
-        sizes: '(max-width: 989px) min(70vw, 360px), min(52vh, 520px)'
+        sizes: '(max-width: 991px) min(70vw, 360px), min(52vh, 520px)'
       -}}
     {%- else -%}
       <div class="dg-hero__placeholder">

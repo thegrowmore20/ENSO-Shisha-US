@@ -106,7 +106,7 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  @media screen and (max-width: 989px) {
+  @media screen and (max-width: 991px) {
     #shopify-section-{{ section.id }} .dg-cap__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
@@ -136,7 +136,7 @@
                 alt: block.settings.image.alt | default: block.settings.label,
                 loading: 'lazy',
                 widths: '400,600,800',
-                sizes: '(max-width: 989px) 100vw, 33vw'
+                sizes: '(max-width: 991px) 100vw, 33vw'
               -}}
             {%- else -%}
               <svg class="dg-cap__placeholder" viewBox="0 0 4 5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
