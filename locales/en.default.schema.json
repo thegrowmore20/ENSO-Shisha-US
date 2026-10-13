@@ -2777,7 +2777,9 @@
         "usp_3": { "label": "Trust signal 3" },
         "header_sets": { "content": "Sets collections" },
         "diamond_sets_collection": { "label": "Diamond sets" },
-        "enso_sets_collection": { "label": "ENSŌ 2026 sets" }
+        "enso_sets_collection": { "label": "ENSŌ 2026 sets" },
+        "header_favs": { "content": "\"Did you forget anything?\" recommendations" },
+        "fav_collection": { "label": "Recommendations collection", "info": "Products not already in the cart are shown here. Falls back to the 'accessories' collection handle if left empty." }
       }
     },
     "user_guide_video_row": {
