@@ -415,6 +415,9 @@ if (!customElements.get('cart-page')) {
 
         if (totEl) totEl.textContent = this.#fmt(cart.total_price);
 
+        const mbarTot = document.getElementById('cp-mbar-total');
+        if (mbarTot) mbarTot.textContent = this.#fmt(cart.total_price);
+
         this.#updateCartCount(cart.item_count);
         document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
       } catch (err) {
