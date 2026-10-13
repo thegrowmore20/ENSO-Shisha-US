@@ -431,6 +431,17 @@
                 if fav_col != blank
                   assign fav_source = fav_col.products
                 endif
+                unless fav_source
+                  for ci in cart.items
+                    unless ci.product.tags contains 'device'
+                      assign fav_col = ci.product.collections | first
+                      if fav_col != blank
+                        assign fav_source = fav_col.products
+                        break
+                      endif
+                    endunless
+                  endfor
+                endunless
               endif
             endunless
 
