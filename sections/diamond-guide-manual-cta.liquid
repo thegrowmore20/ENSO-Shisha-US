@@ -58,7 +58,7 @@
   }
 {% endstyle %}
 
-<section class="dg-cta" id="DgCta-{{ section.id }}">
+<section class="dg-cta" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
     <div class="dg-cta__head">
       {%- if section.settings.eyebrow != blank -%}
@@ -83,6 +83,12 @@
   "tag": "div",
   "enabled_on": { "templates": ["page"] },
   "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.diamond_guide_manual_cta.settings.section_id.label",
+      "info": "t:sections.diamond_guide_manual_cta.settings.section_id.info"
+    },
     {
       "type": "text",
       "id": "eyebrow",

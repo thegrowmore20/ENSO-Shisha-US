@@ -108,7 +108,7 @@
   }
 {% endstyle %}
 
-<section class="dg-cap" id="DgCap-{{ section.id }}">
+<section class="dg-cap" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
     <div class="dg-cap__head">
       {%- if section.settings.eyebrow != blank -%}
@@ -156,6 +156,12 @@
   "tag": "div",
   "enabled_on": { "templates": ["page"] },
   "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.diamond_guide_cap_grid.settings.section_id.label",
+      "info": "t:sections.diamond_guide_cap_grid.settings.section_id.info"
+    },
     {
       "type": "text",
       "id": "eyebrow",

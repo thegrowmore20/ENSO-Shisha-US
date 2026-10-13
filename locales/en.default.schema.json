@@ -2654,6 +2654,7 @@
     "diamond_guide_split": {
       "name": "Diamond guide split",
       "settings": {
+        "section_id": { "label": "Anchor ID", "info": "Used for in-page links, e.g. #hookah" },
         "image": { "label": "Image" },
         "image_side": {
           "label": "Image side",
@@ -2681,6 +2682,7 @@
     "diamond_guide_cap_grid": {
       "name": "Diamond guide grid",
       "settings": {
+        "section_id": { "label": "Anchor ID", "info": "Used for in-page links, e.g. #cap" },
         "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "subheading": { "label": "Subheading" }
@@ -2700,6 +2702,7 @@
     "diamond_guide_checklist": {
       "name": "Diamond guide checklist",
       "settings": {
+        "section_id": { "label": "Anchor ID", "info": "Used for in-page links, e.g. #before" },
         "heading": { "label": "Heading" },
         "subheading": { "label": "Subheading" }
       },
@@ -2721,6 +2724,7 @@
     "diamond_guide_manual_cta": {
       "name": "Diamond guide CTA",
       "settings": {
+        "section_id": { "label": "Anchor ID", "info": "Used for in-page links, e.g. #manual" },
         "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "body": { "label": "Body text" },

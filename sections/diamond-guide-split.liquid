@@ -151,7 +151,7 @@
   endif
 -%}
 
-<section class="dg-split{% if img_right %} dg-split--img-right{% endif %}" id="DgSplit-{{ section.id }}">
+<section class="dg-split{% if img_right %} dg-split--img-right{% endif %}" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
     <div class="dg-split__grid">
 
@@ -208,6 +208,12 @@
   "tag": "div",
   "enabled_on": { "templates": ["page"] },
   "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.diamond_guide_split.settings.section_id.label",
+      "info": "t:sections.diamond_guide_split.settings.section_id.info"
+    },
     {
       "type": "image_picker",
       "id": "image",

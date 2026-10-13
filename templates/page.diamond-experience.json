@@ -61,7 +61,7 @@
         "chip_firmware"
       ],
       "settings": {
-        "back_url": "/pages/enso-experience",
+        "back_url": "/pages/enso-experience#diamond",
         "back_label": "ENSŌ Experience",
         "current_label": "ENSŌ Diamond"
       }
@@ -108,9 +108,9 @@
         "entry_support": {
           "type": "entry",
           "settings": {
-            "url": "/pages/support",
+            "url": "mailto:support@ensoshisha.com",
             "label": "Support",
-            "sublabel": "One step away",
+            "sublabel": "support@ensoshisha.com",
             "is_primary": false
           }
         },
@@ -118,8 +118,8 @@
           "type": "entry",
           "settings": {
             "url": "#app",
-            "label": "Firmware",
-            "sublabel": "Updates over USB-C from ensoshisha.com",
+            "label": "Firmware app",
+            "sublabel": "Updates over USB-C from ensoshisha.com, coming",
             "is_primary": false
           }
         }
@@ -269,6 +269,7 @@
       },
       "block_order": ["step_1", "step_2", "step_3", "step_4"],
       "settings": {
+        "section_id": "hookah",
         "eyebrow": "On your hookah",
         "heading": "Fits the stem you already have",
         "body": "Two adapters come in the box, long and short. One of them fits most traditional and modern stems. Your base, your water and your hose stay exactly as they are.",
@@ -310,6 +311,7 @@
       },
       "block_order": ["fig_open", "fig_load", "fig_close"],
       "settings": {
+        "section_id": "cap",
         "eyebrow": "Cap and cup",
         "heading": "Open, load, close",
         "subheading": "Set the cup in before you switch on. The cap gets hot: hold it by its side pads. The tool lifts the cup out.",
@@ -349,6 +351,7 @@
       },
       "block_order": ["art_heat", "art_water", "art_power"],
       "settings": {
+        "section_id": "before",
         "heading": "Before the first session",
         "subheading": "Three things to know, and one to remember.",
         "padding_top": 80,
@@ -360,6 +363,7 @@
     "dg_airflow": {
       "type": "diamond-guide-split",
       "settings": {
+        "section_id": "air",
         "eyebrow": "Airflow",
         "heading": "The plate sets the draw",
         "body": "The plate on top of the cap controls how much air reaches the blend. Lift and turn it with the tool: open for a free, light draw, closed down for a denser flavour. Most of the time it stays fully open, all holes.",
@@ -375,6 +379,7 @@
     "dg_manual_cta": {
       "type": "diamond-guide-manual-cta",
       "settings": {
+        "section_id": "manual",
         "eyebrow": "Full manual",
         "heading": "Every function, one chapter at a time",
         "body": "The dial and the screen, pre-heat and profiles, battery, cup, cap, cleaning, safety and warranty.",
@@ -389,6 +394,7 @@
     "dg_firmware": {
       "type": "diamond-guide-split",
       "settings": {
+        "section_id": "app",
         "eyebrow": "Firmware",
         "heading": "Updates over USB-C, from our website",
         "body": "Plug Diamond into your computer, open the firmware page on ensoshisha.com, press Update. No app to install, no account, no phone. The page is coming; until then Diamond needs nothing.",

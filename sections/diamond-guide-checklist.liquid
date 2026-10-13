@@ -109,7 +109,7 @@
   }
 {% endstyle %}
 
-<section class="dg-check" id="DgCheck-{{ section.id }}">
+<section class="dg-check" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
     <div class="dg-check__head">
       <h2>{{ section.settings.heading | default: 'Before the first session' | escape }}</h2>
@@ -160,6 +160,12 @@
   "tag": "div",
   "enabled_on": { "templates": ["page"] },
   "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.diamond_guide_checklist.settings.section_id.label",
+      "info": "t:sections.diamond_guide_checklist.settings.section_id.info"
+    },
     {
       "type": "text",
       "id": "heading",
