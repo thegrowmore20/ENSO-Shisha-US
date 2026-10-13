@@ -1340,30 +1340,9 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
 /* ── Qty update loading state ────────────────────────────────────── */
 .cp-addon--qty-loading { pointer-events: none; opacity: .5; }
 
-/* Section-level loading overlay — covers .cp-main while any cart mutation runs */
+/* Section-level loading — pointer events blocked; spinner routed through #cp-page-spinner */
 .cp-main { position: relative; }
 .cp-main.is-loading { pointer-events: none; }
-.cp-main.is-loading::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,.6);
-  border-radius: inherit;
-  z-index: 10;
-}
-.cp-main.is-loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--color-border);
-  border-top-color: var(--color-text);
-  border-radius: 50%;
-  animation: cp-spin-c .7s linear infinite;
-  z-index: 11;
-}
 .cp-addon__qty[hidden],
 .cp-fav__add.is-loading { opacity: .6; pointer-events: none; color: transparent; }
 .cp-addon__qty[hidden] { display: none; }

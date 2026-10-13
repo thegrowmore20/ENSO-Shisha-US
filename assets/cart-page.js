@@ -88,14 +88,11 @@ if (!customElements.get('cart-page')) {
         const data = await res.json();
         const html = data['main'];
         if (!html) { window.location.reload(); return; }
-        const doc  = new DOMParser().parseFromString(html, 'text/html');
-        const next = doc.getElementById('shopify-section-main');
-        const cur  = document.getElementById('shopify-section-main')
-                  || document.querySelector('cart-page')?.closest('[id^="shopify-section"]')
-                  || document.querySelector('cart-page')?.parentElement;
-        if (next && cur) {
-          next.querySelectorAll('script[src]').forEach(s => s.remove());
-          cur.replaceWith(next);
+        const doc          = new DOMParser().parseFromString(html, 'text/html');
+        const nextCartPage = doc.querySelector('cart-page');
+        const curCartPage  = document.querySelector('cart-page');
+        if (nextCartPage && curCartPage) {
+          curCartPage.replaceWith(nextCartPage);
         } else {
           window.location.reload();
         }
@@ -119,6 +116,7 @@ if (!customElements.get('cart-page')) {
             c.classList.toggle('is-active', c.contains(radio));
           });
           radio.disabled = true;
+          this.#showPageSpinner();
           try {
             await this.#cartFetch('/cart/change.js', { id: oldKey, quantity: 0 });
             await this.#cartFetch('/cart/add.js', { id: newVid, quantity: 1 });
@@ -235,8 +233,7 @@ if (!customElements.get('cart-page')) {
             await this.#removeAddon(card);
             return;
           }
-          const main = this.querySelector('.cp-main');
-          if (main) main.classList.add('is-loading');
+          this.#showPageSpinner();
           try {
             await this.#cartFetch('/cart/change.js', { id: key, quantity: next });
             if (num) num.textContent = next;
@@ -244,7 +241,7 @@ if (!customElements.get('cart-page')) {
           } catch (err) {
             console.error('Addon qty change failed', err);
           } finally {
-            if (main) main.classList.remove('is-loading');
+            this.#hidePageSpinner();
           }
         });
       });
@@ -262,11 +259,10 @@ if (!customElements.get('cart-page')) {
 
       if (removeBtn) {
         removeBtn.addEventListener('click', async () => {
-          const name      = row.querySelector('.cp-acc-row__name')?.textContent?.trim() || '';
-          const main      = this.querySelector('.cp-main');
+          const name       = row.querySelector('.cp-acc-row__name')?.textContent?.trim() || '';
           const accSection = row.closest('.cp-acc-section');
           removeBtn.disabled = true;
-          if (main) main.classList.add('is-loading');
+          this.#showPageSpinner();
           try {
             await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
             row.remove();
@@ -279,7 +275,7 @@ if (!customElements.get('cart-page')) {
             console.error('Acc remove failed', err);
             removeBtn.disabled = false;
           } finally {
-            if (main) main.classList.remove('is-loading');
+            this.#hidePageSpinner();
           }
         });
       }
@@ -294,8 +290,7 @@ if (!customElements.get('cart-page')) {
             removeBtn?.click();
             return;
           }
-          const main = this.querySelector('.cp-main');
-          if (main) main.classList.add('is-loading');
+          this.#showPageSpinner();
           try {
             const data = await this.#cartFetch('/cart/change.js', { id: key, quantity: next });
             if (num) num.textContent = next;
@@ -306,7 +301,7 @@ if (!customElements.get('cart-page')) {
           } catch (err) {
             console.error('Acc qty change failed', err);
           } finally {
-            if (main) main.classList.remove('is-loading');
+            this.#hidePageSpinner();
           }
         });
       });
@@ -321,18 +316,14 @@ if (!customElements.get('cart-page')) {
           const vid     = parseInt(card?.dataset.vid || '0', 10);
           if (!vid) return;
           const favName = card.querySelector('.cp-fav__name')?.textContent?.trim() || '';
-          const main    = this.querySelector('.cp-main');
-          if (main) main.classList.add('is-loading');
           btn.disabled = true;
           try {
             await this.#cartFetch('/cart/add.js', { id: vid, quantity: 1 });
             if (favName) this.#toast(`${favName} added to cart`);
             else this.#toast('Added to cart');
-            // Re-render the whole section so acc list and fav list update correctly
             await this.#reRenderSection();
           } catch (err) {
             console.error('Fav add failed', err);
-            if (main) main.classList.remove('is-loading');
             btn.disabled = false;
           }
         });
