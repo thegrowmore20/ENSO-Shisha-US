@@ -1,6 +1,6 @@
 {% stylesheet %}
 
-.dg-fw {
+.dg-fw__inner {
   padding: 96px 0 64px;
   border-top: 1px solid var(--color-border);
 }
@@ -92,7 +92,7 @@
 }
 
 @media screen and (max-width: 991px) {
-  .dg-fw {
+  .dg-fw__inner {
     padding: 64px 0 48px;
   }
   .dg-fw__copy {
@@ -113,12 +113,12 @@
 {% endstylesheet %}
 
 {% style %}
-  #shopify-section-{{ section.id }} .dg-fw {
+  #shopify-section-{{ section.id }} .dg-fw__inner {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
   @media screen and (max-width: 989px) {
-    #shopify-section-{{ section.id }} .dg-fw {
+    #shopify-section-{{ section.id }} .dg-fw__inner {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
@@ -127,6 +127,7 @@
 
 <section class="dg-fw" id="{{ section.settings.section_id | default: section.id }}">
   <div class="container">
+    <div class="dg-fw__inner">
     <div class="dg-fw__copy">
       {%- if section.settings.eyebrow != blank -%}
         <p class="dg-fw__eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -182,6 +183,7 @@
         {%- endif -%}
       </div>
     {%- endif -%}
+    </div>
   </div>
 </section>
 
