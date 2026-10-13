@@ -34,9 +34,21 @@
   margin: 0;
 }
 
+/* Match handoff's .xp container: max-width 1600px, 40px horizontal padding */
+.dg-cap .container {
+  max-width: 1600px;
+  padding-inline: 40px;
+}
+
+@media screen and (max-width: 749px) {
+  .dg-cap .container {
+    padding-inline: 16px;
+  }
+}
+
 .dg-cap__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
 }
 
@@ -86,7 +98,7 @@
   line-height: 23px;
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (max-width: 991px) {
   .dg-cap { padding: 64px 0; }
   .dg-cap__head h2 {
     font-size: 30px;
@@ -95,13 +107,6 @@
   .dg-cap__grid {
     grid-template-columns: 1fr;
     gap: 32px;
-  }
-  .dg-cap__grid figure img {
-    aspect-ratio: 4 / 3;
-    object-position: center;
-  }
-  .dg-cap__placeholder {
-    aspect-ratio: 4 / 3;
   }
 }
 
