@@ -1,0 +1,63 @@
+{%- doc -%}
+  Cart addon card — device accordion essentials/spares.
+  Parameters:
+    product  {object}  Shopify product object (required)
+    hidden   {bool}    Starts hidden behind "show more" (optional)
+{%- enddoc -%}
+{%- liquid
+  assign hidden   = hidden | default: false
+  assign av       = product.selected_or_first_available_variant
+  assign img      = product.featured_image
+  assign subtitle = product.metafields.custom.headline | metafield_tag | strip_html | strip
+  assign in_cart  = false
+  assign cart_qty = 0
+  assign cart_key = ''
+  for ci in cart.items
+    if ci.product.id == product.id
+      assign in_cart  = true
+      assign cart_qty = ci.quantity
+      assign cart_key = ci.key
+      break
+    endif
+  endfor
+-%}
+<div class="cp-addon{% if in_cart %} is-added{% endif %}{% if hidden and in_cart == false %} cp-addon--hidden{% endif %}"
+     data-pid="{{ product.id }}"
+     data-vid="{{ av.id }}"
+     {% if in_cart %}data-key="{{ cart_key }}"{% endif %}
+     {% if hidden and in_cart == false %}data-hidden-initially{% endif %}>
+  <div class="cp-addon__img">
+    {%- if img != blank -%}
+      <img src="{{ img | image_url: width: 120 }}"
+           alt="{{ img.alt | default: product.title | escape }}"
+           width="56" height="56" loading="lazy">
+    {%- else -%}
+      <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <rect width="56" height="56" rx="4" fill="#f0ede8"/>
+        <rect x="18" y="18" width="20" height="20" rx="3" fill="#c8b89a"/>
+      </svg>
+    {%- endif -%}
+  </div>
+  <div class="cp-addon__info">
+    <b class="cp-addon__name">{{ product.title }}</b>
+    {%- if subtitle != blank -%}<span class="cp-addon__sub">{{ subtitle }}</span>{%- endif -%}
+    <span class="cp-addon__price">{{ av.price | money }}</span>
+  </div>
+  <div class="cp-addon__action">
+    {%- if in_cart -%}
+      <button type="button" class="cp-addon__added" aria-label="{{ 'cart.addon.remove' | t: title: product.title }}">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
+          <path d="M1 5l3 4L11 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {{ 'cart.addon.added' | t }}
+      </button>
+      <div class="cp-addon__qty" data-key="{{ cart_key }}">
+        <button type="button" class="cp-addon__qty-btn" data-d="-1" aria-label="{{ 'cart.qty.decrease' | t }}">−</button>
+        <span class="cp-addon__qty-num">{{ cart_qty }}</span>
+        <button type="button" class="cp-addon__qty-btn" data-d="1" aria-label="{{ 'cart.qty.increase' | t }}">+</button>
+      </div>
+    {%- else -%}
+      <button type="button" class="cp-addon__atc">{{ 'cart.addon.add' | t }}</button>
+    {%- endif -%}
+  </div>
+</div>

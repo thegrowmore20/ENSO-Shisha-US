@@ -1,129 +1,1257 @@
 {%- liquid
-  assign scheme_class = 'color-surface'
+  assign has_devices   = false
+  assign has_accs      = false
+  assign device_count  = 0
+  assign solo_family   = ''
+
+  for item in cart.items
+    if item.product.tags contains 'device'
+      assign has_devices  = true
+      assign device_count = device_count | plus: 1
+      assign solo_family  = item.product.metafields.custom.device_family.value | default: ''
+    else
+      assign has_accs = true
+    endif
+  endfor
+
+  if device_count > 1
+    assign solo_family = ''
+  endif
+
+  if cart.item_count == 0
+    assign cart_mode = 'empty'
+  elsif has_devices and has_accs
+    assign cart_mode = 'mixed'
+  elsif has_devices
+    assign cart_mode = 'device'
+  else
+    assign cart_mode = 'accessories'
+  endif
+
+  if cart_mode == 'device'
+    if solo_family == 'diamond'
+      assign cart_heading = 'cart.heading.choose_diamond' | t
+    else
+      assign cart_heading = 'cart.heading.choose_enso' | t
+    endif
+    assign cart_lead = 'cart.lead.device' | t
+  elsif cart_mode == 'accessories'
+    assign cart_heading = 'cart.heading.accessories' | t
+    assign cart_lead    = 'cart.lead.accessories' | t
+  elsif cart_mode == 'mixed'
+    assign cart_heading = 'cart.heading.mixed' | t
+    assign cart_lead    = 'cart.lead.mixed' | t
+  endif
+
+  if cart_mode == 'device'
+    if solo_family == 'diamond'
+      assign back_url   = section.settings.diamond_url | default: '/products/enso-diamond'
+      assign back_label = 'cart.back.diamond' | t
+    else
+      assign back_url   = section.settings.enso_url | default: '/products/enso-2026'
+      assign back_label = 'cart.back.enso' | t
+    endif
+  elsif cart_mode == 'accessories'
+    assign back_url   = routes.collections_url | append: '/accessories'
+    assign back_label = 'cart.back.accessories' | t
+  else
+    assign back_url   = '/'
+    assign back_label = 'cart.back.shopping' | t
+  endif
+
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
+
+  capture device_pid_list
+    for item in cart.items
+      if item.product.tags contains 'device'
+        echo item.product.id
+        echo ','
+      endif
+    endfor
+  endcapture
 -%}
 
-<div class="cart-page {{ scheme_class }} section-padding">
-  <div class="container">
-    <h1 class="h-section cart-page__title">{{ 'cart.general.title' | t }}</h1>
+<cart-page
+  class="cart-page color-surface"
+  data-mode="{{ cart_mode }}"
+  data-money-format="{{ shop.money_format | replace: "'", '\"' | escape }}"
+  data-device-pids="{{ device_pid_list | strip }}">
 
-    {%- if cart.item_count == 0 -%}
-      <div class="cart-page__empty text-center">
-        <p class="body-text text-muted">{{ 'cart.general.empty' | t }}</p>
-        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">{{ 'cart.general.continue_shopping' | t }}</a>
-      </div>
-    {%- else -%}
-      {%- form 'cart', cart, id: 'CartForm' -%}
-        <div class="cart-page__items">
-          {%- for item in cart.items -%}
-            <div class="cart-item">
-              <a href="{{ item.url }}" class="cart-item__media">
-                {%- if item.image -%}
-                  <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | default: item.title | escape }}" width="100" height="100" loading="lazy">
-                {%- endif -%}
-              </a>
-              <div class="cart-item__info">
-                <a href="{{ item.url }}" class="h-feature">{{ item.product.title }}</a>
-                {%- unless item.variant.title == 'Default Title' -%}
-                  <p class="caption">{{ item.variant.title }}</p>
-                {%- endunless -%}
-                <p class="caption">{{ item.final_price | money }}</p>
-              </div>
-              <input
-                type="number"
-                name="updates[{{ forloop.index0 }}]"
-                value="{{ item.quantity }}"
-                min="0"
-                aria-label="{{ 'cart.general.title' | t }}"
-                class="search-input cart-item__qty"
-              >
-              <p class="cart-item__total">{{ item.final_line_price | money }}</p>
-            </div>
-          {%- endfor -%}
-        </div>
+  {%- if cart_mode == 'empty' -%}
+    <div class="container">
+      <h1 class="h2 cp-empty-title">{{ 'cart.heading.empty' | t }}</h1>
+      <p class="body-text text-muted cp-empty-lead">{{ 'cart.lead.empty' | t }}</p>
+      <div class="cp-empty">
 
-        <div class="cart-page__footer">
-          <div class="cart-page__subtotal">
-            <span class="h-feature">{{ 'cart.general.subtotal' | t }}</span>
-            <span class="h-feature">{{ cart.total_price | money }}</span>
+        {%- comment -%}Card 1 – Diamond{%- endcomment -%}
+        <a class="cp-empty-card" href="{{ section.settings.diamond_url | default: '/products/enso-diamond' }}">
+          <div class="cp-empty-card__img">
+            {%- if section.settings.empty_diamond_image != blank -%}
+              <img src="{{ section.settings.empty_diamond_image | image_url: width: 600 }}"
+                   srcset="{{ section.settings.empty_diamond_image | image_url: width: 400 }} 400w, {{ section.settings.empty_diamond_image | image_url: width: 600 }} 600w"
+                   sizes="(max-width: 749px) 90vw, 30vw"
+                   alt="{{ section.settings.empty_diamond_image.alt | default: section.settings.empty_diamond_title | escape }}"
+                   width="{{ section.settings.empty_diamond_image.width }}"
+                   height="{{ section.settings.empty_diamond_image.height }}"
+                   loading="eager">
+            {%- else -%}
+              <svg aria-hidden="true" width="400" height="400" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
+            {%- endif -%}
           </div>
-          <button type="submit" name="checkout" class="btn btn--primary btn--full">{{ 'cart.general.checkout' | t }}</button>
-        </div>
-      {%- endform -%}
-    {%- endif -%}
-  </div>
-</div>
+          <h2 class="cp-empty-card__title">{{ section.settings.empty_diamond_title | default: 'ENSŌ Diamond' }}</h2>
+          <p class="cp-empty-card__sub body-text text-muted">{{ section.settings.empty_diamond_subtitle | default: 'The electric heater for the hookah you already own' }}</p>
+          <span class="btn btn--primary">{{ section.settings.empty_diamond_cta | default: 'SHOP DIAMOND' }}</span>
+        </a>
+
+        {%- comment -%}Card 2 – ENSŌ 2026{%- endcomment -%}
+        <a class="cp-empty-card" href="{{ section.settings.enso_url | default: '/products/enso-2026' }}">
+          <div class="cp-empty-card__img">
+            {%- if section.settings.empty_enso_image != blank -%}
+              <img src="{{ section.settings.empty_enso_image | image_url: width: 600 }}"
+                   srcset="{{ section.settings.empty_enso_image | image_url: width: 400 }} 400w, {{ section.settings.empty_enso_image | image_url: width: 600 }} 600w"
+                   sizes="(max-width: 749px) 90vw, 30vw"
+                   alt="{{ section.settings.empty_enso_image.alt | default: section.settings.empty_enso_title | escape }}"
+                   width="{{ section.settings.empty_enso_image.width }}"
+                   height="{{ section.settings.empty_enso_image.height }}"
+                   loading="eager">
+            {%- else -%}
+              <svg aria-hidden="true" width="400" height="400" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
+            {%- endif -%}
+          </div>
+          <h2 class="cp-empty-card__title">{{ section.settings.empty_enso_title | default: 'ENSŌ 2026 Edition' }}</h2>
+          <p class="cp-empty-card__sub body-text text-muted">{{ section.settings.empty_enso_subtitle | default: 'The all-in-one electric hookah' }}</p>
+          <span class="btn btn--outline">{{ section.settings.empty_enso_cta | default: 'SEE THE 2026 EDITION' }}</span>
+        </a>
+
+        {%- comment -%}Card 3 – Accessories{%- endcomment -%}
+        <a class="cp-empty-card" href="{{ section.settings.empty_acc_url | default: '/collections/accessories' }}">
+          <div class="cp-empty-card__img">
+            {%- if section.settings.empty_acc_image != blank -%}
+              <img src="{{ section.settings.empty_acc_image | image_url: width: 600 }}"
+                   srcset="{{ section.settings.empty_acc_image | image_url: width: 400 }} 400w, {{ section.settings.empty_acc_image | image_url: width: 600 }} 600w"
+                   sizes="(max-width: 749px) 90vw, 30vw"
+                   alt="{{ section.settings.empty_acc_image.alt | default: section.settings.empty_acc_title | escape }}"
+                   width="{{ section.settings.empty_acc_image.width }}"
+                   height="{{ section.settings.empty_acc_image.height }}"
+                   loading="eager">
+            {%- else -%}
+              <svg aria-hidden="true" width="400" height="400" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
+            {%- endif -%}
+          </div>
+          <h2 class="cp-empty-card__title">{{ section.settings.empty_acc_title | default: 'Accessories' }}</h2>
+          <p class="cp-empty-card__sub body-text text-muted">{{ section.settings.empty_acc_subtitle | default: 'Batteries, cups, screens, tools and the backpack' }}</p>
+          <span class="btn btn--outline">{{ section.settings.empty_acc_cta | default: 'SHOP ACCESSORIES' }}</span>
+        </a>
+
+      </div>
+    </div>
+
+  {%- else -%}
+    <div class="container">
+      <div class="cp-layout">
+
+        {%- comment -%}——— LEFT: MAIN CONTENT ———{%- endcomment -%}
+        <div class="cp-main">
+          <h1 class="h2 cp-heading">{{ cart_heading }}</h1>
+          <p class="body-text text-muted cp-lead">{{ cart_lead }}</p>
+
+          {%- comment -%}DEVICES{%- endcomment -%}
+          {%- if has_devices -%}
+            {%- if cart_mode == 'mixed' -%}
+              <h2 class="cp-section-h">{{ 'cart.section.in_your_cart' | t }}</h2>
+            {%- endif -%}
+
+            {%- for item in cart.items -%}
+              {%- unless item.product.tags contains 'device' -%}{%- continue -%}{%- endunless -%}
+              {%- liquid
+                assign dv_family  = item.product.metafields.custom.device_family.value | default: ''
+                assign dv_col_h   = dv_family | append: '-sets'
+                assign dv_col     = collections[dv_col_h]
+                assign ess_accs   = item.product.metafields.custom.essential_accessories.value
+                assign spr_accs   = item.product.metafields.custom.spare_accessories.value
+
+                assign spare_hidden_count = 0
+                for sa in spr_accs
+                  if forloop.index <= 2
+                    continue
+                  endif
+                  assign spc_in = false
+                  for ci in cart.items
+                    if ci.product.id == sa.id
+                      assign spc_in = true
+                      break
+                    endif
+                  endfor
+                  unless spc_in
+                    assign spare_hidden_count = spare_hidden_count | plus: 1
+                  endunless
+                endfor
+
+                assign dev_subtitle = item.product.metafields.custom.headline.value | default: ''
+              -%}
+
+              <details class="cp-dev"
+                       data-key="{{ item.key }}"
+                       data-pid="{{ item.product.id }}"
+                       data-family="{{ dv_family }}"
+                       {% if cart_mode == 'device' %}open{% endif %}>
+                <summary class="cp-dev__summary">
+                  <div class="cp-dev__thumb">
+                    {%- if item.image -%}
+                      <img src="{{ item.image | image_url: width: 120 }}"
+                           alt="{{ item.image.alt | default: item.title | escape }}"
+                           width="56" height="56" loading="lazy">
+                    {%- endif -%}
+                  </div>
+                  <div class="cp-dev__meta">
+                    <b class="cp-dev__name">{{ item.product.title }}</b>
+                    {%- if dev_subtitle != blank -%}
+                      <small class="cp-dev__sub text-muted">{{ dev_subtitle }}</small>
+                    {%- endif -%}
+                  </div>
+                  <em class="cp-dev__price">{{ item.final_price | money }}</em>
+                  <span class="cp-dev__tog" aria-hidden="true">
+                    <span class="cp-dev__tog-show">{{ 'cart.device.show_addons' | t }}</span>
+                    <span class="cp-dev__tog-hide">{{ 'cart.device.hide_addons' | t }}</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                  <button type="button" class="cp-dev__x" data-remove="{{ item.key }}"
+                          aria-label="{{ 'cart.device.remove' | t: title: item.product.title }}">×</button>
+                </summary>
+
+                <div class="cp-dev__body">
+
+                  {%- comment -%}PICK A SET{%- endcomment -%}
+                  {%- if dv_col != blank -%}
+                    <div class="cp-sets">
+                      <h2 class="cp-sets__h">{{ 'cart.sets.heading' | t }}</h2>
+                      <p class="cp-sets__sub body-text text-muted">
+                        {%- if dv_family == 'diamond' -%}
+                          {{ 'cart.sets.sub_diamond' | t }}
+                        {%- else -%}
+                          {{ 'cart.sets.sub_enso' | t }}
+                        {%- endif -%}
+                      </p>
+                      <div class="cp-sets__grid">
+                        {%- for sp in dv_col.products -%}
+                          {%- liquid
+                            assign sp_var    = sp.selected_or_first_available_variant
+                            assign sp_active = false
+                            if sp.id == item.product.id
+                              assign sp_active = true
+                            endif
+                            assign sp_badge = sp.metafields.custom.badge.value | default: ''
+                          -%}
+                          <label class="cp-set{% if sp_active %} is-active{% endif %}">
+                            <input class="visually-hidden" type="radio"
+                                   name="cp-set-{{ item.key }}"
+                                   value="{{ sp.id }}"
+                                   data-old-key="{{ item.key }}"
+                                   data-new-pid="{{ sp.id }}"
+                                   data-new-vid="{{ sp_var.id }}"
+                                   {% if sp_active %}checked{% endif %}>
+                            {%- if sp_badge != blank -%}
+                              <span class="cp-set__badge{% if sp_badge contains 'MOST' or sp_badge contains 'Most' or sp_badge contains 'most' %} cp-set__badge--accent{% endif %}">{{ sp_badge }}</span>
+                            {%- endif -%}
+                            <div class="cp-set__img">
+                              {%- if sp.featured_image -%}
+                                <img src="{{ sp.featured_image | image_url: width: 300 }}"
+                                     alt="{{ sp.featured_image.alt | default: sp.title | escape }}"
+                                     width="200" height="200" loading="lazy">
+                              {%- else -%}
+                                <svg aria-hidden="true" width="200" height="200" viewBox="0 0 200 200" fill="none"><rect width="200" height="200" fill="#f0ede8"/></svg>
+                              {%- endif -%}
+                            </div>
+                            <div class="cp-set__info">
+                              <b class="cp-set__name">{{ sp.title }}</b>
+                              <span class="cp-set__price">
+                                {%- if sp_var.compare_at_price > sp_var.price -%}
+                                  <s>{{ sp_var.compare_at_price | money }}</s>
+                                {%- endif -%}
+                                {{ sp_var.price | money }}
+                              </span>
+                              {%- if sp.description != blank -%}
+                                <div class="cp-set__desc body-text">{{ sp.description }}</div>
+                              {%- endif -%}
+                            </div>
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+
+                  {%- comment -%}ADD ACCESSORIES{%- endcomment -%}
+                  {%- if ess_accs != blank or spr_accs != blank -%}
+                    <div class="cp-addons">
+                      <h2 class="cp-addons__h">{{ 'cart.addons.heading' | t }}</h2>
+                      <p class="cp-addons__sub body-text text-muted">
+                        {%- if dv_family == 'diamond' -%}
+                          {{ 'cart.addons.sub_diamond' | t }}
+                        {%- else -%}
+                          {{ 'cart.addons.sub_enso' | t }}
+                        {%- endif -%}
+                      </p>
+
+                      {%- if ess_accs != blank -%}
+                        <h3 class="cp-addons__group-h">{{ 'cart.addons.essentials' | t }}</h3>
+                        <div class="cp-addons__grid">
+                          {%- for acc in ess_accs -%}
+                            {%- render 'cart-addon-card', product: acc -%}
+                          {%- endfor -%}
+                        </div>
+                      {%- endif -%}
+
+                      {%- if spr_accs != blank -%}
+                        <h3 class="cp-addons__group-h">{{ 'cart.addons.spares' | t }}</h3>
+                        <div class="cp-addons__grid cp-addons__grid--spares"
+                             data-spares-for="{{ item.key }}">
+                          {%- for acc in spr_accs -%}
+                            {%- liquid
+                              assign spc_in = false
+                              for ci in cart.items
+                                if ci.product.id == acc.id
+                                  assign spc_in = true
+                                  break
+                                endif
+                              endfor
+                              if forloop.index > 2 and spc_in == false
+                                assign spr_hidden = true
+                              else
+                                assign spr_hidden = false
+                              endif
+                            -%}
+                            {%- render 'cart-addon-card', product: acc, hidden: spr_hidden -%}
+                          {%- endfor -%}
+                        </div>
+                        {%- if spare_hidden_count > 0 -%}
+                          <button type="button" class="cp-addons__more"
+                                  data-spares-toggle="{{ item.key }}">
+                            <span class="cp-addons__more-show">{{ 'cart.addons.show_more' | t: count: spare_hidden_count }}</span>
+                            <span class="cp-addons__more-hide" hidden>{{ 'cart.addons.show_fewer' | t }}</span>
+                          </button>
+                        {%- endif -%}
+                      {%- endif -%}
+
+                      <a href="#" class="cp-addons__remove-link text-muted" data-remove="{{ item.key }}">
+                        {{ 'cart.device.remove_link' | t: title: item.product.title }}
+                      </a>
+                    </div>
+                  {%- endif -%}
+
+                </div>
+              </details>
+            {%- endfor -%}
+          {%- endif -%}
+
+          {%- comment -%}STANDALONE ACCESSORIES LIST{%- endcomment -%}
+          {%- if has_accs -%}
+            <div class="cp-acc-section">
+              {%- if cart_mode == 'mixed' -%}
+                <h2 class="cp-section-h">{{ 'cart.section.accessories' | t }}</h2>
+              {%- endif -%}
+              <ul class="cp-acc-list" role="list">
+                {%- for item in cart.items -%}
+                  {%- if item.product.tags contains 'device' -%}{%- continue -%}{%- endif -%}
+                  {%- assign acc_sub = item.product.metafields.custom.headline.value | default: '' -%}
+                  <li class="cp-acc-row" data-key="{{ item.key }}">
+                    <div class="cp-acc-row__img">
+                      {%- if item.image -%}
+                        <img src="{{ item.image | image_url: width: 120 }}"
+                             alt="{{ item.image.alt | default: item.title | escape }}"
+                             width="56" height="56" loading="lazy">
+                      {%- endif -%}
+                    </div>
+                    <div class="cp-acc-row__info">
+                      <b class="cp-acc-row__name">{{ item.product.title }}</b>
+                      {%- if acc_sub != blank -%}
+                        <small class="cp-acc-row__sub text-muted">{{ acc_sub }}</small>
+                      {%- endif -%}
+                    </div>
+                    <div class="cp-acc-row__qty">
+                      <button type="button" class="cp-acc-row__qty-btn" data-d="-1" aria-label="{{ 'cart.qty.decrease' | t }}">−</button>
+                      <span class="cp-acc-row__qty-num">{{ item.quantity }}</span>
+                      <button type="button" class="cp-acc-row__qty-btn" data-d="1" aria-label="{{ 'cart.qty.increase' | t }}">+</button>
+                    </div>
+                    <span class="cp-acc-row__price">{{ item.final_line_price | money }}</span>
+                    <button type="button" class="cp-acc-row__remove" data-remove="{{ item.key }}"
+                            aria-label="{{ 'cart.general.remove' | t: title: item.product.title }}">×</button>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%}DID YOU FORGET ANYTHING?{%- endcomment -%}
+          {%- liquid
+            assign fav_source = null
+            if has_devices
+              for item in cart.items
+                if item.product.tags contains 'device'
+                  assign fav_source = item.product.metafields.custom.featured_accessories.value
+                  break
+                endif
+              endfor
+            endif
+            unless fav_source
+              assign fav_source = collections.accessories.products
+            endunless
+
+            assign fav_count = 0
+            assign fav_has   = false
+            for fp in fav_source
+              if fav_count >= 3
+                break
+              endif
+              assign fp_in = false
+              for ci in cart.items
+                if ci.product.id == fp.id
+                  assign fp_in = true
+                  break
+                endif
+              endfor
+              unless fp_in
+                assign fav_has  = true
+                assign fav_count = fav_count | plus: 1
+              endunless
+            endfor
+          -%}
+
+          {%- if fav_has -%}
+            <div class="cp-favs">
+              <div class="cp-favs__header">
+                <h2 class="cp-favs__h">{{ 'cart.favs.heading' | t }}</h2>
+                <a href="{{ routes.collections_url }}/accessories" class="cp-favs__all caption">{{ 'cart.favs.all' | t }} ›</a>
+              </div>
+              <div class="cp-favs__grid" id="cp-favs-grid">
+                {%- assign fav_count = 0 -%}
+                {%- for fp in fav_source -%}
+                  {%- if fav_count >= 3 -%}{%- break -%}{%- endif -%}
+                  {%- assign fp_in = false -%}
+                  {%- for ci in cart.items -%}
+                    {%- if ci.product.id == fp.id -%}{%- assign fp_in = true -%}{%- break -%}{%- endif -%}
+                  {%- endfor -%}
+                  {%- unless fp_in -%}
+                    {%- render 'cart-fav-card', product: fp -%}
+                    {%- assign fav_count = fav_count | plus: 1 -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+        </div>{%- comment -%}end .cp-main{%- endcomment -%}
+
+        {%- comment -%}——— RIGHT: SIDEBAR ———{%- endcomment -%}
+        <aside class="cp-sidebar" id="cp-sidebar" aria-label="{{ 'cart.summary.heading' | t }}">
+          <div class="cp-sidebar__inner">
+            <h2 class="cp-sidebar__h">{{ 'cart.summary.heading' | t }}</h2>
+
+            <ul class="cp-sidebar__items" id="cp-sidebar-items" role="list">
+              {%- for item in cart.items -%}
+                {%- assign item_sub = item.product.metafields.custom.headline.value | default: '' -%}
+                {%- if item.product.tags contains 'device' -%}
+                  <li class="cp-sidebar__row cp-sidebar__row--device">
+                    <div class="cp-sidebar__row-info">
+                      <span class="cp-sidebar__row-name">{{ item.product.title }}</span>
+                      {%- if item_sub != blank -%}
+                        <small class="cp-sidebar__row-sub text-muted">{{ item_sub }}</small>
+                      {%- endif -%}
+                    </div>
+                    <span class="cp-sidebar__row-price">{{ item.final_price | money }}</span>
+                  </li>
+                {%- else -%}
+                  <li class="cp-sidebar__row" data-line-key="{{ item.key }}">
+                    <span class="cp-sidebar__row-name">{{ item.product.title }}{% if item.quantity > 1 %} × {{ item.quantity }}{% endif %}</span>
+                    <span class="cp-sidebar__row-price">{{ item.final_line_price | money }}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+
+            <div class="cp-sidebar__total" id="cp-sidebar-total">
+              <span class="cp-sidebar__total-label">{{ 'cart.general.total' | t }}</span>
+              <span class="cp-sidebar__total-price" id="cp-sidebar-total-price">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="cp-sidebar__vat caption text-muted">{{ 'cart.summary.vat_note' | t }}</p>
+
+            <a href="/checkout" class="btn btn--primary btn--full cp-sidebar__cta">
+              {{- section.settings.cta_label | default: 'Checkout' | upcase -}}
+            </a>
+
+            {%- if section.settings.usp_1 != blank or section.settings.usp_2 != blank or section.settings.usp_3 != blank -%}
+              <ul class="cp-sidebar__usps caption text-muted" role="list">
+                {%- if section.settings.usp_1 != blank -%}
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 1.5A7.5 7.5 0 1 0 9 16.5 7.5 7.5 0 0 0 9 1.5z"/><path d="M9 5v4l2 2"/></svg>
+                    {{ section.settings.usp_1 }}
+                  </li>
+                {%- endif -%}
+                {%- if section.settings.usp_2 != blank -%}
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="9" r="7.5"/><path d="M9 5v4"/><circle cx="9" cy="13" r=".75" fill="currentColor"/></svg>
+                    {{ section.settings.usp_2 }}
+                  </li>
+                {%- endif -%}
+                {%- if section.settings.usp_3 != blank -%}
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15.75 12H13.5L12 9H6L4.5 12H2.25"/><rect x="1.5" y="3" width="15" height="9" rx="1.5"/></svg>
+                    {{ section.settings.usp_3 }}
+                  </li>
+                {%- endif -%}
+              </ul>
+            {%- endif -%}
+
+            <a href="{{ back_url }}" class="cp-sidebar__back caption text-muted">{{ back_label }}</a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  {%- endif -%}
+
+</cart-page>
+
+<script src="{{ 'cart-page.js' | asset_url }}" defer></script>
 
 {% stylesheet %}
-  .cart-page__title {
-    margin-bottom: var(--space-7);
-  }
+/* ── Layout ─────────────────────────────────────────────── */
+.cart-page {
+  padding-block: 80px;
+}
+@media screen and (max-width: 749px) {
+  .cart-page { padding-block: 40px; }
+}
 
-  .cart-page__empty {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-    align-items: center;
-    padding-block: var(--space-7);
-  }
+.cp-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-8);
+  align-items: start;
+}
+@media screen and (max-width: 989px) {
+  .cp-layout { grid-template-columns: 1fr; }
+}
 
-  .cart-item {
-    display: grid;
-    grid-template-columns: 80px 1fr 90px 100px;
-    gap: var(--space-4);
-    align-items: center;
-    padding-block: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-  }
+.cp-heading { margin-bottom: var(--space-2); }
+.cp-lead    { margin-bottom: var(--space-6); }
+.cp-section-h {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-bold);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-5);
+  margin-top: var(--space-7);
+}
+.cp-section-h:first-child { margin-top: 0; }
 
-  .cart-item__media img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-  }
+/* ── Empty state ─────────────────────────────────────────── */
+.cp-empty-title { margin-bottom: var(--space-2); }
+.cp-empty-lead  { margin-bottom: var(--space-6); }
+.cp-empty {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+@media screen and (max-width: 749px) {
+  .cp-empty { grid-template-columns: 1fr; }
+}
 
-  .cart-item__total {
-    text-align: right;
-    font-size: 14px;
-  }
+.cp-empty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  transition: box-shadow .2s;
+}
+.cp-empty-card:hover { box-shadow: var(--shadow-md); }
 
-  .cart-page__footer {
-    margin-top: var(--space-7);
-    max-width: 360px;
-    margin-left: auto;
-  }
+.cp-empty-card__img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-background-raised);
+}
+.cp-empty-card__img img,
+.cp-empty-card__img svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.cp-empty-card__title {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+.cp-empty-card__sub { margin: 0; }
 
-  .cart-page__subtotal {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: var(--space-5);
-  }
+/* ── Device accordion ────────────────────────────────────── */
+.cp-dev {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+.cp-dev + .cp-dev { margin-top: 0; }
 
-  @media screen and (max-width: 589px) {
-    .cart-item {
-      grid-template-columns: 64px 1fr;
-      grid-template-areas: "media info" "media qty" "media total";
-    }
+.cp-dev > summary { list-style: none; cursor: pointer; }
+.cp-dev > summary::-webkit-details-marker { display: none; }
+
+.cp-dev__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-background);
+}
+.cp-dev[open] .cp-dev__summary {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cp-dev__thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-background-raised);
+}
+.cp-dev__thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+.cp-dev__meta { flex: 1; min-width: 0; }
+.cp-dev__name { display: block; font-size: 15px; font-weight: var(--font-weight-semibold); }
+.cp-dev__sub  { display: block; font-size: 13px; margin-top: 2px; }
+
+.cp-dev__price {
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-semibold);
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.cp-dev__tog {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.cp-dev__tog-hide { display: none; }
+details[open] .cp-dev__tog-show { display: none; }
+details[open] .cp-dev__tog-hide { display: inline; }
+details[open] .cp-dev__tog svg  { transform: rotate(180deg); }
+.cp-dev__tog svg { transition: transform .2s; }
+
+.cp-dev__x {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-text-muted);
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background .15s;
+}
+.cp-dev__x:hover { background: var(--color-background-raised); }
+
+.cp-dev__body { padding: var(--space-6) var(--space-5); }
+
+@media screen and (max-width: 749px) {
+  .cp-dev__summary { flex-wrap: wrap; padding: var(--space-4); }
+  .cp-dev__tog { display: none; }
+  .cp-dev__body { padding: var(--space-5) var(--space-4); }
+}
+
+/* ── Pick a set ──────────────────────────────────────────── */
+.cp-sets { margin-bottom: var(--space-7); }
+.cp-sets__h   { font-size: var(--font-size-h4); font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); }
+.cp-sets__sub { margin-bottom: var(--space-5); }
+
+.cp-sets__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.cp-set {
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  cursor: pointer;
+  position: relative;
+  transition: border-color .15s;
+}
+.cp-set.is-active,
+.cp-set:has(input:checked) {
+  border-color: var(--color-text);
+  border-width: 2px;
+}
+
+.cp-set__badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  background: var(--color-text);
+  color: var(--color-background);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: .04em;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+}
+.cp-set__badge--accent {
+  background: var(--palette-sand);
+  color: #fff;
+}
+
+.cp-set__img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-background-raised);
+  margin-bottom: var(--space-4);
+}
+.cp-set__img img,
+.cp-set__img svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cp-set__name  { font-size: 14px; font-weight: var(--font-weight-semibold); margin-bottom: var(--space-1); display: block; }
+.cp-set__price { font-family: var(--font-accent); font-size: 15px; font-weight: var(--font-weight-semibold); display: block; margin-bottom: var(--space-3); }
+.cp-set__price s { font-weight: var(--font-weight-regular); color: var(--color-text-muted); margin-right: var(--space-1); }
+
+.cp-set__desc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+.cp-set__desc ul,
+.cp-set__desc p { margin: 0; padding: 0; list-style: none; }
+.cp-set__desc li { padding-left: 1em; position: relative; }
+.cp-set__desc li::before { content: "·"; position: absolute; left: 0; }
+
+/* ── Add accessories ─────────────────────────────────────── */
+.cp-addons__h       { font-size: var(--font-size-h4); font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); }
+.cp-addons__sub     { margin-bottom: var(--space-5); }
+.cp-addons__group-h { font-size: var(--font-size-h6); font-weight: var(--font-weight-bold); margin-bottom: var(--space-4); margin-top: var(--space-5); }
+.cp-addons__group-h:first-of-type { margin-top: 0; }
+
+.cp-addons__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+@media screen and (max-width: 599px) {
+  .cp-addons__grid { grid-template-columns: 1fr; }
+}
+
+.cp-addon--hidden { display: none; }
+
+.cp-addon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color .15s;
+}
+.cp-addon.is-added { border-color: var(--color-text); }
+
+.cp-addon__img {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-background-raised);
+}
+.cp-addon__img img,
+.cp-addon__img svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cp-addon__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cp-addon__name  { font-size: 13px; font-weight: var(--font-weight-semibold); }
+.cp-addon__sub   { font-size: 12px; color: var(--color-text-muted); }
+.cp-addon__price { font-family: var(--font-accent); font-size: 13px; font-weight: var(--font-weight-semibold); }
+
+.cp-addon__action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.cp-addon__atc {
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: .04em;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-background);
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.cp-addon__atc:hover {
+  background: var(--palette-sand, #c8943a);
+  border-color: var(--palette-sand, #c8943a);
+}
+
+.cp-addon__added {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: .04em;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--palette-sand, #c8943a);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.cp-addon__added:hover { opacity: .8; }
+
+.cp-addon__qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.cp-addon__qty-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transition: background .15s;
+}
+.cp-addon__qty-btn:hover { background: var(--color-background-raised); }
+.cp-addon__qty-num { font-size: 13px; min-width: 18px; text-align: center; }
+
+.cp-addons__more {
+  margin-top: var(--space-4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  color: var(--color-text);
+  padding: 0;
+}
+
+.cp-addons__remove-link {
+  display: block;
+  margin-top: var(--space-5);
+  font-size: 13px;
+  text-decoration: underline;
+  color: var(--color-text-muted);
+}
+
+/* ── Standalone accessories list ─────────────────────────── */
+.cp-acc-section { margin-top: var(--space-6); }
+.cp-acc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.cp-acc-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto auto auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+@media screen and (max-width: 599px) {
+  .cp-acc-row {
+    grid-template-columns: 56px 1fr auto;
+    grid-template-rows: auto auto;
   }
+  .cp-acc-row__price  { grid-column: 2; }
+  .cp-acc-row__remove { grid-row: 1; grid-column: 3; }
+  .cp-acc-row__qty    { grid-column: 2 / 4; }
+}
+
+.cp-acc-row__img {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-background-raised);
+}
+.cp-acc-row__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.cp-acc-row__name { font-size: 14px; font-weight: var(--font-weight-semibold); display: block; }
+.cp-acc-row__sub  { font-size: 13px; display: block; }
+
+.cp-acc-row__qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.cp-acc-row__qty-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.cp-acc-row__qty-btn:hover { background: var(--color-background-raised); }
+.cp-acc-row__qty-num { font-size: 14px; min-width: 22px; text-align: center; }
+
+.cp-acc-row__price {
+  font-family: var(--font-accent);
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.cp-acc-row__remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--color-text-muted);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background .15s;
+}
+.cp-acc-row__remove:hover { background: var(--color-background-raised); }
+
+/* ── Did you forget anything? ────────────────────────────── */
+.cp-favs {
+  margin-top: var(--space-7);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--color-border);
+}
+.cp-favs__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.cp-favs__h { font-size: var(--font-size-h4); font-weight: var(--font-weight-bold); margin: 0; }
+.cp-favs__all { color: var(--color-text-muted); text-decoration: underline; white-space: nowrap; }
+
+.cp-favs__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+@media screen and (max-width: 749px) {
+  .cp-favs__grid { grid-template-columns: 1fr 1fr; }
+}
+@media screen and (max-width: 479px) {
+  .cp-favs__grid { grid-template-columns: 1fr; }
+}
+
+.cp-fav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+}
+.cp-fav__img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-background-raised);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+.cp-fav__img img,
+.cp-fav__img svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.cp-fav__name  { font-size: 14px; font-weight: var(--font-weight-semibold); margin: 0; }
+.cp-fav__sub   { font-size: 13px; color: var(--color-text-muted); }
+.cp-fav__price { font-family: var(--font-accent); font-size: 15px; font-weight: var(--font-weight-semibold); }
+.cp-fav__add   { width: 100%; margin-top: auto; }
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+.cp-sidebar {
+  position: sticky;
+  top: calc(var(--announcement-bar-height, 0px) + 80px + var(--space-5));
+}
+@media screen and (max-width: 989px) {
+  .cp-sidebar { position: static; }
+}
+
+.cp-sidebar__inner {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cp-sidebar__h {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cp-sidebar__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cp-sidebar__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  justify-content: space-between;
+}
+.cp-sidebar__row-info  { flex: 1; min-width: 0; }
+.cp-sidebar__row-name  { font-size: 13px; font-weight: var(--font-weight-semibold); display: block; }
+.cp-sidebar__row-sub   { display: block; font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
+.cp-sidebar__row-price { font-size: 13px; font-weight: var(--font-weight-semibold); white-space: nowrap; }
+
+.cp-sidebar__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+.cp-sidebar__total-label { font-size: 18px; font-weight: var(--font-weight-bold); }
+.cp-sidebar__total-price { font-family: var(--font-accent); font-size: 22px; font-weight: var(--font-weight-semibold); }
+
+.cp-sidebar__vat { margin: 0; }
+
+.cp-sidebar__usps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+.cp-sidebar__usps li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.cp-sidebar__usps svg { flex-shrink: 0; margin-top: 1px; }
+
+.cp-sidebar__back {
+  text-align: center;
+  text-decoration: underline;
+}
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:sections.main-cart.name",
+  "name": "t:sections.main_cart.name",
   "tag": "section",
   "settings": [
     {
       "type": "color",
       "id": "color_background",
       "label": "t:sections.all.background_color.label",
-      "default": "{{ settings.color_palette.background }}"
+      "default": "{{ settings.color_palette.paper }}"
     },
     {
       "type": "color",
       "id": "color_text",
       "label": "t:sections.all.text_color.label",
-      "default": "{{ settings.color_palette.foreground }}"
+      "default": "{{ settings.color_palette.ink }}"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main_cart.settings.header_empty.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "empty_diamond_image",
+      "label": "t:sections.main_cart.settings.empty_diamond_image.label"
+    },
+    {
+      "type": "text",
+      "id": "empty_diamond_title",
+      "label": "t:sections.main_cart.settings.empty_diamond_title.label",
+      "default": "ENSŌ Diamond"
+    },
+    {
+      "type": "text",
+      "id": "empty_diamond_subtitle",
+      "label": "t:sections.main_cart.settings.empty_diamond_subtitle.label",
+      "default": "The electric heater for the hookah you already own"
+    },
+    {
+      "type": "text",
+      "id": "empty_diamond_cta",
+      "label": "t:sections.main_cart.settings.empty_diamond_cta.label",
+      "default": "SHOP DIAMOND"
+    },
+    {
+      "type": "url",
+      "id": "diamond_url",
+      "label": "t:sections.main_cart.settings.diamond_url.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "empty_enso_image",
+      "label": "t:sections.main_cart.settings.empty_enso_image.label"
+    },
+    {
+      "type": "text",
+      "id": "empty_enso_title",
+      "label": "t:sections.main_cart.settings.empty_enso_title.label",
+      "default": "ENSŌ 2026 Edition"
+    },
+    {
+      "type": "text",
+      "id": "empty_enso_subtitle",
+      "label": "t:sections.main_cart.settings.empty_enso_subtitle.label",
+      "default": "The all-in-one electric hookah"
+    },
+    {
+      "type": "text",
+      "id": "empty_enso_cta",
+      "label": "t:sections.main_cart.settings.empty_enso_cta.label",
+      "default": "SEE THE 2026 EDITION"
+    },
+    {
+      "type": "url",
+      "id": "enso_url",
+      "label": "t:sections.main_cart.settings.enso_url.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "empty_acc_image",
+      "label": "t:sections.main_cart.settings.empty_acc_image.label"
+    },
+    {
+      "type": "text",
+      "id": "empty_acc_title",
+      "label": "t:sections.main_cart.settings.empty_acc_title.label",
+      "default": "Accessories"
+    },
+    {
+      "type": "text",
+      "id": "empty_acc_subtitle",
+      "label": "t:sections.main_cart.settings.empty_acc_subtitle.label",
+      "default": "Batteries, cups, screens, tools and the backpack"
+    },
+    {
+      "type": "text",
+      "id": "empty_acc_cta",
+      "label": "t:sections.main_cart.settings.empty_acc_cta.label",
+      "default": "SHOP ACCESSORIES"
+    },
+    {
+      "type": "url",
+      "id": "empty_acc_url",
+      "label": "t:sections.main_cart.settings.empty_acc_url.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main_cart.settings.header_checkout.content"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:sections.main_cart.settings.cta_label.label",
+      "default": "Checkout"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main_cart.settings.header_usps.content"
+    },
+    {
+      "type": "text",
+      "id": "usp_1",
+      "label": "t:sections.main_cart.settings.usp_1.label",
+      "default": "14 days unopened, 30 days opened, from delivery"
+    },
+    {
+      "type": "text",
+      "id": "usp_2",
+      "label": "t:sections.main_cart.settings.usp_2.label",
+      "default": "Two years on the device, one year on the battery"
+    },
+    {
+      "type": "text",
+      "id": "usp_3",
+      "label": "t:sections.main_cart.settings.usp_3.label",
+      "default": "Ships from our EU and US warehouses"
     }
   ]
 }

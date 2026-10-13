@@ -2728,6 +2728,33 @@
         "cta_label": { "label": "Button label" }
       },
       "presets": { "name": "Diamond guide CTA" }
+    },
+    "main_cart": {
+      "name": "Cart",
+      "settings": {
+        "header_empty": { "content": "Empty cart" },
+        "empty_diamond_image": { "label": "Diamond image" },
+        "empty_diamond_title": { "label": "Diamond title" },
+        "empty_diamond_subtitle": { "label": "Diamond subtitle" },
+        "empty_diamond_cta": { "label": "Diamond button" },
+        "diamond_url": { "label": "Diamond URL" },
+        "empty_enso_image": { "label": "ENSŌ image" },
+        "empty_enso_title": { "label": "ENSŌ title" },
+        "empty_enso_subtitle": { "label": "ENSŌ subtitle" },
+        "empty_enso_cta": { "label": "ENSŌ button" },
+        "enso_url": { "label": "ENSŌ URL" },
+        "empty_acc_image": { "label": "Accessories image" },
+        "empty_acc_title": { "label": "Accessories title" },
+        "empty_acc_subtitle": { "label": "Accessories subtitle" },
+        "empty_acc_cta": { "label": "Accessories button" },
+        "empty_acc_url": { "label": "Accessories URL" },
+        "header_checkout": { "content": "Checkout" },
+        "cta_label": { "label": "Checkout button label" },
+        "header_usps": { "content": "Trust signals" },
+        "usp_1": { "label": "Trust signal 1" },
+        "usp_2": { "label": "Trust signal 2" },
+        "usp_3": { "label": "Trust signal 3" }
+      }
     }
   }
 }

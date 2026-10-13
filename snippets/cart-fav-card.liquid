@@ -1,0 +1,28 @@
+{%- doc -%}
+  "Did you forget anything?" card in cart page.
+  Parameters:
+    product  {object}  Shopify product object (required)
+{%- enddoc -%}
+{%- liquid
+  assign av       = product.selected_or_first_available_variant
+  assign img      = product.featured_image
+  assign subtitle = product.metafields.custom.headline | metafield_tag | strip_html | strip
+-%}
+<div class="cp-fav" data-pid="{{ product.id }}" data-vid="{{ av.id }}">
+  <div class="cp-fav__img">
+    {%- if img != blank -%}
+      <img src="{{ img | image_url: width: 300 }}"
+           alt="{{ img.alt | default: product.title | escape }}"
+           width="200" height="200" loading="lazy">
+    {%- else -%}
+      <svg aria-hidden="true" width="200" height="200" viewBox="0 0 200 200" fill="none">
+        <rect width="200" height="200" rx="8" fill="#f0ede8"/>
+        <rect x="70" y="70" width="60" height="60" rx="8" fill="#c8b89a"/>
+      </svg>
+    {%- endif -%}
+  </div>
+  <b class="cp-fav__name">{{ product.title }}</b>
+  {%- if subtitle != blank -%}<span class="cp-fav__sub">{{ subtitle }}</span>{%- endif -%}
+  <span class="cp-fav__price">{{ av.price | money }}</span>
+  <button type="button" class="btn btn--primary cp-fav__add">{{ 'cart.favs.add' | t }}</button>
+</div>

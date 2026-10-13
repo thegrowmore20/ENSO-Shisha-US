@@ -140,7 +140,7 @@
       "total": "Total",
       "discount": "Discount",
       "checkout": "Checkout",
-      "remove": "Remove",
+      "remove": "Remove {{ title }}",
       "note": "Order note",
       "add_order_note": "Add Order Note",
       "order_note_placeholder": "Add a note for your order...",
@@ -149,6 +149,67 @@
         "other": "{{ count }} items"
       },
       "free_shipping_progress": "Progress towards free shipping"
+    },
+    "heading": {
+      "empty": "Start building your ritual",
+      "choose_diamond": "Now choose your set",
+      "choose_enso": "Now choose your set",
+      "accessories": "Your accessories",
+      "mixed": "Your cart"
+    },
+    "lead": {
+      "empty": "Choose a device or shop accessories below.",
+      "device": "Pick the set that fits your setup, then add the extras you need.",
+      "accessories": "Add more from our collection, or head to checkout when you're ready.",
+      "mixed": "Review your device and accessories below."
+    },
+    "back": {
+      "diamond": "← Back to ENSŌ Diamond",
+      "enso": "← Back to ENSŌ 2026",
+      "accessories": "← Continue shopping",
+      "shopping": "← Continue shopping"
+    },
+    "section": {
+      "in_your_cart": "In your cart",
+      "accessories": "Accessories"
+    },
+    "addon": {
+      "add": "ADD TO CART",
+      "added": "ADDED",
+      "remove": "Remove {{ title }}"
+    },
+    "qty": {
+      "increase": "Increase quantity",
+      "decrease": "Decrease quantity"
+    },
+    "device": {
+      "show_addons": "Choose set & add-ons",
+      "hide_addons": "Hide set & add-ons",
+      "remove": "Remove {{ title }}",
+      "remove_link": "Remove {{ title }} from cart"
+    },
+    "sets": {
+      "heading": "Pick a set",
+      "sub_diamond": "Choose the bundle that suits your setup",
+      "sub_enso": "Choose the bundle that suits your setup"
+    },
+    "addons": {
+      "heading": "Add accessories",
+      "sub_diamond": "Everything that works with your Diamond",
+      "sub_enso": "Everything that works with your ENSŌ 2026",
+      "essentials": "Essentials",
+      "spares": "Spares",
+      "show_more": "Show {{ count }} more",
+      "show_fewer": "Show fewer"
+    },
+    "favs": {
+      "heading": "Did you forget anything?",
+      "all": "Shop all accessories",
+      "add": "ADD"
+    },
+    "summary": {
+      "heading": "Order summary",
+      "vat_note": "VAT included where applicable"
     }
   },
   "sections": {
