@@ -151,14 +151,14 @@
       "free_shipping_progress": "Progress towards free shipping"
     },
     "heading": {
-      "empty": "Start building your ritual",
+      "empty": "Your cart",
       "choose_diamond": "Now choose your set",
       "choose_enso": "Now choose your set",
       "accessories": "Your accessories",
       "mixed": "Your cart"
     },
     "lead": {
-      "empty": "Choose a device or shop accessories below.",
+      "empty": "Nothing here yet. Start with a device, or add what your ENSŌ is missing.",
       "device": "Pick the set that fits your setup, then add the extras you need.",
       "accessories": "Add more from our collection, or head to checkout when you're ready.",
       "mixed": "Review your device and accessories below."
