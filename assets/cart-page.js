@@ -64,6 +64,43 @@ if (!customElements.get('cart-page')) {
       });
     }
 
+    // ── Page spinner ───────────────────────────────────────────────────────
+
+    #showPageSpinner() {
+      let el = document.getElementById('cp-page-spinner');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'cp-page-spinner';
+        document.body.appendChild(el);
+      }
+      el.classList.add('is-on');
+    }
+
+    #hidePageSpinner() {
+      document.getElementById('cp-page-spinner')?.classList.remove('is-on');
+    }
+
+    // ── Section re-render (replaces full page reload) ──────────────────────
+
+    async #reRenderSection() {
+      this.#showPageSpinner();
+      try {
+        const res  = await fetch('/cart?sections=main', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+        const data = await res.json();
+        const doc  = new DOMParser().parseFromString(data.main, 'text/html');
+        const next = doc.getElementById('shopify-section-main');
+        if (next) {
+          next.querySelectorAll('script[src]').forEach(s => s.remove());
+          document.getElementById('shopify-section-main')?.replaceWith(next);
+        }
+      } catch (err) {
+        console.error('Section re-render failed', err);
+        window.location.reload();
+      } finally {
+        this.#hidePageSpinner();
+      }
+    }
+
     // ── Set switcher (radio cards inside device accordions) ────────────────
 
     #bindSetSwitcher() {
@@ -79,10 +116,11 @@ if (!customElements.get('cart-page')) {
           try {
             await this.#cartFetch('/cart/change.js', { id: oldKey, quantity: 0 });
             await this.#cartFetch('/cart/add.js', { id: newVid, quantity: 1 });
-            window.location.reload();
+            await this.#reRenderSection();
           } catch (err) {
             console.error('Set switch failed', err);
             radio.disabled = false;
+            this.#hidePageSpinner();
           }
         });
       });
@@ -371,21 +409,24 @@ if (!customElements.get('cart-page')) {
       });
     }
 
-    // ── Device remove (× button) ───────────────────────────────────────────
+    // ── Device remove (× button and "remove from cart" link) ──────────────
 
     #bindDeviceRemove() {
-      this.querySelectorAll('.cp-dev__x[data-remove]').forEach(el => {
+      this.querySelectorAll('.cp-dev__x[data-remove], .cp-dev__remove[data-remove]').forEach(el => {
         el.addEventListener('click', async e => {
           e.stopPropagation();
           e.preventDefault();
           const key = el.dataset.remove;
           el.disabled = true;
+          el.classList.add('is-loading');
           try {
             await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
-            window.location.reload();
+            await this.#reRenderSection();
           } catch (err) {
             console.error('Device remove failed', err);
             el.disabled = false;
+            el.classList.remove('is-loading');
+            this.#hidePageSpinner();
           }
         });
       });
@@ -428,7 +469,7 @@ if (!customElements.get('cart-page')) {
     #checkEmpty() {
       const hasAcc = this.querySelectorAll('.cp-acc-row').length > 0;
       const hasDev = this.querySelectorAll('.cp-dev').length > 0;
-      if (!hasAcc && !hasDev) window.location.reload();
+      if (!hasAcc && !hasDev) this.#reRenderSection().catch(() => window.location.reload());
     }
   }
 

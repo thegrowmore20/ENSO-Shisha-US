@@ -370,7 +370,7 @@
       lastStep = i;
       steps.forEach(function(s, k) {
         s.classList.toggle('is-on', k === i);
-        s.classList.toggle('was-on', k === prev && prev >= 0);
+        s.classList.toggle('was-on', k === prev && prev >= 0 && i > prev);
       });
     }
 

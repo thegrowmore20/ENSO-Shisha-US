@@ -34,18 +34,6 @@
   margin: 0;
 }
 
-/* Match handoff's .xp container: max-width 1600px, 40px horizontal padding */
-.dg-cap .container {
-  max-width: 1600px;
-  padding-inline: 40px;
-}
-
-@media screen and (max-width: 749px) {
-  .dg-cap .container {
-    padding-inline: 16px;
-  }
-}
-
 .dg-cap__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -62,6 +50,7 @@
 .dg-cap__grid figure img {
   width: 100%;
   aspect-ratio: 4 / 5;
+  max-height: 520px;
   object-fit: cover;
   border-radius: 22px;
   border: 1px solid var(--color-border);
