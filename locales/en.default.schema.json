@@ -2658,7 +2658,13 @@
         "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "body": { "label": "Body text" },
-        "image": { "label": "Image" }
+        "image": { "label": "Image" },
+        "footer_header": { "content": "Page footer" },
+        "foot_note": { "label": "Support note" },
+        "link_1_label": { "label": "Link 1 label" },
+        "link_1_url": { "label": "Link 1 URL" },
+        "link_2_label": { "label": "Link 2 label" },
+        "link_2_url": { "label": "Link 2 URL" }
       },
       "presets": { "name": "Diamond guide firmware" }
     },

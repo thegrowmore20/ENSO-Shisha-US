@@ -8,7 +8,7 @@
 .dg-fw__copy {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 24px 64px;
+  column-gap: 64px;
   align-items: end;
   margin-bottom: 32px;
 }
@@ -43,6 +43,7 @@
 .dg-fw__img {
   width: 100%;
   aspect-ratio: 21 / 9;
+  max-height: 560px;
   object-fit: cover;
   object-position: 50% 62%;
   border-radius: 28px;
@@ -52,9 +53,42 @@
 .dg-fw__placeholder {
   width: 100%;
   aspect-ratio: 21 / 9;
+  max-height: 560px;
   display: block;
   border-radius: 28px;
   background: #f0ede8;
+}
+
+.dg-fw__foot {
+  margin-top: 48px;
+  padding-bottom: 8px;
+}
+
+.dg-fw__foot-note {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin: 0 0 40px;
+}
+
+.dg-fw__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+
+.dg-fw__link {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 2px solid var(--palette-sand);
+  padding-bottom: 2px;
+}
+
+.dg-fw__link:hover {
+  opacity: 0.72;
 }
 
 @media screen and (max-width: 991px) {
@@ -63,6 +97,7 @@
   }
   .dg-fw__copy {
     grid-template-columns: 1fr;
+    row-gap: 16px;
   }
   .dg-fw__h {
     font-size: 30px;
@@ -71,6 +106,7 @@
   .dg-fw__img,
   .dg-fw__placeholder {
     aspect-ratio: 4 / 3;
+    max-height: none;
   }
 }
 
@@ -107,13 +143,44 @@
         alt: section.settings.image.alt | default: section.settings.heading,
         loading: 'lazy',
         widths: '750,1100,1500,2000',
-        sizes: '(max-width: 989px) calc(100vw - 32px), calc(100vw - 160px)'
+        sizes: '(max-width: 989px) calc(100vw - 32px), calc(min(100vw, 1440px) - 160px)'
       -}}
     {%- else -%}
       <svg class="dg-fw__placeholder" viewBox="0 0 21 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect width="21" height="9" fill="#f0ede8"/>
         <path d="M10 4.5 L10.5 3.8 L11 4.5 M10.25 4.5 L10.75 4.5 M10.5 4.5 L10.5 5.2" stroke="#c8b89a" stroke-width="0.08" stroke-linecap="round"/>
       </svg>
+    {%- endif -%}
+
+    {%- liquid
+      assign has_note = false
+      assign has_links = false
+      if section.settings.foot_note != blank
+        assign has_note = true
+      endif
+      if section.settings.link_1_label != blank and section.settings.link_1_url != blank
+        assign has_links = true
+      endif
+      if section.settings.link_2_label != blank and section.settings.link_2_url != blank
+        assign has_links = true
+      endif
+    -%}
+    {%- if has_note or has_links -%}
+      <div class="dg-fw__foot">
+        {%- if has_note -%}
+          <p class="dg-fw__foot-note">{{ section.settings.foot_note | escape }}</p>
+        {%- endif -%}
+        {%- if has_links -%}
+          <div class="dg-fw__links">
+            {%- if section.settings.link_1_label != blank and section.settings.link_1_url != blank -%}
+              <a class="dg-fw__link" href="{{ section.settings.link_1_url }}">{{ section.settings.link_1_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.link_2_label != blank and section.settings.link_2_url != blank -%}
+              <a class="dg-fw__link" href="{{ section.settings.link_2_url }}">{{ section.settings.link_2_label | escape }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
     {%- endif -%}
   </div>
 </section>
@@ -152,6 +219,38 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.diamond_guide_firmware.settings.image.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.diamond_guide_firmware.settings.footer_header.content"
+    },
+    {
+      "type": "text",
+      "id": "foot_note",
+      "label": "t:sections.diamond_guide_firmware.settings.foot_note.label",
+      "default": "Questions at any point: support@ensoshisha.com · The ENSŌ team"
+    },
+    {
+      "type": "text",
+      "id": "link_1_label",
+      "label": "t:sections.diamond_guide_firmware.settings.link_1_label.label",
+      "default": "‹ The full manual"
+    },
+    {
+      "type": "url",
+      "id": "link_1_url",
+      "label": "t:sections.diamond_guide_firmware.settings.link_1_url.label"
+    },
+    {
+      "type": "text",
+      "id": "link_2_label",
+      "label": "t:sections.diamond_guide_firmware.settings.link_2_label.label",
+      "default": "‹ Back to ENSŌ Experience"
+    },
+    {
+      "type": "url",
+      "id": "link_2_url",
+      "label": "t:sections.diamond_guide_firmware.settings.link_2_url.label"
     },
     {
       "type": "header",
