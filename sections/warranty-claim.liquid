@@ -77,10 +77,16 @@
     color: #96671f;
   }
 
-  @media screen and (max-width: 991px) {
+  @media screen and (max-width: 1200px) {
     .wr-steps {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 20px 14px;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    .wr-steps {
+      gap: 16px 14px;
     }
   }
 {% endstylesheet %}

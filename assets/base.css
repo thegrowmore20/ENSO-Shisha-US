@@ -155,7 +155,7 @@ h6, .h6 {
   padding-inline: var(--page-margin);
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (max-width: 991px) {
   .container {
     padding-inline: var(--page-margin-mobile);
   }
@@ -165,7 +165,7 @@ h6, .h6 {
   padding-block: var(--space-8);
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: 991px) {
   .section-padding {
     padding-block: var(--space-7);
   }
@@ -188,7 +188,13 @@ h6, .h6 {
   grid-template-columns: repeat(2, 1fr);
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (max-width: 1200px) {
+  .grid--4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 991px) {
   .grid--4,
   .grid--3 {
     grid-template-columns: repeat(2, 1fr);
