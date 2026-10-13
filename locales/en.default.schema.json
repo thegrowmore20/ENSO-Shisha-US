@@ -2651,6 +2651,17 @@
       },
       "presets": { "name": "Diamond guide scroll anim" }
     },
+    "diamond_guide_firmware": {
+      "name": "Diamond guide firmware",
+      "settings": {
+        "section_id": { "label": "Anchor ID", "info": "Used for in-page links, e.g. #app" },
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "body": { "label": "Body text" },
+        "image": { "label": "Image" }
+      },
+      "presets": { "name": "Diamond guide firmware" }
+    },
     "diamond_guide_split": {
       "name": "Diamond guide split",
       "settings": {

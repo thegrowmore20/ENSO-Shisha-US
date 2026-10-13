@@ -1,0 +1,191 @@
+{% stylesheet %}
+
+.dg-fw {
+  padding: 96px 0 64px;
+  border-top: 1px solid var(--color-border);
+}
+
+.dg-fw__copy {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 24px 64px;
+  align-items: end;
+  margin-bottom: 32px;
+}
+
+.dg-fw__eyebrow {
+  grid-column: 1 / -1;
+  margin: 0 0 10px;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.dg-fw__h {
+  font-family: var(--font-accent);
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 50px;
+  letter-spacing: -.025em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.dg-fw__body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgb(0 0 0 / .72);
+  margin: 0;
+  align-self: end;
+}
+
+.dg-fw__img {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: 50% 62%;
+  border-radius: 28px;
+  display: block;
+}
+
+.dg-fw__placeholder {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  display: block;
+  border-radius: 28px;
+  background: #f0ede8;
+}
+
+@media screen and (max-width: 991px) {
+  .dg-fw {
+    padding: 64px 0 48px;
+  }
+  .dg-fw__copy {
+    grid-template-columns: 1fr;
+  }
+  .dg-fw__h {
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .dg-fw__img,
+  .dg-fw__placeholder {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+{% endstylesheet %}
+
+{% style %}
+  #shopify-section-{{ section.id }} .dg-fw {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .dg-fw {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section class="dg-fw" id="{{ section.settings.section_id | default: section.id }}">
+  <div class="container">
+    <div class="dg-fw__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dg-fw__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="dg-fw__h">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.body != blank -%}
+        <p class="dg-fw__body">{{ section.settings.body | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.image != blank -%}
+      {{- section.settings.image | image_url: width: 2000 | image_tag:
+        class: 'dg-fw__img',
+        alt: section.settings.image.alt | default: section.settings.heading,
+        loading: 'lazy',
+        widths: '750,1100,1500,2000',
+        sizes: '(max-width: 989px) calc(100vw - 32px), calc(100vw - 160px)'
+      -}}
+    {%- else -%}
+      <svg class="dg-fw__placeholder" viewBox="0 0 21 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="21" height="9" fill="#f0ede8"/>
+        <path d="M10 4.5 L10.5 3.8 L11 4.5 M10.25 4.5 L10.75 4.5 M10.5 4.5 L10.5 5.2" stroke="#c8b89a" stroke-width="0.08" stroke-linecap="round"/>
+      </svg>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.diamond_guide_firmware.name",
+  "tag": "div",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.diamond_guide_firmware.settings.section_id.label",
+      "info": "t:sections.diamond_guide_firmware.settings.section_id.info"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.diamond_guide_firmware.settings.eyebrow.label",
+      "default": "Firmware"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.diamond_guide_firmware.settings.heading.label",
+      "default": "Updates over USB‑C, from our website"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "t:sections.diamond_guide_firmware.settings.body.label",
+      "default": "Plug Diamond into your computer, open the firmware page on ensoshisha.com, press Update. No app to install, no account, no phone. The page is coming; until then Diamond needs nothing."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.diamond_guide_firmware.settings.image.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.all.padding.padding_top_mobile",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.all.padding.padding_bottom_mobile",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.diamond_guide_firmware.presets.name"
+    }
+  ]
+}
+{% endschema %}

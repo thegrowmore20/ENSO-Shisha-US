@@ -392,16 +392,15 @@
       }
     },
     "dg_firmware": {
-      "type": "diamond-guide-split",
+      "type": "diamond-guide-firmware",
       "settings": {
         "section_id": "app",
         "eyebrow": "Firmware",
-        "heading": "Updates over USB-C, from our website",
+        "heading": "Updates over USB‑C, from our website",
         "body": "Plug Diamond into your computer, open the firmware page on ensoshisha.com, press Update. No app to install, no account, no phone. The page is coming; until then Diamond needs nothing.",
         "image": "shopify://shop_images/firmware-laptop.webp",
-        "image_side": "right",
         "padding_top": 80,
-        "padding_bottom": 80,
+        "padding_bottom": 64,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
