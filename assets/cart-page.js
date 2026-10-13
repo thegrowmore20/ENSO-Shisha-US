@@ -84,13 +84,26 @@ if (!customElements.get('cart-page')) {
     async #reRenderSection() {
       this.#showPageSpinner();
       try {
-        const res  = await fetch('/cart?sections=main', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-        const data = await res.json();
-        const html = data['main'];
-        if (!html) { window.location.reload(); return; }
-        const doc          = new DOMParser().parseFromString(html, 'text/html');
-        const nextCartPage = doc.querySelector('cart-page');
-        const curCartPage  = document.querySelector('cart-page');
+        // Section Rendering API (fast path — works when Shopify returns section HTML)
+        let nextCartPage = null;
+        try {
+          const secRes  = await fetch('/cart?sections=main', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+          const secData = await secRes.json();
+          if (secData['main']) {
+            const secDoc = new DOMParser().parseFromString(secData['main'], 'text/html');
+            nextCartPage = secDoc.querySelector('cart-page');
+          }
+        } catch (_) { /* fall through to full-page fetch */ }
+
+        // Full-page fetch fallback — always works, heavier but reliable
+        if (!nextCartPage) {
+          const pageRes  = await fetch('/cart', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+          const pageHtml = await pageRes.text();
+          const pageDoc  = new DOMParser().parseFromString(pageHtml, 'text/html');
+          nextCartPage   = pageDoc.querySelector('cart-page');
+        }
+
+        const curCartPage = document.querySelector('cart-page');
         if (nextCartPage && curCartPage) {
           curCartPage.replaceWith(nextCartPage);
         } else {
