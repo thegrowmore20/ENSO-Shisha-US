@@ -24,6 +24,7 @@
 <div class="cp-addon{% if in_cart %} is-added{% endif %}{% if hidden and in_cart == false %} cp-addon--hidden{% endif %}"
      data-pid="{{ product.id }}"
      data-vid="{{ av.id }}"
+     data-add-label="{{ 'cart.addon.add' | t }}"
      {% if in_cart %}data-key="{{ cart_key }}"{% endif %}
      {% if hidden and in_cart == false %}data-hidden-initially{% endif %}>
   <a class="cp-addon__img" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
