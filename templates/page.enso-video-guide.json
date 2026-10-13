@@ -14,6 +14,8 @@
       "settings": {
         "show_title": true,
         "show_content": false,
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
         "padding_top": 48,
         "padding_bottom": 0,
         "padding_top_mobile": 32,
@@ -23,52 +25,80 @@
     "video_unboxing": {
       "type": "user-guide-video-row",
       "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "anchor_id": "",
+        "video_url": "https://youtu.be/kAVGefMbILA?si=RrmoYulXNPeILc-k",
+        "thumbnail": "shopify://shop_images/Unboxing-01.webp",
+        "video_position": "right",
         "eyebrow": "ENSŌ",
         "heading": "Unboxing",
         "text": "<p><strong>Please note:</strong> The ENSŌ 2026 Edition includes an ENSŌ-branded USB-C to USB-C charging cable. A charging adapter is not included. Any standard USB-C adapter (20W or higher recommended) will work.</p>",
-        "video_position": "right",
-        "padding_top": 64,
-        "padding_bottom": 40,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 24
+        "cta_label": "",
+        "cta_url": "",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 0
       }
     },
     "video_quick_setup": {
       "type": "user-guide-video-row",
       "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "anchor_id": "",
+        "video_url": "https://youtu.be/hm01ZbaWdpY?si=5wz4G3LW6KJ2aaDK",
+        "thumbnail": "shopify://shop_images/Quick_setup-01.webp",
+        "video_position": "left",
         "eyebrow": "ENSŌ",
         "heading": "Quick Setup",
         "text": "<p>Everything you need to get started in under five minutes — from unboxing to your first session.</p>",
-        "video_position": "left",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
+        "cta_label": "",
+        "cta_url": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       }
     },
     "video_packing": {
       "type": "user-guide-video-row",
       "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "anchor_id": "",
+        "video_url": "https://youtu.be/NH74dp04elA?si=wbYWT17MCBtqh6Hj",
+        "thumbnail": "shopify://shop_images/Cleaning-01.webp",
+        "video_position": "right",
         "eyebrow": "ENSŌ",
         "heading": "Packing Guide",
         "text": "<p>How to pack your bowl for the best session — coverage, airflow and the right amount of tobacco.</p>",
-        "video_position": "right",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
+        "cta_label": "",
+        "cta_url": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       }
     },
     "video_cleaning": {
       "type": "user-guide-video-row",
       "settings": {
+        "color_background": "{{ settings.color_palette.background }}",
+        "color_text": "{{ settings.color_palette.foreground }}",
+        "anchor_id": "",
+        "video_url": "https://youtu.be/gAHT4Sp2tOM?si=Lxvlb7d8cjErpRdY",
+        "thumbnail": "shopify://shop_images/Screenshot_2025-06-23_160501_1.png",
+        "video_position": "left",
         "eyebrow": "ENSŌ",
         "heading": "How to Clean",
         "text": "<p>A quick routine after every session keeps your ENSŌ performing. This video walks through the full clean step by step.</p>",
-        "video_position": "left",
-        "padding_top": 40,
+        "cta_label": "",
+        "cta_url": "",
+        "padding_top": 0,
         "padding_bottom": 80,
-        "padding_top_mobile": 24,
+        "padding_top_mobile": 0,
         "padding_bottom_mobile": 40
       }
     }
