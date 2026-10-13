@@ -32,7 +32,15 @@ if (!customElements.get('cart-page')) {
         headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
         body:    JSON.stringify(body),
       });
-      if (!r.ok) throw new Error(`Cart request failed: ${r.status}`);
+      if (!r.ok) {
+        let msg = `Cart request failed (${r.status})`;
+        try {
+          const data = await r.json();
+          if (data.description) msg = data.description;
+          else if (data.message) msg = data.message;
+        } catch (_) {}
+        throw new Error(msg);
+      }
       return r.json();
     }
 
@@ -139,12 +147,15 @@ if (!customElements.get('cart-page')) {
           radio.disabled = true;
           this.#showPageSpinner();
           try {
-            await this.#cartFetch('/cart/change.js', { id: oldKey, quantity: 0 });
+            // Add new item first — if it fails (out of stock / unavailable)
+            // the original item stays in the cart, nothing is lost.
             await this.#cartFetch('/cart/add.js', { id: newVid, quantity: 1 });
+            // New item confirmed in cart; now safely remove the old one.
+            if (oldKey) await this.#cartFetch('/cart/change.js', { id: oldKey, quantity: 0 });
             await this.#reRenderSection();
           } catch (err) {
             console.error('Set switch failed', err);
-            this.#toast(err.message || 'Could not change selection');
+            this.#toast(err.message || 'Could not change selection — please try again');
             radio.disabled = false;
             this.#hidePageSpinner();
           }
