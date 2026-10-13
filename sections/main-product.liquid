@@ -325,12 +325,12 @@
                       <span
                         data-add-to-cart-text
                         data-label-available="{{ 'products.product.add_to_cart' | t }}"
-                        data-label-sold-out="{{ 'products.product.join_waitlist' | t }}"
+                        data-label-sold-out="{{ 'products.product.sold_out' | t }}"
                       >
                         {%- if current_variant.available -%}
                           {{ 'products.product.add_to_cart' | t }}
                         {%- else -%}
-                          {{ 'products.product.join_waitlist' | t }}
+                          {{ 'products.product.sold_out' | t }}
                         {%- endif -%}
                       </span>
                       <span class="btn__spinner" data-add-to-cart-spinner hidden></span>
@@ -1048,6 +1048,7 @@
   .product-form__cart-row {
     display: flex;
     align-items: stretch;
+    flex-wrap: wrap;
     gap: var(--space-3);
   }
   .product-form__cart-row .quantity {
@@ -1056,6 +1057,17 @@
   }
   .product-form__cart-row .product-form__submit {
     flex: 1;
+  }
+
+  /* REZ "Remind Me" app button: always on its own row below the ATC button */
+  .product-form__cart-row .rez-button-wrapper,
+  .product-form__buy-buttons .rez-button-wrapper {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  .product-form__cart-row .rez-button-wrapper button,
+  .product-form__buy-buttons .rez-button-wrapper button {
+    width: 100%;
   }
 
   .product-form__cart-row .product-form__submit svg {
