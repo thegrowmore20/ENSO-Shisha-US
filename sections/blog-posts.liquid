@@ -245,8 +245,8 @@
     margin-top: 2px;
   }
 
-  /* ── Mobile ── */
-  @media screen and (max-width: 749px) {
+  /* ── Tablet / Mobile layout ── */
+  @media screen and (max-width: 991px) {
     .enso-journal__inner {
       padding: 0 0 0 16px;
     }
@@ -254,11 +254,6 @@
     .enso-journal__head {
       padding-right: 16px;
       margin-bottom: 20px;
-    }
-
-    .enso-journal__heading {
-      font-size: 28px;
-      line-height: 34px;
     }
 
     .enso-journal__grid {
@@ -280,15 +275,23 @@
       aspect-ratio: 4 / 5;
     }
 
-    .enso-jcard__title {
-      font-size: 22px;
-      line-height: 26px;
-    }
-
     .enso-jcard__text {
       left: 20px;
       right: 20px;
       bottom: 18px;
+    }
+  }
+
+  /* ── Mobile only ── */
+  @media screen and (max-width: 749px) {
+    .enso-journal__heading {
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .enso-jcard__title {
+      font-size: 22px;
+      line-height: 26px;
     }
   }
 {% endstylesheet %}
