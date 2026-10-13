@@ -424,19 +424,23 @@
   .lv-hint svg { width: 16px; height: 16px; flex: none; }
   @media (prefers-reduced-motion: reduce) { .lv-hint { transition: none; } }
 
-  /* ── Mobile ── */
-  @media screen and (max-width: 749px) {
-    .qs-wrap { padding: 0 16px; }
+  /* ── Tablet / Mobile layout ── */
+  @media screen and (max-width: 991px) {
     .qs__s {
       grid-template-columns: 1fr;
       gap: 16px;
       padding: 20px 16px;
       border-radius: 22px;
     }
+    .qs__pic { aspect-ratio: 4/5; }
+  }
+
+  /* ── Mobile only ── */
+  @media screen and (max-width: 749px) {
+    .qs-wrap { padding: 0 16px; }
     .qs__n { width: 34px; height: 34px; font-size: 15px; line-height: 34px; margin-bottom: 10px; }
     .qs__tx h2 { font-size: 26px; line-height: 32px; }
     .qs__tx p  { font-size: 16px; line-height: 24px; }
-    .qs__pic   { aspect-ratio: 4/5; }
   }
 {% endstylesheet %}
 

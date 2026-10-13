@@ -97,21 +97,7 @@
     color: var(--color-text-muted);
   }
 
-  @media screen and (max-width: 749px) {
-    .wr-in {
-      padding: 0 16px;
-    }
-
-    .wr-heading {
-      font-size: 40px;
-    }
-
-    .wr-lead {
-      font-size: 15px;
-      line-height: 24px;
-      margin-bottom: 28px;
-    }
-
+  @media screen and (max-width: 991px) {
     .wr-tiles {
       grid-template-columns: minmax(0, 1fr);
       gap: 10px;
@@ -129,6 +115,22 @@
       margin: 0;
       flex: none;
       min-width: 84px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .wr-in {
+      padding: 0 16px;
+    }
+
+    .wr-heading {
+      font-size: 40px;
+    }
+
+    .wr-lead {
+      font-size: 15px;
+      line-height: 24px;
+      margin-bottom: 28px;
     }
   }
 {% endstylesheet %}

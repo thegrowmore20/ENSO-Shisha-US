@@ -146,6 +146,12 @@
     color: var(--color-text-muted);
   }
 
+  @media screen and (max-width: 991px) {
+    .wr-two {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   @media screen and (max-width: 749px) {
     .wr-in {
       padding: 0 16px;
@@ -154,10 +160,6 @@
     .wr-h2 {
       font-size: 26px;
       line-height: 32px;
-    }
-
-    .wr-two {
-      grid-template-columns: minmax(0, 1fr);
     }
   }
 {% endstylesheet %}

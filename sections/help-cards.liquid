@@ -382,7 +382,24 @@
     background: #000;
   }
 
-  /* Mobile */
+  /* Tablet / Mobile layout */
+  @media screen and (max-width: 991px) {
+    .help-cards__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .help-modal {
+      padding: 12px;
+      align-items: flex-end;
+    }
+
+    .help-modal__box {
+      max-height: 85vh;
+      border-radius: 20px 20px 12px 12px;
+    }
+  }
+
+  /* Mobile only */
   @media screen and (max-width: 749px) {
     .help-cards__container {
       padding: 0 16px;
@@ -394,22 +411,8 @@
       margin-bottom: 24px;
     }
 
-    .help-cards__grid {
-      grid-template-columns: 1fr;
-    }
-
     .help-card {
       padding: 28px 24px 72px;
-    }
-
-    .help-modal {
-      padding: 12px;
-      align-items: flex-end;
-    }
-
-    .help-modal__box {
-      max-height: 85vh;
-      border-radius: 20px 20px 12px 12px;
     }
 
     .help-modal__head {
