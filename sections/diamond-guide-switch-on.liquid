@@ -85,14 +85,18 @@
 }
 
 .dg-switch__canvas {
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 0;
   transform-origin: 0 0;
   line-height: 0;
 }
 
 .dg-switch__canvas > img {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: block;
-  width: 100%;
 }
 
 .dg-switch__glow {
@@ -229,6 +233,7 @@
               loading="lazy"
               width="1099"
               height="1969"
+              style="width:1099px;height:1969px"
             >
           {%- endif -%}
 
@@ -325,6 +330,7 @@
         bw = Math.max(200, stageEl.getBoundingClientRect().width);
       }
       if (box) { box.style.width = bw + 'px'; box.style.height = bh + 'px'; }
+      canvas.style.width = D.FW + 'px'; canvas.style.height = D.FH + 'px';
       var scaleW = bw / D.FW;
       var scaleH = bh / D.FH;
       camWide = {cx: D.FW / 2, cy: D.FH / 2, zoom: Math.min(scaleW, scaleH)};
