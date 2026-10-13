@@ -126,7 +126,7 @@
           "type": "award",
           "settings": {
             "image": "shopify://shop_images/Icons_all-05-webp.webp",
-            "title": "&nbsp;<a href=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\" title=\"https://cdn.shopify.com/s/files/1/0773/3218/5401/files/User_Guide_ENSO2026-compressed.pdf?v=1773254224\"><strong>ENSŌ User Guide</strong></a>&nbsp;",
+            "title": "&nbsp;<a href=\"/pages/enso-2026-manual\"><strong>ENSŌ User Guide</strong></a>&nbsp;",
             "subtitle": "",
             "text": ""
           }
