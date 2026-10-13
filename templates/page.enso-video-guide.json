@@ -64,6 +64,7 @@
     },
     "video_packing": {
       "type": "user-guide-video-row",
+      "disabled": true,
       "settings": {
         "color_background": "{{ settings.color_palette.background }}",
         "color_text": "{{ settings.color_palette.foreground }}",
