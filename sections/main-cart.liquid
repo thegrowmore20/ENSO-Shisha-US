@@ -70,14 +70,14 @@
 -%}
 
 {% style %}
-  .cart-page {
-    padding-top: {{ section.settings.padding_top | default: 56 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
+  #shopify-section-{{ section.id }} .cart-page {
+    padding-top: {{ section.settings.padding_top_mobile | default: 32 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile | default: 80 }}px;
   }
-  @media screen and (max-width: 990px) {
-    .cart-page {
-      padding-top: {{ section.settings.padding_top_mobile | default: 32 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 80 }}px;
+  @media screen and (min-width: 991px) {
+    #shopify-section-{{ section.id }} .cart-page {
+      padding-top: {{ section.settings.padding_top | default: 56 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
     }
   }
 {% endstyle %}
