@@ -37,9 +37,9 @@
         "cta_label": "",
         "cta_url": "",
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 40,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "video_quick_setup": {
@@ -56,10 +56,10 @@
         "text": "<p>Everything you need to get started in under five minutes — from unboxing to your first session.</p>",
         "cta_label": "",
         "cta_url": "",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "video_packing": {
@@ -77,10 +77,10 @@
         "text": "<p>How to pack your bowl for the best session — coverage, airflow and the right amount of tobacco.</p>",
         "cta_label": "",
         "cta_url": "",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     },
     "video_cleaning": {
@@ -97,9 +97,9 @@
         "text": "<p>A quick routine after every session keeps your ENSŌ performing. This video walks through the full clean step by step.</p>",
         "cta_label": "",
         "cta_url": "",
-        "padding_top": 0,
+        "padding_top": 40,
         "padding_bottom": 80,
-        "padding_top_mobile": 0,
+        "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
       }
     }
