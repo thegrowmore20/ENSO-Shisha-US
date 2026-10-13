@@ -25,33 +25,48 @@
   display: flex;
   align-items: center;
   height: 100%;
+  min-width: 0;
 }
 
 .dg-switch__stack {
   position: relative;
   width: 100%;
-  min-height: 280px;
 }
 
 .dg-switch__step {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  top: 0;
   opacity: 0;
-  transition: opacity .4s;
+  transform: translateY(24px);
+  transition: opacity .45s cubic-bezier(.2,.8,.2,1), transform .45s cubic-bezier(.2,.8,.2,1);
+  pointer-events: none;
   width: 100%;
 }
 
 .dg-switch__step.is-on {
+  position: relative;
   opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.dg-switch__step.was-on {
+  opacity: .32;
+  transform: translateY(-22px);
+  position: absolute;
+  bottom: 100%;
+  top: auto;
+  margin-bottom: 22px;
 }
 
 .dg-switch__step h2 {
-  font-size: var(--font-size-h2);
+  font-size: 44px;
+  line-height: 50px;
   font-weight: var(--font-weight-heavy);
   font-family: var(--font-heading);
-  margin: 0 0 12px;
-  line-height: 1.15;
+  margin: 0 0 14px;
   letter-spacing: -.02em;
 }
 
@@ -155,7 +170,8 @@
   .dg-switch__stage { order: 1; height: 50vmin; }
   .dg-switch__copy { order: 2; height: auto; padding-top: 24px; padding-bottom: 32px; }
   .dg-switch__stack { min-height: 0; position: static; }
-  .dg-switch__step {
+  .dg-switch__step,
+  .dg-switch__step.was-on {
     position: static;
     transform: none;
     opacity: 0;
@@ -163,9 +179,13 @@
     overflow: hidden;
     transition: opacity .3s;
     pointer-events: none;
+    bottom: auto;
+    margin-bottom: 0;
   }
   .dg-switch__step.is-on {
+    position: static;
     opacity: 1;
+    transform: none;
     height: auto;
     pointer-events: auto;
   }
@@ -346,9 +366,11 @@
     var lastStep = -1;
     function setStep(i) {
       if (i === lastStep) return;
+      var prev = lastStep;
       lastStep = i;
       steps.forEach(function(s, k) {
         s.classList.toggle('is-on', k === i);
+        s.classList.toggle('was-on', k === prev && prev >= 0);
       });
     }
 
