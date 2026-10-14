@@ -391,9 +391,9 @@
 .d-buy__pill {
   display: block;
   width: 100%;
-  background: #000;
-  color: #fff;
-  border: none;
+  background: transparent;
+  color: var(--color-text);
+  border: 1.5px solid var(--color-text);
   border-radius: 999px;
   padding: 20px 40px;
   font-family: var(--font-body);
@@ -402,10 +402,10 @@
   letter-spacing: .1em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: opacity .2s;
+  transition: background .2s, color .2s;
   line-height: 1;
 }
-.d-buy__pill:hover { opacity: .85; }
+.d-buy__pill:hover { background: var(--color-text); color: #fff; }
 .d-buy__pill:disabled { opacity: .45; cursor: not-allowed; }
 .d-buy__pill.is-loading { opacity: .7; pointer-events: none; position: relative; color: transparent; }
 .d-buy__pill.is-loading::after {
@@ -415,8 +415,8 @@
   margin: auto;
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(255,255,255,.4);
-  border-top-color: #fff;
+  border: 2px solid rgba(0,0,0,.2);
+  border-top-color: var(--color-text);
   border-radius: 50%;
   animation: d-btn-spin .7s linear infinite;
 }
@@ -677,7 +677,7 @@
       {%- comment -%} ── BUY CARD ── {%- endcomment -%}
       <aside class="d-buy__card" id="DBuyCard-{{ section.id }}">
 
-        <div class="d-buy__eyebrow"><i aria-hidden="true"></i>Pre-order open</div>
+        <div class="d-buy__eyebrow"><i aria-hidden="true"></i>Pre-order</div>
 
         {%- liquid
           assign _d_has_chips = false
