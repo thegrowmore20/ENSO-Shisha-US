@@ -449,6 +449,16 @@
 }
 .d-buy__pill:hover { opacity: .88; }
 .d-buy__pill:disabled { opacity: .45; cursor: not-allowed; }
+.d-buy__pill.is-added {
+  background: transparent;
+  color: var(--color-accent-button-background);
+  border: 1.5px solid var(--color-accent-button-background);
+}
+.d-buy__pill.is-added:hover {
+  background: var(--color-accent-button-background);
+  color: var(--color-accent-button-label);
+  opacity: 1;
+}
 .d-buy__pill.is-loading { opacity: .7; pointer-events: none; position: relative; color: transparent; }
 .d-buy__pill.is-loading::after {
   content: '';
@@ -742,6 +752,7 @@
             type="submit"
             class="d-buy__pill"
             id="DiamondBtn-{{ section.id }}"
+            data-label="{{ section.settings.cta_label | default: 'Pre-order' | escape }}"
             {%- unless current_variant.available -%}disabled{%- endunless -%}
           >
             {%- if current_variant.available -%}
@@ -808,12 +819,53 @@
   if (customElements.get('diamond-buy')) return;
 
   class DiamondBuy extends HTMLElement {
+    #lineKey = null;
+
     connectedCallback() {
       const sectionId  = this.dataset.sectionId;
       const form       = document.getElementById('DiamondForm-' + sectionId);
       const btn        = document.getElementById('DiamondBtn-' + sectionId);
       const stickyForm = document.getElementById('StickyProductForm-' + sectionId);
       const stickyBtn  = stickyForm && stickyForm.querySelector('[data-add-to-cart]');
+      const ctaLabel   = btn ? btn.dataset.label : '';
+
+      /* ── Helpers ── */
+      const updateCount = (cart) => {
+        if (typeof updateCartItemCounts === 'function') {
+          updateCartItemCounts(cart.item_count);
+        } else {
+          document.querySelectorAll('.cart-count').forEach((el) => {
+            el.textContent = cart.item_count;
+            el.hidden = cart.item_count === 0;
+          });
+        }
+      };
+
+      const setAdded = (key) => {
+        this.#lineKey = key;
+        [btn, stickyBtn].forEach((b) => {
+          if (!b) return;
+          b.classList.add('is-added');
+          b.textContent = 'Added to cart';
+        });
+      };
+
+      const setDefault = () => {
+        this.#lineKey = null;
+        [btn, stickyBtn].forEach((b) => {
+          if (!b) return;
+          b.classList.remove('is-added');
+          b.textContent = ctaLabel;
+        });
+      };
+
+      const setBusy = (busy) => {
+        [btn, stickyBtn].forEach((b) => {
+          if (!b) return;
+          b.classList.toggle('is-loading', busy);
+          if (b === stickyBtn) b.disabled = busy;
+        });
+      };
 
       /* ── Sticky form → route through main AJAX handler ── */
       if (stickyForm && form) {
@@ -823,47 +875,56 @@
         });
       }
 
-      /* ── AJAX ATC ── */
       if (!form || !btn) return;
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (btn.disabled || btn.classList.contains('is-loading')) return;
+        if (btn.classList.contains('is-loading')) return;
 
-        btn.classList.add('is-loading');
-        if (stickyBtn) { stickyBtn.disabled = true; stickyBtn.classList.add('is-loading'); }
+        /* ── Already in cart → remove ── */
+        if (btn.classList.contains('is-added') && this.#lineKey) {
+          setBusy(true);
+          try {
+            await fetch('/cart/change.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: this.#lineKey, quantity: 0 })
+            });
+            setDefault();
+            const cart = await (await fetch('/cart.js')).json();
+            updateCount(cart);
+            document.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart } }));
+            if (typeof updateCartDrawer === 'function') await updateCartDrawer();
+          } catch (err) {
+            console.error('[diamond-buy] remove error:', err);
+          } finally {
+            setBusy(false);
+          }
+          return;
+        }
 
+        /* ── Add to cart ── */
+        setBusy(true);
         try {
           const res = await fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/javascript' },
             body: new FormData(form)
           });
-
           if (!res.ok) throw new Error('cart/add failed');
           const item = await res.json();
 
-          // Show toast notification (exposed by product-popup.liquid)
+          setAdded(item.key);
+
           if (typeof window.__showProductToast === 'function') {
             window.__showProductToast(item.product_title || item.title || '');
           }
 
-          // Update header cart count bubble
-          const cartRes = await fetch('/cart.js');
-          const cart = await cartRes.json();
-          if (typeof updateCartItemCounts === 'function') {
-            updateCartItemCounts(cart.item_count);
-          } else {
-            document.querySelectorAll('.cart-count').forEach(function (el) {
-              el.textContent = cart.item_count;
-              el.hidden = cart.item_count === 0;
-            });
-          }
-
+          const cart = await (await fetch('/cart.js')).json();
+          updateCount(cart);
           document.dispatchEvent(new CustomEvent('cart:add', { detail: { item } }));
 
-          // Open cart drawer only when enabled in theme settings
           if (this.dataset.cartType === 'drawer') {
             if (typeof updateCartDrawer === 'function') await updateCartDrawer();
             if (typeof openCartDrawer === 'function') openCartDrawer();
@@ -872,8 +933,7 @@
         } catch (err) {
           console.error('[diamond-buy] ATC error:', err);
         } finally {
-          btn.classList.remove('is-loading');
-          if (stickyBtn) { stickyBtn.disabled = false; stickyBtn.classList.remove('is-loading'); }
+          setBusy(false);
         }
       });
     }
