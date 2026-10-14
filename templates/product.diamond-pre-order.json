@@ -14,27 +14,45 @@
       "blocks": {
         "spec_dimensions": {
           "type": "spec",
-          "settings": { "title": "Product dimensions" }
+          "settings": {
+            "title": "Product dimensions",
+            "content": "<ul><li><strong>Height:</strong> 18 cm with the cap on</li><li><strong>Width:</strong> 10 cm at the band</li><li><strong>Weight:</strong> About 1 kg with the battery</li><li><strong>Fits:</strong> Stem tops that take a standard bowl</li></ul>"
+          }
         },
         "spec_heating": {
           "type": "spec",
-          "settings": { "title": "Heating" }
+          "settings": {
+            "title": "Heating",
+            "content": "<ul><li><strong>Session temperature:</strong> 180–320 °C, one-degree steps</li><li><strong>Pre-heat:</strong> 0–15 minutes, default 7 minutes at 275 °C</li><li><strong>Element:</strong> Below and around the ceramic cup</li><li><strong>Profiles:</strong> Default, Phoenix, Wraith, Oracle</li></ul>"
+          }
         },
         "spec_battery": {
           "type": "spec",
-          "settings": { "title": "Battery and charging" }
+          "settings": {
+            "title": "Battery and charging",
+            "content": "<ul><li><strong>Runtime:</strong> About 90 minutes, pre-heat not included</li><li><strong>Charging:</strong> USB-C, about 1.5 hours with a 30 W supply</li><li><strong>Charge while in use:</strong> Yes, over USB-C</li><li><strong>Firmware:</strong> Updates over USB-C</li></ul>"
+          }
         },
         "spec_controls": {
           "type": "spec",
-          "settings": { "title": "Controls" }
+          "settings": {
+            "title": "Controls",
+            "content": "<ul><li><strong>Dial:</strong> Turn to move, click to choose</li><li><strong>Screen:</strong> Round display, color themes, brightness</li><li><strong>Feedback:</strong> Sound and haptics, adjustable or off</li><li><strong>App:</strong> None needed — no account, no phone</li></ul>"
+          }
         },
         "spec_materials": {
           "type": "spec",
-          "settings": { "title": "Materials" }
+          "settings": {
+            "title": "Materials",
+            "content": "<ul><li><strong>Body:</strong> Soft-touch graphite, copper stripe, vegan leather band</li><li><strong>Cup and chamber:</strong> Glazed ceramic cup, stainless steel mesh and air path</li><li><strong>Cap:</strong> Heat-holding shell, air plate, silicone insert</li></ul>"
+          }
         },
         "spec_compatibility": {
           "type": "spec",
-          "settings": { "title": "Compatibility" }
+          "settings": {
+            "title": "Compatibility",
+            "content": "<p>Most traditional stems, with one of the two silicone adapters in the box. Not sure about yours? Send us a photo of the stem top.</p>"
+          }
         }
       },
       "block_order": [

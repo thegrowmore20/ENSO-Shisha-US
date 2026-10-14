@@ -283,6 +283,25 @@
   text-decoration: none;
 }
 
+/* Richtext list inside spec body — matches dl style */
+.d-spec__body-inner ul,
+.d-spec__body-inner ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.d-spec__body-inner li {
+  font-size: 15px;
+  line-height: 1.47;
+  color: rgb(0 0 0 / .65);
+}
+.d-spec__body-inner li strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
 /* Dimensions: dl + image side by side */
 .d-spec__dim-grid {
   display: grid;
