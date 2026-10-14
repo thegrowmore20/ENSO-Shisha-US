@@ -2550,6 +2550,18 @@
       },
       "presets": { "name": "Diamond Features" }
     },
+    "diamond_heat": {
+      "name": "Diamond Heat",
+      "settings": {
+        "eyebrow": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "body": { "label": "Body text" },
+        "media_header": { "content": "Video" },
+        "video": { "label": "Loop video" },
+        "poster": { "label": "Poster image" }
+      },
+      "presets": { "name": "Diamond Heat" }
+    },
     "diamond_dial": {
       "name": "Diamond Dial",
       "settings": {
