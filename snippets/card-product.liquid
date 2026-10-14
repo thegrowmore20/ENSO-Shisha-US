@@ -343,20 +343,24 @@
   .product-card .rez-button-wrapper {
     margin-top: var(--space-2) !important;
     margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding: 0 !important;
     width: 100% !important;
+    height: 50px !important;
+    overflow: hidden !important;
   }
-  .product-card .rez-button-wrapper > * {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+  /* Hide any extra elements REZ injects (form fields, message divs, etc.) */
+  .product-card .rez-button-wrapper > *:not(button) {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
   }
   .product-card .rez-button-wrapper button {
     width: 100% !important;
     height: 50px !important;
     margin: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding: 0 !important;
     border-radius: var(--radius-pill) !important;
     font-family: var(--font-heading) !important;
     font-size: 13px !important;
@@ -369,6 +373,9 @@
     justify-content: center !important;
   }
   @media screen and (max-width: 749px) {
+    .product-card .rez-button-wrapper {
+      height: 44px !important;
+    }
     .product-card .rez-button-wrapper button {
       height: 44px !important;
       font-size: 12px !important;
