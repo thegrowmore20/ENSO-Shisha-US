@@ -328,6 +328,7 @@ h6, .h6 {
   --btn-text:  #75593b;
 }
 
+/* Main button: burnt champagne gradient — the default for every primary action. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -342,10 +343,56 @@ h6, .h6 {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-align: center;
-  border: 1px solid transparent;
+  color: #fff;
+  background: linear-gradient(180deg, var(--btn-hi), var(--btn-main) 60%);
+  border: 1px solid var(--btn-edge);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 1px 2px rgb(0 0 0 / .10), 0 6px 14px -6px rgb(70 50 30 / .35);
   transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
   white-space: nowrap;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: linear-gradient(180deg, var(--btn-main), var(--btn-hover) 70%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .14), 0 1px 2px rgb(0 0 0 / .12), 0 8px 18px -6px rgb(70 50 30 / .42);
+}
+
+.btn:active {
+  background: var(--btn-press);
+  border-color: var(--btn-text);
+  transform: translateY(1px) scale(.99);
+  box-shadow: inset 0 2px 5px rgb(0 0 0 / .32);
+  transition-duration: .06s;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--btn-text);
+  outline-offset: 3px;
+}
+
+/* "In the cart" toggle state — white pill with champagne outline */
+.btn[aria-pressed="true"] {
+  background: #fff;
+  color: var(--btn-text);
+  border: 1.5px solid var(--btn-main);
+  box-shadow: none;
+  transform: none;
+}
+
+.btn[aria-pressed="true"]:hover {
+  background: #fff;
+  box-shadow: none;
+}
+
+/* Disabled / out of stock */
+.btn:disabled,
+.btn[disabled],
+.btn.is-oos {
+  opacity: 0.55;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
 }
 
 /* Cart drawer keeps its own button sizing */
@@ -355,109 +402,51 @@ h6, .h6 {
   line-height: normal;
 }
 
-.btn:hover {
-  opacity: 1;
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
-.btn:focus-visible {
-  outline: 2px solid var(--btn-text);
-  outline-offset: 3px;
-}
-
-.btn:disabled,
-.btn[disabled] {
-  opacity: 0.55;
-  box-shadow: none;
-  cursor: default;
-  pointer-events: none;
-}
-
-/* Primary: dark button on light backgrounds. */
-.btn--primary {
-  background-color: var(--color-primary-button-background);
-  border-color: var(--color-primary-button-border);
-  color: var(--color-primary-button-label);
-}
-
-.btn--primary:hover {
-  background-color: var(--color-primary-button-hover-background);
-  border-color: var(--color-primary-button-hover-border);
-}
-
-/* Accent: burnt champagne gradient button for dark and photo backgrounds.
-   Sections whose buttons always sit on media opt in with the modifier
-   class or are listed here. */
-.btn--accent,
-.video-hero-slider .btn,
-.split__item .btn,
-.site-footer .btn {
-  background: linear-gradient(180deg, var(--btn-hi), var(--color-accent-button-background) 60%);
-  border: 1px solid var(--btn-edge);
-  color: var(--color-accent-button-label);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 1px 2px rgb(0 0 0 / .10), 0 6px 14px -6px rgb(70 50 30 / .35);
-}
-
-.btn--accent:hover,
-.video-hero-slider .btn:hover,
-.split__item .btn:hover,
-.site-footer .btn:hover {
-  background: linear-gradient(180deg, var(--color-accent-button-background), var(--color-accent-button-hover-background) 70%);
-  border-color: var(--btn-edge);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .14), 0 1px 2px rgb(0 0 0 / .12), 0 8px 18px -6px rgb(70 50 30 / .42);
-}
-
-.btn--accent:active,
-.video-hero-slider .btn:active,
-.split__item .btn:active,
-.site-footer .btn:active {
-  background: var(--btn-press);
-  border-color: var(--btn-text);
-  transform: translateY(1px) scale(.99);
-  box-shadow: inset 0 2px 5px rgb(0 0 0 / .32);
-  transition-duration: .06s;
-}
-
-/* "In the cart" toggle state */
-.btn--accent[aria-pressed="true"],
-.video-hero-slider .btn[aria-pressed="true"],
-.split__item .btn[aria-pressed="true"],
-.site-footer .btn[aria-pressed="true"] {
-  background: #fff;
-  color: var(--btn-text);
-  border: 1.5px solid var(--color-accent-button-background);
-  box-shadow: none;
-  transform: none;
-}
-
-.btn--accent[aria-pressed="true"]:hover,
-.video-hero-slider .btn[aria-pressed="true"]:hover,
-.split__item .btn[aria-pressed="true"]:hover,
-.site-footer .btn[aria-pressed="true"]:hover {
-  background: #fff;
-}
-
+/* Secondary: white pill for second actions next to a main one */
 .btn--secondary {
   background: linear-gradient(180deg, #fff, #f6f4f0);
-  border-color: var(--color-secondary-button-border);
-  color: var(--color-secondary-button-label);
+  color: #1a1813;
+  border: 1px solid #e2ded7;
   box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgb(0 0 0 / .06), 0 6px 14px -8px rgb(0 0 0 / .18);
 }
 
 .btn--secondary:hover {
   background: #efece6;
-  border-color: var(--color-secondary-button-hover-border);
-  color: var(--color-secondary-button-hover-label);
   box-shadow: inset 0 2px 4px rgb(0 0 0 / .10);
 }
 
+/* Primary: explicit dark override — only needed where a dark button is required */
+.btn--primary {
+  background: var(--color-primary-button-background);
+  border-color: var(--color-primary-button-border);
+  color: var(--color-primary-button-label);
+  box-shadow: none;
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-button-hover-background);
+  border-color: var(--color-primary-button-hover-border);
+  box-shadow: none;
+}
+
+.btn--primary:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+/* Accent alias — same as base .btn; kept for backwards compat */
+.btn--accent {
+  background: linear-gradient(180deg, var(--btn-hi), var(--btn-main) 60%);
+  border: 1px solid var(--btn-edge);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 1px 2px rgb(0 0 0 / .10), 0 6px 14px -6px rgb(70 50 30 / .35);
+}
+
 .btn--outline {
-  background-color: transparent;
+  background: transparent;
   color: var(--color-text);
   border-color: var(--color-text);
+  box-shadow: none;
 }
 
 .btn--full {
@@ -480,19 +469,10 @@ h6, .h6 {
   visibility: hidden;
 }
 
-/* "Add to cart" buttons (product cards' quick-add and the product page buy
-   button) are primary buttons. */
+/* Add to cart buttons inherit the champagne gradient from .btn */
 .quick-add-button,
 .product-form__submit {
-  background-color: var(--color-primary-button-background);
-  border-color: var(--color-primary-button-border);
-  color: var(--color-primary-button-label);
-}
-
-.quick-add-button:hover,
-.product-form__submit:hover {
-  background-color: var(--color-primary-button-hover-background);
-  opacity: 1;
+  /* inherits .btn styles — no override needed */
 }
 
 .quick-add-button[data-loading] { position: relative; }
