@@ -56,11 +56,17 @@
         {%- endif -%}
       {%- endfor -%}
 
-      {%- if has_more or section.settings.full_faq_link != blank -%}
+      {%- liquid
+        assign show_full_faq = false
+        if section.settings.full_faq_link != blank and section.settings.full_faq_label != blank and section.blocks.size > 5
+          assign show_full_faq = true
+        endif
+      -%}
+      {%- if has_more or show_full_faq -%}
         <div class="d-faqs__btns">
           {%- if has_more -%}
             <button
-              class="d-faqs__btn d-faqs__toggle"
+              class="btn btn--secondary d-faqs__toggle"
               type="button"
               aria-expanded="false"
               aria-controls="DFaqsMore-{{ section.id }}"
@@ -70,8 +76,8 @@
               {{- section.settings.show_more_label | default: 'Show more' | escape -}}
             </button>
           {%- endif -%}
-          {%- if section.settings.full_faq_link != blank and section.settings.full_faq_label != blank -%}
-            <a class="d-faqs__btn" href="{{ section.settings.full_faq_link }}">
+          {%- if show_full_faq -%}
+            <a class="btn btn--secondary" href="{{ section.settings.full_faq_link }}">
               {{- section.settings.full_faq_label | escape -}}
             </a>
           {%- endif -%}
@@ -152,28 +158,6 @@ details[open] .d-faqs__icon::after { content: "−"; }
   flex-wrap: wrap;
   margin-top: 28px;
 }
-
-.d-faqs__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 44px;
-  padding: 0 28px;
-  border-radius: 999px;
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-bold);
-  font-size: 14px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  background: transparent;
-  color: var(--color-text);
-  border: 1px solid rgb(0 0 0 / .25);
-  transition: border-color .2s;
-}
-
-.d-faqs__btn:hover { border-color: var(--color-text); }
 
 @media screen and (min-width: 992px) {
   .d-faqs__heading {
