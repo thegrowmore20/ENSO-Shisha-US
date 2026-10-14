@@ -106,10 +106,19 @@
   margin: 12px 0 22px;
 }
 
-/* ── CTA pill — uses .btn.btn--secondary from base.css ── */
+/* ── CTA pill — outline ghost on dark photo ── */
 .d-acc-hero__cta {
   margin-top: auto;
   align-self: flex-start;
+  color: #fff;
+  border-color: rgb(255 255 255 / .6);
+  box-shadow: none;
+}
+
+.d-acc-hero__cta:hover {
+  background: rgb(255 255 255 / .12);
+  border-color: #fff;
+  box-shadow: none;
 }
 
 @media screen and (max-width: 749px) {
@@ -216,7 +225,7 @@
         {%- endif -%}
 
         {%- if section.settings.cta_label != blank -%}
-          <span class="btn btn--secondary d-acc-hero__cta" aria-hidden="true">{{ section.settings.cta_label | escape }}</span>
+          <span class="btn btn--outline d-acc-hero__cta" aria-hidden="true">{{ section.settings.cta_label | escape }}</span>
         {%- endif -%}
 
       </div>
