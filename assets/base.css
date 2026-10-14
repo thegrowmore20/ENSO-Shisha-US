@@ -415,24 +415,8 @@ h6, .h6 {
   box-shadow: inset 0 2px 4px rgb(0 0 0 / .10);
 }
 
-/* Primary: explicit dark override — only needed where a dark button is required */
-.btn--primary {
-  background: var(--color-primary-button-background);
-  border-color: var(--color-primary-button-border);
-  color: var(--color-primary-button-label);
-  box-shadow: none;
-}
-
-.btn--primary:hover {
-  background: var(--color-primary-button-hover-background);
-  border-color: var(--color-primary-button-hover-border);
-  box-shadow: none;
-}
-
-.btn--primary:active {
-  transform: scale(0.98);
-  box-shadow: none;
-}
+/* Primary: alias for champagne — same as base .btn */
+/* (dark override removed: all primary actions use the champagne gradient) */
 
 /* Accent alias — same as base .btn; kept for backwards compat */
 .btn--accent {
@@ -1048,12 +1032,6 @@ button.carousel__arrow.carousel__arrow--prev[disabled] {
 .star {
     color: var(--color-accent) !important;
 }
-a.btn.btn--outline {
-    border: none;
-    padding: 0;
-    border-bottom: 1px solid #ccc;
-    border-radius: 0;
-}
 .product-main p a {
     text-decoration: underline;
 }
@@ -1089,30 +1067,6 @@ div[data-icon="icon_1"] img, div[data-icon="icon_2"] img {
 a.site-header__mega-view-all {
     order: 1;
     border: none;
-    text-decoration: underline;
-}
-a.btn.btn--outline {
-    /* text-decoration: underline; */
-    text-underline-offset: .25rem;
-    font-weight: 700;
-    border: none;
-    padding: 0;
-    margin: 0;
-    height: auto;
-}
-
-a.btn.btn--outline::after {
-    content: "";
-    display: block;
-    width: 8px;
-    height: 8px;
-    border: 2px solid #000;
-    border-left: 0;
-    border-bottom: 0;
-    transform: rotate(45deg);
-}
-
-a.btn.btn--outline:hover {
     text-decoration: underline;
 }
 .price__current {
