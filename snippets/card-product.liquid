@@ -168,7 +168,6 @@
             class="quick-add-button btn btn--{{ section.settings.quickadd_design }} btn--full"
             {% unless product.available %}disabled{% endunless %}
           >
-            {% render 'icon-add-to-cart' %}
             <span data-quick-add-label data-label-available="Add To Cart" data-label-sold-out="{{ 'products.product.sold_out' | t }}">
               {% if product.available %}
                 Add To Cart
