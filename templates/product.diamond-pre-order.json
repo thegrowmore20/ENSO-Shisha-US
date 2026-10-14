@@ -196,7 +196,7 @@
         "feat_battery": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/s-feat-battery-tearoom.jpg",
+            "image": "shopify://shop_images/s-feat-battery-tearoom.webp",
             "alt": "A hand pulling the battery pack out of the back of Diamond",
             "title": "Removable battery",
             "sub": "About 90 minutes per pack, pre-heat not included",
