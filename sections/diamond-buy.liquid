@@ -459,20 +459,35 @@
   color: var(--color-accent-button-label);
   opacity: 1;
 }
-.d-buy__pill.is-loading { opacity: .7; pointer-events: none; position: relative; color: transparent; }
+.d-buy__pill.is-loading {
+  opacity: .8;
+  pointer-events: none;
+  position: relative;
+  color: transparent !important;
+}
 .d-buy__pill.is-loading::after {
   content: '';
   position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255,255,255,.3);
-  border-top-color: var(--color-accent-button-label);
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 2px solid rgba(255, 255, 255, .35);
+  border-top-color: #fff;
   border-radius: 50%;
-  animation: d-btn-spin .7s linear infinite;
+  animation: d-btn-spin .65s linear infinite;
 }
-@keyframes d-btn-spin { to { transform: rotate(360deg); } }
+/* Gold spinner when in outline/added state */
+.d-buy__pill.is-added.is-loading::after {
+  border-color: rgba(200, 148, 58, .3);
+  border-top-color: var(--color-accent-button-background);
+}
+@keyframes d-btn-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 
 /* Trust */
 .d-trust {
