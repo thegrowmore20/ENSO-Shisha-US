@@ -93,9 +93,33 @@ function updateMegaOpenState() {
 }
 
 megaNavItems.forEach((item) => {
-  item.addEventListener('mouseenter', updateMegaOpenState);
+  item.addEventListener('mouseenter', () => {
+    // Close other open mega items, open this one
+    document.querySelectorAll('[data-nav-item].is-open').forEach((other) => {
+      if (other !== item) {
+        other.classList.remove('is-open');
+        const t = other.querySelector('[data-dropdown-toggle]');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      }
+    });
+    item.classList.add('is-open');
+    const toggle = item.querySelector('[data-dropdown-toggle]');
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    updateMegaOpenState();
+  });
+  // Don't close on nav-item mouseleave — let the header mouseleave handle it
+  // so hovering logo/icons keeps the menu open
   item.addEventListener('mouseleave', updateMegaOpenState);
 });
+
+// Close mega menus only when cursor leaves the entire header
+const siteHeaderEl = document.querySelector('.site-header');
+if (siteHeaderEl) {
+  siteHeaderEl.addEventListener('mouseleave', () => {
+    closeAllDropdowns();
+    updateMegaOpenState();
+  });
+}
 
 // focusin/focusout bubble (unlike focus/blur), so one pair of delegated
 // listeners covers tabbing in and out of every mega panel's links.
