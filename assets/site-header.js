@@ -192,7 +192,7 @@ class EnsoSearch {
     this.#abortController = new AbortController();
 
     const base = window.Shopify?.routes?.root || '/';
-    const url = `${base}search/suggest?q=${encodeURIComponent(term)}&resources[type]=product,collection,page,article&resources[limit]=6&section_id=predictive-search`;
+    const url = `${base}search/suggest?q=${encodeURIComponent(term)}&resources[type]=product,collection,page,article&resources[limit]=5&resources[options][unavailable_products]=last&section_id=predictive-search`;
 
     try {
       const response = await fetch(url, { signal: this.#abortController.signal });
