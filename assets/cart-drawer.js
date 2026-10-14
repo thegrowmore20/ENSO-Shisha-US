@@ -260,9 +260,10 @@ addCartDrawerListeners();
  * with no re-binding required anywhere else.
  */
 document.addEventListener("submit", async (e) => {
-  // global.js handles ATC everywhere via stopImmediatePropagation; this
-  // listener is a fallback for any form that slips through (e.g. if global.js
-  // hasn't loaded yet). Skip if already handled.
+  // global.js IIFE owns all ATC form submits (add, remove, toggle).
+  // Yield to it whenever it is present; only act as fallback when it is not.
+  if (document.__globalATC) return;
+
   const form = e.target.closest('form[action="/cart/add"]');
   if (!form) return;
 

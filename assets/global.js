@@ -863,6 +863,10 @@ if (!customElements.get('product-recommendations')) {
 
       document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true, detail: { item } }));
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
+
+      // Refresh and open the cart drawer (cart-drawer.js exports these globally)
+      if (typeof updateCartDrawer === 'function') await updateCartDrawer();
+      if (typeof openCartDrawer  === 'function') openCartDrawer();
     } catch (err) {
       showToast(err.message || 'Could not add to cart');
     } finally {
@@ -893,4 +897,7 @@ if (!customElements.get('product-recommendations')) {
   } else {
     syncCartState();
   }
+
+  // Signal to cart-drawer.js that this IIFE owns all ATC form submits.
+  document.__globalATC = true;
 })();
