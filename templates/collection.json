@@ -46,7 +46,7 @@
         "enable_sorting": true,
         "products_per_page": 15,
         "enable_quickadd": true,
-        "quickadd_design": "secondary",
+        "quickadd_design": "accent",
         "pagination_type": "load_more",
         "mobile_columns": "2",
         "nav_menu": "",

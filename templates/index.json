@@ -390,7 +390,7 @@
         "card_gap": 24,
         "products_limit": 8,
         "enable_quickadd": true,
-        "quickadd_design": "secondary",
+        "quickadd_design": "accent",
         "padding_top": 40,
         "padding_bottom": 40,
         "padding_top_mobile": 24,
