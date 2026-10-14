@@ -59,7 +59,7 @@
   {%- if cta_label != blank -%}
     <div class="container">
       <div class="acc-section__viewall">
-        <a class="acc-section__viewall-btn" href="{{ cta_link }}">{{ cta_label }}</a>
+        <a class="btn btn--secondary acc-section__viewall-btn" href="{{ cta_link }}">{{ cta_label }}</a>
       </div>
     </div>
   {%- endif -%}
@@ -291,22 +291,7 @@
     margin-top: 28px;
   }
 
-  .acc-section__viewall-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 16px 32px;
-    font-size: 13px;
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: #000;
-    border: 1px solid rgb(0 0 0 / .25);
-    border-radius: 999px;
-    transition: border-color 0.2s;
-  }
-
-  .acc-section__viewall-btn:hover { border-color: #000; }
+  /* uses .btn.btn--secondary from base.css — no overrides needed */
 
   /* Mobile */
   @media screen and (max-width: 991px) {
