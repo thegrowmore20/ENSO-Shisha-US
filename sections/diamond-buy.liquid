@@ -386,14 +386,22 @@
   margin-top: 2px;
 }
 
+/* Price note — block between price and button */
+.d-buy__price-note-block {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(0 0 0 / .6);
+  margin: -6px 0 18px;
+}
+
 /* CTA pill */
 .d-buy__form { margin-bottom: 18px; }
 .d-buy__pill {
   display: block;
   width: 100%;
-  background: transparent;
-  color: var(--color-text);
-  border: 1.5px solid var(--color-text);
+  background: var(--color-primary-button-background);
+  color: var(--color-primary-button-label);
+  border: none;
   border-radius: 999px;
   padding: 20px 40px;
   font-family: var(--font-body);
@@ -402,10 +410,10 @@
   letter-spacing: .1em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background .2s, color .2s;
+  transition: opacity .2s;
   line-height: 1;
 }
-.d-buy__pill:hover { background: var(--color-text); color: #fff; }
+.d-buy__pill:hover { opacity: .88; }
 .d-buy__pill:disabled { opacity: .45; cursor: not-allowed; }
 .d-buy__pill.is-loading { opacity: .7; pointer-events: none; position: relative; color: transparent; }
 .d-buy__pill.is-loading::after {
@@ -415,8 +423,8 @@
   margin: auto;
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(0,0,0,.2);
-  border-top-color: var(--color-text);
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: var(--color-primary-button-label);
   border-radius: 50%;
   animation: d-btn-spin .7s linear infinite;
 }
@@ -706,10 +714,11 @@
           {%- if has_compare -%}
             <span class="d-buy__was">{{ current_variant.compare_at_price | money }}</span>
           {%- endif -%}
-          {%- if section.settings.price_note != blank -%}
-            <span class="d-buy__price-note">{{ section.settings.price_note }}</span>
-          {%- endif -%}
         </div>
+
+        {%- if section.settings.price_note != blank -%}
+          <p class="d-buy__price-note-block">{{ section.settings.price_note }}</p>
+        {%- endif -%}
 
         <form
           action="/cart/add"
