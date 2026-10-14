@@ -28,8 +28,15 @@
     "search": {
       "placeholder": "Search the ritual...",
       "no_results_html": "No results found for \"{{ terms }}\". Check the spelling or use a different word.",
+      "no_results": "Nothing found for \"{{ terms }}\"",
       "results_for_html": "Results for \"{{ terms }}\"",
-      "title": "Search"
+      "title": "Search",
+      "types": {
+        "product": "Product",
+        "collection": "Collection",
+        "page": "Page",
+        "article": "Article"
+      }
     },
     "password_page": {
       "opening_soon": "Opening Soon"
