@@ -159,23 +159,6 @@
             "more3_p": "Wet, heavy blends breathe in the steel basket; dry, fine cuts sit under the flat screen. Both are in the box."
           }
         },
-        "feat_clean": {
-          "type": "card",
-          "settings": {
-            "image": "shopify://shop_images/s-feat-clean-cup.webp",
-            "alt": "Warm water poured through the steel basket into the black ceramic cup held in a hand",
-            "title": "Only the cup to clean",
-            "sub": "The heating element stays clean",
-            "text": "The tobacco never touches the heating element, so there is nothing to scrape. After a session you rinse the cup and the mesh under warm water, and that is it.",
-            "small": "Rinse the cup and the mesh, and you are done",
-            "more1_h": "After every session",
-            "more1_p": "Lift the cup out, push the mesh and the tobacco out in one piece, rinse both.",
-            "more2_h": "Now and then",
-            "more2_p": "Brush the shaft and rinse the cap under the tap.",
-            "more3_h": "Never",
-            "more3_p": "The battery and its contacts never get wet."
-          }
-        },
         "feat_ceramic": {
           "type": "card",
           "settings": {
@@ -191,6 +174,23 @@
             "more2_p": "The air path is stainless steel. Nothing in it keeps the smell of the last session.",
             "more3_h": "Built to last",
             "more3_p": "A zinc-alloy body, a two-year warranty on the device and one year on the battery."
+          }
+        },
+        "feat_clean": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/s-feat-clean-cup.webp",
+            "alt": "Warm water poured through the steel basket into the black ceramic cup held in a hand",
+            "title": "Only the cup to clean",
+            "sub": "The heating element stays clean",
+            "text": "The tobacco never touches the heating element, so there is nothing to scrape. After a session you rinse the cup and the mesh under warm water, and that is it.",
+            "small": "Rinse the cup and the mesh, and you are done",
+            "more1_h": "After every session",
+            "more1_p": "Lift the cup out, push the mesh and the tobacco out in one piece, rinse both.",
+            "more2_h": "Now and then",
+            "more2_p": "Brush the shaft and rinse the cap under the tap.",
+            "more3_h": "Never",
+            "more3_p": "The battery and its contacts never get wet."
           }
         },
         "feat_battery": {
