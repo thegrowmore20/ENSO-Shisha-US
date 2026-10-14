@@ -317,25 +317,38 @@ h6, .h6 {
 }
 
 /* ---------- Buttons ---------- */
+
+/* Burnt champagne button tokens — derived from the accent palette */
+:root {
+  --btn-main:  #8f6e4c;
+  --btn-hi:    #9c7a55;
+  --btn-edge:  #b39776;
+  --btn-hover: #7f603f;
+  --btn-press: #6f5236;
+  --btn-text:  #75593b;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  height: 44px;
-  padding: 0 40px;
+  height: 50px;
+  padding: 0 30px;
   border-radius: var(--radius-pill);
   font-family: var(--font-heading);
-  font-weight: 500;
-  font-size: 16px;
-  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-align: center;
   border: 1px solid transparent;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
   white-space: nowrap;
+  cursor: pointer;
 }
 
-/* Cart drawer keeps its own button sizing — excluded from the site-wide height normalization */
+/* Cart drawer keeps its own button sizing */
 .cart-drawer .btn {
   height: auto;
   padding: 12px 40px;
@@ -343,14 +356,27 @@ h6, .h6 {
 }
 
 .btn:hover {
-  opacity: 0.88;
+  opacity: 1;
 }
 
 .btn:active {
   transform: scale(0.98);
 }
 
-/* Primary: the default button on light backgrounds. */
+.btn:focus-visible {
+  outline: 2px solid var(--btn-text);
+  outline-offset: 3px;
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.55;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Primary: dark button on light backgrounds. */
 .btn--primary {
   background-color: var(--color-primary-button-background);
   border-color: var(--color-primary-button-border);
@@ -360,41 +386,72 @@ h6, .h6 {
 .btn--primary:hover {
   background-color: var(--color-primary-button-hover-background);
   border-color: var(--color-primary-button-hover-border);
-  opacity: 1;
 }
 
-/* Accent: the same button on dark and photo backgrounds. Sections whose
-   buttons always sit on media opt in with the modifier class or are listed
-   here. */
+/* Accent: burnt champagne gradient button for dark and photo backgrounds.
+   Sections whose buttons always sit on media opt in with the modifier
+   class or are listed here. */
 .btn--accent,
 .video-hero-slider .btn,
 .split__item .btn,
 .site-footer .btn {
-  background-color: var(--color-accent-button-background);
-  border-color: var(--color-accent-button-background);
+  background: linear-gradient(180deg, var(--btn-hi), var(--color-accent-button-background) 60%);
+  border: 1px solid var(--btn-edge);
   color: var(--color-accent-button-label);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 1px 2px rgb(0 0 0 / .10), 0 6px 14px -6px rgb(70 50 30 / .35);
 }
 
 .btn--accent:hover,
 .video-hero-slider .btn:hover,
 .split__item .btn:hover,
 .site-footer .btn:hover {
-  background-color: var(--color-accent-button-hover-background);
-  border-color: var(--color-accent-button-hover-background);
-  opacity: 1;
+  background: linear-gradient(180deg, var(--color-accent-button-background), var(--color-accent-button-hover-background) 70%);
+  border-color: var(--btn-edge);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .14), 0 1px 2px rgb(0 0 0 / .12), 0 8px 18px -6px rgb(70 50 30 / .42);
+}
+
+.btn--accent:active,
+.video-hero-slider .btn:active,
+.split__item .btn:active,
+.site-footer .btn:active {
+  background: var(--btn-press);
+  border-color: var(--btn-text);
+  transform: translateY(1px) scale(.99);
+  box-shadow: inset 0 2px 5px rgb(0 0 0 / .32);
+  transition-duration: .06s;
+}
+
+/* "In the cart" toggle state */
+.btn--accent[aria-pressed="true"],
+.video-hero-slider .btn[aria-pressed="true"],
+.split__item .btn[aria-pressed="true"],
+.site-footer .btn[aria-pressed="true"] {
+  background: #fff;
+  color: var(--btn-text);
+  border: 1.5px solid var(--color-accent-button-background);
+  box-shadow: none;
+  transform: none;
+}
+
+.btn--accent[aria-pressed="true"]:hover,
+.video-hero-slider .btn[aria-pressed="true"]:hover,
+.split__item .btn[aria-pressed="true"]:hover,
+.site-footer .btn[aria-pressed="true"]:hover {
+  background: #fff;
 }
 
 .btn--secondary {
-  background-color: var(--color-secondary-button-background);
+  background: linear-gradient(180deg, #fff, #f6f4f0);
   border-color: var(--color-secondary-button-border);
   color: var(--color-secondary-button-label);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgb(0 0 0 / .06), 0 6px 14px -8px rgb(0 0 0 / .18);
 }
 
 .btn--secondary:hover {
-  background-color: var(--color-secondary-button-hover-background);
+  background: #efece6;
   border-color: var(--color-secondary-button-hover-border);
   color: var(--color-secondary-button-hover-label);
-  opacity: 1;
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / .10);
 }
 
 .btn--outline {
@@ -499,9 +556,9 @@ h6, .h6 {
 
 @media screen and (max-width: 749px) {
   .btn {
-    height: 40px;
+    height: 44px;
     gap: 5px;
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .quick-add-button svg {
@@ -1009,7 +1066,7 @@ button.carousel__arrow.carousel__arrow--prev[disabled] {
     display: none;
 }
 .star {
-    color: #c8943a !important;
+    color: var(--color-accent) !important;
 }
 a.btn.btn--outline {
     border: none;
@@ -1119,7 +1176,7 @@ img.product-card__image.product-card__secondary-image[alt="ENSŌ Diamond Pre-Ord
     object-fit: contain;
 }
 .custom-wishlist-button svg {
-    stroke: #c8943a;
+    stroke: var(--color-accent);
 }
 
 .product-block.product-rich-text.product-rich-text--text-left.list-items li {
