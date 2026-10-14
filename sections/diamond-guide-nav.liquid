@@ -72,10 +72,12 @@
     {%- if section.blocks.size > 0 -%}
       <div class="dg-nav__row" role="list">
         {%- for block in section.blocks -%}
+          {%- assign chip_href = block.settings.url | default: '#' -%}
           <a
             class="dg-nav__chip{% if block.settings.is_current %} is-current{% endif %}"
-            href="{{ block.settings.url | default: '#' }}"
+            href="{{ chip_href }}"
             role="listitem"
+            {% if chip_href contains '/pages/enso-app' %}target="_blank" rel="noopener noreferrer"{% endif %}
             {% if block.settings.is_current %}aria-current="page"{% endif %}
             {{ block.shopify_attributes }}
           >{{ block.settings.label | escape }}</a>
