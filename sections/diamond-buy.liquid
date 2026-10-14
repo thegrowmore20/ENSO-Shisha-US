@@ -621,8 +621,19 @@
           <details class="d-spec" data-accordion data-accordion-group="specs" {{ block.shopify_attributes }}>
             <summary>{{ block.settings.title | escape }}</summary>
             <div class="d-spec__body">
+              {%- liquid
+                assign dims_img_src = 'https://cdn.shopify.com/s/files/1/0773/3218/5401/files/dim-image.webp'
+                if block.settings.image != blank
+                  assign dims_img_src = block.settings.image | image_url: width: 240
+                endif
+              -%}
               {%- if _bi == 0 and mf_dims != blank -%}
-                <div class="d-spec__body-inner">{{ product.metafields.custom.spec_dimensions | metafield_tag }}</div>
+                <div class="d-spec__body-inner">
+                  <div class="d-spec__dim-grid">
+                    <div>{{ product.metafields.custom.spec_dimensions | metafield_tag }}</div>
+                    <div class="d-spec__dims"><img src="{{ dims_img_src }}" alt="ENSŌ Diamond dimensions" loading="lazy" width="120"></div>
+                  </div>
+                </div>
               {%- elsif _bi == 1 and mf_heat != blank -%}
                 <div class="d-spec__body-inner">{{ product.metafields.custom.spec_heating | metafield_tag }}</div>
               {%- elsif _bi == 2 and mf_batt != blank -%}
@@ -634,7 +645,16 @@
               {%- elsif _bi == 5 and mf_compat != blank -%}
                 <div class="d-spec__body-inner">{{ product.metafields.custom.spec_compatibility | metafield_tag }}</div>
               {%- elsif block.settings.content != blank -%}
-                <div class="d-spec__body-inner">{{ block.settings.content }}</div>
+                {%- if _bi == 0 -%}
+                  <div class="d-spec__body-inner">
+                    <div class="d-spec__dim-grid">
+                      <div>{{ block.settings.content }}</div>
+                      <div class="d-spec__dims"><img src="{{ dims_img_src }}" alt="ENSŌ Diamond dimensions" loading="lazy" width="120"></div>
+                    </div>
+                  </div>
+                {%- else -%}
+                  <div class="d-spec__body-inner">{{ block.settings.content }}</div>
+                {%- endif -%}
               {%- else -%}
                 {%- case _bi -%}
                   {%- when 0 -%}
@@ -1041,6 +1061,12 @@
           "id": "title",
           "label": "Title",
           "default": "Spec title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (first accordion only)",
+          "info": "Optional. For the dimensions accordion — defaults to the built-in silhouette."
         },
         {
           "type": "richtext",
