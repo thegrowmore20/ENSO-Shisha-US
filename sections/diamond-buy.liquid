@@ -86,7 +86,10 @@
   gap: var(--space-3);
   margin-top: var(--space-4);
   overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.product-gallery--thumbnails_bottom .product-gallery__thumbs::-webkit-scrollbar { display: none; }
 
 .product-gallery--thumbnails_left {
   display: flex;
@@ -571,112 +574,87 @@
           assign mf_compat  = product.metafields.custom.spec_compatibility.value
         -%}
 
-        <details class="d-spec" data-accordion>
-          <summary>Product dimensions</summary>
-          <div class="d-spec__body">
-            {%- if mf_dims != blank -%}
-              <div class="d-spec__body-inner">{{ product.metafields.custom.spec_dimensions | metafield_tag }}</div>
-            {%- else -%}
-            <div class="d-spec__body-inner">
-              <div class="d-spec__dim-grid">
-                <dl class="d-spec__dl">
-                  <dt>Height</dt><dd>18 cm with the cap on</dd>
-                  <dt>Width</dt><dd>10 cm at the band</dd>
-                  <dt>Weight</dt><dd>About 1 kg with the battery</dd>
-                  <dt>Fits</dt><dd>Stem tops that take a standard bowl</dd>
-                </dl>
-                <div class="d-spec__dims">
-                  <img src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/dim-silhouette.webp?v=1791784230" alt="ENSŌ Diamond silhouette dimensions" loading="lazy" width="120">
-                </div>
-              </div>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'spec' -%}
+          {%- assign _bi = forloop.index0 -%}
+          <details class="d-spec" data-accordion data-accordion-group="specs" {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.title | escape }}</summary>
+            <div class="d-spec__body">
+              {%- if _bi == 0 and mf_dims != blank -%}
+                <div class="d-spec__body-inner">{{ product.metafields.custom.spec_dimensions | metafield_tag }}</div>
+              {%- elsif _bi == 1 and mf_heat != blank -%}
+                <div class="d-spec__body-inner">{{ product.metafields.custom.spec_heating | metafield_tag }}</div>
+              {%- elsif _bi == 2 and mf_batt != blank -%}
+                <div class="d-spec__body-inner">{{ product.metafields.custom.spec_battery | metafield_tag }}</div>
+              {%- elsif _bi == 3 and mf_ctrl != blank -%}
+                <div class="d-spec__body-inner">{{ product.metafields.custom.spec_controls | metafield_tag }}</div>
+              {%- elsif _bi == 4 and mf_mat != blank -%}
+                <div class="d-spec__body-inner">{{ product.metafields.custom.spec_materials | metafield_tag }}</div>
+              {%- elsif _bi == 5 and mf_compat != blank -%}
+                <div class="d-spec__body-inner">{{ product.metafields.custom.spec_compatibility | metafield_tag }}</div>
+              {%- elsif block.settings.content != blank -%}
+                <div class="d-spec__body-inner">{{ block.settings.content }}</div>
+              {%- else -%}
+                {%- case _bi -%}
+                  {%- when 0 -%}
+                  <div class="d-spec__body-inner">
+                    <div class="d-spec__dim-grid">
+                      <dl class="d-spec__dl">
+                        <dt>Height</dt><dd>18 cm with the cap on</dd>
+                        <dt>Width</dt><dd>10 cm at the band</dd>
+                        <dt>Weight</dt><dd>About 1 kg with the battery</dd>
+                        <dt>Fits</dt><dd>Stem tops that take a standard bowl</dd>
+                      </dl>
+                      <div class="d-spec__dims">
+                        <img src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/dim-silhouette.webp?v=1791784230" alt="ENSŌ Diamond silhouette dimensions" loading="lazy" width="120">
+                      </div>
+                    </div>
+                  </div>
+                  {%- when 1 -%}
+                  <div class="d-spec__body-inner">
+                    <dl class="d-spec__dl">
+                      <dt>Session temperature</dt><dd>180–320 °C, one-degree steps</dd>
+                      <dt>Pre-heat</dt><dd>0–15 minutes, default 7 minutes at 275 °C</dd>
+                      <dt>Element</dt><dd>Below and around the ceramic cup</dd>
+                      <dt>Profiles</dt><dd>Default, Phoenix, Wraith, Oracle</dd>
+                    </dl>
+                  </div>
+                  {%- when 2 -%}
+                  <div class="d-spec__body-inner">
+                    <dl class="d-spec__dl">
+                      <dt>Runtime</dt><dd>About 90 minutes, pre-heat not included</dd>
+                      <dt>Charging</dt><dd>USB-C, about 1.5 hours with a 30 W supply</dd>
+                      <dt>Charge while in use</dt><dd>Yes, over USB-C</dd>
+                      <dt>Firmware</dt><dd>Updates over USB-C</dd>
+                    </dl>
+                  </div>
+                  {%- when 3 -%}
+                  <div class="d-spec__body-inner">
+                    <dl class="d-spec__dl">
+                      <dt>Dial</dt><dd>Turn to move, click to choose</dd>
+                      <dt>Screen</dt><dd>Round display, color themes, brightness</dd>
+                      <dt>Feedback</dt><dd>Sound and haptics, adjustable or off</dd>
+                      <dt>App</dt><dd>None needed — no account, no phone</dd>
+                    </dl>
+                  </div>
+                  {%- when 4 -%}
+                  <div class="d-spec__body-inner">
+                    <dl class="d-spec__dl">
+                      <dt>Body</dt><dd>Soft-touch graphite, copper stripe, vegan leather band</dd>
+                      <dt>Cup and chamber</dt><dd>Glazed ceramic cup, stainless steel mesh and air path</dd>
+                      <dt>Cap</dt><dd>Heat-holding shell, air plate, silicone insert</dd>
+                    </dl>
+                  </div>
+                  {%- when 5 -%}
+                  <div class="d-spec__body-inner">
+                    <p>Most traditional stems, with one of the two silicone adapters in the box. Not sure about yours? Send us a photo of the stem top.</p>
+                  </div>
+                {%- endcase -%}
+              {%- endif -%}
             </div>
-            {%- endif -%}
-          </div>
-        </details>
-
-        <details class="d-spec" data-accordion>
-          <summary>Heating</summary>
-          <div class="d-spec__body">
-            {%- if mf_heat != blank -%}
-              <div class="d-spec__body-inner">{{ product.metafields.custom.spec_heating | metafield_tag }}</div>
-            {%- else -%}
-            <div class="d-spec__body-inner">
-              <dl class="d-spec__dl">
-                <dt>Session temperature</dt><dd>180–320 °C, one-degree steps</dd>
-                <dt>Pre-heat</dt><dd>0–15 minutes, default 7 minutes at 275 °C</dd>
-                <dt>Element</dt><dd>Below and around the ceramic cup</dd>
-                <dt>Profiles</dt><dd>Default, Phoenix, Wraith, Oracle</dd>
-              </dl>
-            </div>
-            {%- endif -%}
-          </div>
-        </details>
-
-        <details class="d-spec" data-accordion>
-          <summary>Battery and charging</summary>
-          <div class="d-spec__body">
-            {%- if mf_batt != blank -%}
-              <div class="d-spec__body-inner">{{ product.metafields.custom.spec_battery | metafield_tag }}</div>
-            {%- else -%}
-            <div class="d-spec__body-inner">
-              <dl class="d-spec__dl">
-                <dt>Runtime</dt><dd>About 90 minutes, pre-heat not included</dd>
-                <dt>Charging</dt><dd>USB-C, about 1.5 hours with a 30 W supply</dd>
-                <dt>Charge while in use</dt><dd>Yes, over USB-C</dd>
-                <dt>Firmware</dt><dd>Updates over USB-C</dd>
-              </dl>
-            </div>
-            {%- endif -%}
-          </div>
-        </details>
-
-        <details class="d-spec" data-accordion>
-          <summary>Controls</summary>
-          <div class="d-spec__body">
-            {%- if mf_ctrl != blank -%}
-              <div class="d-spec__body-inner">{{ product.metafields.custom.spec_controls | metafield_tag }}</div>
-            {%- else -%}
-            <div class="d-spec__body-inner">
-              <dl class="d-spec__dl">
-                <dt>Dial</dt><dd>Turn to move, click to choose</dd>
-                <dt>Screen</dt><dd>Round display, color themes, brightness</dd>
-                <dt>Feedback</dt><dd>Sound and haptics, adjustable or off</dd>
-                <dt>App</dt><dd>None needed — no account, no phone</dd>
-              </dl>
-            </div>
-            {%- endif -%}
-          </div>
-        </details>
-
-        <details class="d-spec" data-accordion>
-          <summary>Materials</summary>
-          <div class="d-spec__body">
-            {%- if mf_mat != blank -%}
-              <div class="d-spec__body-inner">{{ product.metafields.custom.spec_materials | metafield_tag }}</div>
-            {%- else -%}
-            <div class="d-spec__body-inner">
-              <dl class="d-spec__dl">
-                <dt>Body</dt><dd>Soft-touch graphite, copper stripe, vegan leather band</dd>
-                <dt>Cup and chamber</dt><dd>Glazed ceramic cup, stainless steel mesh and air path</dd>
-                <dt>Cap</dt><dd>Heat-holding shell, air plate, silicone insert</dd>
-              </dl>
-            </div>
-            {%- endif -%}
-          </div>
-        </details>
-
-        <details class="d-spec" data-accordion>
-          <summary>Compatibility</summary>
-          <div class="d-spec__body">
-            {%- if mf_compat != blank -%}
-              <div class="d-spec__body-inner">{{ product.metafields.custom.spec_compatibility | metafield_tag }}</div>
-            {%- else -%}
-            <div class="d-spec__body-inner">
-              <p>Most traditional stems, with one of the two silicone adapters in the box. Not sure about yours? Send us a photo of the stem top.</p>
-            </div>
-            {%- endif -%}
-          </div>
-        </details>
+          </details>
+          {%- endif -%}
+        {%- endfor -%}
 
       </div>{%- comment -%} /d-buy__specs {%- endcomment -%}
 
@@ -792,6 +770,7 @@
 </div>
 
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'accordion.js' | asset_url }}" defer="defer"></script>
 
 {% javascript %}
 (function () {
@@ -961,8 +940,39 @@
       "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24
     }
   ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Spec title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "info": "Leave blank to show the built-in default content for this accordion."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
   "presets": [
-    { "name": "t:sections.diamond_buy.presets.name" }
+    {
+      "name": "t:sections.diamond_buy.presets.name",
+      "blocks": [
+        { "type": "spec", "settings": { "title": "Product dimensions" } },
+        { "type": "spec", "settings": { "title": "Heating" } },
+        { "type": "spec", "settings": { "title": "Battery and charging" } },
+        { "type": "spec", "settings": { "title": "Controls" } },
+        { "type": "spec", "settings": { "title": "Materials" } },
+        { "type": "spec", "settings": { "title": "Compatibility" } }
+      ]
+    }
   ]
 }
 {% endschema %}

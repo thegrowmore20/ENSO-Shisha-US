@@ -11,6 +11,40 @@
   "sections": {
     "diamond_buy_main": {
       "type": "diamond-buy",
+      "blocks": {
+        "spec_dimensions": {
+          "type": "spec",
+          "settings": { "title": "Product dimensions" }
+        },
+        "spec_heating": {
+          "type": "spec",
+          "settings": { "title": "Heating" }
+        },
+        "spec_battery": {
+          "type": "spec",
+          "settings": { "title": "Battery and charging" }
+        },
+        "spec_controls": {
+          "type": "spec",
+          "settings": { "title": "Controls" }
+        },
+        "spec_materials": {
+          "type": "spec",
+          "settings": { "title": "Materials" }
+        },
+        "spec_compatibility": {
+          "type": "spec",
+          "settings": { "title": "Compatibility" }
+        }
+      },
+      "block_order": [
+        "spec_dimensions",
+        "spec_heating",
+        "spec_battery",
+        "spec_controls",
+        "spec_materials",
+        "spec_compatibility"
+      ],
       "settings": {
         "gallery_layout": "thumbnails_bottom",
         "subline": "Electric heat for the hookah you already own",
