@@ -473,6 +473,12 @@ h6, .h6 {
   border-radius: 50%;
   animation: product-spin 0.6s linear infinite;
 }
+/* Golden spinner when button background is white (Added To Cart state) */
+.btn[aria-pressed="true"].is-loading .btn__spinner,
+.btn[aria-pressed="true"][data-loading] .btn__spinner {
+  border-color: rgba(143, 110, 76, 0.3);
+  border-top-color: var(--btn-main);
+}
 @keyframes product-spin { to { transform: rotate(360deg); } }
 
 /* Global ATC toast — centered on screen, used by all popups and page ATC actions */
@@ -517,6 +523,11 @@ h6, .h6 {
   border-top-color: #fff;
   border-radius: 50%;
   animation: product-spin 0.6s linear infinite;
+}
+/* Golden spinner when button background is white (Added To Cart state) */
+.btn[aria-pressed="true"].is-loading::after {
+  border-color: rgba(143, 110, 76, 0.3);
+  border-top-color: var(--btn-main);
 }
 
 @media screen and (max-width: 749px) {
