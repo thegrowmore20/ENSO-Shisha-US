@@ -169,11 +169,11 @@
             {% unless product.available %}disabled{% endunless %}
           >
             {% render 'icon-add-to-cart' %}
-            <span data-quick-add-label data-label-available="Add To Cart" data-label-sold-out="{{ 'products.product.join_waitlist' | t }}">
+            <span data-quick-add-label data-label-available="Add To Cart" data-label-sold-out="{{ 'products.product.sold_out' | t }}">
               {% if product.available %}
                 Add To Cart
               {% else %}
-                {{ 'products.product.join_waitlist' | t }}
+                {{ 'products.product.sold_out' | t }}
               {% endif %}
             </span>
             <span class="btn__spinner" data-add-to-cart-spinner hidden></span>

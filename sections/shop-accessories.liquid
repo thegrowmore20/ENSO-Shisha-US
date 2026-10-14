@@ -94,8 +94,8 @@
 
       <div class="carousel__actions carousel__actions-desktop">
         {%- if section.settings.cta_label != blank -%}
-          <a href="{{ section.settings.cta_link | default: section_collection.url | default: '#' }}" class="btn btn--outline">
-            {{ section.settings.cta_label }}
+          <a href="{{ section.settings.cta_link | default: section_collection.url | default: '#' }}" class="shop-acc__view-all">
+            {{ section.settings.cta_label }} ›
           </a>
         {%- endif -%}
       </div>
@@ -155,8 +155,8 @@
       {%- endif -%}
       <div class="carousel__actions carousel__actions-mobile">
         {%- if section.settings.cta_label != blank -%}
-          <a href="{{ section.settings.cta_link | default: section_collection.url | default: '#' }}" class="btn btn--outline">
-            {{ section.settings.cta_label }}
+          <a href="{{ section.settings.cta_link | default: section_collection.url | default: '#' }}" class="shop-acc__view-all">
+            {{ section.settings.cta_label }} ›
           </a>
         {%- endif -%}
       </div>
@@ -165,6 +165,23 @@
     {%- endif -%}
   </div>
 </carousel-slider>
+
+{% stylesheet %}
+  .shop-acc__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-text);
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+  }
+  .shop-acc__view-all:hover { opacity: 0.7; }
+{% endstylesheet %}
 
 {% comment %} {% stylesheet %}
   .shop-accessories { display: block; }
@@ -346,10 +363,11 @@
       "id": "quickadd_design",
       "label": "Quickadd Design",
       "options": [
+        { "value": "accent", "label": "Champagne (default)" },
         { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" }
+        { "value": "secondary", "label": "Secondary (white)" }
       ],
-      "default": "secondary"
+      "default": "accent"
     },
     {
       "type": "header",
