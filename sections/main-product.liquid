@@ -323,6 +323,13 @@
                     </div>
                   {%- endif -%}
 
+                  {%- liquid
+                    assign show_remind_me = false
+                    if block.settings.remind_me_url != blank and current_variant.available == false
+                      assign show_remind_me = true
+                    endif
+                  -%}
+                  {%- unless show_remind_me -%}
                   <div class="product-form__cart-row{% unless block.settings.show_quantity %} product-form__cart-row--no-qty{% endunless %}">
                     {%- if block.settings.show_quantity -%}
                       {%- render 'quantity-selector', section_id: section.id -%}
@@ -349,6 +356,14 @@
                       <span class="btn__spinner" data-add-to-cart-spinner hidden></span>
                     </button>
                   </div>
+                  {%- endunless -%}
+                  {%- if show_remind_me -%}
+                  <div class="product-form__cart-row product-form__cart-row--no-qty">
+                    <a href="{{ block.settings.remind_me_url }}" class="btn btn--primary btn--full product-form__remind-me">
+                      {{ block.settings.remind_me_label | default: 'Remind Me' }}
+                    </a>
+                  </div>
+                  {%- endif -%}
 
                   <p class="product-form__error caption" data-add-to-cart-error hidden></p>
 
@@ -1709,7 +1724,10 @@
       "limit": 1,
       "settings": [
         { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": true },
-        { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout button", "default": true }
+        { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout button", "default": true },
+        { "type": "header", "content": "Out of stock" },
+        { "type": "url", "id": "remind_me_url", "label": "Remind Me link (shown when sold out)" },
+        { "type": "text", "id": "remind_me_label", "label": "Remind Me button text", "default": "Remind Me" }
       ]
     },
     {

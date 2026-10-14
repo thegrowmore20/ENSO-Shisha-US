@@ -9,16 +9,6 @@
  */
 {
   "sections": {
-    "enso_hero": {
-      "type": "enso-hero-video",
-      "settings": {
-        "video": "shopify://files/videos/a2f99e6f.mp4",
-        "heading": "An all-in-one portable hookah",
-        "subline": "Your ritual. Without charcoal. Open system, full control.",
-        "cta_label": "Learn more",
-        "cta_link": "#whyenso"
-      }
-    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -656,7 +646,6 @@
     }
   },
   "order": [
-    "enso_hero",
     "main",
     "why_enso",
     "enso_witb",
