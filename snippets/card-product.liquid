@@ -153,7 +153,7 @@
     <div class="caption product-card__price">
       {% render 'price', product: card_product %}
     </div>
-    {% if section.settings.enable_quickadd %}
+    {% if section.settings.enable_quickadd and product.available %}
       <div class="product-card-quickadd">
         {% form 'product', card_product, class: 'quick-add-form' %}
           <input
@@ -162,18 +162,12 @@
             value="{{ product.selected_or_first_available_variant.id }}"
             data-variant-id-input
           >
-
           <button
             type="submit"
             class="quick-add-button btn btn--{{ section.settings.quickadd_design }} btn--full"
-            {% unless product.available %}disabled{% endunless %}
           >
             <span data-quick-add-label data-label-available="Add To Cart" data-label-sold-out="{{ 'products.product.sold_out' | t }}">
-              {% if product.available %}
-                Add To Cart
-              {% else %}
-                {{ 'products.product.sold_out' | t }}
-              {% endif %}
+              Add To Cart
             </span>
             <span class="btn__spinner" data-add-to-cart-spinner hidden></span>
           </button>
@@ -339,27 +333,15 @@
     margin-top: var(--space-2);
   }
 
-  /* REZ / back-in-stock app "Notify Me" button — match ATC height and spacing */
-  .product-card .rez-button-wrapper {
+  /* REZ "Notify Me" button (rez-out-of-stock-collection-btn) — match ATC sizing */
+  .product-card .rez-out-of-stock-collection-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 50px !important;
     margin-top: var(--space-2) !important;
     margin-bottom: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    height: 50px !important;
-    overflow: hidden !important;
-  }
-  /* Hide any extra elements REZ injects (form fields, message divs, etc.) */
-  .product-card .rez-button-wrapper > *:not(button) {
-    display: none !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-  }
-  .product-card .rez-button-wrapper button {
-    width: 100% !important;
-    height: 50px !important;
-    margin: 0 !important;
     padding: 0 !important;
     border-radius: var(--radius-pill) !important;
     font-family: var(--font-heading) !important;
@@ -368,15 +350,9 @@
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
     box-sizing: border-box !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
   }
   @media screen and (max-width: 749px) {
-    .product-card .rez-button-wrapper {
-      height: 44px !important;
-    }
-    .product-card .rez-button-wrapper button {
+    .product-card .rez-out-of-stock-collection-btn {
       height: 44px !important;
       font-size: 12px !important;
     }
