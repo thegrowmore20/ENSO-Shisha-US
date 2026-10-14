@@ -349,7 +349,19 @@
 }
 
 /* Chips */
-.d-buy__chips { margin-bottom: 12px; }
+.d-buy__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.d-buy__chips .product-chip {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 13px;
+  color: var(--color-text);
+}
 
 /* Sub */
 .d-buy__sub {
