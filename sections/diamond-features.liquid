@@ -109,6 +109,12 @@
 @media screen and (max-width: 991px) {
   .d-feat__media { aspect-ratio: 4 / 5; }
 }
+/* Phone: square photos, swipe only — no tap-to-open */
+@media screen and (max-width: 767px) {
+  .d-feat__media { aspect-ratio: 1 / 1 !important; }
+  .d-feat__open  { display: none !important; }
+  .d-feat__slide { cursor: default; }
+}
 .d-feat__media img {
   width: 100%;
   height: 100%;
@@ -702,10 +708,11 @@
       d.addEventListener('click', function () { go(+d.dataset.i); });
     });
 
-    /* ── Slide click: inactive → go to, active → open modal ── */
+    /* ── Slide click: inactive → go to, active → open modal (desktop only) ── */
     slides.forEach(function (el, k) {
       el.addEventListener('click', function () {
         if (k !== idx) { go(k); return; }
+        if (matchMedia('(max-width: 767px)').matches) return;
         lastFocus = el;
         openModal(k);
       });

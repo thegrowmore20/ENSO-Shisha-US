@@ -159,40 +159,6 @@
             "more3_p": "Wet, heavy blends breathe in the steel basket; dry, fine cuts sit under the flat screen. Both are in the box."
           }
         },
-        "feat_swap": {
-          "type": "card",
-          "settings": {
-            "image": "shopify://shop_images/s-feat-cup-swap.webp",
-            "alt": "The cup removal tool lifting the packed ceramic cup out of Diamond",
-            "title": "Change the cup mid-session",
-            "sub": "Lift the cup out, drop the next one in",
-            "text": "The cup lifts out of the chamber with the tool, even hot. Pack the second cup while the first one runs, then swap and carry on with a new flavor without waiting for the device to cool.",
-            "small": "Always lift a hot cup with the tool",
-            "more1_h": "Two cups in the box",
-            "more1_p": "One in the chamber, one on the table ready to go. More cups are sold separately.",
-            "more2_h": "The tool",
-            "more2_p": "The steel hook with the black handle catches the rim of the cup, so your fingers never touch the hot ceramic.",
-            "more3_h": "Clean in a minute",
-            "more3_p": "Empty the used cup once it has cooled, rinse it, and it is ready for the next evening."
-          }
-        },
-        "feat_heat": {
-          "type": "card",
-          "settings": {
-            "image": "shopify://shop_images/s-feat-heat-sketch.webp",
-            "alt": "Cross-section sketch showing the heating element around the cup wall and the plate in the cap above",
-            "title": "Heat from every side",
-            "sub": "The element wraps the cup, the plate closes it from the top",
-            "text": "The heating element sits under the cup and around its wall, so the tobacco warms from below and from the sides at once. The plate in the cap closes the chamber from above and keeps the heat on the load, the way a lid keeps it in a classic bowl.",
-            "small": "Cross-section, not to scale",
-            "more1_h": "Even from edge to center",
-            "more1_p": "Heat reaches the whole load at once instead of burning the top layer, so the first draw and the last taste the same.",
-            "more2_h": "The plate on top",
-            "more2_p": "The cap plate sits over the cup and holds the heat in. Its openings also set how freely the air moves.",
-            "more3_h": "Held to the degree",
-            "more3_p": "The controller reads the temperature and holds the number you set, from 180 to 320 °C, for the whole session."
-          }
-        },
         "feat_clean": {
           "type": "card",
           "settings": {
@@ -230,7 +196,7 @@
         "feat_battery": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/s-feat-battery-wide.webp",
+            "image": "shopify://shop_images/s-feat-battery-tearoom.jpg",
             "alt": "A hand pulling the battery pack out of the back of Diamond",
             "title": "Removable battery",
             "sub": "About 90 minutes per pack, pre-heat not included",
@@ -281,10 +247,8 @@
       },
       "block_order": [
         "feat_blend",
-        "feat_swap",
-        "feat_heat",
-        "feat_clean",
         "feat_ceramic",
+        "feat_clean",
         "feat_battery",
         "feat_charge",
         "feat_update"
