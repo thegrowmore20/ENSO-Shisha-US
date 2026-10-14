@@ -315,21 +315,19 @@
   }
 }
 
-/* Eyebrow */
-.d-buy__eyebrow {
+/* Eyebrow — mirrors handoff .buy .eyebrow, inherits uppercase/spacing from base .eyebrow */
+.d-buy .eyebrow {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
   color: rgb(0 0 0 / .75);
   margin-bottom: 10px;
+  font-family: var(--font-body);
 }
-.d-buy__eyebrow i {
-  width: 7px;
-  height: 7px;
+.d-buy .eyebrow i {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #16a34a;
   flex-shrink: 0;
@@ -687,7 +685,7 @@
       {%- comment -%} ── BUY CARD ── {%- endcomment -%}
       <aside class="d-buy__card" id="DBuyCard-{{ section.id }}">
 
-        <div class="d-buy__eyebrow"><i aria-hidden="true"></i>Pre-order</div>
+        <div class="eyebrow"><i aria-hidden="true"></i>Pre-order</div>
 
         {%- liquid
           assign _d_has_chips = false
