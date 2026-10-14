@@ -16,7 +16,7 @@
           "type": "spec",
           "settings": {
             "title": "Product dimensions",
-            "content": "<ul><li><strong>Height:</strong> 18 cm with the cap on</li><li><strong>Width:</strong> 10 cm at the band</li><li><strong>Weight:</strong> About 1 kg with the battery</li><li><strong>Fits:</strong> Stem tops that take a standard bowl</li></ul>"
+            "content": "<ul><li><strong>Height:</strong> 18 cm with the cap on</li><li><strong>Width:</strong> 10 cm at the band</li><li><strong>Weight:</strong> 1,380 g (3.0 lb) with the battery</li><li><strong>Fits:</strong> Stem tops that take a standard bowl, with one of the two adapters</li></ul>"
           }
         },
         "spec_heating": {
@@ -107,6 +107,18 @@
         "eyebrow": "What it is",
         "heading": "An electric heater for the hookah you already own",
         "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, just pure flavor.",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "diamond_heat_main": {
+      "type": "diamond-heat",
+      "settings": {
+        "eyebrow": "How the heat works",
+        "heading": "Heat from every side",
+        "body": "The element sits under the cup and around its wall, so the tobacco warms from below and from the sides at once. The plate in the cap closes the chamber from above and keeps the heat on the load, the way a lid keeps it in a classic bowl.",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,

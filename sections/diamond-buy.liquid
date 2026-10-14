@@ -310,9 +310,12 @@
   align-items: start;
 }
 .d-spec__dims img {
-  width: 120px;
+  width: 220px;
   height: auto;
   display: block;
+}
+@media screen and (max-width: 599px) {
+  .d-spec__dims img { width: 160px; }
 }
 
 /* ── Buy card ── */
@@ -646,7 +649,7 @@
                 <div class="d-spec__body-inner">
                   <div class="d-spec__dim-grid">
                     <div>{{ product.metafields.custom.spec_dimensions | metafield_tag }}</div>
-                    <div class="d-spec__dims"><img src="{{ dims_img_src }}" alt="ENSŌ Diamond dimensions" loading="lazy" width="120"></div>
+                    <div class="d-spec__dims"><img src="{{ dims_img_src }}" alt="ENSŌ Diamond dimensions" loading="lazy" width="220"></div>
                   </div>
                 </div>
               {%- elsif _bi == 1 and mf_heat != blank -%}
@@ -664,7 +667,7 @@
                   <div class="d-spec__body-inner">
                     <div class="d-spec__dim-grid">
                       <div>{{ block.settings.content }}</div>
-                      <div class="d-spec__dims"><img src="{{ dims_img_src }}" alt="ENSŌ Diamond dimensions" loading="lazy" width="120"></div>
+                      <div class="d-spec__dims"><img src="{{ dims_img_src }}" alt="ENSŌ Diamond dimensions" loading="lazy" width="220"></div>
                     </div>
                   </div>
                 {%- else -%}
@@ -678,8 +681,8 @@
                       <dl class="d-spec__dl">
                         <dt>Height</dt><dd>18 cm with the cap on</dd>
                         <dt>Width</dt><dd>10 cm at the band</dd>
-                        <dt>Weight</dt><dd>About 1 kg with the battery</dd>
-                        <dt>Fits</dt><dd>Stem tops that take a standard bowl</dd>
+                        <dt>Weight</dt><dd>1,380 g (3.0 lb) with the battery</dd>
+                        <dt>Fits</dt><dd>Stem tops that take a standard bowl, with one of the two adapters</dd>
                       </dl>
                       <div class="d-spec__dims">
                         <img src="https://cdn.shopify.com/s/files/1/0773/3218/5401/files/dim-silhouette.webp?v=1791784230" alt="ENSŌ Diamond silhouette dimensions" loading="lazy" width="120">
