@@ -121,6 +121,31 @@ if (siteHeaderEl) {
   });
 }
 
+// Hovering the logo or action icons also opens the first mega menu,
+// so the header turns solid and content appears on any header hover.
+const firstMegaItemEl = megaNavItems[0];
+const headerLogoEl = document.querySelector('.site-header__logo');
+const headerActionsEl = document.querySelector('.site-header__actions');
+
+function openFirstMegaMenu() {
+  if (!firstMegaItemEl) return;
+  document.querySelectorAll('[data-nav-item].is-open').forEach((other) => {
+    if (other !== firstMegaItemEl) {
+      other.classList.remove('is-open');
+      const t = other.querySelector('[data-dropdown-toggle]');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    }
+  });
+  firstMegaItemEl.classList.add('is-open');
+  const toggle = firstMegaItemEl.querySelector('[data-dropdown-toggle]');
+  if (toggle) toggle.setAttribute('aria-expanded', 'true');
+  updateMegaOpenState();
+}
+
+[headerLogoEl, headerActionsEl].forEach((el) => {
+  if (el) el.addEventListener('mouseenter', openFirstMegaMenu);
+});
+
 // focusin/focusout bubble (unlike focus/blur), so one pair of delegated
 // listeners covers tabbing in and out of every mega panel's links.
 document.addEventListener('focusin', updateMegaOpenState);
