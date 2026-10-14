@@ -259,7 +259,7 @@
               <ul class="product-trust product-block" {{ block.shopify_attributes }}>
                 <li class="product-trust__item">
                   <svg class="product-trust__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <div><b>{{ block.settings.item_1_heading | default: '30 days to decide' }}</b><span>{{ block.settings.item_1_body | default: 'From delivery' }}</span></div>
+                  <div><b>{{ block.settings.item_1_heading | default: '15 days to return' }}</b><span>{{ block.settings.item_1_body | default: 'Unused, original condition' }}</span></div>
                 </li>
                 <li class="product-trust__item">
                   <svg class="product-trust__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4.5 6v5.2c0 4.6 3.2 8.4 7.5 9.8 4.3-1.4 7.5-5.2 7.5-9.8V6L12 3Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
@@ -368,7 +368,7 @@
                 </li>
                 <li>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>
-                  {{ block.settings.item_2 | default: '14 days to return an unopened item' }}
+                  {{ block.settings.item_2 | default: '15 days from delivery, unused only' }}
                 </li>
                 <li>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg>
@@ -1668,8 +1668,8 @@
       "name": "Trust strip",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "item_1_heading", "label": "Item 1 heading", "default": "30 days to decide" },
-        { "type": "text", "id": "item_1_body",    "label": "Item 1 body",    "default": "From delivery" },
+        { "type": "text", "id": "item_1_heading", "label": "Item 1 heading", "default": "15 days to return" },
+        { "type": "text", "id": "item_1_body",    "label": "Item 1 body",    "default": "Unused, original condition" },
         { "type": "text", "id": "item_2_heading", "label": "Item 2 heading", "default": "Real people answer" },
         { "type": "text", "id": "item_2_body",    "label": "Item 2 body",    "default": "Email support, in English" },
         { "type": "text", "id": "item_3_heading", "label": "Item 3 heading", "default": "EU prices include VAT" },
@@ -1682,7 +1682,7 @@
       "limit": 1,
       "settings": [
         { "type": "text", "id": "item_1", "label": "Line 1", "default": "Ships from our EU warehouse, tracking by email" },
-        { "type": "text", "id": "item_2", "label": "Line 2", "default": "14 days to return an unopened item" },
+        { "type": "text", "id": "item_2", "label": "Line 2", "default": "15 days from delivery, unused only" },
         { "type": "text", "id": "item_3", "label": "Line 3", "default": "Questions? support@ensoshisha.com, a person answers" }
       ]
     },

@@ -85,8 +85,8 @@
         "trust_strip": {
           "type": "trust_strip",
           "settings": {
-            "item_1_heading": "30 days to decide",
-            "item_1_body": "From delivery",
+            "item_1_heading": "15 days to return",
+            "item_1_body": "Unused, original condition",
             "item_2_heading": "Real people answer",
             "item_2_body": "Email support, in English",
             "item_3_heading": "EU prices include VAT",
@@ -612,9 +612,9 @@
           "settings": {
             "icon": "shield",
             "heading": "Warranty and returns",
-            "body": "Two years on Diamond, one year on the battery. 14 days unopened, 30 days opened to return.",
+            "body": "Two years on Diamond, one year on the battery. 15 days from delivery, unused only. Opened items are final sale.",
             "link": "",
-            "popup_body": "<p><strong>What is covered</strong></p><p>The device, the heater and the electronics for two years, the battery for one. Cups, mesh screens and mouthpieces are consumables and are sold separately.</p><p><strong>How a claim works</strong></p><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced unit ships back from the nearest warehouse. <a href=\"mailto:support@ensoshisha.com?subject=Warranty\">Write to support</a></p><p><strong>Returns</strong></p><p>14 days from delivery for an unopened box, 30 days for an opened one. Write to support first; the address and the steps are on the warranty page. <a href=\"/pages/warranty\">Warranty and returns</a></p>",
+            "popup_body": "<p><strong>What is covered</strong></p><p>The device, the heater and the electronics for two years, the battery for one. Cups, mesh screens and mouthpieces are consumables and are sold separately.</p><p><strong>How a claim works</strong></p><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced unit ships back from the nearest warehouse. <a href=\"mailto:support@ensoshisha.com?subject=Warranty\">Write to support</a></p><p><strong>Returns</strong></p><p>15 days from delivery, unused and in original condition. Opened or used items are final sale. A 20% restocking fee applies. Return shipping is not covered. <a href=\"/pages/warranty\">Warranty and returns</a></p>",
             "button_symbol": "plus"
           }
         },
