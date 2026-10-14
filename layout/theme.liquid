@@ -17,6 +17,7 @@
   {%- render 'css-variables' -%}
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
+  <script>window.Shopify = window.Shopify || {}; window.Shopify.routes = window.Shopify.routes || {}; window.Shopify.routes.root = {{ routes.root_url | json }};</script>
   <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'accordion.js' | asset_url }}" defer="defer"></script>
 

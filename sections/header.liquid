@@ -85,9 +85,16 @@
       </nav>
 
       <div class="site-header__actions">
-        <a href="{{ routes.search_url }}" class="site-header__icon-btn" aria-label="{{ 'header.search' | t }}">
+        <button
+          type="button"
+          id="EnsoSearchToggle"
+          class="site-header__icon-btn"
+          aria-label="{{ 'header.search' | t }}"
+          aria-expanded="false"
+          aria-controls="EnsoSearchDrawer"
+        >
           {%- render 'icon-search' -%}
-        </a>
+        </button>
         {%- if section.settings.experience_link != blank -%}
           <a
             href="{{ section.settings.experience_link }}"
@@ -180,6 +187,35 @@
     </div>
   </div>
 </header>
+
+<div
+  id="EnsoSearchDrawer"
+  class="enso-search"
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ 'header.search' | t }}"
+>
+  <div class="enso-search__box">
+    <div class="enso-search__in">
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <input type="hidden" name="type" value="product,article,page,collection">
+        <input
+          type="search"
+          name="q"
+          id="EnsoSearchInput"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          aria-label="{{ 'general.search.placeholder' | t }}"
+          autocomplete="off"
+        >
+      </form>
+      <button type="button" id="EnsoSearchClose" aria-label="{{ 'accessibility.close' | t }}">&#215;</button>
+    </div>
+    <p class="enso-search__hint" id="EnsoSearchHint">{{ 'general.search.placeholder' | t }}. Esc closes.</p>
+    <div id="EnsoSearchResults" class="enso-search__results" aria-live="polite"></div>
+  </div>
+</div>
+
 </mobile-menu>
 
 <script src="{{ 'site-header.js' | asset_url }}" defer="defer"></script>
@@ -589,6 +625,150 @@
 
   body.template--index:has(#MainContent > .shopify-section:first-child .video-hero-slider) .site-header:not(.is-scrolled):not(.site-header--mega-open) .site-header__logo .site-logo--has-inverse .site-logo__inverse {
     display: block;
+  }
+
+  /* ─── Search drawer ─── */
+  .enso-search {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgb(255 255 255 / 0.98);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 96px 24px 40px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .enso-search[hidden] { display: none; }
+
+  .enso-search.is-open { opacity: 1; }
+
+  .enso-search__box {
+    width: min(760px, 100%);
+  }
+
+  .enso-search__in {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 2px solid var(--color-text);
+    padding: 8px 0;
+  }
+
+  .enso-search__in form { flex: 1; }
+
+  .enso-search__in input[type="search"] {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    font: var(--font-weight-regular) 28px/36px var(--font-heading);
+    background: none;
+    color: var(--color-text);
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .enso-search__in input[type="search"]::-webkit-search-cancel-button,
+  .enso-search__in input[type="search"]::-webkit-search-decoration { display: none; }
+
+  .enso-search__in button[id="EnsoSearchClose"] {
+    border: 0;
+    background: none;
+    font: 400 30px/1 var(--font-accent);
+    cursor: pointer;
+    color: var(--color-text);
+    flex-shrink: 0;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .enso-search__hint {
+    margin: 12px 0 0;
+    color: var(--color-text-muted);
+    font-size: 14px;
+  }
+
+  .enso-search__hint--no-results {
+    margin-top: 28px;
+    font-size: 15px;
+  }
+
+  .enso-search__results { margin-top: 28px; }
+
+  .enso-search__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .enso-search__list a {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: background 0.1s ease;
+  }
+
+  .enso-search__list a:hover,
+  .enso-search__list a:focus-visible {
+    background: var(--color-background-raised);
+  }
+
+  .enso-search__list img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.08);
+    border-radius: 10px;
+  }
+
+  .enso-search__img-placeholder {
+    display: block;
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    background: var(--color-background-raised);
+    border: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .enso-search__list .k {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 2px;
+  }
+
+  .enso-search__list b {
+    display: block;
+    font: var(--font-weight-bold) 16px/22px var(--font-heading);
+  }
+
+  .enso-search__list small {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 19px;
+    margin-top: 2px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .enso-search { padding: 72px 20px 32px; }
+    .enso-search__in input[type="search"] { font-size: 22px; line-height: 30px; }
   }
 {% endstylesheet %}
 

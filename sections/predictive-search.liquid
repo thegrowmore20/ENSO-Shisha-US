@@ -1,0 +1,102 @@
+{%- comment -%}
+  Hidden utility section — never placed in the theme editor. Called only via
+  routes.predictive_search_url?q=...&resources[type]=...&section_id=predictive-search
+  by EnsoSearch in site-header.js, which extracts #shopify-section-predictive-search
+  and injects it into #EnsoSearchResults.
+{%- endcomment -%}
+{%- if predictive_search.performed -%}
+  {%- liquid
+    assign total = predictive_search.resources.products.size
+    assign total = total | plus: predictive_search.resources.collections.size
+    assign total = total | plus: predictive_search.resources.pages.size
+    assign total = total | plus: predictive_search.resources.articles.size
+  -%}
+  {%- if total > 0 -%}
+    <ul class="enso-search__list" role="list">
+      {%- for product in predictive_search.resources.products -%}
+        <li>
+          <a href="{{ product.url }}">
+            {%- if product.featured_image -%}
+              {{- product.featured_image | image_url: width: 128 | image_tag:
+                  loading: 'lazy',
+                  width: 64,
+                  height: 64,
+                  alt: product.featured_image.alt | default: product.title -}}
+            {%- else -%}
+              <span class="enso-search__img-placeholder" aria-hidden="true"></span>
+            {%- endif -%}
+            <span>
+              <span class="k">{{ 'general.search.types.product' | t | default: 'Product' }}</span>
+              <b>{{ product.title }}</b>
+              {%- if product.price > 0 -%}
+                <small>{{ product.price | money }}</small>
+              {%- endif -%}
+            </span>
+          </a>
+        </li>
+      {%- endfor -%}
+      {%- for collection in predictive_search.resources.collections -%}
+        <li>
+          <a href="{{ collection.url }}">
+            {%- if collection.featured_image -%}
+              {{- collection.featured_image | image_url: width: 128 | image_tag:
+                  loading: 'lazy',
+                  width: 64,
+                  height: 64,
+                  alt: collection.featured_image.alt | default: collection.title -}}
+            {%- else -%}
+              <span class="enso-search__img-placeholder" aria-hidden="true"></span>
+            {%- endif -%}
+            <span>
+              <span class="k">{{ 'general.search.types.collection' | t | default: 'Collection' }}</span>
+              <b>{{ collection.title }}</b>
+            </span>
+          </a>
+        </li>
+      {%- endfor -%}
+      {%- for page in predictive_search.resources.pages -%}
+        <li>
+          <a href="{{ page.url }}">
+            <span class="enso-search__img-placeholder" aria-hidden="true"></span>
+            <span>
+              <span class="k">{{ 'general.search.types.page' | t | default: 'Page' }}</span>
+              <b>{{ page.title }}</b>
+            </span>
+          </a>
+        </li>
+      {%- endfor -%}
+      {%- for article in predictive_search.resources.articles -%}
+        <li>
+          <a href="{{ article.url }}">
+            {%- if article.image -%}
+              {{- article.image | image_url: width: 128 | image_tag:
+                  loading: 'lazy',
+                  width: 64,
+                  height: 64,
+                  alt: article.image.alt | default: article.title -}}
+            {%- else -%}
+              <span class="enso-search__img-placeholder" aria-hidden="true"></span>
+            {%- endif -%}
+            <span>
+              <span class="k">{{ 'general.search.types.article' | t | default: 'Article' }}</span>
+              <b>{{ article.title }}</b>
+              {%- if article.excerpt_or_content != blank -%}
+                <small>{{ article.excerpt_or_content | strip_html | truncate: 80 }}</small>
+              {%- endif -%}
+            </span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <p class="enso-search__hint enso-search__hint--no-results">
+      {{- 'general.search.no_results' | t: terms: predictive_search.terms | default: 'Nothing found. Try "battery", "cup" or "warranty".' -}}
+    </p>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Predictive search"
+}
+{% endschema %}
