@@ -318,8 +318,9 @@ h6, .h6 {
 
 /* ---------- Buttons ---------- */
 
-/* Burnt champagne button tokens — derived from the accent palette */
+/* Burnt champagne button tokens — match spec names exactly */
 :root {
+  --btn:       #8f6e4c;
   --btn-main:  #8f6e4c;
   --btn-hi:    #9c7a55;
   --btn-edge:  #b39776;
