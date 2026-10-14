@@ -364,7 +364,7 @@
               <ul class="pp__trust product-block" {{ block.shopify_attributes }}>
                 <li>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.5"/><circle cx="17" cy="17.5" r="1.5"/></svg>
-                  {{ block.settings.item_1 | default: 'Ships from our EU warehouse, tracking by email' }}
+                  {{ block.settings.item_1 | default: 'Ships from our US warehouse in Florida, tracking by email' }}
                 </li>
                 <li>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>
@@ -1681,7 +1681,7 @@
       "name": "Trust badges",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "item_1", "label": "Line 1", "default": "Ships from our EU warehouse, tracking by email" },
+        { "type": "text", "id": "item_1", "label": "Line 1", "default": "Ships from our US warehouse in Florida, tracking by email" },
         { "type": "text", "id": "item_2", "label": "Line 2", "default": "15 days from delivery, unused only" },
         { "type": "text", "id": "item_3", "label": "Line 3", "default": "Questions? support@ensoshisha.com, a person answers" }
       ]

@@ -15,7 +15,7 @@
         "video": "shopify://files/videos/teaser.mp4",
         "poster": "shopify://shop_images/teaser-poster.webp",
         "heading": "The electric heater for your hookah",
-        "subline": "A Modern Twist on a Classic Ritual. No coals, just pure flavour.",
+        "subline": "A Modern Twist on a Classic Ritual. No coals, just pure flavor.",
         "cta_label": "Learn more",
         "cta_link": "#tech"
       }
@@ -65,7 +65,7 @@
         "image": "shopify://shop_images/heater-dial.webp",
         "eyebrow": "What it is",
         "heading": "An electric heater for the hookah you already own",
-        "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, just pure flavour.",
+        "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, just pure flavor.",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -114,7 +114,7 @@
         "image": "shopify://shop_images/bowl-darkwood.webp",
         "image_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
         "heading": "Design your perfect bowl",
-        "text": "How to pack for the flavour you want: grams, mesh, temperature and time, one blend at a time.",
+        "text": "How to pack for the flavor you want: grams, mesh, temperature and time, one blend at a time.",
         "cta1_label": "Open the guide",
         "cta1_link": "/pages/diamond-packing-guide",
         "cta2_label": "Shop",
@@ -180,12 +180,12 @@
             "alt": "A hand lifting the thermo cap off Diamond, the cup packed with tobacco",
             "title": "Any blend you like",
             "sub": "Blonde, dark or your own mix, 10–15 g in the cup",
-            "text": "Pack the cup the way you pack a bowl. Light blonde leaf, heavy dark leaf, creamy or minty, one flavour or your own mix: Diamond takes the tobacco you already buy, with no pods and no cartridges.",
+            "text": "Pack the cup the way you pack a bowl. Light blonde leaf, heavy dark leaf, creamy or minty, one flavor or your own mix: Diamond takes the tobacco you already buy, with no pods and no cartridges.",
             "small": "No pods, no cartridges",
             "more1_h": "Blonde and dark",
             "more1_p": "Blonde leaf likes a gentler start; dark leaf takes more heat and a longer pre-heat. Both hold for the whole session because the controller keeps the temperature to the degree.",
             "more2_h": "Your own mix",
-            "more2_p": "Layer two flavours or split the cup half and half. Keep the load at 10–15 g and leave the centre loose so the air moves.",
+            "more2_p": "Layer two flavors or split the cup half and half. Keep the load at 10–15 g and leave the center loose so the air moves.",
             "more3_h": "Basket or screen",
             "more3_p": "Wet, heavy blends breathe in the steel basket; dry, fine cuts sit under the flat screen. Both are in the box."
           }
@@ -197,7 +197,7 @@
             "alt": "The cup removal tool lifting the packed ceramic cup out of Diamond",
             "title": "Change the cup mid-session",
             "sub": "Lift the cup out, drop the next one in",
-            "text": "The cup lifts out of the chamber with the tool, even hot. Pack the second cup while the first one runs, then swap and carry on with a new flavour without waiting for the device to cool.",
+            "text": "The cup lifts out of the chamber with the tool, even hot. Pack the second cup while the first one runs, then swap and carry on with a new flavor without waiting for the device to cool.",
             "small": "Always lift a hot cup with the tool",
             "more1_h": "Two cups in the box",
             "more1_p": "One in the chamber, one on the table ready to go. More cups are sold separately.",
@@ -216,7 +216,7 @@
             "sub": "The element wraps the cup, the plate closes it from the top",
             "text": "The heating element sits under the cup and around its wall, so the tobacco warms from below and from the sides at once. The plate in the cap closes the chamber from above and keeps the heat on the load, the way a lid keeps it in a classic bowl.",
             "small": "Cross-section, not to scale",
-            "more1_h": "Even from edge to centre",
+            "more1_h": "Even from edge to center",
             "more1_p": "Heat reaches the whole load at once instead of burning the top layer, so the first draw and the last taste the same.",
             "more2_h": "The plate on top",
             "more2_p": "The cap plate sits over the cup and holds the heat in. Its openings also set how freely the air moves.",
@@ -251,7 +251,7 @@
             "text": "A ceramic element warms a ceramic cup, and the air runs through stainless steel. No coal, no foil, no flame: what you taste is the tobacco, from the first draw to the last.",
             "small": "Two-year warranty on the device",
             "more1_h": "Ceramic on ceramic",
-            "more1_p": "Ceramic holds heat evenly and carries no taste of its own, so the flavour stays true through a long session.",
+            "more1_p": "Ceramic holds heat evenly and carries no taste of its own, so the flavor stays true through a long session.",
             "more2_h": "Stainless steel inside",
             "more2_p": "The air path is stainless steel. Nothing in it keeps the smell of the last session.",
             "more3_h": "Built to last",
@@ -299,8 +299,8 @@
             "alt": "Diamond on a desk, screen dark, a USB-C cable connected to a laptop",
             "title": "Update over USB-C",
             "sub": "New firmware from your computer",
-            "text": "Connect Diamond to your computer with the USB-C cable and install new firmware from a page on ensoshisha.eu. No app to install, no account.",
-            "small": "New firmware from a page on ensoshisha.eu",
+            "text": "Connect Diamond to your computer with the USB-C cable and install new firmware from a page on ensoshisha.com. No app to install, no account.",
+            "small": "New firmware from a page on ensoshisha.com",
             "more1_h": "Three steps",
             "more1_p": "Take the battery out, plug the cable into the port in the bay, open the update page and press Update.",
             "more2_h": "Your settings stay",
@@ -377,7 +377,7 @@
     "diamond_faqs_main": {
       "type": "diamond-faqs",
       "blocks": {
-        "faq_1":  { "type": "faq_item", "settings": { "question": "What is Diamond?", "answer": "An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, just pure flavour." } },
+        "faq_1":  { "type": "faq_item", "settings": { "question": "What is Diamond?", "answer": "An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, just pure flavor." } },
         "faq_2":  { "type": "faq_item", "settings": { "question": "Will it fit my hookah?", "answer": "It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to support@ensoshisha.com." } },
         "faq_3":  { "type": "faq_item", "settings": { "question": "Does the tobacco taste different?", "answer": "Cleaner. The blend is warmed to a set temperature instead of being scorched from above, so you taste the leaf and the molasses, not the coal." } },
         "faq_4":  { "type": "faq_item", "settings": { "question": "What temperature should I use?", "answer": "Most blends sit well at 250–270 °C. For a dark blend, start at 290 °C for the first minutes, then come down to 270 and 250 °C. Every tobacco is made for coal and behaves a little differently, so note what works and save it as a profile." } },
@@ -385,9 +385,9 @@
         "faq_6":  { "type": "faq_item", "settings": { "question": "How do I clean it?", "answer": "After every session, lift the cup out with the removal tool, empty it and brush the chamber. Once a week, soak the basket and the screens, rinse the cap and wipe the body with a cloth." } },
         "faq_7":  { "type": "faq_item", "settings": { "question": "How much tobacco does it take?", "answer": "10–15 g. Use the basket mesh for a loose, airy pack, or a flat screen for a denser pack. The packing guide has a starting point for each." } },
         "faq_8":  { "type": "faq_item", "settings": { "question": "How does pre-heat work?", "answer": "You set both the time, 0–15 minutes, and the temperature it warms to. Default is 7 minutes at 275 °C. Diamond tells you when it is ready." } },
-        "faq_9":  { "type": "faq_item", "settings": { "question": "What are profiles?", "answer": "Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own colour. Open Menu, Profiles, and turn to choose." } },
+        "faq_9":  { "type": "faq_item", "settings": { "question": "What are profiles?", "answer": "Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own color. Open Menu, Profiles, and turn to choose." } },
         "faq_10": { "type": "faq_item", "settings": { "question": "How do I charge it?", "answer": "Over USB-C, about 1.5 hours with a 30 W supply. The battery also charges on its own, outside Diamond. There is no charger in the box." } },
-        "faq_11": { "type": "faq_item", "settings": { "question": "Do I need an app, Wi-Fi or an account?", "answer": "No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.eu, coming with the first update." } },
+        "faq_11": { "type": "faq_item", "settings": { "question": "Do I need an app, Wi-Fi or an account?", "answer": "No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.com, coming with the first update." } },
         "faq_12": { "type": "faq_item", "settings": { "question": "Can I touch it during a session?", "answer": "Yes, by the band and the lower body. The cup and the cap are hot, the way a bowl and its foil would be. Let it cool 10 minutes before you open it." } },
         "faq_13": { "type": "faq_item", "settings": { "question": "Can I take it on a plane?", "answer": "Yes, in hand luggage, like any device with a lithium battery. Take the pack out and carry it with you; never check it in." } },
         "faq_14": { "type": "faq_item", "settings": { "question": "What wears out, and can I buy spares?", "answer": "The cups, screens, mesh and adapters wear like any bowl and grommet. Every one of them, plus the cap, battery and cable, is sold separately." } },
@@ -605,7 +605,7 @@
             "heading": "Support",
             "body": "A person answers at support@ensoshisha.com. Guides, firmware and the manual live in ENSŌ Experience.",
             "link": "",
-            "popup_body": "<p><strong>Ask us</strong></p><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version from the Battery screen. <a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com</a></p><p><strong>Help yourself first</strong></p><p>Quick Start for the first session, the full manual, cleaning and charging, and the firmware page are in ENSŌ Experience, made for the phone. <a href=\"/pages/enso-experience\">Open ENSŌ Experience</a></p><p><strong>Firmware</strong></p><p>Updates come over USB-C from a page on ensoshisha.eu. What the first owners ask for shapes what the next update brings.</p>",
+            "popup_body": "<p><strong>Ask us</strong></p><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version from the Battery screen. <a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com</a></p><p><strong>Help yourself first</strong></p><p>Quick Start for the first session, the full manual, cleaning and charging, and the firmware page are in ENSŌ Experience, made for the phone. <a href=\"/pages/enso-experience\">Open ENSŌ Experience</a></p><p><strong>Firmware</strong></p><p>Updates come over USB-C from a page on ensoshisha.com. What the first owners ask for shapes what the next update brings.</p>",
             "button_symbol": "plus"
           }
         },
@@ -616,7 +616,7 @@
             "heading": "Wholesale and distribution",
             "body": "Lounges, shops and distributors: one contact for pricing, demo units and territory questions.",
             "link": "",
-            "popup_body": "<p><strong>For lounges and shops</strong></p><p>Trade pricing from small quantities, a demo unit programme and printed material for the counter. Delivery from our EU and US warehouses.</p><p><strong>For distributors</strong></p><p>Territory agreements for countries we do not ship to directly, with marketing assets, training and firmware support from the team.</p><p><strong>Get in touch</strong></p><p>Tell us who you are, where you are and roughly how many units you have in mind. We answer with a price list and the next step. <a href=\"mailto:support@ensoshisha.com?subject=Wholesale%20and%20distribution\">Write to the wholesale team</a></p>",
+            "popup_body": "<p><strong>For lounges and shops</strong></p><p>Trade pricing from small quantities, a demo unit program and printed material for the counter. Delivery from our US warehouse in Florida.</p><p><strong>For distributors</strong></p><p>Territory agreements for countries we do not ship to directly, with marketing assets, training and firmware support from the team.</p><p><strong>Get in touch</strong></p><p>Tell us who you are, where you are and roughly how many units you have in mind. We answer with a price list and the next step. <a href=\"mailto:support@ensoshisha.com?subject=Wholesale%20and%20distribution\">Write to the wholesale team</a></p>",
             "button_symbol": "plus"
           }
         }

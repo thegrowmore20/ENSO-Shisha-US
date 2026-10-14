@@ -54,7 +54,7 @@
             "tab": "diamond",
             "anchor_id": "q-what-is-diamond",
             "question": "What is Diamond?",
-            "answer": "<p>An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, just pure flavour.</p>"
+            "answer": "<p>An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, just pure flavor.</p>"
           }
         },
         "q_diamond_fit": {
@@ -126,7 +126,7 @@
             "tab": "diamond",
             "anchor_id": "q-what-are-profiles",
             "question": "What are profiles?",
-            "answer": "<p>Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own colour. Open Menu, Profiles, and turn to choose.</p>"
+            "answer": "<p>Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own color. Open Menu, Profiles, and turn to choose.</p>"
           }
         },
         "q_diamond_charge": {
@@ -144,7 +144,7 @@
             "tab": "diamond",
             "anchor_id": "q-do-i-need-an-app-wi-fi-or-an-account",
             "question": "Do I need an app, Wi-Fi or an account?",
-            "answer": "<p>No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.eu, coming with the first update.</p>"
+            "answer": "<p>No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.com, coming with the first update.</p>"
           }
         },
         "q_diamond_touch": {
@@ -219,7 +219,7 @@
           "settings": {
             "tab": "enso",
             "question": "What is the Flower Cup?",
-            "answer": "<p>A deeper ceramic insert that holds up to 20 g. Stir halfway to refresh flavour.</p>"
+            "answer": "<p>A deeper ceramic insert that holds up to 20 g. Stir halfway to refresh flavor.</p>"
           }
         },
         "question_AWFNDz": {
@@ -273,7 +273,7 @@
           "type": "question",
           "settings": {
             "tab": "enso",
-            "question": "What do the LED colours indicate?",
+            "question": "What do the LED colors indicate?",
             "answer": "<p>• Orange – Standard mode/heating<br/>• Green – G-Mode active<br/>• Blue – Temperature locked<br/>• Red – Low battery</p>"
           }
         },
@@ -314,7 +314,7 @@
           "settings": {
             "tab": "enso",
             "question": "Can I adjust the draw or airflow in ENSŌ?",
-            "answer": "<p>Yes. First, avoid overpacking — keep the load between 8 and 15 g and leave a clear chimney in the centre of the bowl. If the pull is still too restricted, attach the optional Hose Adapter and any wide-bore (≈11–12 mm) silicone hose; the larger diameter can nearly double airflow for an effortless draw.</p>"
+            "answer": "<p>Yes. First, avoid overpacking — keep the load between 8 and 15 g and leave a clear chimney in the center of the bowl. If the pull is still too restricted, attach the optional Hose Adapter and any wide-bore (≈11–12 mm) silicone hose; the larger diameter can nearly double airflow for an effortless draw.</p>"
           }
         },
         "question_XrGnma": {
@@ -401,7 +401,7 @@
           "settings": {
             "tab": "enso",
             "question": "How do I remove lingering odours?",
-            "answer": "<p>Clean all parts promptly after heavily flavoured sessions and allow them to dry completely in fresh air.</p>"
+            "answer": "<p>Clean all parts promptly after heavily flavored sessions and allow them to dry completely in fresh air.</p>"
           }
         },
         "question_FJcrJF": {
@@ -417,7 +417,7 @@
           "settings": {
             "tab": "enso",
             "question": "How often should I change the water?",
-            "answer": "<p>After every session for optimum flavour. Deep-clean the glass tank after 2–3 sessions.</p>"
+            "answer": "<p>After every session for optimum flavor. Deep-clean the glass tank after 2–3 sessions.</p>"
           }
         },
         "question_YAB3tc": {
@@ -440,7 +440,7 @@
           "type": "category",
           "settings": {
             "tab": "enso",
-            "label": "Bowls, Packing & Flavours FAQs"
+            "label": "Bowls, Packing & Flavors FAQs"
           }
         },
         "question_fEBpPW": {
@@ -463,7 +463,7 @@
           "type": "question",
           "settings": {
             "tab": "enso",
-            "question": "Can I mix two flavours in one bowl?",
+            "question": "Can I mix two flavors in one bowl?",
             "answer": "<p>Absolutely. Layer or split 50/50 — just keep total mass under 15g and leave the airway clear. Put mint or spice notes on top for best effect.</p>"
           }
         },
@@ -527,7 +527,7 @@
           "settings": {
             "tab": "orders",
             "question": "When will my card be charged?",
-            "answer": "<p>Your card (or other payment method) is authorised and captured immediately at checkout.</p>"
+            "answer": "<p>Your card (or other payment method) is authorized and captured immediately at checkout.</p>"
           }
         },
         "question_iFqbxe": {
@@ -662,7 +662,7 @@
           "settings": {
             "tab": "orders",
             "question": "How do I dispose of batteries and cups?",
-            "answer": "<p>Take spent Li-ion packs to any e-waste centre. Rinse aluminium cups and recycle with metal waste.</p>"
+            "answer": "<p>Take spent Li-ion packs to any e-waste center. Rinse aluminium cups and recycle with metal waste.</p>"
           }
         }
       },

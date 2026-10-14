@@ -27,10 +27,10 @@
             "is_current": false
           }
         },
-        "pill_flavour": {
+        "pill_flavor": {
           "type": "pill",
           "settings": {
-            "label": "Flavour guide",
+            "label": "Flavor guide",
             "url": "/blogs/journal",
             "is_current": false
           }
@@ -48,7 +48,7 @@
         "pill_quick",
         "pill_manual",
         "pill_troubleshooting",
-        "pill_flavour",
+        "pill_flavor",
         "pill_accessories"
       ],
       "settings": {

@@ -189,7 +189,7 @@
           "type": "item",
           "settings": {
             "title": "Why the charcoal had to go",
-            "body": "<p>Coal is the one part of the evening nobody loves. Ten minutes over a burner, tongs, ash on the table, the smell of coal in the room, and a burnt edge on the flavour whenever a piece sits too long.</p><p>ENSŌ replaces it with electric heat set to the degree. The blend warms evenly and never meets a flame, so what you taste is the tobacco you chose.</p>",
+            "body": "<p>Coal is the one part of the evening nobody loves. Ten minutes over a burner, tongs, ash on the table, the smell of coal in the room, and a burnt edge on the flavor whenever a piece sits too long.</p><p>ENSŌ replaces it with electric heat set to the degree. The blend warms evenly and never meets a flame, so what you taste is the tobacco you chose.</p>",
             "image_position": "50% 50%",
             "video": "shopify://files/videos/phil-coal-loop.mp4",
             "video_poster": "shopify://shop_images/phil-coal-poster.webp"
@@ -312,7 +312,7 @@
           "type": "feature",
           "settings": {
             "title": "Profiles",
-            "description": "Default, Phoenix, Wraith and Oracle, each in its own colour"
+            "description": "Default, Phoenix, Wraith and Oracle, each in its own color"
           }
         },
         "feat_4": {
