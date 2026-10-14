@@ -708,8 +708,9 @@ if (!customElements.get('product-recommendations')) {
 
 /*
   Global AJAX add-to-cart — intercepts every form[action="/cart/add"] submit
-  site-wide, regardless of cart_type setting. Shows a centred toast instead of
-  redirecting to /cart or opening the drawer.
+  site-wide. On success: button toggles to "Added To Cart" (aria-pressed=true,
+  white + champagne outline). Clicking again removes the item from the cart and
+  reverts the button. Page load syncs state with /cart.js.
 */
 (() => {
   // ── Toast ──────────────────────────────────────────────────────────────────
@@ -757,6 +758,66 @@ if (!customElements.get('product-recommendations')) {
     });
   }
 
+  // ── Button label helper ────────────────────────────────────────────────────
+  function getLabelEl(btn) {
+    return btn.querySelector('[data-quick-add-label], [data-add-to-cart-text]');
+  }
+
+  // ── Mark button as "Added To Cart" ────────────────────────────────────────
+  function markAsAdded(btn, variantId) {
+    btn.setAttribute('aria-pressed', 'true');
+    btn.setAttribute('data-in-cart-variant', variantId);
+    const label = getLabelEl(btn);
+    if (label) label.textContent = 'Added To Cart';
+  }
+
+  // ── Revert all buttons for a variant back to "Add To Cart" ────────────────
+  function revertToAdd(variantId) {
+    document.querySelectorAll(`[data-in-cart-variant="${variantId}"]`).forEach(b => {
+      b.removeAttribute('aria-pressed');
+      b.removeAttribute('data-in-cart-variant');
+      const label = getLabelEl(b);
+      if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
+    });
+  }
+
+  // ── Spinner on/off ─────────────────────────────────────────────────────────
+  function btnStart(btn) {
+    btn.classList.add('is-loading');
+    btn.setAttribute('data-loading', '');
+    btn.disabled = true;
+    const sp = btn.querySelector('[data-add-to-cart-spinner]');
+    if (sp) sp.removeAttribute('hidden');
+  }
+  function btnEnd(btn) {
+    btn.classList.remove('is-loading');
+    btn.removeAttribute('data-loading');
+    btn.disabled = false;
+    const sp = btn.querySelector('[data-add-to-cart-spinner]');
+    if (sp) sp.setAttribute('hidden', '');
+  }
+
+  // ── Remove from cart ───────────────────────────────────────────────────────
+  async function removeFromCart(btn, variantId) {
+    btnStart(btn);
+    try {
+      await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ id: Number(variantId), quantity: 0 }),
+      });
+      const cartRes  = await fetch('/cart.js');
+      const cartData = await cartRes.json();
+      updateCount(cartData.item_count);
+      revertToAdd(variantId);
+      document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
+    } catch (err) {
+      showToast(err.message || 'Could not remove from cart');
+    } finally {
+      btnEnd(btn);
+    }
+  }
+
   // ── Submit delegation ──────────────────────────────────────────────────────
   document.addEventListener('submit', async (e) => {
     const form = e.target.closest('form[action="/cart/add"]');
@@ -765,17 +826,17 @@ if (!customElements.get('product-recommendations')) {
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    // Use e.submitter (the exact button clicked) so only that button gets the
-    // spinner — never the sticky ATC button when the main form is submitted
-    // and vice versa.
-    const btn     = e.submitter || form.querySelector('[type="submit"]');
-    const spinner = btn?.querySelector('[data-add-to-cart-spinner]');
+    // Use e.submitter so only the clicked button gets the spinner.
+    const btn = e.submitter || form.querySelector('[type="submit"]');
 
-    if (btn) {
-      btn.setAttribute('data-loading', '');
-      btn.disabled = true;
+    // Already in cart — remove instead of add
+    if (btn?.getAttribute('aria-pressed') === 'true') {
+      const variantId = btn.dataset.inCartVariant;
+      if (variantId) await removeFromCart(btn, variantId);
+      return;
     }
-    if (spinner) spinner.removeAttribute('hidden');
+
+    if (btn) btnStart(btn);
 
     try {
       const res  = await fetch('/cart/add.js', {
@@ -786,22 +847,43 @@ if (!customElements.get('product-recommendations')) {
       const item = await res.json();
       if (!res.ok) throw new Error(item.description || item.message || 'Could not add to cart');
 
-      const name = item.product_title || item.title || 'Item';
-      showToast(`${name} added to cart`);
-
       const cartRes  = await fetch('/cart.js');
       const cartData = await cartRes.json();
       updateCount(cartData.item_count);
 
-      document.dispatchEvent(new CustomEvent('cart:add', { bubbles: true, detail: { item: item } }));
+      // Mark the clicked button and any other submit buttons in the same form
+      const variantId = String(item.variant_id);
+      form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId));
+
+      document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true, detail: { item } }));
+      document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
     } catch (err) {
       showToast(err.message || 'Could not add to cart');
     } finally {
-      if (btn) {
-        btn.removeAttribute('data-loading');
-        btn.disabled = false;
-      }
-      if (spinner) spinner.setAttribute('hidden', '');
+      if (btn) btnEnd(btn);
     }
   });
+
+  // ── Page-load cart sync ────────────────────────────────────────────────────
+  async function syncCartState() {
+    try {
+      const cartRes  = await fetch('/cart.js');
+      const cartData = await cartRes.json();
+      const inCart   = new Set(cartData.items.map(i => String(i.variant_id)));
+
+      document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
+        const input = form.querySelector('[name="id"]');
+        if (!input) return;
+        const variantId = String(input.value);
+        if (!inCart.has(variantId)) return;
+        form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId));
+      });
+    } catch (_) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncCartState);
+  } else {
+    syncCartState();
+  }
 })();
