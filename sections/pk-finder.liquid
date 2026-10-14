@@ -1,4 +1,4 @@
-{% style %}
+﻿{% style %}
   #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -83,9 +83,9 @@
   var BASE={virginia:252,dark:270,mix:262},PROF={virginia:'Phoenix',dark:'Wraith',mix:'Default'};
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function calc(st){
-    var t=BASE[st.leaf]+(st.str==='strong'?5:-5),pre='7 minutes at 275 °C (Default)',prof=PROF[st.leaf];
-    if(st.leaf==='dark'&&st.str==='strong'){pre='7 minutes at 290 °C';prof='Oracle'}
-    else if(st.leaf==='dark'){pre='7 minutes at 280 °C'}
+    var t=BASE[st.leaf]+(st.str==='strong'?5:-5),pre='7 minutes at 275 °C (527 °F) (Default)',prof=PROF[st.leaf];
+    if(st.leaf==='dark'&&st.str==='strong'){pre='7 minutes at 290 °C (554 °F)';prof='Oracle'}
+    else if(st.leaf==='dark'){pre='7 minutes at 280 °C (536 °F)'}
     return{t:Math.round(t/5)*5,pre:pre,prof:prof};
   }
   function initHf(f){
@@ -99,7 +99,7 @@
     function go(){
       var r=calc(st);
       var tOut=f.querySelector('.hf2__t'),pOut=f.querySelector('.hf2__pre'),prOut=f.querySelector('.hf2__prof');
-      if(tOut)tOut.textContent=r.t+' °C';
+      if(tOut)tOut.textContent=r.t+' °C ('+Math.round(r.t*9/5+32)+' °F)';
       if(pOut)pOut.textContent=r.pre;
       if(prOut)prOut.textContent=r.prof;
       if(!tEl)return;

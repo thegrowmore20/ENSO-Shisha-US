@@ -1,4 +1,4 @@
-{% style %}
+﻿{% style %}
   #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -16,24 +16,24 @@
   <section class="em-ch em-ch-section" id="temperature" style="scroll-margin-top:180px">
     <p class="em-ch__num">04 · Use</p>
     <h2>Temperature and modes</h2>
-    <p class="em-ch__lead">180–330 °C on the thermodial, in 5° steps. Start low and step up.</p>
+    <p class="em-ch__lead">180–330 °C (356–626 °F) on the thermodial, in 5 °C (9 °F) steps. Start low and step up.</p>
     <div class="em-parts em-parts--t">
       {%- if section.settings.img_dial != blank -%}
         {{- section.settings.img_dial | image_url: width: 800 | image_tag:
             loading: 'lazy',
-            alt: 'The thermodial, 180 to 330 °C',
+            alt: 'The thermodial, 180 to 330 °C (356 to 626 °F)',
             widths: '400, 600, 800',
             sizes: '(max-width: 760px) 100vw, 40vw' -}}
       {%- else -%}
-        <img src="{{ 'temp-dial-ink.webp' | file_url }}" alt="The thermodial, 180 to 330 °C" loading="lazy">
+        <img src="{{ 'temp-dial-ink.webp' | file_url }}" alt="The thermodial, 180 to 330 °C (356 to 626 °F)" loading="lazy">
       {%- endif -%}
       <div>
         <ol>
-          <li><b>Scale.</b> The range is 180°–330°C — each gradation step on the dial equals 5°C.</li>
+          <li><b>Scale.</b> The range is 180–330 °C (356–626 °F) — each gradation step on the dial equals 5 °C (9 °F).</li>
           <li><b>Turn.</b> Turn the Thermodial: clockwise = higher, counter-clockwise = lower. Start low (180°), heat 5–8 min, then step up 15–30° at a time, allowing 30–60 seconds per change.</li>
           <li><b>Read.</b> The LED shows your setting — the higher the temperature, the closer the LED strips sit to the middle.</li>
         </ol>
-        <p>The 2026 edition reads about 10–15°C cooler than earlier models at the same displayed number — the temperature sensing was made more conservative. If 255°C used to be your setting, try 265–270°C, and move in small steps from there.</p>
+        <p>The 2026 edition reads about 10–15 °C (18–27 °F) cooler than earlier models at the same displayed number — the temperature sensing was made more conservative. If 255 °C (491 °F) used to be your setting, try 265–270 °C (509–518 °F), and move in small steps from there.</p>
       </div>
     </div>
 
@@ -41,7 +41,7 @@
     <div class="em-temps">
       <div>
         <b>Default</b>
-        <span>Orange light. ENSŌ regulates the temperature, with a 70 °C+ boost during the 5-minute pre-heat.</span>
+        <span>Orange light. ENSŌ regulates the temperature, with a 70 °C (126 °F)+ boost during the 5-minute pre-heat.</span>
       </div>
       <div>
         <b>G-Mode</b>
