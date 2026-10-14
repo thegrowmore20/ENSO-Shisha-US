@@ -69,7 +69,16 @@
         "price_note": "Last founder price. The final price after launch is $349. Reserve now for $120 and pay the remaining $200 before shipping. Sales tax is added at checkout.",
         "cta_label": "Reserve for $120",
         "inbox_text": "Diamond with thermo cap and battery, two ceramic cups, basket mesh, three flat screens, two silicone adapters, cup tool, brush, USB-C cable.",
-        "contact_email": "support@ensoshisha.com"
+        "contact_email": "support@ensoshisha.com",
+        "chip_1": "",
+        "chip_2": "",
+        "chip_3": "",
+        "chip_4": "",
+        "chip_5": "",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_heater_main": {
@@ -104,6 +113,9 @@
       ],
       "settings": {
         "image": "shopify://shop_images/heater-dial.webp",
+        "image_position": "left",
+        "image_fit": "cover",
+        "column_gap": 56,
         "eyebrow": "What it is",
         "heading": "An electric heater for the hookah you already own",
         "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, just pure flavor.",
@@ -119,104 +131,8 @@
         "eyebrow": "How the heat works",
         "heading": "Heat from every side",
         "body": "The element sits under the cup and around its wall, so the tobacco warms from below and from the sides at once. The plate in the cap closes the chamber from above and keeps the heat on the load, the way a lid keeps it in a classic bowl.",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      }
-    },
-    "diamond_fits_main": {
-      "type": "diamond-heater",
-      "blocks": {
-        "fits_fact_1": {
-          "type": "fact",
-          "settings": {
-            "title": "Long adapter",
-            "text": "For stems with a narrow, tall top fitting."
-          }
-        },
-        "fits_fact_2": {
-          "type": "fact",
-          "settings": {
-            "title": "Short adapter",
-            "text": "For stems with a broad top fitting. One of the two fits most traditional and modern stems."
-          }
-        },
-        "fits_fact_3": {
-          "type": "fact",
-          "settings": {
-            "title": "Nothing else changes",
-            "text": "Diamond replaces only the coals. The evening, the water and the hose are the ones you know."
-          }
-        }
-      },
-      "block_order": ["fits_fact_1", "fits_fact_2", "fits_fact_3"],
-      "settings": {
-        "image": "shopify://shop_images/fits-hookah-real.webp",
-        "image_position": "right",
-        "image_fit": "contain",
-        "column_gap": 220,
-        "eyebrow": "Fits any hookah",
-        "heading": "If a bowl fits, Diamond fits",
-        "body": "Two adapters in the box, long and short, seat Diamond on the top of the stem you already have. Your stem, base and hose stay exactly as they are."
-      }
-    },
-    "diamond_bowl_main": {
-      "type": "diamond-bowl",
-      "settings": {
-        "image": "shopify://shop_images/bowl-darkwood.webp",
-        "image_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
-        "heading": "Design your perfect bowl",
-        "text": "How to pack for the flavor you want: grams, mesh, temperature and time, one blend at a time.",
-        "cta1_label": "Open the guide",
-        "cta1_link": "/pages/diamond-packing-guide",
-        "cta2_label": "Shop",
-        "cta2_link": "#buy",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      }
-    },
-    "diamond_dial_main": {
-      "type": "diamond-dial",
-      "blocks": {
-        "feat_temp": {
-          "type": "feature",
-          "settings": {
-            "title": "Precise temperature control",
-            "body": "Heat and pre-heat set to your taste: 180 to 320 °C to the degree, and zero to fifteen minutes of warm-up before the first draw",
-            "screen_image": "shopify://shop_images/session.svg"
-          }
-        },
-        "feat_prof": {
-          "type": "feature",
-          "settings": {
-            "title": "Profiles that remember",
-            "body": "Default, Phoenix, Wraith, Oracle. Each keeps its own temperature and pre-heat, so a favourite blend is one click away",
-            "screen_image": "shopify://shop_images/profile_default.svg"
-          }
-        },
-        "feat_hap": {
-          "type": "feature",
-          "settings": {
-            "title": "Haptic feedback",
-            "body": "Every step of the dial answers with a small click under the finger, every confirmation with a short pulse. You feel the setting change without looking",
-            "screen_image": "shopify://shop_images/start.svg"
-          }
-        }
-      },
-      "block_order": [
-        "feat_temp",
-        "feat_prof",
-        "feat_hap"
-      ],
-      "settings": {
-        "section_id": "dial",
-        "heading": "One dial, every setting",
-        "subline": "Pre-heat time to the minute, temperature to the degree, four profiles that remember both",
-        "video": "shopify://files/videos/dial-loop.mp4",
-        "hint_text": "Tap a line to see that screen on the dial. Tap the picture to play the loop again",
+        "video": "shopify://files/videos/heat-626_b8822f42-c337-4a42-9eed-7d7e79072ac8.mp4",
+        "poster": "shopify://shop_images/heat-626-poster.webp",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -385,6 +301,95 @@
         "padding_bottom_mobile": 40
       }
     },
+    "diamond_dial_main": {
+      "type": "diamond-dial",
+      "blocks": {
+        "feat_temp": {
+          "type": "feature",
+          "settings": {
+            "title": "Precise temperature control",
+            "body": "Heat and pre-heat set to your taste: 180 to 320 °C to the degree, and zero to fifteen minutes of warm-up before the first draw",
+            "screen_image": "shopify://shop_images/session.svg"
+          }
+        },
+        "feat_prof": {
+          "type": "feature",
+          "settings": {
+            "title": "Profiles that remember",
+            "body": "Default, Phoenix, Wraith, Oracle. Each keeps its own temperature and pre-heat, so a favourite blend is one click away",
+            "screen_image": "shopify://shop_images/profile_default.svg"
+          }
+        },
+        "feat_hap": {
+          "type": "feature",
+          "settings": {
+            "title": "Haptic feedback",
+            "body": "Every step of the dial answers with a small click under the finger, every confirmation with a short pulse. You feel the setting change without looking",
+            "screen_image": "shopify://shop_images/start.svg"
+          }
+        }
+      },
+      "block_order": [
+        "feat_temp",
+        "feat_prof",
+        "feat_hap"
+      ],
+      "settings": {
+        "section_id": "dial",
+        "heading": "One dial, every setting",
+        "subline": "Pre-heat time to the minute, temperature to the degree, four profiles that remember both",
+        "video": "shopify://files/videos/dial-loop.mp4",
+        "hint_text": "Tap a line to see that screen on the dial. Tap the picture to play the loop again",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "diamond_fits_main": {
+      "type": "diamond-heater",
+      "blocks": {
+        "fits_fact_1": {
+          "type": "fact",
+          "settings": {
+            "title": "Long adapter",
+            "text": "For stems with a narrow, tall top fitting."
+          }
+        },
+        "fits_fact_2": {
+          "type": "fact",
+          "settings": {
+            "title": "Short adapter",
+            "text": "For stems with a broad top fitting. One of the two fits most traditional and modern stems."
+          }
+        },
+        "fits_fact_3": {
+          "type": "fact",
+          "settings": {
+            "title": "Nothing else changes",
+            "text": "Diamond replaces only the coals. The evening, the water and the hose are the ones you know."
+          }
+        }
+      },
+      "block_order": [
+        "fits_fact_1",
+        "fits_fact_2",
+        "fits_fact_3"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/fits-hookah-real.webp",
+        "image_position": "right",
+        "image_fit": "contain",
+        "column_gap": 220,
+        "eyebrow": "Fits any hookah",
+        "heading": "If a bowl fits, Diamond fits",
+        "body": "Two adapters in the box, long and short, seat Diamond on the top of the stem you already have. Your stem, base and hose stay exactly as they are.",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
     "diamond_acc_main": {
       "type": "diamond-acc-hero",
       "settings": {
@@ -401,79 +406,6 @@
         "padding_bottom_mobile": 40
       }
     },
-    "diamond_experience": {
-      "type": "enso-experience",
-      "blocks": {
-        "chip_qs":      { "type": "chip", "settings": { "label": "Quick start", "url": "/pages/enso-2026-manual#quick-start" } },
-        "chip_manual":  { "type": "chip", "settings": { "label": "Full manual",  "url": "/pages/enso-2026-manual" } },
-        "chip_warranty":{ "type": "chip", "settings": { "label": "Warranty",     "url": "/pages/warranty" } },
-        "chip_fw":      { "type": "chip", "settings": { "label": "Firmware",     "url": "/pages/enso-experience" } }
-      },
-      "block_order": ["chip_qs", "chip_manual", "chip_warranty", "chip_fw"],
-      "settings": {
-        "image": "shopify://shop_images/enso-exp-tea.webp",
-        "eyebrow": "ENSŌ Experience",
-        "heading": "More questions? The answers are in ENSŌ Experience",
-        "text": "Step-by-step guides for every owner: the first session, packing the cup, the right temperature for each blend, cleaning and care, and firmware updates. Made for the phone.",
-        "cta_label": "Open ENSŌ Experience",
-        "cta_link": "/pages/enso-experience",
-        "height_desktop": "large",
-        "content_max_width": 540,
-        "heading_size_desktop": 40,
-        "heading_size_mobile": 28,
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      }
-    },
-    "diamond_faqs_main": {
-      "type": "diamond-faqs",
-      "blocks": {
-        "faq_1":  { "type": "faq_item", "settings": { "question": "What is Diamond?", "answer": "An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, just pure flavor." } },
-        "faq_2":  { "type": "faq_item", "settings": { "question": "Will it fit my hookah?", "answer": "It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to support@ensoshisha.com." } },
-        "faq_3":  { "type": "faq_item", "settings": { "question": "Does the tobacco taste different?", "answer": "Cleaner. The blend is warmed to a set temperature instead of being scorched from above, so you taste the leaf and the molasses, not the coal." } },
-        "faq_4":  { "type": "faq_item", "settings": { "question": "What temperature should I use?", "answer": "Most blends sit well at 250–270 °C. For a dark blend, start at 290 °C for the first minutes, then come down to 270 and 250 °C. Every tobacco is made for coal and behaves a little differently, so note what works and save it as a profile." } },
-        "faq_5":  { "type": "faq_item", "settings": { "question": "How long does the battery last?", "answer": "About 90 minutes, pre-heat not included. Charge over USB-C while you smoke, or switch Diamond off, change to a second Diamond Battery and switch it back on." } },
-        "faq_6":  { "type": "faq_item", "settings": { "question": "How do I clean it?", "answer": "After every session, lift the cup out with the removal tool, empty it and brush the chamber. Once a week, soak the basket and the screens, rinse the cap and wipe the body with a cloth." } },
-        "faq_7":  { "type": "faq_item", "settings": { "question": "How much tobacco does it take?", "answer": "10–15 g. Use the basket mesh for a loose, airy pack, or a flat screen for a denser pack. The packing guide has a starting point for each." } },
-        "faq_8":  { "type": "faq_item", "settings": { "question": "How does pre-heat work?", "answer": "You set both the time, 0–15 minutes, and the temperature it warms to. Default is 7 minutes at 275 °C. Diamond tells you when it is ready." } },
-        "faq_9":  { "type": "faq_item", "settings": { "question": "What are profiles?", "answer": "Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own color. Open Menu, Profiles, and turn to choose." } },
-        "faq_10": { "type": "faq_item", "settings": { "question": "How do I charge it?", "answer": "Over USB-C, about 1.5 hours with a 30 W supply. The battery also charges on its own, outside Diamond. There is no charger in the box." } },
-        "faq_11": { "type": "faq_item", "settings": { "question": "Do I need an app, Wi-Fi or an account?", "answer": "No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.com, coming with the first update." } },
-        "faq_12": { "type": "faq_item", "settings": { "question": "Can I touch it during a session?", "answer": "Yes, by the band and the lower body. The cup and the cap are hot, the way a bowl and its foil would be. Let it cool 10 minutes before you open it." } },
-        "faq_13": { "type": "faq_item", "settings": { "question": "Can I take it on a plane?", "answer": "Yes, in hand luggage, like any device with a lithium battery. Take the pack out and carry it with you; never check it in." } },
-        "faq_14": { "type": "faq_item", "settings": { "question": "What wears out, and can I buy spares?", "answer": "The cups, screens, mesh and adapters wear like any bowl and grommet. Every one of them, plus the cap, battery and cable, is sold separately." } },
-        "faq_15": { "type": "faq_item", "settings": { "question": "Warranty and returns?", "answer": "Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to support first." } }
-      },
-      "block_order": ["faq_1","faq_2","faq_3","faq_4","faq_5","faq_6","faq_7","faq_8","faq_9","faq_10","faq_11","faq_12","faq_13","faq_14","faq_15"],
-      "settings": {
-        "heading": "Frequently asked questions",
-        "visible_count": 6,
-        "show_more_label": "Show more",
-        "show_less_label": "Show less",
-        "full_faq_label": "Full FAQ",
-        "full_faq_link": "/pages/faq",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      }
-    },
-    "diamond_also_like": {
-      "type": "accessories-carousel",
-      "settings": {
-        "collection": "accesories",
-        "heading": "You might also like",
-        "products_limit": 8,
-        "cta_label": "View all accessories",
-        "cta_link": "/collections/accesories",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      }
-    },
     "diamond_witb_main": {
       "type": "diamond-witb",
       "blocks": {
@@ -481,9 +413,11 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/device-top.webp",
-            "title": "Diamond with thermo cap",
             "size": "hero",
+            "title": "Diamond with thermo cap",
+            "qty_badge": "",
             "opens_modal": true,
+            "product_handle": "",
             "list_item": "Diamond with thermo cap and battery",
             "list_qty": "1",
             "sub": "The heater itself, cap on, battery in",
@@ -496,9 +430,10 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-cup.webp",
-            "title": "Ceramic cups",
             "size": "default",
+            "title": "Ceramic cups",
             "qty_badge": "2",
+            "opens_modal": false,
             "product_handle": "replacement-ceramic-cup",
             "list_item": "Ceramic cup",
             "list_qty": "2",
@@ -512,9 +447,10 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-basket.webp",
-            "title": "Basket mesh",
             "size": "default",
+            "title": "Basket mesh",
             "qty_badge": "1",
+            "opens_modal": false,
             "product_handle": "5-mesh-screens-2-wax-pad-inserts-for-enso",
             "list_item": "Basket mesh",
             "list_qty": "1",
@@ -528,9 +464,10 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-screens-2.webp",
-            "title": "Flat mesh screens",
             "size": "default",
+            "title": "Flat mesh screens",
             "qty_badge": "3",
+            "opens_modal": false,
             "product_handle": "5-mesh-screens-2-wax-pad-inserts-for-enso",
             "list_item": "Flat mesh screen",
             "list_qty": "3",
@@ -544,9 +481,10 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-adapter-tall.webp",
-            "title": "Long adapter",
             "size": "s",
+            "title": "Long adapter",
             "qty_badge": "1",
+            "opens_modal": false,
             "product_handle": "updated-vapor-hose-adapter-2-pack",
             "list_item": "Silicone adapters, long and short",
             "list_qty": "2",
@@ -560,10 +498,13 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-adapter-short.webp",
-            "title": "Short adapter",
             "size": "s",
+            "title": "Short adapter",
             "qty_badge": "1",
+            "opens_modal": false,
             "product_handle": "updated-vapor-hose-adapter-2-pack",
+            "list_item": "",
+            "list_qty": "1",
             "sub": "For shorter stems",
             "what": "A silicone sleeve on a steel core. It takes the place of the bowl grommet on top of the stem.",
             "why": "One of the two fits most traditional and modern stems.",
@@ -574,8 +515,10 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-tool.webp",
-            "title": "Cup removal tool",
             "size": "default",
+            "title": "Cup removal tool",
+            "qty_badge": "",
+            "opens_modal": false,
             "product_handle": "cleaning-glove",
             "list_item": "Cup removal tool",
             "list_qty": "1",
@@ -589,8 +532,10 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-brush.webp",
-            "title": "Cleaning brush",
             "size": "s",
+            "title": "Cleaning brush",
+            "qty_badge": "",
+            "opens_modal": false,
             "product_handle": "enso-replacement-battery-plus",
             "list_item": "Cleaning brush",
             "list_qty": "1",
@@ -604,8 +549,10 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/d-cable.webp",
-            "title": "USB-C cable",
             "size": "default",
+            "title": "USB-C cable",
+            "qty_badge": "",
+            "opens_modal": false,
             "product_handle": "enso-replacement-battery-plus",
             "list_item": "USB-C cable",
             "list_qty": "1",
@@ -631,6 +578,231 @@
         "heading": "What is in the box",
         "body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. The battery ships fitted.",
         "modal_body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. Tap an item to see what it is for.",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "diamond_also_like": {
+      "type": "accessories-carousel",
+      "settings": {
+        "collection": "accesories",
+        "heading": "You might also like",
+        "products_limit": 8,
+        "cta_label": "View all accessories",
+        "cta_link": "/collections/accesories",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "diamond_bowl_main": {
+      "type": "diamond-bowl",
+      "settings": {
+        "image": "shopify://shop_images/bowl-darkwood.webp",
+        "image_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
+        "heading": "Design your perfect bowl",
+        "text": "How to pack for the flavor you want: grams, mesh, temperature and time, one blend at a time.",
+        "cta1_label": "Open the guide",
+        "cta1_link": "/pages/diamond-packing-guide",
+        "cta2_label": "Shop",
+        "cta2_link": "#buy",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "diamond_faqs_main": {
+      "type": "diamond-faqs",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is Diamond?",
+            "answer": "An electric heater that replaces charcoal on a traditional hookah. It sits where the bowl sits: pack the cup, set the temperature, start. No coals, just pure flavor."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will it fit my hookah?",
+            "answer": "It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to support@ensoshisha.com."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does the tobacco taste different?",
+            "answer": "Cleaner. The blend is warmed to a set temperature instead of being scorched from above, so you taste the leaf and the molasses, not the coal."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What temperature should I use?",
+            "answer": "Most blends sit well at 250–270 °C. For a dark blend, start at 290 °C for the first minutes, then come down to 270 and 250 °C. Every tobacco is made for coal and behaves a little differently, so note what works and save it as a profile."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does the battery last?",
+            "answer": "About 90 minutes, pre-heat not included. Charge over USB-C while you smoke, or switch Diamond off, change to a second Diamond Battery and switch it back on."
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I clean it?",
+            "answer": "After every session, lift the cup out with the removal tool, empty it and brush the chamber. Once a week, soak the basket and the screens, rinse the cap and wipe the body with a cloth."
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How much tobacco does it take?",
+            "answer": "10–15 g. Use the basket mesh for a loose, airy pack, or a flat screen for a denser pack. The packing guide has a starting point for each."
+          }
+        },
+        "faq_8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How does pre-heat work?",
+            "answer": "You set both the time, 0–15 minutes, and the temperature it warms to. Default is 7 minutes at 275 °C. Diamond tells you when it is ready."
+          }
+        },
+        "faq_9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What are profiles?",
+            "answer": "Four presets on the dial. Default always starts at 7 minutes and 275 °C. Phoenix, Wraith and Oracle keep the time and temperature you set last, each in its own color. Open Menu, Profiles, and turn to choose."
+          }
+        },
+        "faq_10": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I charge it?",
+            "answer": "Over USB-C, about 1.5 hours with a 30 W supply. The battery also charges on its own, outside Diamond. There is no charger in the box."
+          }
+        },
+        "faq_11": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need an app, Wi-Fi or an account?",
+            "answer": "No. Everything is on the dial. Firmware updates run over USB-C from a page on ensoshisha.com, coming with the first update."
+          }
+        },
+        "faq_12": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I touch it during a session?",
+            "answer": "Yes, by the band and the lower body. The cup and the cap are hot, the way a bowl and its foil would be. Let it cool 10 minutes before you open it."
+          }
+        },
+        "faq_13": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I take it on a plane?",
+            "answer": "Yes, in hand luggage, like any device with a lithium battery. Take the pack out and carry it with you; never check it in."
+          }
+        },
+        "faq_14": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What wears out, and can I buy spares?",
+            "answer": "The cups, screens, mesh and adapters wear like any bowl and grommet. Every one of them, plus the cap, battery and cable, is sold separately."
+          }
+        },
+        "faq_15": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Warranty and returns?",
+            "answer": "Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to support first."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10",
+        "faq_11",
+        "faq_12",
+        "faq_13",
+        "faq_14",
+        "faq_15"
+      ],
+      "settings": {
+        "heading": "Frequently asked questions",
+        "visible_count": 6,
+        "show_more_label": "Show more",
+        "show_less_label": "Show less",
+        "full_faq_label": "Full FAQ",
+        "full_faq_link": "/pages/faq",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "diamond_experience": {
+      "type": "enso-experience",
+      "blocks": {
+        "chip_qs": {
+          "type": "chip",
+          "settings": {
+            "label": "Quick start",
+            "url": "/pages/enso-2026-manual#quick-start"
+          }
+        },
+        "chip_manual": {
+          "type": "chip",
+          "settings": {
+            "label": "Full manual",
+            "url": "/pages/enso-2026-manual"
+          }
+        },
+        "chip_warranty": {
+          "type": "chip",
+          "settings": {
+            "label": "Warranty",
+            "url": "/pages/warranty"
+          }
+        },
+        "chip_fw": {
+          "type": "chip",
+          "settings": {
+            "label": "Firmware",
+            "url": "/pages/enso-experience"
+          }
+        }
+      },
+      "block_order": [
+        "chip_qs",
+        "chip_manual",
+        "chip_warranty",
+        "chip_fw"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/enso-exp-tea.webp",
+        "eyebrow": "ENSŌ Experience",
+        "heading": "More questions? The answers are in ENSŌ Experience",
+        "text": "Step-by-step guides for every owner: the first session, packing the cup, the right temperature for each blend, cleaning and care, and firmware updates. Made for the phone.",
+        "cta_label": "Open ENSŌ Experience",
+        "cta_link": "/pages/enso-experience",
+        "height_desktop": "large",
+        "content_max_width": 540,
+        "heading_size_desktop": 40,
+        "heading_size_mobile": 28,
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
