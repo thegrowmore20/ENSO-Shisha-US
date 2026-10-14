@@ -764,9 +764,10 @@ if (!customElements.get('product-recommendations')) {
   }
 
   // ── Mark button as "Added To Cart" ────────────────────────────────────────
-  function markAsAdded(btn, variantId) {
+  function markAsAdded(btn, variantId, productTitle) {
     btn.setAttribute('aria-pressed', 'true');
     btn.setAttribute('data-in-cart-variant', variantId);
+    if (productTitle) btn.setAttribute('data-product-title', productTitle);
     const label = getLabelEl(btn);
     if (label) label.textContent = 'Added To Cart';
   }
@@ -776,6 +777,7 @@ if (!customElements.get('product-recommendations')) {
     document.querySelectorAll(`[data-in-cart-variant="${variantId}"]`).forEach(b => {
       b.removeAttribute('aria-pressed');
       b.removeAttribute('data-in-cart-variant');
+      b.removeAttribute('data-product-title');
       const label = getLabelEl(b);
       if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
     });
@@ -809,8 +811,9 @@ if (!customElements.get('product-recommendations')) {
       const cartRes  = await fetch('/cart.js');
       const cartData = await cartRes.json();
       updateCount(cartData.item_count);
+      const removedTitle = btn.dataset.productTitle;
       revertToAdd(variantId);
-      showToast('Removed from cart');
+      showToast(removedTitle ? `${removedTitle} removed from cart` : 'Removed from cart');
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
     } catch (err) {
       showToast(err.message || 'Could not remove from cart');
@@ -853,8 +856,10 @@ if (!customElements.get('product-recommendations')) {
       updateCount(cartData.item_count);
 
       // Mark the clicked button and any other submit buttons in the same form
-      const variantId = String(item.variant_id);
-      form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId));
+      const variantId    = String(item.variant_id);
+      const productTitle = item.product_title || '';
+      form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId, productTitle));
+      showToast(productTitle ? `${productTitle} added to cart` : 'Added to cart');
 
       document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true, detail: { item } }));
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
@@ -870,14 +875,15 @@ if (!customElements.get('product-recommendations')) {
     try {
       const cartRes  = await fetch('/cart.js');
       const cartData = await cartRes.json();
-      const inCart   = new Set(cartData.items.map(i => String(i.variant_id)));
+      const inCartMap = new Map(cartData.items.map(i => [String(i.variant_id), i.product_title || '']));
 
       document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
         const input = form.querySelector('[name="id"]');
         if (!input) return;
         const variantId = String(input.value);
-        if (!inCart.has(variantId)) return;
-        form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId));
+        if (!inCartMap.has(variantId)) return;
+        const productTitle = inCartMap.get(variantId);
+        form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId, productTitle));
       });
     } catch (_) {}
   }
