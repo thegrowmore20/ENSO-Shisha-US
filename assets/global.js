@@ -751,11 +751,13 @@ if (!customElements.get('product-recommendations')) {
 
   // ── Cart count badge ───────────────────────────────────────────────────────
   function updateCount(count) {
+    // Use the DOM property (not the attribute) — more reliable across browsers
     document.querySelectorAll('.cart-count, .cart-count-bubble, [data-cart-count]').forEach(el => {
       el.textContent = count;
-      if (count === 0) el.setAttribute('hidden', '');
-      else el.removeAttribute('hidden');
+      el.hidden = count === 0;
     });
+    // Delegate to cart-drawer.js's own updater if available (keeps drawer in sync)
+    if (typeof updateCartItemCounts === 'function') updateCartItemCounts(count);
   }
 
   // ── Button label helper ────────────────────────────────────────────────────
@@ -803,18 +805,22 @@ if (!customElements.get('product-recommendations')) {
   async function removeFromCart(btn, variantId) {
     btnStart(btn);
     try {
-      await fetch('/cart/change.js', {
-        method: 'POST',
+      // /cart/update.js returns the full cart — one round-trip, and we can check ok
+      const res      = await fetch('/cart/update.js', {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ id: Number(variantId), quantity: 0 }),
+        body:    JSON.stringify({ updates: { [variantId]: 0 } }),
       });
-      const cartRes  = await fetch('/cart.js');
-      const cartData = await cartRes.json();
+      const cartData = await res.json();
+      if (!res.ok) throw new Error(cartData.description || cartData.message || 'Could not remove from cart');
+
       updateCount(cartData.item_count);
       const removedTitle = btn.dataset.productTitle;
       revertToAdd(variantId);
       showToast(removedTitle ? `${removedTitle} removed from cart` : 'Removed from cart');
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
+      // Refresh drawer to match (no open — just sync the contents)
+      if (typeof updateCartDrawer === 'function') await updateCartDrawer();
     } catch (err) {
       showToast(err.message || 'Could not remove from cart');
     } finally {
