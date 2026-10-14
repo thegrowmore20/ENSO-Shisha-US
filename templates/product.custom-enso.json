@@ -36,7 +36,11 @@
         },
         "tags": {
           "type": "tags",
-          "settings": {}
+          "settings": {
+            "chip_1": "No charcoal",
+            "chip_2": "Battery powered",
+            "chip_3": "Magnetic mouthpiece"
+          }
         },
         "text_JLGqNX": {
           "type": "text",
@@ -163,9 +167,9 @@
         "enable_sticky_info": true,
         "show_info_border": true,
         "accordion_position": "below_media",
-        "padding_top": 0,
+        "padding_top": 40,
         "padding_bottom": 40,
-        "padding_top_mobile": 0,
+        "padding_top_mobile": 24,
         "padding_bottom_mobile": 24
       }
     },
