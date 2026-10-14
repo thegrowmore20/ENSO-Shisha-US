@@ -63,7 +63,7 @@
             "tab": "diamond",
             "anchor_id": "q-will-it-fit-my-hookah",
             "question": "Will it fit my hookah?",
-            "answer": "<p>It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a>.</p>"
+            "answer": "<p>It fits stems that take a standard bowl, using one of the two adapters in the box, long or short. Not sure? Send a photo of your stem top to <a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com</a>.</p>"
           }
         },
         "q_diamond_taste": {
@@ -180,7 +180,7 @@
             "tab": "diamond",
             "anchor_id": "q-warranty-and-returns",
             "question": "Warranty and returns?",
-            "answer": "<p>Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to <a href=\"mailto:support@ensoshisha.eu\">support</a> first.</p>"
+            "answer": "<p>Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to <a href=\"mailto:support@ensoshisha.com\">support</a> first.</p>"
           }
         },
         "category_hECena": {
@@ -535,7 +535,7 @@
           "settings": {
             "tab": "orders",
             "question": "What if my card payment is declined?",
-            "answer": "<p>There are many reasons a card might be declined. You can always use another payment method. If you still have problems, please contact customer service by emailing: <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a></p>"
+            "answer": "<p>There are many reasons a card might be declined. You can always use another payment method. If you still have problems, please contact customer service by emailing: <a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com</a></p>"
           }
         },
         "question_4mQKPc": {
@@ -551,7 +551,7 @@
           "settings": {
             "tab": "orders",
             "question": "Can I edit or cancel my order?",
-            "answer": "<p>If the parcel hasn't been packed, we can still change the address, items, or quantities. Contact Support at <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a> immediately; once the label has been printed, the order is locked.</p>"
+            "answer": "<p>If the parcel hasn't been packed, we can still change the address, items, or quantities. Contact Support at <a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com</a> immediately; once the label has been printed, the order is locked.</p>"
           }
         },
         "question_BYVKtQ": {
@@ -559,7 +559,7 @@
           "settings": {
             "tab": "orders",
             "question": "How do I return or replace a damaged or defective item?",
-            "answer": "<p>Photograph any damage or record a video of the issue, and contact Support at <a href=\"mailto:support@ensoshisha.eu\">support@ensoshisha.eu</a> within 48h of delivery. We'll issue a prepaid label or ship a replacement at no cost once the claim is approved.</p>"
+            "answer": "<p>Photograph any damage or record a video of the issue, and contact Support at <a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com</a> within 48h of delivery. We'll issue a prepaid label or ship a replacement at no cost once the claim is approved.</p>"
           }
         },
         "question_XktBWD": {
@@ -753,7 +753,7 @@
         "exp_label": "ENSŌ Experience · FAQ",
         "search_placeholder": "Search the questions: battery, cleaning, shipping…",
         "no_results_text": "No question matches that. Try another word, or write to",
-        "support_email": "support@ensoshisha.eu",
+        "support_email": "support@ensoshisha.com",
         "tab_1_label": "ENSŌ Diamond",
         "tab_2_label": "ENSŌ 2026 Edition",
         "tab_3_label": "Orders, shipping and warranty",

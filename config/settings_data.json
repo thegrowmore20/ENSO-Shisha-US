@@ -82,11 +82,11 @@
               "phone_number": "",
               "call_url": "",
               "open_new_call": false,
-              "email_address": "support@ensoshisha.eu",
-              "email_url": "mailto:support@ensoshisha.eu",
+              "email_address": "support@ensoshisha.com",
+              "email_url": "mailto:support@ensoshisha.com",
               "open_new_email": false,
               "location": "16133 Ventura Blvd Fl 7, Encino, CA 91436, USA",
-              "address_url": "https://www.google.com/maps/search/?api=1&query=16133+Ventura+Blvd+Fl+7%2C+Encino%2C+CA+91436%2C+USA",
+              "address_url": "https://maps.app.goo.gl/qVLL58x3Jnnv3ie6A",
               "open_new_address": true
             }
           }
