@@ -16,9 +16,17 @@ shopify-accelerated-checkout {
 	--shopify-accelerated-checkout-button-border-radius: 50px !important;
 	--shopify-accelerated-checkout-button-height: 50px !important;
 }
+/* Direct targeting for branded buttons (Google Pay, Apple Pay, etc.) */
+.shopify-payment-button__button {
+	min-height: 50px !important;
+	border-radius: 50px !important;
+}
 @media screen and (max-width: 749px) {
 	shopify-accelerated-checkout {
 		--shopify-accelerated-checkout-button-height: 44px !important;
+	}
+	.shopify-payment-button__button {
+		min-height: 44px !important;
 	}
 }
 .shopify-payment-button__button--unbranded {
