@@ -167,10 +167,8 @@
         <button
           type="submit"
           class="btn btn--accent acc-card__btn"
-          data-label-add="{{ _atc_label | escape }}"
-          data-label-added="{{ 'products.product.added_to_cart' | t | default: 'Added to cart' | escape }}"
         >
-          <span class="acc-card__btn-label">{{ _atc_label }}</span>
+          <span class="acc-card__btn-label" data-quick-add-label data-label-available="{{ _atc_label | escape }}">{{ _atc_label }}</span>
         </button>
       </form>
     {%- else -%}

@@ -250,11 +250,11 @@
   }
   .acc-card__btn--remind:hover { border-color: var(--color-text); }
 
-  /* "Added to cart" state: lighter gold + dark text */
-  .acc-card__btn--added {
+  /* "Added to cart" state — set by global.js via aria-pressed="true" */
+  .acc-card__btn[aria-pressed="true"] {
     background: transparent !important;
     color: var(--color-text) !important;
-    border-color: rgb(0 0 0 / .25) !important;
+    border: 1.5px solid rgb(0 0 0 / .25) !important;
     box-shadow: none !important;
     opacity: 1 !important;
   }
@@ -280,55 +280,6 @@
 
 {% javascript %}
 (function () {
-
-  /* ── Card-level ATC (direct form on the card, not popup) ── */
-  function handleCardAtc(form, productTitle) {
-    var btn = form.querySelector('[type="submit"]');
-    if (!btn || btn.disabled) return;
-    var vidInput = form.querySelector('input[name="id"]');
-    if (!vidInput) return;
-    var variantId = vidInput.value;
-    var labelEl = btn.querySelector('.acc-card__btn-label');
-    var addedLabel = btn.dataset.labelAdded || 'Added to cart';
-    var addLabel   = btn.dataset.labelAdd   || 'Add to cart';
-
-    /* show spinner via is-loading (::after pseudo in base.css) */
-    btn.disabled = true;
-    btn.classList.add('is-loading');
-
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-      body: JSON.stringify({ id: variantId, quantity: 1 })
-    })
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      if (window.__showProductToast) window.__showProductToast(data.product_title || productTitle);
-      document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
-
-      btn.classList.remove('is-loading');
-      if (labelEl) labelEl.textContent = addedLabel;
-      btn.classList.add('acc-card__btn--added');
-
-      setTimeout(function () {
-        btn.classList.remove('acc-card__btn--added');
-        if (labelEl) labelEl.textContent = addLabel;
-        btn.disabled = false;
-      }, 2000);
-
-      return fetch('/cart.js').then(function (r) { return r.json(); });
-    })
-    .then(function (cart) {
-      document.querySelectorAll('.cart-count').forEach(function (el) {
-        el.textContent = cart.item_count;
-        el.hidden = cart.item_count === 0;
-      });
-    })
-    .catch(function () {
-      btn.classList.remove('is-loading');
-      btn.disabled = false;
-    });
-  }
 
   /* ── Open global popup from card data attributes ── */
   function openFromCard(card) {
@@ -377,14 +328,7 @@
       openFromCard(card);
     });
 
-    /* card form ATC */
-    trackEl.addEventListener('submit', function (e) {
-      var form = e.target.closest('.acc-card__form');
-      if (!form) return;
-      e.preventDefault();
-      var titleEl = form.closest('.acc-card') && form.closest('.acc-card').querySelector('.acc-card__title');
-      handleCardAtc(form, titleEl ? titleEl.textContent.trim() : '');
-    });
+    /* ATC submit handled by global.js interceptor — no local handler needed */
   }
 
   function boot() {
