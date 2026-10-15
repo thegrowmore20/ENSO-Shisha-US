@@ -155,7 +155,7 @@
    ══════════════════════════════════════════ */
 .acc-bar {
   position: fixed;
-  top: var(--site-header-height, 0px);
+  top: var(--acc-bar-top, 0px);
   left: 0;
   right: 0;
   z-index: 39;
@@ -783,6 +783,7 @@
 
       this._bindEvents();
       this._renderDeviceFilter();
+      this._trackHeaderVisibility();
     }
 
     /* ── Bind all event listeners (delegated to `this` so they survive grid replacement) ── */
@@ -1203,6 +1204,24 @@
       .finally(function () {
         if (btn) { btn.classList.remove('is-loading'); setTimeout(function () { btn.disabled = false; }, 400); }
       });
+    }
+
+    /* ── Track header visibility; set --acc-bar-top accordingly ── */
+    _trackHeaderVisibility() {
+      var bar  = this.querySelector('.acc-bar');
+      if (!bar) return;
+      var setTop = function (headerVisible, headerHeight) {
+        bar.style.setProperty('--acc-bar-top', headerVisible ? headerHeight + 'px' : '0px');
+      };
+      var siteHeader = document.querySelector('.section-header, #shopify-section-header, header[role="banner"]');
+      if (!siteHeader) { setTop(false, 0); return; }
+      var getHeight = function () { return siteHeader.offsetHeight || 0; };
+      setTop(true, getHeight());
+      var obs = new IntersectionObserver(function (entries) {
+        var entry = entries[0];
+        setTop(entry.isIntersecting, entry.isIntersecting ? getHeight() : 0);
+      }, { threshold: 0 });
+      obs.observe(siteHeader);
     }
 
     /* ── Update sticky bar cart summary ── */
