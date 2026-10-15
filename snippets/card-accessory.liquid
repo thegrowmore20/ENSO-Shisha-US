@@ -128,9 +128,17 @@
       {%- endfor -%}
     </div>
   {%- endif -%}
-  <p class="acc-card__desc">{{ product.metafields.custom.headline | metafield_tag | strip_html | strip | truncate: 140 }}</p>
+  {%- liquid
+    assign _desc_text = product.metafields.custom.headline | metafield_tag | strip_html | strip
+    if _desc_text == blank
+      assign _desc_text = product.description | strip_html | strip | truncate: 100
+    endif
+  -%}
+  {%- if _desc_text != blank -%}
+    <p class="acc-card__desc">{{ _desc_text }}</p>
+  {%- endif -%}
   {%- if show_details -%}
-    <span class="acc-card__details" role="button" tabindex="0" aria-label="{{ 'accessibility.open_details' | t: title: product.title }}">{{ 'products.product.details' | t | default: 'Details' }}</span>
+    <a class="acc-card__details" href="{{ product.url }}" aria-label="{{ 'accessibility.open_details' | t: title: product.title }}">{{ 'products.product.details' | t | default: 'Details' }}</a>
   {%- endif -%}
 
   {%- liquid
