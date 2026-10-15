@@ -7,11 +7,8 @@
   data-collection-url="{{ collection.url }}"
   data-section-id="{{ section.id }}">
 
-  {%- comment -%} ── Sentinel: marks the bar's natural position for IntersectionObserver ── {%- endcomment -%}
-  <div class="acc-bar-sentinel" id="AccBarSentinel" aria-hidden="true"></div>
-
-  {%- comment -%} ── Sticky device tabs bar (fixed, shown when sentinel leaves viewport) ── {%- endcomment -%}
-  <div class="acc-bar" role="navigation" aria-label="{{ 'sections.accessories_shop.device_nav' | t }}" hidden>
+  {%- comment -%} ── Sticky device tabs bar ── {%- endcomment -%}
+  <div class="acc-bar" role="navigation" aria-label="{{ 'sections.accessories_shop.device_nav' | t }}">
     <div class="acc-bar__inner">
       <div class="acc-seg" role="tablist" aria-label="{{ 'sections.accessories_shop.device_nav' | t }}">
         <button class="acc-seg__btn is-active" role="tab" aria-pressed="true"  data-dev="all"     type="button">{{ 'sections.accessories_shop.tab_all' | t }}</button>
@@ -152,44 +149,12 @@
    STICKY DEVICE TABS BAR
    ══════════════════════════════════════════ */
 
-/* Sentinel holds the natural-position space so layout doesn't jump */
-.acc-bar-sentinel {
-  height: 57px; /* matches bar height + border */
-}
-@media screen and (max-width: 749px) {
-  .acc-bar-sentinel { height: 49px; }
-}
-
 .acc-bar {
-  position: fixed;
+  position: sticky;
   top: var(--site-header-height, 0px);
-  left: 0;
-  right: 0;
-  z-index: 39;
+  z-index: 42;
   background: var(--color-background, #faf6ec);
   border-bottom: 1px solid var(--color-border, #e3ddcc);
-  transform: translateY(-100%);
-  opacity: 0;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-  pointer-events: none;
-}
-
-/* When header hides/is absent, snap bar flush to top of viewport */
-body:has(.site-header--hidden) .acc-bar,
-body:not(:has(.site-header)) .acc-bar {
-  top: 0;
-}
-
-/* Visible state — mirrors sticky-atc pattern */
-.acc-bar:not([hidden]) {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Keep mounted so CSS transition can run */
-.acc-bar[hidden] {
-  display: block;
 }
 
 .acc-bar__inner {
@@ -812,7 +777,6 @@ body:not(:has(.site-header)) .acc-bar {
 
       this._bindEvents();
       this._renderDeviceFilter();
-      this._initStickyBar();
     }
 
     /* ── Bind all event listeners (delegated to `this` so they survive grid replacement) ── */
@@ -1233,17 +1197,6 @@ body:not(:has(.site-header)) .acc-bar {
       .finally(function () {
         if (btn) { btn.classList.remove('is-loading'); setTimeout(function () { btn.disabled = false; }, 400); }
       });
-    }
-
-    /* ── Sticky bar: same IntersectionObserver pattern as sticky-add-to-cart ── */
-    _initStickyBar() {
-      var bar      = this.querySelector('.acc-bar');
-      var sentinel = this.querySelector('.acc-bar-sentinel');
-      if (!bar || !sentinel) return;
-      var obs = new IntersectionObserver(function (entries) {
-        bar.hidden = entries[0].isIntersecting;
-      }, { threshold: 0 });
-      obs.observe(sentinel);
     }
 
     /* ── Update sticky bar cart summary ── */
