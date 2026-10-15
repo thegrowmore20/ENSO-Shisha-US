@@ -875,16 +875,13 @@
         self._handleAtc(form, card ? (card.dataset.popupTitle || '') : '');
       });
 
-      // Popup open — delegated to this
+      // Card image and title links navigate to product page (no popup on catalogue)
+      // Popup open — Details span only (hidden on grid, used on device pages)
       this.addEventListener('click', function (e) {
-        var imgLink    = e.target.closest('.acc-card__img');
-        var titleLink  = e.target.closest('.acc-card__title a');
         var detailSpan = e.target.closest('.acc-card__details');
-        if (!imgLink && !titleLink && !detailSpan) return;
-        var card = e.target.closest('.acc-card[data-popup-title]');
+        if (!detailSpan) return;
+        var card = detailSpan.closest('.acc-card[data-popup-title]');
         if (!card) return;
-        // Don't intercept ATC form submit
-        if (e.target.closest('.acc-card__form')) return;
         e.preventDefault();
         self._openPopup(card);
       });
