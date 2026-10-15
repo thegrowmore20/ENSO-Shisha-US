@@ -328,6 +328,54 @@
       openFromCard(card);
     });
 
+    /* variant option switching */
+    trackEl.addEventListener('click', function (e) {
+      var optBtn = e.target.closest('.acc-card__opt');
+      if (!optBtn) return;
+      var card = optBtn.closest('.acc-card');
+      if (!card) return;
+
+      var vid       = optBtn.dataset.vid;
+      var money     = optBtn.dataset.money;
+      var available = optBtn.dataset.available !== 'false';
+
+      /* update active state */
+      card.querySelectorAll('.acc-card__opt').forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      optBtn.classList.add('is-active');
+      optBtn.setAttribute('aria-pressed', 'true');
+
+      /* update hidden form input */
+      var idInput = card.querySelector('input[name="id"]');
+      if (idInput) idInput.value = vid;
+
+      /* update price */
+      var priceEl = card.querySelector('.acc-card__price b');
+      if (priceEl && money) priceEl.textContent = money;
+
+      /* update card-level data attrs used by global.js for button state sync */
+      card.dataset.price     = optBtn.dataset.price;
+      card.dataset.available = available;
+
+      /* swap ATC ↔ Notify me */
+      var foot     = card.querySelector('.acc-card__foot');
+      var form     = card.querySelector('.acc-card__form');
+      var notifyEl = card.querySelector('.acc-card__btn--remind');
+      var oosEl    = card.querySelector('.acc-card__oos');
+
+      if (available) {
+        if (form)     form.hidden     = false;
+        if (notifyEl) notifyEl.hidden = true;
+        if (oosEl)    oosEl.hidden    = true;
+      } else {
+        if (form)     form.hidden     = true;
+        if (notifyEl) notifyEl.hidden = false;
+        if (oosEl)    oosEl.hidden    = false;
+      }
+    });
+
     /* ATC submit handled by global.js interceptor — no local handler needed */
   }
 

@@ -146,35 +146,27 @@
     <span class="acc-card__details" role="button" tabindex="0" aria-label="{{ 'accessibility.open_details' | t: title: product.title }}">{{ 'products.product.details' | t | default: 'Details' }}</span>
   {%- endif -%}
 
+  {%- liquid
+    assign _atc_label = 'products.product.add_to_cart' | t
+    if product.tags contains 'pre-order' or product.tags contains 'preorder'
+      assign _atc_label = 'products.product.pre_order' | t | default: 'Pre-order'
+    endif
+  -%}
   <div class="acc-card__foot">
     <div class="acc-card__price">
       <b>{{ variant.price | money }}</b>
-      {%- unless product.available -%}
-        <small class="acc-card__oos">{{ 'products.product.sold_out' | t }}</small>
-      {%- endunless -%}
+      <small class="acc-card__oos"{% if variant.available %} hidden{% endif %}>{{ 'products.product.sold_out' | t }}</small>
     </div>
 
-    {%- if product.available -%}
-      {%- liquid
-        assign _atc_label = 'products.product.add_to_cart' | t
-        if product.tags contains 'pre-order' or product.tags contains 'preorder'
-          assign _atc_label = 'products.product.pre_order' | t | default: 'Pre-order'
-        endif
-      -%}
-      <form action="{{ routes.cart_add_url }}" method="post" class="acc-card__form">
-        <input type="hidden" name="id" value="{{ variant.id }}">
-        <input type="hidden" name="quantity" value="1">
-        <button
-          type="submit"
-          class="btn btn--accent acc-card__btn"
-        >
-          <span class="acc-card__btn-label" data-quick-add-label data-label-available="{{ _atc_label | escape }}">{{ _atc_label }}</span>
-        </button>
-      </form>
-    {%- else -%}
-      <a class="btn btn--outline acc-card__btn acc-card__btn--remind" href="{{ product.url }}">
-        {{ 'products.product.notify_me' | t | default: 'Notify me' }}
-      </a>
-    {%- endif -%}
+    <form action="{{ routes.cart_add_url }}" method="post" class="acc-card__form"{% unless variant.available %} hidden{% endunless %}>
+      <input type="hidden" name="id" value="{{ variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button type="submit" class="btn btn--accent acc-card__btn">
+        <span class="acc-card__btn-label" data-quick-add-label data-label-available="{{ _atc_label | escape }}">{{ _atc_label }}</span>
+      </button>
+    </form>
+    <a class="btn btn--outline acc-card__btn acc-card__btn--remind" href="{{ product.url }}"{% if variant.available %} hidden{% endif %}>
+      {{ 'products.product.notify_me' | t | default: 'Notify me' }}
+    </a>
   </div>
 </article>
