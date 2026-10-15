@@ -424,8 +424,6 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: contain;
-  background: #faf8f4;
-  border: 1px solid rgb(0 0 0 / .08);
   border-radius: 16px;
   margin: 0 0 18px;
 }
@@ -479,11 +477,15 @@
     popTitle.textContent = title;
     popDesc.innerHTML = descTpl ? descTpl.innerHTML : '';
     if (img) {
-      popImg.src    = img;
+      popImg.hidden = true;
+      popImg.src    = '';
       popImg.alt    = title;
-      popImg.hidden = false;
+      popImg.onload = function () { popImg.hidden = false; };
+      popImg.onerror = function () { popImg.hidden = true; };
+      popImg.src    = img;
     } else {
       popImg.hidden = true;
+      popImg.src    = '';
     }
     lastFocus = document.activeElement;
     pop.hidden = false;
