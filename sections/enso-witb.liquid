@@ -4,40 +4,38 @@
 {%- assign tiles    = section.blocks | where: 'type', 'tile' -%}
 {%- assign items    = section.blocks | where: 'type', 'list_item' -%}
 
-<!-- Pre-rendered product data: one <template> per block that has a product -->
-{%- for block in section.blocks -%}
-  {%- if block.type == 'callout' or block.type == 'tile' -%}
-    {%- assign b = block.settings -%}
-    {%- if b.product != blank -%}
-      {%- assign prod = b.product -%}
-      {%- assign av_variant = prod.first_available_variant | default: prod.variants.first -%}
-      <template
-        id="witb-tpl-{{ block.id }}"
-        data-title="{{ prod.title | escape }}"
-        data-fits="{{ prod.metafields.custom.compatiblity_with | default: b.fits_label | default: st.default_fits_label | escape }}"
-        data-price="{{ av_variant.price | money }}"
-        data-available="{{ prod.available }}"
-        data-vid="{{ av_variant.id | default: prod.variants.first.id }}"
-        data-url="{{ prod.url }}"
-      >
-        {%- for img in prod.images limit: 3 -%}
-          <img src="{{ img | image_url: width: 900 }}" alt="{{ img.alt | default: prod.title | escape }}">
+{%- comment -%} Pre-rendered product data: one <template> per tile that has a product {%- endcomment -%}
+{%- for block in tiles -%}
+  {%- assign b = block.settings -%}
+  {%- if b.product != blank -%}
+    {%- assign prod = b.product -%}
+    {%- assign av_variant = prod.first_available_variant | default: prod.variants.first -%}
+    <template
+      id="witb-tpl-{{ block.id }}"
+      data-title="{{ prod.title | escape }}"
+      data-fits="{{ prod.metafields.custom.compatiblity_with | default: b.fits_label | default: st.default_fits_label | escape }}"
+      data-price="{{ av_variant.price | money }}"
+      data-available="{{ prod.available }}"
+      data-vid="{{ av_variant.id | default: prod.variants.first.id }}"
+      data-url="{{ prod.url }}"
+    >
+      {%- for img in prod.images limit: 3 -%}
+        <img src="{{ img | image_url: width: 900 }}" alt="{{ img.alt | default: prod.title | escape }}">
+      {%- endfor -%}
+      <div class="witb-d-headline">{{ prod.metafields.custom.headline | metafield_tag }}</div>
+      <div class="witb-d-what">
+        {%- if prod.metafields.custom.short_description != blank -%}
+          {{ prod.metafields.custom.short_description | metafield_tag }}
+        {%- else -%}
+          <p>{{ prod.description | strip_html | truncatewords: 60 }}</p>
+        {%- endif -%}
+      </div>
+      <div class="witb-d-variants">
+        {%- for v in prod.variants -%}
+          <span data-vid="{{ v.id }}" data-price="{{ v.price | money }}" data-available="{{ v.available }}">{{ v.title | escape }}</span>
         {%- endfor -%}
-        <div class="witb-d-headline">{{ prod.metafields.custom.headline | metafield_tag }}</div>
-        <div class="witb-d-what">
-          {%- if prod.metafields.custom.short_description != blank -%}
-            {{ prod.metafields.custom.short_description | metafield_tag }}
-          {%- else -%}
-            <p>{{ prod.description | strip_html | truncatewords: 60 }}</p>
-          {%- endif -%}
-        </div>
-        <div class="witb-d-variants">
-          {%- for v in prod.variants -%}
-            <span data-vid="{{ v.id }}" data-price="{{ v.price | money }}" data-available="{{ v.available }}">{{ v.title | escape }}</span>
-          {%- endfor -%}
-        </div>
-      </template>
-    {%- endif -%}
+      </div>
+    </template>
   {%- endif -%}
 {%- endfor -%}
 
@@ -63,7 +61,7 @@
 
     <div class="witb__grid">
 
-      <!-- Device image + hotspot callouts -->
+      <!-- Left: device image + hotspot callouts -->
       <div class="witb__dev">
         {%- if st.device_image != blank -%}
           {{
@@ -81,17 +79,26 @@
 
         {%- for block in callouts -%}
           {%- assign b = block.settings -%}
-          {%- if b.align_left -%}
-            {%- assign co_x = 100 | minus: b.pos_x -%}
-            {%- assign co_style = 'right:' | append: co_x | append: '%;top:' | append: b.pos_y | append: '%' -%}
-          {%- else -%}
-            {%- assign co_style = 'left:' | append: b.pos_x | append: '%;top:' | append: b.pos_y | append: '%' -%}
-          {%- endif -%}
+          {%- liquid
+            if b.align_left
+              assign co_x = 100 | minus: b.pos_x
+              assign co_style = 'right:' | append: co_x | append: '%;top:' | append: b.pos_y | append: '%'
+            else
+              assign co_style = 'left:' | append: b.pos_x | append: '%;top:' | append: b.pos_y | append: '%'
+            endif
+            assign pop_img_url = ''
+            if b.popup_image != blank
+              assign pop_img_url = b.popup_image | image_url: width: 600
+            endif
+          -%}
           <button
             type="button"
             class="witb__co{% if b.align_left %} witb__co--left{% endif %}"
             style="{{ co_style }}"
             data-witb-id="{{ block.id }}"
+            data-pop-title="{{ b.label | escape }}"
+            data-pop-img="{{ pop_img_url }}"
+            data-pop-desc="{{ b.popup_desc | escape }}"
             aria-label="{{ b.label | escape }}"
             {{ block.shopify_attributes }}
           >
@@ -105,67 +112,91 @@
         {%- endfor -%}
       </div>
 
-      <!-- Accessory tiles -->
-      {%- if tiles.size > 0 -%}
-        <div class="witb__tiles">
-          {%- for block in tiles -%}
-            {%- assign b = block.settings -%}
-            <button
-              type="button"
-              class="witb__tile{% if b.product != blank %} witb__tile--link{% endif %}"
-              data-witb-id="{{ block.id }}"
-              {{ block.shopify_attributes }}
-            >
-              <span class="witb__tile-img">
-                {%- if b.image != blank -%}
-                  {{
-                    b.image
-                    | image_url: width: 300
-                    | image_tag:
-                      widths: '150,200,300',
-                      sizes: '(min-width:992px) 15vw, 25vw',
-                      alt: b.image.alt | default: b.name,
-                      loading: 'lazy'
-                  }}
-                {%- elsif b.product != blank and b.product.featured_image != blank -%}
-                  {{
-                    b.product.featured_image
-                    | image_url: width: 300
-                    | image_tag:
-                      widths: '150,200,300',
-                      sizes: '(min-width:992px) 15vw, 25vw',
-                      alt: b.product.featured_image.alt | default: b.product.title,
-                      loading: 'lazy'
-                  }}
-                {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'witb__tile-ph' }}
+      <!-- Right: tiles + list stacked -->
+      <div class="witb__side">
+
+        {%- if tiles.size > 0 -%}
+          <div class="witb__tiles">
+            {%- for block in tiles -%}
+              {%- assign b = block.settings -%}
+              {%- liquid
+                assign pop_title = b.popup_title
+                if pop_title == blank
+                  assign pop_title = b.name
+                endif
+                if pop_title == blank and b.product != blank
+                  assign pop_title = b.product.title
+                endif
+                assign pop_img_url = ''
+                if b.popup_image != blank
+                  assign pop_img_url = b.popup_image | image_url: width: 600
+                endif
+                assign has_pop_data = false
+                if b.popup_image != blank or b.popup_desc != blank
+                  assign has_pop_data = true
+                endif
+              -%}
+              <button
+                type="button"
+                class="witb__tile{% if b.product != blank or has_pop_data %} witb__tile--link{% endif %}"
+                data-witb-id="{{ block.id }}"
+                {%- if has_pop_data -%}
+                  data-pop-title="{{ pop_title | escape }}"
+                  data-pop-img="{{ pop_img_url }}"
+                  data-pop-desc="{{ b.popup_desc | escape }}"
                 {%- endif -%}
-              </span>
-              <span class="witb__tile-cap">
-                <b>{{ b.name | default: b.product.title }}</b>
-                {%- if b.quantity != blank -%}<i>{{ b.quantity }}</i>{%- endif -%}
-              </span>
-            </button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
+                {{ block.shopify_attributes }}
+              >
+                <span class="witb__tile-img">
+                  {%- if b.image != blank -%}
+                    {{
+                      b.image
+                      | image_url: width: 300
+                      | image_tag:
+                        widths: '150,200,300',
+                        sizes: '(min-width:992px) 15vw, 25vw',
+                        alt: b.image.alt | default: b.name,
+                        loading: 'lazy'
+                    }}
+                  {%- elsif b.product != blank and b.product.featured_image != blank -%}
+                    {{
+                      b.product.featured_image
+                      | image_url: width: 300
+                      | image_tag:
+                        widths: '150,200,300',
+                        sizes: '(min-width:992px) 15vw, 25vw',
+                        alt: b.product.featured_image.alt | default: b.product.title,
+                        loading: 'lazy'
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'witb__tile-ph' }}
+                  {%- endif -%}
+                </span>
+                <span class="witb__tile-cap">
+                  <b>{{ b.name | default: b.product.title }}</b>
+                  {%- if b.quantity != blank -%}<i>{{ b.quantity }}</i>{%- endif -%}
+                </span>
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
 
-      <!-- Items list -->
-      {%- if items.size > 0 -%}
-        <ul class="witb__list">
-          {%- for block in items -%}
-            {%- assign b = block.settings -%}
-            <li {{ block.shopify_attributes }}>
-              <em>{{ b.quantity }}</em>
-              <span>
-                <b>{{ b.name }}</b>
-                {%- if b.note != blank %} · {{ b.note }}{%- endif -%}
-              </span>
-            </li>
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
+        {%- if items.size > 0 -%}
+          <ul class="witb__list">
+            {%- for block in items -%}
+              {%- assign b = block.settings -%}
+              <li {{ block.shopify_attributes }}>
+                <em>{{ b.quantity }}</em>
+                <span>
+                  <b>{{ b.name }}</b>
+                  {%- if b.note != blank %} · <span class="witb__list-note">{{ b.note }}</span>{%- endif -%}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
 
+      </div>
     </div>
 
     {%- if st.hint_text != blank -%}
@@ -173,9 +204,21 @@
     {%- endif -%}
 
   </div>
+
+  <!-- Simple info popup: hotspot callouts + info-only tiles -->
+  <div class="witb__pop" hidden role="dialog" aria-modal="true" aria-labelledby="witb-pop-title-{{ sid }}">
+    <div class="witb__pop-box">
+      <button type="button" class="witb__pop-x" aria-label="Close">×</button>
+      <img class="witb__pop-img" alt="" hidden>
+      <p class="witb__pop-eye">In the box</p>
+      <h3 class="witb__pop-title" id="witb-pop-title-{{ sid }}"></h3>
+      <p class="witb__pop-desc"></p>
+    </div>
+  </div>
+
 </section>
 
-{% style %}
+{% stylesheet %}
 .enso-witb {
   padding-top: var(--witb-pt-m, 40px);
   padding-bottom: var(--witb-pb-m, 24px);
@@ -186,17 +229,18 @@
     padding-bottom: var(--witb-pb, 40px);
   }
 }
+
+/* Heading */
 .witb__head { text-align: center; margin: 0 auto 40px; }
-.witb__head .eyebrow {
-  font-size: 15px;
-  color: var(--color-text-muted, #666);
-}
+.witb__head .eyebrow { font-size: 15px; color: var(--color-text-muted, #666); }
 .witb__h2 {
   margin: 8px 0 0;
   font-family: var(--font-accent);
   font-weight: var(--font-weight-heavy);
   letter-spacing: -0.025em;
 }
+
+/* Grid: device left | side right */
 .witb__grid {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -206,6 +250,8 @@
 @media screen and (max-width: 991px) {
   .witb__grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Device callout image */
 .witb__dev {
   position: relative;
   border: 1px solid rgb(0 0 0 / .1);
@@ -214,9 +260,10 @@
   overflow: hidden;
   aspect-ratio: 1;
 }
-.witb__dev img, .witb__dev-ph {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-}
+.witb__dev img,
+.witb__dev-ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Hotspot callouts */
 .witb__co {
   position: absolute;
   display: flex;
@@ -256,6 +303,16 @@
   .witb__co-l    { display: none; }
   .witb__co-s    { display: inline; }
 }
+
+/* Right side column */
+.witb__side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+/* Tiles */
 .witb__tiles {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -264,6 +321,13 @@
 @media screen and (max-width: 1199px) {
   .witb__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+@media screen and (max-width: 991px) {
+  .witb__tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media screen and (max-width: 599px) {
+  .witb__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 .witb__tile {
   border: 1px solid rgb(0 0 0 / .1);
   border-radius: 16px;
@@ -273,29 +337,29 @@
 }
 .witb__tile--link { cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .witb__tile--link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgb(0 0 0 / .08); }
+
 .witb__tile-img {
   display: grid; place-items: center;
   aspect-ratio: 1; background: #fff; padding: 12px;
 }
-.witb__tile-img img, .witb__tile-ph {
-  width: 100%; height: 100%; object-fit: contain; display: block;
-}
+.witb__tile-img img,
+.witb__tile-ph { width: 100%; height: 100%; object-fit: contain; display: block; }
+
 .witb__tile-cap {
   display: flex; flex-direction: column; gap: 1px;
   padding: 8px 10px 9px; border-top: 1px solid #eee;
 }
-.witb__tile-cap b { font: 700 11.5px/1.3 var(--font-heading); color: #000 !important; }
+.witb__tile-cap b { font: 700 11.5px/1.3 var(--font-heading); color: #000 !important; text-wrap: balance; }
 .witb__tile-cap i { font: 600 11.5px var(--font-heading); font-style: normal; color: #8a8a8a; white-space: nowrap; }
 @media screen and (max-width: 991px) {
   .witb__tile-cap { padding: 8px 9px; }
   .witb__tile-cap b { font-size: 11px; }
 }
+
+/* List */
 .witb__list {
-  grid-column: 1 / -1;
-  list-style: none; margin: 18px 0 0; padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0 28px;
+  list-style: none; margin: 0; padding: 0;
+  border-bottom: 1px solid rgb(0 0 0 / .1);
 }
 .witb__list li {
   display: grid;
@@ -304,41 +368,144 @@
   border-top: 1px solid rgb(0 0 0 / .1);
   font-size: 15px; line-height: 22px; color: rgb(0 0 0 / .7);
 }
-.witb__list em { font-style: normal; font-weight: 700; color: var(--palette-sand); }
+.witb__list em { font-style: normal; font-weight: 700; color: var(--palette-sand, #c8943a); }
 .witb__list b  { color: #000; font-weight: 600; }
-@media screen and (max-width: 991px) {
-  .witb__list { grid-template-columns: minmax(0, 1fr); }
-}
+.witb__list-note { color: rgb(0 0 0 / .5); }
+
+/* Footer hint */
 .witb__hint { text-align: center; color: #8a8a8a; font-size: 13px; margin: 14px 0 0; }
 
-{% endstyle %}
+/* ── Simple info popup ── */
+.witb__pop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgb(0 0 0 / .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.witb__pop[hidden] { display: none !important; }
+
+.witb__pop-box {
+  background: #fff;
+  border-radius: 24px;
+  max-width: 420px;
+  width: 100%;
+  padding: 28px;
+  position: relative;
+}
+
+.witb__pop-x {
+  position: absolute;
+  right: 14px; top: 14px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / .12);
+  background: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+.witb__pop-x:hover { background: rgb(0 0 0 / .05); }
+
+.witb__pop-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #faf8f4;
+  border: 1px solid rgb(0 0 0 / .08);
+  border-radius: 16px;
+  margin: 0 0 18px;
+}
+.witb__pop-img[hidden] { display: none !important; }
+
+.witb__pop-eye {
+  font: 600 12px/1 var(--font-heading);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+  margin: 0 0 10px;
+}
+.witb__pop-title {
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+.witb__pop-desc {
+  margin: 0;
+  color: rgb(0 0 0 / .72);
+  font-size: 15px;
+  line-height: 24px;
+}
+{% endstylesheet %}
 
 {% javascript %}
 (function () {
   var sectionEl = document.querySelector('.enso-witb[data-sid]');
   if (!sectionEl) return;
 
+  /* ── Simple info popup ── */
+  var pop      = sectionEl.querySelector('.witb__pop');
+  var popImg   = pop && pop.querySelector('.witb__pop-img');
+  var popTitle = pop && pop.querySelector('.witb__pop-title');
+  var popDesc  = pop && pop.querySelector('.witb__pop-desc');
+  var popX     = pop && pop.querySelector('.witb__pop-x');
+  var lastFocus = null;
+
+  function openSimplePop(btn) {
+    var img   = btn.dataset.popImg   || '';
+    var title = btn.dataset.popTitle || '';
+    var desc  = btn.dataset.popDesc  || '';
+    popTitle.textContent = title;
+    popDesc.textContent  = desc;
+    if (img) {
+      popImg.src    = img;
+      popImg.alt    = title;
+      popImg.hidden = false;
+    } else {
+      popImg.hidden = true;
+    }
+    lastFocus = document.activeElement;
+    pop.hidden = false;
+    document.body.style.overflow = 'hidden';
+    if (popX) popX.focus();
+  }
+
+  function closePop() {
+    pop.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  if (pop) {
+    popX.addEventListener('click', closePop);
+    pop.addEventListener('click', function (e) { if (e.target === pop) closePop(); });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (pop && !pop.hidden && e.key === 'Escape') closePop();
+  });
+
+  /* ── Product popup (tiles with linked product) ── */
   function openFromTemplate(tpl) {
     if (!tpl) return;
-    var d = tpl.dataset;
-
-    var imgs    = Array.from(tpl.content.querySelectorAll('img'));
-    var images  = imgs.map(function (img) { return { src: img.src, alt: img.alt }; });
-
+    var d        = tpl.dataset;
+    var imgs     = Array.from(tpl.content.querySelectorAll('img'));
+    var images   = imgs.map(function (img) { return { src: img.src, alt: img.alt }; });
     var headlineEl = tpl.content.querySelector('.witb-d-headline');
     var whatEl     = tpl.content.querySelector('.witb-d-what');
     var varEl      = tpl.content.querySelector('.witb-d-variants');
     var varSpans   = varEl ? Array.from(varEl.querySelectorAll('[data-vid]')) : [];
-
-    var variants = varSpans.length > 1 ? varSpans.map(function (vs) {
-      return {
-        vid:       vs.dataset.vid,
-        price:     vs.dataset.price,
-        available: vs.dataset.available,
-        title:     vs.textContent.trim()
-      };
+    var variants   = varSpans.length > 1 ? varSpans.map(function (vs) {
+      return { vid: vs.dataset.vid, price: vs.dataset.price, available: vs.dataset.available, title: vs.textContent.trim() };
     }) : [];
-
     document.dispatchEvent(new CustomEvent('product:popup', {
       bubbles: true,
       detail: {
@@ -356,8 +523,19 @@
     }));
   }
 
+  /* ── Click routing ── */
   sectionEl.querySelectorAll('[data-witb-id]').forEach(function (btn) {
     btn.addEventListener('click', function () {
+      /* Callout hotspots → always simple popup */
+      if (btn.classList.contains('witb__co')) {
+        if (pop) openSimplePop(btn);
+        return;
+      }
+      /* Tiles: popup data → simple popup; product → product popup */
+      if (btn.dataset.popTitle && pop) {
+        openSimplePop(btn);
+        return;
+      }
       openFromTemplate(document.getElementById('witb-tpl-' + btn.dataset.witbId));
     });
   });
@@ -367,42 +545,47 @@
 {% schema %}
 {
   "name": "ENSO in the box",
-  "tag": "section",
+  "tag": "div",
   "settings": [
-    { "type": "text",         "id": "eyebrow",           "label": "Eyebrow",                    "default": "What is in the box" },
-    { "type": "text",         "id": "heading",           "label": "Heading",                    "default": "Everything to start a session" },
-    { "type": "image_picker", "id": "device_image",      "label": "Device callout image" },
-    { "type": "text",         "id": "hint_text",         "label": "Hint text",                  "default": "Tap a part to see what it is and where to get a spare. The wall adapter is not included." },
-    { "type": "text",         "id": "default_fits_label","label": "Default Fits label",          "default": "Fits ENSO 2026 Edition" },
+    { "type": "text",         "id": "eyebrow",            "label": "Eyebrow",                    "default": "What is in the box" },
+    { "type": "text",         "id": "heading",            "label": "Heading",                    "default": "Everything to start a session" },
+    { "type": "image_picker", "id": "device_image",       "label": "Device callout image" },
+    { "type": "text",         "id": "hint_text",          "label": "Hint text",                  "default": "Tap a part to see what it is. The wall adapter is not included." },
+    { "type": "text",         "id": "default_fits_label", "label": "Default Fits label",          "default": "Fits ENSO 2026 Edition" },
     { "type": "header",       "content": "Section spacing" },
-    { "type": "range", "id": "padding_top",           "label": "Padding top — desktop",  "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
-    { "type": "range", "id": "padding_bottom",        "label": "Padding bottom — desktop","min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "padding_top_mobile",    "label": "Padding top — mobile",   "min": 0, "max": 80,  "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile","min": 0, "max": 80,  "step": 4, "unit": "px", "default": 24 }
+    { "type": "range", "id": "padding_top",           "label": "Padding top — desktop",   "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom",        "label": "Padding bottom — desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile",    "label": "Padding top — mobile",    "min": 0, "max": 80,  "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 80,  "step": 4, "unit": "px", "default": 24 }
   ],
   "blocks": [
     {
       "type": "callout",
       "name": "Hotspot",
       "settings": [
-        { "type": "text",         "id": "label",       "label": "Label (desktop)" },
-        { "type": "text",         "id": "label_short", "label": "Label (mobile)" },
-        { "type": "range",        "id": "pos_x",       "label": "Horizontal position (dot from left)", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
-        { "type": "range",        "id": "pos_y",       "label": "Vertical position (dot from top)",    "min": 0, "max": 100, "step": 1, "unit": "%", "default": 10 },
-        { "type": "checkbox",     "id": "align_left",  "label": "Label on left side",                  "default": false },
-        { "type": "product",      "id": "product",     "label": "Product (opens sheet on click)" },
-        { "type": "text",         "id": "fits_label",  "label": "Override Fits label" }
+        { "type": "text",         "id": "label",        "label": "Label (desktop)" },
+        { "type": "text",         "id": "label_short",  "label": "Label (mobile short)" },
+        { "type": "range",        "id": "pos_x",        "label": "Horizontal % (from left)", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+        { "type": "range",        "id": "pos_y",        "label": "Vertical % (from top)",    "min": 0, "max": 100, "step": 1, "unit": "%", "default": 10 },
+        { "type": "checkbox",     "id": "align_left",   "label": "Label on left side",       "default": false },
+        { "type": "header",       "content": "Popup content" },
+        { "type": "image_picker", "id": "popup_image",  "label": "Popup image" },
+        { "type": "textarea",     "id": "popup_desc",   "label": "Popup description" }
       ]
     },
     {
       "type": "tile",
       "name": "Accessory tile",
       "settings": [
-        { "type": "product",      "id": "product",     "label": "Product (opens sheet on click)" },
-        { "type": "image_picker", "id": "image",       "label": "Override image" },
-        { "type": "text",         "id": "name",        "label": "Override name" },
-        { "type": "text",         "id": "quantity",    "label": "Quantity (e.g. 1×)" },
-        { "type": "text",         "id": "fits_label",  "label": "Override Fits label" }
+        { "type": "product",      "id": "product",      "label": "Product (opens product sheet on click)" },
+        { "type": "image_picker", "id": "image",        "label": "Override image" },
+        { "type": "text",         "id": "name",         "label": "Name" },
+        { "type": "text",         "id": "quantity",     "label": "Quantity (e.g. 1×)" },
+        { "type": "text",         "id": "fits_label",   "label": "Override Fits label" },
+        { "type": "header",       "content": "Info popup (overrides product sheet)" },
+        { "type": "image_picker", "id": "popup_image",  "label": "Popup image" },
+        { "type": "text",         "id": "popup_title",  "label": "Popup title (defaults to name)" },
+        { "type": "textarea",     "id": "popup_desc",   "label": "Popup description" }
       ]
     },
     {
@@ -411,7 +594,7 @@
       "settings": [
         { "type": "text", "id": "quantity", "label": "Quantity", "default": "1×" },
         { "type": "text", "id": "name",     "label": "Item name" },
-        { "type": "text", "id": "note",     "label": "Note (optional)" }
+        { "type": "text", "id": "note",     "label": "Note (optional, muted)" }
       ]
     }
   ],
@@ -419,25 +602,25 @@
     {
       "name": "ENSO in the box",
       "blocks": [
-        { "type": "callout",   "settings": { "label": "Glass ThermoCap",           "label_short": "ThermoCap",  "pos_x": 50, "pos_y": 10, "align_left": false } },
-        { "type": "callout",   "settings": { "label": "Brown leather strap",       "label_short": "Strap",      "pos_x": 41, "pos_y": 19, "align_left": true  } },
-        { "type": "callout",   "settings": { "label": "Mouthpiece · 15 cm",  "label_short": "Mouthpiece", "pos_x": 63, "pos_y": 30, "align_left": false } },
-        { "type": "callout",   "settings": { "label": "Blow-out valve",            "label_short": "Valve",      "pos_x": 34, "pos_y": 47, "align_left": true  } },
-        { "type": "callout",   "settings": { "label": "Hose · 1.5 m",        "label_short": "Hose",       "pos_x": 70, "pos_y": 62, "align_left": false } },
-        { "type": "callout",   "settings": { "label": "Glass water tank",          "label_short": "Tank",       "pos_x": 41, "pos_y": 87, "align_left": true  } },
-        { "type": "callout",   "settings": { "label": "Dip tube",                  "label_short": "Dip tube",   "pos_x": 50, "pos_y": 84, "align_left": false } },
-        { "type": "tile",      "settings": { "name": "Battery",                    "quantity": "1×" } },
-        { "type": "tile",      "settings": { "name": "Ceramic cups",               "quantity": "2×" } },
-        { "type": "tile",      "settings": { "name": "Disposable capsules",        "quantity": "10×" } },
-        { "type": "tile",      "settings": { "name": "3-in-1 multi-tool + glove",  "quantity": "1×" } },
-        { "type": "tile",      "settings": { "name": "Mesh screens",               "quantity": "2×" } },
-        { "type": "list_item", "settings": { "quantity": "1×",  "name": "USB-C cable",        "note": "wall adapter not included" } },
-        { "type": "list_item", "settings": { "quantity": "5×",  "name": "Silicone mouth tips" } },
-        { "type": "list_item", "settings": { "quantity": "1 set", "name": "Cleaning brushes",   "note": "for the shaft" } },
-        { "type": "list_item", "settings": { "quantity": "5×",  "name": "Glass balls",        "note": "for the blow-out valve" } },
-        { "type": "list_item", "settings": { "quantity": "1×",  "name": "ENSO screen wipe" } },
-        { "type": "list_item", "settings": { "quantity": "1×",  "name": "Warranty card" } },
-        { "type": "list_item", "settings": { "quantity": "1×",  "name": "User manual" } }
+        { "type": "callout",   "settings": { "label": "Glass ThermoCap",          "label_short": "ThermoCap",  "pos_x": 50, "pos_y": 10, "align_left": false } },
+        { "type": "callout",   "settings": { "label": "Brown leather strap",      "label_short": "Strap",      "pos_x": 41, "pos_y": 19, "align_left": true  } },
+        { "type": "callout",   "settings": { "label": "Mouthpiece · 15 cm", "label_short": "Mouthpiece", "pos_x": 63, "pos_y": 30, "align_left": false } },
+        { "type": "callout",   "settings": { "label": "Blow-out valve",           "label_short": "Valve",      "pos_x": 34, "pos_y": 47, "align_left": true  } },
+        { "type": "callout",   "settings": { "label": "Hose · 1.5 m",       "label_short": "Hose",       "pos_x": 70, "pos_y": 62, "align_left": false } },
+        { "type": "callout",   "settings": { "label": "Glass water tank",         "label_short": "Tank",       "pos_x": 41, "pos_y": 87, "align_left": true  } },
+        { "type": "callout",   "settings": { "label": "Dip tube",                 "label_short": "Dip tube",   "pos_x": 50, "pos_y": 84, "align_left": false } },
+        { "type": "tile",      "settings": { "name": "Battery",                   "quantity": "1×" } },
+        { "type": "tile",      "settings": { "name": "Ceramic cups",              "quantity": "2×" } },
+        { "type": "tile",      "settings": { "name": "Disposable capsules",       "quantity": "10×" } },
+        { "type": "tile",      "settings": { "name": "3-in-1 multi-tool + glove", "quantity": "1×" } },
+        { "type": "tile",      "settings": { "name": "Mesh screens",              "quantity": "2×" } },
+        { "type": "list_item", "settings": { "quantity": "1×",   "name": "USB-C cable",        "note": "wall adapter not included" } },
+        { "type": "list_item", "settings": { "quantity": "5×",   "name": "Silicone mouth tips" } },
+        { "type": "list_item", "settings": { "quantity": "1 set","name": "Cleaning brushes",   "note": "for the shaft" } },
+        { "type": "list_item", "settings": { "quantity": "5×",   "name": "Glass balls",        "note": "for the blow-out valve" } },
+        { "type": "list_item", "settings": { "quantity": "1×",   "name": "ENSŌ screen wipe" } },
+        { "type": "list_item", "settings": { "quantity": "1×",   "name": "Warranty card" } },
+        { "type": "list_item", "settings": { "quantity": "1×",   "name": "User manual" } }
       ]
     }
   ]
