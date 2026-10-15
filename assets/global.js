@@ -825,8 +825,6 @@ if (!customElements.get('product-recommendations')) {
       revertToAdd(variantId);
       showToast(removedTitle ? `${removedTitle} removed from cart` : 'Removed from cart');
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
-      // Refresh drawer to match (no open — just sync the contents)
-      if (typeof updateCartDrawer === 'function') await updateCartDrawer();
     } catch (err) {
       showToast(err.message || 'Could not remove from cart');
     } finally {
@@ -875,10 +873,6 @@ if (!customElements.get('product-recommendations')) {
 
       document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true, detail: { item } }));
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
-
-      // Refresh and open the cart drawer (cart-drawer.js exports these globally)
-      if (typeof updateCartDrawer === 'function') await updateCartDrawer();
-      if (typeof openCartDrawer  === 'function') openCartDrawer();
     } catch (err) {
       showToast(err.message || 'Could not add to cart');
     } finally {
