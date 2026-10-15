@@ -379,21 +379,20 @@ h6, .h6 {
   outline-offset: 3px;
 }
 
-/* "Added to Cart" state — golden filled, white text */
+/* "Added to Cart" state — transparent with golden outline */
 .btn[aria-pressed="true"] {
-  background: var(--btn-main, #c8943a);
-  background-image: none;
-  color: #fff !important;
-  border-color: transparent;
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--color-accent-button-background, #c8943a) !important;
+  border: 1.5px solid var(--color-accent-button-background, #c8943a) !important;
   box-shadow: none;
   transform: none;
 }
 
-.btn[aria-pressed="true"] * { color: #fff !important; }
+.btn[aria-pressed="true"] * { color: var(--color-accent-button-background, #c8943a) !important; }
 
 .btn[aria-pressed="true"]:hover {
-  background: var(--btn-main, #c8943a);
-  opacity: 0.88;
+  background: transparent !important;
   box-shadow: none;
 }
 
@@ -541,10 +540,10 @@ h6, .h6 {
   border-radius: 50%;
   animation: product-spin 0.6s linear infinite;
 }
-/* White spinner on golden-filled Added To Cart bg */
+/* Sand/golden spinner — visible on transparent bg during removal */
 .btn[aria-pressed="true"].is-loading::after {
-  border-color: rgba(255, 255, 255, 0.35);
-  border-top-color: #fff;
+  border-color: rgba(200, 148, 58, 0.3);
+  border-top-color: var(--btn-main, #c8943a);
 }
 
 /* Error state — shown briefly on ATC failure */
