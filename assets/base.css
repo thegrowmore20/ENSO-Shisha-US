@@ -519,6 +519,9 @@ h6, .h6 {
   color: transparent !important;
   pointer-events: none;
 }
+.btn.is-loading * {
+  color: transparent !important;
+}
 .btn.is-loading::after {
   content: '';
   position: absolute;
