@@ -1210,7 +1210,8 @@
       "settings": {
         "collection": { "label": "Collection" },
         "heading": { "label": "Heading" },
-        "products_limit": { "label": "Products to show" },
+        "products_limit": { "label": "Products to show (max 12)" },
+        "product_list": { "label": "Product list", "info": "Used when no collection is selected. Collection takes priority." },
         "header_cta": { "content": "View all button" },
         "cta_label": { "label": "Button label" },
         "cta_link": { "label": "Button link" }

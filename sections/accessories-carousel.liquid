@@ -1,5 +1,6 @@
 {%- liquid
   assign coll = section.settings.collection
+  assign product_list = section.settings.product_list
   assign heading = section.settings.heading
   assign cta_label = section.settings.cta_label
   assign cta_link = section.settings.cta_link | default: coll.url | default: '/collections/all'
@@ -38,15 +39,18 @@
             {%- render 'card-accessory', product: product -%}
           {%- endunless -%}
         {%- endfor -%}
-      {%- elsif request.design_mode -%}
+      {%- elsif product_list.size > 0 -%}
+        {%- for product in product_list limit: limit -%}
+          {%- render 'card-accessory', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
         {%- for i in (1..4) -%}
           <article class="acc-card acc-card--placeholder">
             <div class="acc-card__img">{{ 'product-' | append: i | placeholder_svg_tag: 'acc-card__placeholder' }}</div>
-            <h3 class="acc-card__title">Accessory {{ i }}</h3>
+            <h3 class="acc-card__title">Product name</h3>
             <p class="acc-card__desc">Product description goes here.</p>
             <div class="acc-card__foot">
-              <div class="acc-card__price"><b>€0.00</b></div>
-              <span class="acc-card__btn">Add to cart</span>
+              <div class="acc-card__price"><b>$0.00</b></div>
             </div>
           </article>
         {%- endfor -%}
@@ -233,55 +237,25 @@
     color: var(--color-text-muted, rgb(0 0 0 / .5));
   }
 
-  /* CTA buttons */
-  /* Loading spinner inside the button */
-  .acc-btn-spinner {
-    display: block;
-    width: 15px;
-    height: 15px;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: accSpin 0.65s linear infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes accSpin {
-    to { transform: rotate(360deg); }
-  }
-
   .acc-card__form { margin: 0; }
 
-  .acc-card__btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #000;
-    color: #fff;
-    border: 0;
-    border-radius: 999px;
-    padding: 10px 18px;
-    font-size: 12px;
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: opacity 0.2s;
-  }
-
-  .acc-card__btn:hover { opacity: 0.8; }
+  /* .btn.btn--accent provides gold fill; keep only sizing overrides */
+  .acc-card__btn { font-size: 12px; padding: 0 16px; min-width: 110px; }
 
   .acc-card__btn--remind {
     background: transparent;
-    color: #000;
+    color: var(--color-text);
     border: 1.5px solid rgb(0 0 0 / .3);
+    box-shadow: none;
   }
+  .acc-card__btn--remind:hover { border-color: var(--color-text); }
 
-  .acc-card__btn--remind:hover {
-    border-color: #000;
-    opacity: 1;
+  /* "Added to cart" state: ghost outline */
+  .acc-card__btn--added {
+    background: transparent !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-text) !important;
+    box-shadow: none !important;
   }
 
   /* View all */
@@ -310,12 +284,17 @@
   function handleCardAtc(form, productTitle) {
     var btn = form.querySelector('[type="submit"]');
     var variantId = form.querySelector('input[name="id"]') && form.querySelector('input[name="id"]').value;
-    var originalLabel = btn ? btn.innerHTML : '';
+    var labelEl = btn && btn.querySelector('.acc-card__btn-label');
+    var spinnerEl = btn && btn.querySelector('.btn__spinner');
+    var addedLabel = btn && btn.dataset.labelAdded;
+    var addLabel = btn && btn.dataset.labelAdd;
+
     if (btn) {
-      btn.style.width = btn.offsetWidth + 'px';
-      btn.innerHTML = '<span class="acc-btn-spinner"></span>';
       btn.disabled = true;
+      if (labelEl) labelEl.hidden = true;
+      if (spinnerEl) spinnerEl.hidden = false;
     }
+
     fetch('/cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
@@ -325,6 +304,17 @@
     .then(function (data) {
       if (window.__showProductToast) window.__showProductToast(data.product_title || productTitle);
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
+      if (btn && labelEl) {
+        if (spinnerEl) spinnerEl.hidden = true;
+        labelEl.textContent = addedLabel || 'Added to cart';
+        labelEl.hidden = false;
+        btn.classList.add('acc-card__btn--added');
+        setTimeout(function () {
+          btn.classList.remove('acc-card__btn--added');
+          if (labelEl && addLabel) labelEl.textContent = addLabel;
+          btn.disabled = false;
+        }, 2000);
+      }
       return fetch('/cart.js').then(function (r) { return r.json(); });
     })
     .then(function (cart) {
@@ -333,9 +323,12 @@
         el.hidden = cart.item_count === 0;
       });
     })
-    .catch(function () {})
-    .finally(function () {
-      if (btn) { btn.style.width = ''; btn.innerHTML = originalLabel; btn.disabled = false; }
+    .catch(function () {
+      if (btn) {
+        if (labelEl) { labelEl.hidden = false; }
+        if (spinnerEl) { spinnerEl.hidden = true; }
+        btn.disabled = false;
+      }
     });
   }
 
@@ -434,9 +427,16 @@
       "id": "products_limit",
       "label": "t:sections.accessories_carousel.settings.products_limit.label",
       "min": 2,
-      "max": 16,
+      "max": 12,
       "step": 1,
       "default": 8
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "t:sections.accessories_carousel.settings.product_list.label",
+      "info": "t:sections.accessories_carousel.settings.product_list.info",
+      "limit": 12
     },
     {
       "type": "header",

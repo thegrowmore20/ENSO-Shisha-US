@@ -14,6 +14,7 @@
   endif
   assign load_more_step = section.settings.load_more_step | plus: 0
   assign section_collection = section.settings.collection
+  assign section_product_list = section.settings.product_list
 -%}
 
 
@@ -101,7 +102,21 @@
       </div>
     </div>
 
-    {%- if section_collection != blank -%}
+    {%- liquid
+      if section_collection != blank
+        assign use_collection = true
+      elsif section_product_list.size > 0
+        assign use_collection = false
+      else
+        assign use_collection = false
+      endif
+      assign has_source = false
+      if section_collection != blank or section_product_list.size > 0
+        assign has_source = true
+      endif
+    -%}
+
+    {%- if has_source -%}
       {%- if is_load_more -%}
         <load-more-grid class="carousel__wrapper" data-step="{{ load_more_step }}">
       {%- else -%}
@@ -113,8 +128,20 @@
           role="group"
           aria-label="{{ section.settings.heading | escape }}"
         >
-          {%- for product in section_collection.products limit: section.settings.products_limit -%}
-            {% unless product.title contains 'Shipping Protection' %}
+          {%- if use_collection -%}
+            {%- for product in section_collection.products limit: section.settings.products_limit -%}
+              {% unless product.title contains 'Shipping Protection' %}
+                {%- if is_load_more -%}
+                  <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
+                    {%- render 'card-product', product: product, section: section -%}
+                  </div>
+                {%- else -%}
+                  {%- render 'card-product', product: product, section: section -%}
+                {%- endif -%}
+              {% endunless %}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for product in section_product_list limit: section.settings.products_limit -%}
               {%- if is_load_more -%}
                 <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
                   {%- render 'card-product', product: product, section: section -%}
@@ -122,8 +149,8 @@
               {%- else -%}
                 {%- render 'card-product', product: product, section: section -%}
               {%- endif -%}
-            {% endunless %}
-          {%- endfor -%}
+            {%- endfor -%}
+          {%- endif -%}
         </div>
         {%- if is_carousel -%}
           <div class="carousel__controls">
@@ -135,18 +162,21 @@
             </button>
           </div>
         {%- endif -%}
-        {%- if is_load_more and section_collection.products.size > load_more_step -%}
-          <div class="carousel__load-more">
-            <button
-              type="button"
-              class="btn btn--outline"
-              data-load-more-button
-              data-label-load-more="{{ 'sections.shop_accessories.load_more' | t }}"
-              data-label-show-less="{{ 'sections.shop_accessories.show_less' | t }}"
-            >
-              {{ 'sections.shop_accessories.load_more' | t }}
-            </button>
-          </div>
+        {%- if is_load_more -%}
+          {%- assign load_more_total = section_collection.products.size | default: section_product_list.size -%}
+          {%- if load_more_total > load_more_step -%}
+            <div class="carousel__load-more">
+              <button
+                type="button"
+                class="btn btn--outline"
+                data-load-more-button
+                data-label-load-more="{{ 'sections.shop_accessories.load_more' | t }}"
+                data-label-show-less="{{ 'sections.shop_accessories.show_less' | t }}"
+              >
+                {{ 'sections.shop_accessories.load_more' | t }}
+              </button>
+            </div>
+          {%- endif -%}
         {%- endif -%}
       {%- if is_load_more -%}
         </load-more-grid>
@@ -155,13 +185,28 @@
       {%- endif -%}
       <div class="carousel__actions carousel__actions-mobile">
         {%- if section.settings.cta_label != blank -%}
-          <a href="{{ section.settings.cta_link | default: section_collection.url | default: '#' }}" class="shop-acc__view-all">
+          {%- assign cta_href = section.settings.cta_link | default: section_collection.url | default: '#' -%}
+          <a href="{{ cta_href }}" class="shop-acc__view-all">
             {{ section.settings.cta_label }} ›
           </a>
         {%- endif -%}
       </div>
-    {%- elsif request.design_mode -%}
-      <p class="body-text text-muted">{{ 'sections.shop_accessories.onboarding' | t }}</p>
+    {%- else -%}
+      <div class="carousel__wrapper">
+        <div class="carousel__track" role="group" aria-label="{{ section.settings.heading | escape }}">
+          {%- for i in (1..4) -%}
+            <article class="product-card product-card--placeholder">
+              <div class="product-card__media">
+                {{ 'product-' | append: i | placeholder_svg_tag: 'product-card__placeholder-img' }}
+              </div>
+              <div class="product-card__info">
+                <h3 class="h-feature product-card__title">Product name</h3>
+                <div class="caption product-card__price">$0.00</div>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      </div>
     {%- endif -%}
   </div>
 </carousel-slider>
@@ -276,6 +321,13 @@
       "label": "Collection"
     },
     {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Product list",
+      "info": "Used when no collection is selected. Collection takes priority.",
+      "limit": 12
+    },
+    {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow label",
@@ -347,9 +399,9 @@
     {
       "type": "range",
       "id": "products_limit",
-      "label": "Products to show",
+      "label": "Products to show (max 12)",
       "min": 2,
-      "max": 16,
+      "max": 12,
       "step": 1,
       "default": 10
     },
