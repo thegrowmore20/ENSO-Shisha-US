@@ -796,7 +796,7 @@
             {%- if current_variant.available -%}
               {{ section.settings.cta_label | default: 'Pre-order' }}
             {%- else -%}
-              Sold out
+              {{ 'products.product.sold_out' | t }}
             {%- endif -%}
           </button>
         </form>
