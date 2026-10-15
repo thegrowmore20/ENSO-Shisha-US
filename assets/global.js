@@ -823,6 +823,7 @@ if (!customElements.get('product-recommendations')) {
       updateCount(cartData.item_count);
       const removedTitle = btn.dataset.productTitle;
       revertToAdd(variantId);
+      showToast(removedTitle ? `${removedTitle} removed from cart` : 'Removed from cart');
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
     } catch (err) {
       showToast(err.message || 'Could not remove from cart');
