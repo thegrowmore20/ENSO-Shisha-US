@@ -250,12 +250,13 @@
   }
   .acc-card__btn--remind:hover { border-color: var(--color-text); }
 
-  /* "Added to cart" state: ghost outline */
+  /* "Added to cart" state: lighter gold + dark text */
   .acc-card__btn--added {
     background: transparent !important;
     color: var(--color-text) !important;
-    border-color: var(--color-text) !important;
+    border-color: rgb(0 0 0 / .25) !important;
     box-shadow: none !important;
+    opacity: 1 !important;
   }
 
   /* View all */
@@ -283,17 +284,17 @@
   /* ── Card-level ATC (direct form on the card, not popup) ── */
   function handleCardAtc(form, productTitle) {
     var btn = form.querySelector('[type="submit"]');
-    var variantId = form.querySelector('input[name="id"]') && form.querySelector('input[name="id"]').value;
-    var labelEl = btn && btn.querySelector('.acc-card__btn-label');
-    var spinnerEl = btn && btn.querySelector('.btn__spinner');
-    var addedLabel = btn && btn.dataset.labelAdded;
-    var addLabel = btn && btn.dataset.labelAdd;
+    if (!btn || btn.disabled) return;
+    var vidInput = form.querySelector('input[name="id"]');
+    if (!vidInput) return;
+    var variantId = vidInput.value;
+    var labelEl = btn.querySelector('.acc-card__btn-label');
+    var addedLabel = btn.dataset.labelAdded || 'Added to cart';
+    var addLabel   = btn.dataset.labelAdd   || 'Add to cart';
 
-    if (btn) {
-      btn.disabled = true;
-      if (labelEl) labelEl.hidden = true;
-      if (spinnerEl) spinnerEl.hidden = false;
-    }
+    /* show spinner via is-loading (::after pseudo in base.css) */
+    btn.disabled = true;
+    btn.classList.add('is-loading');
 
     fetch('/cart/add.js', {
       method: 'POST',
@@ -304,17 +305,17 @@
     .then(function (data) {
       if (window.__showProductToast) window.__showProductToast(data.product_title || productTitle);
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
-      if (btn && labelEl) {
-        if (spinnerEl) spinnerEl.hidden = true;
-        labelEl.textContent = addedLabel || 'Added to cart';
-        labelEl.hidden = false;
-        btn.classList.add('acc-card__btn--added');
-        setTimeout(function () {
-          btn.classList.remove('acc-card__btn--added');
-          if (labelEl && addLabel) labelEl.textContent = addLabel;
-          btn.disabled = false;
-        }, 2000);
-      }
+
+      btn.classList.remove('is-loading');
+      if (labelEl) labelEl.textContent = addedLabel;
+      btn.classList.add('acc-card__btn--added');
+
+      setTimeout(function () {
+        btn.classList.remove('acc-card__btn--added');
+        if (labelEl) labelEl.textContent = addLabel;
+        btn.disabled = false;
+      }, 2000);
+
       return fetch('/cart.js').then(function (r) { return r.json(); });
     })
     .then(function (cart) {
@@ -324,11 +325,8 @@
       });
     })
     .catch(function () {
-      if (btn) {
-        if (labelEl) { labelEl.hidden = false; }
-        if (spinnerEl) { spinnerEl.hidden = true; }
-        btn.disabled = false;
-      }
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
     });
   }
 
