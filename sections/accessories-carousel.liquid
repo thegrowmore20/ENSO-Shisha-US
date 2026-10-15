@@ -241,6 +241,7 @@
 
   /* .btn.btn--accent provides gold fill; keep only sizing overrides */
   .acc-card__btn { font-size: 12px; padding: 0 16px; min-width: 110px; }
+  .acc-card__btn-label { color: #fff; }
 
   .acc-card__btn--oos {
     background: transparent;
@@ -260,6 +261,9 @@
     box-shadow: none !important;
     opacity: 1 !important;
   }
+  .acc-card__btn[aria-pressed="true"] .acc-card__btn-label {
+    color: var(--color-accent-button-background, #c8943a) !important;
+  }
 
   /* View all */
   .acc-section__viewall {
@@ -271,11 +275,23 @@
 
   /* uses .btn.btn--secondary from base.css — no overrides needed */
 
-  /* Mobile */
+  /* Tablet (hide arrows, tighten layout) */
   @media screen and (max-width: 991px) {
-    .acc-track { padding: 0 16px 8px; }
-    .acc-card { flex: 0 0 72vw; }
     .acc-arrow { display: none; }
+  }
+
+  /* Mobile — peek carousel: current card centred, adjacent cards visible at edges */
+  @media screen and (max-width: 749px) {
+    .acc-wrap { overflow: hidden; }
+    .acc-section { overflow: visible; }
+    .acc-track {
+      padding: 0 10vw 8px;
+      gap: 12px;
+    }
+    .acc-card {
+      flex: 0 0 80vw;
+      scroll-snap-align: center;
+    }
   }
 
 {% endstylesheet %}
