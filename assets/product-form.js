@@ -407,6 +407,19 @@ if (!customElements.get('sticky-add-to-cart')) {
           ? this.addButtonText.dataset.labelAvailable
           : this.addButtonText.dataset.labelSoldOut;
       }
+      // Override with cart state: if this variant is already in the cart, show "Added To Cart"
+      if (variant.available && this.addButton) {
+        const vid = String(variant.id);
+        const inCart = window.__cartItemsCache && window.__cartItemsCache.has(vid);
+        if (inCart) {
+          this.addButton.setAttribute('aria-pressed', 'true');
+          this.addButton.setAttribute('data-in-cart-variant', vid);
+          if (this.addButtonText) this.addButtonText.textContent = 'Added To Cart';
+        } else {
+          this.addButton.removeAttribute('aria-pressed');
+          this.addButton.removeAttribute('data-in-cart-variant');
+        }
+      }
     }
 
     #bindQuantity() {
