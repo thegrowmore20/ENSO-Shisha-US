@@ -668,7 +668,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding: 8px 18px 4px;
+  padding: 8px 0 4px;
 }
 
 .acc-card__opt {
@@ -1206,22 +1206,18 @@
       });
     }
 
-    /* ── Track header visibility; set --acc-bar-top accordingly ── */
+    /* ── Track header bottom edge; set --acc-bar-top to sit flush below it ── */
     _trackHeaderVisibility() {
-      var bar  = this.querySelector('.acc-bar');
+      var bar = this.querySelector('.acc-bar');
       if (!bar) return;
-      var setTop = function (headerVisible, headerHeight) {
-        bar.style.setProperty('--acc-bar-top', headerVisible ? headerHeight + 'px' : '0px');
-      };
       var siteHeader = document.querySelector('.section-header, #shopify-section-header, header[role="banner"]');
-      if (!siteHeader) { setTop(false, 0); return; }
-      var getHeight = function () { return siteHeader.offsetHeight || 0; };
-      setTop(true, getHeight());
-      var obs = new IntersectionObserver(function (entries) {
-        var entry = entries[0];
-        setTop(entry.isIntersecting, entry.isIntersecting ? getHeight() : 0);
-      }, { threshold: 0 });
-      obs.observe(siteHeader);
+      var update = function () {
+        var top = siteHeader ? Math.max(0, siteHeader.getBoundingClientRect().bottom) : 0;
+        bar.style.top = top + 'px';
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
     }
 
     /* ── Update sticky bar cart summary ── */
