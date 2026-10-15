@@ -600,57 +600,6 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
-(function () {
-  function openAccCardPopup(card) {
-    var d = card.dataset;
-    var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
-      return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
-    });
-    document.dispatchEvent(new CustomEvent('product:popup', {
-      bubbles: true,
-      detail: {
-        title:     d.popupTitle     || '',
-        fits:      d.popupCompat    || '',
-        price:     d.popupPrice     || '',
-        available: d.popupAvailable !== 'false',
-        vid:       d.popupVariant   || '',
-        url:       d.popupUrl       || '',
-        images:    images,
-        headline:  decodeURIComponent(d.popupHeadline  || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
-        shortdesc: decodeURIComponent(d.popupShortdesc || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
-        variants:  []
-      }
-    }));
-  }
-
-  document.addEventListener('click', function (e) {
-    var grid = e.target.closest('.collection__grid');
-    if (!grid) return;
-
-    var imgLink    = e.target.closest('.acc-card__img');
-    var titleLink  = e.target.closest('.acc-card__title a');
-    var detailSpan = e.target.closest('.acc-card__details');
-    if (!imgLink && !titleLink && !detailSpan) return;
-
-    var card = e.target.closest('.acc-card[data-popup-title]');
-    if (!card) return;
-    if (e.target.closest('.acc-card__form')) return;
-
-    e.preventDefault();
-    openAccCardPopup(card);
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
-    var grid = e.target.closest('.collection__grid');
-    if (!grid) return;
-    var detailSpan = e.target.closest('.acc-card__details');
-    if (!detailSpan) return;
-    var card = detailSpan.closest('.acc-card[data-popup-title]');
-    if (card) { e.preventDefault(); openAccCardPopup(card); }
-  });
-})();
 {% endjavascript %}
 
 {% schema %}

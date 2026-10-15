@@ -875,26 +875,6 @@
         self._handleAtc(form, card ? (card.dataset.popupTitle || '') : '');
       });
 
-      // Card image and title links navigate to product page (no popup on catalogue)
-      // Popup open — Details span only (hidden on grid, used on device pages)
-      this.addEventListener('click', function (e) {
-        var detailSpan = e.target.closest('.acc-card__details');
-        if (!detailSpan) return;
-        var card = detailSpan.closest('.acc-card[data-popup-title]');
-        if (!card) return;
-        e.preventDefault();
-        self._openPopup(card);
-      });
-
-      // Keyboard: Enter on Details span
-      this.addEventListener('keydown', function (e) {
-        if (e.key !== 'Enter') return;
-        var detailSpan = e.target.closest('.acc-card__details');
-        if (!detailSpan) return;
-        var card = detailSpan.closest('.acc-card[data-popup-title]');
-        if (card) { e.preventDefault(); self._openPopup(card); }
-      });
-
       // Variant pill clicks
       this.addEventListener('click', function (e) {
         var pill = e.target.closest('.acc-card__opt');
@@ -1216,29 +1196,6 @@
       .finally(function () {
         if (btn) { btn.classList.remove('is-loading'); setTimeout(function () { btn.disabled = false; }, 400); }
       });
-    }
-
-    /* ── Open global product popup from card data attrs ── */
-    _openPopup(card) {
-      var d = card.dataset;
-      var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
-        return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
-      });
-      document.dispatchEvent(new CustomEvent('product:popup', {
-        bubbles: true,
-        detail: {
-          title:     d.popupTitle     || '',
-          fits:      d.popupCompat    || '',
-          price:     d.popupPrice     || '',
-          available: d.popupAvailable !== 'false',
-          vid:       d.popupVariant   || '',
-          url:       d.popupUrl       || '',
-          images:    images,
-          headline:  decodeURIComponent(d.popupHeadline  || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
-          shortdesc: decodeURIComponent(d.popupShortdesc || '').replace(/&#(\d+);/g, function(_, n) { return String.fromCharCode(n); }),
-          variants:  []
-        }
-      }));
     }
 
     /* ── Update sticky bar cart summary ── */
