@@ -834,7 +834,7 @@ if (!customElements.get('product-recommendations')) {
 
   // ── Submit delegation ──────────────────────────────────────────────────────
   document.addEventListener('submit', async (e) => {
-    const form = e.target.closest('form[action="/cart/add"]');
+    const form = e.target.closest('form[action*="/cart/add"]');
     if (!form) return;
 
     e.preventDefault();
