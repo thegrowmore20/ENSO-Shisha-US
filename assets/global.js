@@ -723,9 +723,11 @@ if (!customElements.get('product-recommendations')) {
       position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);
       background:#111;color:#fff;font-family:var(--font-body,sans-serif);
       font-size:14px;line-height:1.4;padding:14px 24px;border-radius:100px;
-      white-space:nowrap;pointer-events:none;opacity:0;
+      max-width:calc(100vw - 48px);white-space:normal;text-align:center;
+      pointer-events:none;opacity:0;
       transition:opacity .2s ease,transform .2s ease;z-index:9999;}
     #ajax-atc-toast.is-visible{opacity:1;transform:translate(-50%,-50%) scale(1);}
+    @media(max-width:749px){#ajax-atc-toast{font-size:12px;padding:10px 16px;}}
   `;
 
   function injectToastStyles() {
@@ -769,6 +771,14 @@ if (!customElements.get('product-recommendations')) {
     return btn.querySelector('[data-quick-add-label], [data-add-to-cart-text]');
   }
 
+  // ── Toggle card icon spans (bag ↔ checkmark) ──────────────────────────────
+  function setCardIcons(btn, inCart) {
+    const addIcon   = btn.querySelector('.acc-card__btn-icon--add');
+    const checkIcon = btn.querySelector('.acc-card__btn-icon--check');
+    if (addIcon)   addIcon.style.display   = inCart ? 'none' : '';
+    if (checkIcon) checkIcon.style.display = inCart ? '' : 'none';
+  }
+
   // ── Mark button as "Added To Cart" ────────────────────────────────────────
   function markAsAdded(btn, variantId, productTitle) {
     btn.setAttribute('aria-pressed', 'true');
@@ -777,6 +787,7 @@ if (!customElements.get('product-recommendations')) {
     cartVariantsCache.set(String(variantId), productTitle || '');
     const label = getLabelEl(btn);
     if (label) label.textContent = 'Added To Cart';
+    setCardIcons(btn, true);
   }
 
   // ── Revert all buttons for a variant back to "Add To Cart" ────────────────
@@ -788,6 +799,7 @@ if (!customElements.get('product-recommendations')) {
       b.removeAttribute('data-product-title');
       const label = getLabelEl(b);
       if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
+      setCardIcons(b, false);
     });
   }
 
@@ -915,6 +927,7 @@ if (!customElements.get('product-recommendations')) {
           b.removeAttribute('data-product-title');
           const label = getLabelEl(b);
           if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
+          setCardIcons(b, false);
         }
       });
     } catch (_) {}
