@@ -775,8 +775,17 @@ if (!customElements.get('product-recommendations')) {
   function setCardIcons(btn, inCart) {
     const addIcon   = btn.querySelector('.acc-card__btn-icon--add');
     const checkIcon = btn.querySelector('.acc-card__btn-icon--check');
-    if (addIcon)   addIcon.style.display   = inCart ? 'none' : '';
-    if (checkIcon) checkIcon.style.display = inCart ? '' : 'none';
+    if (!addIcon && !checkIcon) return;
+    // Only swap icons in icon-button mode (≤991px); desktop uses text buttons
+    if (!window.matchMedia('(max-width: 991px)').matches) return;
+    if (addIcon) {
+      if (inCart) addIcon.style.display = 'none';
+      else        addIcon.style.removeProperty('display');
+    }
+    if (checkIcon) {
+      if (inCart) checkIcon.style.setProperty('display', 'flex', 'important');
+      else        checkIcon.style.display = 'none';
+    }
   }
 
   // ── Mark button as "Added To Cart" ────────────────────────────────────────
@@ -822,6 +831,19 @@ if (!customElements.get('product-recommendations')) {
     if (sp) sp.setAttribute('hidden', '');
     const lbl = getLabelEl(btn);
     if (lbl) lbl.style.visibility = '';
+  }
+
+  // ── Show error state on button for 3 s ────────────────────────────────────
+  function showBtnError(btn, msg) {
+    if (!btn) return;
+    btn.classList.add('btn--atc-error');
+    const lbl = getLabelEl(btn);
+    const prevText = lbl ? lbl.textContent : null;
+    if (lbl) lbl.textContent = msg || 'Error';
+    setTimeout(() => {
+      btn.classList.remove('btn--atc-error');
+      if (lbl && prevText !== null) lbl.textContent = prevText;
+    }, 3000);
   }
 
   // ── Remove from cart ───────────────────────────────────────────────────────
@@ -891,6 +913,7 @@ if (!customElements.get('product-recommendations')) {
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
     } catch (err) {
       showToast(err.message || 'Could not add to cart');
+      showBtnError(btn, err.message || 'Error');
     } finally {
       if (btn) btnEnd(btn);
     }
