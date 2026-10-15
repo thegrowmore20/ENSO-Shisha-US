@@ -364,9 +364,12 @@
 .witb__list li {
   display: grid;
   grid-template-columns: 46px minmax(0, 1fr);
-  gap: 10px; padding: 11px 0;
+  gap: 10px; padding: 16px 0;
   border-top: 1px solid rgb(0 0 0 / .1);
   font-size: 15px; line-height: 22px; color: rgb(0 0 0 / .7);
+}
+@media screen and (max-width: 749px) {
+  .witb__list li { padding: 13px 0; }
 }
 .witb__list em { font-style: normal; font-weight: 700; color: var(--palette-sand, #c8943a); }
 .witb__list b  { color: #000; font-weight: 600; }
