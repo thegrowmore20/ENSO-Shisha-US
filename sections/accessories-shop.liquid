@@ -389,23 +389,23 @@
   /* Card: hide description and details link */
   .acc-grid .acc-card__desc { display: none; }
   .acc-grid .acc-card__details { display: none; }
-  .acc-card__opts { display: none; }
+  .acc-shop .acc-card__opts { display: none; }
 
   /* Card: extra top padding for fits badge */
   .acc-grid .acc-card__img img { padding: 18% 8% 8%; }
 
-  /* ATC → icon-only round button */
-  .acc-card__btn-label { display: none; }
-  .acc-card__btn {
+  /* ATC → icon-only round button (shop page only, not carousel) */
+  .acc-shop .acc-card__btn-label { display: none; }
+  .acc-shop .acc-card__btn {
     width: 40px;
     height: 40px;
     padding: 0;
     flex-shrink: 0;
   }
-  .acc-card__btn-icon { display: block !important; }
+  .acc-shop .acc-card__btn-icon { display: block !important; }
   /* "Added" state: base.css aria-pressed rule handles color/border;
      keep icon visible in sand */
-  .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon {
+  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon {
     color: var(--color-accent-button-background, #c8943a) !important;
   }
 }
