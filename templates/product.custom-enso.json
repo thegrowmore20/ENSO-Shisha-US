@@ -39,7 +39,9 @@
           "settings": {
             "chip_1": "No charcoal",
             "chip_2": "Battery powered",
-            "chip_3": "Magnetic mouthpiece"
+            "chip_3": "Magnetic mouthpiece",
+            "chip_4": "",
+            "chip_5": ""
           }
         },
         "text_JLGqNX": {
@@ -73,7 +75,9 @@
           "type": "buy_buttons",
           "settings": {
             "show_quantity": false,
-            "show_dynamic_checkout": false
+            "show_dynamic_checkout": false,
+            "remind_me_url": "",
+            "remind_me_label": "Remind Me"
           }
         },
         "trust_strip": {
@@ -89,7 +93,9 @@
         },
         "specs_inline": {
           "type": "specs_inline",
-          "settings": {}
+          "settings": {
+            "heading": "Specifications"
+          }
         },
         "witb_inline": {
           "type": "witb_inline",
@@ -264,8 +270,8 @@
             "pos_x": 50,
             "pos_y": 10,
             "align_left": false,
-            "product": "glass-thermo-cap",
-            "fits_label": ""
+            "popup_image": "shopify://shop_images/glass-thermo-cap-1.webp",
+            "popup_desc": "<p>The see-through cap that holds the heat over the cup, so you can watch the blend while it works.</p>"
           }
         },
         "co_strap": {
@@ -276,8 +282,8 @@
             "pos_x": 41,
             "pos_y": 19,
             "align_left": true,
-            "product": "beige-vegan-leather-strap-for-enso",
-            "fits_label": ""
+            "popup_image": "shopify://shop_images/replacement-leather-strap-1.webp",
+            "popup_desc": "<p>The leather strap with ENSŌ hardware. Carry ENSŌ by it.</p>"
           }
         },
         "co_mp": {
@@ -288,8 +294,8 @@
             "pos_x": 63,
             "pos_y": 30,
             "align_left": false,
-            "product": "enso-mouthpiece-extensions",
-            "fits_label": ""
+            "popup_image": "shopify://shop_images/replacement-mouthpiece-1.webp",
+            "popup_desc": "<p>The magnetic mouthpiece at the end of the hose. It snaps on and off.</p>"
           }
         },
         "co_valve": {
@@ -300,8 +306,8 @@
             "pos_x": 34,
             "pos_y": 47,
             "align_left": true,
-            "product": "",
-            "fits_label": ""
+            "popup_image": "shopify://shop_images/choke-valve-1.webp",
+            "popup_desc": "<p>Clears old smoke from the glass tank with one breath. Five spare glass balls for the valve are in the box.</p>"
           }
         },
         "co_hose": {
@@ -312,8 +318,8 @@
             "pos_x": 70,
             "pos_y": 62,
             "align_left": false,
-            "product": "enso-vapor-hose-1-5-m",
-            "fits_label": ""
+            "popup_image": "shopify://shop_images/enso-custom-hoses-1.webp",
+            "popup_desc": "<p>The longer, washable silicone hose. It snaps on and off the device by its magnet.</p>"
           }
         },
         "co_tank": {
@@ -324,8 +330,8 @@
             "pos_x": 41,
             "pos_y": 87,
             "align_left": true,
-            "product": "replacement-glass-tank",
-            "fits_label": ""
+            "popup_image": "shopify://shop_images/replacement-glass-tank-1.webp",
+            "popup_desc": "<p>Holds the water the smoke passes through. Fill it to the level mark, never above.</p>"
           }
         },
         "co_diptube": {
@@ -336,8 +342,8 @@
             "pos_x": 50,
             "pos_y": 84,
             "align_left": false,
-            "product": "acrylic-tank-for-enso",
-            "fits_label": ""
+            "popup_image": "shopify://shop_images/replacement-dip-tube-1.webp",
+            "popup_desc": "<p>Takes the smoke down into the water. It sits inside the tank.</p>"
           }
         },
         "tile_battery": {
@@ -347,7 +353,9 @@
             "image": "shopify://shop_images/witb-battery.webp",
             "name": "Battery",
             "quantity": "1×",
-            "fits_label": ""
+            "fits_label": "",
+            "popup_title": "",
+            "popup_desc": ""
           }
         },
         "tile_cups": {
@@ -357,7 +365,9 @@
             "image": "shopify://shop_images/witb-cups.webp",
             "name": "Ceramic cups",
             "quantity": "2×",
-            "fits_label": ""
+            "fits_label": "",
+            "popup_title": "",
+            "popup_desc": ""
           }
         },
         "tile_caps": {
@@ -367,7 +377,9 @@
             "image": "shopify://shop_images/witb-capsules.webp",
             "name": "Disposable capsules",
             "quantity": "10×",
-            "fits_label": ""
+            "fits_label": "",
+            "popup_title": "",
+            "popup_desc": ""
           }
         },
         "tile_tool": {
@@ -377,7 +389,9 @@
             "image": "shopify://shop_images/witb-multitool.webp",
             "name": "3-in-1 multi-tool + glove",
             "quantity": "1×",
-            "fits_label": ""
+            "fits_label": "",
+            "popup_title": "",
+            "popup_desc": ""
           }
         },
         "tile_screen": {
@@ -387,7 +401,9 @@
             "image": "shopify://shop_images/mesh-screen-kit-1.webp",
             "name": "Mesh screens",
             "quantity": "2×",
-            "fits_label": ""
+            "fits_label": "",
+            "popup_title": "",
+            "popup_desc": ""
           }
         },
         "li_usbc": {
@@ -486,6 +502,7 @@
         "collection": "accesories",
         "heading": "Accessories for ENSŌ",
         "products_limit": 8,
+        "product_list": [],
         "cta_label": "View all accessories",
         "cta_link": "/collections/accesories",
         "padding_top": 40,
@@ -500,6 +517,7 @@
         "color_background": "{{ settings.color_palette.background }}",
         "color_text": "{{ settings.color_palette.foreground }}",
         "image": "shopify://shop_images/jr-arch-cup.webp",
+        "image_file": "",
         "image_mobile_x": 50,
         "heading": "Pack your blend",
         "heading_size_desktop": 40,
@@ -574,13 +592,49 @@
     "enso_experience": {
       "type": "enso-experience",
       "blocks": {
-        "chip_qs": { "type": "chip", "settings": { "label": "Quick start" } },
-        "chip_manual": { "type": "chip", "settings": { "label": "Full manual" } },
-        "chip_faq": { "type": "chip", "settings": { "label": "FAQ" } },
-        "chip_warranty": { "type": "chip", "settings": { "label": "Warranty" } },
-        "chip_fw": { "type": "chip", "settings": { "label": "Firmware app" } }
+        "chip_qs": {
+          "type": "chip",
+          "settings": {
+            "label": "Quick start",
+            "url": ""
+          }
+        },
+        "chip_manual": {
+          "type": "chip",
+          "settings": {
+            "label": "Full manual",
+            "url": ""
+          }
+        },
+        "chip_faq": {
+          "type": "chip",
+          "settings": {
+            "label": "FAQ",
+            "url": ""
+          }
+        },
+        "chip_warranty": {
+          "type": "chip",
+          "settings": {
+            "label": "Warranty",
+            "url": ""
+          }
+        },
+        "chip_fw": {
+          "type": "chip",
+          "settings": {
+            "label": "Firmware app",
+            "url": ""
+          }
+        }
       },
-      "block_order": ["chip_qs", "chip_manual", "chip_faq", "chip_warranty", "chip_fw"],
+      "block_order": [
+        "chip_qs",
+        "chip_manual",
+        "chip_faq",
+        "chip_warranty",
+        "chip_fw"
+      ],
       "settings": {
         "image": "shopify://shop_images/enso-exp-tea.webp",
         "eyebrow": "ENSŌ Experience",
