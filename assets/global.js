@@ -886,8 +886,11 @@ if (!customElements.get('product-recommendations')) {
     }
   });
 
-  // ── Page-load cart sync ────────────────────────────────────────────────────
+  // ── Cart sync — runs at page load and on every cart:updated event ──────────
+  let _syncInFlight = false;
   async function syncCartState() {
+    if (_syncInFlight) return;
+    _syncInFlight = true;
     try {
       const cartRes  = await fetch('/cart.js');
       const cartData = await cartRes.json();
@@ -895,6 +898,7 @@ if (!customElements.get('product-recommendations')) {
       const inCartMap = new Map(cartData.items.map(i => [String(i.variant_id), i.product_title || '']));
       inCartMap.forEach((title, vid) => cartVariantsCache.set(vid, title));
 
+      // Mark buttons whose variant is now in the cart
       document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
         const input = form.querySelector('[name="id"]');
         if (!input) return;
@@ -903,8 +907,24 @@ if (!customElements.get('product-recommendations')) {
         const productTitle = inCartMap.get(variantId);
         form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId, productTitle));
       });
+
+      // Revert buttons whose variant is no longer in the cart
+      document.querySelectorAll('[data-in-cart-variant]').forEach(b => {
+        const vid = b.dataset.inCartVariant;
+        if (!inCartMap.has(vid)) {
+          b.removeAttribute('aria-pressed');
+          b.removeAttribute('data-in-cart-variant');
+          b.removeAttribute('data-product-title');
+          const label = getLabelEl(b);
+          if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
+        }
+      });
     } catch (_) {}
+    finally { _syncInFlight = false; }
   }
+
+  // Re-sync on every cart mutation from any source (popup, drawer, card ATC)
+  document.addEventListener('cart:updated', syncCartState);
 
   // ── Variant-switch sync — restore "Added To Cart" if switched-to variant is in cart ──
   document.addEventListener('variant:change', (e) => {
