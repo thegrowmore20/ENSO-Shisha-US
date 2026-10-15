@@ -722,12 +722,12 @@ if (!customElements.get('product-recommendations')) {
     #ajax-atc-toast{
       position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);
       background:#111;color:#fff;font-family:var(--font-body,sans-serif);
-      font-size:14px;line-height:1.4;padding:14px 24px;border-radius:100px;
+      font-size:16px;line-height:1.4;padding:14px 24px;border-radius:100px;
       max-width:calc(100vw - 48px);white-space:normal;text-align:center;
       pointer-events:none;opacity:0;
       transition:opacity .2s ease,transform .2s ease;z-index:9999;}
     #ajax-atc-toast.is-visible{opacity:1;transform:translate(-50%,-50%) scale(1);}
-    @media(max-width:749px){#ajax-atc-toast{font-size:12px;padding:10px 16px;}}
+    @media(max-width:749px){#ajax-atc-toast{font-size:14px;padding:10px 18px;max-width:350px;}}
   `;
 
   function injectToastStyles() {
@@ -784,7 +784,7 @@ if (!customElements.get('product-recommendations')) {
     }
     if (checkIcon) {
       if (inCart) checkIcon.style.setProperty('display', 'flex', 'important');
-      else        checkIcon.style.display = 'none';
+      else        checkIcon.style.setProperty('display', 'none', 'important');
     }
   }
 
@@ -976,6 +976,7 @@ if (!customElements.get('product-recommendations')) {
         b.removeAttribute('data-product-title');
         const label = getLabelEl(b);
         if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
+        setCardIcons(b, false);
       }
     };
 

@@ -259,6 +259,12 @@ addCartDrawerListeners();
  * from `document` (bound once, here) covers every current AND future card
  * with no re-binding required anywhere else.
  */
+// When global.js handles ATC it dispatches cart:add — open and refresh the drawer.
+document.addEventListener('cart:add', async () => {
+  await updateCartDrawer();
+  openCartDrawer();
+});
+
 document.addEventListener("submit", async (e) => {
   // global.js IIFE owns all ATC form submits (add, remove, toggle).
   // Yield to it whenever it is present; only act as fallback when it is not.

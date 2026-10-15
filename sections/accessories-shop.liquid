@@ -1,6 +1,7 @@
 {%- liquid
   assign cols_default = section.settings.cols_default | default: 4
 -%}
+{%- render 'acc-atc-states' -%}
 
 <accessories-shop class="acc-shop"
   data-cols="{{ cols_default }}"
@@ -394,37 +395,13 @@ body:not(:has(.site-header)) .acc-bar {
   /* Card: extra top padding for fits badge */
   .acc-grid .acc-card__img img { padding: 18% 8% 8%; }
 
-  /* ATC → icon-only round button (shop page only, not carousel) */
+  /* ATC → icon-only round button; icon states handled by acc-atc-states snippet */
   .acc-shop .acc-card__btn-label { display: none; }
   .acc-shop .acc-card__btn {
     width: 40px;
     height: 40px;
     padding: 0;
     flex-shrink: 0;
-  }
-  .acc-shop .acc-card__btn-icon--add {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-  }
-  .acc-shop .acc-card__btn-icon--check { display: none !important; }
-  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--add { display: none !important; }
-  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--check {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-accent-button-background, #c8943a);
-  }
-
-  /* Hide icons while spinner is active so they don't overlap */
-  .acc-shop .acc-card__btn[data-loading] .acc-card__btn-icon { display: none !important; }
-
-  /* OOS button: same 40×40 circle but label hidden, bag icon shown (muted) */
-  .acc-shop .acc-card__btn--oos .acc-card__btn-label { display: none; }
-  .acc-shop .acc-card__oos-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 
@@ -672,12 +649,7 @@ body:not(:has(.site-header)) .acc-bar {
 
 .acc-grid .acc-card__foot { padding: 12px 18px 18px; }
 
-/* Icons hidden by default; mobile blocks show them */
-.acc-card__btn-icon { display: none; }
-
-@media screen and (min-width: 992px) {
-  .acc-card__btn-icon { display: none; }
-}
+/* Icon state CSS lives in snippets/acc-atc-states.liquid */
 
 /* ══════════════════════════════════════════
    VARIANT PILLS

@@ -379,20 +379,20 @@ h6, .h6 {
   outline-offset: 3px;
 }
 
-/* "Added to Cart" state — transparent with golden outline */
+/* "Added to Cart" state — golden filled */
 .btn[aria-pressed="true"] {
-  background: transparent !important;
+  background: var(--color-accent-button-background, #c8943a) !important;
   background-image: none !important;
-  color: var(--color-accent-button-background, #c8943a) !important;
-  border: 1.5px solid var(--color-accent-button-background, #c8943a) !important;
+  color: #fff !important;
+  border-color: transparent !important;
   box-shadow: none;
   transform: none;
 }
 
-.btn[aria-pressed="true"] * { color: var(--color-accent-button-background, #c8943a) !important; }
+.btn[aria-pressed="true"] * { color: #fff !important; }
 
 .btn[aria-pressed="true"]:hover {
-  background: transparent !important;
+  background: var(--color-accent-button-background, #c8943a) !important;
   box-shadow: none;
 }
 

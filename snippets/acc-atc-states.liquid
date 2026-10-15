@@ -1,0 +1,65 @@
+{%- doc -%}
+  Shared CSS for accessory card ATC button icon states.
+  Rendered by accessories-shop and accessories-carousel sections.
+  Sections keep their own sizing/layout overrides; all state logic lives here.
+{%- enddoc -%}
+{% stylesheet %}
+/* ── Acc card icon buttons — global default: hidden (desktop uses text labels) */
+.acc-card__btn-icon { display: none; }
+
+/* ── Shop page (mobile ≤991px) ─────────────────────────────────────── */
+@media screen and (max-width: 991px) {
+  /* Added state: white circle with golden checkmark (overrides base.css golden fill) */
+  .acc-shop .acc-card__btn[aria-pressed="true"] {
+    background: #fff !important;
+    background-image: none !important;
+    color: var(--color-accent-button-background, #c8943a) !important;
+    border: 1.5px solid var(--color-accent-button-background, #c8943a) !important;
+    box-shadow: none !important;
+  }
+  /* Initial: show bag icon */
+  .acc-shop .acc-card__btn-icon--add  { display: flex; align-items: center; justify-content: center; }
+  .acc-shop .acc-card__btn-icon--check { display: none; }
+  /* Added-to-cart: swap to checkmark */
+  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--add   { display: none !important; }
+  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--check {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-button-background, #c8943a);
+  }
+  /* Loading: hide all icons so only spinner shows */
+  .acc-shop .acc-card__btn[data-loading] .acc-card__btn-icon { display: none !important; }
+  /* OOS: hide label, show bag icon (muted via btn--outline + disabled) */
+  .acc-shop .acc-card__btn--oos .acc-card__btn-label { display: none; }
+  .acc-shop .acc-card__oos-icon { display: flex; align-items: center; justify-content: center; }
+}
+
+/* ── Carousel / .acc-section (mobile ≤749px) ──────────────────────── */
+@media screen and (max-width: 749px) {
+  /* Added state: white circle with golden checkmark */
+  .acc-section .acc-card__btn[aria-pressed="true"] {
+    background: #fff !important;
+    background-image: none !important;
+    color: var(--color-accent-button-background, #c8943a) !important;
+    border: 1.5px solid var(--color-accent-button-background, #c8943a) !important;
+    box-shadow: none !important;
+  }
+  /* Initial: show bag icon */
+  .acc-section .acc-card__btn-icon--add  { display: flex; align-items: center; justify-content: center; }
+  .acc-section .acc-card__btn-icon--check { display: none; }
+  /* Added-to-cart: swap to checkmark */
+  .acc-section .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--add   { display: none !important; }
+  .acc-section .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--check {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-button-background, #c8943a);
+  }
+  /* Loading: hide all icons so only spinner shows */
+  .acc-section .acc-card__btn[data-loading] .acc-card__btn-icon { display: none !important; }
+  /* OOS: hide label, show bag icon */
+  .acc-section .acc-card__btn--oos .acc-card__btn-label { display: none; }
+  .acc-section .acc-card__oos-icon { display: flex; align-items: center; justify-content: center; }
+}
+{% endstylesheet %}
