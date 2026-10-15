@@ -292,6 +292,29 @@
       flex: 0 0 80vw;
       scroll-snap-align: center;
     }
+
+    /* Icon-only ATC button on mobile */
+    .acc-card__btn {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      flex-shrink: 0;
+      min-width: unset;
+    }
+    .acc-card__btn-label { display: none; }
+    .acc-card__btn-icon--add {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .acc-card__btn-icon--check { display: none; }
+    .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--add { display: none !important; }
+    .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--check {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent-button-background, #c8943a);
+    }
   }
 
 {% endstylesheet %}

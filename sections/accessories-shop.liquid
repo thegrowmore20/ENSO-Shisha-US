@@ -396,11 +396,18 @@
     padding: 0;
     flex-shrink: 0;
   }
-  .acc-shop .acc-card__btn-icon { display: block !important; }
-  /* "Added" state: base.css aria-pressed rule handles color/border;
-     keep icon visible in sand */
-  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon {
-    color: var(--color-accent-button-background, #c8943a) !important;
+  .acc-shop .acc-card__btn-icon--add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .acc-shop .acc-card__btn-icon--check { display: none; }
+  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--add { display: none !important; }
+  .acc-shop .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon--check {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-button-background, #c8943a);
   }
 }
 
@@ -649,7 +656,8 @@
 
 .acc-grid .acc-card__foot { padding: 12px 18px 18px; }
 
-/* ATC icon mode moved to 991px block above */
+/* Icons hidden by default; mobile blocks show them */
+.acc-card__btn-icon { display: none; }
 
 @media screen and (min-width: 992px) {
   .acc-card__btn-icon { display: none; }
