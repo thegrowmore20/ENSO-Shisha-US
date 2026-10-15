@@ -143,6 +143,8 @@ function addCartDrawerListeners() {
     button.addEventListener("click", async () => {
       const rootItem = button.closest(".cart-drawer-item");
       const key = rootItem.getAttribute("data-line-item-key");
+      const titleEl = rootItem.querySelector("h3 a, h3");
+      const itemTitle = titleEl ? titleEl.textContent.trim() : null;
 
       button.disabled = true;
       showCartDrawerLoading();
@@ -164,6 +166,10 @@ function addCartDrawerListeners() {
         const cart = await res.json();
 
         updateCartItemCounts(cart.item_count);
+
+        if (window.__showToast) {
+          window.__showToast(itemTitle ? `${itemTitle} removed from cart` : 'Removed from cart');
+        }
 
         await updateCartDrawer();
       } catch (error) {

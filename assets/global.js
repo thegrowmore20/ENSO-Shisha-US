@@ -754,6 +754,8 @@ if (!customElements.get('product-recommendations')) {
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => el.classList.remove('is-visible'), 2800);
   }
+  // Expose so cart-drawer.js (loaded separately) can reuse the same toast
+  window.__showToast = showToast;
 
   // ── Cart count badge ───────────────────────────────────────────────────────
   function updateCount(count) {
