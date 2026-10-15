@@ -387,10 +387,7 @@ body:not(:has(.site-header)) .acc-bar {
   /* Mobile bottom bar */
   .acc-mbar { display: flex; }
 
-  /* Card: hide description and details link */
-  .acc-grid .acc-card__desc { display: none; }
-  .acc-grid .acc-card__details { display: none; }
-  .acc-shop .acc-card__opts { display: none; }
+  /* Card: description, details and variant pills all visible on mobile */
 
   /* Card: extra top padding for fits badge */
   .acc-grid .acc-card__img img { padding: 18% 8% 8%; }
@@ -647,7 +644,7 @@ body:not(:has(.site-header)) .acc-bar {
 
 .acc-card__details:hover { color: var(--color-text, #0a0a0a); }
 
-.acc-grid .acc-card__foot { padding: 12px 18px 18px; }
+.acc-grid .acc-card__foot { padding: 12px 18px 18px; margin-top: auto; }
 
 /* Icon state CSS lives in snippets/acc-atc-states.liquid */
 

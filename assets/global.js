@@ -910,6 +910,7 @@ if (!customElements.get('product-recommendations')) {
       const variantId    = String(item.variant_id);
       const productTitle = item.product_title || '';
       form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId, productTitle));
+      showToast(productTitle ? `${productTitle} added to cart` : 'Added to cart');
 
       document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true, detail: { item } }));
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
@@ -961,6 +962,12 @@ if (!customElements.get('product-recommendations')) {
 
   // Re-sync on every cart mutation from any source (popup, drawer, card ATC)
   document.addEventListener('cart:updated', syncCartState);
+
+  // Cart drawer dispatches this when an item is removed via the × button
+  document.addEventListener('cart:remove', (e) => {
+    const title = e.detail?.title;
+    showToast(title ? `${title} removed from cart` : 'Removed from cart');
+  });
 
   // ── Variant-switch sync — restore/revert "Added To Cart" on variant change ──
   document.addEventListener('variant:change', (e) => {

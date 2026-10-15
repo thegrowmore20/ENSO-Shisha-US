@@ -167,9 +167,7 @@ function addCartDrawerListeners() {
 
         updateCartItemCounts(cart.item_count);
 
-        if (window.__showToast) {
-          window.__showToast(itemTitle ? `${itemTitle} removed from cart` : 'Removed from cart');
-        }
+        document.dispatchEvent(new CustomEvent('cart:remove', { bubbles: true, detail: { title: itemTitle } }));
 
         await updateCartDrawer();
       } catch (error) {
