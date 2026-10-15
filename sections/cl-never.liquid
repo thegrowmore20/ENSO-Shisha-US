@@ -54,11 +54,7 @@
   <div class="cl-dd">
     <figure class="cl-dd__card cl-dd__card--dont">
       <div class="ts__pic ts__pic--img">
-        {%- if section.settings.img_dial_dont != blank -%}
-          {{- section.settings.img_dial_dont | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_dial_dont.alt | default: 'Never wet the dial', width: section.settings.img_dial_dont.width, height: section.settings.img_dial_dont.height -}}
-        {%- else -%}
-          <svg class="cl-placeholder" viewBox="0 0 4 5" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="4" height="5" fill="#f5f5f4"/><path d="M1.2 2.5a.6.6 0 1 1 1.2 0 .6.6 0 0 1-1.2 0zm-.6 1.3.8-1 .7.7.7-.9 1.2 1.2H.6z" fill="#c8b89a"/></svg>
-        {%- endif -%}
+        <img src="{{ 'dont-water-dial.webp' | file_url }}" alt="Never rinse the dial" loading="lazy">
       </div>
       <figcaption class="ts__tx">
         <span class="cl-dd__badge cl-dd__badge--dont">✕ Don't</span>
@@ -68,11 +64,7 @@
     </figure>
     <figure class="cl-dd__card cl-dd__card--do">
       <div class="ts__pic ts__pic--img">
-        {%- if section.settings.img_dial_do != blank -%}
-          {{- section.settings.img_dial_do | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_dial_do.alt | default: 'Wipe the dial dry', width: section.settings.img_dial_do.width, height: section.settings.img_dial_do.height -}}
-        {%- else -%}
-          <svg class="cl-placeholder" viewBox="0 0 4 5" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="4" height="5" fill="#f5f5f4"/><path d="M1.2 2.5a.6.6 0 1 1 1.2 0 .6.6 0 0 1-1.2 0zm-.6 1.3.8-1 .7.7.7-.9 1.2 1.2H.6z" fill="#c8b89a"/></svg>
-        {%- endif -%}
+        <img src="{{ 'ok-wipe-dial.webp' | file_url }}" alt="Wipe the dial with a dry cloth" loading="lazy">
       </div>
       <figcaption class="ts__tx">
         <span class="cl-dd__badge cl-dd__badge--do">✓ Do</span>
@@ -178,10 +170,7 @@
     { "type": "header", "content": "Water and the contacts" },
     { "type": "image_picker", "id": "img_step1", "label": "Step 1 — no water in battery bay" },
     { "type": "image_picker", "id": "img_step2", "label": "Step 2 — keep battery dry" },
-    { "type": "header", "content": "The dial" },
-    { "type": "image_picker", "id": "img_dial_dont", "label": "Don't — dont-water-dial.jpg" },
-    { "type": "image_picker", "id": "img_dial_do",   "label": "Do — ok-wipe-dial.jpg" },
-    { "type": "header", "content": "Spacing" },
+{ "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 80 },
     { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Top padding (mobile)", "default": 40 },
