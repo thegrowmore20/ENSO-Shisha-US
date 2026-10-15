@@ -865,6 +865,7 @@
         var form = e.target.closest('.acc-card__form');
         if (!form) return;
         e.preventDefault();
+        e.stopPropagation(); // prevent global.js double-add
         var card = form.closest('.acc-card');
         self._handleAtc(form, card ? (card.dataset.popupTitle || '') : '');
       });
@@ -1102,28 +1103,64 @@
       this._fpBadge.hidden = count === 0;
     }
 
-    /* ── AJAX Add to Cart ── */
+    /* ── AJAX Add to Cart (add ↔ remove toggle) ── */
     _handleAtc(form, title) {
       var self = this;
-      var btn = form.querySelector('[type="submit"]');
-      var vid = form.querySelector('input[name="id"]');
-      if (!vid) return;
-      var originalHTML = btn ? btn.innerHTML : '';
-      if (btn) {
-        btn.style.minWidth = btn.offsetWidth + 'px';
-        btn.innerHTML = '<span class="acc-btn-spinner"></span>';
+      var btn   = form.querySelector('[type="submit"]');
+      var vidEl = form.querySelector('input[name="id"]');
+      if (!vidEl) return;
+      var vid = vidEl.value;
+
+      /* — already in cart → remove — */
+      if (btn && btn.getAttribute('aria-pressed') === 'true') {
         btn.disabled = true;
+        btn.classList.add('is-loading');
+        fetch('/cart/update.js', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ updates: { [vid]: 0 } })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          btn.removeAttribute('aria-pressed');
+          btn.removeAttribute('data-in-cart-variant');
+          var lbl = btn.querySelector('[data-quick-add-label]');
+          if (lbl) lbl.textContent = lbl.dataset.labelAvailable || 'Add to cart';
+          document.querySelectorAll('.cart-count').forEach(function (el) {
+            el.textContent = cart.item_count;
+            el.hidden = cart.item_count === 0;
+          });
+          self._updateBar(cart);
+          document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cart } }));
+          if (typeof updateCartDrawer === 'function') updateCartDrawer();
+        })
+        .catch(function () {})
+        .finally(function () {
+          btn.classList.remove('is-loading');
+          setTimeout(function () { btn.disabled = false; }, 300);
+        });
+        return;
       }
+
+      /* — not in cart → add — */
+      if (btn) { btn.disabled = true; btn.classList.add('is-loading'); }
       fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-        body: JSON.stringify({ id: parseInt(vid.value, 10), quantity: 1 })
+        body: JSON.stringify({ id: parseInt(vid, 10), quantity: 1 })
       })
       .then(function (r) {
         if (!r.ok) return r.json().then(function (e) { throw new Error(e.description || 'Error'); });
         return r.json();
       })
       .then(function (item) {
+        if (btn) {
+          btn.setAttribute('aria-pressed', 'true');
+          btn.setAttribute('data-in-cart-variant', vid);
+          btn.setAttribute('data-product-title', item.product_title || '');
+          var lbl = btn.querySelector('[data-quick-add-label]');
+          if (lbl) lbl.textContent = 'Added to cart';
+        }
         if (window.__showProductToast) window.__showProductToast(item.product_title || title);
         return fetch('/cart.js').then(function (r) { return r.json(); });
       })
@@ -1145,9 +1182,11 @@
         document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true }));
         document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
       })
-      .catch(function () {})
+      .catch(function () {
+        if (btn) { btn.removeAttribute('aria-pressed'); btn.classList.remove('is-loading'); btn.disabled = false; }
+      })
       .finally(function () {
-        if (btn) { btn.style.minWidth = ''; btn.innerHTML = originalHTML; btn.disabled = false; }
+        if (btn) { btn.classList.remove('is-loading'); setTimeout(function () { btn.disabled = false; }, 400); }
       });
     }
 

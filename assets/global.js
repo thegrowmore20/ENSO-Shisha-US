@@ -713,6 +713,10 @@ if (!customElements.get('product-recommendations')) {
   reverts the button. Page load syncs state with /cart.js.
 */
 (() => {
+  // ── Cart variants cache — Map of variantId → productTitle ─────────────────
+  const cartVariantsCache = new Map();
+  window.__cartItemsCache = cartVariantsCache;
+
   // ── Toast ──────────────────────────────────────────────────────────────────
   const TOAST_STYLE = `
     #ajax-atc-toast{
@@ -770,12 +774,14 @@ if (!customElements.get('product-recommendations')) {
     btn.setAttribute('aria-pressed', 'true');
     btn.setAttribute('data-in-cart-variant', variantId);
     if (productTitle) btn.setAttribute('data-product-title', productTitle);
+    cartVariantsCache.set(String(variantId), productTitle || '');
     const label = getLabelEl(btn);
     if (label) label.textContent = 'Added To Cart';
   }
 
   // ── Revert all buttons for a variant back to "Add To Cart" ────────────────
   function revertToAdd(variantId) {
+    cartVariantsCache.delete(String(variantId));
     document.querySelectorAll(`[data-in-cart-variant="${variantId}"]`).forEach(b => {
       b.removeAttribute('aria-pressed');
       b.removeAttribute('data-in-cart-variant');
@@ -885,7 +891,9 @@ if (!customElements.get('product-recommendations')) {
     try {
       const cartRes  = await fetch('/cart.js');
       const cartData = await cartRes.json();
+      cartVariantsCache.clear();
       const inCartMap = new Map(cartData.items.map(i => [String(i.variant_id), i.product_title || '']));
+      inCartMap.forEach((title, vid) => cartVariantsCache.set(vid, title));
 
       document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
         const input = form.querySelector('[name="id"]');
@@ -897,6 +905,25 @@ if (!customElements.get('product-recommendations')) {
       });
     } catch (_) {}
   }
+
+  // ── Variant-switch sync — restore "Added To Cart" if switched-to variant is in cart ──
+  document.addEventListener('variant:change', (e) => {
+    const { variant, form } = e.detail || {};
+    if (!variant || !form) return;
+    const vid = String(variant.id);
+    const inCart = cartVariantsCache.has(vid);
+    form.querySelectorAll('[type="submit"]').forEach(b => {
+      if (inCart) {
+        markAsAdded(b, vid, cartVariantsCache.get(vid));
+      } else {
+        b.removeAttribute('aria-pressed');
+        b.removeAttribute('data-in-cart-variant');
+        b.removeAttribute('data-product-title');
+        const label = getLabelEl(b);
+        if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
+      }
+    });
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', syncCartState);

@@ -452,12 +452,12 @@
 }
 .d-buy__pill:hover { opacity: .88; }
 .d-buy__pill:disabled { opacity: .45; cursor: not-allowed; }
-.d-buy__pill.is-added {
+.d-buy__pill[aria-pressed="true"] {
   background: transparent;
   color: var(--color-accent-button-background);
   border: 1.5px solid var(--color-accent-button-background);
 }
-.d-buy__pill.is-added:hover {
+.d-buy__pill[aria-pressed="true"]:hover {
   background: var(--color-accent-button-background);
   color: var(--color-accent-button-label);
   opacity: 1;
@@ -483,7 +483,7 @@
   animation: d-btn-spin .65s linear infinite;
 }
 /* Gold spinner when in outline/added state */
-.d-buy__pill.is-added.is-loading::after {
+.d-buy__pill[aria-pressed="true"].is-loading::after {
   border-color: rgba(200, 148, 58, .3);
   border-top-color: var(--color-accent-button-background);
 }
@@ -883,7 +883,7 @@
         this.#lineKey = key;
         [btn, stickyBtn].forEach((b) => {
           if (!b) return;
-          b.classList.add('is-added');
+          b.setAttribute('aria-pressed', 'true');
           b.textContent = 'Added to cart';
         });
       };
@@ -892,7 +892,7 @@
         this.#lineKey = null;
         [btn, stickyBtn].forEach((b) => {
           if (!b) return;
-          b.classList.remove('is-added');
+          b.removeAttribute('aria-pressed');
           b.textContent = ctaLabel;
         });
       };
@@ -921,7 +921,7 @@
         if (btn.classList.contains('is-loading')) return;
 
         /* ── Already in cart → remove ── */
-        if (btn.classList.contains('is-added') && this.#lineKey) {
+        if (btn.getAttribute('aria-pressed') === 'true' && this.#lineKey) {
           setBusy(true);
           try {
             await fetch('/cart/change.js', {

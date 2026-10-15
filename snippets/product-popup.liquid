@@ -307,12 +307,21 @@
     elPrice.textContent = price || '';
     elAtc.dataset.vid   = vid   || '';
     elAtc.disabled      = !avail;
-    /* reset toggle state whenever variant changes */
-    elAtc.removeAttribute('aria-pressed');
-    elAtc.removeAttribute('data-in-cart-variant');
-    elAtc.textContent = avail ? ADD_LABEL : 'Out of stock';
-    elRemind.hidden   = avail;
-    popLineVid = null;
+    elRemind.hidden     = avail;
+    /* Restore "Added to cart" if this variant is already in the cart */
+    var cache  = window.__cartItemsCache;
+    var inCart = avail && cache && cache.has(String(vid));
+    if (inCart) {
+      elAtc.setAttribute('aria-pressed', 'true');
+      elAtc.setAttribute('data-in-cart-variant', vid);
+      elAtc.textContent = 'Added to cart';
+      popLineVid = vid;
+    } else {
+      elAtc.removeAttribute('aria-pressed');
+      elAtc.removeAttribute('data-in-cart-variant');
+      elAtc.textContent = avail ? ADD_LABEL : 'Out of stock';
+      popLineVid = null;
+    }
   }
 
   /* ── Open ── */
@@ -457,90 +466,7 @@
   /* ── Listen for open requests from any section ── */
   document.addEventListener('product:popup', function (e) { openPopup(e.detail); });
 
-  /* ── AJAX ATC for .acc-card__form (collection, home, etc.)
-        accessories-shop has its own handler; skip if the form is inside it.
-        Implements the same add ↔ remove toggle. ── */
-  document.addEventListener('submit', function (e) {
-    var form = e.target.closest('.acc-card__form');
-    if (!form) return;
-    if (e.target.closest('accessories-shop')) return;
-    e.preventDefault();
-
-    var btn = form.querySelector('[type="submit"]');
-    var vidEl = form.querySelector('input[name="id"]');
-    if (!vidEl) return;
-    var vid = vidEl.value;
-
-    /* — already in cart → remove — */
-    if (btn && btn.getAttribute('aria-pressed') === 'true') {
-      btn.disabled = true;
-      btn.classList.add('is-loading');
-      fetch('/cart/update.js', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ updates: { [vid]: 0 } })
-      })
-      .then(function (r) { return r.json(); })
-      .then(function (cart) {
-        updateCount(cart.item_count);
-        btn.removeAttribute('aria-pressed');
-        btn.removeAttribute('data-in-cart-variant');
-        var lbl = btn.querySelector('[data-quick-add-label],[data-label-available]');
-        if (lbl) lbl.textContent = lbl.dataset.labelAvailable || lbl.dataset.quickAddLabel || 'Add to cart';
-        else btn.textContent = 'Add to cart';
-        document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cart } }));
-        if (typeof updateCartDrawer === 'function') updateCartDrawer();
-      })
-      .catch(function () {})
-      .finally(function () {
-        btn.classList.remove('is-loading');
-        setTimeout(function () { btn.disabled = false; }, 300);
-      });
-      return;
-    }
-
-    /* — not in cart → add — */
-    if (btn) {
-      btn.disabled = true;
-      btn.classList.add('is-loading');
-    }
-    fetch('/cart/add.js', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-      body:    JSON.stringify({ id: parseInt(vid, 10), quantity: 1 })
-    })
-    .then(function (r) {
-      if (!r.ok) return r.json().then(function (err) { throw new Error(err.description || 'Error'); });
-      return r.json();
-    })
-    .then(function (item) {
-      if (btn) {
-        btn.setAttribute('aria-pressed', 'true');
-        btn.setAttribute('data-in-cart-variant', vid);
-        btn.setAttribute('data-product-title', item.product_title || '');
-        var lbl = btn.querySelector('[data-quick-add-label],[data-label-available]');
-        if (lbl) lbl.textContent = 'Added to cart';
-        else btn.textContent = 'Added to cart';
-      }
-      return fetch('/cart.js').then(function (r) { return r.json(); });
-    })
-    .then(function (cart) {
-      updateCount(cart.item_count);
-      return refreshDrawer();
-    })
-    .catch(function () {
-      if (btn) {
-        btn.removeAttribute('aria-pressed');
-        btn.classList.remove('is-loading');
-        btn.disabled = false;
-      }
-    })
-    .finally(function () {
-      if (btn) {
-        btn.classList.remove('is-loading');
-        setTimeout(function () { btn.disabled = false; }, 400);
-      }
-    });
-  });
+  /* .acc-card__form outside accessories-shop is handled by global.js (assets/global.js).
+     No separate handler needed here. */
 })();
 </script>

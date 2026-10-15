@@ -323,15 +323,15 @@ h6, .h6 {
 
 /* ---------- Buttons ---------- */
 
-/* Burnt champagne button tokens — match spec names exactly */
+/* Button tokens — driven by theme accent-button settings so every ATC
+   button shares the same sand color as the diamond-buy pill. */
 :root {
-  --btn:       #8f6e4c;
-  --btn-main:  #8f6e4c;
-  --btn-hi:    #9c7a55;
-  --btn-edge:  #b39776;
-  --btn-hover: #7f603f;
-  --btn-press: #6f5236;
-  --btn-text:  #75593b;
+  --btn-main:  var(--color-accent-button-background, #c8943a);
+  --btn-hi:    var(--color-accent-button-background, #c8943a);
+  --btn-edge:  var(--color-accent-button-background, #c8943a);
+  --btn-hover: var(--color-accent-button-hover-background, #b5832e);
+  --btn-press: var(--color-accent-button-background, #a07028);
+  --btn-text:  var(--color-accent-button-background, #c8943a);
 }
 
 /* Main button: burnt champagne gradient — the default for every primary action. */
@@ -478,10 +478,10 @@ h6, .h6 {
   border-radius: 50%;
   animation: product-spin 0.6s linear infinite;
 }
-/* Golden spinner when button background is white (Added To Cart state) */
+/* Sand spinner when button background is white (Added To Cart state) */
 .btn[aria-pressed="true"].is-loading .btn__spinner,
 .btn[aria-pressed="true"][data-loading] .btn__spinner {
-  border-color: rgba(143, 110, 76, 0.3);
+  border-color: rgba(200, 148, 58, 0.3);
   border-top-color: var(--btn-main);
 }
 @keyframes product-spin { to { transform: rotate(360deg); } }
@@ -529,9 +529,9 @@ h6, .h6 {
   border-radius: 50%;
   animation: product-spin 0.6s linear infinite;
 }
-/* Golden spinner when button background is white (Added To Cart state) */
+/* Sand spinner when button background is white (Added To Cart state) */
 .btn[aria-pressed="true"].is-loading::after {
-  border-color: rgba(143, 110, 76, 0.3);
+  border-color: rgba(200, 148, 58, 0.3);
   border-top-color: var(--btn-main);
 }
 
