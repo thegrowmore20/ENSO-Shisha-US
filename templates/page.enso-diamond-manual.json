@@ -232,17 +232,54 @@
     "dm_donts": {
       "type": "dm-donts",
       "settings": {
-        "dont_water_bay": "shopify://shop_images/dont-water-bay.webp",
-        "rinse_shaft": "shopify://shop_images/ok-rinse-shaft.webp",
-        "dont_water_battery": "shopify://shop_images/dont-water-battery.webp",
-        "before_charge": "shopify://shop_images/before-charge.webp",
-        "dont_covered_soft": "shopify://shop_images/dont-covered-soft.webp",
-        "on_hookah": "shopify://shop_images/on-hookah-front.webp",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      }
+      },
+      "blocks": {
+        "row_water_contacts": {
+          "type": "safe_row",
+          "settings": {
+            "heading": "Water and the contacts",
+            "dont_image": "shopify://shop_images/dont-water-bay.webp",
+            "dont_caption": "Water into the battery bay",
+            "ok_image": "shopify://shop_images/ok-rinse-shaft.webp",
+            "ok_caption": "Rinse the chamber from the top, battery fitted"
+          }
+        },
+        "row_dial": {
+          "type": "safe_row",
+          "settings": {
+            "heading": "The dial",
+            "dont_image": "shopify://shop_images/dont-water-dial.webp",
+            "dont_caption": "Water on the dial and the screen",
+            "ok_image": "shopify://shop_images/ok-wipe-dial.webp",
+            "ok_caption": "Wipe the screen with a dry cloth"
+          }
+        },
+        "row_battery": {
+          "type": "safe_row",
+          "settings": {
+            "heading": "The battery",
+            "dont_image": "shopify://shop_images/dont-water-battery.webp",
+            "dont_caption": "Water over the battery",
+            "ok_image": "shopify://shop_images/before-charge.webp",
+            "ok_caption": "Dry, and charged once it has cooled"
+          }
+        },
+        "row_cooling": {
+          "type": "safe_row",
+          "settings": {
+            "heading": "Cooling down",
+            "dont_image": "shopify://shop_images/dont-covered-soft.webp",
+            "dont_caption": "Covered up on a sofa",
+            "ok_image": "shopify://shop_images/on-hookah-front.webp",
+            "ok_caption": "In the open, on a hard surface"
+          }
+        }
+      },
+      "block_order": ["row_water_contacts", "row_dial", "row_battery", "row_cooling"]
     },
     "dm_troubleshooting": {
       "type": "dm-troubleshooting",
