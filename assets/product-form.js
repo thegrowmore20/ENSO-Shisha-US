@@ -113,6 +113,9 @@ if (!customElements.get('product-info')) {
           ? this.addButtonText.dataset.labelAvailable
           : this.addButtonText.dataset.labelSoldOut;
       }
+      const dynCheckout = this.closest('product-info')?.querySelector('[data-dynamic-checkout]')
+        || this.querySelector('[data-dynamic-checkout]');
+      if (dynCheckout) dynCheckout.hidden = !variant.available;
 
       // 4. Media — jump the gallery to this variant's featured media, if it has one
       if (this.gallery && variant.featured_media) {
@@ -407,6 +410,8 @@ if (!customElements.get('sticky-add-to-cart')) {
           ? this.addButtonText.dataset.labelAvailable
           : this.addButtonText.dataset.labelSoldOut;
       }
+      const dynCheckout = document.querySelector('[data-dynamic-checkout]');
+      if (dynCheckout) dynCheckout.hidden = !variant.available;
       // Override with cart state: if this variant is already in the cart, show "Added To Cart"
       if (variant.available && this.addButton) {
         const vid = String(variant.id);
