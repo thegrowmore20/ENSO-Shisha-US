@@ -798,6 +798,9 @@ if (!customElements.get('product-recommendations')) {
     btn.disabled = true;
     const sp = btn.querySelector('[data-add-to-cart-spinner]');
     if (sp) sp.removeAttribute('hidden');
+    // Inline style beats any stylesheet !important rule (specificity wars)
+    const lbl = getLabelEl(btn);
+    if (lbl) lbl.style.visibility = 'hidden';
   }
   function btnEnd(btn) {
     btn.classList.remove('is-loading');
@@ -805,6 +808,8 @@ if (!customElements.get('product-recommendations')) {
     btn.disabled = false;
     const sp = btn.querySelector('[data-add-to-cart-spinner]');
     if (sp) sp.setAttribute('hidden', '');
+    const lbl = getLabelEl(btn);
+    if (lbl) lbl.style.visibility = '';
   }
 
   // ── Remove from cart ───────────────────────────────────────────────────────
