@@ -228,7 +228,7 @@
     white-space: nowrap;
   }
 
-  .acc-card__oos {
+  .acc-card__oos:not([hidden]) {
     display: block;
     font-size: 11px;
     font-weight: 600;
@@ -242,13 +242,14 @@
   /* .btn.btn--accent provides gold fill; keep only sizing overrides */
   .acc-card__btn { font-size: 12px; padding: 0 16px; min-width: 110px; }
 
-  .acc-card__btn--remind {
+  .acc-card__btn--oos {
     background: transparent;
-    color: var(--color-text);
-    border: 1.5px solid rgb(0 0 0 / .3);
+    color: var(--color-text-muted, rgb(0 0 0 / .45));
+    border: 1.5px solid rgb(0 0 0 / .2);
     box-shadow: none;
+    cursor: default;
+    opacity: 0.7;
   }
-  .acc-card__btn--remind:hover { border-color: var(--color-text); }
 
   /* "Added to cart" state — set by global.js via aria-pressed="true" */
   .acc-card__btn[aria-pressed="true"] {
@@ -360,20 +361,19 @@
       card.dataset.price     = optBtn.dataset.price;
       card.dataset.available = available;
 
-      /* swap ATC ↔ Notify me */
-      var foot     = card.querySelector('.acc-card__foot');
-      var form     = card.querySelector('.acc-card__form');
-      var notifyEl = card.querySelector('.acc-card__btn--remind');
-      var oosEl    = card.querySelector('.acc-card__oos');
+      /* swap ATC ↔ Sold Out button */
+      var form   = card.querySelector('.acc-card__form');
+      var oosBtn = card.querySelector('.acc-card__btn--oos');
+      var oosEl  = card.querySelector('.acc-card__oos');
 
       if (available) {
-        if (form)     form.hidden     = false;
-        if (notifyEl) notifyEl.hidden = true;
-        if (oosEl)    oosEl.hidden    = true;
+        if (form)   form.hidden   = false;
+        if (oosBtn) oosBtn.hidden = true;
+        if (oosEl)  oosEl.hidden  = true;
       } else {
-        if (form)     form.hidden     = true;
-        if (notifyEl) notifyEl.hidden = false;
-        if (oosEl)    oosEl.hidden    = false;
+        if (form)   form.hidden   = true;
+        if (oosBtn) oosBtn.hidden = false;
+        if (oosEl)  oosEl.hidden  = false;
       }
     });
 

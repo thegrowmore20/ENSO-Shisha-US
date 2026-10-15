@@ -165,5 +165,8 @@
         <span class="acc-card__btn-label" data-quick-add-label data-label-available="{{ _atc_label | escape }}">{{ _atc_label }}</span>
       </button>
     </form>
+    <button type="button" class="btn btn--outline acc-card__btn acc-card__btn--oos" disabled{% if variant.available %} hidden{% endif %}>
+      {{ 'products.product.sold_out' | t }}
+    </button>
   </div>
 </article>

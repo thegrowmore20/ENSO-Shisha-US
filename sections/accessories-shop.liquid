@@ -921,10 +921,12 @@
         if (pill.dataset.money) card.dataset.popupPrice   = pill.dataset.money;
 
         var available = pill.dataset.available !== 'false';
-        var form  = card.querySelector('.acc-card__form');
-        var oosEl = card.querySelector('.acc-card__oos');
-        if (form)  form.hidden  = !available;
-        if (oosEl) oosEl.hidden =  available;
+        var form   = card.querySelector('.acc-card__form');
+        var oosBtn = card.querySelector('.acc-card__btn--oos');
+        var oosEl  = card.querySelector('.acc-card__oos');
+        if (form)   form.hidden   = !available;
+        if (oosBtn) oosBtn.hidden =  available;
+        if (oosEl)  oosEl.hidden  =  available;
       });
     }
 
