@@ -12,7 +12,9 @@
 {% endstyle %}
 <section class="cl-sec">
   <h2>Never</h2>
-  <p class="cl-lead">The battery and the contacts never get wet.</p>
+  <p class="cl-lead">The battery, the contacts and the dial never get wet.</p>
+
+  <h3 class="cl-sub">Water and the contacts</h3>
   <div class="slider tslider slider--grid slider--never" style="--n:2">
     <div class="slides">
       <figure class="slide ts">
@@ -47,6 +49,38 @@
     <button class="nav prev" aria-label="Previous">‹</button>
     <button class="nav next" aria-label="Next">›</button>
   </div>
+
+  <h3 class="cl-sub">The dial</h3>
+  <div class="cl-dd">
+    <figure class="cl-dd__card cl-dd__card--dont">
+      <div class="ts__pic ts__pic--img">
+        {%- if section.settings.img_dial_dont != blank -%}
+          {{- section.settings.img_dial_dont | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_dial_dont.alt | default: 'Never wet the dial', width: section.settings.img_dial_dont.width, height: section.settings.img_dial_dont.height -}}
+        {%- else -%}
+          <svg class="cl-placeholder" viewBox="0 0 4 5" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="4" height="5" fill="#f5f5f4"/><path d="M1.2 2.5a.6.6 0 1 1 1.2 0 .6.6 0 0 1-1.2 0zm-.6 1.3.8-1 .7.7.7-.9 1.2 1.2H.6z" fill="#c8b89a"/></svg>
+        {%- endif -%}
+      </div>
+      <figcaption class="ts__tx">
+        <span class="cl-dd__badge cl-dd__badge--dont">✕ Don't</span>
+        <b>Never rinse the dial</b>
+        <p>Water in the dial assembly can cause it to stop responding. No wet cloths either.</p>
+      </figcaption>
+    </figure>
+    <figure class="cl-dd__card cl-dd__card--do">
+      <div class="ts__pic ts__pic--img">
+        {%- if section.settings.img_dial_do != blank -%}
+          {{- section.settings.img_dial_do | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.img_dial_do.alt | default: 'Wipe the dial dry', width: section.settings.img_dial_do.width, height: section.settings.img_dial_do.height -}}
+        {%- else -%}
+          <svg class="cl-placeholder" viewBox="0 0 4 5" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="4" height="5" fill="#f5f5f4"/><path d="M1.2 2.5a.6.6 0 1 1 1.2 0 .6.6 0 0 1-1.2 0zm-.6 1.3.8-1 .7.7.7-.9 1.2 1.2H.6z" fill="#c8b89a"/></svg>
+        {%- endif -%}
+      </div>
+      <figcaption class="ts__tx">
+        <span class="cl-dd__badge cl-dd__badge--do">✓ Do</span>
+        <b>Wipe with a dry cloth</b>
+        <p>A dry microfibre cloth removes fingerprints and residue without any risk to the mechanism.</p>
+      </figcaption>
+    </figure>
+  </div>
 </section>
 
 <div class="cl-sec">
@@ -56,14 +90,97 @@
   </div>
 </div>
 
+{% stylesheet %}
+.cl-sub {
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(0 0 0 / .45);
+  margin: 28px 0 14px;
+}
+
+.cl-dd {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  .cl-dd { grid-template-columns: 1fr; }
+}
+
+.cl-dd__card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid rgb(0 0 0 / .08);
+  margin: 0;
+}
+
+.cl-dd__card .ts__pic {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f9f8f6;
+}
+
+.cl-dd__card .ts__pic img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cl-dd__card--dont { border-color: rgba(204, 60, 60, 0.2); }
+.cl-dd__card--do   { border-color: rgba(40, 160, 100, 0.2); }
+
+.cl-dd__card .ts__tx {
+  padding: 16px 18px 18px;
+}
+
+.cl-dd__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+}
+
+.cl-dd__badge--dont { background: rgba(204, 60, 60, 0.1); color: #c43c3c; }
+.cl-dd__badge--do   { background: rgba(40, 160, 100, 0.1); color: #1d8f5a; }
+
+.cl-dd__card .ts__tx b {
+  display: block;
+  font-size: 15px;
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 6px;
+}
+
+.cl-dd__card .ts__tx p {
+  font-size: 14px;
+  line-height: 22px;
+  color: rgb(0 0 0 / .65);
+  margin: 0;
+}
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "CL: Never",
   "presets": [{ "name": "CL: Never" }],
   "settings": [
-    { "type": "header", "content": "Images" },
+    { "type": "header", "content": "Water and the contacts" },
     { "type": "image_picker", "id": "img_step1", "label": "Step 1 — no water in battery bay" },
     { "type": "image_picker", "id": "img_step2", "label": "Step 2 — keep battery dry" },
+    { "type": "header", "content": "The dial" },
+    { "type": "image_picker", "id": "img_dial_dont", "label": "Don't — dont-water-dial.jpg" },
+    { "type": "image_picker", "id": "img_dial_do",   "label": "Do — ok-wipe-dial.jpg" },
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 80 },
