@@ -123,7 +123,7 @@
                 {%- else -%}
                   <p class="product-stock-badge__text">
                     <i class="product-stock-badge__dot" aria-hidden="true"></i>
-                    {{ block.settings.out_of_stock_text | default: 'Out of stock' }}
+                    {{ block.settings.out_of_stock_text | default: 'Sold Out' }}
                   </p>
                 {%- endif -%}
               </div>
@@ -138,7 +138,7 @@
                     {%- else -%}
                       <p class="product-stock-badge__text">
                         <i class="product-stock-badge__dot" aria-hidden="true"></i>
-                        {{ block.settings.out_of_stock_text | default: 'Out of stock' }}
+                        {{ block.settings.out_of_stock_text | default: 'Sold Out' }}
                       </p>
                     {%- endif -%}
                   </div>
@@ -1659,7 +1659,7 @@
       "limit": 1,
       "settings": [
         { "type": "text", "id": "in_stock_text", "label": "In stock text", "default": "In stock · Ships now" },
-        { "type": "text", "id": "out_of_stock_text", "label": "Out of stock text", "default": "Out of stock" }
+        { "type": "text", "id": "out_of_stock_text", "label": "Out of stock text", "default": "Sold Out" }
       ]
     },
     { "type": "compat_badge", "name": "Compat badge", "limit": 1 },
