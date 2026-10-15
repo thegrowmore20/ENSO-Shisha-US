@@ -98,7 +98,6 @@
             data-witb-id="{{ block.id }}"
             data-pop-title="{{ b.label | escape }}"
             data-pop-img="{{ pop_img_url }}"
-            data-pop-desc="{{ b.popup_desc | escape }}"
             aria-label="{{ b.label | escape }}"
             {{ block.shopify_attributes }}
           >
@@ -109,6 +108,9 @@
               <i class="witb__co-s">{{ b.label_short | default: b.label }}</i>
             </span>
           </button>
+          {%- if b.popup_desc != blank -%}
+            <template data-pop-desc-for="{{ block.id }}">{{ b.popup_desc }}</template>
+          {%- endif -%}
         {%- endfor -%}
       </div>
 
@@ -143,7 +145,6 @@
                 {%- if has_pop_data -%}
                   data-pop-title="{{ pop_title | escape }}"
                   data-pop-img="{{ pop_img_url }}"
-                  data-pop-desc="{{ b.popup_desc | escape }}"
                 {%- endif -%}
                 {{ block.shopify_attributes }}
               >
@@ -177,6 +178,9 @@
                   {%- if b.quantity != blank -%}<i>{{ b.quantity }}</i>{%- endif -%}
                 </span>
               </button>
+              {%- if b.popup_desc != blank -%}
+                <template data-pop-desc-for="{{ block.id }}">{{ b.popup_desc }}</template>
+              {%- endif -%}
             {%- endfor -%}
           </div>
         {%- endif -%}
@@ -448,6 +452,11 @@
   font-size: 15px;
   line-height: 24px;
 }
+.witb__pop-desc p { margin: 0 0 8px; }
+.witb__pop-desc p:last-child { margin-bottom: 0; }
+.witb__pop-desc strong { font-weight: var(--font-weight-semibold); }
+.witb__pop-desc ul, .witb__pop-desc ol { padding-left: 20px; margin: 0 0 8px; }
+.witb__pop-desc li { margin-bottom: 4px; }
 {% endstylesheet %}
 
 {% javascript %}
@@ -466,9 +475,9 @@
   function openSimplePop(btn) {
     var img   = btn.dataset.popImg   || '';
     var title = btn.dataset.popTitle || '';
-    var desc  = btn.dataset.popDesc  || '';
+    var descTpl = sectionEl.querySelector('[data-pop-desc-for="' + btn.dataset.witbId + '"]');
     popTitle.textContent = title;
-    popDesc.textContent  = desc;
+    popDesc.innerHTML = descTpl ? descTpl.innerHTML : '';
     if (img) {
       popImg.src    = img;
       popImg.alt    = title;
@@ -573,7 +582,7 @@
         { "type": "checkbox",     "id": "align_left",   "label": "Label on left side",       "default": false },
         { "type": "header",       "content": "Popup content" },
         { "type": "image_picker", "id": "popup_image",  "label": "Popup image" },
-        { "type": "textarea",     "id": "popup_desc",   "label": "Popup description" }
+        { "type": "richtext",     "id": "popup_desc",   "label": "Popup description" }
       ]
     },
     {
@@ -588,7 +597,7 @@
         { "type": "header",       "content": "Info popup (overrides product sheet)" },
         { "type": "image_picker", "id": "popup_image",  "label": "Popup image" },
         { "type": "text",         "id": "popup_title",  "label": "Popup title (defaults to name)" },
-        { "type": "textarea",     "id": "popup_desc",   "label": "Popup description" }
+        { "type": "richtext",     "id": "popup_desc",   "label": "Popup description" }
       ]
     },
     {
