@@ -16,8 +16,8 @@
         <button class="acc-seg__btn"            role="tab" aria-pressed="false" data-dev="diamond" type="button">Diamond</button>
       </div>
       <div class="acc-bar__sum" id="AccBarSum">
-        <span class="acc-bar__count" id="AccBarCount"></span>
-        <b class="acc-bar__total" id="AccBarTotal"></b>
+        <span class="acc-bar__count" id="AccBarCount">0 items</span>
+        <b class="acc-bar__total" id="AccBarTotal">$0.00</b>
         <a class="btn btn--primary acc-bar__go" href="{{ routes.cart_url }}">{{ 'sections.accessories_shop.go_to_cart' | t }}</a>
       </div>
     </div>
@@ -1248,19 +1248,15 @@
     _updateBar(cart) {
       if (!this._barSum) return;
       var count = cart.item_count || 0;
-      if (this._barCount) this._barCount.hidden = count === 0;
-      if (this._barTotal) this._barTotal.hidden = count === 0;
-      if (count > 0) {
-        if (this._barCount) {
-          this._barCount.textContent = count + (count === 1 ? ' item' : ' items');
-        }
-        if (this._barTotal) {
-          var total = ((cart.total_price || 0) / 100).toFixed(2);
-          var sym = '$';
-          if (cart.currency === 'EUR') sym = '€';
-          else if (cart.currency === 'GBP') sym = '£';
-          this._barTotal.textContent = sym + total;
-        }
+      if (this._barCount) {
+        this._barCount.textContent = count + (count === 1 ? ' item' : ' items');
+      }
+      if (this._barTotal) {
+        var total = ((cart.total_price || 0) / 100).toFixed(2);
+        var sym = '$';
+        if (cart.currency === 'EUR') sym = '€';
+        else if (cart.currency === 'GBP') sym = '£';
+        this._barTotal.textContent = sym + total;
       }
     }
 
