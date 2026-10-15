@@ -165,8 +165,5 @@
         <span class="acc-card__btn-label" data-quick-add-label data-label-available="{{ _atc_label | escape }}">{{ _atc_label }}</span>
       </button>
     </form>
-    <a class="btn btn--outline acc-card__btn acc-card__btn--remind" href="{{ product.url }}"{% if variant.available %} hidden{% endif %}>
-      {{ 'products.product.notify_me' | t | default: 'Notify me' }}
-    </a>
   </div>
 </article>

@@ -920,8 +920,11 @@
         if (pill.dataset.vid)   card.dataset.popupVariant = pill.dataset.vid;
         if (pill.dataset.money) card.dataset.popupPrice   = pill.dataset.money;
 
-        var atcBtn = card.querySelector('.acc-card__btn[type="submit"]');
-        if (atcBtn) atcBtn.disabled = pill.dataset.available === 'false';
+        var available = pill.dataset.available !== 'false';
+        var form  = card.querySelector('.acc-card__form');
+        var oosEl = card.querySelector('.acc-card__oos');
+        if (form)  form.hidden  = !available;
+        if (oosEl) oosEl.hidden =  available;
       });
     }
 
