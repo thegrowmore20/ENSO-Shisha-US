@@ -143,21 +143,14 @@
 .acc-shop {
   display: block;
   background: var(--color-background, #faf6ec);
-  padding-top: 56px; /* reserve space for fixed .acc-bar (56px desktop) */
-}
-
-@media screen and (max-width: 749px) {
-  .acc-shop { padding-top: 48px; }
 }
 
 /* ══════════════════════════════════════════
    STICKY DEVICE TABS BAR
    ══════════════════════════════════════════ */
 .acc-bar {
-  position: fixed;
-  top: var(--acc-bar-top, 0px);
-  left: 0;
-  right: 0;
+  position: sticky;
+  top: var(--site-header-height, 0px);
   z-index: 39;
   background: var(--color-background, #faf6ec);
   border-bottom: 1px solid var(--color-border, #e3ddcc);
@@ -783,7 +776,6 @@
 
       this._bindEvents();
       this._renderDeviceFilter();
-      this._trackHeaderVisibility();
     }
 
     /* ── Bind all event listeners (delegated to `this` so they survive grid replacement) ── */
@@ -1204,20 +1196,6 @@
       .finally(function () {
         if (btn) { btn.classList.remove('is-loading'); setTimeout(function () { btn.disabled = false; }, 400); }
       });
-    }
-
-    /* ── Track header bottom edge; set --acc-bar-top to sit flush below it ── */
-    _trackHeaderVisibility() {
-      var bar = this.querySelector('.acc-bar');
-      if (!bar) return;
-      var siteHeader = document.querySelector('.section-header, #shopify-section-header, header[role="banner"]');
-      var update = function () {
-        var top = siteHeader ? Math.max(0, siteHeader.getBoundingClientRect().bottom) : 0;
-        bar.style.top = top + 'px';
-      };
-      update();
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update, { passive: true });
     }
 
     /* ── Update sticky bar cart summary ── */
