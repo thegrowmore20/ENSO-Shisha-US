@@ -413,8 +413,11 @@ body:not(:has(.site-header)) .acc-bar {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--color-accent-button-background, #c8943a);
   }
+
+  /* Hide icons while spinner is active so they don't overlap */
+  .acc-shop .acc-card__btn[data-loading] .acc-card__btn-icon { display: none !important; }
 
   /* OOS button: same 40×40 circle but label hidden, bag icon shown (muted) */
   .acc-shop .acc-card__btn--oos .acc-card__btn-label { display: none; }

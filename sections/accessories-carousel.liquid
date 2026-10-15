@@ -316,6 +316,9 @@
       color: var(--color-accent-button-background, #c8943a);
     }
 
+    /* Hide icons while spinner is active so they don't overlap */
+    .acc-card__btn[data-loading] .acc-card__btn-icon { display: none !important; }
+
     /* OOS button: same 40×40 circle, bag icon visible (muted/disabled) */
     .acc-card__btn--oos .acc-card__btn-label { display: none; }
     .acc-card__oos-icon {
