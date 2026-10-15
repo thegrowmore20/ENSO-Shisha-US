@@ -14,10 +14,10 @@
   assign img2    = product.images[1]
 
   comment
-    Compatibility metafield drives the popup badge.
-    Falls back to tag-derived label when the metafield is blank.
+    Device family metafield drives the "Fits" badge.
+    If blank the badge is not shown — no tag fallback.
   endcomment
-  assign popup_compat = product.metafields.custom.compatiblity_with | default: ''
+  assign popup_compat = product.metafields.custom.device_family | default: ''
 
   comment
     data-dev: used by accessories-shop JS for device-tab filtering.
@@ -54,20 +54,7 @@
     assign _dev_val = 'both'
   endif
 
-  comment
-    Fits label (used for badge when show_fits is true and popup_compat is blank).
-  endcomment
-  if popup_compat != blank
-    assign _fits_label = popup_compat
-  elsif _has_diamond and _has_enso
-    assign _fits_label = 'Diamond & ENSŌ 2026'
-  elsif _has_diamond
-    assign _fits_label = 'Diamond'
-  elsif _has_enso
-    assign _fits_label = 'ENSŌ 2026'
-  else
-    assign _fits_label = ''
-  endif
+  assign _fits_label = popup_compat
 -%}
 
 {%- capture img_url_list -%}
