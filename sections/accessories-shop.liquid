@@ -927,6 +927,27 @@
         if (form)   form.hidden   = !available;
         if (oosBtn) oosBtn.hidden =  available;
         if (oosEl)  oosEl.hidden  =  available;
+
+        /* Sync ATC button state with cart for the new variant */
+        if (available && form) {
+          var atcBtn = form.querySelector('[type="submit"]');
+          if (atcBtn) {
+            var cache  = window.__cartItemsCache;
+            var inCart = cache && cache.has(String(pill.dataset.vid));
+            if (inCart) {
+              atcBtn.setAttribute('aria-pressed', 'true');
+              atcBtn.setAttribute('data-in-cart-variant', pill.dataset.vid);
+              var lbl = atcBtn.querySelector('[data-quick-add-label]');
+              if (lbl) lbl.textContent = 'Added To Cart';
+            } else {
+              atcBtn.removeAttribute('aria-pressed');
+              atcBtn.removeAttribute('data-in-cart-variant');
+              atcBtn.removeAttribute('data-product-title');
+              var lbl = atcBtn.querySelector('[data-quick-add-label]');
+              if (lbl) lbl.textContent = lbl.dataset.labelAvailable || 'Add To Cart';
+            }
+          }
+        }
       });
     }
 

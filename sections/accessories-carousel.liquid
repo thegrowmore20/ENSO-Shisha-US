@@ -370,6 +370,25 @@
         if (form)   form.hidden   = false;
         if (oosBtn) oosBtn.hidden = true;
         if (oosEl)  oosEl.hidden  = true;
+
+        /* Sync ATC button state with cart for the new variant */
+        var atcBtn = form && form.querySelector('[type="submit"]');
+        if (atcBtn) {
+          var cache  = window.__cartItemsCache;
+          var inCart = cache && cache.has(String(vid));
+          if (inCart) {
+            atcBtn.setAttribute('aria-pressed', 'true');
+            atcBtn.setAttribute('data-in-cart-variant', vid);
+            var lbl = atcBtn.querySelector('[data-quick-add-label]');
+            if (lbl) lbl.textContent = 'Added To Cart';
+          } else {
+            atcBtn.removeAttribute('aria-pressed');
+            atcBtn.removeAttribute('data-in-cart-variant');
+            atcBtn.removeAttribute('data-product-title');
+            var lbl = atcBtn.querySelector('[data-quick-add-label]');
+            if (lbl) lbl.textContent = lbl.dataset.labelAvailable || 'Add To Cart';
+          }
+        }
       } else {
         if (form)   form.hidden   = true;
         if (oosBtn) oosBtn.hidden = false;
