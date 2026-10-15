@@ -823,7 +823,6 @@ if (!customElements.get('product-recommendations')) {
       updateCount(cartData.item_count);
       const removedTitle = btn.dataset.productTitle;
       revertToAdd(variantId);
-      showToast(removedTitle ? `${removedTitle} removed from cart` : 'Removed from cart');
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
     } catch (err) {
       showToast(err.message || 'Could not remove from cart');
@@ -869,7 +868,6 @@ if (!customElements.get('product-recommendations')) {
       const variantId    = String(item.variant_id);
       const productTitle = item.product_title || '';
       form.querySelectorAll('[type="submit"]').forEach(b => markAsAdded(b, variantId, productTitle));
-      showToast(productTitle ? `${productTitle} added to cart` : 'Added to cart');
 
       document.dispatchEvent(new CustomEvent('cart:add',     { bubbles: true, detail: { item } }));
       document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: { cart: cartData } }));
