@@ -396,6 +396,11 @@
     flex-shrink: 0;
   }
   .acc-card__btn-icon { display: block !important; }
+  /* "Added" state: base.css aria-pressed rule handles color/border;
+     keep icon visible in sand */
+  .acc-card__btn[aria-pressed="true"] .acc-card__btn-icon {
+    color: var(--color-accent-button-background, #c8943a) !important;
+  }
 }
 
 /* ══════════════════════════════════════════

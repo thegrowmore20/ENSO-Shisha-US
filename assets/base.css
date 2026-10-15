@@ -377,11 +377,11 @@ h6, .h6 {
   outline-offset: 3px;
 }
 
-/* "In the cart" toggle state — white pill with champagne outline */
+/* "In the cart" toggle state — white pill with sand outline */
 .btn[aria-pressed="true"] {
   background: #fff;
-  color: var(--btn-text);
-  border: 1.5px solid var(--btn-main);
+  color: var(--color-accent-button-background, #c8943a);
+  border: 1.5px solid var(--color-accent-button-background, #c8943a);
   box-shadow: none;
   transform: none;
 }
