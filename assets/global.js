@@ -920,13 +920,14 @@ if (!customElements.get('product-recommendations')) {
   // Re-sync on every cart mutation from any source (popup, drawer, card ATC)
   document.addEventListener('cart:updated', syncCartState);
 
-  // ── Variant-switch sync — restore "Added To Cart" if switched-to variant is in cart ──
+  // ── Variant-switch sync — restore/revert "Added To Cart" on variant change ──
   document.addEventListener('variant:change', (e) => {
     const { variant, form } = e.detail || {};
-    if (!variant || !form) return;
-    const vid = String(variant.id);
+    if (!variant) return;
+    const vid    = String(variant.id);
     const inCart = cartVariantsCache.has(vid);
-    form.querySelectorAll('[type="submit"]').forEach(b => {
+
+    const syncBtn = (b) => {
       if (inCart) {
         markAsAdded(b, vid, cartVariantsCache.get(vid));
       } else {
@@ -936,7 +937,15 @@ if (!customElements.get('product-recommendations')) {
         const label = getLabelEl(b);
         if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
       }
-    });
+    };
+
+    if (form) {
+      form.querySelectorAll('[type="submit"]').forEach(syncBtn);
+    } else {
+      // Fallback: sync any submit button in a form that now carries this variant id
+      document.querySelectorAll(`form[action="/cart/add"] input[name="id"][value="${CSS.escape(vid)}"]`)
+        .forEach(inp => inp.closest('form')?.querySelectorAll('[type="submit"]').forEach(syncBtn));
+    }
   });
 
   if (document.readyState === 'loading') {

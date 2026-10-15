@@ -126,9 +126,10 @@ if (!customElements.get('product-info')) {
         window.history.replaceState({}, '', url);
       }
 
-      // 6. Let other elements on the page (e.g. the sticky add-to-cart bar)
+      // 6. Let other elements on the page (e.g. the sticky add-to-cart bar, global ATC sync)
       // react to the new variant without needing their own variant-matching logic.
-      document.dispatchEvent(new CustomEvent('variant:change', { detail: { variant } }));
+      const form = this.idInput?.closest('form') || this.addButton?.closest('form') || null;
+      document.dispatchEvent(new CustomEvent('variant:change', { detail: { variant, form } }));
     }
 
     #bindQuantity() {
