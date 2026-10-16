@@ -236,8 +236,14 @@ if (!customElements.get('product-media-gallery')) {
       const thumbsList = this.querySelector('[data-gallery-thumbs]');
 
       if (activeThumb && thumbsList) {
-        const thumbLeft = activeThumb.offsetLeft;
-        const thumbRight = thumbLeft + activeThumb.offsetWidth;
+        // Use getBoundingClientRect so thumbLeft is relative to the scroll
+        // container's visible area, then add scrollLeft to get the position
+        // within the scroll content. offsetLeft is unreliable here because
+        // the thumb's offsetParent may not be the scrollable list element.
+        const listRect = thumbsList.getBoundingClientRect();
+        const thumbRect = activeThumb.getBoundingClientRect();
+        const thumbLeft = thumbRect.left - listRect.left + thumbsList.scrollLeft;
+        const thumbRight = thumbLeft + thumbRect.width;
         const stripLeft = thumbsList.scrollLeft;
         const stripRight = stripLeft + thumbsList.clientWidth;
 
