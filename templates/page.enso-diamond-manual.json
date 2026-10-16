@@ -288,7 +288,7 @@
       "settings": {
         "charge_while_smoking": "shopify://shop_images/charge-while-smoking.webp",
         "device_frame": "shopify://shop_images/closed-start.webp",
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -350,7 +350,7 @@
       "type": "dm-dial",
       "settings": {
         "device_frame": "shopify://shop_images/closed-start.webp",
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -519,7 +519,7 @@
         "hookah_step3"
       ],
       "settings": {
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -630,7 +630,7 @@
       ],
       "settings": {
         "device_frame": "shopify://shop_images/closed-start.webp",
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -729,7 +729,7 @@
       "settings": {
         "cable_alone": "shopify://shop_images/cable-alone.webp",
         "device_frame": "shopify://shop_images/closed-start.webp",
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -927,7 +927,7 @@
       "settings": {
         "acc_glove": "shopify://shop_images/cleaning-glove-1.webp",
         "multitool_product": "cleaning-glove",
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -995,7 +995,7 @@
         "row_cooling"
       ],
       "settings": {
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -1015,7 +1015,7 @@
     "dm_warranty": {
       "type": "dm-warranty",
       "settings": {
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,

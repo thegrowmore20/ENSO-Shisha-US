@@ -82,7 +82,7 @@
     "em_quick_start": {
       "type": "em-quick-start",
       "settings": {
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -102,7 +102,7 @@
     "em_in_the_box": {
       "type": "em-in-the-box",
       "settings": {
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -122,7 +122,7 @@
     "em_using": {
       "type": "em-using",
       "settings": {
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -142,7 +142,7 @@
     "em_troubleshooting": {
       "type": "em-troubleshooting",
       "settings": {
-        "color_background": "#faf8f4",
+        "color_background": "#fcfbf8",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
