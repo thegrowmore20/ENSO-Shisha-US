@@ -553,7 +553,7 @@ button.mpick__c span{color:var(--grey)}button.mpick__c.on span{color:var(--sand)
 .hf2__out dd{margin:4px 0 0;font:800 18px/23px Inter,sans-serif}
 .hf2__t{font-size:30px!important;line-height:34px!important;color:#e2614c}
 .hf2__note{margin:12px 0 0;font-size:14px;line-height:21px;color:var(--grey)}
-.hf2__meshc dd{display:flex;align-items:center;gap:8px;margin:4px 0 0}
+.hf2__meshc dd{display:flex;align-items:flex-start;gap:8px;margin:4px 0 0}
 .hf2__mimg{width:40px;height:40px;object-fit:contain;border-radius:8px;border:1px solid rgba(0,0,0,.08);flex-shrink:0}
 .hf2__m{display:block;font:800 18px/23px Inter,sans-serif}
 .hf2__msub{display:block;font:500 12px/16px Montserrat,sans-serif;color:#777;margin-top:2px}
