@@ -662,6 +662,7 @@
       },
       "padding": {
         "section_padding_heading": "Section spacing",
+        "section_padding_header": "Section spacing",
         "padding_desktop_heading": "Padding — desktop",
         "padding_mobile_heading": "Padding — mobile",
         "padding_top": "Top padding",
@@ -1704,16 +1705,16 @@
     "diamond_quick_start": {
       "name": "Diamond Quick Start",
       "settings": {
-        "nav_heading": { "content": "Navigation" },
+        "nav_heading": "Navigation",
         "back_url": { "label": "Back link URL" },
         "back_label": { "label": "Back link label" },
         "device_label": { "label": "Device name" },
-        "hero_heading": { "content": "Hero" },
+        "hero_heading": "Hero",
         "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "subheading": { "label": "Subheading" },
         "safety_note": { "label": "Safety note" },
-        "footer_heading": { "content": "Footer" },
+        "footer_heading": "Footer",
         "hide_footer": { "label": "Hide footer links", "info": "Enable when the Diamond Pre-heat Step section provides the footer" },
         "more_url": { "label": "Manual link URL" },
         "more_label": { "label": "Manual link label" },
@@ -1725,7 +1726,7 @@
           "settings": {
             "heading": { "label": "Heading" },
             "body": { "label": "Body text" },
-            "images_heading": { "content": "Images" },
+            "images_heading": "Images",
             "image_1": { "label": "Image 1" },
             "image_2": { "label": "Image 2" },
             "image_3": { "label": "Image 3" },
