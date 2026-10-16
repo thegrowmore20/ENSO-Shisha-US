@@ -592,9 +592,30 @@
   text-underline-offset: 2px;
 }
 
+/* ── Bar — desktop ── */
+.bar__sub { font: 500 14px Montserrat,sans-serif; letter-spacing:0; color:var(--grey); margin-left:8px; }
+.bar__sub::before { content:"· "; }
+
+/* ── Bar — mobile: keep name + Pre-order on ONE line, price + struck-out on ONE line ── */
+@media (max-width:767px) {
+  .bar b { display:inline-flex; flex-direction:row; align-items:baseline; font-size:15px; }
+  .bar__sub { font-size:12.5px; margin-left:6px; }
+  .bar__sub::before { content:"· "; }
+  .bar .cta span { display:inline-flex !important; flex-direction:row !important; align-items:baseline; gap:6px; }
+  .bar .cta s { display:inline !important; font-size:12.5px !important; margin:0 !important; }
+}
+
 {% endstylesheet %}
 
 <div id="section-{{ section.id }}">
+
+<div class="bar" id="bar"><div class="wrap">
+  <b>ENSŌ Diamond<small class="bar__sub">Pre-order</small></b>
+  <div class="cta">
+    <span>{{ product.price | money }}<s>{{ product.compare_at_price | money }}</s></span>
+    <a class="pill pill--sm" href="/cart">Reserve for $120</a>
+  </div>
+</div></div>
 
 {%- assign sticky_watch_id = 'DBuyCard-' | append: section.id -%}
 {%- render 'sticky-add-to-cart',
