@@ -39,15 +39,23 @@
     secs.forEach(function(s){io.observe(s)});
   }
 })();
-/* sticky finder: 8px from top when header is hidden; drops below header when it shows */
+/* chapter finder: fixed bar, slides in after 300px scroll, syncs top with header visibility */
 (function(){
   var f=document.querySelector('.finder');if(!f)return;
   var hdr=document.querySelector('.site-header');if(!hdr)return;
   var root=document.documentElement;
   root.style.setProperty('--hdr-h',hdr.offsetHeight+'px');
-  function sync(){root.classList.toggle('hdr-show',!hdr.classList.contains('site-header--hidden'));}
-  new MutationObserver(sync).observe(hdr,{attributes:true,attributeFilter:['class']});
-  sync();
+  function syncPos(){root.classList.toggle('hdr-show',!hdr.classList.contains('site-header--hidden'));}
+  new MutationObserver(syncPos).observe(hdr,{attributes:true,attributeFilter:['class']});
+  var tick=false;
+  function syncVis(){
+    var on=scrollY>300;
+    f.classList.toggle('is-on',on);
+    f.setAttribute('aria-hidden',String(!on));
+    tick=false;
+  }
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(syncVis);}},{passive:true});
+  syncPos();syncVis();
 })();
 /* 2 Oct 2026: live Diamond screens for the manual. Each .lv[data-scene] plays a loop while it is on screen;
    with reduced motion it shows one still frame. Screens follow output/diamond-brief/UI; battery always 100 % (guide rule). */
