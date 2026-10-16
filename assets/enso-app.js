@@ -1659,7 +1659,7 @@ const FIRMWARE = {
   /* ⚠️ ver / notes / how are still empty — send them and they appear in the panel. */
   "ENSŌ":       {ver:"", date:"2026-10-01", notes:[], how:[]},
   "ENSŌ 2.0":   {ver:"", date:"2026-10-01", notes:[], how:[]},
-  "Diamond":    {ver:"", date:"2026-10-01", notes:[], how:[]}
+  "Diamond":    {ver:"0.9.3", date:"2026-10-01", notes:[], how:[]}
 };
 const FW_SUGGEST = "2026-10-02";   /* date the picker opens on when nobody has said yet */
 function fwFor(model){ return FIRMWARE[model] || null; }
@@ -2336,8 +2336,8 @@ function saSoftware(){
     ? `<p class="sa-sw__ok">Alerts are on. You hear about the next release first.</p><a href="#" onclick="go('notify');return false;">Alert settings ›</a>`
     : `<p>One short alert when new software is out for Diamond. Nothing else.</p><button class="sa-hero__go sa-sw__btn" type="button" onclick="obNext('notify')">Turn on update alerts</button>`;
   box.innerHTML = `
-    <div class="sa-sw__latest"><span class="sa-tag">Latest release</span><b>${date || 'Coming soon'}</b>
-      <p>Already installed on every Diamond we ship. The next release and what it improves appear here.</p>${notes}</div>
+    <div class="sa-sw__latest"><span class="sa-tag">Latest release</span><b>${f.ver ? 'Version ' + f.ver : (date || 'Coming soon')}</b>
+      <p>${f.ver && date ? 'Released ' + date + '. ' : ''}Already installed on every Diamond we ship. The next release and what it improves appear here.</p>${notes}</div>
     <div class="sa-card2"><span class="sa-tag">Which version do I have</span><p>With Diamond switched off, click the dial <b>five times</b>. The version shows on the screen.</p></div>
     <h2 class="sa-sw__h">How to update</h2>
     ${flowBlock(steps)}
