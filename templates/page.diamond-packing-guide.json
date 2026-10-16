@@ -32,7 +32,7 @@
       "type": "pk-pack",
       "settings": {
         "pack_layer1": "shopify://shop_images/pack-layer1.webp",
-        "pack_press": "shopify://shop_images/pack-press.webp",
+        "pack_press": "shopify://shop_images/pack-press-m.webp",
         "cup_filled": "shopify://shop_images/cup-filled.webp"
       }
     },

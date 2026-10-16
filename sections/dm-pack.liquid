@@ -152,7 +152,7 @@
     {%- for block in basket_blocks -%}
       <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
         {%- if block.settings.image != blank -%}
-          {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+          {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.alt_text | default: block.settings.image.alt | default: '' -}}
         {%- else -%}
           <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
         {%- endif -%}
@@ -352,6 +352,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image alt text"
         },
         {
           "type": "text",

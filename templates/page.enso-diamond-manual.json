@@ -371,7 +371,8 @@
         "basket_step2": {
           "type": "basket_step",
           "settings": {
-            "image": "shopify://shop_images/pack-press.webp",
+            "image": "shopify://shop_images/pack-press-m.webp",
+            "alt_text": "Pressing the tobacco down lightly — just enough to even it out",
             "step_title": "Press just a little",
             "step_body": "<p>Press it down gently with a pick. Keep it airy.</p>"
           }

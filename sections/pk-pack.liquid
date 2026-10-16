@@ -36,7 +36,7 @@
         </figcaption>
         <div class="ts__pic ts__pic--img">
           {%- if section.settings.pack_press != blank -%}
-            {{- section.settings.pack_press | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.pack_press.alt | default: '', width: section.settings.pack_press.width, height: section.settings.pack_press.height -}}
+            {{- section.settings.pack_press | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.pack_press.alt | default: 'Pressing the tobacco down lightly — just enough to even it out', width: section.settings.pack_press.width, height: section.settings.pack_press.height -}}
           {%- else -%}
             <img src="{{ 'dm-s-pack-press.jpg' | file_url }}" alt="" loading="lazy">
           {%- endif -%}
