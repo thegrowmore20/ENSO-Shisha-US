@@ -459,6 +459,8 @@
   };
 
   var SCR = {
+    off:   '',
+    bat:   '<svg viewBox="0 0 60 30" style="width:24cqw;height:12cqw"><rect x="1.5" y="1.5" width="51" height="27" rx="5" fill="none" stroke="#f0e8d8" stroke-width="3"/><rect x="55" y="9" width="4" height="12" rx="1.5" fill="#f0e8d8"/><rect x="6" y="6" width="42" height="18" rx="2" fill="#7eae82"/></svg><div class="t-big" style="margin-top:3cqw">100%</div><div class="t-cap">Battery</div>',
     start: '<div class="lv__bat">' + BOLT + '100%</div><i class="arr l"></i><i class="arr r2"></i><div class="t-start">Start<br>Pre-heat</div>',
     timer: '<div class="t-cap mono r" style="margin:0">Pre-heat timer</div><div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#2a2a2e" stroke-width="3.2"/><circle class="arc" cx="50" cy="50" r="46" fill="none" stroke="#e2614c" stroke-width="3.2" stroke-linecap="round" pathLength="100" stroke-dasharray="53 100"/></svg><b data-k="tm">08:00</b></div><div class="t-cap mono" style="color:#f0e8d8;letter-spacing:.12em;margin:0">mm:ss</div>',
     pre:   '<div class="lv__bat">' + BOLT + '100%</div><div class="t-lbl">Pre-heating</div><div class="t-big" data-k="pt">3:30</div><div class="t-mid" data-k="pc">275°C</div><div class="t-cap">Remaining</div>',
@@ -468,6 +470,7 @@
   };
 
   var SCENES = {
+    level: function () { return [['off', {}, 1300], ['off', {}, 300, 'click', 1], ['bat', {}, 2400]]; },
     qstart: function () {
       var a = [['start', {}, 1400], ['start', {}, 380, 'click', 1]];
       for (var s = 420; s >= 417; s--) a.push(['pre', { pt: s, pc: 275 }, 700]);
