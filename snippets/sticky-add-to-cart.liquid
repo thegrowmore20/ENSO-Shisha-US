@@ -75,6 +75,13 @@
     top: 0;
   }
 
+  /* Mobile is bottom-anchored — never let header-hidden override it */
+  @media screen and (max-width: 749px) {
+    body:has(.site-header--hidden) .sticky-atc {
+      top: auto;
+    }
+  }
+
   .sticky-atc__inner.container {
     max-width: var(--page-width, 1200px);
     margin-inline: auto;
