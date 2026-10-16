@@ -677,6 +677,12 @@
 body:has(.bar.is-on) .sticky-atc { display: none !important; }
 /* When header slides away, bar moves to viewport top (no gap) */
 body:has(.site-header--hidden) .bar { top: 0; }
+/* Mobile: bar is bottom-anchored — prevent header-hidden from overriding top: auto */
+@media screen and (max-width: 991px) {
+  body:has(.site-header--hidden) .bar {
+    top: auto;
+  }
+}
 
 /* Desktop label */
 .bar__sub { font: 500 14px var(--font-body, Montserrat, sans-serif); letter-spacing: 0; color: rgb(0 0 0 / .45); margin-left: 8px; }
@@ -698,10 +704,36 @@ body:has(.site-header--hidden) .bar { top: 0; }
 }
 
 /* Mobile: keep name + Pre-order on ONE line, price + struck-out on ONE line */
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .bar b { display:inline-flex; flex-direction:row; align-items:baseline; font-size:15px; }
   .bar__sub { font-size:12.5px; margin-left:6px; }
   .bar .cta > span { display:inline-flex !important; flex-direction:row !important; align-items:baseline; gap:6px; }
+}
+/* Mobile: prevent bar content overflow + clip overlong product name */
+@media (max-width: 767px) {
+  .bar {
+    overflow: hidden;
+  }
+  .bar b {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bar .wrap {
+    gap: 8px;
+  }
+  .bar .cta {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .bar .pill--sm {
+    padding: 10px 14px;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 }
 
 {% endstylesheet %}
