@@ -1,4 +1,4 @@
-{% style %}
+﻿{% style %}
   #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -18,7 +18,7 @@
     <h2>Warranty</h2>
     <p class="em-ch__lead">Two years on the device, one year on the battery. Registering takes two minutes in the ENSŌ app.</p>
     <div class="em-cta-row">
-      <a class="em-pill" href="{{ section.settings.register_url | default: '/pages/enso-diamond-app#register' }}">Register your warranty</a>
+      <a class="em-pill" href="{{ section.settings.register_url | default: '/pages/enso-app#register' }}">Register your warranty</a>
       <a class="em-lnk" href="{{ section.settings.terms_url | default: '/policies/terms-of-service' }}">Warranty terms ›</a>
     </div>
     <div class="em-faq">

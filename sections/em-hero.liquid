@@ -1,4 +1,4 @@
-{% style %}
+﻿{% style %}
   #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -22,12 +22,12 @@
         {%- if section.settings.cta1_label != blank -%}
           <a href="{{ section.settings.cta1_url }}">{{ section.settings.cta1_label }}</a>
         {%- else -%}
-          <a href="/pages/enso-diamond-app#register">Register your warranty</a>
+          <a href="/pages/enso-app#register">Register your warranty</a>
         {%- endif -%}
         {%- if section.settings.cta2_label != blank -%}
           <a href="{{ section.settings.cta2_url }}">{{ section.settings.cta2_label }}</a>
         {%- else -%}
-          <a href="/pages/enso-diamond-app#fix">Troubleshoot in the app</a>
+          <a href="/pages/enso-app#fix">Troubleshoot in the app</a>
         {%- endif -%}
       </div>
     </div>
