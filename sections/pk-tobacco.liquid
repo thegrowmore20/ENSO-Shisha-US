@@ -81,7 +81,20 @@
   margin: 0;
 }
 @media screen and (max-width: 767px) {
-  .pk-cards { grid-template-columns: 1fr; }
+  .pk-cards {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 85%;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .pk-cards::-webkit-scrollbar { display: none; }
+  .pk-cards > article { scroll-snap-align: start; }
 }
 {% endstylesheet %}
 
