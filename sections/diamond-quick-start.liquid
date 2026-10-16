@@ -302,7 +302,6 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    cursor: grab;
     user-select: none;
     -webkit-user-select: none;
   }
@@ -433,65 +432,8 @@
 
     dots.forEach(function(dot, i) {
       dot.addEventListener('click', function() {
-        track.style.scrollSnapType = '';
         track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
       });
-    });
-
-    // Pointer-capture drag — all move/up events stay on the track element,
-    // so they never interfere with clicks on sibling elements like dots.
-    let startX = 0;
-    let startScroll = 0;
-
-    function snapToNearest() {
-      const w = track.clientWidth;
-      const index = Math.round(track.scrollLeft / w);
-      track.scrollTo({ left: index * w, behavior: 'smooth' });
-      if ('onscrollend' in window) {
-        track.addEventListener('scrollend', function restoreSnap() {
-          track.style.scrollSnapType = '';
-          track.removeEventListener('scrollend', restoreSnap);
-          updateDots();
-        });
-      } else {
-        setTimeout(function() {
-          track.style.scrollSnapType = '';
-          updateDots();
-        }, 400);
-      }
-    }
-
-    track.addEventListener('pointerdown', function(e) {
-      if (e.button !== 0) return;
-      startX = e.clientX;
-      startScroll = track.scrollLeft;
-      track.style.cursor = 'grabbing';
-      track.style.scrollSnapType = 'none';
-      track.setPointerCapture(e.pointerId);
-      e.preventDefault();
-    });
-
-    track.addEventListener('pointermove', function(e) {
-      if (!track.hasPointerCapture(e.pointerId)) return;
-      track.scrollLeft = startScroll - (e.clientX - startX);
-    });
-
-    track.addEventListener('pointerup', function(e) {
-      if (!track.hasPointerCapture(e.pointerId)) return;
-      track.releasePointerCapture(e.pointerId);
-      track.style.cursor = '';
-      snapToNearest();
-    });
-
-    track.addEventListener('pointercancel', function(e) {
-      if (!track.hasPointerCapture(e.pointerId)) return;
-      track.releasePointerCapture(e.pointerId);
-      track.style.cursor = '';
-      track.style.scrollSnapType = '';
-    });
-
-    track.querySelectorAll('img').forEach(function(img) {
-      img.addEventListener('dragstart', function(e) { e.preventDefault(); });
     });
   });
 
