@@ -809,7 +809,7 @@
           "settings": {
             "freq": "After every session",
             "step_title": "Rinse all three parts",
-            "step_body": "The shell, the plate and the insert. Let them dry fully before the next session.",
+            "step_body": "<p>The shell, the plate and the insert. Let them dry fully before the next session.</p>",
             "image": "shopify://shop_images/cap-parts-rinse.webp"
           }
         },
@@ -817,7 +817,7 @@
           "type": "shaft_step",
           "settings": {
             "step_title": "Battery in, latch closed",
-            "step_body": "Give Diamond an hour to cool, then lift the cap off. Leave the battery in with the latch closed the whole time: it closes the bay so no water reaches the contacts.",
+            "step_body": "<p>Give Diamond an hour to cool, then lift the cap off. Leave the battery in with the latch closed the whole time: it closes the bay so no water reaches the contacts.</p>",
             "image": "shopify://shop_images/clean-capoff-back-brush.webp"
           }
         },
