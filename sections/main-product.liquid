@@ -909,11 +909,11 @@
        scrolling in place. */
     .product-gallery--thumbnails_left .product-gallery__thumbs-wrap {
       flex-direction: row;
-      gap: 0;
+      align-items: center;
+      gap: var(--space-2);
       max-height: none;
       min-width: 0;
       width: 100%;
-      position: relative;
     }
     .product-gallery--thumbnails_left .product-gallery__thumbs {
       flex-direction: row;
@@ -923,20 +923,14 @@
       flex: 1;
       min-width: 0;
     }
-    /* Arrows float over the thumbnail row instead of reserving their own
-       flex column — keeps the row (and its thumbnails) spanning the full
-       width instead of leaving a blank gap where an arrow used to sit. */
+    /* Arrows are flex siblings of the thumb list, not absolute overlays.
+       This keeps them beside the strip so they never block tap targets.
+       display:none (from [hidden]) removes them from flow entirely so
+       no blank gap appears when they are not needed. */
     .product-gallery--thumbnails_left .product-gallery__thumbs-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 2;
-    }
-    .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--prev {
-      left: 0;
-    }
-    .product-gallery--thumbnails_left .product-gallery__thumbs-arrow--next {
-      right: 0;
+      position: static;
+      transform: none;
+      flex-shrink: 0;
     }
     .product-gallery__thumbs-arrow--prev .icon-chevron {
       transform: rotate(90deg);
