@@ -39,6 +39,16 @@
     secs.forEach(function(s){io.observe(s)});
   }
 })();
+/* sticky finder: hides on scroll down (>400px), restores on 140px accumulated upscroll */
+(function(){
+  var f=document.querySelector('.finder');if(!f)return;
+  var last=scrollY,up=0,tick=false;
+  function apply(){var y=scrollY,d=y-last;
+    if(d>4){up=0;if(y>400)f.classList.add('away')}
+    else if(d<-4){up-=d;if(up>140)f.classList.remove('away')}
+    last=y;tick=false;}
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(apply);}},{passive:true});
+})();
 /* 2 Oct 2026: live Diamond screens for the manual. Each .lv[data-scene] plays a loop while it is on screen;
    with reduced motion it shows one still frame. Screens follow output/diamond-brief/UI; battery always 100 % (guide rule). */
 (function(){
