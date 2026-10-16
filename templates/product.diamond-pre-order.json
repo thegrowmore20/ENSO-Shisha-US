@@ -684,7 +684,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Warranty and returns?",
-            "answer": "Two years on Diamond, one year on the battery. Returns: 14 days from delivery for an unopened box, 30 days for an opened one. Write to support first."
+            "answer": "Two years on Diamond, one year on the battery. Returns: 15 days from delivery, unused. Opened items are final sale. Write to support first."
           }
         }
       },
@@ -782,9 +782,9 @@
           "settings": {
             "icon": "shield",
             "heading": "Warranty and returns",
-            "body": "Two years on Diamond, one year on the battery. 14 days unopened, 30 days opened to return.",
+            "body": "Two years on Diamond, one year on the battery. 15 days from delivery, unused, to return. Opened items are final sale.",
             "link": "",
-            "popup_body": "<p><strong>What is covered</strong></p><p>The device, the thermo cap and the electronics for two years, the battery pack for one. Cups, mesh screens and silicone adapters are consumables and are sold separately.</p><p><strong>How a claim works</strong></p><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced Diamond ships back from the nearest warehouse. <a href=\"mailto:support@ensoshisha.com?subject=Warranty\">Write to support</a></p><p><strong>Returns</strong></p><p>14 days from delivery for an unopened box, 30 days for an opened one. Write to support first; the address and the steps are on the warranty page. <a href=\"/pages/warranty\">Warranty and returns</a></p>",
+            "popup_body": "<p><strong>What is covered</strong></p><p>The device, the thermo cap and the electronics for two years, the battery pack for one. Cups, mesh screens and silicone adapters are consumables and are sold separately.</p><p><strong>How a claim works</strong></p><p>Write to support with your order number and a photo or a short video. We send a return label; a repaired or replaced Diamond ships back from the nearest warehouse. <a href=\"mailto:support@ensoshisha.com?subject=Warranty\">Write to support</a></p><p><strong>Returns</strong></p><p>15 days from delivery, unused. Opened items are final sale. Write to support first; the address and the steps are on the warranty page. <a href=\"/pages/warranty\">Warranty and returns</a></p>",
             "button_symbol": "plus"
           }
         },
