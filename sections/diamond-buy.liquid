@@ -57,6 +57,16 @@
 /* ── Gallery area ── */
 .d-buy__gallery {
   min-width: 0;
+  overflow: hidden;
+}
+
+.d-buy__gallery product-media-gallery,
+.d-buy__gallery .product-gallery {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  html, body { overflow-x: clip; }
 }
 
 /* ── Gallery — identical to main-product.liquid so the custom element works ── */
