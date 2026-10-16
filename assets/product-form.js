@@ -352,23 +352,12 @@ if (!customElements.get('product-media-gallery')) {
       updateArrows();
     }
 
-    // For thumbnails_bottom: shows a right-edge fade when the thumb strip
-    // has more content out of view, hides it when fully scrolled to the end.
-    // Also peek-scrolls by one thumb when the last visible thumb is clicked.
+    // Peek-scrolls the thumb strip by one thumbnail when the last visible
+    // thumbnail is clicked, so customers know more thumbnails exist.
     #bindThumbsFade() {
       const thumbsList = this.querySelector('[data-gallery-thumbs]');
-      const thumbsWrap = this.querySelector('[data-gallery-thumbs-wrap]');
-      if (!thumbsList || !thumbsWrap) return;
+      if (!thumbsList) return;
 
-      const update = () => {
-        thumbsWrap.classList.toggle(
-          'has-overflow-right',
-          thumbsList.scrollLeft + thumbsList.clientWidth < thumbsList.scrollWidth - 2
-        );
-        thumbsWrap.classList.toggle('has-overflow-left', thumbsList.scrollLeft > 2);
-      };
-
-      // Peek-scroll when clicking the last visible thumb to hint at more thumbnails
       this.thumbs.forEach((thumb) => {
         thumb.addEventListener('click', () => {
           const thumbRect = thumb.getBoundingClientRect();
@@ -381,10 +370,6 @@ if (!customElements.get('product-media-gallery')) {
           thumbsList.scrollBy({ left: thumbRect.width + gap, behavior: 'smooth' });
         });
       });
-
-      thumbsList.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update);
-      update();
     }
   }
 
