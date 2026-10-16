@@ -11,6 +11,96 @@
     }
   }
 {% endstyle %}
+
+{% stylesheet %}
+.dm-pack-banner {
+  display: flex;
+  align-items: stretch;
+  background: #1a1714;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 48px;
+  min-height: 320px;
+}
+
+.dm-pack-banner__body {
+  flex: 0 0 38%;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+.dm-pack-banner__heading {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: 28px;
+  line-height: 1.15;
+  color: #fff;
+  margin: 0;
+}
+
+.dm-pack-banner__text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.75);
+  margin: 0;
+}
+
+.dm-pack-banner__btn {
+  align-self: flex-start;
+  border: 1.5px solid #fff;
+  color: #fff;
+  background: transparent;
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  padding: 10px 22px;
+  height: auto;
+  line-height: 1;
+}
+
+.dm-pack-banner__btn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.dm-pack-banner__media {
+  flex: 1;
+  position: relative;
+  min-height: 280px;
+}
+
+.dm-pack-banner__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 749px) {
+  .dm-pack-banner {
+    flex-direction: column;
+    margin-bottom: 32px;
+    min-height: 0;
+  }
+
+  .dm-pack-banner__body {
+    flex: none;
+    padding: 28px 24px 24px;
+  }
+
+  .dm-pack-banner__heading {
+    font-size: 24px;
+  }
+
+  .dm-pack-banner__media {
+    min-height: 220px;
+  }
+}
+{% endstylesheet %}
 {%- liquid
   assign basket_blocks    = section.blocks | where: "type", "basket_step"
   assign flat_blocks      = section.blocks | where: "type", "flat_step"
@@ -20,6 +110,20 @@
   assign flat_total       = flat_blocks.size | plus: 1
 -%}
 <div class="wrap">
+  <div class="dm-pack-banner">
+    <div class="dm-pack-banner__body">
+      <h2 class="dm-pack-banner__heading">Charged? Pack<br>your first cup</h2>
+      <p class="dm-pack-banner__text">10–15 g in two light layers. Pick your mesh and the steps open right there.</p>
+      <a href="#pack" class="btn dm-pack-banner__btn">HOW TO PACK</a>
+    </div>
+    <div class="dm-pack-banner__media" aria-hidden="true">
+      {%- if section.settings.intro_image != blank -%}
+        {{- section.settings.intro_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '', class: 'dm-pack-banner__img' -}}
+      {%- else -%}
+        <svg class="dm-pack-banner__img" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="800" height="400" fill="#f0ede8"/><path d="M320 120a80 80 0 1 1 160 0 80 80 0 0 1-160 0zm-80 160 120-120 80 80 80-80 120 120H240z" fill="#c8b89a"/></svg>
+      {%- endif -%}
+    </div>
+  </div>
   <section class="ch" id="pack"><p class="ch__num">05 · Start</p><h2>Pack the cup</h2><p class="ch__lead">Two light layers of your usual tobacco. First choose the mesh: it changes the smoke, the pack and the heat.</p><div class="grams"><b>10–15 g</b><span>of your usual tobacco. <b>Mix it first:</b> the juice settles at the bottom of the tin.</span></div><h3>Touching or not: two meshes</h3><p class="h3lead">It is the same craft as packing a bowl for coal. The difference is whether the tobacco touches the hot cup.</p><div class="slider tslider slider--grid" style="--n:2"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Flat screen: in contact</b><p>The tobacco sits against the cup, like a bowl packed in contact under the coals: a deeper roast, a fuller, denser smoke, and it needs less heat. Fine, dry cuts open up best here, Tangiers for example. A little more work to clean.</p></figcaption><div class="ts__pic ts__pic--img">
     {%- if section.settings.flat_screen != blank -%}
       {{- section.settings.flat_screen | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.flat_screen.alt | default: '' -}}
@@ -137,6 +241,15 @@
 {
   "name": "DM: Pack the Cup",
   "settings": [
+    {
+      "type": "header",
+      "content": "Intro banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "intro_image",
+      "label": "Banner image (right side)"
+    },
     {
       "type": "header",
       "content": "Mesh comparison images"
