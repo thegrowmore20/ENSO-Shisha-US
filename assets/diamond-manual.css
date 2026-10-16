@@ -636,7 +636,7 @@ html.hdr-show .finder{top:calc(var(--site-header-height,64px) + 8px)!important}
 .brk{background:#fff;border-radius:22px;padding:18px;margin:0 0 22px;max-width:620px}
 .brk svg{width:100%;height:auto;display:block}
 .ts__pic--mac .lv,.mac .lv{box-shadow:none}
-@media (max-width:767px){.feat--mac,.hf2{grid-template-columns:1fr}.feat--mac .mac,.hf2 .mac{max-width:none}}
+@media (max-width:767px){.feat--mac,.hf2{grid-template-columns:1fr}.feat--mac .mac,.hf2 .mac{max-width:none}.hf2__out{grid-template-columns:1fr 1fr}}
 .ts__pic--mac{aspect-ratio:4/5}@media (max-width:767px){.ts__pic--mac{aspect-ratio:1/1}}
 /* 3 Oct, Vadim: a click shows as an orange ring, a turn as an orange arc running round the screen; the hint sits on top */
 .lv{position:relative}

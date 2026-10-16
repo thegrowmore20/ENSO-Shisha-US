@@ -5,9 +5,9 @@
     function go(d){var w=track.querySelector('.slide').getBoundingClientRect().width+20;track.scrollBy({left:d*w,behavior:'smooth'});}
     p._wired=n._wired=true;p.addEventListener('click',function(){go(-1)});n.addEventListener('click',function(){go(1)});
     track.addEventListener('scroll',upd,{passive:true});upd();
-    /* mobile dot nav */
+    /* mobile dot nav — skip .tslider, those get tsdots from the block below */
     var _sl=[].slice.call(s.querySelectorAll('.slide'));
-    if(_sl.length>1){
+    if(_sl.length>1&&!s.classList.contains('tslider')){
       var _d=document.createElement('div');_d.className='enso-sigdots';
       _sl.forEach(function(_,i){var x=document.createElement('i');if(i===0)x.classList.add('is-on');_d.appendChild(x);});
       s.appendChild(_d);
