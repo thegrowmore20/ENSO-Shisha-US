@@ -15,7 +15,16 @@
   assign back_url   = section.settings.back_url   | default: '/pages/enso-experience'
   assign back_label = section.settings.back_label | default: 'ENSŌ Experience'
   assign dev_label  = section.settings.device_label | default: 'ENSŌ Diamond'
+  assign needs_device_js = false
+  for block in section.blocks
+    if block.settings.use_device_screen
+      assign needs_device_js = true
+    endif
+  endfor
 -%}
+{%- if needs_device_js -%}
+  <script src="{{ 'diamond-manual.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 <div class="qs-wrap">
 
@@ -58,7 +67,7 @@
           if block.settings.image_3 != blank
             assign img_count = img_count | plus: 1
           endif
-          if block.settings.image_4 != blank
+          if block.settings.image_4 != blank or block.settings.use_device_screen
             assign img_count = img_count | plus: 1
           endif
           assign has_images = false
@@ -99,8 +108,35 @@
                   {%- if block.settings.image_3 != blank -%}
                     {{- block.settings.image_3 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
                   {%- endif -%}
-                  {%- if block.settings.image_4 != blank -%}
-                    {{- block.settings.image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
+                  {%- if block.settings.use_device_screen -%}
+                    {%- liquid
+                      if block.settings.device_bg != blank
+                        assign dev_bg_src = block.settings.device_bg | image_url: width: 900
+                        assign dev_bg_tag = block.settings.device_bg | image_url: width: 900 | image_tag: loading: 'lazy', alt: ''
+                      else
+                        assign dev_bg_src = 'closed-start.webp' | file_url
+                        assign dev_bg_tag = nil
+                      endif
+                    -%}
+                    <div class="qs__mac">
+                      <div class="mac">
+                        <div class="dev">
+                          {%- if block.settings.device_bg != blank -%}
+                            {{- dev_bg_tag -}}
+                          {%- else -%}
+                            <img src="{{ dev_bg_src }}" alt="" loading="lazy">
+                          {%- endif -%}
+                          <div class="lv" data-scene="{{ block.settings.device_scene | default: 'level' }}" role="img" aria-label="{{ block.settings.heading }}"></div>
+                        </div>
+                        <span class="finger" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                  {%- elsif block.settings.image_4 != blank -%}
+                    {%- if block.settings.image_4_contain -%}
+                      {{- block.settings.image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading, style: 'object-fit:contain;background:#fff' -}}
+                    {%- else -%}
+                      {{- block.settings.image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
+                    {%- endif -%}
                   {%- endif -%}
                 </div>
                 {%- if img_count > 1 -%}
@@ -313,6 +349,21 @@
     width: 22px;
     border-radius: 999px;
   }
+
+  /* Animated device screen slide */
+  .qs__mac{flex:0 0 100%;height:100%;scroll-snap-align:center;position:relative}
+  .qs__mac .mac{position:absolute;inset:0;aspect-ratio:auto;overflow:hidden;background:#fff}
+  .qs__mac .mac .dev{position:absolute;width:330%;max-width:none;left:50%;top:50%;transform:translate(-50.17%,-57.6%);margin:0}
+  .qs__mac .mac .dev>img{width:100%;height:auto;object-fit:initial;background:none;display:block}
+  .qs__mac .lv{position:absolute;left:50.17%;top:57.6%;width:21.4%;transform:translate(-50%,-50%);aspect-ratio:1;border-radius:50%;background:#0a0a0c;box-shadow:none;max-width:none;container-type:inline-size;overflow:hidden;font-family:Inter,system-ui,sans-serif;color:#f0e8d8}
+  .qs__mac .lv__s{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;transition:opacity .22s}
+  .qs__mac .lv__s.on{opacity:1}
+  .qs__mac .lv__bat{position:absolute;left:0;right:0;top:15.5%;text-align:center;font:500 3.9cqw/1 Inter,sans-serif;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:.8cqw}
+  .qs__mac .lv__bat svg{width:2.6cqw;height:3.6cqw;fill:#e2614c}
+  .qs__mac .t-big{font:700 15.6cqw/1.08 Inter,sans-serif;font-variant-numeric:tabular-nums}
+  .qs__mac .t-cap{font:500 2.9cqw/1 Inter,sans-serif;letter-spacing:.14em;color:#a6a39b;margin-top:2.6cqw;text-transform:uppercase}
+  .qs__mac .finger{display:none}
+  @media (prefers-reduced-motion:reduce){.qs__mac .lv__s,.qs__mac .lv{transition:none}}
 
   /* Manual link */
   .qs__more {
@@ -630,6 +681,34 @@
           "type": "image_picker",
           "id": "image_4",
           "label": "t:sections.diamond_quick_start.blocks.step.settings.image_4.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_4_contain",
+          "label": "Image 4: fit (don't crop)",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Device screen (4th slide)"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_device_screen",
+          "label": "Replace image 4 with live device screen",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "device_scene",
+          "label": "Screen scene ID",
+          "default": "level",
+          "info": "Matches a data-scene value in diamond-manual.js (e.g. level, bat, ver, ses)"
+        },
+        {
+          "type": "image_picker",
+          "id": "device_bg",
+          "label": "Device background photo"
         }
       ]
     }
