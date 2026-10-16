@@ -234,6 +234,20 @@ if (!customElements.get('product-media-gallery')) {
 
       const activeThumb = this.thumbs.find((thumb) => thumb.dataset.targetMediaId === activeMediaId);
       activeThumb?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+
+      // Peek ~40% of the next thumb to signal more thumbnails exist,
+      // without pushing previous thumbs fully off screen.
+      const thumbsList = this.querySelector('[data-gallery-thumbs]');
+      const thumbIndex = activeThumb ? this.thumbs.indexOf(activeThumb) : -1;
+      if (activeThumb && thumbsList && thumbIndex < this.thumbs.length - 1) {
+        const thumbRect = activeThumb.getBoundingClientRect();
+        const listRect = thumbsList.getBoundingClientRect();
+        if (thumbRect.right >= listRect.right - thumbRect.width * 0.5) {
+          requestAnimationFrame(() => {
+            thumbsList.scrollBy({ left: Math.round(thumbRect.width * 0.4), behavior: 'smooth' });
+          });
+        }
+      }
     }
 
     // Pointer events unify mouse drag (desktop) and touch swipe (mobile) in
