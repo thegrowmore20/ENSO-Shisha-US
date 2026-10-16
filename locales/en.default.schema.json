@@ -1483,6 +1483,7 @@
       "name": "ENSŌ Experience",
       "settings": {
         "image": { "label": "Background image" },
+        "mobile_image": { "label": "Mobile image (≤991 px)", "info": "Portrait crop for phones and tablets. Leave blank to use the main image with CSS framing." },
         "eyebrow": { "label": "Eyebrow" },
         "heading": { "label": "Heading" },
         "text": { "label": "Body text" },

@@ -758,6 +758,7 @@
       ],
       "settings": {
         "image": "shopify://shop_images/enso-exp-tea.webp",
+        "mobile_image": "shopify://shop_images/exp-tearoom-mobile.webp",
         "eyebrow": "ENSŌ Experience",
         "heading": "More questions? The answers are in ENSŌ Experience",
         "text": "Step-by-step guides for every owner: the first session, packing the cup, the right temperature for each blend, cleaning and care, and firmware updates. Made for the phone.",

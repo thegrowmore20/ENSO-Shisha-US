@@ -57,23 +57,33 @@
 <section class="enso-exp">
   <div class="container">
     <div class="enso-exp__item">
+      {%- assign mobile_img = section.settings.mobile_image -%}
       {%- if img != blank -%}
-        <img
-          class="enso-exp__image"
-          src="{{ img | image_url: width: 2000 }}"
-          srcset="
-            {{ img | image_url: width: 750 }} 750w,
-            {{ img | image_url: width: 1100 }} 1100w,
-            {{ img | image_url: width: 1500 }} 1500w,
-            {{ img | image_url: width: 2000 }} 2000w
-          "
-          sizes="(max-width: 749px) 100vw, 100vw"
-          alt="{{ img_alt }}"
-          width="{{ img.width }}"
-          height="{{ img.height }}"
-          loading="eager"
-          fetchpriority="high"
-        >
+        <picture>
+          {%- if mobile_img != blank -%}
+            <source
+              media="(max-width: 991px)"
+              srcset="{{ mobile_img | image_url: width: 750 }} 750w, {{ mobile_img | image_url: width: 1100 }} 1100w"
+              sizes="100vw"
+            >
+          {%- endif -%}
+          <img
+            class="enso-exp__image"
+            src="{{ img | image_url: width: 2000 }}"
+            srcset="
+              {{ img | image_url: width: 750 }} 750w,
+              {{ img | image_url: width: 1100 }} 1100w,
+              {{ img | image_url: width: 1500 }} 1500w,
+              {{ img | image_url: width: 2000 }} 2000w
+            "
+            sizes="(max-width: 749px) 100vw, 100vw"
+            alt="{{ img_alt }}"
+            width="{{ img.width }}"
+            height="{{ img.height }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        </picture>
       {%- else -%}
         <div class="enso-exp__placeholder">
           {{ 'lifestyle-1' | placeholder_svg_tag: 'enso-exp__placeholder-svg' }}
@@ -243,13 +253,13 @@
     .enso-exp__copy {
       padding: 28px 20px;
     }
-
-    .enso-exp__text {
-      display: none;
-    }
   }
 
   @media screen and (max-width: 767px) {
+    .enso-exp__text {
+      display: none;
+    }
+
     .enso-exp__image {
       object-position: 50% 18%;
     }
@@ -303,6 +313,12 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.enso_experience.settings.image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:sections.enso_experience.settings.mobile_image.label",
+      "info": "t:sections.enso_experience.settings.mobile_image.info"
     },
     {
       "type": "text",
