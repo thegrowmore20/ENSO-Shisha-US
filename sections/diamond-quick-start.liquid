@@ -145,7 +145,7 @@
                     {%- if block.settings.image_1 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
                     {%- if block.settings.image_2 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
                     {%- if block.settings.image_3 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-                    {%- if block.settings.image_4 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                    {%- if block.settings.image_4 != blank or block.settings.use_device_screen -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
                   </div>
                 {%- endif -%}
               </div>
