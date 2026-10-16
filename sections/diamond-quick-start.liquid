@@ -433,23 +433,15 @@
 
     dots.forEach(function(dot, i) {
       dot.addEventListener('click', function() {
-        dragging = false;
         track.style.scrollSnapType = '';
         track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
       });
     });
 
-    // Mouse / trackpad drag
-    let dragging = false;
+    // Pointer-capture drag — all move/up events stay on the track element,
+    // so they never interfere with clicks on sibling elements like dots.
     let startX = 0;
     let startScroll = 0;
-
-    function stopDrag() {
-      if (!dragging) return;
-      dragging = false;
-      track.style.cursor = '';
-      snapToNearest();
-    }
 
     function snapToNearest() {
       const w = track.clientWidth;
@@ -469,22 +461,34 @@
       }
     }
 
-    track.addEventListener('mousedown', function(e) {
-      dragging = true;
+    track.addEventListener('pointerdown', function(e) {
+      if (e.button !== 0) return;
       startX = e.clientX;
       startScroll = track.scrollLeft;
       track.style.cursor = 'grabbing';
       track.style.scrollSnapType = 'none';
+      track.setPointerCapture(e.pointerId);
       e.preventDefault();
     });
 
-    document.addEventListener('mousemove', function(e) {
-      if (!dragging) return;
+    track.addEventListener('pointermove', function(e) {
+      if (!track.hasPointerCapture(e.pointerId)) return;
       track.scrollLeft = startScroll - (e.clientX - startX);
     });
 
-    document.addEventListener('mouseup', stopDrag);
-    document.addEventListener('pointerup', stopDrag);
+    track.addEventListener('pointerup', function(e) {
+      if (!track.hasPointerCapture(e.pointerId)) return;
+      track.releasePointerCapture(e.pointerId);
+      track.style.cursor = '';
+      snapToNearest();
+    });
+
+    track.addEventListener('pointercancel', function(e) {
+      if (!track.hasPointerCapture(e.pointerId)) return;
+      track.releasePointerCapture(e.pointerId);
+      track.style.cursor = '';
+      track.style.scrollSnapType = '';
+    });
 
     track.querySelectorAll('img').forEach(function(img) {
       img.addEventListener('dragstart', function(e) { e.preventDefault(); });
