@@ -863,7 +863,6 @@
           "type": "cap_step",
           "settings": {
             "image": "shopify://shop_images/cap-parts-rinse.webp",
-            "freq": "After every session",
             "step_title": "Rinse all three parts",
             "step_body": "<p>The shell, the plate and the insert. Let them dry fully before the next session.</p>"
           }
