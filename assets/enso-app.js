@@ -1659,7 +1659,7 @@ const FIRMWARE = {
   /* ⚠️ ver / notes / how are still empty — send them and they appear in the panel. */
   "ENSŌ":       {ver:"", date:"2026-10-01", notes:[], how:[]},
   "ENSŌ 2.0":   {ver:"", date:"2026-10-01", notes:[], how:[]},
-  "Diamond":    {ver:"0.9.3", date:"2026-10-01", notes:[], how:[]}
+  "Diamond":    {ver:"0.9.3", date:"2026-10-01", notes:[], how:[]} /* keep in sync: manual #software step 4 ver scene (assets/diamond-manual.js ~line 82) */
 };
 const FW_SUGGEST = "2026-10-02";   /* date the picker opens on when nobody has said yet */
 function fwFor(model){ return FIRMWARE[model] || null; }
@@ -2329,7 +2329,7 @@ function saSoftware(){
   const notes = (f.notes || []).length ? '<ul class="sa-sw__notes">' + f.notes.map(n => `<li>${n}</li>`).join('') + '</ul>' : '';
   const steps = {flow:[
     {img:'img/s/cable-alone.jpg', t:'Plug into your computer', x:'Take the battery out and plug the cable into the USB-C port at the top of the bay. The other end goes into your computer.'},
-    {t:'Open the firmware page', x:'Open the firmware page on ensoshisha.eu in your browser. No app to install, no account.'},
+    {t:'Open the firmware page', x:'Open the firmware page on ensoshisha.com in your browser. No app to install, no account.'},
     {t:'Press Update', x:'Press Update and wait for it to finish.'},
     {t:'Check the version', x:'Switch Diamond off and click the dial five times: the version shows on the screen.'}]};
   const alert = st === 'on'

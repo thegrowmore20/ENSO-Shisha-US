@@ -79,7 +79,7 @@
     ses:'<div class="lv__bat">'+BOLT+'100%</div><div class="t-huge" data-k="st">280<sup>°</sup></div><div class="t-time" data-k="sm">18:42</div><div class="t-cap mono">Running</div>',
     /* 3 Oct, Vadim: once the dial is locked a small lock stays next to the battery until four clicks unlock it */
     sesl:'<div class="lv__bat"><svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'+BOLT+'100%</div><div class="t-huge" data-k="st">280<sup>°</sup></div><div class="t-time" data-k="sm">18:42</div><div class="t-cap mono">Running</div>',
-    ver:'<div class="t-cap">Software</div><div class="t-mid" style="color:#f0e8d8;margin-top:2cqw">1 Oct 2026</div>',
+    ver:'<div class="t-cap">Software</div><div class="t-mid" style="color:#f0e8d8;margin-top:2cqw">0.9.3</div>',/* keep in sync: help app FIRMWARE.Diamond.ver (assets/enso-app.js ~line 1662) */
     off:'',
     menu:'<div class="lv__bat">'+BOLT+'100%</div><i class="arr l"></i><i class="arr r2"></i><svg viewBox="0 0 24 24" style="width:11cqw;height:11cqw;fill:none;stroke:#f0e8d8;stroke-width:1.8;margin-bottom:2cqw"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg><div class="t-start">Menu</div>',
     lock:'<div class="lv__bat">'+BOLT+'100%</div><svg viewBox="0 0 24 24" style="width:16cqw;height:16cqw;fill:none;stroke:#f0e8d8;stroke-width:1.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div class="t-lbl">Dial locked</div>',
