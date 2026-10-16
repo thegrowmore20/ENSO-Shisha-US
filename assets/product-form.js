@@ -361,9 +361,11 @@ if (!customElements.get('product-media-gallery')) {
       if (!thumbsList || !thumbsWrap) return;
 
       const update = () => {
-        const overflows = thumbsList.scrollWidth > thumbsList.clientWidth + 2;
-        const atEnd = thumbsList.scrollLeft + thumbsList.clientWidth >= thumbsList.scrollWidth - 2;
-        thumbsWrap.classList.toggle('is-thumbs-end', !overflows || atEnd);
+        thumbsWrap.classList.toggle(
+          'has-overflow-right',
+          thumbsList.scrollLeft + thumbsList.clientWidth < thumbsList.scrollWidth - 2
+        );
+        thumbsWrap.classList.toggle('has-overflow-left', thumbsList.scrollLeft > 2);
       };
 
       // Peek-scroll when clicking the last visible thumb to hint at more thumbnails
