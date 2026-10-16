@@ -780,4 +780,7 @@ html.hdr-show .finder{top:calc(var(--hdr-h,64px) + 8px)!important}
 .xnav__row{display:flex;gap:8px;margin-top:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.xnav__row::-webkit-scrollbar{display:none}
 .xnav__row a{flex:none;border:1px solid rgb(0 0 0 / .12);border-radius:999px;padding:8px 16px;font-size:14px;font-weight:500;color:#000;text-decoration:none;white-space:nowrap}
 .xnav__row a:hover{border-color:#000}.xnav__row a[aria-current="page"]{background:#000;color:#fff;border-color:#000}
+/* mobile slider dots */
+.enso-sigdots{display:none}
+@media (max-width:991px){.enso-sigdots{display:flex;justify-content:center;gap:6px;margin:10px 0 4px}.enso-sigdots i{display:block;width:6px;height:6px;border-radius:50%;background:rgb(0 0 0 / .2);transition:all .25s}.enso-sigdots i.is-on{background:#000;width:18px;border-radius:3px}}
 @media (max-width:991px){.xnav{padding:14px 16px 0}}
