@@ -11,39 +11,126 @@
     }
   }
 {% endstyle %}
+{%- liquid
+  assign cup_blocks   = section.blocks | where: "type", "cup_step"
+  assign wash_blocks  = section.blocks | where: "type", "wash_step"
+  assign cap_blocks   = section.blocks | where: "type", "cap_step"
+  assign shaft_blocks = section.blocks | where: "type", "shaft_step"
+  assign never_blocks = section.blocks | where: "type", "never_step"
+-%}
 <div class="wrap">
-  <section class="ch" id="cleaning"><p class="ch__num">12 · Care</p><h2>Cleaning</h2><p class="ch__lead">The heating element never clogs: it stays clean, that is the whole idea of Diamond. Only the cup, the mesh, the cap and the shaft need a rinse.</p><h3>After every session: the cup</h3><p class="h3lead">Only the cup and the mesh need it every time. Give Diamond 20–30 minutes to cool first.</p><div class="slider tslider" style="--n:4"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Let it cool, then lift it out</b><p>After 20–30 minutes, slide the fork under the brim and lift the cup straight out.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_lift_out != blank -%}{{- section.settings.clean_lift_out | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_lift_out.alt | default: '', width: section.settings.clean_lift_out.width, height: section.settings.clean_lift_out.height -}}{%- else -%}<img src="{{ 'dm-s-clean-01-lift-cup-out.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Loosen around the edge</b><p>Flat screen: run the tip of the fork around the inside edge of the cup so the tobacco comes away from the wall. Basket: lift the basket out first and run the fork around its edge the same way.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_loosen != blank -%}{{- section.settings.clean_loosen | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_loosen.alt | default: '', width: section.settings.clean_loosen.width, height: section.settings.clean_loosen.height -}}{%- else -%}<img src="{{ 'dm-s-clean-00b-loosen-edge.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Push it out from below</b><p>Then push from below, through the hole in the bottom, with the tool. The tobacco comes out with the screen or the basket.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_push_out != blank -%}{{- section.settings.clean_push_out | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_push_out.alt | default: '', width: section.settings.clean_push_out.width, height: section.settings.clean_push_out.height -}}{%- else -%}<img src="{{ 'dm-s-clean-02-push-mesh-out.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">4</span><b>Out in one piece</b><p>The tobacco comes out with the mesh. Tip it into the bin and pull the last bits off the mesh.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_one_piece != blank -%}{{- section.settings.clean_one_piece | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_one_piece.alt | default: '', width: section.settings.clean_one_piece.width, height: section.settings.clean_one_piece.height -}}{%- else -%}<img src="{{ 'dm-s-clean-03-out-in-one-piece.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><h3>Wash the cup and the mesh</h3><p class="h3lead">Warm water and a normal sponge. The same for the cup, the basket and the flat screens.</p><div class="slider tslider slider--grid" style="--n:3"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Rinse</b><p>Rinse the cup and the mesh under warm running water.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_rinse != blank -%}{{- section.settings.clean_rinse | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_rinse.alt | default: '', width: section.settings.clean_rinse.width, height: section.settings.clean_rinse.height -}}{%- else -%}<img src="{{ 'dm-s-clean-04-rinse.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Sponge or steel scrubber</b><p>Run a sponge over the inside of the cup and over the mesh. A steel scrubber pad takes off anything that sticks.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_scrubber != blank -%}{{- section.settings.clean_scrubber | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_scrubber.alt | default: '', width: section.settings.clean_scrubber.width, height: section.settings.clean_scrubber.height -}}{%- else -%}<img src="{{ 'dm-s-clean-05-scrubber.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Stuck? Soak it</b><p>Leave the cup and the mesh in warm water for a while, then sponge again. The dishwasher works, but we do not recommend it: the ceramic gets more brittle.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_soak != blank -%}{{- section.settings.clean_soak | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_soak.alt | default: '', width: section.settings.clean_soak.width, height: section.settings.clean_soak.height -}}{%- else -%}<img src="{{ 'dm-s-clean-06-soak.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><a class="cl-glove" href="../partner-v2/product.html#x-glove">{%- if section.settings.acc_glove != blank -%}{{- section.settings.acc_glove | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.acc_glove.alt | default: 'The ENSŌ Cleaning Glove', width: section.settings.acc_glove.width, height: section.settings.acc_glove.height -}}{%- else -%}<img src="{{ 'dm-acc-cleaning-glove-1.jpg' | file_url }}" alt="The ENSŌ Cleaning Glove">{%- endif -%}<span><b>Quicker with the ENSŌ Cleaning Glove</b>Its steel mesh palm cleans the cup, the basket and the screens in a few strokes.<em>See the Cleaning Glove ›</em></span></a><h3>The cap</h3><p class="h3lead">No electronics in the cap: all three parts go under the tap.</p><div class="slider tslider slider--grid" style="--n:1"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Rinse all three parts</b><p>The shell, the plate and the insert. Let them dry fully before the next session.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.cap_parts_rinse != blank -%}{{- section.settings.cap_parts_rinse | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cap_parts_rinse.alt | default: '', width: section.settings.cap_parts_rinse.width, height: section.settings.cap_parts_rinse.height -}}{%- else -%}<img src="{{ 'dm-s-cap-parts-rinse.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><h3>Every few sessions: the shaft</h3><p class="h3lead">The heating element never clogs. The shaft below it gets a brush and a rinse every few sessions. Always with the battery in.</p><div class="slider tslider slider--grid" style="--n:3"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Battery in, latch closed</b><p>Give Diamond an hour to an hour and a half to cool, then lift the cap off. Leave the battery in with the latch closed the whole time: it closes the bay so no water reaches the contacts.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_capoff_back != blank -%}{{- section.settings.clean_capoff_back | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_capoff_back.alt | default: '', width: section.settings.clean_capoff_back.width, height: section.settings.clean_capoff_back.height -}}{%- else -%}<img src="{{ 'dm-s-clean-capoff-back-brush.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Brush the shaft</b><p>Push the cleaning brush through the shaft from the top.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.clean_shaft_brush != blank -%}{{- section.settings.clean_shaft_brush | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.clean_shaft_brush.alt | default: '', width: section.settings.clean_shaft_brush.width, height: section.settings.clean_shaft_brush.height -}}{%- else -%}<img src="{{ 'dm-s-clean-shaft-brush.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Rinse from the top</b><p>A gentle stream from the top only, the battery fitted. Let everything dry fully.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.rinse_shaft != blank -%}{{- section.settings.rinse_shaft | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.rinse_shaft.alt | default: '', width: section.settings.rinse_shaft.width, height: section.settings.rinse_shaft.height -}}{%- else -%}<img src="{{ 'dm-s-ok-rinse-shaft.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div><h3>Never</h3><p class="h3lead">The battery and the contacts never get wet.</p><div class="slider tslider slider--grid slider--never" style="--n:2"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>No water in the battery bay</b><p>Rinse from the top only, with the battery fitted.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.dont_water_bay != blank -%}{{- section.settings.dont_water_bay | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.dont_water_bay.alt | default: '', width: section.settings.dont_water_bay.width, height: section.settings.dont_water_bay.height -}}{%- else -%}<img src="{{ 'dm-s-dont-water-bay.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Keep the battery dry</b><p>The battery never goes under water. Neither does the body, or into a dishwasher.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.dont_water_battery != blank -%}{{- section.settings.dont_water_battery | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.dont_water_battery.alt | default: '', width: section.settings.dont_water_battery.width, height: section.settings.dont_water_battery.height -}}{%- else -%}<img src="{{ 'dm-s-dont-water-battery.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>{%- if section.settings.multitool_product != blank -%}
-  {%- liquid
-    assign mt_product = section.settings.multitool_product
-    assign mt_price = mt_product.price | money
-    assign mt_url = mt_product.url
-    assign mt_title = mt_product.title
-    assign mt_img = mt_product.featured_image
-    assign mt_subtitle = mt_product.metafields.custom.headline | metafield_tag | strip_html | strip
-  -%}
-  <p class="sp-label">MAKES IT QUICKER</p>
-  <div class="spares">
-    <a class="spare" href="{{ mt_url }}">
-      {%- if mt_img != blank -%}
-        {{- mt_img | image_url: width: 400 | image_tag: loading: 'lazy', alt: mt_img.alt | default: mt_title, width: 80, height: 80 -}}
-      {%- elsif section.settings.acc_multi_tool != blank -%}
-        {{- section.settings.acc_multi_tool | image_url: width: 400 | image_tag: loading: 'lazy', alt: section.settings.acc_multi_tool.alt | default: mt_title, width: 80, height: 80 -}}
-      {%- else -%}
-        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:80px;height:80px"><rect width="80" height="80" rx="12" fill="#f0ede8"/><path d="M28 40a12 12 0 1 1 24 0 12 12 0 0 1-24 0zm-6 16 10-12 8 8 8-10 14 14H22z" fill="#c8b89a"/></svg>
-      {%- endif -%}
-      <span><b>{{ mt_title }}</b><small>{{ mt_subtitle }}</small></span>
-      <em>{{ mt_price }}</em>
-    </a>
-  </div>
-{%- elsif section.settings.acc_multi_tool != blank -%}
-  <p class="sp-label">MAKES IT QUICKER</p>
-  <div class="spares">
-    <a class="spare" href="/products/enso-4-in-1-multi-tool">
-      {{- section.settings.acc_multi_tool | image_url: width: 400 | image_tag: loading: 'lazy', alt: 'ENSŌ 4-in-1 Multi-Tool', width: 80, height: 80 -}}
-      <span><b>ENSŌ 4-in-1 Multi-Tool</b><small>For cleaning and packing</small></span>
-    </a>
-  </div>
-{%- endif -%}</section>
+  <section class="ch" id="cleaning"><p class="ch__num">12 · Care</p><h2>Cleaning</h2><p class="ch__lead">The heating element never clogs: it stays clean, that is the whole idea of Diamond. Only the cup, the mesh, the cap and the shaft need a rinse.</p><h3>After every session: the cup and the cap</h3><p class="h3lead">The cup, the mesh and the cap need it every time. Give Diamond 20–30 minutes to cool first.</p>
+  {%- if cup_blocks.size > 0 -%}
+    <div class="slider tslider" style="--n:{{ cup_blocks.size }}"><div class="slides">
+      {%- for block in cup_blocks -%}
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+          {%- if block.settings.image != blank -%}
+            {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+          {%- else -%}
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+          {%- endif -%}
+        </div></figure>
+      {%- endfor -%}
+    </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
+  {%- endif -%}
+  <h3>Wash the cup and the mesh</h3><p class="h3lead">Warm water and a normal sponge. The same for the cup, the basket and the flat screens.</p>
+  {%- if wash_blocks.size > 0 -%}
+    <div class="slider tslider slider--grid" style="--n:{{ wash_blocks.size }}"><div class="slides">
+      {%- for block in wash_blocks -%}
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+          {%- if block.settings.image != blank -%}
+            {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+          {%- else -%}
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+          {%- endif -%}
+        </div></figure>
+      {%- endfor -%}
+    </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
+  {%- endif -%}
+  <h3>The cap</h3><p class="h3lead">No electronics in the cap: all three parts go under the tap.</p>
+  {%- if cap_blocks.size > 0 -%}
+    <div class="slider tslider slider--grid" style="--n:{{ cap_blocks.size }}"><div class="slides">
+      {%- for block in cap_blocks -%}
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span>{%- if block.settings.freq != blank -%}<small class="st__freq">{{ block.settings.freq }}</small>{%- endif -%}<b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+          {%- if block.settings.image != blank -%}
+            {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+          {%- else -%}
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+          {%- endif -%}
+        </div></figure>
+      {%- endfor -%}
+    </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
+  {%- endif -%}
+  <div class="note note--tip"><b>Tip:</b> Between sessions, wipe the top of Diamond around the chamber with a soft dry cloth. Only when it is cool.</div>
+  <a class="cl-glove" href="/collections/accessories">
+    {%- if section.settings.acc_glove != blank -%}
+      {{- section.settings.acc_glove | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.acc_glove.alt | default: 'The ENSŌ Cleaning Glove', width: section.settings.acc_glove.width, height: section.settings.acc_glove.height -}}
+    {%- else -%}
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+    {%- endif -%}
+    <span><b>Quicker with the ENSŌ Cleaning Glove</b>Its steel mesh palm cleans the cup, the basket and the screens in a few strokes.<em>See the Cleaning Glove ›</em></span>
+  </a>
+  <h3>Every few sessions: the shaft</h3><p class="h3lead">The heating element never clogs. The shaft below it gets a brush and a rinse every few sessions. Always with the battery in.</p>
+  {%- if shaft_blocks.size > 0 -%}
+    <div class="slider tslider slider--grid" style="--n:{{ shaft_blocks.size }}"><div class="slides">
+      {%- for block in shaft_blocks -%}
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+          {%- if block.settings.image != blank -%}
+            {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+          {%- else -%}
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+          {%- endif -%}
+        </div></figure>
+      {%- endfor -%}
+    </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
+  {%- endif -%}
+  <h3>Never</h3><p class="h3lead">The battery and the contacts never get wet.</p>
+  {%- if never_blocks.size > 0 -%}
+    <div class="slider tslider slider--grid slider--never" style="--n:{{ never_blocks.size }}"><div class="slides">
+      {%- for block in never_blocks -%}
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+          {%- if block.settings.image != blank -%}
+            {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+          {%- else -%}
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+          {%- endif -%}
+        </div></figure>
+      {%- endfor -%}
+    </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
+  {%- endif -%}
+  {%- if section.settings.multitool_product != blank -%}
+    {%- liquid
+      assign mt_product = section.settings.multitool_product
+      assign mt_price = mt_product.price | money
+      assign mt_url = mt_product.url
+      assign mt_title = mt_product.title
+      assign mt_img = mt_product.featured_image
+      assign mt_subtitle = mt_product.metafields.custom.headline | metafield_tag | strip_html | strip
+    -%}
+    <p class="sp-label">MAKES IT QUICKER</p>
+    <div class="spares">
+      <a class="spare" href="{{ mt_url }}">
+        {%- if mt_img != blank -%}
+          {{- mt_img | image_url: width: 400 | image_tag: loading: 'lazy', alt: mt_img.alt | default: mt_title, width: 80, height: 80 -}}
+        {%- elsif section.settings.acc_multi_tool != blank -%}
+          {{- section.settings.acc_multi_tool | image_url: width: 400 | image_tag: loading: 'lazy', alt: section.settings.acc_multi_tool.alt | default: mt_title, width: 80, height: 80 -}}
+        {%- else -%}
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:80px;height:80px"><rect width="80" height="80" rx="12" fill="#f0ede8"/><path d="M28 40a12 12 0 1 1 24 0 12 12 0 0 1-24 0zm-6 16 10-12 8 8 8-10 14 14H22z" fill="#c8b89a"/></svg>
+        {%- endif -%}
+        <span><b>{{ mt_title }}</b><small>{{ mt_subtitle }}</small></span>
+        <em>{{ mt_price }}</em>
+      </a>
+    </div>
+  {%- elsif section.settings.acc_multi_tool != blank -%}
+    <p class="sp-label">MAKES IT QUICKER</p>
+    <div class="spares">
+      <a class="spare" href="/products/enso-4-in-1-multi-tool">
+        {{- section.settings.acc_multi_tool | image_url: width: 400 | image_tag: loading: 'lazy', alt: 'ENSŌ 4-in-1 Multi-Tool', width: 80, height: 80 -}}
+        <span><b>ENSŌ 4-in-1 Multi-Tool</b><small>For cleaning and packing</small></span>
+      </a>
+    </div>
+  {%- endif -%}
+  </section>
 </div>
 
 {% schema %}
@@ -52,97 +139,12 @@
   "settings": [
     {
       "type": "header",
-      "content": "Cup cleaning steps"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_lift_out",
-      "label": "Lift cup out"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_loosen",
-      "label": "Loosen around edge"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_push_out",
-      "label": "Push mesh out"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_one_piece",
-      "label": "Tobacco out in one piece"
-    },
-    {
-      "type": "header",
-      "content": "Washing steps"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_rinse",
-      "label": "Rinse cup and mesh"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_scrubber",
-      "label": "Scrubber on cup"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_soak",
-      "label": "Soak if stuck"
-    },
-    {
-      "type": "header",
       "content": "Accessories"
     },
     {
       "type": "image_picker",
       "id": "acc_glove",
-      "label": "ENSŌ Cleaning Glove"
-    },
-    {
-      "type": "header",
-      "content": "Cap cleaning"
-    },
-    {
-      "type": "image_picker",
-      "id": "cap_parts_rinse",
-      "label": "Cap parts rinsing"
-    },
-    {
-      "type": "header",
-      "content": "Shaft cleaning steps"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_capoff_back",
-      "label": "Cap off, battery in"
-    },
-    {
-      "type": "image_picker",
-      "id": "clean_shaft_brush",
-      "label": "Brush the shaft"
-    },
-    {
-      "type": "image_picker",
-      "id": "rinse_shaft",
-      "label": "Rinse shaft from top"
-    },
-    {
-      "type": "header",
-      "content": "Never do"
-    },
-    {
-      "type": "image_picker",
-      "id": "dont_water_bay",
-      "label": "No water in battery bay"
-    },
-    {
-      "type": "image_picker",
-      "id": "dont_water_battery",
-      "label": "Keep battery dry"
+      "label": "Cleaning Glove promo image"
     },
     {
       "type": "header",
@@ -207,6 +209,119 @@
       "unit": "px",
       "label": "Padding bottom (mobile)",
       "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cup_step",
+      "name": "Cup cleaning step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_body",
+          "label": "Step description"
+        }
+      ]
+    },
+    {
+      "type": "wash_step",
+      "name": "Washing step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_body",
+          "label": "Step description"
+        }
+      ]
+    },
+    {
+      "type": "cap_step",
+      "name": "Cap cleaning step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "freq",
+          "label": "Frequency label",
+          "info": "e.g. After every session"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_body",
+          "label": "Step description"
+        }
+      ]
+    },
+    {
+      "type": "shaft_step",
+      "name": "Shaft cleaning step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_body",
+          "label": "Step description"
+        }
+      ]
+    },
+    {
+      "type": "never_step",
+      "name": "Never step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_body",
+          "label": "Step description"
+        }
+      ]
     }
   ],
   "presets": [

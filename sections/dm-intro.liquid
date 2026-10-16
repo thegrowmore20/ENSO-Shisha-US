@@ -34,7 +34,27 @@
     {%- endif -%}
   </section>
   <label class="search search--top"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="mn-q" type="search" placeholder="Search the manual: battery, plate, clean…" aria-label="Search the manual"><small id="mn-n"></small></label>
-  <section class="bs" id="safety" aria-labelledby="bs-h"><h2 id="bs-h">Before you start</h2><div class="slider tslider slider--care" style="--n:3"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Keep the contacts dry</b><p>The contacts sit at the bottom of the battery bay and on the end of the battery. They never get wet.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.safety_contacts != blank -%}{{- section.settings.safety_contacts | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.safety_contacts.alt | default: '', width: section.settings.safety_contacts.width, height: section.settings.safety_contacts.height -}}{%- else -%}<img src="{{ 'dm-s-before-contacts.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}<span class="mk mk--info mk--c" style="left:32.7%;top:22%"><i></i><span>USB-C port</span></span><span class="mk mk--warn mk--c" style="left:50.0%;top:79%"><i></i><span>Contacts: keep dry</span></span></div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Keep the battery dry</b><p>The battery never goes under water. Everything else rinses from the top, with the battery fitted.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.safety_battery_dry != blank -%}{{- section.settings.safety_battery_dry | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.safety_battery_dry.alt | default: '', width: section.settings.safety_battery_dry.width, height: section.settings.safety_battery_dry.height -}}{%- else -%}<img src="{{ 'dm-s-battery-dry.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__i">!</span><b>Let the battery cool before charging</b><p>After a session the battery is warm. Give it time to cool, then plug it in.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.safety_before_charge != blank -%}{{- section.settings.safety_before_charge | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.safety_before_charge.alt | default: '', width: section.settings.safety_before_charge.width, height: section.settings.safety_before_charge.height -}}{%- else -%}<img src="{{ 'dm-s-before-charge.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+  <section class="bs" id="safety" aria-labelledby="bs-h"><h2 id="bs-h">Before you start</h2>
+    {%- if section.blocks.size > 0 -%}
+      <div class="slider tslider slider--care" style="--n:{{ section.blocks.size }}"><div class="slides">
+        {%- for block in section.blocks -%}
+          <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__i">!</span><b>{{ block.settings.card_title }}</b><p>{{ block.settings.card_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+            {%- if block.settings.image != blank -%}
+              {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+              {%- if block.settings.marker_1_label != blank -%}
+                <span class="mk mk--info mk--c" style="left:{{ block.settings.marker_1_x }}%;top:{{ block.settings.marker_1_y }}%"><i></i><span>{{ block.settings.marker_1_label }}</span></span>
+              {%- endif -%}
+              {%- if block.settings.marker_2_label != blank -%}
+                <span class="mk mk--warn mk--c" style="left:{{ block.settings.marker_2_x }}%;top:{{ block.settings.marker_2_y }}%"><i></i><span>{{ block.settings.marker_2_label }}</span></span>
+              {%- endif -%}
+            {%- else -%}
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+            {%- endif -%}
+          </div></figure>
+        {%- endfor -%}
+      </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
+    {%- endif -%}
+  </section>
   <a class="packban" href="#pack"><picture><source media="(max-width:991px)" srcset="{%- if section.settings.packban_mobile != blank -%}{{ section.settings.packban_mobile | image_url: width: 800 }}{%- else -%}{{ 'dm-pdp-bowl-darkwood-m.jpg' | file_url }}{%- endif -%}">{%- if section.settings.packban_desktop != blank -%}{{- section.settings.packban_desktop | image_url: width: 1200 | image_tag: loading: 'lazy', alt: 'Tobacco tipped from a tin into the ceramic cup and its basket', width: section.settings.packban_desktop.width, height: section.settings.packban_desktop.height -}}{%- else -%}<img src="{{ 'dm-pdp-bowl-darkwood.jpg' | file_url }}" alt="Tobacco tipped from a tin into the ceramic cup and its basket">{%- endif -%}</picture><div><b>Charged? Pack your first cup</b><span>10–15 g in two light layers. Pick your mesh and the steps open right there.</span></div><em>How to pack</em></a>
 </div>
 
@@ -50,25 +70,6 @@
       "type": "image_picker",
       "id": "hero_image",
       "label": "Hero image"
-    },
-    {
-      "type": "header",
-      "content": "Safety cards"
-    },
-    {
-      "type": "image_picker",
-      "id": "safety_contacts",
-      "label": "Keep contacts dry"
-    },
-    {
-      "type": "image_picker",
-      "id": "safety_battery_dry",
-      "label": "Keep battery dry"
-    },
-    {
-      "type": "image_picker",
-      "id": "safety_before_charge",
-      "label": "Let battery cool before charging"
     },
     {
       "type": "header",
@@ -127,6 +128,87 @@
       "unit": "px",
       "label": "Padding bottom (mobile)",
       "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "safety_card",
+      "name": "Safety Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card image"
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card title"
+        },
+        {
+          "type": "textarea",
+          "id": "card_body",
+          "label": "Card description"
+        },
+        {
+          "type": "header",
+          "content": "Marker 1 (info, blue)"
+        },
+        {
+          "type": "text",
+          "id": "marker_1_label",
+          "label": "Marker 1 label"
+        },
+        {
+          "type": "range",
+          "id": "marker_1_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Marker 1 left position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "marker_1_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Marker 1 top position",
+          "default": 20
+        },
+        {
+          "type": "header",
+          "content": "Marker 2 (warning, orange)"
+        },
+        {
+          "type": "text",
+          "id": "marker_2_label",
+          "label": "Marker 2 label"
+        },
+        {
+          "type": "range",
+          "id": "marker_2_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Marker 2 left position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "marker_2_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Marker 2 top position",
+          "default": 80
+        }
+      ]
     }
   ],
   "presets": [

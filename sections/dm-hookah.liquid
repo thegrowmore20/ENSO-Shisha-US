@@ -12,32 +12,23 @@
   }
 {% endstyle %}
 <div class="wrap">
-  <section class="ch" id="on-your-hookah"><p class="ch__num">06 · Start</p><h2>On your hookah</h2><p class="ch__lead">Diamond sits where the bowl sits. Your stem, base and hose stay as they are.</p><div class="slider tslider" style="--n:3"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Adapter on, half-way</b><p>Push one of the two adapters onto your hookah stem, only half-way. Do not push it all the way down.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.hookah_adapter != blank -%}{{- section.settings.hookah_adapter | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.hookah_adapter.alt | default: '', width: section.settings.hookah_adapter.width, height: section.settings.hookah_adapter.height -}}{%- else -%}<img src="{{ 'dm-s-hookah-adapter-two-hands.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">2</span><b>Diamond on top, then press</b><p>Set Diamond on the adapter and press down with both hands: they slide down the stem together for the firmest grip.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.hookah_mount != blank -%}{{- section.settings.hookah_mount | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.hookah_mount.alt | default: '', width: section.settings.hookah_mount.width, height: section.settings.hookah_mount.height -}}{%- else -%}<img src="{{ 'dm-s-hookah-mount-two-hands.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">3</span><b>Ready</b><p>Your hookah, hose and base stay the same. Only the bowl and the coals are gone.</p></figcaption><div class="ts__pic ts__pic--img">{%- if section.settings.on_hookah != blank -%}{{- section.settings.on_hookah | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.on_hookah.alt | default: '', width: section.settings.on_hookah.width, height: section.settings.on_hookah.height -}}{%- else -%}<img src="{{ 'dm-s-on-hookah-front.jpg' | file_url }}" alt="" loading="lazy">{%- endif -%}</div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
+  <section class="ch" id="on-your-hookah"><p class="ch__num">06 · Start</p><h2>On your hookah</h2><p class="ch__lead">Diamond sits where the bowl sits. Your stem, base and hose stay as they are.</p><div class="slider tslider" style="--n:{{ section.blocks.size }}"><div class="slides">
+    {%- for block in section.blocks -%}
+      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+        {%- if block.settings.image != blank -%}
+          {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
+        {%- else -%}
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+        {%- endif -%}
+      </div></figure>
+    {%- endfor -%}
+  </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></section>
 </div>
 
 {% schema %}
 {
   "name": "DM: On Your Hookah",
   "settings": [
-    {
-      "type": "header",
-      "content": "Hookah mounting steps"
-    },
-    {
-      "type": "image_picker",
-      "id": "hookah_adapter",
-      "label": "Adapter on stem"
-    },
-    {
-      "type": "image_picker",
-      "id": "hookah_mount",
-      "label": "Diamond mounted"
-    },
-    {
-      "type": "image_picker",
-      "id": "on_hookah",
-      "label": "Diamond on hookah ready"
-    },
     {
       "type": "color",
       "id": "color_background",
@@ -87,6 +78,29 @@
       "unit": "px",
       "label": "Padding bottom (mobile)",
       "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hookah_step",
+      "name": "Hookah Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_body",
+          "label": "Step description"
+        }
+      ]
     }
   ],
   "presets": [
