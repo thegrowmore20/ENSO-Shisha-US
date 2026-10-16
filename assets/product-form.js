@@ -235,16 +235,20 @@ if (!customElements.get('product-media-gallery')) {
       const activeThumb = this.thumbs.find((thumb) => thumb.dataset.targetMediaId === activeMediaId);
       activeThumb?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
 
-      // Peek ~40% of the next thumb to signal more thumbnails exist,
-      // without pushing previous thumbs fully off screen.
+      // Peek one full thumbnail forward when the active thumb is at the right
+      // edge of the strip — only for thumbnails_bottom layout (no arrow buttons).
+      // thumbnails_left has its own prev/next arrows; peeking there causes the
+      // prev button to overlap the first thumb and block taps on it.
+      const hasPrevNextButtons = !!this.querySelector('[data-thumbs-prev]');
       const thumbsList = this.querySelector('[data-gallery-thumbs]');
       const thumbIndex = activeThumb ? this.thumbs.indexOf(activeThumb) : -1;
-      if (activeThumb && thumbsList && thumbIndex < this.thumbs.length - 1) {
+      if (!hasPrevNextButtons && activeThumb && thumbsList && thumbIndex < this.thumbs.length - 1) {
         const thumbRect = activeThumb.getBoundingClientRect();
         const listRect = thumbsList.getBoundingClientRect();
         if (thumbRect.right >= listRect.right - thumbRect.width * 0.5) {
+          const gap = parseFloat(getComputedStyle(thumbsList).gap) || 8;
           requestAnimationFrame(() => {
-            thumbsList.scrollBy({ left: Math.round(thumbRect.width * 0.4), behavior: 'smooth' });
+            thumbsList.scrollBy({ left: thumbRect.width + gap, behavior: 'smooth' });
           });
         }
       }
