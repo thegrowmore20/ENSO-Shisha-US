@@ -590,7 +590,7 @@ html,body{overflow-x:clip}
 .lv-hint{max-width:calc(100% - 16px)}
 html.hdr-hide .site-header{transform:translateY(-110%)!important;transition:transform .3s ease}
 .finder{top:8px!important}
-html.hdr-show .finder{top:calc(var(--hdr-h,64px) + 8px)!important}
+html.hdr-show .finder{top:calc(var(--site-header-height,64px) + 8px)!important}
 /* 3 Oct, Vadim "still crooked on the phone": one slide = the full width, aligned to the page; whole pictures, never cropped */
 .ts__pic img{object-fit:contain;background:#fff}
 .ts__pic{background:#fff;border:1px solid rgb(0 0 0 / .06)}
