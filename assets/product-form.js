@@ -190,7 +190,6 @@ if (!customElements.get('product-media-gallery')) {
       }
 
       this.#bindThumbsOverflow();
-      this.#bindThumbsFade();
     }
 
     setActiveMedia(mediaId) {
@@ -235,6 +234,20 @@ if (!customElements.get('product-media-gallery')) {
 
       const activeThumb = this.thumbs.find((thumb) => thumb.dataset.targetMediaId === activeMediaId);
       activeThumb?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+
+      // Peek at the next thumb when the active one sits at the right edge of the strip
+      const thumbsList = this.querySelector('[data-gallery-thumbs]');
+      const thumbIndex = activeThumb ? this.thumbs.indexOf(activeThumb) : -1;
+      if (activeThumb && thumbsList && thumbIndex < this.thumbs.length - 1) {
+        const thumbRect = activeThumb.getBoundingClientRect();
+        const listRect = thumbsList.getBoundingClientRect();
+        if (thumbRect.right >= listRect.right - thumbRect.width * 0.5) {
+          const gap = parseFloat(getComputedStyle(thumbsList).gap) || 8;
+          requestAnimationFrame(() => {
+            thumbsList.scrollBy({ left: thumbRect.width + gap, behavior: 'smooth' });
+          });
+        }
+      }
     }
 
     // Pointer events unify mouse drag (desktop) and touch swipe (mobile) in
@@ -352,25 +365,6 @@ if (!customElements.get('product-media-gallery')) {
       updateArrows();
     }
 
-    // Peek-scrolls the thumb strip by one thumbnail when the last visible
-    // thumbnail is clicked, so customers know more thumbnails exist.
-    #bindThumbsFade() {
-      const thumbsList = this.querySelector('[data-gallery-thumbs]');
-      if (!thumbsList) return;
-
-      this.thumbs.forEach((thumb) => {
-        thumb.addEventListener('click', () => {
-          const thumbRect = thumb.getBoundingClientRect();
-          const listRect = thumbsList.getBoundingClientRect();
-          const isAtRightEdge = thumbRect.right >= listRect.right - thumbRect.width * 0.5;
-          if (!isAtRightEdge) return;
-          const thumbIndex = this.thumbs.indexOf(thumb);
-          if (thumbIndex >= this.thumbs.length - 1) return;
-          const gap = parseFloat(getComputedStyle(thumbsList).gap) || 8;
-          thumbsList.scrollBy({ left: thumbRect.width + gap, behavior: 'smooth' });
-        });
-      });
-    }
   }
 
   customElements.define('product-media-gallery', ProductMediaGallery);
