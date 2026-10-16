@@ -435,6 +435,7 @@
 
     dots.forEach(function(dot, i) {
       dot.addEventListener('click', function() {
+        track.style.scrollSnapType = '';
         track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
       });
     });
