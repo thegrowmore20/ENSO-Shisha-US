@@ -15,16 +15,7 @@
   assign back_url   = section.settings.back_url   | default: '/pages/enso-experience'
   assign back_label = section.settings.back_label | default: 'ENSŌ Experience'
   assign dev_label  = section.settings.device_label | default: 'ENSŌ Diamond'
-  assign needs_device_js = false
-  for block in section.blocks
-    if block.settings.use_device_screen
-      assign needs_device_js = true
-    endif
-  endfor
 -%}
-{%- if needs_device_js -%}
-  <script src="{{ 'diamond-manual.js' | asset_url }}" defer></script>
-{%- endif -%}
 
 <div class="qs-wrap">
 
@@ -126,7 +117,7 @@
                           {%- else -%}
                             <img src="{{ dev_bg_src }}" alt="" loading="lazy">
                           {%- endif -%}
-                          <div class="lv" data-scene="{{ block.settings.device_scene | default: 'level' }}" role="img" aria-label="{{ block.settings.heading }}"></div>
+                          <div class="lv" data-qs-scene="{{ block.settings.device_scene | default: 'level' }}" role="img" aria-label="{{ block.settings.heading }}"></div>
                         </div>
                         <span class="finger" aria-hidden="true"></span>
                       </div>
@@ -505,6 +496,59 @@
       img.addEventListener('dragstart', function(e) { e.preventDefault(); });
     });
   });
+
+  // Inline battery-level animation for device-screen slides (data-qs-scene)
+  (function() {
+    var BAT = '<svg viewBox="0 0 60 30" style="width:24cqw;height:12cqw">'
+      + '<rect x="1.5" y="1.5" width="51" height="27" rx="5" fill="none" stroke="#f0e8d8" stroke-width="3"/>'
+      + '<rect x="55" y="9" width="4" height="12" rx="1.5" fill="#f0e8d8"/>'
+      + '<rect x="6" y="6" width="42" height="18" rx="2" fill="#7eae82"/>'
+      + '</svg><div class="t-big" style="margin-top:3cqw">100%</div>'
+      + '<div class="t-cap">Battery</div>';
+
+    function initLv(el) {
+      if (el._lvInit) return;
+      el._lvInit = true;
+      el.innerHTML = '<div class="lv__s"></div><div class="lv__s">' + BAT + '</div>';
+      var screens = el.querySelectorAll('.lv__s');
+      var off = screens[0], bat = screens[1];
+      var timer = null;
+      function tick(phase) {
+        clearTimeout(timer);
+        if (phase === 0) {
+          off.classList.add('on'); bat.classList.remove('on');
+          timer = setTimeout(function() { tick(1); }, 1600);
+        } else {
+          bat.classList.add('on'); off.classList.remove('on');
+          timer = setTimeout(function() { tick(0); }, 2400);
+        }
+      }
+      el._lvStart = function() { if (timer !== null) return; tick(0); };
+      el._lvPause = function() {
+        clearTimeout(timer); timer = null;
+        off.classList.remove('on'); bat.classList.remove('on');
+      };
+    }
+
+    document.querySelectorAll('.qs__pic--seq').forEach(function(pic) {
+      var track = pic.querySelector('.qs__track');
+      if (!track) return;
+      var mac = track.querySelector('.qs__mac');
+      if (!mac) return;
+      var lv = mac.querySelector('.lv[data-qs-scene]');
+      if (!lv) return;
+      var macIndex = Array.from(track.children).indexOf(mac);
+
+      function checkLv() {
+        var index = Math.round(track.scrollLeft / track.clientWidth);
+        initLv(lv);
+        if (index === macIndex) { lv._lvStart(); }
+        else { lv._lvPause(); }
+      }
+
+      track.addEventListener('scroll', checkLv, { passive: true });
+    });
+  }());
 {% endjavascript %}
 
 {% schema %}
