@@ -11,15 +11,6 @@
   "sections": {
     "dm_intro": {
       "type": "dm-intro",
-      "settings": {
-        "hero_image": "shopify://shop_images/hero-front-start.webp",
-        "packban_desktop": "shopify://shop_images/bowl-darkwood.webp",
-        "packban_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "padding_top_mobile": 20,
-        "padding_bottom_mobile": 20
-      },
       "blocks": {
         "safety_contacts": {
           "type": "safety_card",
@@ -40,7 +31,13 @@
           "settings": {
             "image": "shopify://shop_images/battery-dry.webp",
             "card_title": "Keep the battery dry",
-            "card_body": "<p>The battery never goes under water. Everything else rinses from the top, with the battery fitted and the dial kept dry.</p>"
+            "card_body": "<p>The battery never goes under water. Everything else rinses from the top, with the battery fitted and the dial kept dry.</p>",
+            "marker_1_label": "",
+            "marker_1_x": 50,
+            "marker_1_y": 20,
+            "marker_2_label": "",
+            "marker_2_x": 50,
+            "marker_2_y": 80
           }
         },
         "safety_before_charge": {
@@ -48,20 +45,33 @@
           "settings": {
             "image": "shopify://shop_images/before-charge.webp",
             "card_title": "Let the battery cool before charging",
-            "card_body": "<p>After a session the battery is warm. Give it time to cool, then plug it in.</p>"
+            "card_body": "<p>After a session the battery is warm. Give it time to cool, then plug it in.</p>",
+            "marker_1_label": "",
+            "marker_1_x": 50,
+            "marker_1_y": 20,
+            "marker_2_label": "",
+            "marker_2_x": 50,
+            "marker_2_y": 80
           }
         }
       },
-      "block_order": ["safety_contacts", "safety_battery_dry", "safety_before_charge"]
+      "block_order": [
+        "safety_contacts",
+        "safety_battery_dry",
+        "safety_before_charge"
+      ],
+      "settings": {
+        "hero_image": "shopify://shop_images/hero-front-start.webp",
+        "packban_desktop": "shopify://shop_images/bowl-darkwood.webp",
+        "packban_mobile": "shopify://shop_images/bowl-darkwood-m.webp",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     },
     "dm_outofbox": {
       "type": "dm-outofbox",
-      "settings": {
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      },
       "blocks": {
         "outofbox_device": {
           "type": "box_item",
@@ -69,6 +79,7 @@
             "image": "shopify://shop_images/device-top.webp",
             "label": "Diamond with thermo cap",
             "size": "hero",
+            "count": "",
             "list_title": "Diamond",
             "list_body": "<p>With the thermo cap fitted and the battery inside.</p>"
           }
@@ -90,6 +101,7 @@
             "image": "shopify://shop_images/d-basket.webp",
             "label": "Basket mesh",
             "size": "regular",
+            "count": "",
             "list_title": "Basket mesh",
             "list_body": "<p>Sits in the cup for a loose, airy pack. Lifts out in one piece to clean.</p>"
           }
@@ -111,6 +123,7 @@
             "image": "shopify://shop_images/d-adapter-tall.webp",
             "label": "Long adapter",
             "size": "small",
+            "count": "",
             "list_title": "Long adapter",
             "list_body": "<p>Seats Diamond on your hookah stem.</p>"
           }
@@ -121,6 +134,7 @@
             "image": "shopify://shop_images/d-adapter-short.webp",
             "label": "Short adapter",
             "size": "small",
+            "count": "",
             "list_title": "Short adapter",
             "list_body": "<p>The same, for shorter stem tops. Most stems take either.</p>"
           }
@@ -131,6 +145,7 @@
             "image": "shopify://shop_images/d-tool.webp",
             "label": "Cup removal tool",
             "size": "regular",
+            "count": "",
             "list_title": "Cup removal tool",
             "list_body": "<p>Lifts the hot cup out, and turns the plate on the cap.</p>"
           }
@@ -141,6 +156,7 @@
             "image": "shopify://shop_images/d-brush.webp",
             "label": "Cleaning brush",
             "size": "small",
+            "count": "",
             "list_title": "Cleaning brush",
             "list_body": "<p>For the shaft and the chamber.</p>"
           }
@@ -151,6 +167,7 @@
             "image": "shopify://shop_images/d-cable.webp",
             "label": "USB-C cable",
             "size": "regular",
+            "count": "",
             "list_title": "USB-C cable",
             "list_body": "<p>Charges Diamond or the battery. The wall charger is not in the box.</p>"
           }
@@ -160,7 +177,10 @@
           "settings": {
             "image": "shopify://shop_images/battery-latch-closed.webp",
             "step_title": "The latch",
-            "step_body": "<p>Turn Diamond round. The battery sits behind the black arc latch on the back.</p>"
+            "step_body": "<p>Turn Diamond round. The battery sits behind the black arc latch on the back.</p>",
+            "marker_label": "",
+            "marker_x": 79,
+            "marker_y": 73
           }
         },
         "latch_step_open": {
@@ -168,7 +188,10 @@
           "settings": {
             "image": "shopify://shop_images/battery-latch-open.webp",
             "step_title": "Open the latch",
-            "step_body": "<p>Flip the latch open with a finger.</p>"
+            "step_body": "<p>Flip the latch open with a finger.</p>",
+            "marker_label": "",
+            "marker_x": 79,
+            "marker_y": 73
           }
         },
         "latch_step_battery_out": {
@@ -176,7 +199,10 @@
           "settings": {
             "image": "shopify://shop_images/battery-out.webp",
             "step_title": "Battery out",
-            "step_body": "<p>Lift the battery out by the latch.</p>"
+            "step_body": "<p>Lift the battery out by the latch.</p>",
+            "marker_label": "",
+            "marker_x": 79,
+            "marker_y": 73
           }
         },
         "latch_step_contacts": {
@@ -195,7 +221,10 @@
           "settings": {
             "image": "shopify://shop_images/battery-latch-close.webp",
             "step_title": "Back in, latch closed",
-            "step_body": "<p>With the latch open, set the battery in, contacts down. Then close the latch so the battery is locked in place.</p>"
+            "step_body": "<p>With the latch open, set the battery in, contacts down. Then close the latch so the battery is locked in place.</p>",
+            "marker_label": "",
+            "marker_x": 79,
+            "marker_y": 73
           }
         }
       },
@@ -214,18 +243,17 @@
         "latch_step_battery_out",
         "latch_step_contacts",
         "latch_step_close"
-      ]
-    },
-    "dm_charging": {
-      "type": "dm-charging",
+      ],
       "settings": {
-        "charge_while_smoking": "shopify://shop_images/charge-while-smoking.webp",
-        "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      },
+      }
+    },
+    "dm_charging": {
+      "type": "dm-charging",
       "blocks": {
         "charge_step1": {
           "type": "charge_step",
@@ -252,17 +280,23 @@
           }
         }
       },
-      "block_order": ["charge_step1", "charge_step2", "charge_step3"]
-    },
-    "dm_battery": {
-      "type": "dm-battery",
+      "block_order": [
+        "charge_step1",
+        "charge_step2",
+        "charge_step3"
+      ],
       "settings": {
+        "charge_while_smoking": "shopify://shop_images/charge-while-smoking.webp",
         "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#faf8f4",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      },
+      }
+    },
+    "dm_battery": {
+      "type": "dm-battery",
       "blocks": {
         "battery_step1": {
           "type": "battery_step",
@@ -297,12 +331,26 @@
           }
         }
       },
-      "block_order": ["battery_step1", "battery_step2", "battery_step3", "battery_step4"]
+      "block_order": [
+        "battery_step1",
+        "battery_step2",
+        "battery_step3",
+        "battery_step4"
+      ],
+      "settings": {
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     },
     "dm_dial": {
       "type": "dm-dial",
       "settings": {
         "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#faf8f4",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -311,18 +359,6 @@
     },
     "dm_pack": {
       "type": "dm-pack",
-      "settings": {
-        "flat_screen": "shopify://shop_images/flat-screen.webp",
-        "basket_empty": "shopify://shop_images/basket-empty.webp",
-        "img_basket": "shopify://shop_images/d-basket.webp",
-        "img_screens": "shopify://shop_images/d-screens-2.webp",
-        "cup_filled": "shopify://shop_images/cup-filled.webp",
-        "dark_leaf_packed": "shopify://shop_images/dark-leaf-packed.webp",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      },
       "blocks": {
         "basket_step1": {
           "type": "basket_step",
@@ -434,16 +470,23 @@
         "cup_tool_step2",
         "cup_tool_step3",
         "cup_tool_step4"
-      ]
-    },
-    "dm_hookah": {
-      "type": "dm-hookah",
+      ],
       "settings": {
+        "flat_screen": "shopify://shop_images/flat-screen.webp",
+        "basket_empty": "shopify://shop_images/basket-empty.webp",
+        "img_basket": "shopify://shop_images/d-basket.webp",
+        "img_screens": "shopify://shop_images/d-screens-2.webp",
+        "cup_filled": "shopify://shop_images/cup-filled.webp",
+        "dark_leaf_packed": "shopify://shop_images/dark-leaf-packed.webp",
+        "color_background": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      },
+      }
+    },
+    "dm_hookah": {
+      "type": "dm-hookah",
       "blocks": {
         "hookah_step1": {
           "type": "hookah_step",
@@ -470,17 +513,21 @@
           }
         }
       },
-      "block_order": ["hookah_step1", "hookah_step2", "hookah_step3"]
-    },
-    "dm_preheat": {
-      "type": "dm-preheat",
+      "block_order": [
+        "hookah_step1",
+        "hookah_step2",
+        "hookah_step3"
+      ],
       "settings": {
-        "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#faf8f4",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      },
+      }
+    },
+    "dm_preheat": {
+      "type": "dm-preheat",
       "blocks": {
         "preheat_step1": {
           "type": "preheat_step",
@@ -507,17 +554,22 @@
           }
         }
       },
-      "block_order": ["preheat_step1", "preheat_step2", "preheat_step3"]
-    },
-    "dm_profiles": {
-      "type": "dm-profiles",
+      "block_order": [
+        "preheat_step1",
+        "preheat_step2",
+        "preheat_step3"
+      ],
       "settings": {
         "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      },
+      }
+    },
+    "dm_profiles": {
+      "type": "dm-profiles",
       "blocks": {
         "profiles_slide_m": {
           "type": "profile_slide",
@@ -575,17 +627,18 @@
         "profiles_slide_phoenix",
         "profiles_slide_wraith",
         "profiles_slide_oracle"
-      ]
-    },
-    "dm_menu": {
-      "type": "dm-menu",
+      ],
       "settings": {
         "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#faf8f4",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      },
+      }
+    },
+    "dm_menu": {
+      "type": "dm-menu",
       "blocks": {
         "menu_slide_q": {
           "type": "menu_slide",
@@ -661,13 +714,22 @@
         "menu_slide_brightness",
         "menu_slide_screen",
         "menu_slide_stats"
-      ]
+      ],
+      "settings": {
+        "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     },
     "dm_software": {
       "type": "dm-software",
       "settings": {
         "cable_alone": "shopify://shop_images/cable-alone.webp",
         "device_frame": "shopify://shop_images/closed-start.webp",
+        "color_background": "#faf8f4",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -676,12 +738,6 @@
     },
     "dm_cap": {
       "type": "dm-cap",
-      "settings": {
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      },
       "blocks": {
         "cap_step_parts": {
           "type": "cap_step",
@@ -735,18 +791,17 @@
         "cap_step_holes",
         "cap_step_off",
         "cap_step_press"
-      ]
-    },
-    "dm_cleaning": {
-      "type": "dm-cleaning",
+      ],
       "settings": {
-        "acc_glove": "shopify://shop_images/cleaning-glove-1.webp",
-        "multitool_product": "enso-4-in-1-multi-tool",
+        "color_background": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
-      },
+      }
+    },
+    "dm_cleaning": {
+      "type": "dm-cleaning",
       "blocks": {
         "cup_step1": {
           "type": "cup_step",
@@ -807,18 +862,18 @@
         "cap_step1": {
           "type": "cap_step",
           "settings": {
+            "image": "shopify://shop_images/cap-parts-rinse.webp",
             "freq": "After every session",
             "step_title": "Rinse all three parts",
-            "step_body": "<p>The shell, the plate and the insert. Let them dry fully before the next session.</p>",
-            "image": "shopify://shop_images/cap-parts-rinse.webp"
+            "step_body": "<p>The shell, the plate and the insert. Let them dry fully before the next session.</p>"
           }
         },
         "cap_step2": {
           "type": "shaft_step",
           "settings": {
+            "image": "shopify://shop_images/clean-capoff-back-brush.webp",
             "step_title": "Battery in, latch closed",
-            "step_body": "<p>Give Diamond an hour to an hour and a half to cool, then lift the cap off. Leave the battery in with the latch closed the whole time: it closes the bay so no water reaches the contacts.</p>",
-            "image": "shopify://shop_images/clean-capoff-back-brush.webp"
+            "step_body": "<p>Give Diamond an hour to an hour and a half to cool, then lift the cap off. Leave the battery in with the latch closed the whole time: it closes the bay so no water reaches the contacts.</p>"
           }
         },
         "shaft_step1": {
@@ -868,11 +923,21 @@
         "shaft_step2",
         "never_step1",
         "never_step2"
-      ]
+      ],
+      "settings": {
+        "acc_glove": "shopify://shop_images/cleaning-glove-1.webp",
+        "multitool_product": "cleaning-glove",
+        "color_background": "#faf8f4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     },
     "dm_travel": {
       "type": "dm-travel",
       "settings": {
+        "color_background": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -881,12 +946,6 @@
     },
     "dm_donts": {
       "type": "dm-donts",
-      "settings": {
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
-      },
       "blocks": {
         "row_water_contacts": {
           "type": "safe_row",
@@ -929,11 +988,24 @@
           }
         }
       },
-      "block_order": ["row_water_contacts", "row_dial", "row_battery", "row_cooling"]
+      "block_order": [
+        "row_water_contacts",
+        "row_dial",
+        "row_battery",
+        "row_cooling"
+      ],
+      "settings": {
+        "color_background": "#faf8f4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     },
     "dm_troubleshooting": {
       "type": "dm-troubleshooting",
       "settings": {
+        "color_background": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -943,6 +1015,7 @@
     "dm_warranty": {
       "type": "dm-warranty",
       "settings": {
+        "color_background": "#faf8f4",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
