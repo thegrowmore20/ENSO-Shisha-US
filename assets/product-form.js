@@ -233,23 +233,20 @@ if (!customElements.get('product-media-gallery')) {
       });
 
       const activeThumb = this.thumbs.find((thumb) => thumb.dataset.targetMediaId === activeMediaId);
-      activeThumb?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-
-      // Peek one full thumbnail forward when the active thumb is at the right
-      // edge of the strip — only for thumbnails_bottom layout (no arrow buttons).
-      // thumbnails_left has its own prev/next arrows; peeking there causes the
-      // prev button to overlap the first thumb and block taps on it.
-      const hasPrevNextButtons = !!this.querySelector('[data-thumbs-prev]');
       const thumbsList = this.querySelector('[data-gallery-thumbs]');
-      const thumbIndex = activeThumb ? this.thumbs.indexOf(activeThumb) : -1;
-      if (!hasPrevNextButtons && activeThumb && thumbsList && thumbIndex < this.thumbs.length - 1) {
-        const thumbRect = activeThumb.getBoundingClientRect();
-        const listRect = thumbsList.getBoundingClientRect();
-        if (thumbRect.right >= listRect.right - thumbRect.width * 0.5) {
-          const gap = parseFloat(getComputedStyle(thumbsList).gap) || 8;
-          requestAnimationFrame(() => {
-            thumbsList.scrollBy({ left: thumbRect.width + gap, behavior: 'smooth' });
-          });
+
+      if (activeThumb && thumbsList) {
+        const thumbLeft = activeThumb.offsetLeft;
+        const thumbRight = thumbLeft + activeThumb.offsetWidth;
+        const stripLeft = thumbsList.scrollLeft;
+        const stripRight = stripLeft + thumbsList.clientWidth;
+
+        if (thumbLeft < stripLeft) {
+          // Thumb is off-screen to the LEFT — scroll backward
+          thumbsList.scrollTo({ left: thumbLeft - 20, behavior: 'smooth' });
+        } else if (thumbRight > stripRight) {
+          // Thumb is off-screen to the RIGHT — scroll forward
+          thumbsList.scrollTo({ left: thumbRight - thumbsList.clientWidth + 20, behavior: 'smooth' });
         }
       }
     }
