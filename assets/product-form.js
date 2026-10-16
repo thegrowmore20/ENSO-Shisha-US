@@ -236,24 +236,14 @@ if (!customElements.get('product-media-gallery')) {
       const thumbsList = this.querySelector('[data-gallery-thumbs]');
 
       if (activeThumb && thumbsList) {
-        // Use getBoundingClientRect so thumbLeft is relative to the scroll
-        // container's visible area, then add scrollLeft to get the position
-        // within the scroll content. offsetLeft is unreliable here because
-        // the thumb's offsetParent may not be the scrollable list element.
+        // getBoundingClientRect gives accurate position regardless of offsetParent.
+        // Center the active thumb in the strip so neighbors on both sides stay visible.
         const listRect = thumbsList.getBoundingClientRect();
         const thumbRect = activeThumb.getBoundingClientRect();
         const thumbLeft = thumbRect.left - listRect.left + thumbsList.scrollLeft;
-        const thumbRight = thumbLeft + thumbRect.width;
-        const stripLeft = thumbsList.scrollLeft;
-        const stripRight = stripLeft + thumbsList.clientWidth;
-
-        if (thumbLeft < stripLeft) {
-          // Thumb is off-screen to the LEFT — scroll backward
-          thumbsList.scrollTo({ left: thumbLeft - 20, behavior: 'smooth' });
-        } else if (thumbRight > stripRight) {
-          // Thumb is off-screen to the RIGHT — scroll forward
-          thumbsList.scrollTo({ left: thumbRight - thumbsList.clientWidth + 20, behavior: 'smooth' });
-        }
+        const thumbCenter = thumbLeft + thumbRect.width / 2;
+        const newScrollLeft = thumbCenter - thumbsList.clientWidth / 2;
+        thumbsList.scrollTo({ left: Math.max(0, newScrollLeft), behavior: 'smooth' });
       }
     }
 
