@@ -47,11 +47,11 @@
   var root=document.documentElement;
   root.style.setProperty('--hdr-h',hdr.offsetHeight+'px');
   /* move finder (and xnav) to direct children of <main> — sticky now spans every dm-* section */
-  var intro=document.getElementById('shopify-section-dm-intro');
-  if(intro){
-    main.insertBefore(f,intro);
-    var xnav=intro.querySelector('.xnav');
-    if(xnav)main.insertBefore(xnav,f);
+  var intro=document.querySelector('.xnav');
+  var introSection=intro&&intro.closest('[id^="shopify-section-"]');
+  if(introSection){
+    main.insertBefore(f,introSection);
+    if(intro)main.insertBefore(intro,f);
   }
   f.removeAttribute('aria-hidden');
   function syncPos(){root.classList.toggle('hdr-show',!hdr.classList.contains('site-header--hidden'));}
