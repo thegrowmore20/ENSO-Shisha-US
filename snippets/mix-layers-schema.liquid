@@ -1,0 +1,35 @@
+{% doc %}
+  Renders the "Mix in layers" heat-map diagram: the ENSŌ Diamond cup in cross-section with
+  animated heat arrows and a dashed divider showing the accent / main-flavor split.
+  Shared by sections/pk-heatmap.liquid and sections/dm-pack.liquid so the two pages
+  always stay in sync. Contains no Liquid output — pure SVG.
+{% enddoc %}
+<svg viewBox="0 0 360 270" role="img" aria-label="The ENSŌ Diamond cup in section: heat comes from the sides and from below, strongest at the bottom">
+  <defs>
+    <linearGradient id="hg" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#e2614c"/>
+      <stop offset=".55" stop-color="#e7a35a"/>
+      <stop offset="1" stop-color="#f3dfb8"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer cup shell (shallower: base y=210, stem notch y=234) -->
+  <path d="M24 52Q24 66 40 68Q78 74 84 96L84 176Q84 210 118 210L160 210L160 234L200 234L200 210L242 210Q276 210 276 176L276 96Q282 74 320 68Q336 66 336 52Z" fill="#1d1b19"/>
+  <!-- Inner fill with heat gradient (~1/3 accent top, ~2/3 main bottom) -->
+  <path d="M44 56Q86 60 98 86L98 172Q98 196 122 196L238 196Q262 196 262 172L262 86Q274 60 316 56Z" fill="url(#hg)" opacity=".94"/>
+  <!-- Stem -->
+  <rect x="172" y="196" width="16" height="30" fill="#1d1b19"/>
+  <!-- Dashed divider: ~1/3 from top of fill (accent / main boundary) -->
+  <line x1="100" y1="110" x2="260" y2="110" stroke="#1d1b19" stroke-width="2" stroke-dasharray="6 6"/>
+  <!-- Layer labels -->
+  <text x="180" y="94" text-anchor="middle" font-family="Inter" font-weight="800" font-size="17" fill="#3a2a10">Accent</text>
+  <text x="180" y="158" text-anchor="middle" font-family="Inter" font-weight="800" font-size="17" fill="#fff">Main flavor</text>
+  <!-- Heat arrows: sides centred on wall midpoint, bottom below stem -->
+  <g stroke="#e2614c" stroke-width="3.5" fill="none" stroke-linecap="round">
+    <path class="hu" d="M120 248v-18m0 0-6 7m6-7 6 7"/>
+    <path class="hu" d="M240 248v-18m0 0-6 7m6-7 6 7"/>
+    <path class="hl" d="M30 115h22m0 0-7-6m7 6-7 6"/>
+    <path class="hl" d="M30 155h22m0 0-7-6m7 6-7 6"/>
+    <path class="hr" d="M330 115h-22m0 0 7-6m-7 6 7 6"/>
+    <path class="hr" d="M330 155h-22m0 0 7-6m-7 6 7 6"/>
+  </g>
+</svg>
