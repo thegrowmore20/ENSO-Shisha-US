@@ -344,17 +344,11 @@
   /* Animated device screen slide */
   .qs__mac{flex:0 0 100%;height:100%;scroll-snap-align:center;position:relative}
   .qs__mac .mac{position:absolute;inset:0;aspect-ratio:auto;overflow:hidden;background:#fff}
-  .qs__mac .mac .dev{position:absolute;width:330%;max-width:none;left:50%;top:50%;transform:translate(-50.17%,-57.6%);margin:0}
+  /* Reset preheat-step's global .dev zoomed positioning; show full device capped at 440px */
+  .qs__mac .mac .dev{position:relative;width:330%;max-width:440px;margin:0 auto;left:auto;top:auto;transform:none}
   .qs__mac .mac .dev>img{width:100%;height:auto;object-fit:initial;background:none;display:block}
-  .qs__mac .lv{position:absolute;left:50.17%;top:57.6%;width:21.4%;transform:translate(-50%,-50%);aspect-ratio:1;border-radius:50%;background:#0a0a0c;box-shadow:none;max-width:none;container-type:inline-size;overflow:hidden;font-family:Inter,system-ui,sans-serif;color:#f0e8d8}
-  .qs__mac .lv__s{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;transition:opacity .22s}
-  .qs__mac .lv__s.on{opacity:1}
-  .qs__mac .lv__bat{position:absolute;left:0;right:0;top:15.5%;text-align:center;font:500 3.9cqw/1 Inter,sans-serif;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:.8cqw}
-  .qs__mac .lv__bat svg{width:2.6cqw;height:3.6cqw;fill:#e2614c}
-  .qs__mac .t-big{font:700 15.6cqw/1.08 Inter,sans-serif;font-variant-numeric:tabular-nums}
-  .qs__mac .t-cap{font:500 2.9cqw/1 Inter,sans-serif;letter-spacing:.14em;color:#a6a39b;margin-top:2.6cqw;text-transform:uppercase}
+  /* .lv position/style comes from preheat-step global CSS (.dev .lv, .lv__s, .lv.press etc.) */
   .qs__mac .finger{display:none}
-  @media (prefers-reduced-motion:reduce){.qs__mac .lv__s,.qs__mac .lv{transition:none}}
 
   /* Manual link */
   .qs__more {
@@ -498,6 +492,7 @@
   });
 
   // Inline battery-level animation for device-screen slides (data-qs-scene)
+  // SCR.bat content from diamond-manual.js — identical so cqw sizes match at real dial scale
   (function() {
     var BAT = '<svg viewBox="0 0 60 30" style="width:24cqw;height:12cqw">'
       + '<rect x="1.5" y="1.5" width="51" height="27" rx="5" fill="none" stroke="#f0e8d8" stroke-width="3"/>'
@@ -510,23 +505,30 @@
       if (el._lvInit) return;
       el._lvInit = true;
       el.innerHTML = '<div class="lv__s"></div><div class="lv__s">' + BAT + '</div>';
-      var screens = el.querySelectorAll('.lv__s');
-      var off = screens[0], bat = screens[1];
+      var off = el.querySelectorAll('.lv__s')[0], bat = el.querySelectorAll('.lv__s')[1];
       var timer = null;
+      // Cycle: bat(2.4s) → off(1.3s) → click-press(0.3s) → bat → …
+      // Phase 0 = bat, 1 = off, 2 = click (off + press glow)
       function tick(phase) {
         clearTimeout(timer);
         if (phase === 0) {
-          off.classList.add('on'); bat.classList.remove('on');
-          timer = setTimeout(function() { tick(1); }, 1600);
-        } else {
           bat.classList.add('on'); off.classList.remove('on');
-          timer = setTimeout(function() { tick(0); }, 2400);
+          el.classList.remove('press');
+          timer = setTimeout(function() { tick(1); }, 2400);
+        } else if (phase === 1) {
+          off.classList.add('on'); bat.classList.remove('on');
+          timer = setTimeout(function() { tick(2); }, 1300);
+        } else {
+          el.classList.add('press'); // orange glow = dial click gesture
+          timer = setTimeout(function() { tick(0); }, 300);
         }
       }
+      // Start with bat phase so user sees battery immediately on swipe
       el._lvStart = function() { if (timer !== null) return; tick(0); };
       el._lvPause = function() {
         clearTimeout(timer); timer = null;
         off.classList.remove('on'); bat.classList.remove('on');
+        el.classList.remove('press');
       };
     }
 
