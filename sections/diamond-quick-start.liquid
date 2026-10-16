@@ -117,7 +117,7 @@
                           {%- else -%}
                             <img src="{{ dev_bg_src }}" alt="" loading="lazy">
                           {%- endif -%}
-                          <div class="lv" data-scene="{{ block.settings.device_scene | default: 'level' }}" role="img" aria-label="{{ block.settings.heading }}"></div>
+                          <div class="lv" data-qs-scene="{{ block.settings.device_scene | default: 'level' }}" role="img" aria-label="{{ block.settings.heading }}"></div>
                         </div>
                         <span class="finger" aria-hidden="true"></span>
                       </div>
@@ -436,7 +436,8 @@
     dots.forEach(function(dot, i) {
       dot.addEventListener('click', function() {
         track.style.scrollSnapType = '';
-        track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+        var slide = track.children[i];
+        if (slide) track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
       });
     });
 
