@@ -677,22 +677,6 @@
         "accordions";
       gap: var(--space-4);
     }
-    /* acc-below variant: dissolve the left-col wrapper so media and accordions
-       join the grid directly, then place them in the correct mobile order. */
-    .product-main--acc-below .product-main__inner {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "media"
-        "content"
-        "accordions";
-      gap: var(--space-4);
-    }
-    .product-main--acc-below .product-main__left-col {
-      display: contents;
-    }
-    .product-main--acc-below .product-main__media      { grid-area: media; }
-    .product-main--acc-below .product-main__content    { grid-area: content; }
-    .product-main--acc-below .product-main__accordions { grid-area: accordions; }
   }
 
   /* Accordions below media (product.custom-enso template).
@@ -737,6 +721,24 @@
       top: var(--space-6);
       align-self: start;
     }
+  }
+
+  /* Mobile: acc-below collapses to single column.
+     display:contents dissolves the left-col wrapper so media and accordions
+     participate directly in the grid, ordered: gallery → info → accordions. */
+  @media screen and (max-width: 991px) {
+    .product-main--acc-below .product-main__inner {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "media"
+        "content"
+        "accordions";
+      gap: var(--space-4);
+    }
+    .product-main--acc-below .product-main__left-col      { display: contents; }
+    .product-main--acc-below .product-main__media         { grid-area: media; }
+    .product-main--acc-below .product-main__content       { grid-area: content; }
+    .product-main--acc-below .product-main__accordions    { grid-area: accordions; }
   }
 
   .product-main__content {
