@@ -46,7 +46,7 @@
     {%- endif -%}
   </div></figure>
     {%- for block in basket_blocks -%}
-      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
         {%- if block.settings.image != blank -%}
           {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
         {%- else -%}
@@ -74,7 +74,7 @@
     {%- endif -%}
   </div></figure>
     {%- for block in flat_blocks -%}
-      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
         {%- if block.settings.image != blank -%}
           {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
         {%- else -%}
@@ -117,7 +117,7 @@
   {%- if chamber_blocks.size > 0 -%}
     <h3>Into the chamber</h3><div class="slider tslider" style="--n:{{ chamber_blocks.size }}"><div class="slides">
       {%- for block in chamber_blocks -%}
-        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
           {%- if block.settings.image != blank -%}
             {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
           {%- else -%}
@@ -131,7 +131,7 @@
   {%- if cup_tool_blocks.size > 0 -%}
     <div class="slider tslider" style="--n:{{ cup_tool_blocks.size }}"><div class="slides">
       {%- for block in cup_tool_blocks -%}
-        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
           {%- if block.settings.image != blank -%}
             {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
           {%- else -%}
@@ -257,7 +257,7 @@
           "label": "Step title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "step_body",
           "label": "Step description"
         }
@@ -278,7 +278,7 @@
           "label": "Step title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "step_body",
           "label": "Step description"
         }
@@ -299,7 +299,7 @@
           "label": "Step title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "step_body",
           "label": "Step description"
         }
@@ -320,7 +320,7 @@
           "label": "Step title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "step_body",
           "label": "Step description"
         }

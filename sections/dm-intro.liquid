@@ -38,7 +38,7 @@
     {%- if section.blocks.size > 0 -%}
       <div class="slider tslider slider--care" style="--n:{{ section.blocks.size }}"><div class="slides">
         {%- for block in section.blocks -%}
-          <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__i">!</span><b>{{ block.settings.card_title }}</b><p>{{ block.settings.card_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+          <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__i">!</span><b>{{ block.settings.card_title }}</b>{{ block.settings.card_body }}</figcaption><div class="ts__pic ts__pic--img">
             {%- if block.settings.image != blank -%}
               {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
               {%- if block.settings.marker_1_label != blank -%}
@@ -146,7 +146,7 @@
           "label": "Card title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "card_body",
           "label": "Card description"
         },

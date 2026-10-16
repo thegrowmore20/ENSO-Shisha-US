@@ -21,7 +21,7 @@
           assign cap_img_style = ''
         endif
       -%}
-      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
         {%- if block.settings.image != blank -%}
           {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '', style: cap_img_style -}}
         {%- else -%}
@@ -110,7 +110,7 @@
           "label": "Step title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "step_body",
           "label": "Step description"
         }

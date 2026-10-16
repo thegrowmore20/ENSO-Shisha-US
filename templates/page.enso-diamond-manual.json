@@ -24,19 +24,31 @@
         "safety_contacts": {
           "type": "safety_card",
           "settings": {
-            "image": "shopify://shop_images/before-contacts.webp"
+            "image": "shopify://shop_images/before-contacts.webp",
+            "card_title": "Keep the contacts dry",
+            "card_body": "<p>The contacts sit at the bottom of the battery bay and on the end of the battery. They never get wet.</p>",
+            "marker_1_label": "USB-C port",
+            "marker_1_x": 33,
+            "marker_1_y": 22,
+            "marker_2_label": "Contacts: keep dry",
+            "marker_2_x": 50,
+            "marker_2_y": 79
           }
         },
         "safety_battery_dry": {
           "type": "safety_card",
           "settings": {
-            "image": "shopify://shop_images/battery-dry.webp"
+            "image": "shopify://shop_images/battery-dry.webp",
+            "card_title": "Keep the battery dry",
+            "card_body": "<p>The battery never goes under water. Everything else rinses from the top, with the battery fitted and the dial kept dry.</p>"
           }
         },
         "safety_before_charge": {
           "type": "safety_card",
           "settings": {
-            "image": "shopify://shop_images/before-charge.webp"
+            "image": "shopify://shop_images/before-charge.webp",
+            "card_title": "Let the battery cool before charging",
+            "card_body": "<p>After a session the battery is warm. Give it time to cool, then plug it in.</p>"
           }
         }
       },
@@ -55,93 +67,135 @@
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/device-top.webp",
-            "size": "hero"
+            "label": "Diamond with thermo cap",
+            "size": "hero",
+            "list_title": "Diamond",
+            "list_body": "<p>With the thermo cap fitted and the battery inside.</p>"
           }
         },
         "outofbox_cup": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-cup.webp",
-            "size": "regular"
+            "label": "Ceramic cups",
+            "size": "regular",
+            "count": "×2",
+            "list_title": "Ceramic cups",
+            "list_body": "<p>The tobacco goes here: one running, one packed and waiting.</p>"
           }
         },
         "outofbox_basket": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-basket.webp",
-            "size": "regular"
+            "label": "Basket mesh",
+            "size": "regular",
+            "list_title": "Basket mesh",
+            "list_body": "<p>Sits in the cup for a loose, airy pack. Lifts out in one piece to clean.</p>"
           }
         },
         "outofbox_screens": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-screens-2.webp",
-            "size": "regular"
+            "label": "Flat mesh screens",
+            "size": "regular",
+            "count": "×3",
+            "list_title": "Flat mesh screens",
+            "list_body": "<p>Lie on the bottom of the cup for a denser pack.</p>"
           }
         },
         "outofbox_adapter_tall": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-adapter-tall.webp",
-            "size": "regular"
+            "label": "Long adapter",
+            "size": "small",
+            "list_title": "Long adapter",
+            "list_body": "<p>Seats Diamond on your hookah stem.</p>"
           }
         },
         "outofbox_adapter_short": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-adapter-short.webp",
-            "size": "regular"
+            "label": "Short adapter",
+            "size": "small",
+            "list_title": "Short adapter",
+            "list_body": "<p>The same, for shorter stem tops. Most stems take either.</p>"
           }
         },
         "outofbox_tool": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-tool.webp",
-            "size": "regular"
+            "label": "Cup removal tool",
+            "size": "regular",
+            "list_title": "Cup removal tool",
+            "list_body": "<p>Lifts the hot cup out, and turns the plate on the cap.</p>"
           }
         },
         "outofbox_brush": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-brush.webp",
-            "size": "regular"
+            "label": "Cleaning brush",
+            "size": "small",
+            "list_title": "Cleaning brush",
+            "list_body": "<p>For the shaft and the chamber.</p>"
           }
         },
         "outofbox_cable": {
           "type": "box_item",
           "settings": {
             "image": "shopify://shop_images/d-cable.webp",
-            "size": "regular"
+            "label": "USB-C cable",
+            "size": "regular",
+            "list_title": "USB-C cable",
+            "list_body": "<p>Charges Diamond or the battery. The wall charger is not in the box.</p>"
           }
         },
         "latch_step_closed": {
           "type": "latch_step",
           "settings": {
-            "image": "shopify://shop_images/battery-latch-closed.webp"
+            "image": "shopify://shop_images/battery-latch-closed.webp",
+            "step_title": "The latch",
+            "step_body": "<p>Turn Diamond round. The battery sits behind the black arc latch on the back.</p>"
           }
         },
         "latch_step_open": {
           "type": "latch_step",
           "settings": {
-            "image": "shopify://shop_images/battery-latch-open.webp"
+            "image": "shopify://shop_images/battery-latch-open.webp",
+            "step_title": "Open the latch",
+            "step_body": "<p>Flip the latch open with a finger.</p>"
           }
         },
         "latch_step_battery_out": {
           "type": "latch_step",
           "settings": {
-            "image": "shopify://shop_images/battery-out.webp"
+            "image": "shopify://shop_images/battery-out.webp",
+            "step_title": "Battery out",
+            "step_body": "<p>Lift the battery out by the latch.</p>"
           }
         },
         "latch_step_contacts": {
           "type": "latch_step",
           "settings": {
-            "image": "shopify://shop_images/pack-contacts.webp"
+            "image": "shopify://shop_images/pack-contacts.webp",
+            "step_title": "Paper tab off",
+            "step_body": "<p>Pull the small paper tab off the battery contacts. With it in place Diamond will not switch on.</p>",
+            "marker_label": "Paper tab: pull it off",
+            "marker_x": 79,
+            "marker_y": 73
           }
         },
         "latch_step_close": {
           "type": "latch_step",
           "settings": {
-            "image": "shopify://shop_images/battery-latch-close.webp"
+            "image": "shopify://shop_images/battery-latch-close.webp",
+            "step_title": "Back in, latch closed",
+            "step_body": "<p>With the latch open, set the battery in, contacts down. Then close the latch so the battery is locked in place.</p>"
           }
         }
       },
@@ -176,19 +230,25 @@
         "charge_step1": {
           "type": "charge_step",
           "settings": {
-            "image": "shopify://shop_images/before-charge.webp"
+            "image": "shopify://shop_images/before-charge.webp",
+            "step_title": "Battery on its own",
+            "step_body": "<p>Pull the battery out and plug the cable straight into it. Handy with a spare: one in Diamond, one charging.</p>"
           }
         },
         "charge_step2": {
           "type": "charge_step",
           "settings": {
-            "image": "shopify://shop_images/charge-dots.webp"
+            "image": "shopify://shop_images/charge-dots.webp",
+            "step_title": "About 1.5 h · 30 W",
+            "step_body": "<p>Full in about 1.5 hours with a 30 W USB-C charger. The four dots show the charge in quarters.</p>"
           }
         },
         "charge_step3": {
           "type": "charge_step",
           "settings": {
-            "image": "shopify://shop_images/charge-in.webp"
+            "image": "shopify://shop_images/charge-in.webp",
+            "step_title": "Or inside Diamond",
+            "step_body": "<p>Leave the battery in and plug the cable into the port on the back, under the four dots.</p>"
           }
         }
       },
@@ -207,25 +267,33 @@
         "battery_step1": {
           "type": "battery_step",
           "settings": {
-            "image": "shopify://shop_images/switch-off-thumb.webp"
+            "image": "shopify://shop_images/switch-off-thumb.webp",
+            "step_title": "Switch off",
+            "step_body": "<p>Hold the dial for 3 seconds.</p>"
           }
         },
         "battery_step2": {
           "type": "battery_step",
           "settings": {
-            "image": "shopify://shop_images/battery-out.webp"
+            "image": "shopify://shop_images/battery-out.webp",
+            "step_title": "Battery out",
+            "step_body": "<p>Open the latch and lift the battery out.</p>"
           }
         },
         "battery_step3": {
           "type": "battery_step",
           "settings": {
-            "image": "shopify://shop_images/battery-latch-close.webp"
+            "image": "shopify://shop_images/battery-latch-close.webp",
+            "step_title": "Charged one in",
+            "step_body": "<p>Set a charged battery in, contacts down, and close the latch.</p>"
           }
         },
         "battery_step4": {
           "type": "battery_step",
           "settings": {
-            "ui_image": "shopify://shop_images/continue.webp"
+            "ui_image": "shopify://shop_images/continue.webp",
+            "step_title": "Continue Session?",
+            "step_body": "<p>Switch on. With the chamber still hot, turn to Yes and click: no new pre-heat.</p>"
           }
         }
       },
@@ -259,73 +327,97 @@
         "basket_step1": {
           "type": "basket_step",
           "settings": {
-            "image": "shopify://shop_images/pack-layer1.webp"
+            "image": "shopify://shop_images/pack-layer1.webp",
+            "step_title": "First layer",
+            "step_body": "<p>Lay in about half of the 10–15 g, loosely.</p>"
           }
         },
         "basket_step2": {
           "type": "basket_step",
           "settings": {
-            "image": "shopify://shop_images/pack-press.webp"
+            "image": "shopify://shop_images/pack-press.webp",
+            "step_title": "Press just a little",
+            "step_body": "<p>Press it down gently with a pick. Keep it airy.</p>"
           }
         },
         "basket_step3": {
           "type": "basket_step",
           "settings": {
-            "image": "shopify://shop_images/pack-layer2.webp"
+            "image": "shopify://shop_images/pack-layer2.webp",
+            "step_title": "Second layer",
+            "step_body": "<p>The rest on top, the same blend or another flavor, pressed just a little again.</p>"
           }
         },
         "flat_step1": {
           "type": "flat_step",
           "settings": {
-            "image": "shopify://shop_images/flat-layer1.webp"
+            "image": "shopify://shop_images/flat-layer1.webp",
+            "step_title": "First layer",
+            "step_body": "<p>Lay in about half of the 10–15 g, evenly, and press lightly.</p>"
           }
         },
         "flat_step2": {
           "type": "flat_step",
           "settings": {
-            "image": "shopify://shop_images/flat-layer2.webp"
+            "image": "shopify://shop_images/flat-layer2.webp",
+            "step_title": "Second layer",
+            "step_body": "<p>The rest on top, pressed lightly.</p>"
           }
         },
         "flat_step3": {
           "type": "flat_step",
           "settings": {
-            "image": "shopify://shop_images/flat-packed.webp"
+            "image": "shopify://shop_images/flat-packed.webp",
+            "step_title": "To the curve",
+            "step_body": "<p>Fill right up to where the ceramic starts to curve outwards. That is a full cup.</p>"
           }
         },
         "chamber_step1": {
           "type": "chamber_step",
           "settings": {
-            "image": "shopify://shop_images/chamber-empty.webp"
+            "image": "shopify://shop_images/chamber-empty.webp",
+            "step_title": "Cap off",
+            "step_body": "<p>Lift the cap off by its rubber pads. The chamber is empty.</p>"
           }
         },
         "chamber_step2": {
           "type": "chamber_step",
           "settings": {
-            "image": "shopify://shop_images/cup-in-by-hand.webp"
+            "image": "shopify://shop_images/cup-in-by-hand.webp",
+            "step_title": "Cup in",
+            "step_body": "<p>Set the packed cup straight into the chamber before you switch on. Do not press it down.</p>"
           }
         },
         "cup_tool_step1": {
           "type": "cup_tool_step",
           "settings": {
-            "image": "shopify://shop_images/cap-on-press-pad.webp"
+            "image": "shopify://shop_images/cap-on-press-pad.webp",
+            "step_title": "Cap on",
+            "step_body": "<p>Set it back flush and press on the rubber pad, never on the hot top.</p>"
           }
         },
         "cup_tool_step2": {
           "type": "cup_tool_step",
           "settings": {
-            "image": "shopify://shop_images/cup-tool-seated.webp"
+            "image": "shopify://shop_images/cup-tool-seated.webp",
+            "step_title": "Fork under the brim",
+            "step_body": "<p>Slide the fork under the brim of the cup.</p>"
           }
         },
         "cup_tool_step3": {
           "type": "cup_tool_step",
           "settings": {
-            "image": "shopify://shop_images/cup-tool-lower.webp"
+            "image": "shopify://shop_images/cup-tool-lower.webp",
+            "step_title": "Lift it straight out",
+            "step_body": "<p>Lift straight up. The cup is hot: set it down on a heat-safe surface.</p>"
           }
         },
         "cup_tool_step4": {
           "type": "cup_tool_step",
           "settings": {
-            "image": "shopify://shop_images/cup-seated-tool-off.webp"
+            "image": "shopify://shop_images/cup-seated-tool-off.webp",
+            "step_title": "Next cup in",
+            "step_body": "<p>Swapping? Set the next packed cup in and close the cap.</p>"
           }
         }
       },
@@ -356,19 +448,25 @@
         "hookah_step1": {
           "type": "hookah_step",
           "settings": {
-            "image": "shopify://shop_images/hookah-adapter-two-hands.webp"
+            "image": "shopify://shop_images/hookah-adapter-two-hands.webp",
+            "step_title": "Adapter on, half-way",
+            "step_body": "<p>Push one of the two adapters onto your hookah stem, only half-way. Do not push it all the way down.</p>"
           }
         },
         "hookah_step2": {
           "type": "hookah_step",
           "settings": {
-            "image": "shopify://shop_images/hookah-mount-two-hands.webp"
+            "image": "shopify://shop_images/hookah-mount-two-hands.webp",
+            "step_title": "Diamond on top, then press",
+            "step_body": "<p>Set Diamond on the adapter and press down with both hands: they slide down the stem together for the firmest grip.</p>"
           }
         },
         "hookah_step3": {
           "type": "hookah_step",
           "settings": {
-            "image": "shopify://shop_images/on-hookah-front.webp"
+            "image": "shopify://shop_images/on-hookah-front.webp",
+            "step_title": "Ready",
+            "step_body": "<p>Your hookah, hose and base stay the same. Only the bowl and the coals are gone.</p>"
           }
         }
       },
@@ -387,19 +485,25 @@
         "preheat_step1": {
           "type": "preheat_step",
           "settings": {
-            "image": "shopify://shop_images/cap-off.webp"
+            "image": "shopify://shop_images/cap-off.webp",
+            "step_title": "Cap off, cup in",
+            "step_body": "<p>Lift the cap off by its rubber pads, set the packed cup into the chamber, then cap back on.</p>"
           }
         },
         "preheat_step2": {
           "type": "preheat_step",
           "settings": {
-            "image": "shopify://shop_images/cup-tool-lower.webp"
+            "image": "shopify://shop_images/cup-tool-lower.webp",
+            "step_title": "Set the time and start",
+            "step_body": "<p>Pre-heat Timer → click, turn to set up to 15 minutes, click. Then Start Pre-heat → click. The screen counts down.</p>"
           }
         },
         "preheat_step3": {
           "type": "preheat_step",
           "settings": {
-            "image": "shopify://shop_images/cap-on-press-pad.webp"
+            "image": "shopify://shop_images/cap-on-press-pad.webp",
+            "step_title": "Set the temperature",
+            "step_body": "<p>While it counts down, turn the dial: 180–320 °C. A sound tells you the session has started.</p>"
           }
         }
       },
@@ -418,37 +522,49 @@
         "profiles_slide_m": {
           "type": "profile_slide",
           "settings": {
-            "image": "shopify://shop_images/m-profiles.webp"
+            "image": "shopify://shop_images/m-profiles.webp",
+            "slide_title": "Menu › Profiles",
+            "slide_body": "<p>Open Menu, turn to Profiles and click.</p>"
           }
         },
         "profiles_slide_p": {
           "type": "profile_slide",
           "settings": {
-            "image": "shopify://shop_images/p-profiles.webp"
+            "image": "shopify://shop_images/p-profiles.webp",
+            "slide_title": "Pick one",
+            "slide_body": "<p>Turn through the four, click to choose. A tick marks the one in use.</p>"
           }
         },
         "profiles_slide_default": {
           "type": "profile_slide",
           "settings": {
-            "image": "shopify://shop_images/profile_default.webp"
+            "image": "shopify://shop_images/profile_default.webp",
+            "slide_title": "Default: room to play",
+            "slide_body": "<p>Always starts at 7 minutes and 275 °C (527 °F), the middle of the dial, so you can turn up or down for your blend. Nothing is saved.</p>"
           }
         },
         "profiles_slide_phoenix": {
           "type": "profile_slide",
           "settings": {
-            "image": "shopify://shop_images/profile_phoenix.webp"
+            "image": "shopify://shop_images/profile_phoenix.webp",
+            "slide_title": "Phoenix: Virginia",
+            "slide_body": "<p>For blonde leaf: a slightly longer pre-heat at a gentler heat, 8 minutes at 265 °C (509 °F). Keeps what you set last.</p>"
           }
         },
         "profiles_slide_wraith": {
           "type": "profile_slide",
           "settings": {
-            "image": "shopify://shop_images/profile_wraith.webp"
+            "image": "shopify://shop_images/profile_wraith.webp",
+            "slide_title": "Wraith: dark, balanced",
+            "slide_body": "<p>A rounded, balanced flavor for dark blends, 9 minutes at 275 °C (527 °F). Keeps what you set last.</p>"
           }
         },
         "profiles_slide_oracle": {
           "type": "profile_slide",
           "settings": {
-            "image": "shopify://shop_images/profile_oracle.webp"
+            "image": "shopify://shop_images/profile_oracle.webp",
+            "slide_title": "Oracle: the smokiest",
+            "slide_body": "<p>For the densest, smokiest session, 8 minutes at 290 °C (554 °F). Keeps what you set last.</p>"
           }
         }
       },
@@ -474,49 +590,65 @@
         "menu_slide_q": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/q-menu.webp"
+            "image": "shopify://shop_images/q-menu.webp",
+            "slide_title": "Menu",
+            "slide_body": "<p>Turn to Menu in the start list and click, or click once during a session.</p>"
           }
         },
         "menu_slide_profiles": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/p-profiles.webp"
+            "image": "shopify://shop_images/p-profiles.webp",
+            "slide_title": "Profiles",
+            "slide_body": "<p>Default, Phoenix, Wraith or Oracle. The tick marks the one in use.</p>"
           }
         },
         "menu_slide_theme": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/p-theme.webp"
+            "image": "shopify://shop_images/p-theme.webp",
+            "slide_title": "Theme Color",
+            "slide_body": "<p>Six colors: Ember, Amber, Copper, Moss, Plum and Ash. Kept with the profile.</p>"
           }
         },
         "menu_slide_volume": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/p-volume.webp"
+            "image": "shopify://shop_images/p-volume.webp",
+            "slide_title": "Sound Volume",
+            "slide_body": "<p>From silent to full. Two sounds only: pre-heat done, and battery low.</p>"
           }
         },
         "menu_slide_haptic": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/p-haptic.webp"
+            "image": "shopify://shop_images/p-haptic.webp",
+            "slide_title": "Haptic Feedback",
+            "slide_body": "<p>The small click under your finger as you turn. Five strengths, or off.</p>"
           }
         },
         "menu_slide_brightness": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/p-brightness.webp"
+            "image": "shopify://shop_images/p-brightness.webp",
+            "slide_title": "Brightness",
+            "slide_body": "<p>How bright the screen is. Lower it for a dark room.</p>"
           }
         },
         "menu_slide_screen": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/p-screen.webp"
+            "image": "shopify://shop_images/p-screen.webp",
+            "slide_title": "Session Screen",
+            "slide_body": "<p>Temperature and time, or a calm animation. Switch any time.</p>"
           }
         },
         "menu_slide_stats": {
           "type": "menu_slide",
           "settings": {
-            "image": "shopify://shop_images/p-stats.webp"
+            "image": "shopify://shop_images/p-stats.webp",
+            "slide_title": "Session Stats",
+            "slide_body": "<p>How many sessions this Diamond has run. One counts after five minutes past pre-heat.</p>"
           }
         }
       },
@@ -555,35 +687,45 @@
           "type": "cap_step",
           "settings": {
             "image": "shopify://shop_images/cap-parts-white.webp",
-            "contain_image": true
+            "contain_image": true,
+            "step_title": "Three parts",
+            "step_body": "<p>The shell that holds the heat, the plate that sets the draw, and the insert that holds them.</p>"
           }
         },
         "cap_step_fork": {
           "type": "cap_step",
           "settings": {
             "image": "shopify://shop_images/plate-fork-macro.webp",
-            "contain_image": false
+            "contain_image": false,
+            "step_title": "Five positions",
+            "step_body": "<p>Four open settings and fully closed. Closed there is no draw. Turn it with the cup tool, even during a session.</p>"
           }
         },
         "cap_step_holes": {
           "type": "cap_step",
           "settings": {
             "image": "shopify://shop_images/cap-holes.webp",
-            "contain_image": false
+            "contain_image": false,
+            "step_title": "Where to start",
+            "step_body": "<p>Fully open, all four holes free. Start there and close it a step only if you want a denser draw.</p>"
           }
         },
         "cap_step_off": {
           "type": "cap_step",
           "settings": {
             "image": "shopify://shop_images/cap-off.webp",
-            "contain_image": false
+            "contain_image": false,
+            "step_title": "Lift by the pads",
+            "step_body": "<p>Hold the cap only by its rubber side pads and lift it straight up. It is hot during a session.</p>"
           }
         },
         "cap_step_press": {
           "type": "cap_step",
           "settings": {
             "image": "shopify://shop_images/cap-on-press-pad.webp",
-            "contain_image": false
+            "contain_image": false,
+            "step_title": "Cap on",
+            "step_body": "<p>Set it back flush and press on the rubber pad, never on the hot top.</p>"
           }
         }
       },
@@ -609,43 +751,57 @@
         "cup_step1": {
           "type": "cup_step",
           "settings": {
-            "image": "shopify://shop_images/clean-01-lift-cup-out.webp"
+            "image": "shopify://shop_images/clean-01-lift-cup-out.webp",
+            "step_title": "Let it cool, then lift it out",
+            "step_body": "<p>After 20–30 minutes, slide the fork under the brim and lift the cup straight out.</p>"
           }
         },
         "cup_step2": {
           "type": "cup_step",
           "settings": {
-            "image": "shopify://shop_images/clean-00b-loosen-edge.webp"
+            "image": "shopify://shop_images/clean-00b-loosen-edge.webp",
+            "step_title": "Loosen around the edge",
+            "step_body": "<p>Flat screen: run the tip of the fork around the inside edge of the cup so the tobacco comes away from the wall. Basket: lift the basket out first and run the fork around its edge the same way.</p>"
           }
         },
         "cup_step3": {
           "type": "cup_step",
           "settings": {
-            "image": "shopify://shop_images/clean-02-push-mesh-out.webp"
+            "image": "shopify://shop_images/clean-02-push-mesh-out.webp",
+            "step_title": "Push it out from below",
+            "step_body": "<p>Then push from below, through the hole in the bottom, with the tool. The tobacco comes out with the screen or the basket.</p>"
           }
         },
         "cup_step4": {
           "type": "cup_step",
           "settings": {
-            "image": "shopify://shop_images/clean-03-out-in-one-piece.webp"
+            "image": "shopify://shop_images/clean-03-out-in-one-piece.webp",
+            "step_title": "Out in one piece",
+            "step_body": "<p>The tobacco comes out with the mesh. Tip it into the bin and pull the last bits off the mesh.</p>"
           }
         },
         "cup_step5": {
-          "type": "cup_step",
+          "type": "wash_step",
           "settings": {
-            "image": "shopify://shop_images/clean-04-rinse.webp"
+            "image": "shopify://shop_images/clean-04-rinse.webp",
+            "step_title": "Rinse",
+            "step_body": "<p>Rinse the cup and the mesh under warm running water.</p>"
           }
         },
         "cup_step6": {
-          "type": "cup_step",
+          "type": "wash_step",
           "settings": {
-            "image": "shopify://shop_images/clean-05-scrubber.webp"
+            "image": "shopify://shop_images/clean-05-scrubber.webp",
+            "step_title": "Sponge or steel scrubber",
+            "step_body": "<p>Run a sponge over the inside of the cup and over the mesh. A steel scrubber pad takes off anything that sticks.</p>"
           }
         },
         "cup_step7": {
-          "type": "cup_step",
+          "type": "wash_step",
           "settings": {
-            "image": "shopify://shop_images/clean-06-soak.webp"
+            "image": "shopify://shop_images/clean-06-soak.webp",
+            "step_title": "Stuck? Soak it",
+            "step_body": "<p>Leave the cup and the mesh in warm water for a while, then sponge again.</p>"
           }
         },
         "cap_step1": {
@@ -668,25 +824,33 @@
         "shaft_step1": {
           "type": "shaft_step",
           "settings": {
-            "image": "shopify://shop_images/clean-shaft-brush.webp"
+            "image": "shopify://shop_images/clean-shaft-brush.webp",
+            "step_title": "Brush the shaft",
+            "step_body": "<p>Push the cleaning brush through the shaft from the top.</p>"
           }
         },
         "shaft_step2": {
           "type": "shaft_step",
           "settings": {
-            "image": "shopify://shop_images/ok-rinse-shaft.webp"
+            "image": "shopify://shop_images/ok-rinse-shaft.webp",
+            "step_title": "Rinse from the top",
+            "step_body": "<p>A gentle stream from the top only, the battery fitted. Let everything dry fully.</p>"
           }
         },
         "never_step1": {
           "type": "never_step",
           "settings": {
-            "image": "shopify://shop_images/dont-water-bay.webp"
+            "image": "shopify://shop_images/dont-water-bay.webp",
+            "step_title": "No water in the battery bay",
+            "step_body": "<p>Rinse from the top only, with the battery fitted.</p>"
           }
         },
         "never_step2": {
           "type": "never_step",
           "settings": {
-            "image": "shopify://shop_images/dont-water-battery.webp"
+            "image": "shopify://shop_images/dont-water-battery.webp",
+            "step_title": "Keep the battery dry",
+            "step_body": "<p>The battery never goes under water. Neither do the body and the dial, and none of it goes into a dishwasher.</p>"
           }
         }
       },

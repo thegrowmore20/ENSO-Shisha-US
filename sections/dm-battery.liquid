@@ -22,9 +22,9 @@
   <section class="ch" id="battery"><p class="ch__num">03 · Start</p><h2>Battery</h2><p class="ch__lead">One removable battery runs Diamond. A spare keeps a long evening going: one in Diamond, one charging.</p><div class="temps"><div><b>About 90 min</b><span>Per charge, pre-heat not included</span></div><div><b>About 1.5 h</b><span>From empty to full with a 30 W USB-C charger</span></div></div><h3>When it runs low</h3><div class="temps"><div class=""><b>10 %</b><span>First sound: time to plan</span></div><div class=""><b>4–6 %</b><span>Second sound, and heating stops</span></div><div class="red"><b>2–3 %</b><span>Diamond switches off</span></div></div><h3>Swap it mid-session</h3><div class="slider tslider" style="--n:{{ section.blocks.size }}"><div class="slides">
     {%- for block in section.blocks -%}
       {%- if block.settings.ui_image != blank -%}
-        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ block.settings.ui_image | image_url: width: 600 }}" alt="{{ block.settings.ui_image.alt | default: '' }}"></div></div></figure>
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><img class="lvimg" src="{{ block.settings.ui_image | image_url: width: 600 }}" alt="{{ block.settings.ui_image.alt | default: '' }}"></div></div></figure>
       {%- else -%}
-        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+        <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
           {%- if block.settings.image != blank -%}
             {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
           {%- else -%}
@@ -122,7 +122,7 @@
           "label": "Step title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "step_body",
           "label": "Step description"
         }

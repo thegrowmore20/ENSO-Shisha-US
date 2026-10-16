@@ -21,7 +21,7 @@
 <div class="wrap">
   <section class="ch" id="menu"><p class="ch__num">09 · Every session</p><h2>Menu and settings</h2><p class="ch__lead">Open Menu from the start list, or with one click during a session. Turn to an item, click to open, turn to change, click to confirm. Nothing here stops a running session.</p><div class="slider tslider" style="--n:{{ section.blocks.size }}"><div class="slides">
     {%- for block in section.blocks -%}
-      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.slide_title }}</b><p>{{ block.settings.slide_body }}</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt="">
+      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index }}</span><b>{{ block.settings.slide_title }}</b>{{ block.settings.slide_body }}</figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt="">
         {%- if block.settings.image != blank -%}
           <img class="lvimg" src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | default: '' }}">
         {%- else -%}
@@ -112,7 +112,7 @@
           "label": "Slide title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "slide_body",
           "label": "Slide description"
         }

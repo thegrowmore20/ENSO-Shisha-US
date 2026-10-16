@@ -25,7 +25,7 @@
   -%}
   <div class="slider tslider" style="--n:{{ preheat_count }}"><div class="slides"><figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">1</span><b>Turn the dial down</b><p>Ten or twenty degrees is enough.</p></figcaption><div class="ts__pic ts__pic--mac"><div class="dev"><img src="{{ df_src }}" alt=""><div class="lv" data-scene="down" role="img" aria-label="Turn the dial down: the Diamond screen, animated"></div></div><span class="finger" aria-hidden="true"></span></div></figure>
     {%- for block in section.blocks -%}
-      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b><p>{{ block.settings.step_body }}</p></figcaption><div class="ts__pic ts__pic--img">
+      <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
         {%- if block.settings.image != blank -%}
           {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
         {%- else -%}
@@ -116,7 +116,7 @@
           "label": "Step title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "step_body",
           "label": "Step description"
         }
