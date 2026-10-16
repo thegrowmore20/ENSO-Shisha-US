@@ -43,6 +43,15 @@
       font-size: {{ heading_size_desktop }}px;
     }
   }
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} .enso-exp__item {
+      min-height: 600px;
+    }
+    #shopify-section-{{ section.id }} .enso-exp__heading {
+      font-size: 26px;
+      line-height: 31px;
+    }
+  }
 {% endstyle %}
 
 <section class="enso-exp">
@@ -237,6 +246,50 @@
 
     .enso-exp__text {
       display: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .enso-exp__image {
+      object-position: 50% 18%;
+    }
+
+    .enso-exp__item::after {
+      background: linear-gradient(180deg, rgb(7 8 10 / 0) 0%, rgb(7 8 10 / 0) 38%, rgb(7 8 10 / .78) 62%, rgb(7 8 10 / .92) 100%);
+    }
+
+    .enso-exp__copy {
+      padding: 0 20px 24px;
+      margin: 0;
+    }
+
+    .enso-exp__eyebrow {
+      margin-bottom: 8px;
+    }
+
+    .enso-exp__heading {
+      margin-bottom: 14px;
+    }
+
+    .enso-exp__chips {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .enso-exp__chip {
+      font-size: 12px;
+      padding: 4px 10px;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .enso-exp__btn {
+      padding: 13px 20px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      white-space: nowrap;
     }
   }
 {% endstylesheet %}
