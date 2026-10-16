@@ -792,6 +792,31 @@
     gap: var(--space-3);
     margin-top: var(--space-4);
     overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .product-gallery--thumbnails_bottom .product-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Right-edge fade: signals more thumbnails are out of view */
+  .product-gallery--thumbnails_bottom .product-gallery__thumbs-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+  .product-gallery--thumbnails_bottom .product-gallery__thumbs-wrap::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 56px;
+    background: linear-gradient(to right, transparent, var(--color-background));
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .product-gallery--thumbnails_bottom .product-gallery__thumbs-wrap.is-thumbs-end::after {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .product-gallery--thumbnails_left {
