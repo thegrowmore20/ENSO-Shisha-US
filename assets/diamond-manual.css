@@ -337,7 +337,7 @@ a{color:inherit}
 .search--top{max-width:640px;margin:8px 0 26px;padding:13px 20px;gap:12px}
 .search--top svg{width:20px;height:20px;fill:none;stroke:#000;stroke-width:2;flex:none}
 .search--top input{border:0;outline:0;flex:1;font:500 16px/22px Montserrat,sans-serif;background:transparent;min-width:0}
-.finder{position:fixed;left:0;right:0;top:8px;z-index:6;background:none!important;backdrop-filter:none!important;border:0!important;padding:0 40px!important;margin:0;pointer-events:none;transform:translateY(-120%);opacity:0}
+.finder{position:sticky;top:8px;z-index:20;background:none!important;backdrop-filter:none!important;border:0!important;padding:0 40px!important;max-width:1200px;margin:0 auto 6px;pointer-events:none}
 .finder .chips{pointer-events:auto;display:flex;flex-wrap:nowrap!important;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0!important;padding:6px!important;background:rgb(255 255 255 / .92);backdrop-filter:blur(10px);border-radius:999px;box-shadow:0 6px 24px rgb(0 0 0 / .12),0 0 0 1px rgb(0 0 0 / .06);width:max-content;max-width:100%}
 .finder .chips::-webkit-scrollbar{display:none}
 .chips__h{font:700 11px/16px Montserrat,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);padding:0 10px 0 12px;white-space:nowrap}
@@ -475,9 +475,8 @@ button.mpick__c span{color:var(--grey)}button.mpick__c.on span{color:var(--sand)
  .safe__pair img{border-radius:18px;outline:3px solid;outline-offset:-3px}
  .safe__no img{outline-color:var(--warn)}.safe__ok img{outline-color:#2e7d4f}
 }
-/* 3 Oct, Vadim: chapters on top of the manual; the bar hides while you read down and comes back when you scroll up */
-.finder{transition:transform .3s ease,opacity .3s ease}
-.finder.is-on{transform:none;opacity:1}
+/* 3 Oct, Vadim: chapters on top of the manual; sticky bar adjusts top when header hides/shows */
+.finder{transition:top .3s ease}
 @media (prefers-reduced-motion:reduce){.finder{transition:none}}
 /* bigger Continue screen (again) */
 .bswap{grid-template-columns:320px minmax(0,1fr)}.bswap__scr{width:320px}
@@ -579,7 +578,7 @@ body.bar-on .boxgrid--stack .box__img{top:70px}
 .ch:nth-of-type(even),.ch--alt{background:#faf8f4;box-shadow:0 0 0 100vmax #faf8f4;clip-path:inset(0 -100vmax)}
 .ch::before{content:none}
 .ch__num{font-size:14px;letter-spacing:.12em}
-.finder{transition:transform .3s ease,opacity .3s ease,top .3s ease}
+.finder{transition:top .3s ease}
 .dlab .lv-hint{top:14px}.feat .lv-hint{top:14px}
 
 /* 3 Oct, Vadim: "on the phone it scrolls sideways, the menu lags".

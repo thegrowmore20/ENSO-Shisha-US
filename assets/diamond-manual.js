@@ -39,23 +39,24 @@
     secs.forEach(function(s){io.observe(s)});
   }
 })();
-/* chapter finder: fixed bar, slides in after 300px scroll, syncs top with header visibility */
+/* chapter finder: reparent xnav + finder to <main> so position:sticky spans all sections */
 (function(){
   var f=document.querySelector('.finder');if(!f)return;
   var hdr=document.querySelector('.site-header');if(!hdr)return;
+  var main=document.getElementById('MainContent');if(!main)return;
   var root=document.documentElement;
   root.style.setProperty('--hdr-h',hdr.offsetHeight+'px');
+  /* move finder (and xnav) to direct children of <main> — sticky now spans every dm-* section */
+  var intro=document.getElementById('shopify-section-dm-intro');
+  if(intro){
+    main.insertBefore(f,intro);
+    var xnav=intro.querySelector('.xnav');
+    if(xnav)main.insertBefore(xnav,f);
+  }
+  f.removeAttribute('aria-hidden');
   function syncPos(){root.classList.toggle('hdr-show',!hdr.classList.contains('site-header--hidden'));}
   new MutationObserver(syncPos).observe(hdr,{attributes:true,attributeFilter:['class']});
-  var tick=false;
-  function syncVis(){
-    var on=scrollY>300;
-    f.classList.toggle('is-on',on);
-    f.setAttribute('aria-hidden',String(!on));
-    tick=false;
-  }
-  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(syncVis);}},{passive:true});
-  syncPos();syncVis();
+  syncPos();
 })();
 /* 2 Oct 2026: live Diamond screens for the manual. Each .lv[data-scene] plays a loop while it is on screen;
    with reduced motion it shows one still frame. Screens follow output/diamond-brief/UI; battery always 100 % (guide rule). */
