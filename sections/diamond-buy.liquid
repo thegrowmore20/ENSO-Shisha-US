@@ -665,6 +665,8 @@
 
 /* Suppress the generic sticky-atc when the custom bar is active */
 body:has(.bar.is-on) .sticky-atc { display: none !important; }
+/* When header slides away, bar moves to viewport top (no gap) */
+body:has(.site-header--hidden) .bar { top: 0; }
 
 /* Desktop label */
 .bar__sub { font: 500 14px var(--font-body, Montserrat, sans-serif); letter-spacing: 0; color: rgb(0 0 0 / .45); margin-left: 8px; }
