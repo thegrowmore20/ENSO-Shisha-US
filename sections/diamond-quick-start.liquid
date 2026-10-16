@@ -435,23 +435,28 @@
 
     dots.forEach(function(dot, i) {
       dot.addEventListener('click', function() {
+        dragging = false;
         track.style.scrollSnapType = '';
         track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
       });
     });
 
     // Mouse / trackpad drag
-    // Disable scroll-snap during drag (Chromium snaps on programmatic scrollLeft),
-    // restore via scrollend event or 400ms timeout after mouseup.
     let dragging = false;
     let startX = 0;
     let startScroll = 0;
+
+    function stopDrag() {
+      if (!dragging) return;
+      dragging = false;
+      track.style.cursor = '';
+      snapToNearest();
+    }
 
     function snapToNearest() {
       const w = track.clientWidth;
       const index = Math.round(track.scrollLeft / w);
       track.scrollTo({ left: index * w, behavior: 'smooth' });
-      // Re-enable snap once the scroll settles
       if ('onscrollend' in window) {
         track.addEventListener('scrollend', function restoreSnap() {
           track.style.scrollSnapType = '';
@@ -475,17 +480,13 @@
       e.preventDefault();
     });
 
-    window.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function(e) {
       if (!dragging) return;
       track.scrollLeft = startScroll - (e.clientX - startX);
     });
 
-    window.addEventListener('mouseup', function() {
-      if (!dragging) return;
-      dragging = false;
-      track.style.cursor = '';
-      snapToNearest();
-    });
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('pointerup', stopDrag);
 
     track.querySelectorAll('img').forEach(function(img) {
       img.addEventListener('dragstart', function(e) { e.preventDefault(); });
