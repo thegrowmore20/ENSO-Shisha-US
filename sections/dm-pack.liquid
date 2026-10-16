@@ -55,11 +55,7 @@
       </div></figure>
     {%- endfor -%}
     <figure class="slide ts"><figcaption class="ts__tx"><span class="st__n">{{ basket_total }}</span><b>To the edge</b><p>Stop at the edge of the mesh. Then set the dial a little higher.</p></figcaption><div class="ts__pic ts__pic--img">
-    {%- if section.settings.cup_filled != blank -%}
-      {{- section.settings.cup_filled | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cup_filled.alt | default: '' -}}
-    {%- else -%}
-      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
-    {%- endif -%}
+    <picture><source media="(max-width:749px)" srcset="{{ 'pack-level-basket-m.webp' | file_url }}"><img src="{{ 'pack-level-basket.webp' | file_url }}" alt="Basket mesh filled to the edge of the basket" loading="lazy"></picture>
   </div></figure></div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div></div><button type="button" class="mpick__c" data-mesh="flat" aria-expanded="false" aria-controls="pack-flat">
     {%- if section.settings.img_screens != blank -%}
       {{- section.settings.img_screens | image_url: width: 300 | image_tag: loading: 'lazy', alt: section.settings.img_screens.alt | default: '' -}}
@@ -75,7 +71,9 @@
   </div></figure>
     {%- for block in flat_blocks -%}
       <figure class="slide ts" {{ block.shopify_attributes }}><figcaption class="ts__tx"><span class="st__n">{{ forloop.index | plus: 1 }}</span><b>{{ block.settings.step_title }}</b>{{ block.settings.step_body }}</figcaption><div class="ts__pic ts__pic--img">
-        {%- if block.settings.image != blank -%}
+        {%- if forloop.last -%}
+          <picture><source media="(max-width:749px)" srcset="{{ 'pack-level-m.webp' | file_url }}"><img src="{{ 'pack-level.webp' | file_url }}" alt="Flat screen cup filled to the curve of the cup" loading="lazy"></picture>
+        {%- elsif block.settings.image != blank -%}
           {{- block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: '' -}}
         {%- else -%}
           <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>

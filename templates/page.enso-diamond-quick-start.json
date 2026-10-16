@@ -26,11 +26,9 @@
           "type": "step",
           "settings": {
             "heading": "Pack the cup",
-            "body": "10–15 g, pressed just a little, to the edge of the mesh.",
-            "image_1": "shopify://shop_images/basket-empty.webp",
-            "image_2": "shopify://shop_images/pack-layer1.webp",
-            "image_3": "shopify://shop_images/pack-press.webp",
-            "image_4": "shopify://shop_images/cup-filled.webp"
+            "body": "10–15 g, pressed just a little: to the edge of the basket, or to the curve of the cup with the flat screen.",
+            "use_pack_level": true,
+            "pack_level_variant": "basket"
           }
         },
         "step_3": {

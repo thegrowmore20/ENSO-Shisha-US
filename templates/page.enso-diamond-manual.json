@@ -369,7 +369,7 @@
           "settings": {
             "image": "shopify://shop_images/flat-packed.webp",
             "step_title": "To the curve",
-            "step_body": "<p>Fill right up to where the ceramic starts to curve outwards. That is a full cup.</p>"
+            "step_body": "<p>Fill to the curve of the cup, pressed lightly. Then set the dial a little lower.</p>"
           }
         },
         "chamber_step1": {
@@ -801,7 +801,7 @@
           "settings": {
             "image": "shopify://shop_images/clean-06-soak.webp",
             "step_title": "Stuck? Soak it",
-            "step_body": "<p>Leave the cup and the mesh in warm water for a while, then sponge again.</p>"
+            "step_body": "<p>Leave the cup and the mesh in warm water for a while, then sponge again. The dishwasher works, but we do not recommend it: the ceramic gets more brittle.</p>"
           }
         },
         "cap_step1": {
@@ -817,7 +817,7 @@
           "type": "shaft_step",
           "settings": {
             "step_title": "Battery in, latch closed",
-            "step_body": "<p>Give Diamond an hour to cool, then lift the cap off. Leave the battery in with the latch closed the whole time: it closes the bay so no water reaches the contacts.</p>",
+            "step_body": "<p>Give Diamond an hour to an hour and a half to cool, then lift the cap off. Leave the battery in with the latch closed the whole time: it closes the bay so no water reaches the contacts.</p>",
             "image": "shopify://shop_images/clean-capoff-back-brush.webp"
           }
         },

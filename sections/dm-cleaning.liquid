@@ -47,7 +47,15 @@
       {%- endfor -%}
     </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
   {%- endif -%}
-  <h3>The cap</h3><p class="h3lead">No electronics in the cap: all three parts go under the tap.</p>
+  <a class="cl-glove" href="/collections/accessories">
+    {%- if section.settings.acc_glove != blank -%}
+      {{- section.settings.acc_glove | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.acc_glove.alt | default: 'The ENSŌ Cleaning Glove', width: section.settings.acc_glove.width, height: section.settings.acc_glove.height -}}
+    {%- else -%}
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
+    {%- endif -%}
+    <span><b>Quicker with the ENSŌ Cleaning Glove</b>Its steel mesh palm cleans the cup, the basket and the screens in a few strokes.<em>See the Cleaning Glove ›</em></span>
+  </a>
+  <h3>The cap</h3><p class="h3lead">After every session. No electronics in the cap: all three parts go under the tap.</p>
   {%- if cap_blocks.size > 0 -%}
     <div class="slider tslider slider--grid" style="--n:{{ cap_blocks.size }}"><div class="slides">
       {%- for block in cap_blocks -%}
@@ -61,15 +69,7 @@
       {%- endfor -%}
     </div><button class="nav prev" aria-label="Previous">‹</button><button class="nav next" aria-label="Next">›</button></div>
   {%- endif -%}
-  <div class="note note--tip"><b>Tip:</b> Between sessions, wipe the top of Diamond around the chamber with a soft dry cloth. Only when it is cool.</div>
-  <a class="cl-glove" href="/collections/accessories">
-    {%- if section.settings.acc_glove != blank -%}
-      {{- section.settings.acc_glove | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.acc_glove.alt | default: 'The ENSŌ Cleaning Glove', width: section.settings.acc_glove.width, height: section.settings.acc_glove.height -}}
-    {%- else -%}
-      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto"><rect width="400" height="300" rx="16" fill="#f0ede8"/><path d="M160 100a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm-40 80 60-60 40 40 40-40 60 60H120z" fill="#c8b89a"/></svg>
-    {%- endif -%}
-    <span><b>Quicker with the ENSŌ Cleaning Glove</b>Its steel mesh palm cleans the cup, the basket and the screens in a few strokes.<em>See the Cleaning Glove ›</em></span>
-  </a>
+  <p class="cl-tip">Between sessions, wipe the top of Diamond around the chamber with a paper towel or a slightly damp cloth, so the next session starts clean.</p>
   <h3>Every few sessions: the shaft</h3><p class="h3lead">The heating element never clogs. The shaft below it gets a brush and a rinse every few sessions. Always with the battery in.</p>
   {%- if shaft_blocks.size > 0 -%}
     <div class="slider tslider slider--grid" style="--n:{{ shaft_blocks.size }}"><div class="slides">

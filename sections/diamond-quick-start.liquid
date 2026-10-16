@@ -65,6 +65,9 @@
           if img_count > 0
             assign has_images = true
           endif
+          if block.settings.use_pack_level
+            assign has_images = true
+          endif
         -%}
         <li class="qs__s" id="{{ block.id }}" {{ block.shopify_attributes }}>
           <div class="qs__tx">
@@ -76,31 +79,41 @@
           </div>
 
           {%- if has_images -%}
-            <div class="qs__pic qs__pic--seq">
-              <div class="qs__track" aria-label="{{ block.settings.heading }} — step images">
-                {%- if block.settings.image_1 != blank -%}
-                  {{- block.settings.image_1 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
-                {%- endif -%}
-                {%- if block.settings.image_2 != blank -%}
-                  {{- block.settings.image_2 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
-                {%- endif -%}
-                {%- if block.settings.image_3 != blank -%}
-                  {{- block.settings.image_3 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
-                {%- endif -%}
-                {%- if block.settings.image_4 != blank -%}
-                  {{- block.settings.image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
+            {%- if block.settings.use_pack_level -%}
+              <div class="qs__pic">
+                {%- if block.settings.pack_level_variant == 'flat' -%}
+                  <picture><source media="(max-width:749px)" srcset="{{ 'pack-level-m.webp' | file_url }}"><img src="{{ 'pack-level.webp' | file_url }}" alt="Flat screen cup filled to the curve of the cup" loading="lazy" style="width:100%;height:100%;object-fit:cover"></picture>
+                {%- else -%}
+                  <picture><source media="(max-width:749px)" srcset="{{ 'pack-level-basket-m.webp' | file_url }}"><img src="{{ 'pack-level-basket.webp' | file_url }}" alt="Basket mesh filled to the edge of the basket" loading="lazy" style="width:100%;height:100%;object-fit:cover"></picture>
                 {%- endif -%}
               </div>
-              {%- if img_count > 1 -%}
-                <div class="qs__dots" aria-hidden="true">
-                  {%- assign dot_first = true -%}
-                  {%- if block.settings.image_1 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-                  {%- if block.settings.image_2 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-                  {%- if block.settings.image_3 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
-                  {%- if block.settings.image_4 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+            {%- else -%}
+              <div class="qs__pic qs__pic--seq">
+                <div class="qs__track" aria-label="{{ block.settings.heading }} — step images">
+                  {%- if block.settings.image_1 != blank -%}
+                    {{- block.settings.image_1 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
+                  {%- endif -%}
+                  {%- if block.settings.image_2 != blank -%}
+                    {{- block.settings.image_2 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
+                  {%- endif -%}
+                  {%- if block.settings.image_3 != blank -%}
+                    {{- block.settings.image_3 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
+                  {%- endif -%}
+                  {%- if block.settings.image_4 != blank -%}
+                    {{- block.settings.image_4 | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw', alt: block.settings.heading -}}
+                  {%- endif -%}
                 </div>
-              {%- endif -%}
-            </div>
+                {%- if img_count > 1 -%}
+                  <div class="qs__dots" aria-hidden="true">
+                    {%- assign dot_first = true -%}
+                    {%- if block.settings.image_1 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                    {%- if block.settings.image_2 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                    {%- if block.settings.image_3 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                    {%- if block.settings.image_4 != blank -%}<i{% if dot_first %} class="on"{% endif %}></i>{%- assign dot_first = false -%}{%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
           {%- endif -%}
         </li>
       {%- endfor -%}
@@ -579,6 +592,22 @@
           "label": "t:sections.diamond_quick_start.blocks.step.settings.body.label"
         },
         {
+          "type": "checkbox",
+          "id": "use_pack_level",
+          "label": "Show pack level image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "pack_level_variant",
+          "label": "Pack level variant",
+          "options": [
+            { "value": "basket", "label": "Basket mesh" },
+            { "value": "flat", "label": "Flat screen" }
+          ],
+          "default": "basket"
+        },
+        {
           "type": "header",
           "content": "t:sections.diamond_quick_start.blocks.step.settings.images_heading"
         },
@@ -620,7 +649,7 @@
           "type": "step",
           "settings": {
             "heading": "Pack the cup",
-            "body": "10–15 g, pressed just a little, to the edge of the mesh."
+            "body": "10–15 g, pressed just a little: to the edge of the basket, or to the curve of the cup with the flat screen."
           }
         },
         {

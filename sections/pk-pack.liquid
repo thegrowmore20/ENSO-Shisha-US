@@ -12,7 +12,7 @@
 {% endstyle %}
 <div class="pk-sec">
   <h2>Pack it</h2>
-  <div class="slider tslider slider--grid" style="--n:3">
+  <div class="slider tslider slider--grid" style="--n:4">
     <div class="slides">
       <figure class="slide ts">
         <figcaption class="ts__tx">
@@ -46,21 +46,27 @@
         <figcaption class="ts__tx">
           <span class="st__n">3</span>
           <b>Second layer to the edge</b>
-          <p>The rest on top, pressed lightly again. To the edge of the basket, or to the small tab of the cup with the flat screen.</p>
+          <p>The rest on top, pressed lightly again. To the edge of the basket.</p>
         </figcaption>
         <div class="ts__pic ts__pic--img">
-          {%- if section.settings.cup_filled != blank -%}
-            {{- section.settings.cup_filled | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.cup_filled.alt | default: '', width: section.settings.cup_filled.width, height: section.settings.cup_filled.height -}}
-          {%- else -%}
-            <img src="{{ 'dm-s-cup-filled.jpg' | file_url }}" alt="" loading="lazy">
-          {%- endif -%}
+          <picture><source media="(max-width:749px)" srcset="{{ 'pack-level-basket-m.webp' | file_url }}"><img src="{{ 'pack-level-basket.webp' | file_url }}" alt="Basket mesh filled to the edge of the basket" loading="lazy"></picture>
+        </div>
+      </figure>
+      <figure class="slide ts">
+        <figcaption class="ts__tx">
+          <span class="st__n">4</span>
+          <b>Flat screen: to the curve</b>
+          <p>With the flat screen, fill to the curve of the cup instead, pressed lightly.</p>
+        </figcaption>
+        <div class="ts__pic ts__pic--img">
+          <picture><source media="(max-width:749px)" srcset="{{ 'pack-level-m.webp' | file_url }}"><img src="{{ 'pack-level.webp' | file_url }}" alt="Flat screen cup filled to the curve of the cup" loading="lazy"></picture>
         </div>
       </figure>
     </div>
     <button class="nav prev" aria-label="Previous">‹</button>
     <button class="nav next" aria-label="Next">›</button>
   </div>
-  <p class="pk-note"><b>One flavor?</b> One layer, semi-dense, to the tab or to the edge of the basket.</p>
+  <p class="pk-note"><b>One flavor?</b> One layer, semi-dense, to the curve with the flat screen or to the edge of the basket.</p>
 </div>
 
 {% schema %}
@@ -71,7 +77,6 @@
     { "type": "header", "content": "Images" },
     { "type": "image_picker", "id": "pack_layer1", "label": "Step 1 photo (mix tobacco)" },
     { "type": "image_picker", "id": "pack_press", "label": "Step 2 photo (first layer)" },
-    { "type": "image_picker", "id": "cup_filled", "label": "Step 3 photo (second layer)" },
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 40 },

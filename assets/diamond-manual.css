@@ -728,6 +728,7 @@ html.hdr-show .finder{top:calc(var(--site-header-height,64px) + 8px)!important}
 .cl-glove b{display:block;font:800 18px/24px Inter,sans-serif;margin-bottom:4px}
 .cl-glove span{font-size:15px;line-height:23px;color:rgb(0 0 0 / .78)}.cl-glove em{display:block;font-style:normal;font-weight:700;color:#000;margin-top:6px}
 @media (max-width:767px){.cl-glove{grid-template-columns:88px minmax(0,1fr)}.cl-glove img{width:88px;height:88px}}
+.cl-tip{margin:20px 0 0;max-width:760px;background:#fbf7ef;border-radius:16px;padding:14px 18px;font-size:15.5px;line-height:24px}
 /* 4 Oct: on a phone one slide shows at a time: the picture sits right under its own text, no gap from taller neighbours */
 @media (max-width:767px){.tslider .slides{align-items:start!important}.ts{height:auto}.ts__pic{margin-top:0!important}}
 
