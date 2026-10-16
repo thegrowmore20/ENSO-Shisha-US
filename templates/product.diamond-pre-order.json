@@ -181,14 +181,14 @@
           "settings": {
             "image": "shopify://shop_images/s-feat-clean-cup.webp",
             "alt": "Warm water poured through the steel basket into the black ceramic cup held in a hand",
-            "title": "Only the cup to clean",
+            "title": "Only the cup, mesh and cap to clean",
             "sub": "The heating element stays clean",
-            "text": "The tobacco never touches the heating element, so there is nothing to scrape. After a session you rinse the cup and the mesh under warm water, and that is it.",
-            "small": "Rinse the cup and the mesh, and you are done",
+            "text": "The tobacco never touches the heating element, so there is nothing to scrape. After every session you rinse the cup, the mesh and the cap under warm water, and that is it.",
+            "small": "Rinse the cup, the mesh and the cap after every session",
             "more1_h": "After every session",
-            "more1_p": "Lift the cup out, push the mesh and the tobacco out in one piece, rinse both.",
-            "more2_h": "Now and then",
-            "more2_p": "Brush the shaft and rinse the cap under the tap.",
+            "more1_p": "Lift the cup out, push the mesh and the tobacco out in one piece, rinse both — and rinse the cap too.",
+            "more2_h": "Every few sessions",
+            "more2_p": "Brush the shaft and rinse it under warm water.",
             "more3_h": "Never",
             "more3_p": "The battery and its contacts never get wet."
           }
@@ -621,7 +621,7 @@
           "type": "faq_item",
           "settings": {
             "question": "How do I clean it?",
-            "answer": "After every session: wash the cup and the basket or screen under warm water, then brush the chamber. The dial and the battery stay dry — never wet them."
+            "answer": "After every session: the cup, the mesh and the cap. Wash all three under warm water and let them dry. Brush the chamber too. The shaft needs it every few sessions. The dial and the battery stay dry — wipe, never rinse."
           }
         },
         "faq_7": {
