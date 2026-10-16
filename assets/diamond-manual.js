@@ -250,10 +250,15 @@
   [].forEach.call(document.querySelectorAll('.hf2'),function(f){
     var lv=f.querySelector('.lv');lv.innerHTML='<div class="lv__s on"><div class="lv__bat"><svg viewBox="0 0 10 14"><path d="M6 0 0 8h4l-1 6 7-9H6l1-5z"/></svg>100%</div><div class="t-huge" data-k="t">275<sup>°</sup></div><div class="t-cap">Session heat</div></div>';
     var tEl=lv.querySelector('[data-k="t"]'),st={leaf:'virginia',str:'soft',fl:'fruit'},cur=275,anim;
+    var MESH={soft:{name:'Basket mesh',sub:'Loose, airy pack. Long, smooth session.'},strong:{name:'Flat screen',sub:'Denser pack. Fuller, faster session.'}};
     function go(){var r=calc(st);
       f.querySelector('.hf2__t').textContent=r.t+' °C';
       f.querySelector('.hf2__pre').textContent=r.pre;
       f.querySelector('.hf2__prof').textContent=r.prof;
+      var meshc=f.querySelector('.hf2__meshc');
+      if(meshc){var m=MESH[st.str];meshc.querySelector('.hf2__m').textContent=m.name;meshc.querySelector('.hf2__msub').textContent=m.sub;
+        var out=f.querySelector('.hf2__out'),img=meshc.querySelector('.hf2__mimg'),src=st.str==='soft'?out.dataset.basketSrc:out.dataset.flatSrc;
+        if(src){img.src=src;img.style.display=''}else{img.style.display='none'}}
       clearInterval(anim);lv.classList.add('press');setTimeout(function(){lv.classList.remove('press')},250);
       if(reduce){cur=r.t;tEl.innerHTML=cur+'<sup>°</sup>';return}
       anim=setInterval(function(){cur+=cur<r.t?1:-1;tEl.innerHTML=cur+'<sup>°</sup>';if(cur===r.t)clearInterval(anim)},20)}

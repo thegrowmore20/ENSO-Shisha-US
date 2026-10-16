@@ -548,13 +548,17 @@ button.mpick__c span{color:var(--grey)}button.mpick__c.on span{color:var(--sand)
 .feat .dev{background:#fff;border-radius:20px}
 .hf2{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:40px;align-items:center;margin:4px 0 22px}
 .hf2 .dev{background:#fff}
-.hf2__out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:6px 0 0;border-top:2px solid #000;padding-top:14px}
+.hf2__out{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:6px 0 0;border-top:2px solid #000;padding-top:14px}
 .hf2__out dt{font:700 11px/16px Montserrat,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#777}
 .hf2__out dd{margin:4px 0 0;font:800 18px/23px Inter,sans-serif}
 .hf2__t{font-size:30px!important;line-height:34px!important;color:#e2614c}
 .hf2__note{margin:12px 0 0;font-size:14px;line-height:21px;color:var(--grey)}
+.hf2__meshc dd{display:flex;align-items:center;gap:8px;margin:4px 0 0}
+.hf2__mimg{width:40px;height:40px;object-fit:contain;border-radius:8px;border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.hf2__m{display:block;font:800 18px/23px Inter,sans-serif}
+.hf2__msub{display:block;font:500 12px/16px Montserrat,sans-serif;color:#777;margin-top:2px}
 @media (max-width:767px){.feat,.feat--rev{grid-template-columns:1fr;padding:20px 16px;gap:18px}.feat--rev .dev{order:0}.feat .dev{max-width:280px;margin:0 auto}.feat h3{font-size:24px;line-height:30px}
- .hf2{grid-template-columns:1fr;gap:16px}.hf2 .dev{max-width:280px;margin:0 auto}.hf2__out{grid-template-columns:1fr 1fr}.hf2__out div:first-child{grid-column:1/-1}}
+ .hf2{grid-template-columns:1fr;gap:16px}.hf2 .dev{max-width:280px;margin:0 auto}.hf2__out{grid-template-columns:1fr 1fr}}
 /* 3 Oct: pack the cup, accordion */
 .grams{display:flex;align-items:center;gap:18px;background:#fcfbf8;border-radius:22px;padding:18px 24px;margin:4px 0 18px}
 .grams>b{font:800 44px/48px Inter,sans-serif;letter-spacing:-.03em;white-space:nowrap}
@@ -628,7 +632,7 @@ html.hdr-show .finder{top:calc(var(--site-header-height,64px) + 8px)!important}
 .feat--mac .mac{border-radius:22px}
 .hf2{grid-template-columns:minmax(0,440px) minmax(0,1fr)}
 .hf2 .mac{border-radius:22px}
-.hf2__out{grid-template-columns:repeat(3,minmax(0,1fr))}
+.hf2__out{grid-template-columns:repeat(4,minmax(0,1fr))}
 .brk{background:#fff;border-radius:22px;padding:18px;margin:0 0 22px;max-width:620px}
 .brk svg{width:100%;height:auto;display:block}
 .ts__pic--mac .lv,.mac .lv{box-shadow:none}
