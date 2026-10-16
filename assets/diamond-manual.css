@@ -774,7 +774,7 @@ html.hdr-show .finder{top:calc(var(--site-header-height,64px) + 8px)!important}
 @media (max-width:767px){.ch .pk-heatmap,.ch .pk-cards{grid-template-columns:1fr}}
 
 /* ── xnav ── */
-.xnav{max-width:1200px;margin:0 auto;padding:18px 40px 0;font-family:Montserrat,sans-serif}
+.xnav{max-width:1200px;margin:0 auto;padding:18px 40px 8px;font-family:Montserrat,sans-serif}
 .xnav__back{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:rgb(0 0 0 / .62);text-decoration:none}
 .xnav__back:hover{color:#000}.xnav__back b{color:#000;font-weight:700}
 .xnav__row{display:flex;gap:8px;margin-top:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.xnav__row::-webkit-scrollbar{display:none}
@@ -783,4 +783,4 @@ html.hdr-show .finder{top:calc(var(--site-header-height,64px) + 8px)!important}
 /* mobile slider dots */
 .enso-sigdots{display:none}
 @media (max-width:991px){.enso-sigdots{display:flex;justify-content:center;gap:6px;margin:10px 0 4px}.enso-sigdots i{display:block;width:6px;height:6px;border-radius:50%;background:rgb(0 0 0 / .2);transition:all .25s}.enso-sigdots i.is-on{background:#000;width:18px;border-radius:3px}}
-@media (max-width:991px){.xnav{padding:14px 16px 0}}
+@media (max-width:991px){.xnav{padding:14px 16px 8px}}
