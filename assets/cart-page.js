@@ -3,9 +3,12 @@ if (!customElements.get('cart-page')) {
     connectedCallback() { this.#reinit(); }
 
     #reinit() {
-      this.moneyFmt   = this.dataset.moneyFormat || '{{ amount }}';
-      this.devicePids = new Set(
+      this.moneyFmt    = this.dataset.moneyFormat || '{{ amount }}';
+      this.devicePids  = new Set(
         (this.dataset.devicePids || '').split(',').map(s => s.trim()).filter(Boolean)
+      );
+      this.deviceKeys  = new Set(
+        (this.dataset.deviceKeys || '').split(',').map(s => s.trim()).filter(Boolean)
       );
 
       this.#bindSetSwitcher();
@@ -225,6 +228,10 @@ if (!customElements.get('cart-page')) {
     async #removeAddon(card) {
       const key = card.dataset.key;
       if (!key) return;
+      if (this.deviceKeys?.has(key)) {
+        console.error('[cart] blocked: addon handler tried to remove device line, key:', key);
+        return;
+      }
       const atcBtn = card.querySelector('.cp-addon__atc');
       const name   = card.querySelector('.cp-addon__name')?.textContent?.trim() || '';
       if (atcBtn) { atcBtn.classList.add('is-loading'); atcBtn.disabled = true; }
@@ -280,6 +287,11 @@ if (!customElements.get('cart-page')) {
           const name       = row.querySelector('.cp-acc-row__name')?.textContent?.trim() || '';
           const accSection = row.closest('.cp-acc-section');
           removeBtn.disabled = true;
+          if (this.deviceKeys?.has(key)) {
+            console.error('[cart] blocked: acc-row handler tried to remove device line, key:', key);
+            removeBtn.disabled = false;
+            return;
+          }
           this.#showPageSpinner();
           try {
             await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });

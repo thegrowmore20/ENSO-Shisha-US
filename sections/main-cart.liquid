@@ -67,6 +67,15 @@
       endif
     endfor
   endcapture
+
+  capture device_key_list
+    for item in cart.items
+      if item.product.tags contains 'device'
+        echo item.key
+        echo ','
+      endif
+    endfor
+  endcapture
 -%}
 
 {% style %}
@@ -86,7 +95,8 @@
   class="cart-page"
   data-mode="{{ cart_mode }}"
   data-money-format="{{ shop.money_format | replace: "'", '"' | escape }}"
-  data-device-pids="{{ device_pid_list | strip }}">
+  data-device-pids="{{ device_pid_list | strip }}"
+  data-device-keys="{{ device_key_list | strip }}">
 
   {%- comment -%}——— TOAST ———{%- endcomment -%}
   <div class="cp-toast" id="cp-toast" role="status" aria-live="polite" aria-atomic="true"></div>
