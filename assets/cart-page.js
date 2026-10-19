@@ -133,6 +133,14 @@ if (!customElements.get('cart-page')) {
             });
           }
           curCartPage.#reinit();
+          // Sync header cart bubble after any re-render
+          fetch('/cart.js')
+            .then(r => r.json())
+            .then(cart => {
+              this.#updateCartCount(cart.item_count);
+              document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
+            })
+            .catch(() => {});
         } else {
           window.location.reload();
         }
