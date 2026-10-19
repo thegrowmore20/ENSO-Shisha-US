@@ -292,12 +292,17 @@
               </ul>
 
             {%- when 'specs_inline' -%}
-              {%- if product.metafields.custom.specifications != blank -%}
+              {%- assign specs_content = block.settings.content | default: '' -%}
+              {%- if specs_content != blank or product.metafields.custom.specifications != blank -%}
                 <div class="product-facts product-block" {{ block.shopify_attributes }}>
                   {%- if block.settings.heading != blank -%}
                     <b class="product-inbox__heading">{{ block.settings.heading }}</b>
                   {%- endif -%}
-                  {{ product.metafields.custom.specifications | metafield_tag }}
+                  {%- if specs_content != blank -%}
+                    {{ specs_content }}
+                  {%- else -%}
+                    {{ product.metafields.custom.specifications | metafield_tag }}
+                  {%- endif -%}
                 </div>
               {%- endif -%}
 
@@ -1217,6 +1222,7 @@
     margin-top: var(--space-3);
     display: flow-root;
   }
+  .accordion__content p:not(:last-child) { margin-bottom: 10px; }
   .product-main__content .accordion__content h1,
   .product-main__content .accordion__content h2 {
     font-size: 20px;
@@ -1432,6 +1438,7 @@
     color: rgb(0 0 0 / .72);
   }
   .product-variant-desc p { margin: 0; }
+  .product-variant-desc p:not(:last-child) { margin-bottom: 10px; }
 
   /* ---------- Trust strip ---------- */
   .product-trust {
@@ -1838,7 +1845,8 @@
       "name": "Specifications (inline)",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Specifications" }
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Specifications" },
+        { "type": "richtext", "id": "content", "label": "Content (overrides metafield)" }
       ]
     },
     {
