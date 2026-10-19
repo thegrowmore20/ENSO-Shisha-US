@@ -97,9 +97,13 @@ if (!customElements.get('cart-page')) {
     // ── Section re-render (replaces full page reload) ──────────────────────
 
     async #reRenderSection(silent = false) {
-      // Capture open device accordions before innerHTML is replaced
+      // Capture open device accordions before innerHTML is replaced.
+      // Track both key (stable across most operations) and pid (stable across variant switches).
       const openDevKeys = new Set(
         Array.from(this.querySelectorAll('details.cp-dev[open]')).map(d => d.dataset.key)
+      );
+      const openDevPids = new Set(
+        Array.from(this.querySelectorAll('details.cp-dev[open]')).map(d => d.dataset.pid)
       );
 
       if (!silent) this.#showPageSpinner();
@@ -133,10 +137,10 @@ if (!customElements.get('cart-page')) {
           // Updating innerHTML and calling #reinit() explicitly is always safe.
           curCartPage.innerHTML = nextCartPage.innerHTML;
           Array.from(nextCartPage.attributes).forEach(a => curCartPage.setAttribute(a.name, a.value));
-          // Restore open state — Liquid only adds `open` in device-only mode
-          if (openDevKeys.size) {
+          // Restore open state — match by key first, then pid (pid survives variant switches)
+          if (openDevKeys.size || openDevPids.size) {
             curCartPage.querySelectorAll('details.cp-dev').forEach(d => {
-              if (openDevKeys.has(d.dataset.key)) d.open = true;
+              if (openDevKeys.has(d.dataset.key) || openDevPids.has(d.dataset.pid)) d.open = true;
             });
           }
           curCartPage.#reinit();
