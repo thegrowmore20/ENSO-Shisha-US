@@ -122,6 +122,8 @@ if (!customElements.get('cart-page')) {
           nextCartPage   = pageDoc.querySelector('cart-page');
         }
 
+        console.log('[cart-page] rerender — mode:', nextCartPage?.getAttribute('data-mode'), '| device-keys:', nextCartPage?.getAttribute('data-device-keys'));
+
         const curCartPage = document.querySelector('cart-page');
         if (nextCartPage && curCartPage) {
           // Update innerHTML in-place so the element stays in the live DOM.
@@ -181,6 +183,8 @@ if (!customElements.get('cart-page')) {
               const addedName = card.querySelector('.cp-addon__name')?.textContent?.trim() || '';
               if (addedName) this.#toast(`${addedName} added to cart`);
               else this.#toast('Added to cart');
+              const cartAfterAdd = await this.#getCart();
+              console.log('[cart-page] cart after add — items:', cartAfterAdd.items.map(i => ({ title: i.product_title, key: i.key, pid: i.product_id })));
               await this.#reRenderSection(true);
             } catch (err) {
               console.error('Addon add failed', err);
@@ -209,7 +213,8 @@ if (!customElements.get('cart-page')) {
       const name   = card.querySelector('.cp-addon__name')?.textContent?.trim() || '';
       if (atcBtn) { atcBtn.classList.add('is-loading'); atcBtn.disabled = true; }
       try {
-        await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
+        const changeRes = await this.#cartFetch('/cart/change.js', { id: key, quantity: 0 });
+        console.log('[cart-page] cart after addon remove — items:', (changeRes.items || []).map(i => ({ title: i.product_title, key: i.key, pid: i.product_id })));
         if (name) this.#toast(`${name} removed from cart`);
         else this.#toast('Removed from cart');
         await this.#reRenderSection(true);
