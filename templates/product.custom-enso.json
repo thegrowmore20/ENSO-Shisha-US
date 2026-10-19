@@ -118,6 +118,7 @@
           "type": "specs_accordion",
           "settings": {
             "heading": "Specifications",
+            "content": "<ul><li>2 hours per battery</li><li>180–330 °C (356–626 °F), one dial</li><li>Magnetic mouthpieces</li><li>Two-year warranty, one year on the battery</li></ul>",
             "default_open": false
           }
         },
