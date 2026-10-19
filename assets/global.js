@@ -983,8 +983,13 @@ if (!customElements.get('product-recommendations')) {
         b.removeAttribute('aria-pressed');
         b.removeAttribute('data-in-cart-variant');
         b.removeAttribute('data-product-title');
+        b.disabled = !variant.available;
         const label = getLabelEl(b);
-        if (label) label.textContent = label.dataset.labelAvailable || 'Add To Cart';
+        if (label) {
+          label.textContent = variant.available
+            ? (label.dataset.labelAvailable || 'Add To Cart')
+            : (label.dataset.labelSoldOut || 'Sold Out');
+        }
         setCardIcons(b, false);
       }
     };
