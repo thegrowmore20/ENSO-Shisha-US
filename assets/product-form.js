@@ -135,10 +135,12 @@ if (!customElements.get('product-info')) {
         window.history.replaceState({}, '', url);
       }
 
-      // 6. Stock badge
+      // 6. Stock badge — show only when metafield has a value
       if (this.stockBadge && this.stockBadgeTpls) {
         const tpl = this.stockBadgeTpls.content.querySelector('[data-variant-stock-id="' + variant.id + '"]');
-        if (tpl) this.stockBadge.innerHTML = tpl.innerHTML;
+        const html = tpl ? tpl.innerHTML.trim() : '';
+        this.stockBadge.innerHTML = html;
+        this.stockBadge.hidden = !html;
       }
 
       // 7. Variant note

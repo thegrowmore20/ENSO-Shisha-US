@@ -114,47 +114,23 @@
               </template>
 
             {%- when 'stock_badge' -%}
-              {%- liquid
-                assign _badge_text = current_variant.metafields.custom.availability_text
-                if _badge_text == blank
-                  if current_variant.available
-                    assign _badge_text = block.settings.in_stock_text | default: 'In stock · Ships now'
-                    assign _badge_in = true
-                  else
-                    assign _badge_text = block.settings.out_of_stock_text | default: 'Sold Out'
-                    assign _badge_in = false
-                  endif
-                else
-                  assign _badge_in = current_variant.available
-                endif
-              -%}
-              <div class="product-stock-badge product-block" data-stock-badge {{ block.shopify_attributes }}>
+              {%- assign _badge_text = current_variant.metafields.custom.availability_text -%}
+              <div class="product-stock-badge product-block" data-stock-badge {% if _badge_text == blank %}hidden{% endif %} {{ block.shopify_attributes }}>
                 <p class="product-stock-badge__text">
-                  <i class="product-stock-badge__dot{% if _badge_in %} product-stock-badge__dot--in{% endif %}" aria-hidden="true"></i>
+                  <i class="product-stock-badge__dot{% if current_variant.available %} product-stock-badge__dot--in{% endif %}" aria-hidden="true"></i>
                   {{ _badge_text }}
                 </p>
               </div>
               <template data-stock-badge-templates>
                 {%- for variant in product.variants -%}
-                  {%- liquid
-                    assign _v_text = variant.metafields.custom.availability_text
-                    if _v_text == blank
-                      if variant.available
-                        assign _v_text = block.settings.in_stock_text | default: 'In stock · Ships now'
-                        assign _v_in = true
-                      else
-                        assign _v_text = block.settings.out_of_stock_text | default: 'Sold Out'
-                        assign _v_in = false
-                      endif
-                    else
-                      assign _v_in = variant.available
-                    endif
-                  -%}
+                  {%- assign _v_text = variant.metafields.custom.availability_text -%}
                   <div data-variant-stock-id="{{ variant.id }}">
-                    <p class="product-stock-badge__text">
-                      <i class="product-stock-badge__dot{% if _v_in %} product-stock-badge__dot--in{% endif %}" aria-hidden="true"></i>
-                      {{ _v_text }}
-                    </p>
+                    {%- if _v_text != blank -%}
+                      <p class="product-stock-badge__text">
+                        <i class="product-stock-badge__dot{% if variant.available %} product-stock-badge__dot--in{% endif %}" aria-hidden="true"></i>
+                        {{ _v_text }}
+                      </p>
+                    {%- endif -%}
                   </div>
                 {%- endfor -%}
               </template>
