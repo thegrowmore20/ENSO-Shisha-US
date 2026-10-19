@@ -259,6 +259,35 @@
     color: var(--color-text-muted, rgb(0 0 0 / .45));
   }
 
+  /* REZ "Notify Me" button — match acc-card__btn sizing in the flex foot row */
+  .acc-card .rez-button-wrapper { margin: 0; flex-shrink: 0; }
+  .acc-card .rez-out-of-stock-collection-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 44px !important;
+    padding: 0 16px !important;
+    min-width: 110px !important;
+    width: auto !important;
+    border-radius: var(--radius-pill) !important;
+    font-family: var(--font-heading) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    box-sizing: border-box !important;
+  }
+  @media screen and (max-width: 749px) {
+    .acc-card .rez-button-wrapper { flex-shrink: 0; }
+    .acc-card .rez-out-of-stock-collection-btn {
+      width: 40px !important;
+      height: 40px !important;
+      min-width: unset !important;
+      padding: 0 !important;
+      font-size: 0 !important;
+    }
+  }
+
   /* View all */
   .acc-section__viewall {
     display: flex;
