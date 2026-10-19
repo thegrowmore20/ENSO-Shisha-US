@@ -193,9 +193,6 @@
                               {%- if card_variant != nil and card_variant.metafields.custom.tagline != blank -%}
                                 <small class="variant-card__tagline">{{ card_variant.metafields.custom.tagline }}</small>
                               {%- endif -%}
-                              {%- if card_variant != nil and card_variant.metafields.custom.availability_text != blank -%}
-                                <small class="variant-card__avail">{{ card_variant.metafields.custom.availability_text }}</small>
-                              {%- endif -%}
                             </span>
                             {%- if card_variant != nil -%}
                               <em class="variant-card__price">{{ card_variant.price | money }}</em>
