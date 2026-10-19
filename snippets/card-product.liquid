@@ -153,25 +153,31 @@
     <div class="caption product-card__price">
       {% render 'price', product: card_product %}
     </div>
-    {% if section.settings.enable_quickadd and product.available %}
+    {% if section.settings.enable_quickadd %}
       <div class="product-card-quickadd">
-        {% form 'product', card_product, class: 'quick-add-form' %}
-          <input
-            type="hidden"
-            name="id"
-            value="{{ product.selected_or_first_available_variant.id }}"
-            data-variant-id-input
-          >
-          <button
-            type="submit"
-            class="quick-add-button btn btn--{{ section.settings.quickadd_design }} btn--full"
-          >
-            <span data-quick-add-label data-label-available="Add To Cart" data-label-sold-out="{{ 'products.product.sold_out' | t }}">
-              Add To Cart
-            </span>
-            <span class="btn__spinner" data-add-to-cart-spinner hidden></span>
+        {%- if card_product.available -%}
+          {% form 'product', card_product, class: 'quick-add-form' %}
+            <input
+              type="hidden"
+              name="id"
+              value="{{ card_product.selected_or_first_available_variant.id }}"
+              data-variant-id-input
+            >
+            <button
+              type="submit"
+              class="quick-add-button btn btn--{{ section.settings.quickadd_design }} btn--full"
+            >
+              <span data-quick-add-label data-label-available="Add To Cart" data-label-sold-out="{{ 'products.product.sold_out' | t }}">
+                Add To Cart
+              </span>
+              <span class="btn__spinner" data-add-to-cart-spinner hidden></span>
+            </button>
+          {% endform %}
+        {%- else -%}
+          <button type="button" class="quick-add-button btn btn--outline btn--full" disabled>
+            {{ 'products.product.sold_out' | t }}
           </button>
-        {% endform %}
+        {%- endif -%}
       </div>
     {% endif %}  
   </div>
