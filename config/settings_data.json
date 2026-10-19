@@ -137,6 +137,11 @@
           "selector_collection": "",
           "selector_cart_item": ""
         }
+      },
+      "7800736727063894098": {
+        "type": "shopify://apps/rez-preorder-back-in-stock/blocks/rez/0da60196-81b6-4270-afac-c9294e1641ba",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
