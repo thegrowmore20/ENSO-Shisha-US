@@ -1103,21 +1103,22 @@ body:has(.site-header--hidden) .bar { top: 0; }
         try {
           const res = await fetch('/cart/add.js', {
             method: 'POST',
-            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/javascript' },
+            headers: { Accept: 'application/json' },
             body: new FormData(form)
           });
-          if (!res.ok) throw new Error('cart/add failed');
-          const item = await res.json();
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.description || data.message || 'Could not add to cart');
 
-          setAdded(item.key);
+          setAdded(data.key);
 
-          if (typeof window.__showProductToast === 'function') {
-            window.__showProductToast(item.product_title || item.title || '');
+          if (typeof window.__showToast === 'function') {
+            window.__showToast(data.product_title || data.title || 'Added to cart');
           }
 
           const cart = await (await fetch('/cart.js')).json();
           updateCount(cart);
-          document.dispatchEvent(new CustomEvent('cart:add', { detail: { item } }));
+          document.dispatchEvent(new CustomEvent('cart:add', { detail: { item: data } }));
+          document.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart } }));
 
           if (this.dataset.cartType === 'drawer') {
             if (typeof updateCartDrawer === 'function') await updateCartDrawer();
@@ -1126,6 +1127,14 @@ body:has(.site-header--hidden) .bar { top: 0; }
 
         } catch (err) {
           console.error('[diamond-buy] ATC error:', err);
+          if (typeof window.__showToast === 'function') {
+            window.__showToast(err.message || 'Could not add to cart');
+          }
+          [btn, stickyBtn].forEach((b) => {
+            if (!b) return;
+            b.classList.add('btn--atc-error');
+            setTimeout(() => b.classList.remove('btn--atc-error'), 3000);
+          });
         } finally {
           setBusy(false);
         }
