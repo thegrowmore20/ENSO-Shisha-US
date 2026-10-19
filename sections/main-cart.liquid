@@ -196,7 +196,15 @@
                 assign dv_family  = item.product.metafields.custom.device_family.value | default: ''
                 assign ess_accs   = item.product.metafields.custom.essential_accessories.value
                 assign spr_accs   = item.product.metafields.custom.spare_accessories.value
-                assign dev_subtitle = item.product.metafields.custom.headline | metafield_tag | strip_html | strip
+                assign v_cpd_first = item.variant.metafields.custom.cart_page_description | metafield_tag | replace: '</li>', '|||' | strip_html | split: '|||' | first | strip
+                if item.variant.title != blank and item.variant.title != 'Default Title'
+                  assign dev_subtitle = item.variant.title
+                  if v_cpd_first != blank
+                    assign dev_subtitle = dev_subtitle | append: ' · ' | append: v_cpd_first
+                  endif
+                else
+                  assign dev_subtitle = item.product.metafields.custom.headline | metafield_tag | strip_html | strip
+                endif
 
                 assign spare_hidden_count = 0
                 if spr_accs != blank
@@ -261,21 +269,31 @@
                       </p>
                       <div class="cp-sets__grid">
                         {%- for v in item.product.variants -%}
-                          {%- assign v_img  = v.featured_image | default: item.product.featured_image -%}
-                          {%- assign v_desc = v.metafields.custom.description | metafield_tag | strip_html | strip -%}
+                          {%- liquid
+                            assign v_badge = v.metafields.custom.badge | default: v.metafields.custom.availability_text
+                            assign v_cp_img = v.metafields.custom.cart_page_image
+                            assign v_img    = v.featured_image | default: item.product.featured_image
+                            assign v_desc   = v.metafields.custom.cart_page_description | metafield_tag
+                          -%}
                           <div class="cp-set{% if v.id == item.variant_id %} is-active{% endif %}{% unless v.available %} is-sold-out{% endunless %}"
                                data-vid="{{ v.id }}"
                                data-current-key="{{ item.key }}"
                                data-current-vid="{{ item.variant_id }}"
                                role="button"
-                               tabindex="{% unless v.available %}−1{% else %}0{% endunless %}"
+                               tabindex="{% unless v.available %}-1{% else %}0{% endunless %}"
                                aria-pressed="{% if v.id == item.variant_id %}true{% else %}false{% endif %}"
                                aria-disabled="{% unless v.available %}true{% else %}false{% endunless %}">
-                            <span class="cp-set__badge{% unless v.available %} cp-set__badge--oos{% endunless %}">
-                              {%- if v.available -%}{{ 'cart.sets.badge_ready' | t }}{%- else -%}{{ 'cart.sets.badge_sold_out' | t }}{%- endif -%}
-                            </span>
+                            {%- if v_badge != blank -%}
+                              <span class="cp-set__badge">{{ v_badge }}</span>
+                            {%- endif -%}
                             <div class="cp-set__img">
-                              {%- if v_img != blank -%}
+                              {%- if v_cp_img != blank -%}
+                                <img src="{{ v_cp_img | image_url: width: 400 }}"
+                                     srcset="{{ v_cp_img | image_url: width: 200 }} 200w, {{ v_cp_img | image_url: width: 400 }} 400w"
+                                     sizes="(max-width: 749px) 45vw, 180px"
+                                     alt="{{ v.title | escape }}"
+                                     width="400" height="400" loading="lazy">
+                              {%- elsif v_img != blank -%}
                                 <img src="{{ v_img | image_url: width: 400 }}"
                                      srcset="{{ v_img | image_url: width: 200 }} 200w, {{ v_img | image_url: width: 400 }} 400w"
                                      sizes="(max-width: 749px) 45vw, 180px"
@@ -287,12 +305,17 @@
                             </div>
                             <div class="cp-set__info">
                               <span class="cp-set__name">{{ v.title }}</span>
-                              <span class="cp-set__price">
-                                {{ v.price | money }}
+                              <div class="cp-set__price-wrap">
+                                <span class="cp-set__price">
+                                  {{ v.price | money }}
+                                  {%- if v.compare_at_price > v.price -%}
+                                    <small class="cp-set__price-tag">{{ 'cart.sets.price_launch' | t }}</small>
+                                  {%- endif -%}
+                                </span>
                                 {%- if v.compare_at_price > v.price -%}
-                                  <s>{{ v.compare_at_price | money }}</s>
+                                  <s class="cp-set__reg-price">{{ v.compare_at_price | money }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></s>
                                 {%- endif -%}
-                              </span>
+                              </div>
                               {%- if v_desc != blank -%}
                                 <div class="cp-set__desc">{{ v_desc }}</div>
                               {%- endif -%}
@@ -1412,20 +1435,33 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
 
 .cp-set__info  { display: flex; flex-direction: column; gap: 6px; }
 .cp-set__name  { display: block; font-size: 15px; font-weight: var(--font-weight-bold); line-height: 1.35; }
+.cp-set__price-wrap { display: flex; flex-direction: column; gap: 2px; }
 .cp-set__price {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
   font-family: var(--font-accent);
   font-weight: var(--font-weight-heavy);
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: -.02em;
 }
-.cp-set__price s {
+.cp-set__reg-price {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
   font-size: 13px;
   font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
-  margin-left: 4px;
   text-decoration: line-through;
+}
+.cp-set__price-tag {
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: .04em;
+  text-transform: lowercase;
+  color: var(--color-text-muted);
+  text-decoration: none;
 }
 .cp-set__desc {
   font-size: 13px;
