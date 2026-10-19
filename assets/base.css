@@ -257,14 +257,14 @@ h6, .h6 {
 .body-text {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
 .caption {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--color-text-muted);
 }
 
