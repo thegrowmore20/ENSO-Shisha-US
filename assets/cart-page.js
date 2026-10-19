@@ -169,11 +169,7 @@ if (!customElements.get('cart-page')) {
           radio.disabled = true;
           this.#showPageSpinner();
           try {
-            // Add new item first — if it fails (out of stock / unavailable)
-            // the original item stays in the cart, nothing is lost.
             await this.#cartFetch('/cart/add.js', { id: newVid, quantity: 1 });
-            // New item confirmed in cart; now safely remove the old one.
-            if (oldKey) await this.#cartFetch('/cart/change.js', { id: oldKey, quantity: 0 });
             await this.#reRenderSection();
           } catch (err) {
             console.error('Set switch failed', err);
@@ -213,6 +209,7 @@ if (!customElements.get('cart-page')) {
               await this.#reRenderSection(true);
             } catch (err) {
               console.error('Addon add failed', err);
+              this.#toast(err.message || 'Could not add to cart');
               atcBtn.classList.remove('is-loading');
               atcBtn.disabled = false;
             }
