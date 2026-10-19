@@ -1272,13 +1272,17 @@
 {% style %}
 
   /* ---------- Stock badge ---------- */
-  .product-stock-badge { margin-top: 0; }
+  .product-stock-badge { margin-top: 0; margin-bottom: 10px; }
   .product-stock-badge__text {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-family: var(--font-heading);
     font-size: 14px;
-    color: rgb(0 0 0 / .72);
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgb(0 0 0 / .75);
     margin: 0;
   }
   .product-stock-badge__dot {
