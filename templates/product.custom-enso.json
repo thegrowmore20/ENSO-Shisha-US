@@ -56,14 +56,8 @@
             "default_text": ""
           }
         },
-        "text_JLGqNX": {
-          "type": "text",
-          "settings": {
-            "content": "<p>The standard battery takes about 3 hours to charge fully (Battery Plus: about 1 hour 45 minutes). Same 2026 Edition. In the box: the 2026 glass ThermoCap, hose and magnetic mouthpiece, plus a spare hose and a short mouthpiece.</p>",
-            "alignment": "left",
-            "text_size": "medium",
-            "show_icon": false
-          }
+        "variant_description": {
+          "type": "variant_description"
         },
         "price": {
           "type": "price",
@@ -152,7 +146,7 @@
         "tags",
         "variant_picker",
         "variant_note",
-        "text_JLGqNX",
+        "variant_description",
         "price",
         "buy_buttons",
         "trust_strip",

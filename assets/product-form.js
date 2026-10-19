@@ -9,6 +9,12 @@ if (!customElements.get('product-info')) {
       this.addButton = this.querySelector('[data-add-to-cart]');
       this.addButtonText = this.querySelector('[data-add-to-cart-text]');
       this.gallery = document.getElementById('ProductMediaGallery-' + this.dataset.sectionId);
+      this.stockBadge = this.querySelector('[data-stock-badge]');
+      this.stockBadgeTpls = this.querySelector('[data-stock-badge-templates]');
+      this.variantNote = this.querySelector('[data-variant-note]');
+      this.variantNoteTpls = this.querySelector('[data-variant-note-templates]');
+      this.variantDesc = this.querySelector('[data-variant-desc]');
+      this.variantDescTpls = this.querySelector('[data-variant-desc-templates]');
 
       this.#bindVariantPicker();
       this.#bindQuantity();
@@ -129,7 +135,29 @@ if (!customElements.get('product-info')) {
         window.history.replaceState({}, '', url);
       }
 
-      // 6. Let other elements on the page (e.g. the sticky add-to-cart bar, global ATC sync)
+      // 6. Stock badge
+      if (this.stockBadge && this.stockBadgeTpls) {
+        const tpl = this.stockBadgeTpls.content.querySelector('[data-variant-stock-id="' + variant.id + '"]');
+        if (tpl) this.stockBadge.innerHTML = tpl.innerHTML;
+      }
+
+      // 7. Variant note
+      if (this.variantNote && this.variantNoteTpls) {
+        const tpl = this.variantNoteTpls.content.querySelector('[data-variant-note-id="' + variant.id + '"]');
+        const text = tpl ? tpl.textContent.trim() : '';
+        this.variantNote.textContent = text;
+        this.variantNote.hidden = !text;
+      }
+
+      // 8. Variant description (rich text metafield)
+      if (this.variantDesc && this.variantDescTpls) {
+        const tpl = this.variantDescTpls.content.querySelector('[data-variant-desc-id="' + variant.id + '"]');
+        const html = tpl ? tpl.innerHTML.trim() : '';
+        this.variantDesc.innerHTML = html;
+        this.variantDesc.hidden = !html;
+      }
+
+      // 9. Let other elements on the page (e.g. the sticky add-to-cart bar, global ATC sync)
       // react to the new variant without needing their own variant-matching logic.
       const form = this.idInput?.closest('form') || this.addButton?.closest('form') || null;
       document.dispatchEvent(new CustomEvent('variant:change', { detail: { variant, form } }));

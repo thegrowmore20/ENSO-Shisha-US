@@ -114,33 +114,47 @@
               </template>
 
             {%- when 'stock_badge' -%}
+              {%- liquid
+                assign _badge_text = current_variant.metafields.custom.availability_text
+                if _badge_text == blank
+                  if current_variant.available
+                    assign _badge_text = block.settings.in_stock_text | default: 'In stock · Ships now'
+                    assign _badge_in = true
+                  else
+                    assign _badge_text = block.settings.out_of_stock_text | default: 'Sold Out'
+                    assign _badge_in = false
+                  endif
+                else
+                  assign _badge_in = current_variant.available
+                endif
+              -%}
               <div class="product-stock-badge product-block" data-stock-badge {{ block.shopify_attributes }}>
-                {%- if current_variant.available -%}
-                  <p class="product-stock-badge__text">
-                    <i class="product-stock-badge__dot product-stock-badge__dot--in" aria-hidden="true"></i>
-                    {{ block.settings.in_stock_text | default: 'In stock · Ships now' }}
-                  </p>
-                {%- else -%}
-                  <p class="product-stock-badge__text">
-                    <i class="product-stock-badge__dot" aria-hidden="true"></i>
-                    {{ block.settings.out_of_stock_text | default: 'Sold Out' }}
-                  </p>
-                {%- endif -%}
+                <p class="product-stock-badge__text">
+                  <i class="product-stock-badge__dot{% if _badge_in %} product-stock-badge__dot--in{% endif %}" aria-hidden="true"></i>
+                  {{ _badge_text }}
+                </p>
               </div>
               <template data-stock-badge-templates>
                 {%- for variant in product.variants -%}
+                  {%- liquid
+                    assign _v_text = variant.metafields.custom.availability_text
+                    if _v_text == blank
+                      if variant.available
+                        assign _v_text = block.settings.in_stock_text | default: 'In stock · Ships now'
+                        assign _v_in = true
+                      else
+                        assign _v_text = block.settings.out_of_stock_text | default: 'Sold Out'
+                        assign _v_in = false
+                      endif
+                    else
+                      assign _v_in = variant.available
+                    endif
+                  -%}
                   <div data-variant-stock-id="{{ variant.id }}">
-                    {%- if variant.available -%}
-                      <p class="product-stock-badge__text">
-                        <i class="product-stock-badge__dot product-stock-badge__dot--in" aria-hidden="true"></i>
-                        {{ block.settings.in_stock_text | default: 'In stock · Ships now' }}
-                      </p>
-                    {%- else -%}
-                      <p class="product-stock-badge__text">
-                        <i class="product-stock-badge__dot" aria-hidden="true"></i>
-                        {{ block.settings.out_of_stock_text | default: 'Sold Out' }}
-                      </p>
-                    {%- endif -%}
+                    <p class="product-stock-badge__text">
+                      <i class="product-stock-badge__dot{% if _v_in %} product-stock-badge__dot--in{% endif %}" aria-hidden="true"></i>
+                      {{ _v_text }}
+                    </p>
                   </div>
                 {%- endfor -%}
               </template>
@@ -200,6 +214,9 @@
                           >
                             <span class="variant-card__left">
                               <b class="variant-card__name">{{ value }}</b>
+                              {%- if card_variant != nil and card_variant.metafields.custom.tagline != blank -%}
+                                <small class="variant-card__tagline">{{ card_variant.metafields.custom.tagline }}</small>
+                              {%- endif -%}
                               {%- if card_variant != nil and card_variant.metafields.custom.availability_text != blank -%}
                                 <small class="variant-card__avail">{{ card_variant.metafields.custom.availability_text }}</small>
                               {%- endif -%}
@@ -252,6 +269,19 @@
               <template data-variant-note-templates>
                 {%- for variant in product.variants -%}
                   <span data-variant-note-id="{{ variant.id }}">{{ variant.metafields.custom.note_text }}</span>
+                {%- endfor -%}
+              </template>
+
+            {%- when 'variant_description' -%}
+              {%- assign _vdesc = current_variant.metafields.custom.product_page_description -%}
+              <div class="product-variant-desc product-block" data-variant-desc {% if _vdesc == blank %}hidden{% endif %} {{ block.shopify_attributes }}>
+                {{- _vdesc | metafield_tag -}}
+              </div>
+              <template data-variant-desc-templates>
+                {%- for variant in product.variants -%}
+                  <div data-variant-desc-id="{{ variant.id }}">
+                    {{- variant.metafields.custom.product_page_description | metafield_tag -}}
+                  </div>
                 {%- endfor -%}
               </template>
 
@@ -1357,7 +1387,8 @@
   .variant-card.is-unavailable { opacity: 0.4; cursor: not-allowed; text-decoration: none; }
   .variant-card__left { display: flex; flex-direction: column; gap: 2px; }
   .variant-card__name { font-size: 15px; font-weight: 600; }
-  .variant-card__avail { font-size: 13px; color: var(--color-text-muted); font-weight: 400; }
+  .variant-card__tagline { font-size: 13px; color: var(--color-text-muted); font-weight: 400; }
+  .variant-card__avail { font-size: 12px; color: var(--color-text-muted); font-weight: 400; opacity: 0.75; }
   .variant-card__price {
     font-style: normal;
     font-family: var(--font-accent);
@@ -1720,6 +1751,11 @@
       "settings": [
         { "type": "text", "id": "default_text", "label": "Default text", "info": "Shown when no variant-specific note is set" }
       ]
+    },
+    {
+      "type": "variant_description",
+      "name": "Variant description",
+      "limit": 1
     },
     {
       "type": "trust_strip",
