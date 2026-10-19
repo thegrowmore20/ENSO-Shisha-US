@@ -13,6 +13,7 @@ if (!customElements.get('cart-page')) {
 
       console.log('[cart-page] reinit — devicePids:', [...this.devicePids], 'deviceKeys:', [...this.deviceKeys]);
 
+      this.#bindSetCards();
       this.#bindAddonCards();
       this.#bindAccRows();
       this.#bindFavCards();
@@ -156,6 +157,39 @@ if (!customElements.get('cart-page')) {
       } finally {
         if (!silent) this.#hidePageSpinner();
       }
+    }
+
+    // ── Pick a set (variant switcher inside device accordion) ─────────────
+
+    #bindSetCards() {
+      this.querySelectorAll('.cp-set[data-vid]').forEach(card => {
+        const activate = async () => {
+          const newVid     = parseInt(card.dataset.vid, 10);
+          const currentKey = card.dataset.currentKey;
+          const currentVid = parseInt(card.dataset.currentVid, 10);
+
+          if (!newVid || !currentKey || newVid === currentVid) return;
+
+          this.#showPageSpinner();
+          this.querySelectorAll('.cp-set').forEach(c => c.classList.add('is-loading'));
+
+          try {
+            await this.#cartFetch('/cart/change.js', { id: currentKey, quantity: 0 });
+            await this.#cartFetch('/cart/add.js', { id: newVid, quantity: 1 });
+            await this.#reRenderSection(false);
+          } catch (err) {
+            console.error('Set switch failed', err);
+            this.querySelectorAll('.cp-set').forEach(c => c.classList.remove('is-loading'));
+            this.#hidePageSpinner();
+            this.#toast(err.message || 'Could not switch set');
+          }
+        };
+
+        card.addEventListener('click', activate);
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+        });
+      });
     }
 
     // ── Addon cards (essentials / spares inside device accordion) ──────────

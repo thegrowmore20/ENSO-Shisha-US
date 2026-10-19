@@ -252,6 +252,50 @@
 
                 <div class="cp-dev__body">
 
+                  {%- comment -%}PICK A SET{%- endcomment -%}
+                  {%- if item.product.variants.size > 1 -%}
+                    <div class="cp-sets">
+                      <h3 class="cp-sets__h">{{ 'cart.sets.heading' | t }}</h3>
+                      <p class="cp-sets__sub">
+                        {%- if dv_family == 'diamond' -%}{{ 'cart.sets.sub_diamond' | t }}{%- else -%}{{ 'cart.sets.sub_enso' | t }}{%- endif -%}
+                      </p>
+                      <div class="cp-sets__grid">
+                        {%- for v in item.product.variants -%}
+                          {%- unless v.available -%}{%- continue -%}{%- endunless -%}
+                          {%- assign v_img = v.featured_image | default: item.product.featured_image -%}
+                          <div class="cp-set{% if v.id == item.variant_id %} is-active{% endif %}"
+                               data-vid="{{ v.id }}"
+                               data-current-key="{{ item.key }}"
+                               data-current-vid="{{ item.variant_id }}"
+                               role="button"
+                               tabindex="0"
+                               aria-pressed="{% if v.id == item.variant_id %}true{% else %}false{% endif %}">
+                            <div class="cp-set__img">
+                              {%- if v_img != blank -%}
+                                <img src="{{ v_img | image_url: width: 400 }}"
+                                     srcset="{{ v_img | image_url: width: 200 }} 200w, {{ v_img | image_url: width: 400 }} 400w"
+                                     sizes="(max-width: 749px) 45vw, 180px"
+                                     alt="{{ v_img.alt | default: v.title | escape }}"
+                                     width="400" height="400" loading="lazy">
+                              {%- else -%}
+                                <svg aria-hidden="true" viewBox="0 0 400 400" fill="none"><rect width="400" height="400" fill="#f0ede8"/><rect x="140" y="140" width="120" height="120" rx="16" fill="#c8b89a"/></svg>
+                              {%- endif -%}
+                            </div>
+                            <div class="cp-set__info">
+                              <span class="cp-set__name">{{ v.title }}</span>
+                              <span class="cp-set__price">
+                                {{ v.price | money }}
+                                {%- if v.compare_at_price > v.price -%}
+                                  <s>{{ v.compare_at_price | money }}</s>
+                                {%- endif -%}
+                              </span>
+                            </div>
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+
                   {%- comment -%}ADD ACCESSORIES{%- endcomment -%}
                   {%- if ess_accs != blank or spr_accs != blank -%}
                     <div class="cp-addons block">
@@ -1288,6 +1332,74 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
     flex-shrink: 0;
   }
   .cart-page { padding-bottom: 100px; }
+}
+
+/* ── Pick a set ──────────────────────────────────────────────────── */
+.cp-sets { margin-bottom: 28px; }
+.cp-sets__h {
+  font-family: var(--font-accent);
+  font-size: 20px;
+  font-weight: var(--font-weight-heavy);
+  margin: 0 0 6px;
+  letter-spacing: -.01em;
+}
+.cp-sets__sub { color: var(--color-text-muted); margin-bottom: 16px; font-size: 14px; }
+
+.cp-sets__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 16px;
+}
+@media screen and (max-width: 991px) {
+  .cp-sets__grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+.cp-set {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 18px;
+  cursor: pointer;
+  background: var(--color-background);
+  transition: border-color .2s, box-shadow .2s;
+  outline-offset: 3px;
+}
+.cp-set:hover { box-shadow: var(--shadow-sm); }
+.cp-set.is-active {
+  border-color: var(--color-text);
+  border-width: 2px;
+  padding: 17.5px;
+}
+.cp-set.is-loading { opacity: .6; pointer-events: none; }
+
+.cp-set__img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-background-raised);
+}
+.cp-set__img img, .cp-set__img svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.cp-set__info  { display: flex; flex-direction: column; gap: 4px; }
+.cp-set__name  { display: block; font-size: 14px; font-weight: var(--font-weight-semibold); line-height: 1.3; }
+.cp-set__price {
+  display: block;
+  font-family: var(--font-accent);
+  font-weight: var(--font-weight-heavy);
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -.02em;
+}
+.cp-set__price s {
+  font-size: 13px;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+  margin-left: 4px;
+  text-decoration: line-through;
 }
 {% endstylesheet %}
 
