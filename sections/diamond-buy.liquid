@@ -943,13 +943,8 @@ body:has(.site-header--hidden) .bar { top: 0; }
             class="d-buy__pill"
             id="DiamondBtn-{{ section.id }}"
             data-label="{{ section.settings.cta_label | default: 'Pre-order' | escape }}"
-            {%- unless current_variant.available -%}disabled{%- endunless -%}
           >
-            {%- if current_variant.available -%}
-              {{ section.settings.cta_label | default: 'Pre-order' }}
-            {%- else -%}
-              {{ 'products.product.sold_out' | t }}
-            {%- endif -%}
+            {{ section.settings.cta_label | default: 'Pre-order' }}
           </button>
         </form>
 
