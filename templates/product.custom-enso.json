@@ -88,7 +88,7 @@
         "specs_inline": {
           "type": "specs_inline",
           "settings": {
-            "heading": "Specifications"
+            "heading": ""
           }
         },
         "witb_inline": {
@@ -111,6 +111,13 @@
           "settings": {
             "heading": "Description",
             "content": "{{ product.metafields.custom.description | metafield_tag }}",
+            "default_open": false
+          }
+        },
+        "accordion_specs": {
+          "type": "specs_accordion",
+          "settings": {
+            "heading": "Specifications",
             "default_open": false
           }
         },
@@ -154,6 +161,7 @@
         "witb_inline",
         "contact_text",
         "accordion_description",
+        "accordion_specs",
         "accordion_how",
         "accordion_why",
         "accordion_warranty"
