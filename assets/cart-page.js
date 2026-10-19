@@ -169,6 +169,7 @@ if (!customElements.get('cart-page')) {
           const currentVid = parseInt(card.dataset.currentVid, 10);
 
           if (!newVid || !currentKey || newVid === currentVid) return;
+          if (card.classList.contains('is-sold-out')) return;
 
           this.#showPageSpinner();
           this.querySelectorAll('.cp-set').forEach(c => c.classList.add('is-loading'));
