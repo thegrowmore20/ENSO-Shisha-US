@@ -11,6 +11,8 @@ if (!customElements.get('cart-page')) {
         (this.dataset.deviceKeys || '').split(',').map(s => s.trim()).filter(Boolean)
       );
 
+      console.log('[cart-page] reinit — devicePids:', [...this.devicePids], 'deviceKeys:', [...this.deviceKeys]);
+
       this.#bindSetSwitcher();
       this.#bindAddonCards();
       this.#bindAccRows();
@@ -224,6 +226,7 @@ if (!customElements.get('cart-page')) {
 
     async #removeAddon(card) {
       const key = card.dataset.key;
+      console.log('[cart-page] #removeAddon — card.dataset.key:', key, '| deviceKeys:', [...(this.deviceKeys || [])]);
       if (!key) return;
       if (this.deviceKeys?.has(key)) {
         console.error('[cart] blocked: addon handler tried to remove device line, key:', key);
@@ -284,6 +287,7 @@ if (!customElements.get('cart-page')) {
           const name       = row.querySelector('.cp-acc-row__name')?.textContent?.trim() || '';
           const accSection = row.closest('.cp-acc-section');
           removeBtn.disabled = true;
+          console.log('[cart-page] acc-row remove — key:', key, '| deviceKeys:', [...(this.deviceKeys || [])]);
           if (this.deviceKeys?.has(key)) {
             console.error('[cart] blocked: acc-row handler tried to remove device line, key:', key);
             removeBtn.disabled = false;
