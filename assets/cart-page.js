@@ -13,7 +13,6 @@ if (!customElements.get('cart-page')) {
 
       console.log('[cart-page] reinit — devicePids:', [...this.devicePids], 'deviceKeys:', [...this.deviceKeys]);
 
-      this.#bindSetSwitcher();
       this.#bindAddonCards();
       this.#bindAccRows();
       this.#bindFavCards();
@@ -155,32 +154,6 @@ if (!customElements.get('cart-page')) {
       } finally {
         if (!silent) this.#hidePageSpinner();
       }
-    }
-
-    // ── Set switcher (radio cards inside device accordions) ────────────────
-
-    #bindSetSwitcher() {
-      this.querySelectorAll('input[type="radio"][data-new-pid]').forEach(radio => {
-        radio.addEventListener('change', async () => {
-          if (!radio.checked) return;
-          const oldKey = radio.dataset.oldKey;
-          const newVid = parseInt(radio.dataset.newVid, 10);
-          radio.closest('.cp-sets__grid')?.querySelectorAll('.cp-set').forEach(c => {
-            c.classList.toggle('is-active', c.contains(radio));
-          });
-          radio.disabled = true;
-          this.#showPageSpinner();
-          try {
-            await this.#cartFetch('/cart/add.js', { id: newVid, quantity: 1 });
-            await this.#reRenderSection();
-          } catch (err) {
-            console.error('Set switch failed', err);
-            this.#toast(err.message || 'Could not change selection — please try again');
-            radio.disabled = false;
-            this.#hidePageSpinner();
-          }
-        });
-      });
     }
 
     // ── Addon cards (essentials / spares inside device accordion) ──────────

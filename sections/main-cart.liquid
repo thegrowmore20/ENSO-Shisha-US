@@ -194,17 +194,6 @@
               {%- unless item.product.tags contains 'device' -%}{%- continue -%}{%- endunless -%}
               {%- liquid
                 assign dv_family  = item.product.metafields.custom.device_family.value | default: ''
-                if dv_family == 'diamond'
-                  assign dv_col = section.settings.diamond_sets_collection
-                  if dv_col == blank
-                    assign dv_col = collections['diamond-sets']
-                  endif
-                else
-                  assign dv_col = section.settings.enso_sets_collection
-                  if dv_col == blank
-                    assign dv_col = collections['enso-sets']
-                  endif
-                endif
                 assign ess_accs   = item.product.metafields.custom.essential_accessories.value
                 assign spr_accs   = item.product.metafields.custom.spare_accessories.value
                 assign dev_subtitle = item.product.metafields.custom.headline | metafield_tag | strip_html | strip
@@ -262,60 +251,6 @@
                 </summary>
 
                 <div class="cp-dev__body">
-
-                  {%- comment -%}PICK A SET{%- endcomment -%}
-                  {%- if dv_col != blank -%}
-                    <div class="cp-sets block">
-                      <h2 class="cp-sets__h">{{ 'cart.sets.heading' | t }}</h2>
-                      <p class="cp-sets__sub">
-                        {%- if dv_family == 'diamond' -%}{{ 'cart.sets.sub_diamond' | t }}{%- else -%}{{ 'cart.sets.sub_enso' | t }}{%- endif -%}
-                      </p>
-                      <div class="cp-sets__grid">
-                        {%- for sp in dv_col.products -%}
-                          {%- liquid
-                            assign sp_var    = sp.selected_or_first_available_variant
-                            assign sp_active = false
-                            if sp.id == item.product.id
-                              assign sp_active = true
-                            endif
-                            assign sp_badge = sp.metafields.custom.badge.value | default: ''
-                          -%}
-                          <label class="cp-set{% if sp_active %} is-active{% endif %}">
-                            <input class="visually-hidden" type="radio"
-                                   name="cp-set-{{ item.key }}"
-                                   value="{{ sp.id }}"
-                                   data-old-key="{{ item.key }}"
-                                   data-new-pid="{{ sp.id }}"
-                                   data-new-vid="{{ sp_var.id }}"
-                                   {% if sp_active %}checked{% endif %}>
-                            {%- if sp_badge != blank -%}
-                              <span class="cp-set__badge{% if sp_badge contains 'MOST' or sp_badge contains 'Most' %} cp-set__badge--accent{% endif %}">{{ sp_badge }}</span>
-                            {%- endif -%}
-                            <div class="cp-set__img">
-                              {%- if sp.featured_image -%}
-                                <img src="{{ sp.featured_image | image_url: width: 300 }}"
-                                     alt="{{ sp.featured_image.alt | default: sp.title | escape }}"
-                                     width="200" height="200" loading="lazy">
-                              {%- else -%}
-                                <svg aria-hidden="true" viewBox="0 0 200 200" fill="none"><rect width="200" height="200" fill="#f0ede8"/></svg>
-                              {%- endif -%}
-                            </div>
-                            <div class="cp-set__info">
-                              <b class="cp-set__name">{{ sp.title }}</b>
-                              <span class="cp-set__price">
-                                {%- if sp_var.compare_at_price > sp_var.price -%}<s>{{ sp_var.compare_at_price | money }}</s>{%- endif -%}
-                                {{ sp_var.price | money }}
-                              </span>
-                              {%- assign sp_witb = sp.metafields.custom.what_s_in_the_box -%}
-                              {%- if sp_witb != blank -%}
-                                <div class="cp-set__desc">{{ sp_witb | metafield_tag }}</div>
-                              {%- endif -%}
-                            </div>
-                          </label>
-                        {%- endfor -%}
-                      </div>
-                    </div>
-                  {%- endif -%}
 
                   {%- comment -%}ADD ACCESSORIES{%- endcomment -%}
                   {%- if ess_accs != blank or spr_accs != blank -%}
@@ -823,92 +758,6 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
   .cp-dev__body { padding: 8px 16px 16px; }
   .cp-dev__x { top: 10px; right: 10px; }
 }
-
-/* ── Pick a set ──────────────────────────────────────────────────── */
-.cp-sets { margin-bottom: 28px; }
-.cp-sets__h {
-  font-family: var(--font-accent);
-  font-size: 20px;
-  font-weight: var(--font-weight-heavy);
-  margin: 0 0 6px;
-  letter-spacing: -.01em;
-}
-.cp-sets__sub { color: var(--color-text-muted); margin-bottom: 16px; font-size: 14px; }
-
-.cp-sets__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 16px;
-}
-@media screen and (max-width: 991px) {
-  .cp-sets__grid { grid-template-columns: 1fr; }
-}
-
-.cp-set {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 18px;
-  border: 1.5px solid var(--color-border);
-  border-radius: 18px;
-  cursor: pointer;
-  background: var(--color-background);
-  transition: border-color .2s, box-shadow .2s;
-}
-.cp-set:hover { box-shadow: var(--shadow-sm); }
-.cp-set.is-active,
-.cp-set:has(input:checked) {
-  border-color: var(--color-text);
-  border-width: 2px;
-  padding: 17.5px;
-}
-
-.cp-set__badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--color-text);
-  color: var(--color-background);
-  font-size: 10px;
-  font-weight: var(--font-weight-bold);
-  letter-spacing: .1em;
-  padding: 5px 9px;
-  border-radius: var(--radius-pill);
-  text-transform: uppercase;
-}
-.cp-set__badge--accent { background: var(--palette-sand, #c8943a); }
-
-.cp-set__img {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--color-background-raised);
-}
-.cp-set__img img, .cp-set__img svg { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.cp-set__info  { display: flex; flex-direction: column; gap: 4px; }
-.cp-set__name  { display: block; font-size: 16px !important; font-weight: var(--font-weight-semibold); line-height: 1.3; }
-.cp-set__price {
-  display: block;
-  font-family: var(--font-accent);
-  font-weight: var(--font-weight-heavy);
-  font-size: 22px;
-  line-height: 26px;
-  letter-spacing: -.02em;
-}
-.cp-set__price s {
-  font-size: 14px;
-  font-weight: var(--font-weight-regular);
-  color: var(--color-text-muted);
-  margin-left: 6px;
-  text-decoration: line-through;
-}
-.cp-set__desc { font-size: 14px; color: var(--color-text-muted); line-height: 22px; }
-.cp-set__desc p { margin: 0; }
-.cp-set__desc ul { margin: 0; padding: 0; list-style: none; }
-.cp-set__desc li::before { content: "·"; margin-right: 6px; }
 
 /* ── Add accessories ─────────────────────────────────────────────── */
 .cp-addons__h {
@@ -1578,20 +1427,6 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
       "id": "usp_3",
       "label": "t:sections.main_cart.settings.usp_3.label",
       "default": "Ships from our US warehouse in Florida"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.main_cart.settings.header_sets.content"
-    },
-    {
-      "type": "collection",
-      "id": "diamond_sets_collection",
-      "label": "t:sections.main_cart.settings.diamond_sets_collection.label"
-    },
-    {
-      "type": "collection",
-      "id": "enso_sets_collection",
-      "label": "t:sections.main_cart.settings.enso_sets_collection.label"
     },
     {
       "type": "header",
