@@ -2497,6 +2497,8 @@
         "gallery_layout": { "label": "Gallery layout" },
         "subline": { "label": "Subline" },
         "price_note": { "label": "Price note" },
+        "display_price": { "label": "Display price (overrides variant price)" },
+        "display_compare_price": { "label": "Display compare-at price (struck through)" },
         "cta_label": { "label": "CTA label" },
         "inbox_text": { "label": "In the box text" },
         "contact_email": { "label": "Contact email" },

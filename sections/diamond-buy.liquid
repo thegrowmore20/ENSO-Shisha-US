@@ -923,9 +923,16 @@ body:has(.site-header--hidden) .bar { top: 0; }
         {%- endif -%}
 
         <div class="d-buy__price">
-          <strong>{{ current_variant.price | money }}</strong>
-          {%- if has_compare -%}
-            <span class="d-buy__was">{{ current_variant.compare_at_price | money }}</span>
+          {%- if section.settings.display_price != blank -%}
+            <strong>{{ section.settings.display_price }}</strong>
+            {%- if section.settings.display_compare_price != blank -%}
+              <span class="d-buy__was">{{ section.settings.display_compare_price }}</span>
+            {%- endif -%}
+          {%- else -%}
+            <strong>{{ current_variant.price | money }}</strong>
+            {%- if has_compare -%}
+              <span class="d-buy__was">{{ current_variant.compare_at_price | money }}</span>
+            {%- endif -%}
           {%- endif -%}
         </div>
 
@@ -1182,6 +1189,18 @@ body:has(.site-header--hidden) .bar { top: 0; }
       "id": "price_note",
       "label": "t:sections.diamond_buy.settings.price_note.label",
       "default": "Last pre-order price. The final price after launch is €349."
+    },
+    {
+      "type": "text",
+      "id": "display_price",
+      "label": "t:sections.diamond_buy.settings.display_price.label",
+      "info": "e.g. $320.00 — shown instead of the Shopify variant price. Leave blank to use the real price."
+    },
+    {
+      "type": "text",
+      "id": "display_compare_price",
+      "label": "t:sections.diamond_buy.settings.display_compare_price.label",
+      "info": "e.g. $349.00 — shown as struck-through compare price. Leave blank to hide."
     },
     {
       "type": "text",
