@@ -118,13 +118,15 @@
   {%- if product.variants.size > 1 and product.options[0] != 'Title' -%}
     <div class="acc-card__opts" role="group" aria-label="{{ product.options[0] | escape }}">
       {%- for v in product.variants -%}
+        {%- assign v_img = v.featured_image | default: product.featured_image -%}
         <button class="acc-card__opt{% if forloop.first %} is-active{% endif %}"
                 type="button"
                 aria-pressed="{{ forloop.first }}"
                 data-vid="{{ v.id }}"
                 data-price="{{ v.price }}"
                 data-money="{{ v.price | money }}"
-                data-available="{{ v.available }}">{{ v.title }}</button>
+                data-available="{{ v.available }}"
+                data-image="{{ v_img | image_url: width: 600 }}">{{ v.title }}</button>
       {%- endfor -%}
     </div>
   {%- endif -%}

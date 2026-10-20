@@ -407,6 +407,13 @@
       var priceEl = card.querySelector('.acc-card__price b');
       if (priceEl && money) priceEl.textContent = money;
 
+      /* swap card image to variant image */
+      var imgEl = card.querySelector('.acc-card__img img');
+      if (imgEl && optBtn.dataset.image) {
+        imgEl.src = optBtn.dataset.image;
+        imgEl.removeAttribute('srcset');
+      }
+
       /* update card-level data attrs used by global.js for button state sync */
       card.dataset.price     = optBtn.dataset.price;
       card.dataset.available = available;
