@@ -244,6 +244,15 @@
                 if ess_accs != blank or spr_accs != blank
                   assign has_addon_content = true
                 endif
+
+                assign item_disp_price = item.variant.metafields.custom.display_price
+                if item_disp_price == blank and dv_family == 'diamond'
+                  if item.variant.title contains 'Battery'
+                    assign item_disp_price = section.settings.diamond_battery_display_price
+                  else
+                    assign item_disp_price = section.settings.diamond_solo_display_price
+                  endif
+                endif
               -%}
 
               <details class="cp-dev"
@@ -265,7 +274,13 @@
                       <small class="cp-dev__sub">{{ dev_subtitle }}</small>
                     {%- endif -%}
                   </div>
-                  <em class="cp-dev__price">{{ item.final_price | money }}</em>
+                  <em class="cp-dev__price">
+                    {%- if item_disp_price != blank -%}
+                      {{- item_disp_price -}}
+                    {%- else -%}
+                      {{- item.final_price | money -}}
+                    {%- endif -%}
+                  </em>
                   <button type="button" class="cp-dev__x" data-remove="{{ item.key }}"
                           aria-label="{{ 'cart.device.remove' | t: title: item.product.title }}">×</button>
                   {%- if has_addon_content -%}
@@ -344,7 +359,7 @@
                                     {%- endif -%}
                                   </span>
                                   {%- if v_disp_compare != blank -%}
-                                    <s class="cp-set__reg-price">{{ v_disp_compare }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></s>
+                                    <span class="cp-set__reg-price">{{ v_disp_compare }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></span>
                                   {%- endif -%}
                                 {%- else -%}
                                   <span class="cp-set__price">
@@ -354,7 +369,7 @@
                                     {%- endif -%}
                                   </span>
                                   {%- if v.compare_at_price > v.price -%}
-                                    <s class="cp-set__reg-price">{{ v.compare_at_price | money }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></s>
+                                    <span class="cp-set__reg-price">{{ v.compare_at_price | money }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></span>
                                   {%- endif -%}
                                 {%- endif -%}
                               </div>
@@ -1496,7 +1511,6 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
   font-size: 13px;
   font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
-  text-decoration: line-through;
 }
 .cp-set__price-tag {
   font-size: 11px;
