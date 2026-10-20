@@ -14,12 +14,22 @@
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
 -%}
 
+{%- liquid
+  assign pt_tablet = section.settings.padding_top | times: 0.75 | round
+  assign pb_tablet = section.settings.padding_bottom | times: 0.75 | round
+-%}
 {% style %}
   .section-padding-{{ section.id }} {
     padding-top: {{ section.settings.padding_top_mobile }}px;
     padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
   }
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 750px) and (max-width: 1199px) {
+    .section-padding-{{ section.id }} {
+      padding-top: {{ pt_tablet }}px;
+      padding-bottom: {{ pb_tablet }}px;
+    }
+  }
+  @media screen and (min-width: 1200px) {
     .section-padding-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;

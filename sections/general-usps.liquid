@@ -6,10 +6,21 @@
   @param section.blocks[] column blocks (icon_asset | image, heading)
 {%- enddoc -%}
 
+{%- liquid
+  assign pt_usp_tablet = section.settings.padding_top_desktop | times: 0.75 | round
+  assign pb_usp_tablet = section.settings.padding_bottom_desktop | times: 0.75 | round
+-%}
 {% style %}
   #usps-{{ section.id }} {
     padding-top: {{ section.settings.padding_top_desktop }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 1199px) {
+    #usps-{{ section.id }} {
+      padding-top: {{ pt_usp_tablet }}px;
+      padding-bottom: {{ pb_usp_tablet }}px;
+    }
   }
 
   @media screen and (max-width: 749px) {
