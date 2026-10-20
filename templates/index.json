@@ -402,7 +402,7 @@
         "columns": "4",
         "columns_mobile": "1",
         "card_gap": 24,
-        "products_limit": 8,
+        "products_limit": 12,
         "enable_quickadd": true,
         "quickadd_design": "accent",
         "padding_top": 40,
