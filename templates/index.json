@@ -421,7 +421,7 @@
         "heading": "ENSŌ Experience",
         "text": "Everything you need to know: your first session step by step, how to pack the cup, which temperature suits which blend, cleaning and care, and firmware updates. Short guides with photos, made for the phone.",
         "cta_label": "Open ENSŌ Experience",
-        "cta_link": "/pages/experience",
+        "cta_link": "/pages/enso-experience",
         "height_desktop": "large",
         "content_max_width": 540,
         "heading_size_desktop": 40,
@@ -495,7 +495,7 @@
             "icon": "book",
             "heading": "Guides and how-tos",
             "body": "The first session step by step, packing the cup, temperatures, cleaning and firmware, in ENSŌ Experience.",
-            "link": "/pages/experience",
+            "link": "/pages/enso-experience",
             "popup_body": "",
             "button_symbol": "arrow"
           }
