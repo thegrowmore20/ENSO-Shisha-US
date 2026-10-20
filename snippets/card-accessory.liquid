@@ -15,7 +15,7 @@
 
   comment
     Device family metafield drives the "Fits" badge.
-    If blank the badge is not shown — no tag fallback.
+    Falls back to tag-derived label when metafield is blank.
   endcomment
   assign popup_compat = product.metafields.custom.device_family | default: ''
 
@@ -54,7 +54,17 @@
     assign _dev_val = 'both'
   endif
 
-  assign _fits_label = popup_compat
+  if popup_compat != blank
+    assign _fits_label = popup_compat
+  elsif _has_diamond and _has_enso
+    assign _fits_label = ''
+  elsif _has_diamond
+    assign _fits_label = 'Diamond'
+  elsif _has_enso
+    assign _fits_label = 'ENSŌ 2026'
+  else
+    assign _fits_label = ''
+  endif
 -%}
 
 {%- capture img_url_list -%}
