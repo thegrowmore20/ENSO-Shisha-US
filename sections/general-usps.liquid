@@ -140,14 +140,6 @@
     margin: 10px 0 0;
   }
 
-  /* ── Mid-desktop (992–1199px): allow items to wrap into 2 rows ── */
-  @media screen and (min-width: 992px) and (max-width: 1199px) {
-    .usps__row {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  }
-
   /* ── Desktop (≥992px): from handoff ── */
   @media screen and (min-width: 992px) {
     .usps__row {
@@ -174,6 +166,14 @@
     .usps__icon img {
       width: 84px;
       height: 84px;
+    }
+  }
+
+  /* ── Mid-desktop (992–1199px): wrap into 2 rows of 3 ── */
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    .usps__row {
+      flex-wrap: wrap;
+      justify-content: center;
     }
   }
 
