@@ -229,7 +229,7 @@
                 endif
 
                 assign has_addon_content = false
-                if item.product.variants.size > 1 or ess_accs != blank or spr_accs != blank
+                if ess_accs != blank or spr_accs != blank
                   assign has_addon_content = true
                 endif
               -%}
@@ -278,10 +278,12 @@
                       <div class="cp-sets__grid">
                         {%- for v in item.product.variants -%}
                           {%- liquid
-                            assign v_badge = v.metafields.custom.badge | default: v.metafields.custom.availability_text
-                            assign v_cp_img = v.metafields.custom.cart_page_image
-                            assign v_img    = v.featured_image | default: item.product.featured_image
-                            assign v_desc   = v.metafields.custom.cart_page_description | metafield_tag
+                            assign v_badge        = v.metafields.custom.badge | default: v.metafields.custom.availability_text
+                            assign v_cp_img       = v.metafields.custom.cart_page_image
+                            assign v_img          = v.featured_image | default: item.product.featured_image
+                            assign v_desc         = v.metafields.custom.cart_page_description | metafield_tag
+                            assign v_disp_price   = v.metafields.custom.display_price
+                            assign v_disp_compare = v.metafields.custom.display_compare_price
                           -%}
                           <div class="cp-set{% if v.id == item.variant_id %} is-active{% endif %}{% unless v.available %} is-sold-out{% endunless %}"
                                data-vid="{{ v.id }}"
@@ -314,14 +316,26 @@
                             <div class="cp-set__info">
                               <span class="cp-set__name">{{ v.title }}</span>
                               <div class="cp-set__price-wrap">
-                                <span class="cp-set__price">
-                                  {{ v.price | money }}
-                                  {%- if v.compare_at_price > v.price -%}
-                                    <small class="cp-set__price-tag">{{ 'cart.sets.price_launch' | t }}</small>
+                                {%- if v_disp_price != blank -%}
+                                  <span class="cp-set__price">
+                                    {{ v_disp_price }}
+                                    {%- if v_disp_compare != blank -%}
+                                      <small class="cp-set__price-tag">{{ 'cart.sets.price_launch' | t }}</small>
+                                    {%- endif -%}
+                                  </span>
+                                  {%- if v_disp_compare != blank -%}
+                                    <s class="cp-set__reg-price">{{ v_disp_compare }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></s>
                                   {%- endif -%}
-                                </span>
-                                {%- if v.compare_at_price > v.price -%}
-                                  <s class="cp-set__reg-price">{{ v.compare_at_price | money }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></s>
+                                {%- else -%}
+                                  <span class="cp-set__price">
+                                    {{ v.price | money }}
+                                    {%- if v.compare_at_price > v.price -%}
+                                      <small class="cp-set__price-tag">{{ 'cart.sets.price_launch' | t }}</small>
+                                    {%- endif -%}
+                                  </span>
+                                  {%- if v.compare_at_price > v.price -%}
+                                    <s class="cp-set__reg-price">{{ v.compare_at_price | money }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></s>
+                                  {%- endif -%}
                                 {%- endif -%}
                               </div>
                               {%- if v_desc != blank -%}
