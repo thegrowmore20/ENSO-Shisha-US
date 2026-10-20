@@ -119,10 +119,10 @@
         "eyebrow": "What it is",
         "heading": "An electric heater for the hookah you already own",
         "body": "Diamond sits where the bowl sits and replaces the charcoal. No coals, just pure flavor.",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_heat_main": {
@@ -133,9 +133,9 @@
         "body": "The element sits under the cup and around its wall, so the tobacco warms from below and from the sides at once. The plate in the cap closes the chamber from above and keeps the heat on the load, the way a lid keeps it in a classic bowl.",
         "video": "shopify://files/videos/heat-626_b8822f42-c337-4a42-9eed-7d7e79072ac8.mp4",
         "poster": "shopify://shop_images/heat-626-poster.webp",
-        "padding_top": 80,
+        "padding_top": 40,
         "padding_bottom": 80,
-        "padding_top_mobile": 40,
+        "padding_top_mobile": 24,
         "padding_bottom_mobile": 40
       }
     },
@@ -305,9 +305,9 @@
         "video": "shopify://files/videos/dial-loop.mp4",
         "hint_text": "Tap a line to see that screen on the dial. Tap the picture to play the loop again",
         "padding_top": 80,
-        "padding_bottom": 80,
+        "padding_bottom": 40,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_fits_main": {
@@ -348,10 +348,10 @@
         "eyebrow": "Fits any hookah",
         "heading": "If a bowl fits, Diamond fits",
         "body": "Two adapters in the box, long and short, seat Diamond on the top of the stem you already have. Your stem, base and hose stay exactly as they are.",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_acc_main": {
@@ -364,10 +364,10 @@
         "heading": "Extras for your Diamond",
         "body": "A second battery, spare cups and screens, the cap that changes the draw. Everything fits the Diamond you already have.",
         "cta_label": "Shop accessories",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_witb_main": {
@@ -542,10 +542,10 @@
         "heading": "What is in the box",
         "body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. The battery ships fitted.",
         "modal_body": "Everything for the first session except the hookah, the tobacco and a 30 W USB-C supply. Tap an item to see what it is for.",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_also_like": {
@@ -570,10 +570,10 @@
         ],
         "cta_label": "View all accessories",
         "cta_link": "/collections/accesories",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_bowl_main": {
@@ -587,10 +587,10 @@
         "cta1_link": "/pages/diamond-packing-guide",
         "cta2_label": "Shop",
         "cta2_link": "#buy",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_faqs_main": {
@@ -726,10 +726,10 @@
         "show_less_label": "Show less",
         "full_faq_label": "Full FAQ",
         "full_faq_link": "/pages/faq",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_experience": {
@@ -782,10 +782,10 @@
         "content_max_width": 540,
         "heading_size_desktop": 40,
         "heading_size_mobile": 28,
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "diamond_help": {
