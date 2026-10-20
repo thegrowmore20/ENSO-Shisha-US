@@ -40,7 +40,7 @@
           "type": "pill",
           "settings": {
             "label": "Flavor guide",
-            "url": "/blogs/journal",
+            "url": "/blogs/news",
             "is_current": false
           }
         },
