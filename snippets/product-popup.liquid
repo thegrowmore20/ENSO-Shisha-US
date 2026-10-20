@@ -449,6 +449,32 @@
     setVariant(btn.dataset.vid, btn.dataset.price, btn.dataset.available);
   });
 
+  /* ── Remind me: proxy click to REZ Notify Me button on the page ── */
+  elRemind.addEventListener('click', function (e) {
+    e.preventDefault();
+    var vid = elAtc.dataset.vid;
+
+    /* Find the card on the page matching this variant (acc-card or sa-card-wrap) */
+    var card = document.querySelector('[data-popup-variant="' + vid + '"]');
+
+    /* Fall back: match by product URL */
+    if (!card) {
+      var rawUrl = elUrl.getAttribute('href');
+      card = document.querySelector('[data-popup-url="' + rawUrl + '"]');
+    }
+
+    var rezBtn = card && card.querySelector('.rez-out-of-stock-collection-btn');
+
+    if (rezBtn) {
+      closePopup();
+      /* Wait for popup close animation before clicking REZ button */
+      setTimeout(function () { rezBtn.click(); }, 320);
+    } else {
+      /* No REZ button on page — go to product page */
+      window.location.href = elUrl.href;
+    }
+  });
+
   /* ── Close handlers ── */
   elClose.addEventListener('click', closePopup);
   elBack.addEventListener('click',  closePopup);
