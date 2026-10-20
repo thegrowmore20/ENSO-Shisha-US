@@ -5,7 +5,7 @@
   assign solo_family   = ''
 
   for item in cart.items
-    if item.product.tags contains 'device'
+    if item.product.tags contains 'device' and item.product.metafields.custom.device_family != blank
       assign has_devices  = true
       assign device_count = device_count | plus: 1
       assign solo_family  = item.product.metafields.custom.device_family.value | default: ''
@@ -191,7 +191,7 @@
             {%- endif -%}
 
             {%- for item in cart.items -%}
-              {%- unless item.product.tags contains 'device' -%}{%- continue -%}{%- endunless -%}
+              {%- unless item.product.tags contains 'device' and item.product.metafields.custom.device_family != blank -%}{%- continue -%}{%- endunless -%}
               {%- liquid
                 assign dv_family  = item.product.metafields.custom.device_family.value | default: ''
                 assign ess_accs   = item.product.metafields.custom.essential_accessories.value
@@ -408,7 +408,7 @@
               {%- endif -%}
               <ul class="cp-acc-list" id="cp-acc-list" role="list">
                 {%- for item in cart.items -%}
-                  {%- if item.product.tags contains 'device' -%}{%- continue -%}{%- endif -%}
+                  {%- if item.product.tags contains 'device' and item.product.metafields.custom.device_family != blank -%}{%- continue -%}{%- endif -%}
                   {%- assign acc_sub = item.product.metafields.custom.headline | metafield_tag | strip_html | strip -%}
                   <li class="cp-acc-row" data-key="{{ item.key }}">
                     <a class="cp-acc-row__img" href="{{ item.product.url }}" aria-label="{{ item.product.title | escape }}">
