@@ -479,7 +479,7 @@
         "heading": "From the journal",
         "posts_limit": 3,
         "cta_label": "All articles",
-        "cta_link": "shopify://blogs/journal",
+        "cta_link": "shopify://blogs/news",
         "padding_top": 40,
         "padding_bottom": 40,
         "padding_top_mobile": 24,
@@ -507,7 +507,7 @@
             "heading": "Support",
             "body": "A person answers at support@ensoshisha.com. Guides, firmware and the manual live in ENSŌ Experience.",
             "link": "",
-            "popup_body": "<h4>Ask us</h4><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version.</p><p><a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com ›</a></p><h4>Help yourself first</h4><p>The first session step by step, the full manual, cleaning and charging, and the firmware app live in ENSŌ Experience, made for the phone.</p><p><a href=\"/pages/experience\">Open ENSŌ Experience ›</a></p><p><a href=\"/pages/contact\">Support page ›</a></p>",
+            "popup_body": "<h4>Ask us</h4><p>Email is the fastest way, in English. Send the order number and, for anything technical, the firmware version.</p><p><a href=\"mailto:support@ensoshisha.com\">support@ensoshisha.com ›</a></p><h4>Help yourself first</h4><p>The first session step by step, the full manual, cleaning and charging, and the firmware app live in ENSŌ Experience, made for the phone.</p><p><a href=\"/pages/enso-experience\">Open ENSŌ Experience ›</a></p><p><a href=\"/pages/contact\">Support page ›</a></p>",
             "button_symbol": "plus"
           }
         },
