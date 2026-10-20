@@ -34,15 +34,17 @@
     <button class="acc-arrow acc-arrow--l" type="button" id="AccArrowPrev-{{ section.id }}" aria-label="{{ 'accessibility.previous_slide' | t }}">&#8249;</button>
 
     <div class="acc-track" id="AccTrack-{{ section.id }}" role="region" aria-label="{{ heading | escape }}">
-      {%- if coll != blank -%}
-        {%- for product in coll.products limit: limit -%}
+      {%- if product_list.size > 0 -%}
+        {%- for product in product_list limit: limit -%}
           {%- unless product.title contains 'Shipping Protection' -%}
             {%- render 'card-accessory', product: product -%}
           {%- endunless -%}
         {%- endfor -%}
-      {%- elsif product_list.size > 0 -%}
-        {%- for product in product_list limit: limit -%}
-          {%- render 'card-accessory', product: product -%}
+      {%- elsif coll != blank -%}
+        {%- for product in coll.products limit: limit -%}
+          {%- unless product.title contains 'Shipping Protection' -%}
+            {%- render 'card-accessory', product: product -%}
+          {%- endunless -%}
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..4) -%}
@@ -368,13 +370,15 @@
     if (prevBtn) prevBtn.addEventListener('click', function () { trackEl.scrollBy({ left: -cardWidth(), behavior: 'smooth' }); });
     if (nextBtn) nextBtn.addEventListener('click', function () { trackEl.scrollBy({ left: cardWidth(), behavior: 'smooth' }); });
 
-    /* click image or title → global popup */
+    /* click anywhere on card (except interactive controls) → global popup */
     trackEl.addEventListener('click', function (e) {
-      var imgLink   = e.target.closest('.acc-card__img');
-      var titleLink = e.target.closest('.acc-card__title a');
-      if (!imgLink && !titleLink) return;
+      /* Let buttons, form inputs, variant opts, and details links pass through */
+      if (e.target.closest('button, input, select, a.acc-card__details, .acc-card__opt, .rez-button-wrapper')) return;
       var card = e.target.closest('.acc-card[data-popup-title]');
       if (!card) return;
+      /* Also let the title link and image link navigate normally if popup isn't available */
+      var imgLink   = e.target.closest('.acc-card__img');
+      var titleLink = e.target.closest('.acc-card__title a');
       e.preventDefault();
       openFromCard(card);
     });
