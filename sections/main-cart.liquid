@@ -359,7 +359,7 @@
                                     {%- endif -%}
                                   </span>
                                   {%- if v_disp_compare != blank -%}
-                                    <span class="cp-set__reg-price">{{ v_disp_compare }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></span>
+                                    <span class="cp-set__reg-price"><s>{{ v_disp_compare }}</s> <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></span>
                                   {%- endif -%}
                                 {%- else -%}
                                   <span class="cp-set__price">
@@ -369,7 +369,7 @@
                                     {%- endif -%}
                                   </span>
                                   {%- if v.compare_at_price > v.price -%}
-                                    <span class="cp-set__reg-price">{{ v.compare_at_price | money }} <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></span>
+                                    <span class="cp-set__reg-price"><s>{{ v.compare_at_price | money }}</s> <small class="cp-set__price-tag">{{ 'cart.sets.price_regular' | t }}</small></span>
                                   {%- endif -%}
                                 {%- endif -%}
                               </div>
