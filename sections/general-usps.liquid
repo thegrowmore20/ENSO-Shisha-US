@@ -140,8 +140,45 @@
     margin: 10px 0 0;
   }
 
-  /* ── Tablet + Mobile (≤1199px): 3-column grid ── */
-  @media screen and (max-width: 1199px) {
+  /* ── Mid-desktop (992–1199px): allow items to wrap into 2 rows ── */
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    .usps__row {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  /* ── Desktop (≥992px): from handoff ── */
+  @media screen and (min-width: 992px) {
+    .usps__row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .usps__item {
+      flex: 0 0 150px;
+      max-width: 150px;
+    }
+
+    .usps__icon {
+      width: 132px;
+      height: 132px;
+      padding: 20px;
+      border-radius: 22px;
+    }
+
+    .usps__icon img {
+      width: 84px;
+      height: 84px;
+    }
+  }
+
+  /* ── Mobile (≤991px): from handoff ── */
+  @media screen and (max-width: 991px) {
     .usps__row {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -170,49 +207,6 @@
     .usps__label {
       font-size: 12px;
       letter-spacing: 0.06em;
-    }
-  }
-
-  /* ── Tablet mid (768–1199px): slightly larger icons ── */
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
-    .usps__icon {
-      max-width: 120px;
-      padding: 18px;
-      border-radius: 20px;
-    }
-
-    .usps__icon img {
-      width: 64px;
-      height: 64px;
-    }
-  }
-
-  /* ── Desktop (≥1200px): 6-in-a-row ── */
-  @media screen and (min-width: 1200px) {
-    .usps__row {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      gap: 24px;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .usps__item {
-      flex: 0 0 150px;
-      max-width: 150px;
-    }
-
-    .usps__icon {
-      width: 132px;
-      height: 132px;
-      padding: 20px;
-      border-radius: 22px;
-    }
-
-    .usps__icon img {
-      width: 84px;
-      height: 84px;
     }
   }
 {% endstylesheet %}
