@@ -227,6 +227,11 @@
                     endunless
                   endfor
                 endif
+
+                assign has_addon_content = false
+                if item.product.variants.size > 1 or ess_accs != blank or spr_accs != blank
+                  assign has_addon_content = true
+                endif
               -%}
 
               <details class="cp-dev"
@@ -251,13 +256,16 @@
                   <em class="cp-dev__price">{{ item.final_price | money }}</em>
                   <button type="button" class="cp-dev__x" data-remove="{{ item.key }}"
                           aria-label="{{ 'cart.device.remove' | t: title: item.product.title }}">×</button>
-                  <div class="cp-dev__tog">
-                    <span class="cp-dev__tog-show">{{ 'cart.device.show_addons' | t }}</span>
-                    <span class="cp-dev__tog-hide">{{ 'cart.device.hide_addons' | t }}</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                  </div>
+                  {%- if has_addon_content -%}
+                    <div class="cp-dev__tog">
+                      <span class="cp-dev__tog-show">{{ 'cart.device.show_addons' | t }}</span>
+                      <span class="cp-dev__tog-hide">{{ 'cart.device.hide_addons' | t }}</span>
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                    </div>
+                  {%- endif -%}
                 </summary>
 
+                {%- if has_addon_content -%}
                 <div class="cp-dev__body">
 
                   {%- comment -%}PICK A SET{%- endcomment -%}
@@ -387,6 +395,7 @@
                   </button>
 
                 </div>
+                {%- endif -%}
               </details>
             {%- endfor -%}
           {%- endif -%}
