@@ -402,6 +402,25 @@ body:not(:has(.site-header)) .acc-bar {
   }
 }
 
+/* ── Compact grid (>= 5 cols): icon-only buttons ── */
+.acc-grid--compact .acc-card__btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  min-width: unset;
+  flex-shrink: 0;
+}
+.acc-grid--compact .acc-card__btn-label { display: none; }
+.acc-grid--compact .acc-card__btn-icon  { display: block; }
+.acc-grid--compact .acc-card .rez-button-wrapper { flex-shrink: 0; }
+.acc-grid--compact .acc-card .rez-out-of-stock-collection-btn {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: unset !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+}
+
 /* ══════════════════════════════════════════
    FILTER PANEL
    ══════════════════════════════════════════ */
@@ -925,7 +944,10 @@ body:not(:has(.site-header)) .acc-bar {
     /* ── Set --cols CSS var on the grid ── */
     _setColsStyle(v) {
       var grid = this.querySelector('#AccGrid');
-      if (grid) grid.style.setProperty('--cols', v);
+      if (!grid) return;
+      grid.style.setProperty('--cols', v);
+      // >= 5 cols: cards too narrow for text buttons, switch to icon-only
+      grid.classList.toggle('acc-grid--compact', parseInt(v, 10) >= 5);
     }
 
     /* ── Tab helpers ── */
