@@ -21,7 +21,8 @@
             "heading": "A Modern Twist on a Classic Ritual",
             "text": "<p>The electric heater for your hookah.<br>No coals, just pure flavor.</p>",
             "cta_label": "Shop now",
-            "cta_link": "shopify://products/enso-diamond-pre-order"
+            "cta_link": "shopify://products/enso-diamond-pre-order",
+            "cta_style": "secondary"
           }
         },
         "slide_enso": {
@@ -33,7 +34,8 @@
             "heading": "Where tradition meets modern innovation",
             "text": "<p>Your ritual. Without charcoal. Open system, full control.</p>",
             "cta_label": "Shop Now",
-            "cta_link": "shopify://products/enso-diamond-pre-order"
+            "cta_link": "shopify://products/enso-diamond-pre-order",
+            "cta_style": "secondary"
           }
         }
       },
@@ -164,6 +166,37 @@
         "padding_bottom_mobile": 24
       }
     },
+    "enso_system_video": {
+      "type": "video-hero-slider",
+      "blocks": {
+        "slide_system": {
+          "type": "slide",
+          "settings": {
+            "thumbnail": "shopify://shop_images/6403a43b-Screenshot_2026-09-21_111535-removebg-preview.png",
+            "video": "shopify://files/videos/34b32e93-a726a9d69d414e18811fa97b77202100.HD-1080p-7.2Mbps-32265318.mp4",
+            "video_url": "",
+            "eyebrow": "",
+            "heading": "",
+            "text": "",
+            "cta_label": "Explore the system",
+            "cta_link": "shopify://products/enso",
+            "cta_style": "accent"
+          }
+        }
+      },
+      "block_order": [
+        "slide_system"
+      ],
+      "settings": {
+        "color_background": "{{ settings.color_palette.graphite }}",
+        "color_text": "{{ settings.color_palette.ivory }}",
+        "full_viewport_height": true,
+        "section_margin_bottom": 40,
+        "poster_loading": "lazy",
+        "autoplay_interval": 0,
+        "video_quality": "720"
+      }
+    },
     "enso_phil": {
       "type": "enso-phil",
       "blocks": {
@@ -208,37 +241,6 @@
         "padding_bottom": 40,
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
-      }
-    },
-    "enso_system_video": {
-      "type": "video-hero-slider",
-      "blocks": {
-        "slide_system": {
-          "type": "slide",
-          "settings": {
-            "thumbnail": "shopify://shop_images/6403a43b-Screenshot_2026-09-21_111535-removebg-preview.png",
-            "video": "shopify://files/videos/34b32e93-a726a9d69d414e18811fa97b77202100.HD-1080p-7.2Mbps-32265318.mp4",
-            "video_url": "",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "cta_label": "Explore the system",
-            "cta_link": "shopify://products/enso",
-            "cta_style": "accent"
-          }
-        }
-      },
-      "block_order": [
-        "slide_system"
-      ],
-      "settings": {
-        "color_background": "{{ settings.color_palette.graphite }}",
-        "color_text": "{{ settings.color_palette.ivory }}",
-        "full_viewport_height": true,
-        "section_margin_bottom": 40,
-        "poster_loading": "lazy",
-        "autoplay_interval": 0,
-        "video_quality": "720"
       }
     },
     "enso_safety": {
@@ -382,6 +384,17 @@
         "color_background": "{{ settings.color_palette.background }}",
         "color_text": "{{ settings.color_palette.foreground }}",
         "collection": "accesories",
+        "product_list": [
+          "diamond-travel-bag",
+          "diamond-string-bag",
+          "diamond-packing-board",
+          "angel-cloud-elite",
+          "enso-backpack-3-0",
+          "diamond-replacement-battery",
+          "enso-replacement-battery-plus",
+          "acrylic-tank-for-enso",
+          "beige-vegan-leather-strap-for-enso"
+        ],
         "eyebrow": "",
         "heading": "Shop accessories",
         "layout": "carousel",
