@@ -66,6 +66,8 @@
       "settings": {
         "gallery_layout": "thumbnails_bottom",
         "subline": "Electric heat for the hookah you already own",
+        "display_price": "$320.00",
+        "display_compare_price": "$349.00",
         "price_note": "Last founder price. The final price after launch is $349. Reserve now for $120 and pay the remaining $200 before shipping. Sales tax is added at checkout.",
         "cta_label": "Reserve for $120",
         "inbox_text": "Diamond with thermo cap and battery, two ceramic cups, basket mesh, three flat screens, two silicone adapters, cup tool, brush, USB-C cable.",
