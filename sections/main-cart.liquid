@@ -153,7 +153,7 @@
               <b>{{ section.settings.empty_enso_title | default: 'ENSŌ 2026 Edition' }}</b>
               <span>{{ section.settings.empty_enso_subtitle | default: 'The all-in-one electric hookah' }}</span>
             </div>
-            <span class="btn btn--outline btn--full">{{ section.settings.empty_enso_cta | default: 'SEE THE 2026 EDITION' }}</span>
+            <span class="btn btn--secondary btn--full">{{ section.settings.empty_enso_cta | default: 'SEE THE 2026 EDITION' }}</span>
           </a>
 
           <a class="cp-ec" href="{{ section.settings.empty_acc_url | default: routes.collections_url | append: '/accessories' }}">
@@ -174,7 +174,7 @@
               <b>{{ section.settings.empty_acc_title | default: 'Accessories' }}</b>
               <span>{{ section.settings.empty_acc_subtitle | default: 'Batteries, cups, screens, tools and the backpack' }}</span>
             </div>
-            <span class="btn btn--outline btn--full">{{ section.settings.empty_acc_cta | default: 'SHOP ACCESSORIES' }}</span>
+            <span class="btn btn--secondary btn--full">{{ section.settings.empty_acc_cta | default: 'SHOP ACCESSORIES' }}</span>
           </a>
 
         </div>
@@ -296,6 +296,14 @@
                             assign v_desc         = v.metafields.custom.cart_page_description | metafield_tag
                             assign v_disp_price   = v.metafields.custom.display_price
                             assign v_disp_compare = v.metafields.custom.display_compare_price
+                            if v_disp_price == blank and dv_family == 'diamond'
+                              if v.title contains 'Battery'
+                                assign v_disp_price   = section.settings.diamond_battery_display_price
+                              else
+                                assign v_disp_price   = section.settings.diamond_solo_display_price
+                                assign v_disp_compare = section.settings.diamond_solo_display_compare
+                              endif
+                            endif
                           -%}
                           <div class="cp-set{% if v.id == item.variant_id %} is-active{% endif %}{% unless v.available %} is-sold-out{% endunless %}"
                                data-vid="{{ v.id }}"
@@ -1558,6 +1566,28 @@ details.cp-dev[open] .cp-dev__tog-hide { display: block; margin: 0; padding: 0; 
       "type": "url",
       "id": "diamond_url",
       "label": "t:sections.main_cart.settings.diamond_url.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main_cart.settings.header_diamond_prices.content"
+    },
+    {
+      "type": "text",
+      "id": "diamond_solo_display_price",
+      "label": "t:sections.main_cart.settings.diamond_solo_display_price.label",
+      "default": "$320.00"
+    },
+    {
+      "type": "text",
+      "id": "diamond_solo_display_compare",
+      "label": "t:sections.main_cart.settings.diamond_solo_display_compare.label",
+      "default": "$349.00"
+    },
+    {
+      "type": "text",
+      "id": "diamond_battery_display_price",
+      "label": "t:sections.main_cart.settings.diamond_battery_display_price.label",
+      "default": "$379.00"
     },
     {
       "type": "image_picker",
