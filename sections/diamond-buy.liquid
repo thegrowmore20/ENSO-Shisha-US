@@ -1085,7 +1085,11 @@ body:has(.site-header--hidden) .bar { top: 0; }
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ id: this.#lineKey, quantity: 0 })
             });
+            const removedTitle = btn.dataset.label || btn.textContent.trim();
             setDefault();
+            if (typeof window.__showToast === 'function') {
+              window.__showToast(removedTitle ? `${removedTitle} removed from cart` : 'Removed from cart');
+            }
             const cart = await (await fetch('/cart.js')).json();
             updateCount(cart);
             document.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart } }));
@@ -1112,7 +1116,8 @@ body:has(.site-header--hidden) .bar { top: 0; }
           setAdded(data.key);
 
           if (typeof window.__showToast === 'function') {
-            window.__showToast(data.product_title || data.title || 'Added to cart');
+            const addedTitle = data.product_title || data.title;
+            window.__showToast(addedTitle ? `${addedTitle} added to cart` : 'Added to cart');
           }
 
           const cart = await (await fetch('/cart.js')).json();
