@@ -61,16 +61,15 @@
           <a class="enso-jcard" href="{{ article.url }}">
             <div class="enso-jcard__media">
               {%- if card_image -%}
-                {{
-                  card_image
-                  | image_url: width: 900
-                  | image_tag:
-                    widths: '450, 700, 900',
-                    sizes: '(max-width: 749px) 80vw, 33vw',
-                    alt: card_image.alt | default: article.title,
-                    loading: 'lazy',
-                    class: 'enso-jcard__img'
-                }}
+                <img
+                  src="{{ card_image | image_url: width: 900 }}"
+                  srcset="{{ card_image | image_url: width: 450 }} 450w, {{ card_image | image_url: width: 700 }} 700w, {{ card_image | image_url: width: 900 }} 900w"
+                  sizes="(max-width: 749px) 80vw, 33vw"
+                  width="{{ card_image.width }}"
+                  alt="{{ card_image.alt | default: article.title | escape }}"
+                  loading="lazy"
+                  class="enso-jcard__img"
+                >
               {%- elsif forloop.index == 1 -%}
                 <img src="{{ 'jr-arch-redcup.jpg' | asset_url }}" class="enso-jcard__img" alt="{{ article.title | escape }}" loading="lazy" width="900" height="1125">
               {%- elsif forloop.index == 2 -%}
