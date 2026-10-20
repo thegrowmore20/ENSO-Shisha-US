@@ -384,10 +384,6 @@
 
   /* Tablet / Mobile layout */
   @media screen and (max-width: 991px) {
-    .help-cards__grid {
-      grid-template-columns: 1fr;
-    }
-
     .help-modal {
       padding: 12px;
       align-items: flex-end;
@@ -396,6 +392,13 @@
     .help-modal__box {
       max-height: 85vh;
       border-radius: 20px 20px 12px 12px;
+    }
+  }
+
+  /* Mobile: 1-col grid at ≤767px */
+  @media screen and (max-width: 767px) {
+    .help-cards__grid {
+      grid-template-columns: 1fr;
     }
   }
 
