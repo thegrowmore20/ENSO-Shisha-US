@@ -223,7 +223,8 @@
             "heading": "",
             "text": "",
             "cta_label": "Explore the system",
-            "cta_link": "shopify://products/enso"
+            "cta_link": "shopify://products/enso",
+            "cta_style": "accent"
           }
         }
       },

@@ -146,7 +146,8 @@
           <div class="body-text video-hero-slider__text">{{ block.settings.text }}</div>
         {%- endif -%}
         {%- if block.settings.cta_label != blank and block.settings.cta_link != blank -%}
-          <a href="{{ block.settings.cta_link }}" class="btn btn--secondary video-hero-slider__cta">
+          {%- assign cta_style = block.settings.cta_style | default: 'secondary' -%}
+          <a href="{{ block.settings.cta_link }}" class="btn btn--{{ cta_style }} video-hero-slider__cta">
             {{ block.settings.cta_label }}
           </a>
         {%- endif -%}
@@ -664,6 +665,17 @@
           "type": "url",
           "id": "cta_link",
           "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "cta_style",
+          "label": "Button style",
+          "options": [
+            { "value": "secondary", "label": "Secondary (white outline)" },
+            { "value": "accent",    "label": "Accent (sand gold)" },
+            { "value": "primary",   "label": "Primary (black)" }
+          ],
+          "default": "secondary"
         }
       ]
     }
