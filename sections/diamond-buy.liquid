@@ -446,9 +446,9 @@
 .d-buy__pill {
   display: block;
   width: 100%;
-  background: var(--color-primary-button-background);
-  color: var(--color-primary-button-label);
-  border: 1.5px solid var(--color-primary-button-background);
+  background: #8f6e4c;
+  color: #fff;
+  border: 1.5px solid #8f6e4c;
   border-radius: 999px;
   padding: 20px 40px;
   font-family: var(--font-body);
@@ -464,12 +464,12 @@
 .d-buy__pill:disabled { opacity: .45; cursor: not-allowed; }
 .d-buy__pill[aria-pressed="true"] {
   background: transparent;
-  color: var(--color-primary-button-background);
-  border: 1.5px solid var(--color-primary-button-background);
+  color: #8f6e4c;
+  border: 1.5px solid #8f6e4c;
 }
 .d-buy__pill[aria-pressed="true"]:hover {
-  background: var(--color-primary-button-background);
-  color: var(--color-primary-button-label);
+  background: #8f6e4c;
+  color: #fff;
   opacity: 1;
 }
 .d-buy__pill.is-loading {
@@ -492,10 +492,10 @@
   border-radius: 50%;
   animation: d-btn-spin .65s linear infinite;
 }
-/* Dark spinner when in outline/added state */
+/* Bronze spinner when in outline/added state */
 .d-buy__pill[aria-pressed="true"].is-loading::after {
-  border-color: rgba(0, 0, 0, .15);
-  border-top-color: var(--color-primary-button-background);
+  border-color: rgba(143, 110, 76, .2);
+  border-top-color: #8f6e4c;
 }
 @keyframes d-btn-spin {
   from { transform: rotate(0deg); }
