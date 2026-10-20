@@ -131,24 +131,34 @@
           {%- if use_collection -%}
             {%- for product in section_collection.products limit: section.settings.products_limit -%}
               {%- unless product.title contains 'Shipping Protection' -%}
+                {%- capture sa_img_urls -%}{%- for pimg in product.images limit: 5 -%}{%- unless forloop.first -%};{%- endunless -%}{{- pimg | image_url: width: 800 -}}{%- endfor -%}{%- endcapture -%}
                 {%- if is_load_more -%}
                   <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
-                    {%- render 'card-product', product: product, section: section -%}
+                    <div class="sa-card-wrap" data-popup-title="{{ product.title | escape }}" data-popup-images="{{ sa_img_urls | strip }}" data-popup-img-alt="{{ product.featured_image.alt | default: product.title | escape }}" data-popup-price="{{ product.selected_or_first_available_variant.price | money }}" data-popup-variant="{{ product.selected_or_first_available_variant.id }}" data-popup-url="{{ product.url }}" data-popup-available="{{ product.available }}" data-popup-compat="{{ product.metafields.custom.device_family | default: '' | escape }}" data-popup-headline="{{ product.metafields.custom.headline | metafield_tag | strip_html | escape }}" data-popup-shortdesc="{{ product.metafields.custom.short_description | metafield_tag | strip_html | escape }}">
+                      {%- render 'card-product', product: product, section: section -%}
+                    </div>
                   </div>
                 {%- else -%}
-                  {%- render 'card-product', product: product, section: section -%}
+                  <div class="sa-card-wrap" data-popup-title="{{ product.title | escape }}" data-popup-images="{{ sa_img_urls | strip }}" data-popup-img-alt="{{ product.featured_image.alt | default: product.title | escape }}" data-popup-price="{{ product.selected_or_first_available_variant.price | money }}" data-popup-variant="{{ product.selected_or_first_available_variant.id }}" data-popup-url="{{ product.url }}" data-popup-available="{{ product.available }}" data-popup-compat="{{ product.metafields.custom.device_family | default: '' | escape }}" data-popup-headline="{{ product.metafields.custom.headline | metafield_tag | strip_html | escape }}" data-popup-shortdesc="{{ product.metafields.custom.short_description | metafield_tag | strip_html | escape }}">
+                    {%- render 'card-product', product: product, section: section -%}
+                  </div>
                 {%- endif -%}
               {%- endunless -%}
             {%- endfor -%}
           {%- else -%}
             {%- for product in section_product_list limit: section.settings.products_limit -%}
               {%- unless product.title contains 'Shipping Protection' -%}
+                {%- capture sa_img_urls -%}{%- for pimg in product.images limit: 5 -%}{%- unless forloop.first -%};{%- endunless -%}{{- pimg | image_url: width: 800 -}}{%- endfor -%}{%- endcapture -%}
                 {%- if is_load_more -%}
                   <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
-                    {%- render 'card-product', product: product, section: section -%}
+                    <div class="sa-card-wrap" data-popup-title="{{ product.title | escape }}" data-popup-images="{{ sa_img_urls | strip }}" data-popup-img-alt="{{ product.featured_image.alt | default: product.title | escape }}" data-popup-price="{{ product.selected_or_first_available_variant.price | money }}" data-popup-variant="{{ product.selected_or_first_available_variant.id }}" data-popup-url="{{ product.url }}" data-popup-available="{{ product.available }}" data-popup-compat="{{ product.metafields.custom.device_family | default: '' | escape }}" data-popup-headline="{{ product.metafields.custom.headline | metafield_tag | strip_html | escape }}" data-popup-shortdesc="{{ product.metafields.custom.short_description | metafield_tag | strip_html | escape }}">
+                      {%- render 'card-product', product: product, section: section -%}
+                    </div>
                   </div>
                 {%- else -%}
-                  {%- render 'card-product', product: product, section: section -%}
+                  <div class="sa-card-wrap" data-popup-title="{{ product.title | escape }}" data-popup-images="{{ sa_img_urls | strip }}" data-popup-img-alt="{{ product.featured_image.alt | default: product.title | escape }}" data-popup-price="{{ product.selected_or_first_available_variant.price | money }}" data-popup-variant="{{ product.selected_or_first_available_variant.id }}" data-popup-url="{{ product.url }}" data-popup-available="{{ product.available }}" data-popup-compat="{{ product.metafields.custom.device_family | default: '' | escape }}" data-popup-headline="{{ product.metafields.custom.headline | metafield_tag | strip_html | escape }}" data-popup-shortdesc="{{ product.metafields.custom.short_description | metafield_tag | strip_html | escape }}">
+                    {%- render 'card-product', product: product, section: section -%}
+                  </div>
                 {%- endif -%}
               {%- endunless -%}
             {%- endfor -%}
@@ -213,7 +223,61 @@
   </div>
 </carousel-slider>
 
+{% javascript %}
+(function () {
+  function openFromCard(wrap) {
+    var d = wrap.dataset;
+    var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
+      return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
+    });
+    document.dispatchEvent(new CustomEvent('product:popup', {
+      bubbles: true,
+      detail: {
+        title:     d.popupTitle     || '',
+        fits:      d.popupCompat    || '',
+        price:     d.popupPrice     || '',
+        available: d.popupAvailable !== 'false',
+        vid:       d.popupVariant   || '',
+        url:       d.popupUrl       || '',
+        images:    images,
+        headline:  d.popupHeadline  || '',
+        shortdesc: d.popupShortdesc || '',
+        variants:  []
+      }
+    }));
+  }
+
+  function initTrack(trackEl) {
+    if (trackEl.dataset.saPopupInit) return;
+    trackEl.dataset.saPopupInit = '1';
+    trackEl.addEventListener('click', function (e) {
+      /* Let quick-add button, spinner, and REZ wrapper handle themselves */
+      if (e.target.closest('button, input, .rez-button-wrapper')) return;
+      var wrap = e.target.closest('.sa-card-wrap[data-popup-title]');
+      if (!wrap) return;
+      e.preventDefault();
+      openFromCard(wrap);
+    });
+  }
+
+  function boot() {
+    document.querySelectorAll('.shop-accessories .carousel__track').forEach(initTrack);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+{% endjavascript %}
+
 {% stylesheet %}
+  /* Wrapper div must not break card layout */
+  .sa-card-wrap {
+    display: contents;
+  }
+
   .shop-acc__view-all {
     display: inline-flex;
     align-items: center;
