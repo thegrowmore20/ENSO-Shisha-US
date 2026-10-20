@@ -444,13 +444,16 @@
 /* CTA pill */
 .d-buy__form { margin-bottom: 18px; }
 .d-buy__pill {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 44px;
   background: var(--color-accent-button-background);
   color: var(--color-accent-button-label);
   border: 1.5px solid var(--color-accent-button-background);
   border-radius: 999px;
-  padding: 20px 40px;
+  padding: 0 30px;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 15px;
@@ -459,6 +462,7 @@
   cursor: pointer;
   transition: opacity .2s;
   line-height: 1;
+  box-sizing: border-box;
 }
 .d-buy__pill:hover { opacity: .88; }
 .d-buy__pill:disabled { opacity: .45; cursor: not-allowed; }
