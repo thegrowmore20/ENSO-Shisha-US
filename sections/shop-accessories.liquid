@@ -1,3 +1,4 @@
+{%- render 'acc-atc-states' -%}
 {%- liquid
   assign scheme_class = 'color-surface'
   render 'surface-colors', background: section.settings.color_background, text: section.settings.color_text
@@ -103,10 +104,10 @@
     </div>
 
     {%- liquid
-      if section_collection != blank
-        assign use_collection = true
-      elsif section_product_list.size > 0
+      if section_product_list.size > 0
         assign use_collection = false
+      elsif section_collection != blank
+        assign use_collection = true
       else
         assign use_collection = false
       endif
@@ -130,25 +131,27 @@
         >
           {%- if use_collection -%}
             {%- for product in section_collection.products limit: section.settings.products_limit -%}
-              {% unless product.title contains 'Shipping Protection' %}
+              {%- unless product.title contains 'Shipping Protection' -%}
                 {%- if is_load_more -%}
                   <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
-                    {%- render 'card-product', product: product, section: section -%}
+                    {%- render 'card-accessory', product: product, show_fits: true, show_details: false -%}
                   </div>
                 {%- else -%}
-                  {%- render 'card-product', product: product, section: section -%}
+                  {%- render 'card-accessory', product: product, show_fits: true, show_details: false -%}
                 {%- endif -%}
-              {% endunless %}
+              {%- endunless -%}
             {%- endfor -%}
           {%- else -%}
             {%- for product in section_product_list limit: section.settings.products_limit -%}
-              {%- if is_load_more -%}
-                <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
-                  {%- render 'card-product', product: product, section: section -%}
-                </div>
-              {%- else -%}
-                {%- render 'card-product', product: product, section: section -%}
-              {%- endif -%}
+              {%- unless product.title contains 'Shipping Protection' -%}
+                {%- if is_load_more -%}
+                  <div data-grid-item {% if forloop.index0 >= load_more_step %}hidden{% endif %}>
+                    {%- render 'card-accessory', product: product, show_fits: true, show_details: false -%}
+                  </div>
+                {%- else -%}
+                  {%- render 'card-accessory', product: product, show_fits: true, show_details: false -%}
+                {%- endif -%}
+              {%- endunless -%}
             {%- endfor -%}
           {%- endif -%}
         </div>
@@ -210,6 +213,54 @@
     {%- endif -%}
   </div>
 </carousel-slider>
+
+{% javascript %}
+(function () {
+  function openFromCard(card) {
+    var d = card.dataset;
+    var images = (d.popupImages || '').split(';').filter(Boolean).map(function (src) {
+      return { src: src, alt: d.popupImgAlt || d.popupTitle || '' };
+    });
+    document.dispatchEvent(new CustomEvent('product:popup', {
+      bubbles: true,
+      detail: {
+        title:     d.popupTitle     || '',
+        fits:      d.popupCompat    || '',
+        price:     d.popupPrice     || '',
+        available: d.popupAvailable !== 'false',
+        vid:       d.popupVariant   || '',
+        url:       d.popupUrl       || '',
+        images:    images,
+        headline:  d.popupHeadline  || '',
+        shortdesc: d.popupShortdesc || '',
+        variants:  []
+      }
+    }));
+  }
+
+  function initTrack(trackEl) {
+    if (trackEl.dataset.popupInit) return;
+    trackEl.dataset.popupInit = '1';
+    trackEl.addEventListener('click', function (e) {
+      if (e.target.closest('button, input, select, a.acc-card__details, .acc-card__opt, .rez-button-wrapper')) return;
+      var card = e.target.closest('.acc-card[data-popup-title]');
+      if (!card) return;
+      e.preventDefault();
+      openFromCard(card);
+    });
+  }
+
+  function boot() {
+    document.querySelectorAll('.shop-accessories .carousel__track').forEach(initTrack);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+{% endjavascript %}
 
 {% stylesheet %}
   .shop-acc__view-all {
@@ -324,7 +375,7 @@
       "type": "product_list",
       "id": "product_list",
       "label": "Product list",
-      "info": "Used when no collection is selected. Collection takes priority.",
+      "info": "Takes priority over the collection when both are set.",
       "limit": 12
     },
     {
