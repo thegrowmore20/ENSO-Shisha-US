@@ -273,9 +273,13 @@
 {% endjavascript %}
 
 {% stylesheet %}
-  /* Wrapper div must not break card layout */
+  /* Wrapper carries popup data; must not disturb flex/grid sizing */
   .sa-card-wrap {
-    display: contents;
+    min-width: 0;
+  }
+  .sa-card-wrap > .product-card {
+    display: block;
+    width: 100%;
   }
 
   .shop-acc__view-all {
